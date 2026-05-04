@@ -167,10 +167,96 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
   *{transition:none!important;animation:none!important}
   .reveal{opacity:1!important;transform:none!important}
 }
+
+/* ── SCROLL PROGRESS BAR ─────────────────────────────────────────────── */
+#scroll-bar{
+  position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,#4ADE80,#38BDF8);
+  z-index:9997;transform-origin:left;transform:scaleX(0);
+  transition:transform 0.06s linear;
+  box-shadow:0 0 8px #4ADE80;
+  pointer-events:none;
+}
+
+/* ── PULSE DOT ───────────────────────────────────────────────────────── */
+@keyframes pulse-ring{
+  0%{box-shadow:0 0 0 0 rgba(74,222,128,0.45)}
+  70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}
+  100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}
+}
+.pulse-dot{animation:pulse-ring 2.4s ease-out infinite}
+
+/* ── SCAN LABEL ──────────────────────────────────────────────────────── */
+.scan-label{position:relative;overflow:hidden}
+.scan-label::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(74,222,128,0.07),transparent);
+  transform:translateX(-100%);
+  animation:scan-sweep 4s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes scan-sweep{
+  0%{transform:translateX(-100%)} 50%{transform:translateX(200%)} 100%{transform:translateX(200%)}
+}
+
+/* ── HORIZONTAL EXPERIENCE TIMELINE ─────────────────────────────────── */
+.timeline-track{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  gap:0;
+}
+.timeline-track::-webkit-scrollbar{display:none}
+.timeline-card{
+  scroll-snap-align:start;
+  flex:0 0 clamp(280px,36vw,460px);
+  padding:28px 36px 28px 0;
+  position:relative;
+}
+.timeline-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:rgba(255,255,255,0.07);
+  transition:background 0.4s;
+}
+.timeline-card.active-card::before{background:var(--card-color,#4ADE80)}
+.timeline-dot{
+  width:10px;height:10px;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.2);
+  flex-shrink:0;margin-top:4px;
+  transition:border-color 0.3s,box-shadow 0.3s;
+}
+.timeline-card.active-card .timeline-dot{
+  border-color:var(--card-color,#4ADE80);
+  box-shadow:0 0 12px var(--card-color,#4ADE80);
+}
+.timeline-arrow{
+  width:36px;height:36px;border-radius:6px;
+  border:1px solid rgba(255,255,255,0.07);
+  background:transparent;color:#9090A8;
+  display:inline-flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;line-height:1;
+  transition:border-color 0.2s,color 0.2s,background 0.2s;
+}
+.timeline-arrow:hover{border-color:rgba(74,222,128,0.35);color:#4ADE80;background:rgba(74,222,128,0.04)}
+.timeline-arrow:disabled{opacity:0.2;cursor:default;pointer-events:none}
+@media(max-width:768px){.timeline-card{flex:0 0 85vw}}
+
+/* ── VIEW TRANSITIONS — project expand ───────────────────────────────── */
+::view-transition-old(proj-expand),
+::view-transition-new(proj-expand){
+  animation-duration:0.38s;
+  animation-timing-function:cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ── HERO WASH — more transparent so particles show ─────────────────── */
+#hero.wash-void::before{background:rgba(4,4,10,0.52)!important}
 </style>
 
 </head>
 <body>
+<div id="scroll-bar"></div>
 <canvas id="space-canvas"></canvas>
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
@@ -194,31 +280,140 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
   // Reduce particle count on mobile for better performance
   const isMobile = window.innerWidth < 768;
 
-  function makeStars(count, spread, size, color, zRange) {
+  // ── GLSL SHADER STARS — soft glow with sinusoidal pulse ────────────────
+  const starVert = `
+    attribute float phase;
+    attribute float baseSize;
+    uniform float uTime;
+    varying float vAlpha;
+    void main(){
+      float pulse = 0.78 + 0.22 * sin(uTime * 1.3 + phase);
+      vAlpha = pulse;
+      vec4 mv = modelViewMatrix * vec4(position, 1.0);
+      gl_PointSize = baseSize * (300.0 / -mv.z) * pulse;
+      gl_Position = projectionMatrix * mv;
+    }
+  `;
+  const starFrag = `
+    varying float vAlpha;
+    uniform vec3 uColor;
+    void main(){
+      float d = length(gl_PointCoord - 0.5) * 2.0;
+      float glow = pow(1.0 - smoothstep(0.0, 1.0, d), 1.7);
+      gl_FragColor = vec4(uColor, glow * vAlpha * 0.9);
+    }
+  `;
+  function makeGlowStars(count, spread, baseSize, color, zRange) {
     const geo = new THREE.BufferGeometry();
-    const pos = new Float32Array(count * 3);
+    const pos   = new Float32Array(count * 3);
+    const phase = new Float32Array(count);
+    const sizes = new Float32Array(count);
     for (let i = 0; i < count; i++) {
       pos[i*3]   = (Math.random()-0.5)*spread;
       pos[i*3+1] = (Math.random()-0.5)*spread*0.6;
       pos[i*3+2] = -Math.random()*zRange;
+      phase[i]   = Math.random()*Math.PI*2;
+      sizes[i]   = baseSize * (0.5 + Math.random()*0.5);
     }
-    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    const mat = new THREE.PointsMaterial({ color, size, transparent: true, opacity: 0.85, sizeAttenuation: true });
+    geo.setAttribute('position', new THREE.BufferAttribute(pos,   3));
+    geo.setAttribute('phase',    new THREE.BufferAttribute(phase,  1));
+    geo.setAttribute('baseSize', new THREE.BufferAttribute(sizes,  1));
+    const mat = new THREE.ShaderMaterial({
+      vertexShader: starVert, fragmentShader: starFrag,
+      uniforms: { uTime:{value:0}, uColor:{value:new THREE.Color(color)} },
+      transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+    });
     return new THREE.Points(geo, mat);
   }
 
-  // Distant tiny white stars
-  scene.add(makeStars(isMobile?900:4000, 1800, 0.7, 0xaaaacc, 1600));
-  // Mid-field slightly larger
-  scene.add(makeStars(isMobile?280:1200, 1200, 1.2, 0xccccff, 1200));
-  // Bright close blue-white
-  scene.add(makeStars(isMobile?100:500, 800, 2.0, 0x88bbff, 600));
-  // Green accent stars (your signal color)
-  scene.add(makeStars(isMobile?18:80, 600, 2.8, 0x4ADE80, 400));
-  // Warm orange specks
-  scene.add(makeStars(isMobile?12:60, 700, 2.2, 0xFB923C, 500));
-  // Cyan accents
-  scene.add(makeStars(isMobile?12:70, 650, 2.4, 0x38BDF8, 450));
+  const starSystems = [
+    makeGlowStars(isMobile?700:3200,  1800, 1.8, 0xaaaacc, 1600),
+    makeGlowStars(isMobile?200:900,   1200, 2.6, 0xccccff, 1200),
+    makeGlowStars(isMobile?70:350,    800,  3.4, 0x88bbff, 600),
+    makeGlowStars(isMobile?14:60,     600,  4.5, 0x4ADE80, 400),
+    makeGlowStars(isMobile?10:45,     700,  3.8, 0xFB923C, 500),
+    makeGlowStars(isMobile?10:50,     650,  4.0, 0x38BDF8, 450),
+  ];
+  starSystems.forEach(s => scene.add(s));
+
+  // ── PARTICLE FORMATION — letters assemble from scattered field ──────────
+  let particleSystem = null;
+  let particleTargets = [];
+  let pfPhase = 'assembling';
+  let pfFrame = 0;
+
+  function initParticles() {
+    const DEPTH = 340;
+    const camDist = camera.position.z - DEPTH;
+    const vFovRad = 70 * Math.PI / 180;
+    const visH = 2 * Math.tan(vFovRad / 2) * camDist;
+    const visW = visH * (innerWidth / innerHeight);
+
+    const off = document.createElement('canvas');
+    off.width = 520; off.height = 220;
+    const c = off.getContext('2d');
+    c.font = '700 78px "Space Grotesk", sans-serif';
+    c.textBaseline = 'alphabetic';
+    c.fillStyle = '#fff';
+    c.fillText('Ahmad', 16, 100);
+    c.fillStyle = '#4ADE80';
+    c.fillText('Firas', 16, 195);
+
+    const data = c.getImageData(0, 0, off.width, off.height).data;
+    particleTargets = [];
+    const posList = [], colorList = [], phaseList = [], speedList = [];
+    const step = isMobile ? 5 : 3;
+
+    for (let py = 0; py < off.height; py += step) {
+      for (let px = 0; px < off.width; px += step) {
+        if (data[(py*off.width+px)*4+3] > 100) {
+          const isGreen = data[(py*off.width+px)*4+1] > data[(py*off.width+px)*4] * 1.5;
+          const wx = (px/off.width - 0.40) * visW * 1.35;
+          const wy = -(py/off.height - 0.5) * visH * 1.1;
+          particleTargets.push({x:wx, y:wy, isGreen});
+          const a = Math.random()*Math.PI*2, d = 70+Math.random()*220;
+          posList.push(wx+Math.cos(a)*d, wy+Math.sin(a)*d, DEPTH+(Math.random()-0.5)*60);
+          colorList.push(isGreen?0.29:1, isGreen?0.87:1, isGreen?0.5:1);
+          phaseList.push(Math.random()*Math.PI*2);
+          speedList.push(0.032+Math.random()*0.028);
+        }
+      }
+    }
+
+    if (!particleTargets.length) return;
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(posList),  3));
+    geo.setAttribute('aColor',   new THREE.BufferAttribute(new Float32Array(colorList), 3));
+    geo.setAttribute('phase',    new THREE.BufferAttribute(new Float32Array(phaseList), 1));
+    geo.setAttribute('speed',    new THREE.BufferAttribute(new Float32Array(speedList), 1));
+
+    const pVert = `
+      attribute vec3 aColor; attribute float phase; attribute float speed;
+      uniform float uTime; varying vec3 vColor; varying float vAlpha;
+      void main(){
+        vColor=aColor;
+        float pulse=0.65+0.35*sin(uTime*1.8+phase);
+        vAlpha=pulse;
+        vec4 mv=modelViewMatrix*vec4(position,1.0);
+        gl_PointSize=3.2*(300.0/-mv.z)*pulse;
+        gl_Position=projectionMatrix*mv;
+      }`;
+    const pFrag = `
+      varying vec3 vColor; varying float vAlpha;
+      void main(){
+        float d=length(gl_PointCoord-0.5)*2.0;
+        float g=pow(1.0-smoothstep(0.0,1.0,d),1.6);
+        gl_FragColor=vec4(vColor,g*vAlpha);
+      }`;
+    const pMat = new THREE.ShaderMaterial({
+      vertexShader:pVert, fragmentShader:pFrag,
+      uniforms:{uTime:{value:0}},
+      transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+    });
+    particleSystem = new THREE.Points(geo, pMat);
+    scene.add(particleSystem);
+  }
+  document.fonts.ready.then(initParticles);
 
   // Nebula clouds — large soft glowing sprites
   const nebulaData = isMobile ? [
@@ -254,6 +449,9 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
     const progress = total > 0 ? scrolled / total : 0;
     // Camera travels from z=400 (surface) to z=-1200 (deep field)
     targetZ = 400 - progress * 1600;
+    // Scroll progress bar
+    const bar = document.getElementById('scroll-bar');
+    if (bar) bar.style.transform = `scaleX(${progress})`;
   }
   window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -272,8 +470,10 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
   });
   renderer.setSize(window.innerWidth, window.innerHeight);
 
+  let t = 0;
   function animate() {
     requestAnimationFrame(animate);
+    t += 0.009;
     frame++;
     // Smooth camera zoom
     currentZ += (targetZ - currentZ) * 0.04;
@@ -284,6 +484,50 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
     // Slow drift
     camera.position.x += Math.sin(frame * 0.0003) * 0.04;
     camera.position.y += Math.cos(frame * 0.0004) * 0.03;
+    // Update star shader time for glow pulse
+    starSystems.forEach(s => { s.material.uniforms.uTime.value = t; });
+    // Update particle formation
+    if (particleSystem && particleTargets.length) {
+      particleSystem.material.uniforms.uTime.value = t;
+      const inHero = window.scrollY < window.innerHeight * 0.85;
+      particleSystem.visible = inHero;
+      if (inHero) {
+        pfFrame++;
+        const pos = particleSystem.geometry.attributes.position.array;
+        const spd = particleSystem.geometry.attributes.speed.array;
+        const DEPTH = 340;
+        let arrived = true;
+        for (let i = 0; i < particleTargets.length; i++) {
+          if (pfPhase === 'dispersing') {
+            const cx = pos[i*3] - particleTargets[i].x;
+            const cy = pos[i*3+1] - particleTargets[i].y;
+            const len = Math.sqrt(cx*cx+cy*cy)+0.001;
+            pos[i*3]   += (cx/len)*2.2;
+            pos[i*3+1] += (cy/len)*2.2;
+          } else {
+            const dx = particleTargets[i].x - pos[i*3];
+            const dy = particleTargets[i].y - pos[i*3+1];
+            const dz = DEPTH - pos[i*3+2];
+            pos[i*3]   += dx * spd[i];
+            pos[i*3+1] += dy * spd[i];
+            pos[i*3+2] += dz * 0.04;
+            if (Math.abs(dx)+Math.abs(dy) > 2) arrived = false;
+          }
+        }
+        particleSystem.geometry.attributes.position.needsUpdate = true;
+        if (pfPhase === 'assembling' && arrived) { pfPhase='holding'; pfFrame=0; }
+        if (pfPhase === 'holding' && pfFrame > 130) { pfPhase='dispersing'; pfFrame=0; }
+        if (pfPhase === 'dispersing' && pfFrame > 75) {
+          pfPhase='assembling'; pfFrame=0;
+          for (let i = 0; i < particleTargets.length; i++) {
+            const a=Math.random()*Math.PI*2, d=70+Math.random()*220;
+            pos[i*3]   = particleTargets[i].x + Math.cos(a)*d;
+            pos[i*3+1] = particleTargets[i].y + Math.sin(a)*d;
+          }
+          particleSystem.geometry.attributes.position.needsUpdate = true;
+        }
+      }
+    }
     renderer.render(scene, camera);
   }
   animate();
@@ -335,8 +579,8 @@ function useCountUp(target,active,dur=1400){
 /* ── HELPERS ────────────────────────────────────────────────────────────── */
 function EL({color=T.green,children,style={}}){
   return(
-    <div style={{display:'flex',alignItems:'center',gap:10,...style}}>
-      <span style={{display:'inline-block',width:18,height:1,background:color,opacity:0.5}}></span>
+    <div className="scan-label" style={{display:'flex',alignItems:'center',gap:10,...style}}>
+      <span style={{display:'inline-block',width:18,height:1,background:color,opacity:0.5,flexShrink:0}}></span>
       <span style={{fontFamily:T.mono,fontSize:10,letterSpacing:'0.14em',textTransform:'uppercase',color}}>{children}</span>
     </div>
   );
@@ -378,7 +622,7 @@ function Nav(){
     <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:200,padding:'0 52px',background:sc?'rgba(4,4,10,0.9)':'transparent',backdropFilter:sc?'blur(20px)':'none',WebkitBackdropFilter:sc?'blur(20px)':'none',borderBottom:sc?`1px solid ${T.border}`:'1px solid transparent',transition:'all 0.4s cubic-bezier(0.16,1,0.3,1)'}}>
       <div style={{maxWidth:1280,margin:'0 auto',display:'flex',justifyContent:'space-between',alignItems:'center',height:60}}>
         <a href="#" style={{display:'flex',alignItems:'center',gap:8}}>
-          <div style={{width:7,height:7,background:T.green,borderRadius:1}}></div>
+          <div className="pulse-dot" style={{width:7,height:7,background:T.green,borderRadius:1}}></div>
           <span style={{fontFamily:T.mono,fontSize:11,fontWeight:700,letterSpacing:'0.1em',color:T.text}}>AHMAD.DEV</span>
         </a>
         <div className={`nav-links${open?' open':''}`} style={{display:'flex',gap:24}}>
@@ -416,9 +660,9 @@ function Hero(){
           </div>
           <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',paddingTop:20}}>
             <div style={{marginBottom:20}}><EL color={T.green}>Computer Engineer & AI Researcher</EL></div>
-            <h1 style={{fontFamily:T.sans,fontWeight:700,fontSize:'clamp(68px,9.5vw,124px)',lineHeight:0.88,letterSpacing:'-0.05em',color:'#fff',
+            <h1 style={{fontFamily:T.sans,fontWeight:700,fontSize:'clamp(68px,9.5vw,124px)',lineHeight:0.88,letterSpacing:'-0.05em',color:'transparent',userSelect:'none',
               opacity:rdy?1:0,transform:rdy?'translateY(0)':'translateY(40px)',transition:'opacity 0.9s 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.9s 0.3s cubic-bezier(0.16,1,0.3,1)'}}>
-              Ahmad<br/><span style={{color:T.green}}>Firas</span>
+              Ahmad<br/><span>Firas</span>
             </h1>
             <p style={{fontSize:17,lineHeight:1.65,color:T.text2,maxWidth:440,marginTop:32,opacity:rdy?1:0,transform:rdy?'translateY(0)':'translateY(24px)',transition:'opacity 0.9s 0.5s cubic-bezier(0.16,1,0.3,1),transform 0.9s 0.5s cubic-bezier(0.16,1,0.3,1)'}}>
               Building AI systems for uncertain environments — from UAV autonomy research to enterprise agentic workflows.
@@ -506,61 +750,121 @@ function Origin(){
   );
 }
 
-/* ── EXPERIENCE ─────────────────────────────────────────────────────────── */
+/* ── EXPERIENCE — horizontal film-strip timeline ─────────────────────────── */
 function Experience(){
+  const trackRef = React.useRef(null);
+  const [activeIdx, setActiveIdx] = React.useState(0);
   const jobs=[
     {r:'Microsoft Solution Developer',co:'First Solar',p:'Jan 2026 – Present',loc:'Perrysburg, OH',t:'Full-time',active:true,c:T.green,
-      d:'Design and ship agentic AI solutions in Microsoft Copilot Studio, translating business requirements into autonomous multi-step workflows. Lead intern team on code reviews, delivery milestones, and enterprise governance.',
-      s:['Copilot Studio','Azure AI','Power Automate','M365','Python']},
+     d:'Design and ship agentic AI solutions in Microsoft Copilot Studio, translating business requirements into autonomous multi-step workflows. Lead intern team on code reviews, delivery milestones, and enterprise governance.',
+     s:['Copilot Studio','Azure AI','Power Automate','M365','Python']},
     {r:'Sports Analytics & Data Science Intern',co:'UToledo Athletics',p:'Oct 2025 – Present',loc:'Toledo, OH',t:'Internship',active:true,c:T.teal,
-      d:'ML-powered statistical models for roster efficiency and student-athlete benefit allocation. Interactive DOMO dashboards translating performance metrics into coaching insights.',
-      s:['Python','scikit-learn','DOMO','Statistical Modeling']},
+     d:'ML-powered statistical models for roster efficiency and student-athlete benefit allocation. Interactive DOMO dashboards translating performance metrics into coaching insights.',
+     s:['Python','scikit-learn','DOMO','Statistical Modeling']},
     {r:'Undergraduate Researcher',co:'LION Lab · CPHS Lab',p:'May – Dec 2025',loc:'University of Toledo',t:'Research Co-Op',c:T.blue,
-      d:'72.8% zero-shot UAV deployment via MAML across 1,000+ simulated environments. 97.3% HITL success at sub-100ms. Built Deep Flyer drone training platform. Authored ACM Computing Surveys paper on AI failure taxonomy.',
-      s:['PyTorch','ROS 2','MAML','YOLO11','AirSim','NVIDIA Jetson']},
+     d:'72.8% zero-shot UAV deployment via MAML across 1,000+ simulated environments. 97.3% HITL success at sub-100ms. Built Deep Flyer drone training platform. Authored ACM Computing Surveys paper on AI failure taxonomy.',
+     s:['PyTorch','ROS 2','MAML','YOLO11','AirSim','NVIDIA Jetson']},
     {r:'Senior Design Team Lead',co:'Grange Insurance × UToledo',p:'Aug 2024 – May 2025',loc:'Toledo, OH',t:'Industry Project',c:T.purple,
-      d:'Led interdisciplinary team delivering MLOps insurance risk model (R² = 0.976). Airflow + MLflow pipeline with drift monitoring and HITL gates, reducing manual intervention by 75%.',
-      s:['XGBoost','Airflow','MLflow','AWS S3','Bayesian Opt.']},
+     d:'Led interdisciplinary team delivering MLOps insurance risk model (R² = 0.976). Airflow + MLflow pipeline with drift monitoring and HITL gates, reducing manual intervention by 75%.',
+     s:['XGBoost','Airflow','MLflow','AWS S3','Bayesian Opt.']},
     {r:'Database Engineer Co-Op',co:'Park Place Technologies',p:'May – Aug 2023',loc:'Toledo, OH',t:'Co-Op',c:T.orange,
-      d:'Centralized PostgreSQL security database consolidating Active Directory, Cisco AMP, and Microsoft Defender. 15% faster incident response, 95% data integrity, zero data loss in quarterly DR tests.',
-      s:['PostgreSQL','pgAdmin','Active Directory','Cisco AMP']},
+     d:'Centralized PostgreSQL security database consolidating Active Directory, Cisco AMP, and Microsoft Defender. 15% faster incident response, 95% data integrity, zero data loss in quarterly DR tests.',
+     s:['PostgreSQL','pgAdmin','Active Directory','Cisco AMP']},
   ];
+
+  function scrollToCard(idx){
+    if(!trackRef.current) return;
+    const card = trackRef.current.children[idx];
+    if(card) card.scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'});
+    setActiveIdx(idx);
+  }
+
+  React.useEffect(()=>{
+    const track = trackRef.current;
+    if(!track) return;
+    const obs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const idx = Array.from(track.children).indexOf(e.target);
+          if(idx>=0) setActiveIdx(idx);
+        }
+      });
+    },{root:track, threshold:0.55});
+    Array.from(track.children).forEach(c=>obs.observe(c));
+    return()=>obs.disconnect();
+  },[]);
+
   return(
     <section id="experience" className="section-wash wash-nebula" style={{padding:'100px 52px'}}>
       <div className="section-inner" style={{maxWidth:1280,margin:'0 auto'}}>
-        <EL color={T.purple} style={{marginBottom:48}}>The Path</EL>
-        <div style={{position:'relative'}}>
-          <div style={{position:'absolute',left:0,top:8,bottom:8,width:1,background:`linear-gradient(to bottom,${T.purple}66,${T.border} 80%)`}}></div>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:48,flexWrap:'wrap',gap:16}}>
+          <EL color={T.purple}>The Path</EL>
+          <div style={{display:'flex',gap:6,alignItems:'center'}}>
+            {jobs.map((_,i)=>(
+              <button key={i} onClick={()=>scrollToCard(i)}
+                style={{
+                  width:i===activeIdx?20:6, height:6, borderRadius:3, border:'none',
+                  cursor:'pointer', padding:0,
+                  background:i===activeIdx?jobs[i].c:'rgba(255,255,255,0.12)',
+                  transition:'all 0.35s cubic-bezier(0.16,1,0.3,1)',
+                }}
+                aria-label={`Go to ${jobs[i].co}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div ref={trackRef} className="timeline-track reveal">
           {jobs.map((j,i)=>(
-            <div key={i} className={`exp-row reveal reveal-d${Math.min(i,3)+1}`}
-              style={{display:'grid',gridTemplateColumns:'180px 1fr',gap:48,padding:'24px 0 24px 32px',borderBottom:i<jobs.length-1?`1px solid ${T.border}`:'none',position:'relative'}}>
-              <div style={{position:'absolute',left:-4,top:28,width:9,height:9,borderRadius:'50%',background:j.active?j.c:T.bg2,border:`1px solid ${j.active?j.c:T.text3}`,boxShadow:j.active?`0 0 12px ${j.c}55`:'none'}}></div>
-              <div className="exp-meta">
-                <div style={{fontFamily:T.mono,fontSize:11,color:j.active?j.c:T.text3,letterSpacing:'0.04em'}}>{j.p}</div>
-                <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.08em',textTransform:'uppercase',marginTop:5}}>{j.t}</div>
-                <div style={{fontSize:12,color:T.text3,marginTop:4}}>{j.loc}</div>
+            <div key={i}
+              className={`timeline-card${i===activeIdx?' active-card':''}`}
+              style={{'--card-color':j.c}}>
+              <div style={{display:'flex',alignItems:'flex-start',gap:12,marginBottom:18,paddingTop:14}}>
+                <div className="timeline-dot"
+                  style={{background:j.active?j.c:'transparent','--card-color':j.c}}></div>
+                <div>
+                  <div style={{fontFamily:T.mono,fontSize:10,color:j.c,letterSpacing:'0.04em',marginBottom:2}}>{j.p}</div>
+                  <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,textTransform:'uppercase',letterSpacing:'0.08em'}}>{j.t} · {j.loc}</div>
+                </div>
               </div>
-              <div>
-                <div style={{display:'flex',alignItems:'baseline',flexWrap:'wrap',gap:10}}>
-                  <h3 style={{fontSize:18,fontWeight:600,color:'#fff',letterSpacing:'-0.01em'}}>{j.r}</h3>
-                  <span style={{fontFamily:T.mono,fontSize:10,color:j.c}}>{j.co}</span>
-                </div>
-                <p style={{fontSize:14,lineHeight:1.75,color:T.text2,marginTop:10}}>{j.d}</p>
-                <div style={{display:'flex',flexWrap:'wrap',gap:5,marginTop:12}}>
-                  {j.s.map(s=><Tag key={s} c={j.c}>{s}</Tag>)}
-                </div>
+              <h3 style={{fontSize:17,fontWeight:600,color:'#fff',letterSpacing:'-0.01em',lineHeight:1.25,marginBottom:5}}>{j.r}</h3>
+              <div style={{fontFamily:T.mono,fontSize:10,color:j.c,marginBottom:14,opacity:0.8}}>{j.co}</div>
+              <p style={{fontSize:13,lineHeight:1.75,color:T.text2,maxWidth:380,marginBottom:16}}>{j.d}</p>
+              <div style={{display:'flex',flexWrap:'wrap',gap:5}}>
+                {j.s.map(s=><Tag key={s} c={j.c}>{s}</Tag>)}
               </div>
             </div>
           ))}
+        </div>
+
+        <div style={{display:'flex',gap:8,alignItems:'center',marginTop:24}}>
+          <button className="timeline-arrow" onClick={()=>scrollToCard(Math.max(0,activeIdx-1))}
+            disabled={activeIdx===0} aria-label="Previous role">←</button>
+          <button className="timeline-arrow" onClick={()=>scrollToCard(Math.min(jobs.length-1,activeIdx+1))}
+            disabled={activeIdx===jobs.length-1} aria-label="Next role">→</button>
+          <span style={{fontFamily:T.mono,fontSize:10,color:T.text3,marginLeft:10}}>
+            {String(activeIdx+1).padStart(2,'0')} / {String(jobs.length).padStart(2,'0')}
+          </span>
         </div>
       </div>
     </section>
   );
 }
 
-/* ── PROJECTS ───────────────────────────────────────────────────────────── */
+/* ── PROJECTS — View Transitions expand/collapse ─────────────────────────── */
 function Projects(){
   const[open,setOpen]=React.useState(null);
+
+  function toggle(i){
+    const next = open===i ? null : i;
+    if(document.startViewTransition){
+      document.startViewTransition(()=>{
+        ReactDOM.flushSync(()=>setOpen(next));
+      });
+    } else {
+      setOpen(next);
+    }
+  }
   const projects=[
     {idx:'01',dom:'Autonomy',c:T.green,n:'Graph-Based RL for UAV Autonomy',tag:'USRCAP Fellowship · $3,000',fr:'Autonomy that holds up when the map runs out.',img:'UAV flight / AirSim simulation',
       m:[['72.8%','Zero-shot deploy'],['97.3%','HITL success'],['<100ms','Intervention']],
@@ -612,9 +916,9 @@ function Projects(){
           {projects.map((p,i)=>{
             const isOpen=open===i;
             return(
-              <div key={i} className="tilt" style={{background:isOpen?'rgba(255,255,255,0.03)':T.bg,border:`1px solid ${isOpen?p.c+'22':T.border}`,borderRadius:8,overflow:'hidden',cursor:'pointer',transition:'all 0.3s cubic-bezier(0.16,1,0.3,1)'}}
+              <div key={i} className="tilt" style={{background:isOpen?'rgba(255,255,255,0.03)':T.bg,border:`1px solid ${isOpen?p.c+'22':T.border}`,borderRadius:8,overflow:'hidden',cursor:'pointer',transition:'all 0.3s cubic-bezier(0.16,1,0.3,1)',viewTransitionName:`proj-${i}`}}
                 onMouseMove={isOpen?undefined:onTilt} onMouseLeave={isOpen?undefined:offTilt}>
-                <div onClick={()=>setOpen(isOpen?null:i)}
+                <div onClick={()=>toggle(i)}
                   style={{display:'grid',gridTemplateColumns:'36px 1fr 1fr 110px 30px',gap:16,alignItems:'center',padding:'18px 24px'}}>
                   <span style={{fontFamily:T.mono,fontSize:10,color:T.text3}}>{p.idx}</span>
                   <div style={{display:'flex',alignItems:'center',gap:9}}>
