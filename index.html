@@ -433,7 +433,8 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
     particleSystem = new THREE.Points(geo, pMat);
     scene.add(particleSystem);
   }
-  document.fonts.ready.then(() => setTimeout(initParticles, 350));
+  // Particle name formation disabled — name is rendered as static HTML text
+  // document.fonts.ready.then(() => setTimeout(initParticles, 350));
 
   // Scroll depth control — maps scroll progress to camera Z
   let targetZ = 400;
@@ -682,9 +683,9 @@ function Hero(){
           </div>
           <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',paddingTop:20}}>
             <div style={{marginBottom:20}}><EL color={T.green}>Computer Engineer & AI Researcher</EL></div>
-            <h1 style={{fontFamily:T.sans,fontWeight:700,fontSize:'clamp(68px,9.5vw,124px)',lineHeight:0.88,letterSpacing:'-0.05em',color:'transparent',userSelect:'none',
+            <h1 style={{fontFamily:T.sans,fontWeight:700,fontSize:'clamp(68px,9.5vw,124px)',lineHeight:0.88,letterSpacing:'-0.05em',color:'#fff',userSelect:'none',
               opacity:rdy?1:0,transform:rdy?'translateY(0)':'translateY(40px)',transition:'opacity 0.9s 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.9s 0.3s cubic-bezier(0.16,1,0.3,1)'}}>
-              Ahmad<br/><span>Firas</span>
+              Ahmad<br/><span style={{color:T.green}}>Firas</span>
             </h1>
             <p style={{fontSize:17,lineHeight:1.65,color:T.text2,maxWidth:440,marginTop:32,opacity:rdy?1:0,transform:rdy?'translateY(0)':'translateY(24px)',transition:'opacity 0.9s 0.5s cubic-bezier(0.16,1,0.3,1),transform 0.9s 0.5s cubic-bezier(0.16,1,0.3,1)'}}>
               Building AI systems for uncertain environments — from UAV autonomy research to enterprise agentic workflows.
