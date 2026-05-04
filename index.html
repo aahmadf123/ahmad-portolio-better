@@ -697,8 +697,8 @@ function ImgPh({label,style={},className='',slots=1,images=[]}){
   </>;
   if(hasImgs){
     return(
-      <div style={{position:'relative',overflow:'hidden',borderRadius:8,...style}} className={className}>
-        <img src={images[idx]} alt={label} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+      <div style={{position:'relative',overflow:'hidden',borderRadius:8,background:'#07071a',...style}} className={className}>
+        <img src={images[idx]} alt={label} style={{width:'100%',height:'100%',objectFit:'contain',display:'block'}}/>
         {nav}
       </div>
     );
@@ -836,7 +836,7 @@ function Origin(){
             <h2 style={{fontFamily:T.sans,fontSize:28,fontWeight:600,lineHeight:1.3,letterSpacing:'-0.02em',color:'#fff'}}>
               Chasing the gap between what AI can do in a lab and what it actually does when someone's counting on it.
             </h2>
-            <p style={{fontSize:16,lineHeight:1.8,color:T.text2,marginTop:24}}>I'm a Computer Engineering student at the University of Toledo. My work has moved across autonomous drone systems, enterprise AI, sports analytics, and data engineering — not because I planned a portfolio, but because I follow whatever problem is genuinely hard.</p>
+            <p style={{fontSize:16,lineHeight:1.8,color:T.text2,marginTop:24}}>I'm a Computer Science & Engineering graduate from the University of Toledo. My work has moved across autonomous drone systems, enterprise AI, sports analytics, and data engineering — not because I planned a portfolio, but because I follow whatever problem is genuinely hard.</p>
             <p style={{fontSize:16,lineHeight:1.8,color:T.text2,marginTop:16}}>The common thread: does it hold up when someone is counting on it?</p>
             <ImgPh label="Lab / project environment" slots={3} style={{width:'100%',aspectRatio:'16/9',marginTop:28}}/>
           </div>
@@ -860,7 +860,7 @@ function Origin(){
               <div style={{fontFamily:T.mono,fontSize:9,color:T.purple,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:10}}>Education</div>
               <div style={{fontSize:15,fontWeight:600,color:'#fff'}}>University of Toledo</div>
               <div style={{fontSize:13,color:T.text2,marginTop:3}}>B.S. Computer Science & Engineering · Minor in Mathematics</div>
-              <div style={{fontFamily:T.mono,fontSize:10,color:T.blue,marginTop:8}}>2021 – 2026 · GPA 3.23</div>
+              <div style={{fontFamily:T.mono,fontSize:10,color:T.blue,marginTop:8}}>2021 – 2026 · Graduated · GPA 3.23</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:4,marginTop:12}}>
                 {['Machine Learning','Neural Networks','Databases','Software Eng.','Embedded Systems'].map(c=><Tag key={c}>{c}</Tag>)}
               </div>
@@ -941,117 +941,116 @@ function Experience(){
   );
 }
 
-/* ── PROJECTS — View Transitions expand/collapse ─────────────────────────── */
+/* ── PROJECTS — Bento Mosaic Grid ───────────────────────────────────────── */
 function Projects(){
-  const[open,setOpen]=React.useState(null);
-
-  function toggle(i){
-    const next = open===i ? null : i;
-    if(document.startViewTransition){
-      document.startViewTransition(()=>{
-        ReactDOM.flushSync(()=>setOpen(next));
-      });
-    } else {
-      setOpen(next);
-    }
-  }
+  const[sel,setSel]=React.useState(null);
   const projects=[
-    {idx:'01',dom:'Autonomy',c:T.green,n:'Graph-Based RL for UAV Autonomy',tag:'USRCAP Fellowship · $3,000',fr:'Autonomy that holds up when the map runs out.',img:'UAV flight / AirSim simulation',imgs:['Images/graph_RL.png'],
+    {idx:'01',dom:'Autonomy',c:T.green,n:'Graph-Based RL for UAV Autonomy',tag:'USRCAP Fellowship · $3,000',fr:'Autonomy that holds up when the map runs out.',img:'UAV flight / AirSim simulation',imgs:['Images/graph_RL.png'],span:2,
       m:[['72.8%','Zero-shot deploy'],['97.3%','HITL success'],['<100ms','Intervention']],
       what:'Graph Attention Networks encoded the environment relationally — generalizing across topologies rather than memorizing textures. MAML enabled rapid adaptation to unseen environments. Human-in-the-loop safety gates at sub-100ms ensured any degraded state could be interrupted without vehicle loss.',
       learn:"Zero-shot generalization required structured representations AND a recovery system the team would actually trust. The 97.3% HITL rate proved the boundary between autonomous and human control was designed deliberately.",
       s:['MAML','GAT','PPO','SAC','AirSim','SHAP/LIME']},
-    {idx:'02',dom:'Research Tools',c:T.blue,n:'Deep Flyer',tag:'AWS DeepRacer-Inspired UAV Platform',fr:'A training platform so the next experiment starts faster.',img:'Drone + YOLO11 detection overlay',imgs:[],
+    {idx:'02',dom:'Research Tools',c:T.blue,n:'Deep Flyer',tag:'AWS DeepRacer-Inspired UAV Platform',fr:'A training platform so the next experiment starts faster.',img:'Drone + YOLO11 detection overlay',imgs:[],span:1,
       m:[['<5ms','Control latency'],['P3O','Policy'],['Zero-shot','Sim-to-real']],
       what:'Direct PX4-ROS2 bridge replaced MAVROS, cutting latency below 5ms — the hard deadline for reactive UAV control. YOLO11 with ZED Mini and OAK-D Pro gave spatial understanding from real-time stereo vision. Reward functions made student-modifiable without touching core code.',
       learn:'The hardest constraint was latency, not accuracy. A well-trained policy at 20ms is a crashed drone. Documentation is infrastructure — the interface was the product.',
       s:['PyTorch','ROS 2','YOLO11','Gazebo','PX4','ZED Mini','NVIDIA Jetson']},
-    {idx:'03',dom:'ACM CSUR',c:T.orange,n:'4-Pillars Taxonomy',tag:'ACM Computing Surveys · 2025',fr:'A framework for how deployed intelligence breaks, and why it repeats.',img:'Taxonomy diagram / paper figure',imgs:['Images/4-Pillars.png'],
+    {idx:'03',dom:'ACM CSUR',c:T.orange,n:'4-Pillars Taxonomy',tag:'ACM Computing Surveys · 2025',fr:'A framework for how deployed intelligence breaks, and why it repeats.',img:'Taxonomy diagram / paper figure',imgs:['Images/4-Pillars.png'],span:1,
       m:[['37','AI failures'],['74','Sources'],['ACM','Published']],
       what:'37 documented AI failures organized by mechanism: data-environment mismatch, oversight-gap amplification, distributional brittleness, multi-agent instability. The Contested-Environment Amplifier Model formalized how stressors compound quiet failures into catastrophic ones.',
       learn:'Almost all 37 failures had detectable precursors that appeared normal under standard evaluation. Evaluation environments need to be hostile, not merely representative.',
       s:['Taxonomy Design','Literature Review','AI Safety']},
-    {idx:'04',dom:'MLOps',c:T.purple,n:'Homeowner Loss Prediction',tag:'Grange Insurance × UToledo',fr:'Risk modeling as a continuous operating system, not a batch job.',img:'MLflow dashboard / pipeline diagram',imgs:['Images/SeniorDesign_Pipeline.jpeg'],
+    {idx:'04',dom:'MLOps',c:T.purple,n:'Homeowner Loss Prediction',tag:'Grange Insurance × UToledo',fr:'Risk modeling as a continuous operating system, not a batch job.',img:'MLflow dashboard / pipeline diagram',imgs:['Images/SeniorDesign_Pipeline.jpeg'],span:2,
       m:[['R² 0.976','Accuracy'],['75%','Less manual'],['25%','Claim lift']],
       what:'XGBoost with Bayesian optimization. Airflow + MLflow orchestration. AI drift agents triggered retraining. HITL gates required sign-off only on low-confidence predictions — reducing review volume 75% while maintaining oversight where it mattered.',
       learn:"The 75% reduction didn't happen because we removed humans. It happened because we gave humans a better loop to be in.",
       s:['XGBoost','Airflow','MLflow','AWS S3','Bayesian Opt.','CI/CD']},
-    {idx:'05',dom:'Infrastructure',c:T.teal,n:'Security Discovery Database',tag:'Park Place Technologies',fr:'Security operations gained one dependable source of truth.',img:'PostgreSQL schema / security UI',imgs:[],
+    {idx:'05',dom:'Infrastructure',c:T.teal,n:'Security Discovery Database',tag:'Park Place Technologies',fr:'Security operations gained one dependable source of truth.',img:'PostgreSQL schema / security UI',imgs:[],span:1,
       m:[['15%','Faster response'],['95%','Data integrity'],['Zero','Data loss']],
       what:'Disparate security feeds from Active Directory, Cisco AMP, and Microsoft Defender consolidated into a single PostgreSQL architecture with principled validation and quarterly-tested disaster recovery.',
       learn:"Most data quality problems in security ops aren't adversarial — they're inconsistent tooling assumptions meeting at a data boundary.",
       s:['PostgreSQL','Active Directory','Cisco AMP','Disaster Recovery']},
-    {idx:'06',dom:'Hackathon',c:T.green,n:'Deep Truth',tag:'RocketHacks 2025 · Best Use of MongoDB Atlas',fr:'News credibility assessment, built in 24 hours.',img:'DeepTruth UI screenshot',imgs:['Images/DeepTruth_Group.png'],
+    {idx:'06',dom:'Hackathon',c:T.green,n:'Deep Truth',tag:'RocketHacks 2025 · Best Use of MongoDB Atlas',fr:'News credibility assessment, built in 24 hours.',img:'DeepTruth UI screenshot',imgs:['Images/DeepTruth_Group.png'],span:2,
       m:[['#1','MongoDB Atlas'],['24h','Build sprint']],
       what:'Users submit a news article and get an AI-powered credibility verdict with plain-language explanation and five sourced references. Explainability was a first-class constraint, not a retrofit.',
       learn:'The 24-hour clock produced the best decision: build explainability from the start.',
       s:['MongoDB Atlas','Python','ML','NLP']},
-    {idx:'07',dom:'Embedded',c:T.orange,n:'ChemE Car',tag:'AIChE · Most Innovative Design (Worldwide)',fr:'Precision control. No second chances.',img:'ChemE Car hardware / sensors',imgs:['Images/AIChE%20ChemECar_International.jpg','Images/AIChE.jpg'],
+    {idx:'07',dom:'Embedded',c:T.orange,n:'ChemE Car',tag:'AIChE · Most Innovative Design (Worldwide)',fr:'Precision control. No second chances.',img:'ChemE Car hardware / sensors',imgs:['Images/AIChE%20ChemECar_International.jpg','Images/AIChE.jpg'],span:1,
       m:[['Worldwide','Most Innovative'],['National','Qualifier']],
       what:'Arduino-based automation integrated pressure sensors, load cells, wheel encoders, IMU, and temperature data into stopping algorithms reliable under live competition conditions.',
       learn:'Competition constraints produce better engineering than open-ended briefs. Design for worst case.',
       s:['Arduino','C/C++','MATLAB','Simulink','Sensor Fusion']},
-    {idx:'08',dom:'Civic Tech',c:T.pink,n:'Batting Cleanup',tag:'Toledo Codes · Active Deployment',fr:'QR codes and data science for city maintenance.',img:'QR deployment / city map',imgs:['Images/Batting_Cleanup.jpg'],
+    {idx:'08',dom:'Civic Tech',c:T.pink,n:'Batting Cleanup',tag:'Toledo Codes · Active Deployment',fr:'QR codes and data science for city maintenance.',img:'QR deployment / city map',imgs:['Images/Batting_Cleanup.jpg'],span:1,
       m:[['Active','Live'],['Toledo','Partnership']],
       what:'QR codes at community locations let residents report issues in seconds. The backend surfaces clusters to prioritize municipal response patterns.',
       learn:'One extra step kills adoption. Infrastructure that generates no data is not data infrastructure.',
       s:['AI','QR Code Tech','Data Science','Project Management']},
   ];
+  const p=sel!==null?projects[sel]:null;
   return(
     <section id="projects" className="section-wash wash-cluster" style={{padding:'100px 52px'}}>
       <div className="section-inner" style={{maxWidth:1280,margin:'0 auto'}}>
         <EL color={T.blue} style={{marginBottom:14}}>Bodies of Work</EL>
-        <p style={{fontSize:16,color:T.text2,maxWidth:520,lineHeight:1.6,marginBottom:44}}>Each project a different operating condition. Click to expand the full case study.</p>
-        <div style={{display:'flex',flexDirection:'column',gap:3}}>
-          {projects.map((p,i)=>{
-            const isOpen=open===i;
-            return(
-              <div key={i} className="tilt" style={{background:isOpen?'rgba(255,255,255,0.03)':T.bg,border:`1px solid ${isOpen?p.c+'22':T.border}`,borderRadius:8,overflow:'hidden',cursor:'pointer',transition:'all 0.3s cubic-bezier(0.16,1,0.3,1)',viewTransitionName:`proj-${i}`}}
-                onMouseMove={isOpen?undefined:onTilt} onMouseLeave={isOpen?undefined:offTilt}>
-                <div onClick={()=>toggle(i)}
-                  style={{display:'grid',gridTemplateColumns:'36px 1fr 1fr 110px 30px',gap:16,alignItems:'center',padding:'18px 24px'}}>
-                  <span style={{fontFamily:T.mono,fontSize:10,color:T.text3}}>{p.idx}</span>
-                  <div style={{display:'flex',alignItems:'center',gap:9}}>
-                    <div style={{width:5,height:5,borderRadius:1,background:p.c,flexShrink:0}}></div>
-                    <span style={{fontSize:15,fontWeight:600,color:'#fff'}}>{p.n}</span>
-                    <span style={{fontFamily:T.mono,fontSize:9,color:T.text3}}>{p.dom}</span>
-                  </div>
-                  <span className="proj-meta" style={{fontFamily:T.mono,fontSize:9,color:T.text3}}>{p.tag}</span>
-                  <span style={{fontFamily:T.sans,fontSize:14,fontWeight:700,color:p.c}}>{p.m[0]?.[0]}</span>
-                  <span style={{fontSize:18,color:T.text3,display:'flex',alignItems:'center',justifyContent:'center',transition:'transform 0.3s',transform:isOpen?'rotate(45deg)':'none'}}>+</span>
+        <p style={{fontSize:16,color:T.text2,maxWidth:520,lineHeight:1.6,marginBottom:44}}>Each project a different operating condition. Click any card to open the full case study.</p>
+        {/* Bento mosaic grid */}
+        <div className="reveal" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:14}}>
+          {projects.map((proj,i)=>(
+            <div key={i} onClick={()=>setSel(i)} className="tilt"
+              style={{gridColumn:`span ${proj.span}`,background:'rgba(255,255,255,0.02)',border:`1px solid ${T.border}`,borderTop:`2px solid ${proj.c}`,borderRadius:12,overflow:'hidden',cursor:'pointer',transition:'all 0.25s cubic-bezier(0.16,1,0.3,1)'}}
+              onMouseMove={onTilt} onMouseLeave={offTilt}>
+              <ImgPh label={proj.img} images={proj.imgs||[]} style={{width:'100%',aspectRatio:proj.span===2?'16/7':'4/3'}}/>
+              <div style={{padding:'18px 20px'}}>
+                <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:10}}>
+                  <span style={{fontFamily:T.mono,fontSize:8,padding:'2px 7px',background:`${proj.c}15`,border:`1px solid ${proj.c}33`,borderRadius:3,color:proj.c,letterSpacing:'0.08em',textTransform:'uppercase'}}>{proj.dom}</span>
+                  <span style={{fontFamily:T.mono,fontSize:8,color:T.text3}}>{proj.idx}</span>
                 </div>
-                {isOpen&&(
-                  <div style={{padding:'0 24px 32px',borderTop:`1px solid ${T.border}`}}>
-                    <p style={{fontSize:17,fontWeight:500,color:T.text,marginTop:20,lineHeight:1.45}}>{p.fr}</p>
-                    <div className="two-col" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:28,marginTop:24}}>
-                      <ImgPh label={p.img} images={p.imgs||[]} slots={3} style={{width:'100%',aspectRatio:'16/9'}}/>
-                      <div>
-                        <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:14}}>Key Metrics</div>
-                        <div style={{display:'flex',flexDirection:'column',gap:16}}>
-                          {p.m.map(([v,l],j)=><AnimMetric key={j} val={v} label={l} color={p.c}/>)}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="two-col" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:36,marginTop:24}}>
-                      <div>
-                        <div style={{fontFamily:T.mono,fontSize:9,color:T.green,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:8}}>What was built</div>
-                        <p style={{fontSize:14,lineHeight:1.8,color:T.text2}}>{p.what}</p>
-                      </div>
-                      <div>
-                        <div style={{fontFamily:T.mono,fontSize:9,color:T.orange,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:8}}>What I learned</div>
-                        <p style={{fontSize:14,lineHeight:1.8,color:T.text2}}>{p.learn}</p>
-                      </div>
-                    </div>
-                    <div style={{display:'flex',flexWrap:'wrap',gap:5,marginTop:20}}>
-                      {p.s.map(s=><Tag key={s} c={p.c}>{s}</Tag>)}
-                    </div>
+                <h3 style={{fontSize:proj.span===2?17:15,fontWeight:600,color:'#fff',lineHeight:1.3,marginBottom:8}}>{proj.n}</h3>
+                <p style={{fontSize:13,color:T.text2,lineHeight:1.6,marginBottom:12}}>{proj.fr}</p>
+                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                  <div style={{display:'flex',flexWrap:'wrap',gap:4}}>
+                    {proj.s.slice(0,proj.span===2?4:3).map(s=><Tag key={s} c={proj.c}>{s}</Tag>)}
                   </div>
-                )}
+                  <span style={{fontFamily:T.mono,fontSize:11,fontWeight:700,color:proj.c,flexShrink:0,marginLeft:8}}>{proj.m[0]?.[0]}</span>
+                </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
+      {/* Case study modal */}
+      {p&&(
+        <div onClick={e=>{if(e.target===e.currentTarget)setSel(null);}}
+          style={{position:'fixed',inset:0,background:'rgba(4,4,10,0.90)',backdropFilter:'blur(12px)',zIndex:9000,display:'flex',alignItems:'center',justifyContent:'center',padding:'24px'}}>
+          <div style={{background:'#08081a',border:`1px solid ${p.c}33`,borderRadius:16,maxWidth:880,width:'100%',maxHeight:'90vh',overflowY:'auto',position:'relative',padding:'40px 44px'}}>
+            <button onClick={()=>setSel(null)}
+              style={{position:'absolute',top:16,right:16,background:'rgba(255,255,255,0.06)',border:`1px solid ${T.border}`,color:T.text2,borderRadius:8,width:36,height:36,cursor:'pointer',fontSize:18,display:'flex',alignItems:'center',justifyContent:'center',lineHeight:1,zIndex:1}}>✕</button>
+            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:8}}>
+              <span style={{fontFamily:T.mono,fontSize:9,padding:'2px 8px',background:`${p.c}18`,border:`1px solid ${p.c}33`,borderRadius:3,color:p.c,letterSpacing:'0.1em',textTransform:'uppercase'}}>{p.dom}</span>
+              <span style={{fontFamily:T.mono,fontSize:9,color:T.text3}}>{p.idx}</span>
+            </div>
+            <h2 style={{fontSize:26,fontWeight:700,color:'#fff',letterSpacing:'-0.02em',lineHeight:1.2,marginBottom:6}}>{p.n}</h2>
+            <p style={{fontFamily:T.mono,fontSize:10,color:T.text3,marginBottom:10}}>{p.tag}</p>
+            <p style={{fontSize:16,fontWeight:500,color:T.text,lineHeight:1.55,marginBottom:28,maxWidth:680}}>{p.fr}</p>
+            <ImgPh label={p.img} images={p.imgs||[]} slots={3} style={{width:'100%',aspectRatio:'16/7',marginBottom:28,borderRadius:10}}/>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10,marginBottom:28}}>
+              {p.m.map(([v,l],j)=><AnimMetric key={j} val={v} label={l} color={p.c}/>)}
+            </div>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:28,marginBottom:24}}>
+              <div>
+                <div style={{fontFamily:T.mono,fontSize:9,color:T.green,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:8}}>What was built</div>
+                <p style={{fontSize:14,lineHeight:1.8,color:T.text2}}>{p.what}</p>
+              </div>
+              <div>
+                <div style={{fontFamily:T.mono,fontSize:9,color:T.orange,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:8}}>What I learned</div>
+                <p style={{fontSize:14,lineHeight:1.8,color:T.text2}}>{p.learn}</p>
+              </div>
+            </div>
+            <div style={{display:'flex',flexWrap:'wrap',gap:5}}>
+              {p.s.map(s=><Tag key={s} c={p.c}>{s}</Tag>)}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -1276,24 +1275,53 @@ function Certifications(){
   );
 }
 
-/* ── CURRENTLY / PERSONALITY ────────────────────────────────────────────── */
-function Currently(){
-  const currently=[
-    {l:'Building',     v:'ML analytics for Toledo Athletics',       c:T.green},
-    {l:'Researching',  v:'Graph-based RL for UAV navigation',       c:T.blue},
-    {l:'Exploring',    v:'Quantum computing fundamentals',          c:T.purple},
-    {l:'Competing',    v:'AIChE Chem-E Car competition season',     c:T.orange},
+/* ── NOW ────────────────────────────────────────────────────────────────── */
+function Now(){
+  const items=[
+    {mode:'Reading',  icon:'◈', status:'Nothing yet', c:T.green,  entries:[
+      {title:'Nothing as of now',ctx:'Check back soon',dim:true},
+    ]},
+    {mode:'Learning', icon:'◎', status:'In progress', c:T.blue,   entries:[
+      {title:'Drive AI Transformation in Your Organization',ctx:'Microsoft · Course AB-731T00-A'},
+    ]},
+    {mode:'Building', icon:'◇', status:'Active',      c:T.purple, entries:[
+      {title:'Student Athlete Health Insurance Site',  ctx:'Toledo Athletics'},
+      {title:'Athletics Onboarding Website',           ctx:'Toledo Athletics'},
+      {title:'Football Performance Metrics — CV Model',ctx:'Computer Vision · In progress'},
+    ]},
+    {mode:'Pursuing', icon:'◉', status:'Upcoming',    c:T.orange, entries:[
+      {title:'Full-Time Role',                         ctx:'Actively interviewing'},
+      {title:'Microsoft Certified: AI Transformation Leader',ctx:'Exam prep underway'},
+    ]},
   ];
   return(
     <section className="section-wash wash-home" style={{padding:'80px 52px'}}>
       <div className="section-inner" style={{maxWidth:1280,margin:'0 auto'}}>
-        <EL color={T.green} style={{marginBottom:32}}>Right Now</EL>
+        <div style={{display:'flex',alignItems:'baseline',gap:16,marginBottom:12}}>
+          <EL color={T.green}>Now</EL>
+          <span style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.1em',textTransform:'uppercase'}}>Updated · May 2026</span>
+        </div>
+        <p style={{fontSize:15,color:T.text2,marginBottom:36,maxWidth:520,lineHeight:1.65}}>What I'm actively reading, learning, building, and chasing outside of work.</p>
         <div className="four-col reveal" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12}}>
-          {currently.map((c,i)=>(
-            <div key={i} className="tilt" style={{padding:'20px',background:'rgba(255,255,255,0.02)',border:`1px solid ${c.c}22`,borderRadius:8,borderLeft:`3px solid ${c.c}`}}
+          {items.map((item,i)=>(
+            <div key={i} className="tilt" style={{padding:'24px 22px',background:'rgba(255,255,255,0.02)',border:`1px solid ${item.c}1a`,borderRadius:10,borderTop:`2px solid ${item.c}`,position:'relative',overflow:'hidden'}}
               onMouseMove={onTilt} onMouseLeave={offTilt}>
-              <div style={{fontFamily:T.mono,fontSize:9,color:c.c,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:8}}>{c.l}</div>
-              <div style={{fontSize:14,color:T.text,lineHeight:1.45,fontWeight:500}}>{c.v}</div>
+              <div style={{position:'absolute',top:14,right:14,display:'flex',alignItems:'center',gap:5}}>
+                <div style={{width:5,height:5,borderRadius:'50%',background:item.c}} className="pulse-dot"></div>
+                <span style={{fontFamily:T.mono,fontSize:8,color:item.c,letterSpacing:'0.1em',textTransform:'uppercase'}}>{item.status}</span>
+              </div>
+              <div style={{fontFamily:T.mono,fontSize:9,color:item.c,letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:16,display:'flex',alignItems:'center',gap:7}}>
+                <span style={{fontSize:13,opacity:0.9}}>{item.icon}</span>
+                <span>{item.mode}</span>
+              </div>
+              <div style={{display:'flex',flexDirection:'column',gap:12}}>
+                {item.entries.map((e,j)=>(
+                  <div key={j} style={{paddingBottom:j<item.entries.length-1?12:0,borderBottom:j<item.entries.length-1?`1px solid rgba(255,255,255,0.05)`:'none'}}>
+                    <div style={{fontSize:13,fontWeight:600,color:e.dim?T.text3:'#fff',lineHeight:1.4,marginBottom:3,opacity:e.dim?0.5:1}}>{e.title}</div>
+                    <div style={{fontSize:10,color:T.text3,lineHeight:1.5,fontFamily:T.mono,opacity:e.dim?0.4:1}}>{e.ctx}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -1357,7 +1385,7 @@ function App(){
       <Research/>
       <Skills/>
       <Certifications/>
-      <Currently/>
+      <Now/>
       <Contact/>
     </div>
   );
