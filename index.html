@@ -678,8 +678,37 @@ function EL({color=T.green,children,style={}}){
     </div>
   );
 }
-function ImgPh({label,style={},className=''}){
-  return(<div className={`img-ph${className?' '+className:''}`} style={style}><span>{label}</span></div>);
+function ImgPh({label,style={},className='',slots=1,images=[]}){
+  const hasImgs=images&&images.length>0;
+  const count=hasImgs?images.length:slots;
+  const[idx,setIdx]=React.useState(0);
+  const go=(dir,e)=>{if(e)e.stopPropagation();setIdx(i=>(i+dir+count)%count);};
+  const nav=count>1&&<>
+    <button onClick={e=>go(-1,e)} aria-label="Previous image"
+      style={{position:'absolute',left:8,top:'50%',transform:'translateY(-50%)',background:'rgba(4,4,10,0.85)',border:'1px solid rgba(255,255,255,0.14)',color:'#9090A8',borderRadius:4,width:28,height:28,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',fontSize:13,zIndex:3,lineHeight:1,padding:0}}>&#8592;</button>
+    <button onClick={e=>go(1,e)} aria-label="Next image"
+      style={{position:'absolute',right:8,top:'50%',transform:'translateY(-50%)',background:'rgba(4,4,10,0.85)',border:'1px solid rgba(255,255,255,0.14)',color:'#9090A8',borderRadius:4,width:28,height:28,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',fontSize:13,zIndex:3,lineHeight:1,padding:0}}>&#8594;</button>
+    <div style={{position:'absolute',bottom:10,left:'50%',transform:'translateX(-50%)',display:'flex',gap:4,zIndex:3}}>
+      {Array.from({length:count}).map((_,i)=>(
+        <div key={i} onClick={e=>{e.stopPropagation();setIdx(i);}}
+          style={{width:i===idx?14:5,height:5,borderRadius:3,background:i===idx?'#4ADE80':'rgba(255,255,255,0.25)',cursor:'pointer',transition:'all 0.25s'}}/>
+      ))}
+    </div>
+  </>;
+  if(hasImgs){
+    return(
+      <div style={{position:'relative',overflow:'hidden',borderRadius:8,...style}} className={className}>
+        <img src={images[idx]} alt={label} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+        {nav}
+      </div>
+    );
+  }
+  return(
+    <div className={`img-ph${className?' '+className:''}`} style={style}>
+      <span style={{zIndex:1}}>{label}{count>1?` \u00b7 ${idx+1}/${count}`:''}</span>
+      {nav}
+    </div>
+  );
 }
 function Tag({c=T.blue,children}){
   const bg=c===T.green?'rgba(74,222,128,0.07)':c===T.orange?'rgba(251,146,60,0.08)':c===T.purple?'rgba(167,139,250,0.07)':c===T.pink?'rgba(244,114,182,0.07)':c===T.teal?'rgba(45,212,191,0.07)':'rgba(56,189,248,0.07)';
@@ -710,7 +739,7 @@ function Nav(){
   const[sc,setSc]=React.useState(false);
   const[open,setOpen]=React.useState(false);
   React.useEffect(()=>{const h=()=>setSc(window.scrollY>80);window.addEventListener('scroll',h,{passive:true});return()=>window.removeEventListener('scroll',h)},[]);
-  const ls=[['Origin','#origin'],['Path','#experience'],['Work','#projects'],['Research','#research'],['Capabilities','#skills'],['Contact','#contact']];
+  const ls=[['Origin','#origin'],['Path','#experience'],['Work','#projects'],['Research','#research'],['Capabilities','#skills'],['Contact','#contact'],['Docs','docs.html']];
   return(
     <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:200,padding:'0 52px',background:sc?'rgba(4,4,10,0.9)':'transparent',backdropFilter:sc?'blur(20px)':'none',WebkitBackdropFilter:sc?'blur(20px)':'none',borderBottom:sc?`1px solid ${T.border}`:'1px solid transparent',transition:'all 0.4s cubic-bezier(0.16,1,0.3,1)'}}>
       <div style={{maxWidth:1280,margin:'0 auto',display:'flex',justifyContent:'space-between',alignItems:'center',height:60}}>
@@ -775,7 +804,7 @@ function Hero(){
         </div>
         {/* RIGHT brief panel */}
         <div className="hero-right" style={{flex:'0 0 42%',borderLeft:`1px solid ${T.border}`,background:'rgba(8,8,20,0.55)',backdropFilter:'blur(8px)',display:'flex',flexDirection:'column',padding:'104px 48px 56px'}}>
-          <ImgPh label="Profile photo" style={{width:'100%',aspectRatio:'3/4',maxHeight:370,borderRadius:10}}/>
+          <ImgPh label="Profile photo" images={['Images/my%20pic.png']} style={{width:'100%',aspectRatio:'3/4',maxHeight:370,borderRadius:10}}/>
           <div style={{marginTop:28,display:'flex',flexDirection:'column'}}>
             {[
               {l:'Current Role',v:'Sports Analytics & Data Science Intern',s:'UToledo Athletics · Toledo, OH',c:T.teal},
@@ -809,7 +838,7 @@ function Origin(){
             </h2>
             <p style={{fontSize:16,lineHeight:1.8,color:T.text2,marginTop:24}}>I'm a Computer Engineering student at the University of Toledo. My work has moved across autonomous drone systems, enterprise AI, sports analytics, and data engineering — not because I planned a portfolio, but because I follow whatever problem is genuinely hard.</p>
             <p style={{fontSize:16,lineHeight:1.8,color:T.text2,marginTop:16}}>The common thread: does it hold up when someone is counting on it?</p>
-            <ImgPh label="Lab / project environment" style={{width:'100%',aspectRatio:'16/9',marginTop:28}}/>
+            <ImgPh label="Lab / project environment" slots={3} style={{width:'100%',aspectRatio:'16/9',marginTop:28}}/>
           </div>
           <div>
             <div style={{fontFamily:T.mono,fontSize:10,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:20}}>Three things I believe</div>
@@ -843,17 +872,15 @@ function Origin(){
   );
 }
 
-/* ── EXPERIENCE — horizontal film-strip timeline ─────────────────────────── */
+/* ── EXPERIENCE — vertical timeline ─────────────────────────────────────── */
 function Experience(){
-  const trackRef = React.useRef(null);
-  const [activeIdx, setActiveIdx] = React.useState(0);
   const jobs=[
-    {r:'Microsoft Solution Developer',co:'First Solar',p:'Jan 2026 – May 2026',loc:'Perrysburg, OH',t:'Full-time',c:T.green,
-     d:'Design and ship agentic AI solutions in Microsoft Copilot Studio, translating business requirements into autonomous multi-step workflows. Lead intern team on code reviews, delivery milestones, and enterprise governance.',
-     s:['Copilot Studio','Azure AI','Power Automate','M365','Python']},
     {r:'Sports Analytics & Data Science Intern',co:'UToledo Athletics',p:'Oct 2025 – Present',loc:'Toledo, OH',t:'Internship',active:true,c:T.teal,
      d:'ML-powered statistical models for roster efficiency and student-athlete benefit allocation. Interactive DOMO dashboards translating performance metrics into coaching insights.',
      s:['Python','scikit-learn','DOMO','Statistical Modeling']},
+    {r:'Microsoft Solution Developer',co:'First Solar',p:'Jan 2026 – May 2026',loc:'Perrysburg, OH',t:'Full-time',c:T.green,
+     d:'Design and ship agentic AI solutions in Microsoft Copilot Studio, translating business requirements into autonomous multi-step workflows. Lead intern team on code reviews, delivery milestones, and enterprise governance.',
+     s:['Copilot Studio','Azure AI','Power Automate','M365','Python']},
     {r:'Undergraduate Researcher',co:'LION Lab · CPHS Lab',p:'May – Dec 2025',loc:'University of Toledo',t:'Research Co-Op',c:T.blue,
      d:'72.8% zero-shot UAV deployment via MAML across 1,000+ simulated environments. 97.3% HITL success at sub-100ms. Built Deep Flyer drone training platform. Authored ACM Computing Surveys paper on AI failure taxonomy.',
      s:['PyTorch','ROS 2','MAML','YOLO11','AirSim','NVIDIA Jetson']},
@@ -864,80 +891,50 @@ function Experience(){
      d:'Centralized PostgreSQL security database consolidating Active Directory, Cisco AMP, and Microsoft Defender. 15% faster incident response, 95% data integrity, zero data loss in quarterly DR tests.',
      s:['PostgreSQL','pgAdmin','Active Directory','Cisco AMP']},
   ];
-
-  function scrollToCard(idx){
-    if(!trackRef.current) return;
-    const card = trackRef.current.children[idx];
-    if(card) card.scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'});
-    setActiveIdx(idx);
-  }
-
-  React.useEffect(()=>{
-    const track = trackRef.current;
-    if(!track) return;
-    const obs = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          const idx = Array.from(track.children).indexOf(e.target);
-          if(idx>=0) setActiveIdx(idx);
-        }
-      });
-    },{root:track, threshold:0.55});
-    Array.from(track.children).forEach(c=>obs.observe(c));
-    return()=>obs.disconnect();
-  },[]);
-
   return(
     <section id="experience" className="section-wash wash-nebula" style={{padding:'100px 52px'}}>
       <div className="section-inner" style={{maxWidth:1280,margin:'0 auto'}}>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:48,flexWrap:'wrap',gap:16}}>
-          <EL color={T.purple}>The Path</EL>
-          <div style={{display:'flex',gap:6,alignItems:'center'}}>
-            {jobs.map((_,i)=>(
-              <button key={i} onClick={()=>scrollToCard(i)}
-                style={{
-                  width:i===activeIdx?20:6, height:6, borderRadius:3, border:'none',
-                  cursor:'pointer', padding:0,
-                  background:i===activeIdx?jobs[i].c:'rgba(255,255,255,0.12)',
-                  transition:'all 0.35s cubic-bezier(0.16,1,0.3,1)',
-                }}
-                aria-label={`Go to ${jobs[i].co}`}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div ref={trackRef} className="timeline-track reveal">
-          {jobs.map((j,i)=>(
-            <div key={i}
-              className={`timeline-card${i===activeIdx?' active-card':''}`}
-              style={{'--card-color':j.c}}>
-              <div style={{display:'flex',alignItems:'flex-start',gap:12,marginBottom:18,paddingTop:14}}>
-                <div className="timeline-dot"
-                  style={{background:j.active?j.c:'transparent','--card-color':j.c}}></div>
-                <div>
-                  <div style={{fontFamily:T.mono,fontSize:10,color:j.c,letterSpacing:'0.04em',marginBottom:2}}>{j.p}</div>
-                  <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,textTransform:'uppercase',letterSpacing:'0.08em'}}>{j.t} · {j.loc}</div>
+        <EL color={T.purple} style={{marginBottom:52}}>The Path</EL>
+        <div className="reveal" style={{position:'relative',paddingLeft:36}}>
+          {/* Spine */}
+          <div style={{position:'absolute',left:6,top:10,bottom:10,width:1,background:'linear-gradient(to bottom,rgba(167,139,250,0.4),rgba(255,255,255,0.06))'}}></div>
+          <div style={{display:'flex',flexDirection:'column',gap:28}}>
+            {jobs.map((j,i)=>(
+              <div key={i} style={{position:'relative'}}>
+                {/* Node */}
+                <div style={{position:'absolute',left:-34,top:10,width:12,height:12,borderRadius:'50%',
+                  border:`2px solid ${j.c}`,background:j.active?j.c:T.bg,
+                  boxShadow:j.active?`0 0 0 4px ${j.c}22,0 0 14px ${j.c}66`:'none',
+                  zIndex:1}} className={j.active?'pulse-dot':''}></div>
+                {/* Card */}
+                <div className="tilt" style={{background:'rgba(255,255,255,0.025)',border:`1px solid ${T.border}`,borderRadius:10,padding:'22px 26px',borderLeft:`3px solid ${j.c}`,transition:'all 0.25s cubic-bezier(0.16,1,0.3,1)'}}
+                  onMouseMove={onTilt}
+                  onMouseLeave={e=>{offTilt(e);e.currentTarget.style.borderColor=T.border;}}
+                  onMouseEnter={e=>e.currentTarget.style.borderColor=`${j.c}33`}>
+                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',gap:16,flexWrap:'wrap',marginBottom:12}}>
+                    <div>
+                      {j.active&&(
+                        <div style={{display:'inline-flex',alignItems:'center',gap:5,marginBottom:8,padding:'2px 9px',background:`${j.c}15`,borderRadius:20,border:`1px solid ${j.c}33`}}>
+                          <div style={{width:5,height:5,borderRadius:'50%',background:j.c}} className="pulse-dot"></div>
+                          <span style={{fontFamily:T.mono,fontSize:9,color:j.c,letterSpacing:'0.1em',textTransform:'uppercase'}}>Present</span>
+                        </div>
+                      )}
+                      <h3 style={{fontSize:16,fontWeight:600,color:'#fff',letterSpacing:'-0.01em',lineHeight:1.25,margin:0}}>{j.r}</h3>
+                      <div style={{fontFamily:T.mono,fontSize:11,color:j.c,marginTop:5,opacity:0.85}}>{j.co}</div>
+                    </div>
+                    <div style={{textAlign:'right',flexShrink:0}}>
+                      <div style={{fontFamily:T.mono,fontSize:10,color:T.text2}}>{j.p}</div>
+                      <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,marginTop:2,textTransform:'uppercase',letterSpacing:'0.07em'}}>{j.t} · {j.loc}</div>
+                    </div>
+                  </div>
+                  <p style={{fontSize:13,lineHeight:1.8,color:T.text2,maxWidth:760}}>{j.d}</p>
+                  <div style={{display:'flex',flexWrap:'wrap',gap:5,marginTop:14}}>
+                    {j.s.map(s=><Tag key={s} c={j.c}>{s}</Tag>)}
+                  </div>
                 </div>
               </div>
-              <h3 style={{fontSize:17,fontWeight:600,color:'#fff',letterSpacing:'-0.01em',lineHeight:1.25,marginBottom:5}}>{j.r}</h3>
-              <div style={{fontFamily:T.mono,fontSize:10,color:j.c,marginBottom:14,opacity:0.8}}>{j.co}</div>
-              <p style={{fontSize:13,lineHeight:1.75,color:T.text2,maxWidth:380,marginBottom:16}}>{j.d}</p>
-              <div style={{display:'flex',flexWrap:'wrap',gap:5}}>
-                {j.s.map(s=><Tag key={s} c={j.c}>{s}</Tag>)}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div style={{display:'flex',gap:8,alignItems:'center',marginTop:24}}>
-          <button className="timeline-arrow" onClick={()=>scrollToCard(Math.max(0,activeIdx-1))}
-            disabled={activeIdx===0} aria-label="Previous role">←</button>
-          <button className="timeline-arrow" onClick={()=>scrollToCard(Math.min(jobs.length-1,activeIdx+1))}
-            disabled={activeIdx===jobs.length-1} aria-label="Next role">→</button>
-          <span style={{fontFamily:T.mono,fontSize:10,color:T.text3,marginLeft:10}}>
-            {String(activeIdx+1).padStart(2,'0')} / {String(jobs.length).padStart(2,'0')}
-          </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -959,42 +956,42 @@ function Projects(){
     }
   }
   const projects=[
-    {idx:'01',dom:'Autonomy',c:T.green,n:'Graph-Based RL for UAV Autonomy',tag:'USRCAP Fellowship · $3,000',fr:'Autonomy that holds up when the map runs out.',img:'UAV flight / AirSim simulation',
+    {idx:'01',dom:'Autonomy',c:T.green,n:'Graph-Based RL for UAV Autonomy',tag:'USRCAP Fellowship · $3,000',fr:'Autonomy that holds up when the map runs out.',img:'UAV flight / AirSim simulation',imgs:['Images/graph_RL.png'],
       m:[['72.8%','Zero-shot deploy'],['97.3%','HITL success'],['<100ms','Intervention']],
       what:'Graph Attention Networks encoded the environment relationally — generalizing across topologies rather than memorizing textures. MAML enabled rapid adaptation to unseen environments. Human-in-the-loop safety gates at sub-100ms ensured any degraded state could be interrupted without vehicle loss.',
       learn:"Zero-shot generalization required structured representations AND a recovery system the team would actually trust. The 97.3% HITL rate proved the boundary between autonomous and human control was designed deliberately.",
       s:['MAML','GAT','PPO','SAC','AirSim','SHAP/LIME']},
-    {idx:'02',dom:'Research Tools',c:T.blue,n:'Deep Flyer',tag:'AWS DeepRacer-Inspired UAV Platform',fr:'A training platform so the next experiment starts faster.',img:'Drone + YOLO11 detection overlay',
+    {idx:'02',dom:'Research Tools',c:T.blue,n:'Deep Flyer',tag:'AWS DeepRacer-Inspired UAV Platform',fr:'A training platform so the next experiment starts faster.',img:'Drone + YOLO11 detection overlay',imgs:[],
       m:[['<5ms','Control latency'],['P3O','Policy'],['Zero-shot','Sim-to-real']],
       what:'Direct PX4-ROS2 bridge replaced MAVROS, cutting latency below 5ms — the hard deadline for reactive UAV control. YOLO11 with ZED Mini and OAK-D Pro gave spatial understanding from real-time stereo vision. Reward functions made student-modifiable without touching core code.',
       learn:'The hardest constraint was latency, not accuracy. A well-trained policy at 20ms is a crashed drone. Documentation is infrastructure — the interface was the product.',
       s:['PyTorch','ROS 2','YOLO11','Gazebo','PX4','ZED Mini','NVIDIA Jetson']},
-    {idx:'03',dom:'ACM CSUR',c:T.orange,n:'4-Pillars Taxonomy',tag:'ACM Computing Surveys · 2025',fr:'A framework for how deployed intelligence breaks, and why it repeats.',img:'Taxonomy diagram / paper figure',
+    {idx:'03',dom:'ACM CSUR',c:T.orange,n:'4-Pillars Taxonomy',tag:'ACM Computing Surveys · 2025',fr:'A framework for how deployed intelligence breaks, and why it repeats.',img:'Taxonomy diagram / paper figure',imgs:['Images/4-Pillars.png'],
       m:[['37','AI failures'],['74','Sources'],['ACM','Published']],
       what:'37 documented AI failures organized by mechanism: data-environment mismatch, oversight-gap amplification, distributional brittleness, multi-agent instability. The Contested-Environment Amplifier Model formalized how stressors compound quiet failures into catastrophic ones.',
       learn:'Almost all 37 failures had detectable precursors that appeared normal under standard evaluation. Evaluation environments need to be hostile, not merely representative.',
       s:['Taxonomy Design','Literature Review','AI Safety']},
-    {idx:'04',dom:'MLOps',c:T.purple,n:'Homeowner Loss Prediction',tag:'Grange Insurance × UToledo',fr:'Risk modeling as a continuous operating system, not a batch job.',img:'MLflow dashboard / pipeline diagram',
+    {idx:'04',dom:'MLOps',c:T.purple,n:'Homeowner Loss Prediction',tag:'Grange Insurance × UToledo',fr:'Risk modeling as a continuous operating system, not a batch job.',img:'MLflow dashboard / pipeline diagram',imgs:['Images/SeniorDesign_Pipeline.jpeg'],
       m:[['R² 0.976','Accuracy'],['75%','Less manual'],['25%','Claim lift']],
       what:'XGBoost with Bayesian optimization. Airflow + MLflow orchestration. AI drift agents triggered retraining. HITL gates required sign-off only on low-confidence predictions — reducing review volume 75% while maintaining oversight where it mattered.',
       learn:"The 75% reduction didn't happen because we removed humans. It happened because we gave humans a better loop to be in.",
       s:['XGBoost','Airflow','MLflow','AWS S3','Bayesian Opt.','CI/CD']},
-    {idx:'05',dom:'Infrastructure',c:T.teal,n:'Security Discovery Database',tag:'Park Place Technologies',fr:'Security operations gained one dependable source of truth.',img:'PostgreSQL schema / security UI',
+    {idx:'05',dom:'Infrastructure',c:T.teal,n:'Security Discovery Database',tag:'Park Place Technologies',fr:'Security operations gained one dependable source of truth.',img:'PostgreSQL schema / security UI',imgs:[],
       m:[['15%','Faster response'],['95%','Data integrity'],['Zero','Data loss']],
       what:'Disparate security feeds from Active Directory, Cisco AMP, and Microsoft Defender consolidated into a single PostgreSQL architecture with principled validation and quarterly-tested disaster recovery.',
       learn:"Most data quality problems in security ops aren't adversarial — they're inconsistent tooling assumptions meeting at a data boundary.",
       s:['PostgreSQL','Active Directory','Cisco AMP','Disaster Recovery']},
-    {idx:'06',dom:'Hackathon',c:T.green,n:'Deep Truth',tag:'RocketHacks 2025 · Best Use of MongoDB Atlas',fr:'News credibility assessment, built in 24 hours.',img:'DeepTruth UI screenshot',
+    {idx:'06',dom:'Hackathon',c:T.green,n:'Deep Truth',tag:'RocketHacks 2025 · Best Use of MongoDB Atlas',fr:'News credibility assessment, built in 24 hours.',img:'DeepTruth UI screenshot',imgs:['Images/DeepTruth_Group.png'],
       m:[['#1','MongoDB Atlas'],['24h','Build sprint']],
       what:'Users submit a news article and get an AI-powered credibility verdict with plain-language explanation and five sourced references. Explainability was a first-class constraint, not a retrofit.',
       learn:'The 24-hour clock produced the best decision: build explainability from the start.',
       s:['MongoDB Atlas','Python','ML','NLP']},
-    {idx:'07',dom:'Embedded',c:T.orange,n:'ChemE Car',tag:'AIChE · Most Innovative Design (Worldwide)',fr:'Precision control. No second chances.',img:'ChemE Car hardware / sensors',
+    {idx:'07',dom:'Embedded',c:T.orange,n:'ChemE Car',tag:'AIChE · Most Innovative Design (Worldwide)',fr:'Precision control. No second chances.',img:'ChemE Car hardware / sensors',imgs:['Images/AIChE%20ChemECar_International.jpg','Images/AIChE.jpg'],
       m:[['Worldwide','Most Innovative'],['National','Qualifier']],
       what:'Arduino-based automation integrated pressure sensors, load cells, wheel encoders, IMU, and temperature data into stopping algorithms reliable under live competition conditions.',
       learn:'Competition constraints produce better engineering than open-ended briefs. Design for worst case.',
       s:['Arduino','C/C++','MATLAB','Simulink','Sensor Fusion']},
-    {idx:'08',dom:'Civic Tech',c:T.pink,n:'Batting Cleanup',tag:'Toledo Codes · Active Deployment',fr:'QR codes and data science for city maintenance.',img:'QR deployment / city map',
+    {idx:'08',dom:'Civic Tech',c:T.pink,n:'Batting Cleanup',tag:'Toledo Codes · Active Deployment',fr:'QR codes and data science for city maintenance.',img:'QR deployment / city map',imgs:['Images/Batting_Cleanup.jpg'],
       m:[['Active','Live'],['Toledo','Partnership']],
       what:'QR codes at community locations let residents report issues in seconds. The backend surfaces clusters to prioritize municipal response patterns.',
       learn:'One extra step kills adoption. Infrastructure that generates no data is not data infrastructure.',
@@ -1027,7 +1024,7 @@ function Projects(){
                   <div style={{padding:'0 24px 32px',borderTop:`1px solid ${T.border}`}}>
                     <p style={{fontSize:17,fontWeight:500,color:T.text,marginTop:20,lineHeight:1.45}}>{p.fr}</p>
                     <div className="two-col" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:28,marginTop:24}}>
-                      <ImgPh label={p.img} style={{width:'100%',aspectRatio:'16/9'}}/>
+                      <ImgPh label={p.img} images={p.imgs||[]} slots={3} style={{width:'100%',aspectRatio:'16/9'}}/>
                       <div>
                         <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:14}}>Key Metrics</div>
                         <div style={{display:'flex',flexDirection:'column',gap:16}}>
@@ -1066,7 +1063,7 @@ function Research(){
       <div className="section-inner" style={{maxWidth:1280,margin:'0 auto'}}>
         <EL color={T.orange} style={{marginBottom:48}}>Research & Publications</EL>
         <div className="two-col reveal" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:48,marginBottom:48}}>
-          <ImgPh label="4-Pillars Taxonomy diagram" style={{width:'100%',aspectRatio:'4/3'}}/>
+          <ImgPh label="4-Pillars Taxonomy diagram" images={['Images/4-Pillars.png']} style={{width:'100%',aspectRatio:'4/3'}}/>
           <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
             <Tag c={T.orange}>ACM Computing Surveys · 2025</Tag>
             <h3 style={{fontSize:28,fontWeight:600,color:'#fff',letterSpacing:'-0.02em',lineHeight:1.2,marginTop:14}}>Rogue Behavior in AI</h3>
@@ -1082,7 +1079,7 @@ function Research(){
         <div className="reveal" style={{background:'rgba(255,255,255,0.02)',border:`1px solid ${T.border}`,borderRadius:10,overflow:'hidden'}}>
           <div style={{fontFamily:T.mono,fontSize:9,color:T.orange,letterSpacing:'0.12em',textTransform:'uppercase',padding:'18px 24px 0',opacity:0.8}}>Featured In</div>
           <div className="two-col featured-grid" style={{display:'grid',gridTemplateColumns:'280px 1fr',gap:0}}>
-            <ImgPh label="Article feature photo" style={{width:'100%',height:'100%',minHeight:200,borderRadius:0}} className="featured-img"/>
+            <ImgPh label="Article feature photo" images={['Images/athletics_group_pics.png']} style={{width:'100%',height:'100%',minHeight:200,borderRadius:0}} className="featured-img"/>
             <div style={{padding:'20px 28px',display:'flex',flexDirection:'column',justifyContent:'center'}}>
               <h4 style={{fontSize:17,fontWeight:600,color:'#fff',lineHeight:1.35}}>Toledo Athletics Data Internship Program Aids The Rockets, Spurs Student Careers</h4>
               <div style={{fontFamily:T.mono,fontSize:10,color:T.teal,marginTop:8,letterSpacing:'0.04em'}}>UToledo Rockets · April 20, 2026</div>
@@ -1104,6 +1101,8 @@ function Research(){
 
 /* ── SKILLS ─────────────────────────────────────────────────────────────── */
 function Skills(){
+  const[openAward,setOpenAward]=React.useState(null);
+  const[openAffil,setOpenAffil]=React.useState(null);
   const cats=[
     {n:'Languages',c:T.green, s:['Python','JavaScript','C++','Java','SQL','HTML/CSS','Embedded C','MATLAB','Simulink','Bash']},
     {n:'ML & AI',  c:T.blue,  s:['PyTorch','TensorFlow','scikit-learn','RL','GNNs','Meta-Learning','NLP','Computer Vision']},
@@ -1113,10 +1112,16 @@ function Skills(){
     {n:'Microsoft', c:T.pink,  s:['Azure AI','Copilot Studio','Power Automate','Power BI','M365','SharePoint']},
   ];
   const awards=[
-    {t:'USRCAP Research Fellowship',d:'$3,000 · Graph-Based RL UAV Research',y:'2025',c:T.green},
-    {t:'Best Use of MongoDB Atlas',  d:'RocketHacks 2025 · Deep Truth',      y:'2025',c:T.orange},
-    {t:'Most Innovative Car Design', d:'AIChE Chem-E Car · Worldwide',        y:'2024',c:T.blue},
-    {t:'Poster & Presentation',      d:'AIChE · Worldwide Recognition',       y:'2024',c:T.blue},
+    {t:'USRCAP Research Fellowship',d:'$3,000 · Graph-Based RL UAV Research',y:'2025',c:T.green,imgs:['Images/graph_RL.png']},
+    {t:'Best Use of MongoDB Atlas',  d:'RocketHacks 2025 · Deep Truth',      y:'2025',c:T.orange,imgs:['Images/DeepTruth_Group.png']},
+    {t:'Most Innovative Car Design', d:'AIChE Chem-E Car · Worldwide',        y:'2024',c:T.blue,imgs:['Images/AIChE%20ChemECar_International.jpg','Images/AIChE.jpg']},
+    {t:'Poster & Presentation',      d:'AIChE · Worldwide Recognition',       y:'2024',c:T.blue,imgs:['Images/AIChE.jpg']},
+  ];
+  const affiliations=[
+    {n:'IEEE & AESS',role:'Member',c:T.blue,short:'Institute of Electrical & Electronics Engineers / Aerospace & Electronic Systems Society',desc:'Active member of IEEE and the Aerospace and Electronic Systems Society (AESS). Engaged in technical communities around autonomous systems, AI safety, and engineering standards. Participates in local chapter events and conferences.',imgs:['Images/IEEE.jpg','Images/aess.jpg']},
+    {n:'AIChE / Chem-E Car',role:'Team Member & Competitor',c:T.orange,short:'American Institute of Chemical Engineers — University of Toledo Chapter',desc:'Competed on the University of Toledo AIChE Chem-E Car team. Contributed to Arduino-based automation integrating pressure sensors, load cells, and stopping algorithms. Won Most Innovative Car Design worldwide and qualified nationally at the 2024 AIChE Annual Student Conference.',imgs:['Images/AIChE.jpg','Images/AIChE%20ChemECar_International.jpg']},
+    {n:'Pi Sigma Epsilon',role:'Member',c:T.purple,short:'National Co-Educational Professional Fraternity — Sales, Marketing & Management',desc:'Member of Pi Sigma Epsilon, the only national professional co-educational fraternity in sales, marketing, and management. Builds leadership, communication, and professional development skills alongside technical engineering pursuits.',imgs:['Images/PSE_1.jpg','Images/PSE_2.jpg','Images/PSE_3.jpg']},
+    {n:'UToledo Athletics',role:'Data Science Intern',c:T.teal,short:'University of Toledo Department of Athletics',desc:'Embedded within UT Athletics as a Sports Analytics & Data Science Intern. Builds ML models for roster efficiency and student-athlete benefit allocation. Featured in official UToledo Rockets media for bridging technical modeling with direct communication to athletics leadership.',imgs:['Images/athletics_group_pics.png']},
   ];
   return(
     <section id="skills" className="section-wash wash-warm" style={{padding:'100px 52px'}}>
@@ -1138,25 +1143,71 @@ function Skills(){
             </div>
           ))}
         </div>
-        <div style={{marginTop:48}}>
+
+        {/* Awards */}
+        <div style={{marginTop:52}}>
           <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:20}}>Awards & Recognition</div>
           <div className="two-col reveal" style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10}}>
-            {awards.map((a,i)=>(
-              <div key={i} className="tilt" style={{padding:'18px 22px',background:'rgba(255,255,255,0.02)',border:`1px solid ${T.border}`,borderRadius:8,display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}
-                onMouseMove={onTilt} onMouseLeave={offTilt}>
-                <div>
-                  <div style={{fontSize:14,fontWeight:500,color:'#fff'}}>{a.t}</div>
-                  <div style={{fontSize:12,color:T.text2,marginTop:3}}>{a.d}</div>
+            {awards.map((a,i)=>{
+              const isOpen=openAward===i;
+              return(
+                <div key={i} className="tilt"
+                  style={{background:'rgba(255,255,255,0.02)',border:`1px solid ${isOpen?a.c+'44':T.border}`,borderRadius:8,cursor:'pointer',transition:'all 0.3s cubic-bezier(0.16,1,0.3,1)',overflow:'hidden'}}
+                  onMouseMove={isOpen?undefined:onTilt} onMouseLeave={isOpen?undefined:offTilt}
+                  onClick={()=>setOpenAward(isOpen?null:i)}>
+                  <div style={{padding:'18px 22px',display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
+                    <div>
+                      <div style={{fontSize:14,fontWeight:500,color:'#fff'}}>{a.t}</div>
+                      <div style={{fontSize:12,color:T.text2,marginTop:3}}>{a.d}</div>
+                    </div>
+                    <div style={{display:'flex',alignItems:'center',gap:8,flexShrink:0,marginLeft:10}}>
+                      <span style={{fontFamily:T.mono,fontSize:11,color:a.c}}>{a.y}</span>
+                      <span style={{fontSize:14,color:T.text3,transition:'transform 0.3s',transform:isOpen?'rotate(45deg)':'none'}}>+</span>
+                    </div>
+                  </div>
+                  {isOpen&&(
+                    <div style={{padding:'0 18px 18px',borderTop:`1px solid ${T.border}`}}>
+                      <ImgPh label={`${a.t} · photos`} images={a.imgs||[]} slots={3} style={{width:'100%',aspectRatio:'16/9',marginTop:14}}/>
+                    </div>
+                  )}
                 </div>
-                <span style={{fontFamily:T.mono,fontSize:11,color:a.c,flexShrink:0,marginLeft:10}}>{a.y}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
-        <div style={{marginTop:28,display:'flex',gap:14,flexWrap:'wrap'}}>
-          {['IEEE','AESS','AIChE','Pi Sigma Epsilon'].map(a=>(
-            <span key={a} style={{fontFamily:T.mono,fontSize:10,color:T.text3,letterSpacing:'0.06em',padding:'5px 12px',border:`1px solid ${T.border}`,borderRadius:4}}>{a}</span>
-          ))}
+
+        {/* Affiliations */}
+        <div style={{marginTop:52}}>
+          <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:20}}>Professional Affiliations</div>
+          <div className="two-col reveal" style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10}}>
+            {affiliations.map((a,i)=>{
+              const isOpen=openAffil===i;
+              return(
+                <div key={i} className="tilt"
+                  style={{background:'rgba(255,255,255,0.02)',border:`1px solid ${isOpen?a.c+'44':T.border}`,borderRadius:10,cursor:'pointer',transition:'all 0.3s cubic-bezier(0.16,1,0.3,1)',overflow:'hidden'}}
+                  onMouseMove={isOpen?undefined:onTilt} onMouseLeave={isOpen?undefined:offTilt}
+                  onClick={()=>setOpenAffil(isOpen?null:i)}>
+                  <div style={{padding:'20px 22px',display:'flex',alignItems:'flex-start',gap:12}}>
+                    <div style={{width:44,height:44,borderRadius:8,background:`${a.c}15`,border:`1px solid ${a.c}33`,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+                      <div style={{width:10,height:10,borderRadius:2,background:a.c}}></div>
+                    </div>
+                    <div style={{flex:1,minWidth:0}}>
+                      <div style={{fontSize:14,fontWeight:600,color:'#fff',lineHeight:1.3}}>{a.n}</div>
+                      <div style={{fontFamily:T.mono,fontSize:10,color:a.c,marginTop:3,opacity:0.85}}>{a.role}</div>
+                      <div style={{fontSize:12,color:T.text3,marginTop:3,lineHeight:1.4}}>{a.short}</div>
+                    </div>
+                    <span style={{fontSize:16,color:T.text3,transition:'transform 0.3s',transform:isOpen?'rotate(45deg)':'none',flexShrink:0,marginTop:2}}>+</span>
+                  </div>
+                  {isOpen&&(
+                    <div style={{padding:'0 22px 22px',borderTop:`1px solid ${T.border}`}}>
+                      <ImgPh label={`${a.n} · photos`} images={a.imgs||[]} slots={3} style={{width:'100%',aspectRatio:'16/9',marginTop:14}}/>
+                      <p style={{fontSize:13,lineHeight:1.75,color:T.text2,marginTop:14}}>{a.desc}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

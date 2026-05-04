@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmad Firas — Documents</title>
+<meta name="description" content="Preview and download Ahmad Firas's Resume, Curriculum Vitae, and References.">
+<meta name="theme-color" content="#04040A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  background:#04040A;color:#D0D0E0;
+  font-family:'Space Grotesk',sans-serif;
+  line-height:1.7;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  cursor:none;
+  padding-top:env(safe-area-inset-top);
+}
+::selection{background:rgba(74,222,128,0.18);color:#fff}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#04040A}
+::-webkit-scrollbar-thumb{background:#1a1a2e;border-radius:2px}
+
+#space-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+#app-root{position:relative;z-index:1}
+
+/* Cursor */
+#cursor-dot{width:8px;height:8px;background:#4ADE80;border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:background 0.2s}
+#cursor-ring{width:32px;height:32px;border:1px solid rgba(74,222,128,0.3);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s}
+body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:50px;height:50px;border-color:rgba(74,222,128,0.5)}
+@media(max-width:960px){#cursor-dot,#cursor-ring{display:none}body{cursor:auto}}
+
+/* Progress bar */
+#scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#4ADE80,#38BDF8);z-index:9997;transform-origin:left;transform:scaleX(0);transition:transform 0.06s linear;box-shadow:0 0 8px #4ADE80;pointer-events:none;}
+
+/* Image placeholder */
+.img-ph{background:repeating-linear-gradient(-45deg,#0a0a18 0px,#0a0a18 10px,#080810 10px,#080810 20px);border-radius:8px;position:relative;overflow:hidden}
+.img-ph span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:#222238}
+
+a{text-decoration:none;color:inherit}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.75s cubic-bezier(0.16,1,0.3,1),transform 0.75s cubic-bezier(0.16,1,0.3,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none!important;transition:none!important}}
+
+/* Pulse */
+@keyframes pulse-ring{
+  0%{box-shadow:0 0 0 0 rgba(74,222,128,0.45)}
+  70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}
+  100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}
+}
+.pulse-dot{animation:pulse-ring 2.4s ease-out infinite}
+
+/* Scan label */
+.scan-label{position:relative;overflow:hidden}
+.scan-label::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(74,222,128,0.07),transparent);transform:translateX(-100%);animation:scan-sweep 4s ease-in-out infinite;pointer-events:none;}
+@keyframes scan-sweep{0%{transform:translateX(-100%)} 50%{transform:translateX(200%)} 100%{transform:translateX(200%)}}
+
+/* Nav hamburger */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none;z-index:201}
+.nav-hamburger span{display:block;width:22px;height:1.5px;background:#9090A8;border-radius:1px;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1),opacity 0.3s}
+@media(max-width:768px){
+  .nav-hamburger{display:flex!important}
+  .nav-links{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(4,4,10,0.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);flex-direction:column!important;align-items:flex-start!important;padding:12px 28px 28px;gap:0!important;border-bottom:1px solid rgba(255,255,255,0.07);z-index:199}
+  .nav-links.open{display:flex!important}
+  .nav-links a{padding:14px 0!important;width:100%;border-bottom:1px solid rgba(255,255,255,0.05)!important;font-size:13px!important;letter-spacing:0.06em!important}
+}
+
+/* Document preview */
+.doc-card{
+  background:rgba(255,255,255,0.025);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:12px;overflow:hidden;
+  transition:all 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.doc-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:10px 20px;border-radius:6px;cursor:pointer;
+  font-family:'Space Mono',monospace;font-size:10px;
+  font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+  transition:all 0.2s;border:none;
+}
+@media(max-width:600px){
+  .doc-grid{grid-template-columns:1fr!important}
+  .section-pad{padding-left:20px!important;padding-right:20px!important}
+}
+</style>
+</head>
+<body>
+<div id="scroll-bar"></div>
+<canvas id="space-canvas"></canvas>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<div id="app-root"><div id="root"></div></div>
+
+<script>
+/* Deep Space Background */
+(function() {
+  if (!window.THREE) return;
+  const THREE = window.THREE;
+  const canvas = document.getElementById('space-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x04040A, 1);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 2000);
+  camera.position.z = 400;
+  const isMobile = window.innerWidth < 768;
+  const dimVert = `attribute float phase;attribute float baseSize;uniform float uTime;varying float vAlpha;void main(){float pulse=0.90+0.10*sin(uTime*0.7+phase);vAlpha=pulse;vec4 mv=modelViewMatrix*vec4(position,1.0);gl_PointSize=baseSize*(300.0/-mv.z);gl_Position=projectionMatrix*mv;}`;
+  const dimFrag = `varying float vAlpha;uniform vec3 uColor;void main(){float d=length(gl_PointCoord-0.5)*2.0;float core=1.0-smoothstep(0.0,0.55,d);gl_FragColor=vec4(uColor,core*vAlpha);}`;
+  const brightVert = `attribute float phase;attribute float baseSize;uniform float uTime;varying float vAlpha;void main(){float pulse=0.82+0.18*sin(uTime*1.1+phase);vAlpha=pulse;vec4 mv=modelViewMatrix*vec4(position,1.0);gl_PointSize=baseSize*(300.0/-mv.z)*pulse;gl_Position=projectionMatrix*mv;}`;
+  const brightFrag = `varying float vAlpha;uniform vec3 uColor;void main(){float d=length(gl_PointCoord-0.5)*2.0;float core=pow(1.0-smoothstep(0.0,0.22,d),1.4);float halo=pow(1.0-smoothstep(0.0,1.0,d),2.8)*0.55;gl_FragColor=vec4(uColor,(core+halo)*vAlpha);}`;
+  function makeStars(count,spread,baseSize,color,zRange,vert,frag,spreadY){
+    const geo=new THREE.BufferGeometry();const pos=new Float32Array(count*3);const phase=new Float32Array(count);const sizes=new Float32Array(count);const sy=spreadY!==undefined?spreadY:spread*0.65;
+    for(let i=0;i<count;i++){pos[i*3]=(Math.random()-0.5)*spread;pos[i*3+1]=(Math.random()-0.5)*sy;pos[i*3+2]=-Math.random()*zRange;phase[i]=Math.random()*Math.PI*2;sizes[i]=baseSize*(0.45+Math.random()*0.55);}
+    geo.setAttribute('position',new THREE.BufferAttribute(pos,3));geo.setAttribute('phase',new THREE.BufferAttribute(phase,1));geo.setAttribute('baseSize',new THREE.BufferAttribute(sizes,1));
+    const mat=new THREE.ShaderMaterial({vertexShader:vert,fragmentShader:frag,uniforms:{uTime:{value:0},uColor:{value:new THREE.Color(color)}},transparent:true,depthWrite:false,blending:THREE.AdditiveBlending});
+    return new THREE.Points(geo,mat);
+  }
+  const D=dimVert,dF=dimFrag,B=brightVert,bF=brightFrag;
+  const starSystems=[
+    makeStars(isMobile?1200:5000,2600,0.9,0xffffff,2000,D,dF),
+    makeStars(isMobile?400:2000,2400,1.0,0xd8e4ff,1800,D,dF),
+    makeStars(isMobile?200:900,1800,2.0,0xffffff,1400,B,bF),
+    makeStars(isMobile?80:400,1600,2.4,0xddeeff,1200,B,bF),
+    makeStars(isMobile?30:120,900,5.0,0xffffff,600,B,bF),
+    makeStars(isMobile?10:45,650,4.2,0x4ADE80,400,B,bF),
+    makeStars(isMobile?10:40,600,4.0,0x38BDF8,380,B,bF),
+  ];
+  starSystems.forEach(s=>scene.add(s));
+  let targetZ=400,currentZ=400,mx=0,my=0,frame=0,t=0;
+  window.addEventListener('scroll',()=>{const p=window.scrollY/(document.body.scrollHeight-window.innerHeight||1);targetZ=400-p*800;const bar=document.getElementById('scroll-bar');if(bar)bar.style.transform=`scaleX(${p})`;},{passive:true});
+  if(!isMobile)window.addEventListener('mousemove',e=>{mx=(e.clientX/window.innerWidth-0.5)*0.4;my=(e.clientY/window.innerHeight-0.5)*0.25;});
+  window.addEventListener('resize',()=>{renderer.setSize(window.innerWidth,window.innerHeight);camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();});
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  (function animate(){requestAnimationFrame(animate);t+=0.009;frame++;currentZ+=(targetZ-currentZ)*0.04;camera.position.z=currentZ;camera.rotation.y+=(mx*0.03-camera.rotation.y)*0.04;camera.rotation.x+=(-my*0.02-camera.rotation.x)*0.04;camera.position.x+=Math.sin(frame*0.0003)*0.04;camera.position.y+=Math.cos(frame*0.0004)*0.03;starSystems.forEach(s=>{s.material.uniforms.uTime.value=t;});renderer.render(scene,camera);})();
+})();
+</script>
+
+<script>
+(function(){
+  const dot=document.getElementById('cursor-dot');
+  const ring=document.getElementById('cursor-ring');
+  if(!dot)return;
+  let rx=0,ry=0,tx=0,ty=0;
+  document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;dot.style.left=tx+'px';dot.style.top=ty+'px'});
+  (function lerp(){rx+=(tx-rx)*0.13;ry+=(ty-ry)*0.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(lerp)})();
+})();
+</script>
+
+<script type="text/babel">
+const T={
+  green:'#4ADE80',blue:'#38BDF8',orange:'#FB923C',purple:'#A78BFA',pink:'#F472B6',teal:'#2DD4BF',
+  bg:'#04040A',bg1:'#080814',
+  border:'rgba(255,255,255,0.07)',text:'#D0D0E0',text2:'#9090A8',text3:'#4A4A62',
+  mono:"'Space Mono',monospace",sans:"'Space Grotesk',sans-serif",
+};
+
+function EL({color=T.green,children,style={}}){
+  return(
+    <div className="scan-label" style={{display:'flex',alignItems:'center',gap:10,...style}}>
+      <span style={{display:'inline-block',width:18,height:1,background:color,opacity:0.5,flexShrink:0}}></span>
+      <span style={{fontFamily:T.mono,fontSize:10,letterSpacing:'0.14em',textTransform:'uppercase',color}}>{children}</span>
+    </div>
+  );
+}
+
+function ImgPh({label,style={},className='',slots=1}){
+  const[idx,setIdx]=React.useState(0);
+  const go=(dir,e)=>{if(e)e.stopPropagation();setIdx(i=>(i+dir+slots)%slots);};
+  return(
+    <div className={`img-ph${className?' '+className:''}`} style={style}>
+      <span style={{zIndex:1}}>{label}{slots>1?` · ${idx+1}/${slots}`:''}</span>
+      {slots>1&&<>
+        <button onClick={e=>go(-1,e)} aria-label="Previous image"
+          style={{position:'absolute',left:8,top:'50%',transform:'translateY(-50%)',background:'rgba(4,4,10,0.85)',border:'1px solid rgba(255,255,255,0.14)',color:'#9090A8',borderRadius:4,width:28,height:28,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',fontSize:13,zIndex:3,lineHeight:1,padding:0}}>&#8592;</button>
+        <button onClick={e=>go(1,e)} aria-label="Next image"
+          style={{position:'absolute',right:8,top:'50%',transform:'translateY(-50%)',background:'rgba(4,4,10,0.85)',border:'1px solid rgba(255,255,255,0.14)',color:'#9090A8',borderRadius:4,width:28,height:28,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',fontSize:13,zIndex:3,lineHeight:1,padding:0}}>&#8594;</button>
+        <div style={{position:'absolute',bottom:10,left:'50%',transform:'translateX(-50%)',display:'flex',gap:4,zIndex:3}}>
+          {Array.from({length:slots}).map((_,i)=>(
+            <div key={i} onClick={e=>{e.stopPropagation();setIdx(i);}}
+              style={{width:i===idx?14:5,height:5,borderRadius:3,background:i===idx?'#4ADE80':'rgba(255,255,255,0.25)',cursor:'pointer',transition:'all 0.25s'}}/>
+          ))}
+        </div>
+      </>}
+    </div>
+  );
+}
+
+function Nav(){
+  const[sc,setSc]=React.useState(false);
+  const[open,setOpen]=React.useState(false);
+  React.useEffect(()=>{const h=()=>setSc(window.scrollY>80);window.addEventListener('scroll',h,{passive:true});return()=>window.removeEventListener('scroll',h)},[]);
+  const ls=[['Portfolio','index.html'],['Origin','index.html#origin'],['Path','index.html#experience'],['Work','index.html#projects'],['Research','index.html#research'],['Contact','index.html#contact']];
+  return(
+    <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:200,padding:'0 52px',background:sc?'rgba(4,4,10,0.9)':'transparent',backdropFilter:sc?'blur(20px)':'none',WebkitBackdropFilter:sc?'blur(20px)':'none',borderBottom:sc?`1px solid ${T.border}`:'1px solid transparent',transition:'all 0.4s cubic-bezier(0.16,1,0.3,1)'}}>
+      <div style={{maxWidth:1280,margin:'0 auto',display:'flex',justifyContent:'space-between',alignItems:'center',height:60}}>
+        <a href="index.html" style={{display:'flex',alignItems:'center',gap:8}}>
+          <div className="pulse-dot" style={{width:7,height:7,background:T.green,borderRadius:1}}></div>
+          <span style={{fontFamily:T.mono,fontSize:11,fontWeight:700,letterSpacing:'0.1em',color:T.text}}>AHMAD.DEV</span>
+        </a>
+        <div className={`nav-links${open?' open':''}`} style={{display:'flex',gap:24}}>
+          {ls.map(([l,h],i)=>(
+            <a key={i} href={h} onClick={()=>setOpen(false)} style={{fontFamily:T.mono,fontSize:10,letterSpacing:'0.07em',color:i===0?T.green:T.text3,textTransform:'uppercase',transition:'color 0.2s'}}
+              onMouseEnter={e=>e.target.style.color=T.green} onMouseLeave={e=>e.target.style.color=i===0?T.green:T.text3}
+            >{l}</a>
+          ))}
+          <span style={{fontFamily:T.mono,fontSize:10,letterSpacing:'0.07em',color:T.green,textTransform:'uppercase',borderBottom:`1px solid ${T.green}`,paddingBottom:1}}>Docs</span>
+        </div>
+        <button className="nav-hamburger" onClick={()=>setOpen(o=>!o)} aria-label="Toggle navigation menu" style={{display:'none'}}>
+          <span style={{transform:open?'rotate(45deg) translateY(6.5px)':'none'}}></span>
+          <span style={{opacity:open?0:1,margin:'3.5px 0'}}></span>
+          <span style={{transform:open?'rotate(-45deg) translateY(-6.5px)':'none'}}></span>
+        </button>
+      </div>
+    </nav>
+  );
+}
+
+function DocCard({doc}){
+  const[preview,setPreview]=React.useState(false);
+
+  return(
+    <div className="doc-card reveal"
+      style={{borderColor:preview?`${doc.color}33`:T.border}}>
+      {/* Header row */}
+      <div style={{padding:'28px 32px',display:'flex',justifyContent:'space-between',alignItems:'flex-start',gap:20,flexWrap:'wrap'}}>
+        <div style={{flex:'1 1 300px'}}>
+          {/* Icon + type badge */}
+          <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:14}}>
+            <div style={{width:48,height:48,borderRadius:10,background:`${doc.color}15`,border:`1px solid ${doc.color}33`,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+              <span style={{fontFamily:T.mono,fontSize:18}}>{doc.icon}</span>
+            </div>
+            <div>
+              <div style={{fontFamily:T.mono,fontSize:9,color:doc.color,letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:3}}>Document</div>
+              <h2 style={{fontFamily:T.sans,fontSize:20,fontWeight:600,color:'#fff',letterSpacing:'-0.01em',lineHeight:1.2}}>{doc.type}</h2>
+            </div>
+          </div>
+          <p style={{fontSize:14,color:T.text2,lineHeight:1.7,maxWidth:500}}>{doc.desc}</p>
+          {doc.pages&&<div style={{fontFamily:T.mono,fontSize:10,color:T.text3,marginTop:8}}>{doc.pages} {doc.pages===1?'page':'pages'} · PDF</div>}
+        </div>
+        {/* Action buttons */}
+        <div style={{display:'flex',gap:10,alignItems:'center',flexShrink:0,flexWrap:'wrap'}}>
+          <button className="doc-btn" onClick={()=>setPreview(p=>!p)}
+            style={{background:'transparent',border:`1px solid ${preview?doc.color:T.border}`,color:preview?doc.color:T.text2}}>
+            {preview?'Hide Preview':'Preview'} {preview?'↑':'↓'}
+          </button>
+          <a href={doc.file} download
+            className="doc-btn"
+            style={{background:doc.color,color:'#000',border:`1px solid ${doc.color}`,textDecoration:'none'}}
+            onMouseEnter={e=>e.currentTarget.style.opacity='0.82'}
+            onMouseLeave={e=>e.currentTarget.style.opacity='1'}>
+            Download ↓
+          </a>
+        </div>
+      </div>
+
+      {/* Preview panel */}
+      {preview&&(
+        <div style={{padding:'0 32px 32px',borderTop:`1px solid ${T.border}`}}>
+          <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.1em',textTransform:'uppercase',margin:'20px 0 12px'}}>Document Preview</div>
+          <iframe
+            src={doc.file}
+            title={`${doc.type} preview`}
+            style={{width:'100%',height:780,border:`1px solid ${T.border}`,borderRadius:8,background:'#0a0a18'}}
+          >
+            <p style={{padding:24,color:T.text2,fontFamily:T.mono,fontSize:12}}>
+              Your browser cannot display PDFs inline.{' '}
+              <a href={doc.file} download style={{color:doc.color}}>Click here to download.</a>
+            </p>
+          </iframe>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function DocsPage(){
+  React.useEffect(()=>{
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:0.07,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    return()=>io.disconnect();
+  },[]);
+
+  const docs=[
+    {
+      type:'Resume',
+      icon:'📄',
+      color:T.green,
+      file:'docs/Ahmad_Resume_Developer_I_FirstSolar.pdf',
+      pages:1,
+      previewSlots:1,
+      desc:'One-page snapshot of my experience, key projects, and technical skills — optimized for engineering and AI roles.',
+    },
+    {
+      type:'Curriculum Vitae',
+      icon:'📋',
+      color:T.blue,
+      file:'docs/Ahmad_CV_Developer_I_FirstSolar.pdf',
+      pages:3,
+      previewSlots:3,
+      desc:'Full academic and professional record including research publications, fellowships, conference presentations, and all work experience.',
+    },
+    {
+      type:'References',
+      icon:'🤝',
+      color:T.purple,
+      file:'references.pdf',
+      pages:1,
+      previewSlots:1,
+      desc:'Professional and academic references from research advisors, industry mentors, and faculty — available upon request.',
+    },
+  ];
+
+  return(
+    <div style={{minHeight:'100vh'}}>
+      <Nav/>
+      <section style={{padding:'120px 52px 100px',maxWidth:1000,margin:'0 auto'}}>
+        <EL color={T.green} style={{marginBottom:24}}>Documents</EL>
+        <h1 style={{fontFamily:T.sans,fontSize:'clamp(32px,5vw,56px)',fontWeight:700,color:'#fff',letterSpacing:'-0.04em',lineHeight:1.05,marginBottom:14}}>
+          Resume, CV<br/><span style={{color:T.green}}>&amp; References</span>
+        </h1>
+        <p style={{fontSize:16,color:T.text2,maxWidth:520,lineHeight:1.7,marginBottom:60}}>
+          Click <span style={{color:'#fff',fontWeight:500}}>Preview</span> to see each document's pages inline, then <span style={{color:'#fff',fontWeight:500}}>Download</span> to save the file. Replace the placeholder PDFs in the portfolio root to activate downloads.
+        </p>
+        <div className="doc-grid" style={{display:'grid',gridTemplateColumns:'1fr',gap:16}}>
+          {docs.map((doc,i)=><DocCard key={i} doc={doc}/>)}
+        </div>
+      </section>
+      <footer style={{maxWidth:1000,margin:'0 auto',padding:'22px 52px',borderTop:`1px solid ${T.border}`,display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:10}}>
+        <span style={{fontFamily:T.mono,fontSize:10,color:T.text3}}>© 2026 Ahmad Firas</span>
+        <a href="index.html" style={{fontFamily:T.mono,fontSize:10,color:T.text3,transition:'color 0.2s'}}
+          onMouseEnter={e=>e.target.style.color=T.green}
+          onMouseLeave={e=>e.target.style.color=T.text3}>← Back to Portfolio</a>
+      </footer>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<DocsPage/>);
+</script>
+</body></html>
