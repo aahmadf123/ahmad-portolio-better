@@ -344,44 +344,63 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
   let pfScrolledPast = false; // true once user scrolls past hero
 
   function initParticles() {
+    // Wait for React to render the h1 into the DOM
+    const h1 = document.querySelector('#hero h1');
+    if (!h1) { setTimeout(initParticles, 120); return; }
+    const rect = h1.getBoundingClientRect();
+    if (!rect.width || !rect.height) { setTimeout(initParticles, 120); return; }
+
     const DEPTH = 340;
-    const camDist = camera.position.z - DEPTH;
-    const vFovRad = 70 * Math.PI / 180;
-    const visH = 2 * Math.tan(vFovRad / 2) * camDist;
-    const visW = visH * (innerWidth / innerHeight);
 
+    // Convert screen pixel → 3-D world position at z=DEPTH
+    function s2w(sx, sy) {
+      const ndcX =  (sx / window.innerWidth)  * 2 - 1;
+      const ndcY = -(sy / window.innerHeight) * 2 + 1;
+      const v = new THREE.Vector3(ndcX, ndcY, 0.5).unproject(camera);
+      const d = v.sub(camera.position).normalize();
+      const t = (DEPTH - camera.position.z) / d.z;
+      return { x: camera.position.x + d.x * t, y: camera.position.y + d.y * t };
+    }
+
+    // Sample letter shapes into an offscreen canvas sized to the actual h1
+    const fs = Math.round(parseFloat(window.getComputedStyle(h1).fontSize)) || 96;
+    const W  = Math.min(Math.round(rect.width),  900)  || 600;
+    const H  = Math.min(Math.round(rect.height), 400)  || 250;
     const off = document.createElement('canvas');
-    off.width = 520; off.height = 220;
-    const c = off.getContext('2d');
-    c.font = '700 78px "Space Grotesk", sans-serif';
-    c.textBaseline = 'alphabetic';
-    c.fillStyle = '#fff';
-    c.fillText('Ahmad', 16, 100);
-    c.fillStyle = '#4ADE80';
-    c.fillText('Firas', 16, 195);
+    off.width  = W;
+    off.height = H;
+    const ctx = off.getContext('2d');
+    ctx.font = `700 ${fs}px "Space Grotesk", sans-serif`;
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = '#fff';
+    ctx.fillText('Ahmad', 0, 0);
+    ctx.fillStyle = '#4ADE80';
+    ctx.fillText('Firas',  0, fs * 0.92); // match lineHeight:0.88
 
-    const data = c.getImageData(0, 0, off.width, off.height).data;
+    const data = ctx.getImageData(0, 0, W, H).data;
     particleTargets = [];
     const posList = [], colorList = [], phaseList = [], speedList = [];
-    const step = isMobile ? 5 : 3;
+    const step = isMobile ? 6 : 4;
 
-    for (let py = 0; py < off.height; py += step) {
-      for (let px = 0; px < off.width; px += step) {
-        if (data[(py*off.width+px)*4+3] > 100) {
-          const isGreen = data[(py*off.width+px)*4+1] > data[(py*off.width+px)*4] * 1.5;
-          const wx = (px/off.width - 0.40) * visW * 1.35;
-          const wy = -(py/off.height - 0.5) * visH * 1.1;
-          particleTargets.push({x:wx, y:wy, isGreen});
-          const a = Math.random()*Math.PI*2, d = 70+Math.random()*220;
-          posList.push(wx+Math.cos(a)*d, wy+Math.sin(a)*d, DEPTH+(Math.random()-0.5)*60);
-          colorList.push(isGreen?0.29:1, isGreen?0.87:1, isGreen?0.5:1);
-          phaseList.push(Math.random()*Math.PI*2);
-          speedList.push(0.032+Math.random()*0.028);
+    for (let py = 0; py < H; py += step) {
+      for (let px = 0; px < W; px += step) {
+        if (data[(py * W + px) * 4 + 3] > 100) {
+          const isGreen = data[(py * W + px) * 4 + 1] > data[(py * W + px) * 4] * 1.5;
+          // Map canvas pixel to the exact screen position of the h1
+          const sx = rect.left + (px / W) * rect.width;
+          const sy = rect.top  + (py / H) * rect.height;
+          const { x: wx, y: wy } = s2w(sx, sy);
+          particleTargets.push({ x: wx, y: wy, isGreen });
+          const a = Math.random() * Math.PI * 2, d = 10 + Math.random() * 35;
+          posList.push(wx + Math.cos(a) * d, wy + Math.sin(a) * d, DEPTH + (Math.random() - 0.5) * 20);
+          colorList.push(isGreen ? 0.29 : 1, isGreen ? 0.87 : 1, isGreen ? 0.5 : 1);
+          phaseList.push(Math.random() * Math.PI * 2);
+          speedList.push(0.036 + Math.random() * 0.024);
         }
       }
     }
 
-    if (!particleTargets.length) return;
+    if (!particleTargets.length) { setTimeout(initParticles, 200); return; }
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(posList),  3));
     geo.setAttribute('aColor',   new THREE.BufferAttribute(new Float32Array(colorList), 3));
@@ -392,51 +411,29 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
       attribute vec3 aColor; attribute float phase; attribute float speed;
       uniform float uTime; varying vec3 vColor; varying float vAlpha;
       void main(){
-        vColor=aColor;
-        float pulse=0.65+0.35*sin(uTime*1.8+phase);
-        vAlpha=pulse;
-        vec4 mv=modelViewMatrix*vec4(position,1.0);
-        gl_PointSize=3.2*(300.0/-mv.z)*pulse;
-        gl_Position=projectionMatrix*mv;
+        vColor = aColor;
+        float pulse = 0.65 + 0.35 * sin(uTime * 1.8 + phase);
+        vAlpha = pulse;
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = 3.2 * (300.0 / -mv.z) * pulse;
+        gl_Position = projectionMatrix * mv;
       }`;
     const pFrag = `
       varying vec3 vColor; varying float vAlpha;
       void main(){
-        float d=length(gl_PointCoord-0.5)*2.0;
-        float g=pow(1.0-smoothstep(0.0,1.0,d),1.6);
-        gl_FragColor=vec4(vColor,g*vAlpha);
+        float d = length(gl_PointCoord - 0.5) * 2.0;
+        float g = pow(1.0 - smoothstep(0.0, 1.0, d), 1.6);
+        gl_FragColor = vec4(vColor, g * vAlpha);
       }`;
     const pMat = new THREE.ShaderMaterial({
-      vertexShader:pVert, fragmentShader:pFrag,
-      uniforms:{uTime:{value:0}},
-      transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+      vertexShader: pVert, fragmentShader: pFrag,
+      uniforms: { uTime: { value: 0 } },
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
     });
     particleSystem = new THREE.Points(geo, pMat);
     scene.add(particleSystem);
   }
-  document.fonts.ready.then(initParticles);
-
-  // Nebula clouds — large soft glowing sprites
-  const nebulaData = isMobile ? [
-    { x: -200, y: 100,  z: -300, color: 0x1a0a3a, size: 320 },
-    { x: 150,  y: 160,  z: -900, color: 0x200a10, size: 600 },
-  ] : [
-    { x: -200, y: 100,  z: -300, color: 0x1a0a3a, size: 320 },
-    { x: 250,  y: -80,  z: -500, color: 0x0a1a2a, size: 400 },
-    { x: -100, y: -200, z: -700, color: 0x0a2010, size: 500 },
-    { x: 150,  y: 160,  z: -900, color: 0x200a10, size: 600 },
-    { x: -250, y: 50,   z: -1100,color: 0x0a0a30, size: 700 },
-    { x: 100,  y: -150, z: -1300,color: 0x101a08, size: 800 },
-  ];
-  nebulaData.forEach(n => {
-    const spriteMat = new THREE.SpriteMaterial({
-      color: n.color, transparent: true, opacity: 0.22, depthWrite: false,
-    });
-    const sprite = new THREE.Sprite(spriteMat);
-    sprite.position.set(n.x, n.y, n.z);
-    sprite.scale.set(n.size, n.size * 0.7, 1);
-    scene.add(sprite);
-  });
+  document.fonts.ready.then(() => setTimeout(initParticles, 350));
 
   // Scroll depth control — maps scroll progress to camera Z
   let targetZ = 400;
@@ -465,7 +462,7 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
       if (particleSystem && (pfPhase === 'dispersing' || pfPhase === 'dispersed')) {
         const pos = particleSystem.geometry.attributes.position.array;
         for (let i = 0; i < particleTargets.length; i++) {
-          const a = Math.random()*Math.PI*2, d = 80+Math.random()*240;
+          const a = Math.random()*Math.PI*2, d = 10+Math.random()*35;
           pos[i*3]   = particleTargets[i].x + Math.cos(a)*d;
           pos[i*3+1] = particleTargets[i].y + Math.sin(a)*d;
         }
