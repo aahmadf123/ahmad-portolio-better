@@ -46,14 +46,14 @@ body{
 .section-wash::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
 }
-.wash-void::before    { background:rgba(4,4,10,0.82); }
-.wash-deep::before    { background:rgba(6,4,18,0.80); }
-.wash-nebula::before  { background:rgba(10,4,22,0.78); }
-.wash-cluster::before { background:rgba(4,10,20,0.80); }
-.wash-pulse::before   { background:rgba(4,16,12,0.80); }
-.wash-warm::before    { background:rgba(18,8,4,0.80); }
-.wash-cold::before    { background:rgba(4,8,20,0.82); }
-.wash-home::before    { background:rgba(6,12,8,0.82); }
+.wash-void::before    { background:rgba(4,4,10,0.72); }
+.wash-deep::before    { background:rgba(6,4,18,0.68); }
+.wash-nebula::before  { background:rgba(10,4,22,0.66); }
+.wash-cluster::before { background:rgba(4,10,20,0.68); }
+.wash-pulse::before   { background:rgba(4,16,12,0.68); }
+.wash-warm::before    { background:rgba(18,8,4,0.68); }
+.wash-cold::before    { background:rgba(4,8,20,0.70); }
+.wash-home::before    { background:rgba(6,12,8,0.70); }
 
 .section-inner{position:relative;z-index:1}
 
@@ -250,8 +250,8 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
   animation-timing-function:cubic-bezier(0.16,1,0.3,1);
 }
 
-/* ── HERO WASH — more transparent so particles show ─────────────────── */
-#hero.wash-void::before{background:rgba(4,4,10,0.52)!important}
+/* ── HERO WASH — transparent so particles show ─────────────────────── */
+#hero.wash-void::before{background:rgba(4,4,10,0.45)!important}
 </style>
 
 </head>
@@ -339,8 +339,9 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
   // ── PARTICLE FORMATION — letters assemble from scattered field ──────────
   let particleSystem = null;
   let particleTargets = [];
+  // 'assembling' → fly toward targets | 'holding' → stay put | 'dispersing' → fly out | 'dispersed' → idle
   let pfPhase = 'assembling';
-  let pfFrame = 0;
+  let pfScrolledPast = false; // true once user scrolls past hero
 
   function initParticles() {
     const DEPTH = 340;
@@ -452,6 +453,26 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
     // Scroll progress bar
     const bar = document.getElementById('scroll-bar');
     if (bar) bar.style.transform = `scaleX(${progress})`;
+    // Particle scroll detection
+    const nowPast = scrolled > window.innerHeight * 0.45;
+    if (nowPast && !pfScrolledPast) {
+      pfScrolledPast = true;
+      // Start dispersing only if assembled or holding
+      if (pfPhase === 'holding' || pfPhase === 'assembling') pfPhase = 'dispersing';
+    } else if (!nowPast && pfScrolledPast) {
+      pfScrolledPast = false;
+      // Scrolled back — scatter and reassemble
+      if (particleSystem && (pfPhase === 'dispersing' || pfPhase === 'dispersed')) {
+        const pos = particleSystem.geometry.attributes.position.array;
+        for (let i = 0; i < particleTargets.length; i++) {
+          const a = Math.random()*Math.PI*2, d = 80+Math.random()*240;
+          pos[i*3]   = particleTargets[i].x + Math.cos(a)*d;
+          pos[i*3+1] = particleTargets[i].y + Math.sin(a)*d;
+        }
+        particleSystem.geometry.attributes.position.needsUpdate = true;
+        pfPhase = 'assembling';
+      }
+    }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -489,42 +510,46 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
     // Update particle formation
     if (particleSystem && particleTargets.length) {
       particleSystem.material.uniforms.uTime.value = t;
-      const inHero = window.scrollY < window.innerHeight * 0.85;
-      particleSystem.visible = inHero;
-      if (inHero) {
-        pfFrame++;
+      // Keep visible a bit past hero so disperse is seen
+      particleSystem.visible = window.scrollY < window.innerHeight * 1.1;
+
+      if (pfPhase !== 'dispersed') {
         const pos = particleSystem.geometry.attributes.position.array;
         const spd = particleSystem.geometry.attributes.speed.array;
         const DEPTH = 340;
-        let arrived = true;
-        for (let i = 0; i < particleTargets.length; i++) {
-          if (pfPhase === 'dispersing') {
-            const cx = pos[i*3] - particleTargets[i].x;
-            const cy = pos[i*3+1] - particleTargets[i].y;
-            const len = Math.sqrt(cx*cx+cy*cy)+0.001;
-            pos[i*3]   += (cx/len)*2.2;
-            pos[i*3+1] += (cy/len)*2.2;
-          } else {
+
+        if (pfPhase === 'assembling') {
+          let allArrived = true;
+          for (let i = 0; i < particleTargets.length; i++) {
             const dx = particleTargets[i].x - pos[i*3];
             const dy = particleTargets[i].y - pos[i*3+1];
             const dz = DEPTH - pos[i*3+2];
             pos[i*3]   += dx * spd[i];
             pos[i*3+1] += dy * spd[i];
-            pos[i*3+2] += dz * 0.04;
-            if (Math.abs(dx)+Math.abs(dy) > 2) arrived = false;
-          }
-        }
-        particleSystem.geometry.attributes.position.needsUpdate = true;
-        if (pfPhase === 'assembling' && arrived) { pfPhase='holding'; pfFrame=0; }
-        if (pfPhase === 'holding' && pfFrame > 130) { pfPhase='dispersing'; pfFrame=0; }
-        if (pfPhase === 'dispersing' && pfFrame > 75) {
-          pfPhase='assembling'; pfFrame=0;
-          for (let i = 0; i < particleTargets.length; i++) {
-            const a=Math.random()*Math.PI*2, d=70+Math.random()*220;
-            pos[i*3]   = particleTargets[i].x + Math.cos(a)*d;
-            pos[i*3+1] = particleTargets[i].y + Math.sin(a)*d;
+            pos[i*3+2] += dz * 0.05;
+            if (Math.abs(dx) + Math.abs(dy) > 1.5) allArrived = false;
           }
           particleSystem.geometry.attributes.position.needsUpdate = true;
+          if (allArrived) pfPhase = 'holding';
+
+        } else if (pfPhase === 'holding') {
+          // Particles stay — tiny drift to keep them alive (no position update needed)
+          // phase is only exited by scroll (set to 'dispersing' in onScroll)
+
+        } else if (pfPhase === 'dispersing') {
+          let allGone = true;
+          for (let i = 0; i < particleTargets.length; i++) {
+            // Each particle flies outward from its target center
+            const cx = pos[i*3]   - particleTargets[i].x;
+            const cy = pos[i*3+1] - particleTargets[i].y;
+            const len = Math.sqrt(cx*cx + cy*cy) + 0.001;
+            const speed = 1.8 + (len / 40); // accelerates as it moves away
+            pos[i*3]   += (cx / len) * speed;
+            pos[i*3+1] += (cy / len) * speed;
+            if (Math.sqrt(cx*cx + cy*cy) < 180) allGone = false;
+          }
+          particleSystem.geometry.attributes.position.needsUpdate = true;
+          if (allGone) pfPhase = 'dispersed';
         }
       }
     }
