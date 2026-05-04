@@ -748,7 +748,7 @@ function Hero(){
             <span style={{fontFamily:T.mono,fontSize:10,color:T.text3,letterSpacing:'0.1em'}}>00 — PORTFOLIO · 2026</span>
             <div style={{display:'flex',alignItems:'center',gap:7}}>
               <span style={{width:6,height:6,borderRadius:'50%',background:T.green,boxShadow:`0 0 10px ${T.green}`,display:'inline-block'}}></span>
-              <span style={{fontFamily:T.mono,fontSize:10,color:T.text3,letterSpacing:'0.08em'}}>ACTIVE · FIRST SOLAR</span>
+              <span style={{fontFamily:T.mono,fontSize:10,color:T.text3,letterSpacing:'0.08em'}}>ACTIVE · UT ATHLETICS</span>
             </div>
           </div>
           <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',paddingTop:20}}>
@@ -778,7 +778,7 @@ function Hero(){
           <ImgPh label="Profile photo" style={{width:'100%',aspectRatio:'3/4',maxHeight:370,borderRadius:10}}/>
           <div style={{marginTop:28,display:'flex',flexDirection:'column'}}>
             {[
-              {l:'Current Role',v:'Microsoft Solution Developer',s:'First Solar · Perrysburg, OH',c:T.green},
+              {l:'Current Role',v:'Sports Analytics & Data Science Intern',s:'UToledo Athletics · Toledo, OH',c:T.teal},
               {l:'Research',v:'LION Lab · CPHS Lab',s:'University of Toledo',c:T.blue},
               {l:'Degree',v:'B.S. Computer Science & Engineering',s:'Minor: Mathematics · GPA 3.23 · 2026',c:T.purple},
               {l:'Focus',v:'Agentic AI · Autonomous UAV · MLOps',s:null,c:T.orange},
@@ -848,7 +848,7 @@ function Experience(){
   const trackRef = React.useRef(null);
   const [activeIdx, setActiveIdx] = React.useState(0);
   const jobs=[
-    {r:'Microsoft Solution Developer',co:'First Solar',p:'Jan 2026 – Present',loc:'Perrysburg, OH',t:'Full-time',active:true,c:T.green,
+    {r:'Microsoft Solution Developer',co:'First Solar',p:'Jan 2026 – May 2026',loc:'Perrysburg, OH',t:'Full-time',c:T.green,
      d:'Design and ship agentic AI solutions in Microsoft Copilot Studio, translating business requirements into autonomous multi-step workflows. Lead intern team on code reviews, delivery milestones, and enterprise governance.',
      s:['Copilot Studio','Azure AI','Power Automate','M365','Python']},
     {r:'Sports Analytics & Data Science Intern',co:'UToledo Athletics',p:'Oct 2025 – Present',loc:'Toledo, OH',t:'Internship',active:true,c:T.teal,
@@ -1105,7 +1105,7 @@ function Research(){
 /* ── SKILLS ─────────────────────────────────────────────────────────────── */
 function Skills(){
   const cats=[
-    {n:'Languages',c:T.green, s:['Python','C++','Java','SQL','Embedded C','MATLAB','Simulink','Bash']},
+    {n:'Languages',c:T.green, s:['Python','JavaScript','C++','Java','SQL','HTML/CSS','Embedded C','MATLAB','Simulink','Bash']},
     {n:'ML & AI',  c:T.blue,  s:['PyTorch','TensorFlow','scikit-learn','RL','GNNs','Meta-Learning','NLP','Computer Vision']},
     {n:'MLOps & Data',c:T.orange,s:['Airflow','MLflow','Pandas','NumPy','AWS','Docker','Git','CI/CD','Linux','DOMO']},
     {n:'Robotics', c:T.purple,s:['ROS 2','OpenCV','YOLO11','NVIDIA Jetson','Sensor Fusion','VINS-Mono','HITL','AirSim']},
@@ -1228,7 +1228,7 @@ function Certifications(){
 /* ── CURRENTLY / PERSONALITY ────────────────────────────────────────────── */
 function Currently(){
   const currently=[
-    {l:'Building',     v:'Agentic AI workflows at First Solar',    c:T.green},
+    {l:'Building',     v:'ML analytics for Toledo Athletics',       c:T.green},
     {l:'Researching',  v:'Graph-based RL for UAV navigation',       c:T.blue},
     {l:'Exploring',    v:'Quantum computing fundamentals',          c:T.purple},
     {l:'Competing',    v:'AIChE Chem-E Car competition season',     c:T.orange},
