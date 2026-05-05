@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://ahmadfx.xyz/Images/portfolio_logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -35,7 +35,7 @@
 html{scroll-behavior:smooth}
 body{
   background:#04040A;color:#D0D0E0;
-  font-family:'Space Grotesk',sans-serif;
+  font-family:'Sora',sans-serif;
   line-height:1.7;overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
   cursor:none;
@@ -73,13 +73,13 @@ body{
 
 /* Cursor */
 #cursor-dot{width:8px;height:8px;background:#4ADE80;border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:background 0.2s}
-#cursor-ring{width:32px;height:32px;border:1px solid rgba(74,222,128,0.3);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s}
-body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:50px;height:50px;border-color:rgba(74,222,128,0.5)}
+#cursor-ring{width:32px;height:32px;border:1px solid rgba(74,222,128,0.3);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%) scale(1);transition:transform 0.25s ease,border-color 0.25s}
+body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{transform:translate(-50%,-50%) scale(1.5625);border-color:rgba(74,222,128,0.5)}
 @media(max-width:960px){#cursor-dot,#cursor-ring{display:none}body{cursor:auto}}
 
 /* Image placeholder */
 .img-ph{background:repeating-linear-gradient(-45deg,#0a0a18 0px,#0a0a18 10px,#080810 10px,#080810 20px);border-radius:8px;position:relative;overflow:hidden}
-.img-ph span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:#222238}
+.img-ph span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:#222238}
 a{text-decoration:none;color:inherit}
 
 /* Reveal */
@@ -174,10 +174,10 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
 /* ── SCROLL PROGRESS BAR ─────────────────────────────────────────────── */
 #scroll-bar{
   position:fixed;top:0;left:0;height:2px;
-  background:linear-gradient(90deg,#4ADE80,#38BDF8);
+  background:#4ADE80;
+  opacity:0.9;
   z-index:9997;transform-origin:left;transform:scaleX(0);
   transition:transform 0.06s linear;
-  box-shadow:0 0 8px #4ADE80;
   pointer-events:none;
 }
 
@@ -255,6 +255,45 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
 
 /* ── HERO WASH — transparent so particles show ─────────────────────── */
 #hero.wash-void::before{background:rgba(4,4,10,0.45)!important}
+
+/* ── ADAPT: RESPONSIVE FIXES ─────────────────────────────────────── */
+
+/* Projects bento grid — collapse span-2 cards and reflow columns */
+@media(max-width:960px){
+  .proj-grid{grid-template-columns:repeat(2,1fr)!important}
+  .proj-span-2{grid-column:auto!important}
+}
+@media(max-width:540px){
+  .proj-grid{grid-template-columns:1fr!important}
+}
+
+/* Hero left panel — reduce top/bottom padding on mobile */
+@media(max-width:960px){
+  .hero-left{padding-top:80px!important;padding-bottom:40px!important}
+  .hero-right{padding:24px 28px!important}
+}
+@media(max-width:480px){
+  .hero-left{padding-top:64px!important;padding-bottom:28px!important}
+  .hero-right{padding:16px 20px!important}
+}
+
+/* Nav — reduce horizontal padding on very small screens */
+@media(max-width:480px){
+  nav{padding-left:18px!important;padding-right:18px!important}
+}
+
+/* Case study inline expansion panel */
+@media(max-width:768px){
+  .proj-case-study{padding:24px 20px!important}
+}
+@media(max-width:480px){
+  .proj-case-study{padding:18px 14px!important}
+}
+
+/* Contact footer strip */
+@media(max-width:600px){
+  .contact-footer{flex-direction:column!important;gap:6px!important}
+}
 </style>
 
 </head>
@@ -266,7 +305,11 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
 <div id="app-root"><div id="root"></div></div>
 
 <script>
-/* ── Deep Space Scrolling Background ────────────────────────────────────── */
+/* ── Decision Graph Background — neural network / knowledge graph ─────────
+   Represents the actual structure of Ahmad's work: graph attention networks
+   (UAV research), knowledge graphs (agentic AI), decision graphs (HITL).
+   Domain-specific. Not interchangeable with any other dark-theme portfolio.
+── */
 (function() {
   if (!window.THREE) return;
   const THREE = window.THREE;
@@ -276,284 +319,120 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
   renderer.setClearColor(0x04040A, 1);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 2000);
-  camera.position.z = 400;
+  const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1200);
+  camera.position.z = 350;
 
-  // Star layers — different depths, sizes, colors
-  // Reduce particle count on mobile for better performance
   const isMobile = window.innerWidth < 768;
 
-  // ── GLSL SHADER STARS ─────────────────────────────────────────────────
-  // Dim background field — very sharp points, minimal flicker
-  const dimVert = `
-    attribute float phase;
-    attribute float baseSize;
-    uniform float uTime;
-    varying float vAlpha;
-    void main(){
-      float pulse = 0.90 + 0.10 * sin(uTime * 0.7 + phase);
-      vAlpha = pulse;
-      vec4 mv = modelViewMatrix * vec4(position, 1.0);
-      gl_PointSize = baseSize * (300.0 / -mv.z);
-      gl_Position = projectionMatrix * mv;
-    }
-  `;
-  const dimFrag = `
-    varying float vAlpha;
-    uniform vec3 uColor;
-    void main(){
-      float d = length(gl_PointCoord - 0.5) * 2.0;
-      float core = 1.0 - smoothstep(0.0, 0.55, d);
-      gl_FragColor = vec4(uColor, core * vAlpha);
-    }
-  `;
-  // Bright stars — sharp core + soft atmospheric halo
-  const brightVert = `
-    attribute float phase;
-    attribute float baseSize;
-    uniform float uTime;
-    varying float vAlpha;
-    void main(){
-      float pulse = 0.82 + 0.18 * sin(uTime * 1.1 + phase);
-      vAlpha = pulse;
-      vec4 mv = modelViewMatrix * vec4(position, 1.0);
-      gl_PointSize = baseSize * (300.0 / -mv.z) * pulse;
-      gl_Position = projectionMatrix * mv;
-    }
-  `;
-  const brightFrag = `
-    varying float vAlpha;
-    uniform vec3 uColor;
-    void main(){
-      float d = length(gl_PointCoord - 0.5) * 2.0;
-      float core = pow(1.0 - smoothstep(0.0, 0.22, d), 1.4);
-      float halo = pow(1.0 - smoothstep(0.0, 1.0, d), 2.8) * 0.55;
-      gl_FragColor = vec4(uColor, (core + halo) * vAlpha);
-    }
-  `;
+  // ── NODES ─────────────────────────────────────────────────────────────
+  // 90 nodes on desktop / 45 on mobile. Each represents a unit of computation
+  // — loosely reflecting the GAT node-based architecture from the UAV research.
+  const N = isMobile ? 45 : 90;
+  const SPREAD_XY = 560, SPREAD_Z = 190, CONNECT = 135;
+  const MAX_E = isMobile ? 70 : 160;
 
-  function makeStars(count, spread, baseSize, color, zRange, vert, frag, spreadY) {
-    const geo = new THREE.BufferGeometry();
-    const pos   = new Float32Array(count * 3);
-    const phase = new Float32Array(count);
-    const sizes = new Float32Array(count);
-    const sy = spreadY !== undefined ? spreadY : spread * 0.65;
-    for (let i = 0; i < count; i++) {
-      pos[i*3]   = (Math.random()-0.5)*spread;
-      pos[i*3+1] = (Math.random()-0.5)*sy;
-      pos[i*3+2] = -Math.random()*zRange;
-      phase[i]   = Math.random()*Math.PI*2;
-      sizes[i]   = baseSize * (0.45 + Math.random()*0.55);
-    }
-    geo.setAttribute('position', new THREE.BufferAttribute(pos,   3));
-    geo.setAttribute('phase',    new THREE.BufferAttribute(phase,  1));
-    geo.setAttribute('baseSize', new THREE.BufferAttribute(sizes,  1));
-    const mat = new THREE.ShaderMaterial({
-      vertexShader: vert, fragmentShader: frag,
-      uniforms: { uTime:{value:0}, uColor:{value:new THREE.Color(color)} },
-      transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
-    });
-    return new THREE.Points(geo, mat);
+  const pos = [], vel = [], phase = [], nodeColor = [];
+  // Signal palette: mostly dim signal-gray, accent nodes in the design colors
+  const ACCENT = [0x4ADE80, 0x38BDF8, 0xA78BFA]; // green / blue / violet
+  for (let i = 0; i < N; i++) {
+    pos.push(new THREE.Vector3(
+      (Math.random()-0.5)*SPREAD_XY,
+      (Math.random()-0.5)*SPREAD_XY*0.65,
+      (Math.random()-0.5)*SPREAD_Z
+    ));
+    vel.push(new THREE.Vector3(
+      (Math.random()-0.5)*0.09,
+      (Math.random()-0.5)*0.07,
+      (Math.random()-0.5)*0.025
+    ));
+    phase.push(Math.random()*Math.PI*2);
+    const r = Math.random();
+    nodeColor.push(new THREE.Color(r<0.07?ACCENT[0]:r<0.13?ACCENT[1]:r<0.17?ACCENT[2]:0x787898));
   }
 
-  // Milky Way band — dense strip of tiny stars on a diagonal
-  function makeMilkyWay(count, color) {
-    const geo = new THREE.BufferGeometry();
-    const pos   = new Float32Array(count * 3);
-    const phase = new Float32Array(count);
-    const sizes = new Float32Array(count);
-    const angle = Math.PI * 0.22;
-    for (let i = 0; i < count; i++) {
-      const along  = (Math.random()-0.5) * 2400;
-      const across = (Math.random()-0.5) * 260 * Math.pow(Math.random(), 0.6);
-      pos[i*3]   =  along * Math.cos(angle) + across * Math.sin(angle);
-      pos[i*3+1] =  along * Math.sin(angle) - across * Math.cos(angle) * 0.5;
-      pos[i*3+2] = -600 - Math.random() * 1400;
-      phase[i]   = Math.random()*Math.PI*2;
-      sizes[i]   = 0.5 + Math.random()*0.9;
-    }
-    geo.setAttribute('position', new THREE.BufferAttribute(pos,   3));
-    geo.setAttribute('phase',    new THREE.BufferAttribute(phase,  1));
-    geo.setAttribute('baseSize', new THREE.BufferAttribute(sizes,  1));
-    const mat = new THREE.ShaderMaterial({
-      vertexShader: dimVert, fragmentShader: dimFrag,
-      uniforms: { uTime:{value:0}, uColor:{value:new THREE.Color(color)} },
-      transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
-    });
-    return new THREE.Points(geo, mat);
+  // Node geometry (points with per-vertex color + size)
+  const nGeo = new THREE.BufferGeometry();
+  const nPos = new Float32Array(N*3);
+  const nCol = new Float32Array(N*3);
+  const nSz  = new Float32Array(N);
+  for (let i = 0; i < N; i++) {
+    nPos[i*3]=pos[i].x; nPos[i*3+1]=pos[i].y; nPos[i*3+2]=pos[i].z;
+    nCol[i*3]=nodeColor[i].r; nCol[i*3+1]=nodeColor[i].g; nCol[i*3+2]=nodeColor[i].b;
+    // Accent nodes are larger; dim nodes are smaller
+    nSz[i] = nodeColor[i].r > 0.3 ? 2.8+Math.random()*1.4 : 1.0+Math.random()*1.2;
   }
+  nGeo.setAttribute('position', new THREE.BufferAttribute(nPos, 3));
+  nGeo.setAttribute('color',    new THREE.BufferAttribute(nCol, 3));
+  nGeo.setAttribute('size',     new THREE.BufferAttribute(nSz,  1));
 
-  const D = dimVert, dF = dimFrag, B = brightVert, bF = brightFrag;
-  const starSystems = [
-    // ── Deep background haze (tiny, dim, sharp points)
-    makeStars(isMobile?1200:6500, 2600, 0.9,  0xffffff, 2000, D, dF),  // white haze
-    makeStars(isMobile?600:3000,  2400, 1.0,  0xd8e4ff, 1800, D, dF),  // blue-white haze
-    makeStars(isMobile?300:1400,  2200, 1.1,  0xfff5e0, 1600, D, dF),  // warm haze
-    // ── Milky Way band
-    makeMilkyWay(isMobile?800:4500, 0xc8d8ff),   // blue-white band
-    makeMilkyWay(isMobile?400:2000, 0xffeedd),   // warm-tinted band
-    // ── Mid-field stars — main visible field
-    makeStars(isMobile?300:1600,  1800, 2.0,  0xffffff, 1400, B, bF),  // white medium
-    makeStars(isMobile?150:700,   1600, 2.4,  0xddeeff, 1200, B, bF),  // blue-white medium
-    makeStars(isMobile?100:500,   1400, 2.2,  0xfff0cc, 1000, B, bF),  // yellow-white (sun-like)
-    makeStars(isMobile?60:280,    1200, 2.6,  0xaabbff, 900,  B, bF),  // blue (hot) stars
-    makeStars(isMobile?50:220,    1100, 2.4,  0xffccaa, 800,  B, bF),  // orange (cool) giants
-    // ── Bright foreground stars — visible anchors
-    makeStars(isMobile?25:110,    900,  5.0,  0xffffff, 600,  B, bF),  // bright white
-    makeStars(isMobile?15:70,     800,  5.8,  0xaaccff, 500,  B, bF),  // bright blue
-    makeStars(isMobile?12:55,     750,  5.2,  0xffddaa, 480,  B, bF),  // bright orange-white
-    makeStars(isMobile?8:35,      700,  6.5,  0xffffff, 400,  B, bF),  // very bright (Sirius-like)
-    // ── Accent tints (subtle)
-    makeStars(isMobile?10:45,     650,  4.2,  0x4ADE80, 400,  B, bF),  // green accent
-    makeStars(isMobile?10:40,     600,  4.0,  0x38BDF8, 380,  B, bF),  // blue accent
-  ];
-  starSystems.forEach(s => scene.add(s));
+  const nVert = `
+    attribute float size; attribute vec3 color;
+    varying vec3 vColor; varying float vA;
+    void main(){
+      vColor=color;
+      vA=0.5+0.5*(1.0-length(position.xy)/420.0);
+      vec4 mv=modelViewMatrix*vec4(position,1.0);
+      gl_PointSize=size*(230.0/-mv.z);
+      gl_Position=projectionMatrix*mv;
+    }`;
+  const nFrag = `
+    varying vec3 vColor; varying float vA;
+    void main(){
+      float d=length(gl_PointCoord-0.5)*2.0;
+      float g=pow(1.0-smoothstep(0.0,0.82,d),1.6);
+      gl_FragColor=vec4(vColor,g*vA*0.88);
+    }`;
+  const nMat = new THREE.ShaderMaterial({
+    vertexShader:nVert, fragmentShader:nFrag,
+    vertexColors:true, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending
+  });
+  const nPts = new THREE.Points(nGeo, nMat);
+  scene.add(nPts);
 
-  // ── PARTICLE FORMATION — letters assemble from scattered field ──────────
-  let particleSystem = null;
-  let particleTargets = [];
-  // 'assembling' → fly toward targets | 'holding' → stay put | 'dispersing' → fly out | 'dispersed' → idle
-  let pfPhase = 'assembling';
-  let pfScrolledPast = false; // true once user scrolls past hero
+  // ── EDGES ─────────────────────────────────────────────────────────────
+  // Dynamic line segments. Rebuilt each frame. Represent active inference
+  // pathways — edges only drawn between nodes within CONNECT distance.
+  const eGeo = new THREE.BufferGeometry();
+  const ePos = new Float32Array(MAX_E*6); // 2 verts × 3 floats
+  const eCol = new Float32Array(MAX_E*6);
+  const eAlp = new Float32Array(MAX_E*2); // 1 alpha per vertex
+  eGeo.setAttribute('position', new THREE.BufferAttribute(ePos, 3));
+  eGeo.setAttribute('color',    new THREE.BufferAttribute(eCol, 3));
+  eGeo.setAttribute('alpha',    new THREE.BufferAttribute(eAlp, 1));
 
-  function initParticles() {
-    // Wait for React to render the h1 into the DOM
-    const h1 = document.querySelector('#hero h1');
-    if (!h1) { setTimeout(initParticles, 120); return; }
-    const rect = h1.getBoundingClientRect();
-    if (!rect.width || !rect.height) { setTimeout(initParticles, 120); return; }
+  const eVert = `
+    attribute vec3 color; attribute float alpha;
+    varying vec3 vC; varying float vA;
+    void main(){ vC=color; vA=alpha; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`;
+  const eFrag = `
+    varying vec3 vC; varying float vA;
+    void main(){ gl_FragColor=vec4(vC,vA); }`;
+  const eMat = new THREE.ShaderMaterial({
+    vertexShader:eVert, fragmentShader:eFrag,
+    vertexColors:true, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending
+  });
+  const eLines = new THREE.LineSegments(eGeo, eMat);
+  scene.add(eLines);
 
-    const DEPTH = 340;
+  // ── ACTIVATION PULSES ─────────────────────────────────────────────────
+  // Occasional bright-edge flashes — simulating signal propagation through
+  // the graph (analogous to HITL intervention events in the UAV system).
+  let acts = [];
 
-    // Convert screen pixel → 3-D world position at z=DEPTH
-    function s2w(sx, sy) {
-      const ndcX =  (sx / window.innerWidth)  * 2 - 1;
-      const ndcY = -(sy / window.innerHeight) * 2 + 1;
-      const v = new THREE.Vector3(ndcX, ndcY, 0.5).unproject(camera);
-      const d = v.sub(camera.position).normalize();
-      const t = (DEPTH - camera.position.z) / d.z;
-      return { x: camera.position.x + d.x * t, y: camera.position.y + d.y * t };
-    }
+  let t = 0, mx = 0, my = 0;
 
-    // Sample letter shapes into an offscreen canvas sized to the actual h1
-    const fs = Math.round(parseFloat(window.getComputedStyle(h1).fontSize)) || 96;
-    const W  = Math.min(Math.round(rect.width),  900)  || 600;
-    const H  = Math.min(Math.round(rect.height), 400)  || 250;
-    const off = document.createElement('canvas');
-    off.width  = W;
-    off.height = H;
-    const ctx = off.getContext('2d');
-    ctx.font = `700 ${fs}px "Space Grotesk", sans-serif`;
-    ctx.textBaseline = 'top';
-    ctx.fillStyle = '#fff';
-    ctx.fillText('Ahmad', 0, 0);
-    ctx.fillStyle = '#4ADE80';
-    ctx.fillText('Firas',  0, fs * 0.92); // match lineHeight:0.88
-
-    const data = ctx.getImageData(0, 0, W, H).data;
-    particleTargets = [];
-    const posList = [], colorList = [], phaseList = [], speedList = [];
-    const step = isMobile ? 6 : 4;
-
-    for (let py = 0; py < H; py += step) {
-      for (let px = 0; px < W; px += step) {
-        if (data[(py * W + px) * 4 + 3] > 100) {
-          const isGreen = data[(py * W + px) * 4 + 1] > data[(py * W + px) * 4] * 1.5;
-          // Map canvas pixel to the exact screen position of the h1
-          const sx = rect.left + (px / W) * rect.width;
-          const sy = rect.top  + (py / H) * rect.height;
-          const { x: wx, y: wy } = s2w(sx, sy);
-          particleTargets.push({ x: wx, y: wy, isGreen });
-          const a = Math.random() * Math.PI * 2, d = 10 + Math.random() * 35;
-          posList.push(wx + Math.cos(a) * d, wy + Math.sin(a) * d, DEPTH + (Math.random() - 0.5) * 20);
-          colorList.push(isGreen ? 0.29 : 1, isGreen ? 0.87 : 1, isGreen ? 0.5 : 1);
-          phaseList.push(Math.random() * Math.PI * 2);
-          speedList.push(0.036 + Math.random() * 0.024);
-        }
-      }
-    }
-
-    if (!particleTargets.length) { setTimeout(initParticles, 200); return; }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(posList),  3));
-    geo.setAttribute('aColor',   new THREE.BufferAttribute(new Float32Array(colorList), 3));
-    geo.setAttribute('phase',    new THREE.BufferAttribute(new Float32Array(phaseList), 1));
-    geo.setAttribute('speed',    new THREE.BufferAttribute(new Float32Array(speedList), 1));
-
-    const pVert = `
-      attribute vec3 aColor; attribute float phase; attribute float speed;
-      uniform float uTime; varying vec3 vColor; varying float vAlpha;
-      void main(){
-        vColor = aColor;
-        float pulse = 0.65 + 0.35 * sin(uTime * 1.8 + phase);
-        vAlpha = pulse;
-        vec4 mv = modelViewMatrix * vec4(position, 1.0);
-        gl_PointSize = 3.2 * (300.0 / -mv.z) * pulse;
-        gl_Position = projectionMatrix * mv;
-      }`;
-    const pFrag = `
-      varying vec3 vColor; varying float vAlpha;
-      void main(){
-        float d = length(gl_PointCoord - 0.5) * 2.0;
-        float g = pow(1.0 - smoothstep(0.0, 1.0, d), 1.6);
-        gl_FragColor = vec4(vColor, g * vAlpha);
-      }`;
-    const pMat = new THREE.ShaderMaterial({
-      vertexShader: pVert, fragmentShader: pFrag,
-      uniforms: { uTime: { value: 0 } },
-      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-    });
-    particleSystem = new THREE.Points(geo, pMat);
-    scene.add(particleSystem);
-  }
-  // Particle name formation disabled — name is rendered as static HTML text
-  // document.fonts.ready.then(() => setTimeout(initParticles, 350));
-
-  // Scroll depth control — maps scroll progress to camera Z
-  let targetZ = 400;
-  let currentZ = 400;
-  let mx = 0, my = 0;
-  let frame = 0;
-
-  function onScroll() {
-    const scrolled = window.scrollY;
-    const total = document.body.scrollHeight - window.innerHeight;
-    const progress = total > 0 ? scrolled / total : 0;
-    // Camera travels from z=400 (surface) to z=-1200 (deep field)
-    targetZ = 400 - progress * 1600;
-    // Scroll progress bar
-    const bar = document.getElementById('scroll-bar');
-    if (bar) bar.style.transform = `scaleX(${progress})`;
-    // Particle scroll detection
-    const nowPast = scrolled > window.innerHeight * 0.45;
-    if (nowPast && !pfScrolledPast) {
-      pfScrolledPast = true;
-      // Start dispersing only if assembled or holding
-      if (pfPhase === 'holding' || pfPhase === 'assembling') pfPhase = 'dispersing';
-    } else if (!nowPast && pfScrolledPast) {
-      pfScrolledPast = false;
-      // Scrolled back — scatter and reassemble
-      if (particleSystem && (pfPhase === 'dispersing' || pfPhase === 'dispersed')) {
-        const pos = particleSystem.geometry.attributes.position.array;
-        for (let i = 0; i < particleTargets.length; i++) {
-          const a = Math.random()*Math.PI*2, d = 10+Math.random()*35;
-          pos[i*3]   = particleTargets[i].x + Math.cos(a)*d;
-          pos[i*3+1] = particleTargets[i].y + Math.sin(a)*d;
-        }
-        particleSystem.geometry.attributes.position.needsUpdate = true;
-        pfPhase = 'assembling';
-      }
-    }
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // Mouse parallax — desktop only (touch devices have no hover)
   if (!isMobile) {
     window.addEventListener('mousemove', e => {
-      mx = (e.clientX / window.innerWidth  - 0.5) * 0.4;
-      my = (e.clientY / window.innerHeight - 0.5) * 0.25;
+      mx = (e.clientX/window.innerWidth  - 0.5)*0.34;
+      my = (e.clientY/window.innerHeight - 0.5)*0.22;
     });
   }
+
+  window.addEventListener('scroll', () => {
+    const p = window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight);
+    const bar = document.getElementById('scroll-bar');
+    if (bar) bar.style.transform = `scaleX(${p})`;
+  }, { passive: true });
 
   window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -562,68 +441,67 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
   });
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  let t = 0;
   function animate() {
     requestAnimationFrame(animate);
-    t += 0.009;
-    frame++;
-    // Smooth camera zoom
-    currentZ += (targetZ - currentZ) * 0.04;
-    camera.position.z = currentZ;
-    // Gentle mouse parallax on camera rotation
-    camera.rotation.y += (mx * 0.03 - camera.rotation.y) * 0.04;
-    camera.rotation.x += (-my * 0.02 - camera.rotation.x) * 0.04;
-    // Slow drift
-    camera.position.x += Math.sin(frame * 0.0003) * 0.04;
-    camera.position.y += Math.cos(frame * 0.0004) * 0.03;
-    // Update star shader time for glow pulse
-    starSystems.forEach(s => { s.material.uniforms.uTime.value = t; });
-    // Update particle formation
-    if (particleSystem && particleTargets.length) {
-      particleSystem.material.uniforms.uTime.value = t;
-      // Keep visible a bit past hero so disperse is seen
-      particleSystem.visible = window.scrollY < window.innerHeight * 1.1;
+    t += 0.007;
 
-      if (pfPhase !== 'dispersed') {
-        const pos = particleSystem.geometry.attributes.position.array;
-        const spd = particleSystem.geometry.attributes.speed.array;
-        const DEPTH = 340;
+    // Camera gentle drift + mouse parallax
+    camera.rotation.y += (mx*0.036 - camera.rotation.y)*0.04;
+    camera.rotation.x += (-my*0.024 - camera.rotation.x)*0.04;
+    camera.position.x += Math.sin(t*0.11)*0.08;
+    camera.position.y += Math.cos(t*0.09)*0.06;
+    // Subtle depth shift with scroll
+    const scrollP = window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight);
+    camera.position.z += (350 - scrollP*55 - camera.position.z)*0.02;
 
-        if (pfPhase === 'assembling') {
-          let allArrived = true;
-          for (let i = 0; i < particleTargets.length; i++) {
-            const dx = particleTargets[i].x - pos[i*3];
-            const dy = particleTargets[i].y - pos[i*3+1];
-            const dz = DEPTH - pos[i*3+2];
-            pos[i*3]   += dx * spd[i];
-            pos[i*3+1] += dy * spd[i];
-            pos[i*3+2] += dz * 0.05;
-            if (Math.abs(dx) + Math.abs(dy) > 1.5) allArrived = false;
-          }
-          particleSystem.geometry.attributes.position.needsUpdate = true;
-          if (allArrived) pfPhase = 'holding';
+    // Update node positions
+    const BX=SPREAD_XY*0.52, BY=SPREAD_XY*0.38, BZ=SPREAD_Z*0.56;
+    for (let i = 0; i < N; i++) {
+      pos[i].x += vel[i].x + Math.sin(t*0.28+phase[i])*0.042;
+      pos[i].y += vel[i].y + Math.cos(t*0.22+phase[i])*0.036;
+      pos[i].z += vel[i].z;
+      if (Math.abs(pos[i].x) > BX) vel[i].x *= -0.85;
+      if (Math.abs(pos[i].y) > BY) vel[i].y *= -0.85;
+      if (Math.abs(pos[i].z) > BZ) vel[i].z *= -0.85;
+      nPos[i*3]=pos[i].x; nPos[i*3+1]=pos[i].y; nPos[i*3+2]=pos[i].z;
+    }
+    nGeo.attributes.position.needsUpdate = true;
 
-        } else if (pfPhase === 'holding') {
-          // Particles stay — tiny drift to keep them alive (no position update needed)
-          // phase is only exited by scroll (set to 'dispersing' in onScroll)
+    // Random activation pulse
+    if (Math.random() < 0.018 && acts.length < 5) {
+      const ai = Math.floor(Math.random()*N);
+      const aj = Math.floor(Math.random()*N);
+      if (ai !== aj) acts.push({ i:ai, j:aj, t:0, max:52 });
+    }
+    acts = acts.filter(a => a.t < a.max);
+    acts.forEach(a => a.t++);
 
-        } else if (pfPhase === 'dispersing') {
-          let allGone = true;
-          for (let i = 0; i < particleTargets.length; i++) {
-            // Each particle flies outward from its target center
-            const cx = pos[i*3]   - particleTargets[i].x;
-            const cy = pos[i*3+1] - particleTargets[i].y;
-            const len = Math.sqrt(cx*cx + cy*cy) + 0.001;
-            const speed = 1.8 + (len / 40); // accelerates as it moves away
-            pos[i*3]   += (cx / len) * speed;
-            pos[i*3+1] += (cy / len) * speed;
-            if (Math.sqrt(cx*cx + cy*cy) < 180) allGone = false;
-          }
-          particleSystem.geometry.attributes.position.needsUpdate = true;
-          if (allGone) pfPhase = 'dispersed';
+    // Rebuild edges
+    let ec = 0;
+    for (let i = 0; i < N && ec < MAX_E; i++) {
+      for (let j = i+1; j < N && ec < MAX_E; j++) {
+        const dx=pos[i].x-pos[j].x, dy=pos[i].y-pos[j].y, dz=pos[i].z-pos[j].z;
+        const dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
+        if (dist < CONNECT) {
+          const base=ec*6, va=ec*2;
+          const proximity = 1 - dist/CONNECT;
+          const isAct = acts.some(a=>(a.i===i&&a.j===j)||(a.i===j&&a.j===i));
+          const alpha = isAct ? 0.52 : proximity*0.17;
+          const col   = isAct ? [0.29,0.87,0.50] : [0.44,0.44,0.60];
+          ePos[base]=pos[i].x;   ePos[base+1]=pos[i].y;   ePos[base+2]=pos[i].z;
+          ePos[base+3]=pos[j].x; ePos[base+4]=pos[j].y;   ePos[base+5]=pos[j].z;
+          eCol[base]=col[0]; eCol[base+1]=col[1]; eCol[base+2]=col[2];
+          eCol[base+3]=col[0];eCol[base+4]=col[1];eCol[base+5]=col[2];
+          eAlp[va]=alpha; eAlp[va+1]=alpha;
+          ec++;
         }
       }
     }
+    eGeo.attributes.position.needsUpdate=true;
+    eGeo.attributes.color.needsUpdate=true;
+    eGeo.attributes.alpha.needsUpdate=true;
+    eGeo.setDrawRange(0, ec*2);
+
     renderer.render(scene, camera);
   }
   animate();
@@ -647,8 +525,8 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
 const T={
   green:'#4ADE80', blue:'#38BDF8', orange:'#FB923C', purple:'#A78BFA', pink:'#F472B6', teal:'#2DD4BF',
   bg:'#04040A', bg1:'#080814', bg2:'#0c0c1c',
-  border:'rgba(255,255,255,0.07)', text:'#D0D0E0', text2:'#9090A8', text3:'#4A4A62',
-  mono:"'Space Mono',monospace", sans:"'Space Grotesk',sans-serif",
+  border:'rgba(255,255,255,0.07)', text:'#D0D0E0', text2:'#BBBBCF', text3:'#848498',
+  mono:"'JetBrains Mono',monospace", sans:"'Sora',sans-serif",
 };
 
 /* ── HOOKS ──────────────────────────────────────────────────────────────── */
@@ -677,7 +555,7 @@ function EL({color=T.green,children,style={}}){
   return(
     <div className="scan-label" style={{display:'flex',alignItems:'center',gap:10,...style}}>
       <span style={{display:'inline-block',width:18,height:1,background:color,opacity:0.5,flexShrink:0}}></span>
-      <span style={{fontFamily:T.mono,fontSize:10,letterSpacing:'0.14em',textTransform:'uppercase',color}}>{children}</span>
+      <span style={{fontFamily:T.mono,fontSize:12,letterSpacing:'0.10em',textTransform:'uppercase',color}}>{children}</span>
     </div>
   );
 }
@@ -694,7 +572,7 @@ function ImgPh({label,style={},className='',slots=1,images=[]}){
     <div style={{position:'absolute',bottom:10,left:'50%',transform:'translateX(-50%)',display:'flex',gap:4,zIndex:3}}>
       {Array.from({length:count}).map((_,i)=>(
         <div key={i} onClick={e=>{e.stopPropagation();setIdx(i);}}
-          style={{width:i===idx?14:5,height:5,borderRadius:3,background:i===idx?'#4ADE80':'rgba(255,255,255,0.25)',cursor:'pointer',transition:'all 0.25s'}}/>
+          style={{width:14,height:5,borderRadius:3,background:i===idx?'#4ADE80':'rgba(255,255,255,0.25)',cursor:'pointer',transformOrigin:'left center',transform:i===idx?'scaleX(1)':'scaleX(0.36)',transition:'transform 0.25s cubic-bezier(0.16,1,0.3,1),background-color 0.25s'}}/>
       ))}
     </div>
   </>;
@@ -715,7 +593,7 @@ function ImgPh({label,style={},className='',slots=1,images=[]}){
 }
 function Tag({c=T.blue,children}){
   const bg=c===T.green?'rgba(74,222,128,0.07)':c===T.orange?'rgba(251,146,60,0.08)':c===T.purple?'rgba(167,139,250,0.07)':c===T.pink?'rgba(244,114,182,0.07)':c===T.teal?'rgba(45,212,191,0.07)':'rgba(56,189,248,0.07)';
-  return<span style={{fontFamily:T.mono,fontSize:9,padding:'3px 9px',background:bg,border:`1px solid ${c}22`,borderRadius:4,color:c,letterSpacing:'0.03em'}}>{children}</span>;
+  return<span style={{fontFamily:T.mono,fontSize:11,padding:'4px 10px',background:bg,border:`1px solid ${c}22`,borderRadius:4,color:c,letterSpacing:'0.03em'}}>{children}</span>;
 }
 function onTilt(e){const el=e.currentTarget;const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-0.5;const y=(e.clientY-r.top)/r.height-0.5;el.style.transform=`perspective(900px) rotateX(${-y*5}deg) rotateY(${x*6}deg) translateY(-1px)`}
 function offTilt(e){e.currentTarget.style.transform=''}
@@ -741,21 +619,36 @@ function AnimMetric({val,label,color=T.green}){
 function Nav(){
   const[sc,setSc]=React.useState(false);
   const[open,setOpen]=React.useState(false);
+  const[active,setActive]=React.useState('');
   React.useEffect(()=>{const h=()=>setSc(window.scrollY>80);window.addEventListener('scroll',h,{passive:true});return()=>window.removeEventListener('scroll',h)},[]);
-  const ls=[['Origin','#origin'],['Path','#experience'],['Work','#projects'],['Research','#research'],['Capabilities','#skills'],['Contact','#contact'],['Docs','docs.html']];
+  // Active section tracking — highlights the nav link for the visible section
+  React.useEffect(()=>{
+    const ids=['origin','experience','projects','research','skills','contact'];
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{if(e.isIntersecting)setActive('#'+e.target.id);});
+    },{threshold:0,rootMargin:'-60px 0px -60% 0px'});
+    ids.forEach(id=>{const el=document.getElementById(id);if(el)io.observe(el);});
+    return()=>io.disconnect();
+  },[]);
+  const ls=[['About','#origin'],['Experience','#experience'],['Work','#projects'],['Research','#research'],['Capabilities','#skills'],['Contact','#contact'],['Docs','docs.html']];
   return(
-    <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:200,padding:'0 52px',background:sc?'rgba(4,4,10,0.9)':'transparent',backdropFilter:sc?'blur(20px)':'none',WebkitBackdropFilter:sc?'blur(20px)':'none',borderBottom:sc?`1px solid ${T.border}`:'1px solid transparent',transition:'all 0.4s cubic-bezier(0.16,1,0.3,1)'}}>
+    <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:200,padding:'0 52px',background:sc?'rgba(4,4,10,0.9)':'transparent',backdropFilter:sc?'blur(20px)':'none',WebkitBackdropFilter:sc?'blur(20px)':'none',borderBottom:sc?`1px solid ${T.border}`:'1px solid transparent',transition:'background 0.4s cubic-bezier(0.16,1,0.3,1),border-color 0.4s'}}>
       <div style={{maxWidth:1280,margin:'0 auto',display:'flex',justifyContent:'space-between',alignItems:'center',height:60}}>
         <a href="#" style={{display:'flex',alignItems:'center',gap:8}}>
           <div className="pulse-dot" style={{width:7,height:7,background:T.green,borderRadius:1}}></div>
           <span style={{fontFamily:T.mono,fontSize:11,fontWeight:700,letterSpacing:'0.1em',color:T.text}}>AHMAD.DEV</span>
         </a>
         <div className={`nav-links${open?' open':''}`} style={{display:'flex',gap:24}}>
-          {ls.map(([l,h],i)=>(
-            <a key={i} href={h} onClick={()=>setOpen(false)} style={{fontFamily:T.mono,fontSize:10,letterSpacing:'0.07em',color:T.text3,textTransform:'uppercase',transition:'color 0.2s'}}
-              onMouseEnter={e=>e.target.style.color=T.green} onMouseLeave={e=>e.target.style.color=T.text3}
-            >{l}</a>
-          ))}
+          {ls.map(([l,h],i)=>{
+            const isAct=active===h;
+            return(
+              <a key={i} href={h} onClick={()=>setOpen(false)}
+                style={{fontFamily:T.mono,fontSize:12,letterSpacing:'0.07em',color:isAct?T.green:T.text3,textTransform:'uppercase',transition:'color 0.2s',borderBottom:`1px solid ${isAct?T.green+'55':'transparent'}`,paddingBottom:2}}
+                onMouseEnter={e=>{e.target.style.color=T.green;e.target.style.borderBottomColor=T.green+'55'}}
+                onMouseLeave={e=>{e.target.style.color=isAct?T.green:T.text3;e.target.style.borderBottomColor=isAct?T.green+'55':'transparent'}}
+              >{l}</a>
+            );
+          })}
         </div>
         <button className="nav-hamburger" onClick={()=>setOpen(o=>!o)} aria-label="Toggle navigation menu" style={{display:'none'}}>
           <span style={{transform:open?'rotate(45deg) translateY(6.5px)':'none'}}></span>
@@ -775,34 +668,38 @@ function Hero(){
     <section id="hero" className="section-wash wash-void" style={{minHeight:'100vh',display:'flex',flexDirection:'column'}}>
       <div className="section-inner hero-split" style={{flex:1,display:'flex',opacity:rdy?1:0,transition:'opacity 1.1s cubic-bezier(0.16,1,0.3,1)'}}>
         {/* LEFT */}
-        <div className="section-pad" style={{flex:'1 1 58%',display:'flex',flexDirection:'column',justifyContent:'space-between',padding:'104px 64px 56px 52px'}}>
+        <div className="section-pad hero-left" style={{flex:'1 1 58%',display:'flex',flexDirection:'column',justifyContent:'space-between',padding:'104px 64px 56px 52px'}}>
           <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-            <span style={{fontFamily:T.mono,fontSize:10,color:T.text3,letterSpacing:'0.1em'}}>00 — PORTFOLIO · 2026</span>
+            <span style={{fontFamily:T.mono,fontSize:10,color:T.text3,letterSpacing:'0.1em'}}>PORTFOLIO · 2026</span>
             <div style={{display:'flex',alignItems:'center',gap:7}}>
               <span style={{width:6,height:6,borderRadius:'50%',background:T.green,boxShadow:`0 0 10px ${T.green}`,display:'inline-block'}}></span>
-              <span style={{fontFamily:T.mono,fontSize:10,color:T.text3,letterSpacing:'0.08em'}}>ACTIVE · UT ATHLETICS</span>
+              <span style={{fontFamily:T.mono,fontSize:10,color:T.text3,letterSpacing:'0.08em'}}>DATA SCIENCE INTERN · TOLEDO</span>
             </div>
           </div>
           <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',paddingTop:20}}>
             <div style={{marginBottom:20}}><EL color={T.green}>Computer Engineer & AI Researcher</EL></div>
-            <h1 style={{fontFamily:T.sans,fontWeight:700,fontSize:'clamp(68px,9.5vw,124px)',lineHeight:0.88,letterSpacing:'-0.05em',color:'#fff',userSelect:'none',
+            <h1 style={{fontFamily:T.sans,fontWeight:700,fontSize:'clamp(68px,9.5vw,124px)',lineHeight:0.88,letterSpacing:'-0.04em',color:'#fff',userSelect:'none',
               opacity:rdy?1:0,transform:rdy?'translateY(0)':'translateY(40px)',transition:'opacity 0.9s 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.9s 0.3s cubic-bezier(0.16,1,0.3,1)'}}>
               Ahmad<br/><span style={{color:T.green}}>Firas</span>
             </h1>
             <p style={{fontSize:17,lineHeight:1.65,color:T.text2,maxWidth:440,marginTop:32,opacity:rdy?1:0,transform:rdy?'translateY(0)':'translateY(24px)',transition:'opacity 0.9s 0.5s cubic-bezier(0.16,1,0.3,1),transform 0.9s 0.5s cubic-bezier(0.16,1,0.3,1)'}}>
               Building AI systems for uncertain environments: from UAV autonomy research to enterprise agentic workflows.
             </p>
-            <div style={{marginTop:36,display:'flex',gap:14,alignItems:'center',opacity:rdy?1:0,transition:'opacity 0.9s 0.7s ease'}}>
-              <a href="#projects" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'11px 24px',background:T.green,color:'#000',fontFamily:T.mono,fontSize:11,fontWeight:700,letterSpacing:'0.06em',borderRadius:6,textTransform:'uppercase',transition:'opacity 0.2s'}}
+            <div style={{marginTop:36,display:'flex',gap:14,alignItems:'center',flexWrap:'wrap',opacity:rdy?1:0,transition:'opacity 0.9s 0.7s ease'}}>
+              <a href="#projects" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'11px 24px',background:T.green,color:'#050A06',fontFamily:T.mono,fontSize:11,fontWeight:700,letterSpacing:'0.06em',borderRadius:6,textTransform:'uppercase',transition:'opacity 0.2s'}}
                 onMouseEnter={e=>e.currentTarget.style.opacity='0.82'} onMouseLeave={e=>e.currentTarget.style.opacity='1'}>View Work ↗</a>
               <a href="#contact" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'11px 24px',border:`1px solid ${T.border}`,color:T.text2,fontFamily:T.mono,fontSize:11,letterSpacing:'0.06em',borderRadius:6,textTransform:'uppercase',transition:'all 0.2s'}}
                 onMouseEnter={e=>{e.currentTarget.style.borderColor=T.blue;e.currentTarget.style.color=T.blue}}
                 onMouseLeave={e=>{e.currentTarget.style.borderColor=T.border;e.currentTarget.style.color=T.text2}}>Get in Touch</a>
+              <a href="docs/Ahmad_Resume_Developer_I_FirstSolar.pdf" target="_blank" rel="noopener"
+                style={{display:'inline-flex',alignItems:'center',gap:6,padding:'9px 18px',border:`1px solid ${T.border}`,color:T.text3,fontFamily:T.mono,fontSize:10,letterSpacing:'0.07em',borderRadius:6,textTransform:'uppercase',transition:'all 0.2s'}}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor=T.teal;e.currentTarget.style.color=T.teal}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor=T.border;e.currentTarget.style.color=T.text3}}>Resume ↓</a>
             </div>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:10,opacity:rdy?0.5:0,transition:'opacity 1s 1.2s ease'}}>
             <div style={{width:1,height:36,background:`linear-gradient(to bottom,${T.green},transparent)`}}></div>
-            <span style={{fontFamily:T.mono,fontSize:9,letterSpacing:'0.14em',color:T.text3,textTransform:'uppercase'}}>Scroll — journey deeper</span>
+            <span style={{fontFamily:T.mono,fontSize:9,letterSpacing:'0.14em',color:T.text3,textTransform:'uppercase'}}>Scroll to explore</span>
           </div>
         </div>
         {/* RIGHT brief panel */}
@@ -816,9 +713,9 @@ function Hero(){
               {l:'Focus',v:'Agentic AI · Autonomous UAV · MLOps',s:null,c:T.orange},
             ].map((f,i)=>(
               <div key={i} style={{padding:'13px 0',borderBottom:`1px solid ${T.border}`}}>
-                <div style={{fontFamily:T.mono,fontSize:9,color:f.c,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:4,opacity:0.7}}>{f.l}</div>
-                <div style={{fontSize:13,fontWeight:500,color:T.text}}>{f.v}</div>
-                {f.s&&<div style={{fontSize:12,color:T.text3,marginTop:2}}>{f.s}</div>}
+                <div style={{fontFamily:T.mono,fontSize:11,color:f.c,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:4,opacity:0.8}}>{f.l}</div>
+                <div style={{fontSize:15,fontWeight:500,color:T.text}}>{f.v}</div>
+                {f.s&&<div style={{fontSize:13,color:T.text3,marginTop:2}}>{f.s}</div>}
               </div>
             ))}
           </div>
@@ -833,7 +730,7 @@ function Origin(){
   return(
     <section id="origin" className="section-wash wash-deep" style={{padding:'100px 52px'}}>
       <div className="section-inner" style={{maxWidth:1280,margin:'0 auto'}}>
-        <EL color={T.purple} style={{marginBottom:48}}>Origin</EL>
+        <EL color={T.blue} style={{marginBottom:48}}>Origin</EL>
         <div className="two-col reveal" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:72}}>
           <div>
             <h2 style={{fontFamily:T.sans,fontSize:28,fontWeight:600,lineHeight:1.3,letterSpacing:'-0.02em',color:'#fff'}}>
@@ -844,7 +741,7 @@ function Origin(){
             <ImgPh label="Lab / project environment" slots={3} style={{width:'100%',aspectRatio:'16/9',marginTop:28}}/>
           </div>
           <div>
-            <div style={{fontFamily:T.mono,fontSize:10,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:20}}>Three things I believe</div>
+            <div style={{fontFamily:T.mono,fontSize:11,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:20}}>Three things I believe</div>
             {[
               {n:'01',c:T.green, t:'Interdisciplinary by instinct',b:"The skill that transfers between fields isn't domain knowledge — it's knowing how to ask the right question when you don't have home-field advantage."},
               {n:'02',c:T.blue,  t:'Human-in-the-loop by design',  b:"A system someone can't override isn't autonomous — it's unpredictable. The recovery mechanism is part of the design, not an afterthought."},
@@ -856,13 +753,13 @@ function Origin(){
                   <span style={{fontFamily:T.mono,fontSize:10,color:t.c}}>{t.n}</span>
                   <span style={{fontSize:14,fontWeight:600,color:'#fff'}}>{t.t}</span>
                 </div>
-                <p style={{fontSize:13,lineHeight:1.75,color:T.text2}}>{t.b}</p>
+                <p style={{fontSize:15,lineHeight:1.8,color:T.text2}}>{t.b}</p>
               </div>
             ))}
             <div style={{marginTop:16,padding:'20px',background:'rgba(255,255,255,0.02)',borderRadius:8,border:`1px solid ${T.border}`}}>
-              <div style={{fontFamily:T.mono,fontSize:9,color:T.purple,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:10}}>Education</div>
-              <div style={{fontSize:15,fontWeight:600,color:'#fff'}}>University of Toledo</div>
-              <div style={{fontSize:13,color:T.text2,marginTop:3}}>B.S. Computer Science & Engineering · Minor in Mathematics</div>
+              <div style={{fontFamily:T.mono,fontSize:11,color:T.purple,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:10}}>Education</div>
+              <div style={{fontSize:16,fontWeight:600,color:'#fff'}}>University of Toledo</div>
+              <div style={{fontSize:14,color:T.text2,marginTop:3}}>B.S. Computer Science & Engineering · Minor in Mathematics</div>
               <div style={{fontFamily:T.mono,fontSize:10,color:T.blue,marginTop:8}}>2021 – 2026 · Graduated · GPA 3.23</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:4,marginTop:12}}>
                 {['Machine Learning','Neural Networks','Databases','Software Eng.','Embedded Systems'].map(c=><Tag key={c}>{c}</Tag>)}
@@ -875,68 +772,112 @@ function Origin(){
   );
 }
 
-/* ── EXPERIENCE — vertical timeline ─────────────────────────────────────── */
+/* ── EXPERIENCE — expandable timeline ───────────────────────────────────── */
 function Experience(){
+  const[openExp,setOpenExp]=React.useState(null);
   const jobs=[
-    {r:'Sports Analytics & Data Science Intern',co:'UToledo Athletics',p:'Oct 2025 – Present',loc:'Toledo, OH',t:'Internship',active:true,c:T.teal,
+    {r:'Sports Analytics & Data Science Intern',co:'UToledo Athletics',p:'Oct 2025 – Present',loc:'Toledo, OH',t:'Internship',active:true,c:T.teal,slug:'sports-analytics',
+     preview:'ML models for roster efficiency · DOMO dashboards translating performance metrics into coaching insights.',
      d:'ML-powered statistical models for roster efficiency and student-athlete benefit allocation. Interactive DOMO dashboards translating performance metrics into coaching insights.',
      s:['Python','scikit-learn','DOMO','Statistical Modeling']},
-    {r:'Microsoft Solution Developer',co:'First Solar',p:'Jan 2026 – May 2026',loc:'Perrysburg, OH',t:'Full-time',c:T.green,
+    {r:'Microsoft Solution Developer',co:'First Solar',p:'Jan 2026 – May 2026',loc:'Perrysburg, OH',t:'Full-time',c:T.green,slug:'first-solar',
+     preview:'Agentic AI in Microsoft Copilot Studio · enterprise multi-step autonomous workflows.',
      d:'Design and ship agentic AI solutions in Microsoft Copilot Studio, translating business requirements into autonomous multi-step workflows. Lead intern team on code reviews, delivery milestones, and enterprise governance.',
      s:['Copilot Studio','Azure AI','Power Automate','M365','Python']},
-    {r:'Undergraduate Researcher',co:'LION Lab · CPHS Lab',p:'May – Dec 2025',loc:'University of Toledo',t:'Research Co-Op',c:T.blue,
+    {r:'Undergraduate Researcher',co:'LION Lab · CPHS Lab',p:'May – Dec 2025',loc:'University of Toledo',t:'Research Co-Op',c:T.blue,slug:'lion-lab',
+     preview:'72.8% zero-shot UAV deployment via MAML · 97.3% HITL success at sub-100ms · ACM paper authored.',
      d:'72.8% zero-shot UAV deployment via MAML across 1,000+ simulated environments. 97.3% HITL success at sub-100ms. Built Deep Flyer drone training platform. Authored ACM Computing Surveys paper on AI failure taxonomy.',
      s:['PyTorch','ROS 2','MAML','YOLO11','AirSim','NVIDIA Jetson']},
-    {r:'Senior Design Team Lead',co:'Grange Insurance × UToledo',p:'Aug 2024 – May 2025',loc:'Toledo, OH',t:'Industry Project',c:T.purple,
+    {r:'Senior Design Team Lead',co:'Grange Insurance × UToledo',p:'Aug 2024 – May 2025',loc:'Toledo, OH',t:'Industry Project',c:T.purple,slug:'grange-insurance',
+     preview:'MLOps insurance risk model · R²=0.976 · 75% reduction in manual review.',
      d:'Led interdisciplinary team delivering MLOps insurance risk model (R² = 0.976). Airflow + MLflow pipeline with drift monitoring and HITL gates, reducing manual intervention by 75%.',
      s:['XGBoost','Airflow','MLflow','AWS S3','Bayesian Opt.']},
-    {r:'Database Engineer Co-Op',co:'Park Place Technologies',p:'May – Aug 2023',loc:'Toledo, OH',t:'Co-Op',c:T.orange,
+    {r:'Database Engineer Co-Op',co:'Park Place Technologies',p:'May – Aug 2023',loc:'Toledo, OH',t:'Co-Op',c:T.orange,slug:'park-place',
+     preview:'PostgreSQL security database · 15% faster incident response · zero data loss in quarterly DR tests.',
      d:'Centralized PostgreSQL security database consolidating Active Directory, Cisco AMP, and Microsoft Defender. 15% faster incident response, 95% data integrity, zero data loss in quarterly DR tests.',
      s:['PostgreSQL','pgAdmin','Active Directory','Cisco AMP']},
   ];
+  React.useEffect(()=>{
+    const hash=window.location.hash;
+    if(hash.startsWith('#exp-')){
+      const slug=hash.replace('#exp-','');
+      const idx=jobs.findIndex(j=>j.slug===slug);
+      if(idx!==-1)setOpenExp(idx);
+    }
+  },[]);
+
+  // Escape key collapses the open experience item
+  React.useEffect(()=>{
+    const onKey=(e)=>{if(e.key==='Escape'&&openExp!==null){setOpenExp(null);history.replaceState(null,'','#experience');}};
+    document.addEventListener('keydown',onKey);
+    return()=>document.removeEventListener('keydown',onKey);
+  },[openExp]);
+  const handleExp=(i)=>{
+    if(openExp===i){setOpenExp(null);history.replaceState(null,'','#experience');}
+    else{
+      setOpenExp(i);
+      history.replaceState(null,'',`#exp-${jobs[i].slug}`);
+      setTimeout(()=>{const el=document.getElementById(`exp-${jobs[i].slug}`);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},80);
+    }
+  };
   return(
     <section id="experience" className="section-wash wash-nebula" style={{padding:'100px 52px'}}>
       <div className="section-inner" style={{maxWidth:1280,margin:'0 auto'}}>
-        <EL color={T.purple} style={{marginBottom:52}}>The Path</EL>
+        <EL color={T.blue} style={{marginBottom:14}}>The Path</EL>
+        <p style={{fontSize:16,color:T.text2,maxWidth:480,lineHeight:1.6,marginBottom:52}}>Five roles. Click any to expand the full story.</p>
         <div className="reveal" style={{position:'relative',paddingLeft:36}}>
-          {/* Spine */}
           <div style={{position:'absolute',left:6,top:10,bottom:10,width:1,background:'linear-gradient(to bottom,rgba(167,139,250,0.4),rgba(255,255,255,0.06))'}}></div>
-          <div style={{display:'flex',flexDirection:'column',gap:28}}>
-            {jobs.map((j,i)=>(
-              <div key={i} style={{position:'relative'}}>
-                {/* Node */}
-                <div style={{position:'absolute',left:-34,top:10,width:12,height:12,borderRadius:'50%',
-                  border:`2px solid ${j.c}`,background:j.active?j.c:T.bg,
-                  boxShadow:j.active?`0 0 0 4px ${j.c}22,0 0 14px ${j.c}66`:'none',
-                  zIndex:1}} className={j.active?'pulse-dot':''}></div>
-                {/* Card */}
-                <div className="tilt" style={{background:'rgba(255,255,255,0.025)',border:`1px solid ${T.border}`,borderTop:`2px solid ${j.c}`,borderRadius:10,padding:'22px 26px',transition:'all 0.25s cubic-bezier(0.16,1,0.3,1)'}}
-                  onMouseMove={onTilt}
-                  onMouseLeave={e=>{offTilt(e);e.currentTarget.style.borderColor=T.border;e.currentTarget.style.borderTopColor=j.c;}}
-                  onMouseEnter={e=>e.currentTarget.style.borderColor=`${j.c}44`}>
-                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',gap:16,flexWrap:'wrap',marginBottom:12}}>
-                    <div>
-                      {j.active&&(
-                        <div style={{display:'inline-flex',alignItems:'center',gap:5,marginBottom:8,padding:'2px 9px',background:`${j.c}15`,borderRadius:20,border:`1px solid ${j.c}33`}}>
-                          <div style={{width:5,height:5,borderRadius:'50%',background:j.c}} className="pulse-dot"></div>
-                          <span style={{fontFamily:T.mono,fontSize:9,color:j.c,letterSpacing:'0.1em',textTransform:'uppercase'}}>Present</span>
+          <div style={{display:'flex',flexDirection:'column',gap:10}}>
+            {jobs.map((j,i)=>{
+              const isOpen=openExp===i;
+              return(
+                <div key={i} id={`exp-${j.slug}`} style={{position:'relative'}}>
+                  <div style={{position:'absolute',left:-34,top:22,width:12,height:12,borderRadius:'50%',
+                    border:`2px solid ${j.c}`,background:isOpen||j.active?j.c:T.bg,
+                    boxShadow:isOpen||j.active?`0 0 0 4px ${j.c}22,0 0 14px ${j.c}66`:'none',
+                    zIndex:1,transition:'all 0.3s'}} className={j.active?'pulse-dot':''}></div>
+                  <div onClick={()=>handleExp(i)}
+                    tabIndex={0}
+                    role="button"
+                    aria-expanded={isOpen}
+                    aria-label={`${j.r} at ${j.co} — click to ${isOpen?'collapse':'expand'}`}
+                    onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();handleExp(i);}}}
+                    style={{background:isOpen?`${j.c}0a`:'rgba(255,255,255,0.025)',
+                      border:`1px solid ${isOpen?j.c+'55':T.border}`,
+                      borderTop:`2px solid ${j.c}`,
+                      borderRadius:10,overflow:'hidden',cursor:'pointer',
+                      transition:'all 0.32s cubic-bezier(0.16,1,0.3,1)',
+                      boxShadow:isOpen?`0 8px 32px rgba(0,0,0,0.4)`:'none'}}>
+                    <div style={{padding:'20px 26px',display:'flex',justifyContent:'space-between',alignItems:'flex-start',gap:16,flexWrap:'wrap'}}>
+                      <div style={{flex:1,minWidth:0}}>
+                        {j.active&&(
+                          <div style={{display:'inline-flex',alignItems:'center',gap:5,marginBottom:8,padding:'2px 9px',background:`${j.c}15`,borderRadius:20,border:`1px solid ${j.c}33`}}>
+                            <div style={{width:5,height:5,borderRadius:'50%',background:j.c}} className="pulse-dot"></div>
+                            <span style={{fontFamily:T.mono,fontSize:10,color:j.c,letterSpacing:'0.1em',textTransform:'uppercase'}}>Present</span>
+                          </div>
+                        )}
+                        <h3 style={{fontSize:18,fontWeight:600,color:'#fff',letterSpacing:'-0.01em',lineHeight:1.25,margin:0}}>{j.r}</h3>
+                        <div style={{fontFamily:T.mono,fontSize:12,color:j.c,marginTop:5,opacity:0.9}}>{j.co}</div>
+                        {!isOpen&&<p style={{fontSize:14,color:T.text2,marginTop:7,lineHeight:1.55,maxWidth:560}}>{j.preview}</p>}
+                      </div>
+                      <div style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:4,flexShrink:0}}>
+                        <div style={{fontFamily:T.mono,fontSize:11,color:T.text2}}>{j.p}</div>
+                        <div style={{fontFamily:T.mono,fontSize:10,color:T.text3,textTransform:'uppercase',letterSpacing:'0.07em'}}>{j.t} · {j.loc}</div>
+                        <span aria-hidden="true" style={{fontSize:18,color:j.c,marginTop:6,transition:'transform 0.35s cubic-bezier(0.16,1,0.3,1)',transform:isOpen?'rotate(45deg)':'none',display:'inline-block',lineHeight:1}}>+</span>
+                      </div>
+                    </div>
+                    {isOpen&&(
+                      <div style={{padding:'0 26px 26px',borderTop:`1px solid rgba(255,255,255,0.06)`}} onClick={e=>e.stopPropagation()}>
+                        <p style={{fontSize:15,lineHeight:1.9,color:T.text2,marginTop:20,marginBottom:18}}>{j.d}</p>
+                        <div style={{display:'flex',flexWrap:'wrap',gap:6}}>
+                          {j.s.map(s=><Tag key={s} c={j.c}>{s}</Tag>)}
                         </div>
-                      )}
-                      <h3 style={{fontSize:16,fontWeight:600,color:'#fff',letterSpacing:'-0.01em',lineHeight:1.25,margin:0}}>{j.r}</h3>
-                      <div style={{fontFamily:T.mono,fontSize:11,color:j.c,marginTop:5,opacity:0.85}}>{j.co}</div>
-                    </div>
-                    <div style={{textAlign:'right',flexShrink:0}}>
-                      <div style={{fontFamily:T.mono,fontSize:10,color:T.text2}}>{j.p}</div>
-                      <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,marginTop:2,textTransform:'uppercase',letterSpacing:'0.07em'}}>{j.t} · {j.loc}</div>
-                    </div>
-                  </div>
-                  <p style={{fontSize:13,lineHeight:1.8,color:T.text2,maxWidth:760}}>{j.d}</p>
-                  <div style={{display:'flex',flexWrap:'wrap',gap:5,marginTop:14}}>
-                    {j.s.map(s=><Tag key={s} c={j.c}>{s}</Tag>)}
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
@@ -973,7 +914,7 @@ function Projects(){
       what:'Disparate security feeds from Active Directory, Cisco AMP, and Microsoft Defender consolidated into a single PostgreSQL architecture with principled validation and quarterly-tested disaster recovery.',
       learn:"Most data quality problems in security ops aren't adversarial: they're inconsistent tooling assumptions meeting at a data boundary.",
       s:['PostgreSQL','Active Directory','Cisco AMP','Disaster Recovery']},
-    {idx:'06',dom:'Hackathon',slug:'deep-truth',c:T.green,n:'Deep Truth',tag:'RocketHacks 2025 · Best Use of MongoDB Atlas',fr:'News credibility assessment, built in 24 hours.',img:'DeepTruth UI screenshot',imgs:['Images/DeepTruth_Group.png'],span:2,
+    {idx:'06',dom:'Hackathon',slug:'deep-truth',c:T.green,n:'Deep Truth',tag:'RocketHacks 2025 · Best Use of MongoDB Atlas',fr:'News credibility assessment, built in 24 hours.',img:'DeepTruth UI screenshot',imgs:['Images/DeepTruth_Group.png'],span:1,
       m:[['#1','MongoDB Atlas prize'],['24h','Build sprint']],
       what:'Users submit a news article and receive an AI-powered credibility verdict with plain-language explanation and five sourced references. Explainability was a first-class constraint, not a retrofit.',
       learn:'The 24-hour clock produced the best decision: build explainability from the start.',
@@ -999,6 +940,13 @@ function Projects(){
     }
   },[]);
 
+  // Escape key closes the open case study
+  React.useEffect(()=>{
+    const onKey=(e)=>{if(e.key==='Escape'&&sel!==null){setSel(null);history.replaceState(null,'','#projects');}};
+    document.addEventListener('keydown',onKey);
+    return()=>document.removeEventListener('keydown',onKey);
+  },[sel]);
+
   const handleSel=(i)=>{
     if(sel===i){
       setSel(null);
@@ -1021,12 +969,17 @@ function Projects(){
         <p style={{fontSize:16,color:T.text2,maxWidth:520,lineHeight:1.6,marginBottom:44}}>Each project a different operating condition. Click any card for the full case study.</p>
 
         {/* Bento mosaic grid */}
-        <div className="reveal" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:14}}>
+        <div className="reveal proj-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:14}}>
           {projects.map((proj,i)=>{
             const isActive=sel===i;
             return(
               <div key={i} onClick={()=>handleSel(i)}
-                className={isActive?undefined:'tilt'}
+                tabIndex={0}
+                role="button"
+                aria-expanded={isActive}
+                aria-label={`${proj.n} — click to ${isActive?'close':'expand'} case study`}
+                onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();handleSel(i);}}}
+                className={[proj.span===2&&'proj-span-2',!isActive&&'tilt'].filter(Boolean).join(' ')||undefined}
                 style={{gridColumn:`span ${proj.span}`,
                   background:isActive?`${proj.c}0a`:'rgba(255,255,255,0.02)',
                   border:`1px solid ${isActive?proj.c:T.border}`,
@@ -1039,13 +992,13 @@ function Projects(){
                 <div style={{padding:'18px 20px'}}>
                   <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
                     <div style={{display:'flex',alignItems:'center',gap:8}}>
-                      <span style={{fontFamily:T.mono,fontSize:8,padding:'2px 7px',background:`${proj.c}15`,border:`1px solid ${proj.c}33`,borderRadius:3,color:proj.c,letterSpacing:'0.08em',textTransform:'uppercase'}}>{proj.dom}</span>
-                      <span style={{fontFamily:T.mono,fontSize:8,color:T.text3}}>{proj.idx}</span>
+                      <span style={{fontFamily:T.mono,fontSize:11,padding:'3px 8px',background:`${proj.c}15`,border:`1px solid ${proj.c}33`,borderRadius:3,color:proj.c,letterSpacing:'0.08em',textTransform:'uppercase'}}>{proj.dom}</span>
+                      <span style={{fontFamily:T.mono,fontSize:11,color:T.text3}}>{proj.idx}</span>
                     </div>
                     <span aria-hidden="true" style={{fontSize:14,color:isActive?proj.c:T.text3,transition:'transform 0.3s cubic-bezier(0.16,1,0.3,1),color 0.2s',transform:isActive?'rotate(45deg)':'none',flexShrink:0}}>+</span>
                   </div>
                   <h3 style={{fontSize:proj.span===2?17:15,fontWeight:600,color:'#fff',lineHeight:1.3,marginBottom:8}}>{proj.n}</h3>
-                  <p style={{fontSize:13,color:T.text2,lineHeight:1.6,marginBottom:12}}>{proj.fr}</p>
+                  <p style={{fontSize:14,color:T.text2,lineHeight:1.65,marginBottom:12}}>{proj.fr}</p>
                   <div style={{display:'flex',flexWrap:'wrap',gap:4}}>
                     {proj.s.slice(0,proj.span===2?4:3).map(s=><Tag key={s} c={proj.c}>{s}</Tag>)}
                   </div>
@@ -1057,16 +1010,16 @@ function Projects(){
 
         {/* Inline case study expansion — no modal, no fixed overlay */}
         {p&&(
-          <div id={`project-${p.slug}`} role="region" aria-label={`${p.n} case study`}
+          <div id={`project-${p.slug}`} role="region" aria-label={`${p.n} case study`} className="proj-case-study"
             style={{marginTop:16,background:'rgba(6,6,18,0.92)',border:`1px solid ${p.c}33`,borderTop:`2px solid ${p.c}`,borderRadius:12,padding:'36px 44px',position:'relative'}}>
 
             {/* Header */}
             <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:24,marginBottom:24}}>
               <div style={{flex:1,minWidth:0}}>
                 <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:10,flexWrap:'wrap'}}>
-                  <span style={{fontFamily:T.mono,fontSize:9,padding:'2px 8px',background:`${p.c}18`,border:`1px solid ${p.c}33`,borderRadius:3,color:p.c,letterSpacing:'0.1em',textTransform:'uppercase'}}>{p.dom}</span>
-                  <span style={{fontFamily:T.mono,fontSize:9,color:T.text3}}>{p.idx}</span>
-                  <span style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.04em'}}>{p.tag}</span>
+                  <span style={{fontFamily:T.mono,fontSize:11,padding:'2px 8px',background:`${p.c}18`,border:`1px solid ${p.c}33`,borderRadius:3,color:p.c,letterSpacing:'0.1em',textTransform:'uppercase'}}>{p.dom}</span>
+                  <span style={{fontFamily:T.mono,fontSize:11,color:T.text3}}>{p.idx}</span>
+                  <span style={{fontFamily:T.mono,fontSize:11,color:T.text3,letterSpacing:'0.04em'}}>{p.tag}</span>
                 </div>
                 <h2 style={{fontFamily:T.sans,fontSize:26,fontWeight:700,color:'#fff',letterSpacing:'-0.02em',lineHeight:1.2,marginBottom:10}}>{p.n}</h2>
                 <p style={{fontSize:16,fontWeight:500,color:T.text,lineHeight:1.55,maxWidth:640}}>{p.fr}</p>
@@ -1083,18 +1036,18 @@ function Projects(){
             {/* Narrative first: what built / what learned */}
             <div className="two-col" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:36,marginBottom:0}}>
               <div>
-                <div style={{fontFamily:T.mono,fontSize:9,color:p.c,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:10,display:'flex',alignItems:'center',gap:7}}>
+                <div style={{fontFamily:T.mono,fontSize:11,color:p.c,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:10,display:'flex',alignItems:'center',gap:7}}>
                   <span style={{width:12,height:1,background:p.c,opacity:0.5,display:'inline-block',flexShrink:0}}></span>
                   What was built
                 </div>
-                <p style={{fontSize:14,lineHeight:1.85,color:T.text2}}>{p.what}</p>
+                <p style={{fontSize:15,lineHeight:1.9,color:T.text2}}>{p.what}</p>
               </div>
               <div>
-                <div style={{fontFamily:T.mono,fontSize:9,color:T.orange,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:10,display:'flex',alignItems:'center',gap:7}}>
+                <div style={{fontFamily:T.mono,fontSize:11,color:T.orange,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:10,display:'flex',alignItems:'center',gap:7}}>
                   <span style={{width:12,height:1,background:T.orange,opacity:0.5,display:'inline-block',flexShrink:0}}></span>
                   What I learned
                 </div>
-                <p style={{fontSize:14,lineHeight:1.85,color:T.text2}}>{p.learn}</p>
+                <p style={{fontSize:15,lineHeight:1.9,color:T.text2}}>{p.learn}</p>
               </div>
             </div>
 
@@ -1103,7 +1056,7 @@ function Projects(){
               {p.m.map(([v,l],j)=>(
                 <div key={j} style={{display:'flex',alignItems:'baseline',gap:6,padding:'6px 12px',background:`${p.c}0d`,border:`1px solid ${p.c}22`,borderRadius:5}}>
                   <span style={{fontFamily:T.mono,fontSize:13,fontWeight:700,color:p.c,lineHeight:1}}>{v}</span>
-                  <span style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.08em',textTransform:'uppercase'}}>{l}</span>
+                  <span style={{fontFamily:T.mono,fontSize:11,color:T.text3,letterSpacing:'0.08em',textTransform:'uppercase'}}>{l}</span>
                 </div>
               ))}
             </div>
@@ -1124,7 +1077,7 @@ function Research(){
   return(
     <section id="research" className="section-wash wash-pulse" style={{padding:'100px 52px'}}>
       <div className="section-inner" style={{maxWidth:1280,margin:'0 auto'}}>
-        <EL color={T.orange} style={{marginBottom:48}}>Research & Publications</EL>
+        <EL color={T.blue} style={{marginBottom:48}}>Research & Publications</EL>
         <div className="two-col reveal" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:48,marginBottom:48}}>
           <ImgPh label="4-Pillars Taxonomy diagram" images={['Images/4-Pillars.png']} style={{width:'100%',aspectRatio:'4/3'}}/>
           <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
@@ -1142,14 +1095,14 @@ function Research(){
                 onMouseLeave={e=>{e.currentTarget.style.background='transparent';e.currentTarget.style.borderColor=`${T.orange}44`}}>
                 View Preprint ↗
               </a>
-              <span style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.06em'}}>Submitted April 2026 · Awaiting review</span>
+              <span style={{fontFamily:T.mono,fontSize:11,color:T.text3,letterSpacing:'0.06em'}}>Submitted April 2026 · Awaiting review</span>
             </div>
           </div>
         </div>
 
         {/* Featured In — with photo + real link */}
         <div className="reveal" style={{background:'rgba(255,255,255,0.02)',border:`1px solid ${T.border}`,borderRadius:10,overflow:'hidden'}}>
-          <div style={{fontFamily:T.mono,fontSize:9,color:T.orange,letterSpacing:'0.12em',textTransform:'uppercase',padding:'18px 24px 0',opacity:0.8}}>Featured In</div>
+          <div style={{fontFamily:T.mono,fontSize:11,color:T.orange,letterSpacing:'0.12em',textTransform:'uppercase',padding:'18px 24px 0',opacity:0.9}}>Featured In</div>
           <div className="two-col featured-grid" style={{display:'grid',gridTemplateColumns:'280px 1fr',gap:0}}>
             <ImgPh label="Article feature photo" images={['Images/athletics_group_pics.png']} style={{width:'100%',height:'100%',minHeight:200,borderRadius:0}} className="featured-img"/>
             <div style={{padding:'20px 28px',display:'flex',flexDirection:'column',justifyContent:'center'}}>
@@ -1198,7 +1151,7 @@ function Skills(){
   return(
     <section id="skills" className="section-wash wash-warm" style={{padding:'100px 52px'}}>
       <div className="section-inner" style={{maxWidth:1280,margin:'0 auto'}}>
-        <EL color={T.pink} style={{marginBottom:44}}>Capabilities</EL>
+        <EL color={T.blue} style={{marginBottom:44}}>Capabilities</EL>
         <div className="three-col reveal" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10}}>
           {cats.map((cat,i)=>(
             <div key={i} className="tilt" style={{background:'rgba(255,255,255,0.02)',border:`1px solid ${T.border}`,borderRadius:8,padding:22,transition:'border-color 0.2s'}}
@@ -1207,10 +1160,10 @@ function Skills(){
               onMouseEnter={e=>e.currentTarget.style.borderColor=cat.c+'33'}>
               <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:14}}>
                 <div style={{width:5,height:5,background:cat.c,borderRadius:1}}></div>
-                <span style={{fontFamily:T.mono,fontSize:9,color:cat.c,letterSpacing:'0.1em',textTransform:'uppercase'}}>{cat.n}</span>
+                <span style={{fontFamily:T.mono,fontSize:11,color:cat.c,letterSpacing:'0.1em',textTransform:'uppercase'}}>{cat.n}</span>
               </div>
               <div style={{display:'flex',flexWrap:'wrap',gap:4}}>
-                {cat.s.map(s=><span key={s} style={{fontFamily:T.mono,fontSize:10,padding:'3px 8px',background:'rgba(255,255,255,0.02)',border:`1px solid ${T.border}`,borderRadius:4,color:T.text2,letterSpacing:'0.02em'}}>{s}</span>)}
+                {cat.s.map(s=><span key={s} style={{fontFamily:T.mono,fontSize:12,padding:'4px 9px',background:'rgba(255,255,255,0.02)',border:`1px solid ${T.border}`,borderRadius:4,color:T.text2,letterSpacing:'0.02em'}}>{s}</span>)}
               </div>
             </div>
           ))}
@@ -1218,7 +1171,7 @@ function Skills(){
 
         {/* Awards */}
         <div style={{marginTop:52}}>
-          <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:20}}>Awards & Recognition</div>
+          <div style={{fontFamily:T.mono,fontSize:11,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:20}}>Awards & Recognition</div>
           <div className="two-col reveal" style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10}}>
             {awards.map((a,i)=>{
               const isOpen=openAward===i;
@@ -1250,7 +1203,7 @@ function Skills(){
 
         {/* Affiliations */}
         <div style={{marginTop:52}}>
-          <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:20}}>Professional Affiliations</div>
+          <div style={{fontFamily:T.mono,fontSize:11,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:20}}>Professional Affiliations</div>
           <div className="two-col reveal" style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10}}>
             {affiliations.map((a,i)=>{
               const isOpen=openAffil===i;
@@ -1281,43 +1234,21 @@ function Skills(){
             })}
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── CERTIFICATIONS ─────────────────────────────────────────────────────── */
-function Certifications(){
-  return(
-    <section id="certifications" className="section-wash wash-cold" style={{padding:'100px 52px'}}>
-      <div className="section-inner" style={{maxWidth:1280,margin:'0 auto'}}>
-        <EL color={T.teal} style={{marginBottom:40}}>Certifications</EL>
-
-        {/* Black Opal — elevated */}
-        <div className="reveal" style={{marginBottom:16,background:`${T.purple}08`,border:`1px solid ${T.purple}33`,borderRadius:12,padding:'28px 32px',display:'flex',alignItems:'flex-start',gap:28}}>
-          <div style={{width:52,height:52,borderRadius:10,background:`${T.purple}18`,border:`1px solid ${T.purple}44`,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
-            <span style={{fontFamily:T.mono,fontSize:10,fontWeight:700,color:T.purple,letterSpacing:'0.04em'}}>BO</span>
-          </div>
-          <div style={{flex:1}}>
-            <div style={{fontFamily:T.mono,fontSize:9,color:T.purple,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:8,opacity:0.8}}>Black Opal · Quantum Computing</div>
-            <div style={{fontSize:20,fontWeight:600,color:'#fff',lineHeight:1.2,letterSpacing:'-0.02em',marginBottom:10}}>Superposition</div>
-            <p style={{fontSize:14,lineHeight:1.7,color:T.text2,maxWidth:600,marginBottom:14}}>Qubit state manipulation, superposition principles, and measurement postulates. Foundational for quantum circuit design and quantum-enhanced autonomous systems research.</p>
-            <div style={{display:'flex',flexWrap:'wrap',gap:5}}>
-              {['Quantum Computing','Qubits','Superposition','Quantum Circuits'].map(s=><Tag key={s} c={T.purple}>{s}</Tag>)}
+        {/* Certifications — folded into Capabilities, not a standalone section */}
+        <div style={{marginTop:52}}>
+          <div style={{fontFamily:T.mono,fontSize:11,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:20}}>Certifications</div>
+          <div className="reveal" style={{background:`${T.purple}08`,border:`1px solid ${T.purple}33`,borderRadius:12,padding:'28px 32px',display:'flex',alignItems:'flex-start',gap:28}}>
+            <div style={{width:52,height:52,borderRadius:10,background:`${T.purple}18`,border:`1px solid ${T.purple}44`,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+              <span style={{fontFamily:T.mono,fontSize:10,fontWeight:700,color:T.purple,letterSpacing:'0.04em'}}>BO</span>
             </div>
-          </div>
-        </div>
-
-        {/* LinkedIn Learning — compressed */}
-        <div className="reveal" style={{background:'rgba(255,255,255,0.015)',border:`1px solid ${T.border}`,borderRadius:8,padding:'14px 20px',display:'flex',alignItems:'center',gap:14,flexWrap:'wrap'}}>
-          <div style={{width:32,height:32,borderRadius:6,background:'rgba(255,255,255,0.05)',border:`1px solid ${T.border}`,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
-            <span style={{fontFamily:T.mono,fontSize:9,fontWeight:700,color:T.text2}}>LI</span>
-          </div>
-          <span style={{fontFamily:T.mono,fontSize:10,color:T.text2,letterSpacing:'0.04em',flexShrink:0}}>LinkedIn Learning — 4 completions</span>
-          <div style={{display:'flex',flexWrap:'wrap',gap:5}}>
-            {['MySQL','PostgreSQL · 2 courses','ETL / ELT','Sports Analytics'].map(s=>(
-              <span key={s} style={{fontFamily:T.mono,fontSize:9,color:T.text3,padding:'3px 8px',border:`1px solid ${T.border}`,borderRadius:4}}>{s}</span>
-            ))}
+            <div style={{flex:1}}>
+              <div style={{fontFamily:T.mono,fontSize:11,color:T.purple,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:8,opacity:0.9}}>Black Opal · Quantum Computing</div>
+              <div style={{fontSize:20,fontWeight:600,color:'#fff',lineHeight:1.2,letterSpacing:'-0.02em',marginBottom:10}}>Superposition</div>
+              <p style={{fontSize:14,lineHeight:1.7,color:T.text2,maxWidth:600,marginBottom:14}}>Qubit state manipulation, superposition principles, and measurement postulates. Foundational for quantum circuit design and quantum-enhanced autonomous systems research.</p>
+              <div style={{display:'flex',flexWrap:'wrap',gap:5}}>
+                {['Quantum Computing','Qubits','Superposition','Quantum Circuits'].map(s=><Tag key={s} c={T.purple}>{s}</Tag>)}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1328,9 +1259,6 @@ function Certifications(){
 /* ── NOW ────────────────────────────────────────────────────────────────── */
 function Now(){
   const items=[
-    {mode:'Reading',  icon:'◈', status:'Nothing yet', c:T.green,  entries:[
-      {title:'Nothing as of now',ctx:'Check back soon',dim:true},
-    ]},
     {mode:'Learning', icon:'◎', status:'In progress', c:T.blue,   entries:[
       {title:'Drive AI Transformation in Your Organization',ctx:'Microsoft · Course AB-731T00-A'},
     ]},
@@ -1348,11 +1276,11 @@ function Now(){
     <section className="section-wash wash-home" style={{padding:'80px 52px'}}>
       <div className="section-inner" style={{maxWidth:1280,margin:'0 auto'}}>
         <div style={{display:'flex',alignItems:'baseline',gap:16,marginBottom:12}}>
-          <EL color={T.teal}>Now</EL>
-          <span style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.1em',textTransform:'uppercase'}}>Updated · May 2026</span>
+          <EL color={T.blue}>Now</EL>
+          <span style={{fontFamily:T.mono,fontSize:11,color:T.text3,letterSpacing:'0.1em',textTransform:'uppercase'}}>Updated · May 2026</span>
         </div>
-        <p style={{fontSize:15,color:T.text2,marginBottom:36,maxWidth:520,lineHeight:1.65}}>What I'm actively reading, learning, building, and chasing outside of work.</p>
-        <div className="four-col reveal" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12}}>
+        <p style={{fontSize:15,color:T.text2,marginBottom:36,maxWidth:520,lineHeight:1.65}}>What I'm actively learning, building, and chasing outside of work.</p>
+        <div className="three-col reveal" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12}}>
           {items.map((item,i)=>(
             <div key={i} className="tilt" style={{padding:'24px 22px',background:'rgba(255,255,255,0.02)',border:`1px solid ${item.c}1a`,borderRadius:10,borderTop:`2px solid ${item.c}`,position:'relative',overflow:'hidden'}}
               onMouseMove={onTilt} onMouseLeave={offTilt}>
@@ -1360,7 +1288,7 @@ function Now(){
                 <div style={{width:5,height:5,borderRadius:'50%',background:item.c}} className="pulse-dot"></div>
                 <span style={{fontFamily:T.mono,fontSize:8,color:item.c,letterSpacing:'0.1em',textTransform:'uppercase'}}>{item.status}</span>
               </div>
-              <div style={{fontFamily:T.mono,fontSize:9,color:item.c,letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:16,display:'flex',alignItems:'center',gap:7}}>
+              <div style={{fontFamily:T.mono,fontSize:11,color:item.c,letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:16,display:'flex',alignItems:'center',gap:7}}>
                 <span style={{fontSize:13,opacity:0.9}}>{item.icon}</span>
                 <span>{item.mode}</span>
               </div>
@@ -1368,7 +1296,7 @@ function Now(){
                 {item.entries.map((e,j)=>(
                   <div key={j} style={{paddingBottom:j<item.entries.length-1?12:0,borderBottom:j<item.entries.length-1?`1px solid rgba(255,255,255,0.05)`:'none'}}>
                     <div style={{fontSize:13,fontWeight:600,color:e.dim?T.text3:'#fff',lineHeight:1.4,marginBottom:3,opacity:e.dim?0.5:1}}>{e.title}</div>
-                    <div style={{fontSize:10,color:T.text3,lineHeight:1.5,fontFamily:T.mono,opacity:e.dim?0.4:1}}>{e.ctx}</div>
+                    <div style={{fontSize:12,color:T.text3,lineHeight:1.5,fontFamily:T.mono,opacity:e.dim?0.4:1}}>{e.ctx}</div>
                   </div>
                 ))}
               </div>
@@ -1401,7 +1329,7 @@ function Contact(){
               {l:'Location', v:'Toledo, Ohio',                    h:null,                                                  c:T.text},
             ].map((c,i)=>(
               <div key={i} style={{padding:'15px 0',borderBottom:`1px solid ${T.border}`}}>
-                <div style={{fontFamily:T.mono,fontSize:9,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:4}}>{c.l}</div>
+                <div style={{fontFamily:T.mono,fontSize:11,color:T.text3,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:4}}>{c.l}</div>
                 {c.h?<a href={c.h} target="_blank" rel="noopener" style={{fontSize:15,color:c.c,transition:'opacity 0.2s'}}
                   onMouseEnter={e=>e.target.style.opacity='0.7'} onMouseLeave={e=>e.target.style.opacity='1'}>{c.v}</a>
                 :<span style={{fontSize:15,color:T.text}}>{c.v}</span>}
@@ -1410,7 +1338,7 @@ function Contact(){
           </div>
         </div>
       </div>
-      <div style={{maxWidth:1280,margin:'72px auto 0',padding:'22px 0',borderTop:`1px solid ${T.border}`,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+      <div className="contact-footer" style={{maxWidth:1280,margin:'72px auto 0',padding:'22px 0',borderTop:`1px solid ${T.border}`,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
         <span style={{fontFamily:T.mono,fontSize:10,color:T.text3}}>© 2026 Ahmad Firas</span>
         <span style={{fontFamily:T.mono,fontSize:10,color:T.text3}}>ahmadfiras.dev</span>
       </div>
@@ -1434,7 +1362,6 @@ function App(){
       <Projects/>
       <Research/>
       <Skills/>
-      <Certifications/>
       <Now/>
       <Contact/>
     </div>

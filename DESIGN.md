@@ -17,35 +17,35 @@ colors:
   border-default: "#FFFFFF12"
 typography:
   display:
-    fontFamily: "'Space Grotesk', sans-serif"
+    fontFamily: "'Sora', sans-serif"
     fontSize: "clamp(68px, 9.5vw, 124px)"
     fontWeight: 700
     lineHeight: 0.88
     letterSpacing: "-0.05em"
   headline:
-    fontFamily: "'Space Grotesk', sans-serif"
+    fontFamily: "'Sora', sans-serif"
     fontSize: "clamp(28px, 3.5vw, 34px)"
     fontWeight: 700
     lineHeight: 1.15
     letterSpacing: "-0.03em"
   title:
-    fontFamily: "'Space Grotesk', sans-serif"
+    fontFamily: "'Sora', sans-serif"
     fontSize: "15px"
     fontWeight: 600
     lineHeight: 1.3
     letterSpacing: "-0.01em"
   body:
-    fontFamily: "'Space Grotesk', sans-serif"
+    fontFamily: "'Sora', sans-serif"
     fontSize: "16px"
     fontWeight: 400
     lineHeight: 1.75
     letterSpacing: "normal"
   label:
-    fontFamily: "'Space Mono', monospace"
+    fontFamily: "'JetBrains Mono', monospace"
     fontSize: "10px"
     fontWeight: 400
     lineHeight: 1.4
-    letterSpacing: "0.12em"
+    letterSpacing: "0.10em"
 rounded:
   xs: "4px"
   sm: "6px"
@@ -60,7 +60,7 @@ spacing:
 components:
   button-primary:
     backgroundColor: "{colors.system-active-green}"
-    textColor: "#000000"
+    textColor: "#050A06"
     rounded: "{rounded.sm}"
     padding: "11px 24px"
     typography: "{typography.label}"
@@ -124,7 +124,7 @@ The system is precise, confident, and curious. Confidence comes from demonstrate
 **Key Characteristics:**
 - Full-palette color strategy: six named accent roles, each tied to a domain or content type, used deliberately
 - Dark theme mandated by the physical scene (screen-based, focused work, dim ambient context)
-- Space Grotesk (editorial weight, tight tracking) paired with Space Mono (instrument readout, metadata)
+- Sora (editorial weight, tight tracking) paired with JetBrains Mono (instrument readout, metadata)
 - Tonal elevation rather than shadows: depth through layered rgba overlays on a near-black base
 - Motion is reveal-based and directional: content enters; it does not perform
 - Three.js GLSL star field canvas as the deepest surface layer; all UI floats above it
@@ -161,21 +161,21 @@ Six precision-named accent roles against a void base. Each accent maps to a spec
 
 ## 3. Typography
 
-**Display Font:** Space Grotesk (Google Fonts, weights 300-700)
-**Body Font:** Space Grotesk (same family; weight and size carry all hierarchy)
-**Label/Mono Font:** Space Mono (Google Fonts, weights 400 and 700)
+**Display Font:** Sora (Google Fonts, weights 300-800)
+**Body Font:** Sora (same family; weight and size carry all hierarchy)
+**Label/Mono Font:** JetBrains Mono (Google Fonts, weights 400-700)
 
-**Character:** Space Grotesk is tight and geometric without being cold; it carries weight contrast well enough to build a full hierarchy within a single family. Space Mono provides the instrument-readout register: monospaced, uppercase, spaced out. The pairing is editorial above and technical below; the same split a field notebook makes between the scientist's prose and their data annotations.
+**Character:** Sora is a clean geometric sans with slightly more warmth than a pure grotesque; it carries weight contrast well enough to build a full hierarchy within a single family. JetBrains Mono provides the instrument-readout register: monospaced, uppercase, spaced out. The pairing is editorial above and technical below; the same split a field notebook makes between the scientist's prose and their data annotations.
 
 ### Hierarchy
-- **Display** (700, `clamp(68px, 9.5vw, 124px)`, line-height 0.88, letter-spacing -0.05em): Hero name only. Compressed leading creates mass. The tracked-in spacing is intentional at this scale.
+- **Display** (700, `clamp(68px, 9.5vw, 124px)`, line-height 0.88, letter-spacing -0.04em): Hero name only. Compressed leading creates mass. The tracked-in spacing is intentional at this scale.
 - **Headline** (700, `clamp(28px, 3.5vw, 34px)`, line-height 1.15, letter-spacing -0.03em): Section-level statements. Used for the origin section pull quote and the contact section heading. Copy at this size is always a specific claim, not a category label.
 - **Title** (600, 15-17px, line-height 1.3, letter-spacing -0.01em): Card headings, project names, job titles within timeline cards. The 1.25+ ratio between Title and Body is maintained through weight contrast (600 vs 400), not size alone.
 - **Body** (400, 16-17px, line-height 1.75-1.8): All prose. Maximum line length held at 440px (approximately 65ch at 16px). Never justified; always left-aligned.
-- **Label** (Space Mono 400, 9-11px, letter-spacing 0.08-0.14em, uppercase): All metadata: dates, section numbers, role tags, technology names, nav links, button text. Monospaced so columns of numbers align naturally. The uppercase + tracking treatment marks these as annotations, not running prose.
+- **Label** (JetBrains Mono 400, 9-11px, letter-spacing 0.07-0.10em, uppercase): All metadata: dates, section numbers, role tags, technology names, nav links, button text. Monospaced so columns of numbers align naturally. The uppercase + tracking treatment marks these as annotations, not running prose.
 
 ### Named Rules
-**The Mono-for-Data Rule.** Space Mono is used for everything that functions as a data label: dates, metrics, technology tags, nav links, button text, eyebrow labels, issuer badges, timestamps. Space Grotesk handles all prose. Never mix them within a single semantic unit.
+**The Mono-for-Data Rule.** JetBrains Mono is used for everything that functions as a data label: dates, metrics, technology tags, nav links, button text, eyebrow labels, issuer badges, timestamps. Sora handles all prose. Never mix them within a single semantic unit.
 
 **The Compression Rule.** Display type compresses to line-height 0.88. Headline type lands at 1.15. Body opens to 1.75. Spacing is not uniform; it reflects the density of information at each level.
 
