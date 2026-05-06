@@ -222,7 +222,7 @@ function Nav(){
           <div className="pulse-dot" style={{width:7,height:7,background:T.green,borderRadius:1}}></div>
           <span style={{fontFamily:T.mono,fontSize:11,fontWeight:700,letterSpacing:'0.1em',color:T.text}}>AHMAD.DEV</span>
         </a>
-        <div className={`nav-links${open?' open':''}`} style={{display:'flex',gap:24}}>
+        <div className={`nav-links${open?' open':''}`} style={{gap:24}}>
           {ls.map(([l,h],i)=>(
             <a key={i} href={h} onClick={()=>setOpen(false)} style={{fontFamily:T.mono,fontSize:10,letterSpacing:'0.07em',color:i===0?T.green:T.text3,textTransform:'uppercase',transition:'color 0.2s'}}
               onMouseEnter={e=>e.target.style.color=T.green} onMouseLeave={e=>e.target.style.color=i===0?T.green:T.text3}

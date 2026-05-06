@@ -111,23 +111,30 @@ a{text-decoration:none;color:inherit}
 /* iOS/Android text scaling fix */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
+/* Offset anchor-link scroll so fixed nav (60px) never covers section headings */
+html{scroll-padding-top:72px}
+@media(max-width:768px){html{scroll-padding-top:68px}}
+
 /* iOS notch safe areas */
 body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
 
-/* All section padding — override inline styles on mobile */
+/* All section padding — override inline styles on mobile.
+   Exclude #hero: its hero-left div already owns the top padding. */
 @media(max-width:960px){
-  section.section-wash{padding-left:32px!important;padding-right:32px!important}
+  section.section-wash:not(#hero){padding-left:32px!important;padding-right:32px!important}
 }
 @media(max-width:768px){
-  section.section-wash{padding-left:24px!important;padding-right:24px!important;padding-top:72px!important;padding-bottom:56px!important}
+  section.section-wash:not(#hero){padding-left:24px!important;padding-right:24px!important;padding-top:80px!important;padding-bottom:56px!important}
 }
 @media(max-width:480px){
-  section.section-wash{padding-left:16px!important;padding-right:16px!important;padding-top:56px!important;padding-bottom:44px!important}
+  section.section-wash:not(#hero){padding-left:16px!important;padding-right:16px!important;padding-top:76px!important;padding-bottom:44px!important}
 }
 
 /* Nav hamburger */
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none;z-index:201}
 .nav-hamburger span{display:block;width:22px;height:1.5px;background:#9090A8;border-radius:1px;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1),opacity 0.3s}
+/* Base: always flex on desktop */
+.nav-links{display:flex}
 @media(max-width:768px){
   .nav-hamburger{display:flex!important}
   .nav-links{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(4,4,10,0.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);flex-direction:column!important;align-items:flex-start!important;padding:12px 28px 28px;gap:0!important;border-bottom:1px solid rgba(255,255,255,0.07);z-index:199}
@@ -267,13 +274,14 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
   .proj-grid{grid-template-columns:1fr!important}
 }
 
-/* Hero left panel — reduce top/bottom padding on mobile */
+/* Hero left panel — reduce top/bottom padding on mobile.
+   Must stay > 60px (nav height) at all breakpoints. */
 @media(max-width:960px){
-  .hero-left{padding-top:80px!important;padding-bottom:40px!important}
+  .hero-left{padding-top:88px!important;padding-bottom:40px!important}
   .hero-right{padding:24px 28px!important}
 }
 @media(max-width:480px){
-  .hero-left{padding-top:64px!important;padding-bottom:28px!important}
+  .hero-left{padding-top:76px!important;padding-bottom:28px!important}
   .hero-right{padding:16px 20px!important}
 }
 
@@ -674,7 +682,7 @@ function Nav(){
           <div className="pulse-dot" style={{width:7,height:7,background:T.green,borderRadius:1}}></div>
           <span style={{fontFamily:T.mono,fontSize:11,fontWeight:700,letterSpacing:'0.1em',color:T.text}}>AHMAD.DEV</span>
         </a>
-        <div className={`nav-links${open?' open':''}`} style={{display:'flex',gap:24}}>
+        <div className={`nav-links${open?' open':''}`} style={{gap:24}}>
           {ls.map(([l,h],i)=>{
             const isAct=active===h;
             return(
