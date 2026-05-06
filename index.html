@@ -96,7 +96,7 @@ a{text-decoration:none;color:inherit}
 
 @media(max-width:960px){
   .hero-split{flex-direction:column!important}
-  .hero-right{flex:none!important;width:100%!important;height:300px!important;border-left:none!important;border-top:1px solid rgba(255,255,255,0.06)!important}
+  .hero-right{flex:none!important;width:100%!important;height:auto!important;border-left:none!important;border-top:1px solid rgba(255,255,255,0.06)!important}
   .two-col{grid-template-columns:1fr!important;gap:36px!important}
   .three-col{grid-template-columns:1fr 1fr!important}
   .section-pad{padding-left:24px!important;padding-right:24px!important}
@@ -152,8 +152,8 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
 }
 
 
-/* Hero right photo panel — smaller on very small phones */
-@media(max-width:480px){.hero-right{height:180px!important}}
+/* Hero right photo panel — height auto on all mobile sizes */
+@media(max-width:480px){.hero-right{height:auto!important;padding:20px 18px 32px!important}}
 
 /* Disable 3D tilt on touch devices (no hover support) */
 @media(hover:none){
@@ -293,6 +293,42 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
 /* Contact footer strip */
 @media(max-width:600px){
   .contact-footer{flex-direction:column!important;gap:6px!important}
+}
+
+/* ── HERO MOBILE FIXES ───────────────────────────────────────────── */
+/* Profile photo — limit height so bio rows below remain visible */
+@media(max-width:960px){
+  .hero-photo{max-height:280px!important;aspect-ratio:4/3!important}
+}
+@media(max-width:600px){
+  .hero-photo{max-height:220px!important;aspect-ratio:3/2!important}
+}
+@media(max-width:400px){
+  .hero-photo{max-height:180px!important;aspect-ratio:16/9!important}
+}
+/* H1 headline — reduce minimum size on narrow screens */
+@media(max-width:600px){
+  .hero-left h1{font-size:clamp(44px,12vw,80px)!important}
+}
+@media(max-width:400px){
+  .hero-left h1{font-size:clamp(36px,11vw,60px)!important}
+}
+/* Hero top status bar — wrap instead of squeezing */
+@media(max-width:520px){
+  .hero-left > div:first-child{flex-wrap:wrap!important;gap:4px!important}
+}
+/* Hero left CTA row — tighter on very small phones */
+@media(max-width:360px){
+  .hero-left a[href='#projects'],
+  .hero-left a[href='#contact']{
+    padding:10px 16px!important;font-size:10px!important;
+  }
+}
+/* Hero right bio rows — smaller font on very narrow screens */
+@media(max-width:360px){
+  .hero-right div[style*='fontSize:15']{
+    font-size:13px!important;
+  }
 }
 </style>
 
@@ -704,7 +740,7 @@ function Hero(){
         </div>
         {/* RIGHT brief panel */}
         <div className="hero-right" style={{flex:'0 0 42%',borderLeft:`1px solid ${T.border}`,background:'rgba(8,8,20,0.55)',backdropFilter:'blur(8px)',display:'flex',flexDirection:'column',padding:'104px 48px 56px'}}>
-          <ImgPh label="Profile photo" images={['Images/my%20pic.png']} style={{width:'100%',aspectRatio:'3/4',maxHeight:370,borderRadius:10}}/>
+          <ImgPh label="Profile photo" images={['Images/my%20pic.png']} style={{width:'100%',aspectRatio:'3/4',maxHeight:370,borderRadius:10}} className="hero-photo"/>
           <div style={{marginTop:28,display:'flex',flexDirection:'column'}}>
             {[
               {l:'Current Role',v:'Sports Analytics & Data Science Intern',s:'UToledo Athletics · Toledo, OH',c:T.teal},
