@@ -24,18 +24,29 @@ export const TestimonialsColumn = (props: {
           ease: "linear",
           repeatType: "loop",
         }}
-        className="flex flex-col gap-6 pb-6 bg-background"
+        className="flex flex-col gap-4 pb-4"
+        style={{ background: 'transparent' }}
       >
         {[...new Array(2).fill(0).map((_, index) => (
           <React.Fragment key={index}>
             {props.testimonials.map(({ text, image, name, role }, i) => (
-              <div className="p-10 rounded-3xl border shadow-lg shadow-primary/10 max-w-xs w-full" key={i}>
-                <div>{text}</div>
-                <div className="flex items-center gap-2 mt-5">
-                  <img width={40} height={40} src={image} alt={name} className="h-10 w-10 rounded-full" />
-                  <div className="flex flex-col">
-                    <div className="font-medium tracking-tight leading-5">{name}</div>
-                    <div className="leading-5 opacity-60 tracking-tight">{role}</div>
+              <div
+                key={i}
+                style={{
+                  padding: '20px 24px',
+                  borderRadius: 16,
+                  border: '1px solid rgba(242,237,216,0.07)',
+                  background: '#131520',
+                  maxWidth: 280,
+                  width: '100%',
+                }}
+              >
+                <p style={{ fontSize: 13, lineHeight: 1.75, color: '#B8B4A4' }}>{text}</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16 }}>
+                  <img width={36} height={36} src={image} alt={name} style={{ width: 36, height: 36, borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(242,237,216,0.08)' }} />
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: '#F2EDD8', lineHeight: 1.3 }}>{name}</div>
+                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 2 }}>{role}</div>
                   </div>
                 </div>
               </div>

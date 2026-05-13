@@ -44,6 +44,9 @@ export function ExpandableCard({
     };
   }, []);
 
+  const descClass = "text-[#6E6B60] text-xs uppercase tracking-wider";
+  const titleStyle: React.CSSProperties = { fontFamily: "'Fraunces', serif", fontStyle: "italic" };
+
   return (
     <>
       <AnimatePresence>
@@ -52,7 +55,7 @@ export function ExpandableCard({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-white/50 dark:bg-black/50 backdrop-blur-md h-full w-full z-10"
+            className="fixed inset-0 bg-black/70 backdrop-blur-md h-full w-full z-10"
           />
         )}
       </AnimatePresence>
@@ -63,26 +66,30 @@ export function ExpandableCard({
               layoutId={`card-${title}-${id}`}
               ref={cardRef}
               className={cn(
-                "w-full max-w-[850px] h-full flex flex-col overflow-auto [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch] sm:rounded-t-3xl bg-zinc-50 shadow-sm dark:shadow-none dark:bg-zinc-950 relative",
+                "w-full max-w-[850px] h-full flex flex-col overflow-auto [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch] sm:rounded-t-3xl bg-[#131520] border border-white/[0.07] shadow-none relative",
                 classNameExpanded,
               )}
               {...props}
             >
               <motion.div layoutId={`image-${title}-${id}`}>
-                <div className="relative before:absolute before:inset-x-0 before:bottom-[-1px] before:h-[70px] before:z-50 before:bg-gradient-to-t dark:before:from-zinc-950 before:from-zinc-50">
+                <div className="relative before:absolute before:inset-x-0 before:bottom-[-1px] before:h-[70px] before:z-50 before:bg-gradient-to-t before:from-[#131520]">
                   <img src={src} alt={title} className="w-full h-80 object-cover object-center" />
                 </div>
               </motion.div>
-              <div className="relative h-full before:fixed before:inset-x-0 before:bottom-0 before:h-[70px] before:z-50 before:bg-gradient-to-t dark:before:from-zinc-950 before:from-zinc-50">
+              <div className="relative h-full before:fixed before:inset-x-0 before:bottom-0 before:h-[70px] before:z-50 before:bg-gradient-to-t before:from-[#131520]">
                 <div className="flex justify-between items-start p-8 h-auto">
                   <div>
-                    <motion.p layoutId={`description-${description}-${id}`} className="text-zinc-500 dark:text-zinc-400 text-lg">{description}</motion.p>
-                    <motion.h3 layoutId={`title-${title}-${id}`} className="font-semibold text-black dark:text-white text-4xl sm:text-4xl mt-0.5">{title}</motion.h3>
+                    <motion.p layoutId={`description-${description}-${id}`} className={descClass}>{description}</motion.p>
+                    <motion.h3
+                      layoutId={`title-${title}-${id}`}
+                      className="font-semibold text-[#F2EDD8] text-3xl sm:text-4xl mt-2"
+                      style={titleStyle}
+                    >{title}</motion.h3>
                   </div>
                   <motion.button
                     aria-label="Close card"
                     layoutId={`button-${title}-${id}`}
-                    className="h-10 w-10 shrink-0 flex items-center justify-center rounded-full bg-zinc-50 dark:bg-zinc-950 text-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-950 dark:text-white/70 text-black/70 border border-gray-200/90 dark:border-zinc-900 hover:border-gray-300/90 hover:text-black dark:hover:text-white dark:hover:border-zinc-800 transition-colors duration-300 focus:outline-none"
+                    className="h-10 w-10 shrink-0 flex items-center justify-center rounded-full bg-[#1A1D2C] text-[#B8B4A4] hover:text-[#F2EDD8] border border-white/10 hover:border-white/20 transition-colors duration-300 focus:outline-none"
                     onClick={() => setActive(false)}
                   >
                     <motion.div animate={{ rotate: active ? 45 : 0 }} transition={{ duration: 0.4 }}>
@@ -93,7 +100,7 @@ export function ExpandableCard({
                   </motion.button>
                 </div>
                 <div className="relative px-6 sm:px-8">
-                  <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-zinc-500 dark:text-zinc-400 text-base pb-10 flex flex-col items-start gap-4 overflow-auto">
+                  <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-[#B8B4A4] text-sm pb-10 flex flex-col items-start gap-4 overflow-auto">
                     {children}
                   </motion.div>
                 </div>
@@ -110,7 +117,7 @@ export function ExpandableCard({
         layoutId={`card-${title}-${id}`}
         onClick={() => setActive(true)}
         className={cn(
-          "p-3 flex flex-col justify-between items-center bg-zinc-50 shadow-sm dark:shadow-none dark:bg-zinc-950 rounded-2xl cursor-pointer border border-gray-200/70 dark:border-zinc-900",
+          "p-3 flex flex-col justify-between items-center bg-[#131520] rounded-2xl cursor-pointer border border-white/[0.06] hover:border-white/[0.12] transition-colors duration-200",
           className,
         )}
       >
@@ -119,14 +126,18 @@ export function ExpandableCard({
             <img src={src} alt={title} className="w-64 h-56 rounded-lg object-cover object-center" />
           </motion.div>
           <div className="flex justify-between items-center">
-            <div className="flex flex-col">
-              <motion.p layoutId={`description-${description}-${id}`} className="text-zinc-500 dark:text-zinc-400 md:text-left text-sm font-medium">{description}</motion.p>
-              <motion.h3 layoutId={`title-${title}-${id}`} className="text-black dark:text-white md:text-left font-semibold">{title}</motion.h3>
+            <div className="flex flex-col gap-0.5">
+              <motion.p layoutId={`description-${description}-${id}`} className={descClass}>{description}</motion.p>
+              <motion.h3
+                layoutId={`title-${title}-${id}`}
+                className="text-[#F2EDD8] md:text-left font-semibold text-sm"
+                style={titleStyle}
+              >{title}</motion.h3>
             </div>
             <motion.button
               aria-label="Open card"
               layoutId={`button-${title}-${id}`}
-              className={cn("h-8 w-8 shrink-0 flex items-center justify-center rounded-full bg-zinc-50 dark:bg-zinc-950 text-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-950 dark:text-white/70 text-black/70 border border-gray-200/90 dark:border-zinc-900 hover:border-gray-300/90 hover:text-black dark:hover:text-white dark:hover:border-zinc-800 transition-colors duration-300 focus:outline-none", className)}
+              className="h-8 w-8 shrink-0 flex items-center justify-center rounded-full bg-[#1A1D2C] text-[#B8B4A4] hover:text-[#F2EDD8] border border-white/10 hover:border-white/20 transition-colors duration-300 focus:outline-none"
             >
               <motion.div animate={{ rotate: active ? 45 : 0 }} transition={{ duration: 0.4 }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

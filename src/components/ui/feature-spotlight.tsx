@@ -24,11 +24,11 @@ const AnimatedFeatureSpotlight = React.forwardRef<HTMLElement, AnimatedFeatureSp
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col space-y-6 text-center md:text-left items-center md:items-start">
-            <div className="flex items-center space-x-2 text-sm font-medium text-muted-foreground animate-in fade-in slide-in-from-top-4 duration-700">
+            <div className="flex items-center space-x-2 animate-in fade-in slide-in-from-top-4 duration-700" style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6E6B60' }}>
               {preheaderIcon}
               <span>{preheaderText}</span>
             </div>
-            <h2 id="feature-spotlight-heading" className="text-4xl lg:text-5xl font-bold tracking-tight text-foreground animate-in fade-in slide-in-from-top-4 duration-700 delay-150">
+            <h2 id="feature-spotlight-heading" className="text-4xl lg:text-5xl font-bold tracking-tight text-foreground animate-in fade-in slide-in-from-top-4 duration-700 delay-150" style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic' }}>
               {heading}
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed animate-in fade-in slide-in-from-top-4 duration-700 delay-300">

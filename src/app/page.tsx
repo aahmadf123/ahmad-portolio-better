@@ -56,7 +56,7 @@ function Tag({ color = '#4B7BF5', children }: { color?: string; children: React.
 // ── Section wrapper ──
 function Section({ id, children, style }: { id?: string; children: React.ReactNode; style?: React.CSSProperties }) {
   return (
-    <section id={id} style={{ padding: '100px 52px', position: 'relative', overflow: 'hidden', background: 'var(--background)', zIndex: 20, ...style }}>
+    <section id={id} style={{ padding: 'clamp(64px, 8vw, 100px) clamp(20px, 4vw, 52px)', position: 'relative', overflow: 'hidden', background: 'var(--background)', zIndex: 20, ...style }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         {children}
       </div>
@@ -72,7 +72,7 @@ function About() {
   return (
     <Section id="about">
       <SH n="01" label="About" color="#F0B429" />
-      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72 }}>
+      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 48 }}>
         <div>
           <h2 style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontSize: 28, fontWeight: 700, lineHeight: 1.25, letterSpacing: '-0.02em', color: '#F2EDD8', borderLeft: '3px solid #F0B429', paddingLeft: 18 }}>
             Chasing the gap between what AI can do in a lab and what it actually does when someone&apos;s counting on it.
@@ -353,7 +353,7 @@ function Achievements() {
       <SH n="06" label="Highlights" sub="Key results and milestones." color="#2DD4C8" />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}>
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }} viewport={{ once: true }} className="flex flex-col items-center justify-center max-w-[540px] mx-auto mb-10">
-          <p className="text-center opacity-75" style={{ color: '#B8B4A4' }}>Selected achievements from research, industry, and academic work.</p>
+          <p style={{ textAlign: 'center', fontSize: 15, lineHeight: 1.65, color: '#B8B4A4' }}>Selected achievements from research, industry, and academic work.</p>
         </motion.div>
         <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
           <TestimonialsColumn testimonials={achievementsCol1} duration={18} />
@@ -373,7 +373,7 @@ function Contact() {
   return (
     <Section id="contact">
       <SH n="07" label="Contact" sub="Let's talk about building something real." color="#F0B429" />
-      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, alignItems: 'center' }}>
+      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 48, alignItems: 'center' }}>
         <div>
           <h2 style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontSize: 36, fontWeight: 700, lineHeight: 1.2, letterSpacing: '-0.02em', color: '#F2EDD8', marginBottom: 20 }}>
             Open to roles in AI research, ML engineering, and data science.
