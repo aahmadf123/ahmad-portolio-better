@@ -273,7 +273,7 @@ export function NebulaCube({ children }: { children?: React.ReactNode }) {
 
     const scrollTimeline = gsap.timeline({
       scrollTrigger: {
-        trigger: '.content', start: 'top top', end: 'bottom bottom', scrub: 1.5, markers: false,
+        trigger: document.documentElement, start: 'top top', end: 'bottom bottom', scrub: 1.5, markers: false,
         onUpdate: (self) => {
           uniformsRef.current.scrollProgress.value = self.progress;
           updateParticleZoom(self.progress);
@@ -404,41 +404,7 @@ export function NebulaCube({ children }: { children?: React.ReactNode }) {
   }, []);
 
   return (
-    <div ref={mountRef} style={{ width: '100vw', height: '100vh', position: 'relative' }}>
-      <div className="content">
-        {children || (
-          <>
-            <section className="section">
-              <div className="section-inner">
-                <h1 className="title">Ahmad<br /><span style={{ color: '#F0B429' }}>Firas</span></h1>
-                <p className="description">Building AI systems for uncertain environments — from UAV autonomy research to enterprise agentic workflows.</p>
-              </div>
-            </section>
-            <section className="section">
-              <div className="section-inner">
-                <h1 className="title">AI<br />Research</h1>
-                <p className="description">72.8% zero-shot UAV deployment via MAML. 97.3% HITL success at sub-100ms. Published at ACM Computing Surveys.</p>
-              </div>
-            </section>
-            <section className="section">
-              <div className="section-inner">
-                <h1 className="title">Agentic<br />Systems</h1>
-                <p className="description">Designing autonomous multi-step AI workflows in enterprise environments. Microsoft Copilot Studio, Azure AI, and beyond.</p>
-              </div>
-            </section>
-            <section className="section">
-              <div className="section-inner">
-                <h1 className="title">Explore<br />My Work</h1>
-                <p className="description">Scroll to discover projects, research, and the thinking behind them.</p>
-              </div>
-            </section>
-          </>
-        )}
-      </div>
-      <footer className="footer">
-        <p>Ahmad Firas · AI Researcher & Engineer · 2026</p>
-      </footer>
-    </div>
+    <div ref={mountRef} style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true" />
   );
 }
 

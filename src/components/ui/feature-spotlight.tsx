@@ -18,17 +18,17 @@ const AnimatedFeatureSpotlight = React.forwardRef<HTMLElement, AnimatedFeatureSp
     return (
       <section
         ref={ref}
-        className={cn('w-full max-w-6xl mx-auto p-8 md:p-12 rounded-2xl bg-background border overflow-hidden', className)}
+        className={cn('w-full max-w-6xl mx-auto', className)}
         aria-labelledby="feature-spotlight-heading"
         {...props}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="flex flex-col space-y-6 text-center md:text-left items-center md:items-start">
-            <div className="flex items-center space-x-2 animate-in fade-in slide-in-from-top-4 duration-700" style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6E6B60' }}>
+          <div className="flex flex-col space-y-6 text-center md:text-left items-center md:items-start min-w-0">
+            <div className="flex items-center space-x-2 animate-in fade-in slide-in-from-top-4 duration-700" style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6E6B60' }}>
               {preheaderIcon}
               <span>{preheaderText}</span>
             </div>
-            <h2 id="feature-spotlight-heading" className="text-4xl lg:text-5xl font-bold tracking-tight text-foreground animate-in fade-in slide-in-from-top-4 duration-700 delay-150" style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic' }}>
+            <h2 id="feature-spotlight-heading" className="text-4xl lg:text-5xl tracking-tight text-foreground animate-in fade-in slide-in-from-top-4 duration-700 delay-150" style={{ fontFamily: "var(--font-chakra), 'Chakra Petch', sans-serif", fontWeight: 400, lineHeight: 1.05, paddingBottom: '0.08em' }}>
               {heading}
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed animate-in fade-in slide-in-from-top-4 duration-700 delay-300">
