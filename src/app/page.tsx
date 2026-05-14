@@ -70,70 +70,120 @@ function Section({ id, children, style }: { id?: string; children: React.ReactNo
 // ─────────────────────────────────────────────
 function Hero() {
   const [rdy, setRdy] = useState(false);
-  useEffect(() => { const t = setTimeout(() => setRdy(true), 180); return () => clearTimeout(t); }, []);
+  useEffect(() => { const t = setTimeout(() => setRdy(true), 220); return () => clearTimeout(t); }, []);
+
   return (
-    <section id="hero" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', padding: 'clamp(80px,8vw,100px) clamp(20px,4vw,52px) clamp(60px,6vw,80px)', background: 'transparent', zIndex: 20 }}>
-      <div className="hero-grid" style={{ maxWidth: 1280, width: '100%', margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 1fr)', gap: 'clamp(28px, 4vw, 64px)', alignItems: 'center', flex: 1 }}>
-        {/* LEFT */}
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minWidth: 0 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 22, opacity: rdy ? 1 : 0, transition: 'opacity 0.7s ease' }}>
-            <span style={{ display: 'inline-block', width: 22, height: 1.5, background: '#F0B429', opacity: 0.65 }} />
-            <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#F0B429' }}>Computer Engineer · AI Researcher</span>
+    <section id="hero" style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'relative',
+      overflow: 'hidden',
+      background: 'transparent',
+      zIndex: 20,
+    }}>
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        position: 'relative',
+        zIndex: 1,
+        opacity: rdy ? 1 : 0,
+        transition: 'opacity 1.1s cubic-bezier(0.16,1,0.3,1)',
+      }}>
+
+        {/* LEFT — 58% */}
+        <div className="hero-left" style={{
+          flex: '1 1 58%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          padding: 'clamp(64px,6vw,80px) clamp(28px,4vw,64px) clamp(40px,4vw,56px) clamp(20px,4vw,52px)',
+        }}>
+
+          {/* center block */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 24 }}>
+            <div style={{ marginBottom: 20 }}>
+              <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#F0B429' }}>Computer Engineer · AI Researcher</span>
+            </div>
+            <h1 style={{
+              fontFamily: SERIF, fontWeight: 400,
+              fontSize: 'clamp(56px, 10vw, 132px)',
+              lineHeight: 0.95, letterSpacing: '-0.025em', color: '#F2EDD8',
+              margin: 0, paddingBottom: '0.08em',
+            }}>
+              Ahmad<br /><span style={{ color: '#F0B429' }}>Firas</span>
+            </h1>
+            <p style={{ fontSize: 16, lineHeight: 1.72, color: '#B8B4A4', maxWidth: 440, marginTop: 26, fontFamily: SANS }}>
+              Building AI systems for uncertain environments — from UAV autonomy research to enterprise agentic workflows.
+            </p>
+            <div style={{ marginTop: 28, display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+              <a href="#projects" data-magnetic="" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', background: '#F0B429', color: '#0B0D14', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase' }}>View Work ↗</a>
+              <a href="#contact" data-magnetic="" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase' }}>Get in Touch</a>
+              <a href="/docs/Ahmad_Resume_Developer_I_FirstSolar.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid rgba(242,237,216,0.1)', color: '#6E6B60', fontFamily: MONO, fontSize: 10, letterSpacing: '0.07em', borderRadius: 5, textTransform: 'uppercase' }}>Resume ↓</a>
+            </div>
           </div>
-          <h1 style={{
-            fontFamily: SERIF, fontWeight: 400,
-            fontSize: 'clamp(56px, 10vw, 132px)',
-            lineHeight: 0.95, letterSpacing: '-0.025em', color: '#F2EDD8',
-            opacity: rdy ? 1 : 0, transform: rdy ? 'translateY(0)' : 'translateY(36px)',
-            transition: 'opacity 0.9s 0.15s cubic-bezier(0.16,1,0.3,1), transform 0.9s 0.15s cubic-bezier(0.16,1,0.3,1)',
-            margin: 0, paddingBottom: '0.08em',
-          }}>
-            Ahmad<br /><span style={{ color: '#F0B429' }}>Firas</span>
-          </h1>
-          <p style={{
-            fontSize: 17, lineHeight: 1.7, color: '#B8B4A4', maxWidth: 480, marginTop: 28, fontFamily: SANS,
-            opacity: rdy ? 1 : 0, transform: rdy ? 'translateY(0)' : 'translateY(20px)',
-            transition: 'opacity 0.9s 0.35s ease, transform 0.9s 0.35s ease',
-          }}>
-            Building AI systems for uncertain environments — from UAV autonomy research to enterprise agentic workflows.
-          </p>
-          <div style={{ marginTop: 32, display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', opacity: rdy ? 1 : 0, transition: 'opacity 0.9s 0.55s ease' }}>
-            <a href="#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: '#F0B429', color: '#0B0D14', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.07em', borderRadius: 5, textTransform: 'uppercase' }}>View Work ↗</a>
-            <a href="#contact" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', border: '1px solid rgba(242,237,216,0.18)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.07em', borderRadius: 5, textTransform: 'uppercase' }}>Get in Touch</a>
-            <a href="/docs/Ahmad_Resume_Developer_I_FirstSolar.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 18px', border: '1px solid rgba(242,237,216,0.1)', color: '#6E6B60', fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', borderRadius: 5, textTransform: 'uppercase' }}>Resume ↓</a>
-          </div>
-          <div style={{ marginTop: 40, display: 'flex', alignItems: 'center', gap: 10, opacity: rdy ? 0.5 : 0, transition: 'opacity 1s 0.9s ease' }}>
-            <div style={{ width: 1, height: 28, background: 'linear-gradient(to bottom, #F0B429, transparent)' }} />
-            <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.16em', color: '#6E6B60', textTransform: 'uppercase' }}>Scroll to explore</span>
+
+          {/* bottom scroll hint */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, opacity: 0.45, animation: rdy ? 'bob 2.2s ease-in-out 2s infinite' : 'none' }}>
+            <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, #F0B429, transparent)' }} />
+            <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', color: '#6E6B60', textTransform: 'uppercase' }}>Scroll to explore</span>
           </div>
         </div>
-        {/* RIGHT — photo + facts */}
-        <div className="hero-side" style={{ display: 'flex', flexDirection: 'column', gap: 18, opacity: rdy ? 1 : 0, transform: rdy ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 1s 0.5s ease, transform 1s 0.5s ease' }}>
-          <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(240,180,41,0.18)', background: '#131520' }}>
+
+        {/* RIGHT — 42%, fully transparent, border divider only */}
+        <div className="hero-right" style={{
+          flex: '0 0 42%',
+          borderLeft: '1px solid rgba(240,180,41,0.08)',
+          display: 'flex',
+          flexDirection: 'column',
+          padding: 'clamp(64px,6vw,80px) clamp(24px,3.5vw,48px) clamp(40px,4vw,56px)',
+          background: 'transparent',
+        }}>
+          {/* photo — natural aspect ratio, never cropped */}
+          <div style={{ borderRadius: 8, overflow: 'hidden', flexShrink: 0 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/Images/my%20pic.png" alt="Ahmad Firas" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(11,13,20,0.55) 100%)', pointerEvents: 'none' }} />
-            <div style={{ position: 'absolute', left: 14, bottom: 12, fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', color: 'rgba(242,237,216,0.65)', textTransform: 'uppercase' }}>Toledo, OH · 2026</div>
+            <img
+              src="/Images/my%20pic.png"
+              alt="Ahmad Firas"
+              style={{
+                display: 'block',
+                width: '100%',
+                height: 'auto',
+                maxHeight: 'clamp(220px, calc(100svh - 370px), 390px)',
+                objectFit: 'contain',
+                objectPosition: 'center top',
+              }}
+            />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-            {[
-              { l: 'Now', v: 'Sports Analytics Intern', s: 'UToledo Athletics', c: '#2DD4C8' },
-              { l: 'Research', v: 'LION Lab · CPHS Lab', s: 'University of Toledo', c: '#4B7BF5' },
-              { l: 'Focus', v: 'Agentic AI · UAV · MLOps', s: null, c: '#F0B429' },
-            ].map((f) => (
-              <div key={f.l} style={{ padding: '12px 0', borderBottom: '1px solid rgba(242,237,216,0.07)' }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: f.c, letterSpacing: '0.13em', textTransform: 'uppercase', marginBottom: 4 }}>{f.l}</div>
-                <div style={{ fontSize: 14, fontWeight: 500, color: '#F2EDD8' }}>{f.v}</div>
-                {f.s && <div style={{ fontSize: 12, color: '#6E6B60', marginTop: 2 }}>{f.s}</div>}
+
+          {/* info cards */}
+          <div style={{ marginTop: 20 }}>
+            {([
+              { l: 'Now',      v: 'Sports Analytics Intern',  s: 'UToledo Athletics',             c: '#2DD4C8' },
+              { l: 'Research', v: 'LION Lab · CPHS Lab',       s: 'University of Toledo',          c: '#4B7BF5' },
+              { l: 'Degree',   v: 'B.S. CS & Engineering',     s: 'Minor: Math · GPA 3.23 · 2026', c: '#A78BFA' },
+              { l: 'Focus',    v: 'Agentic AI · UAV · MLOps',  s: null,                            c: '#F0B429' },
+            ] as const).map((f) => (
+              <div key={f.l} style={{ padding: '10px 0', borderBottom: '1px solid rgba(242,237,216,0.07)' }}>
+                <div style={{ fontFamily: MONO, fontSize: 10, color: f.c, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 2, opacity: 0.85 }}>{f.l}</div>
+                <div style={{ fontSize: 13, fontWeight: 500, color: '#F2EDD8' }}>{f.v}</div>
+                {f.s && <div style={{ fontSize: 11, color: '#6E6B60', marginTop: 1 }}>{f.s}</div>}
               </div>
             ))}
           </div>
         </div>
       </div>
+
       <style>{`
-        @media (max-width: 820px) {
-          #hero .hero-grid { grid-template-columns: 1fr !important; }
-          #hero .hero-side { order: -1; max-width: 360px; margin: 0 auto; }
+        @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+        @keyframes pulse-a { 0%{box-shadow:0 0 0 0 rgba(45,212,200,0.5)} 70%{box-shadow:0 0 0 7px rgba(45,212,200,0)} 100%{box-shadow:0 0 0 0 rgba(45,212,200,0)} }
+        @media (max-width: 960px) {
+          #hero .hero-left { flex: none !important; width: 100% !important; }
+          #hero .hero-right { flex: none !important; width: 100% !important; border-left: none !important; border-top: 1px solid rgba(240,180,41,0.08) !important; }
+          #hero .hero-right img { max-height: 44vw !important; min-height: 180px; }
+        }
+        @media (max-width: 600px) {
+          #hero .hero-left h1 { font-size: clamp(48px,13vw,80px) !important; }
         }
       `}</style>
     </section>
@@ -150,7 +200,7 @@ function About() {
       <SH n="01" label="About" color="#F0B429" />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 48 }}>
         <div>
-          <h2 style={{ fontFamily: SERIF, fontSize: 30, fontWeight: 400, lineHeight: 1.3, letterSpacing: '-0.015em', color: '#F2EDD8', borderLeft: '3px solid #F0B429', paddingLeft: 18, paddingBottom: '0.08em' }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: 32, fontWeight: 400, lineHeight: 1.25, letterSpacing: '-0.02em', color: '#F2EDD8', paddingBottom: '0.08em' }}>
             Chasing the gap between what AI can do in a lab and what it actually does when someone&apos;s counting on it.
           </h2>
           <p style={{ fontSize: 16, lineHeight: 1.75, color: '#B8B4A4', marginTop: 24 }}>I&apos;m a Computer Science &amp; Engineering graduate from the University of Toledo. My work has moved across autonomous drone systems, enterprise AI, sports analytics, and data engineering — not because I planned a portfolio, but because I follow whatever problem is genuinely hard.</p>
@@ -171,7 +221,7 @@ function About() {
             { n: '02', color: '#4B7BF5', t: 'Human-in-the-loop by design', b: "A system someone can't override isn't autonomous — it's unpredictable. The recovery mechanism is part of the design, not an afterthought." },
             { n: '03', color: '#F07832', t: 'Deployment from line one', b: "Real edge cases, latency requirements, stakeholders who need to understand the output. That pressure makes the work honest." },
           ].map((item) => (
-            <div key={item.n} style={{ padding: '18px 20px', borderTop: `1px solid rgba(242,237,216,0.06)`, borderRight: `1px solid rgba(242,237,216,0.06)`, borderBottom: `1px solid rgba(242,237,216,0.06)`, borderLeft: `2px solid ${item.color}`, borderRadius: 6, marginBottom: 8 }}>
+            <div key={item.n} style={{ padding: '18px 20px', border: `1px solid rgba(242,237,216,0.08)`, background: `${item.color}0a`, borderRadius: 6, marginBottom: 8 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                 <span style={{ fontFamily: MONO, fontSize: 10, color: item.color, opacity: 0.7 }}>{item.n}</span>
                 <span style={{ fontSize: 14, fontWeight: 600, color: '#F2EDD8' }}>{item.t}</span>
@@ -213,7 +263,7 @@ function Experience() {
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {jobs.map((job, i) => (
           <div key={i} onClick={() => setOpen(open === i ? null : i)}
-            style={{ padding: '22px 26px', borderTop: `1px solid ${open === i ? job.color + '55' : 'rgba(242,237,216,0.07)'}`, borderRight: `1px solid ${open === i ? job.color + '55' : 'rgba(242,237,216,0.07)'}`, borderBottom: `1px solid ${open === i ? job.color + '55' : 'rgba(242,237,216,0.07)'}`, cursor: 'pointer', borderLeft: `2px solid ${job.color}`, background: open === i ? `${job.color}0a` : 'rgba(242,237,216,0.02)', transition: 'all 0.25s', borderRadius: 8 }}>
+            style={{ padding: '22px 26px', border: `1px solid ${open === i ? job.color + '55' : 'rgba(242,237,216,0.07)'}`, cursor: 'pointer', background: open === i ? `${job.color}0a` : 'rgba(242,237,216,0.02)', transition: 'all 0.25s', borderRadius: 8 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
@@ -318,10 +368,9 @@ function Projects() {
             </div>
           ))}
         </div>
-        <h4 style={{ color: '#F07832', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Framework</h4>
-        <p>37 documented AI failures organized by mechanism: data-environment mismatch, oversight-gap amplification, distributional brittleness, multi-agent instability. The Contested-Environment Amplifier Model formalized how operational stressors compound quiet failures into catastrophic ones.</p>
-        <h4 style={{ color: '#F07832', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14 }}>Key Insight</h4>
-        <p>Almost all 37 failures had detectable precursors that appeared normal under standard evaluation. Evaluation environments need to be hostile, not merely representative.</p>
+        <h4 style={{ color: '#F07832', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Overview</h4>
+        <p>A four-pillar taxonomy of AI failures in safety-critical autonomous environments, synthesized from 37 documented incidents across 127 sources. Published to ACM Computing Surveys, currently under review.</p>
+        <a href="#research" onClick={(e) => { e.preventDefault(); document.getElementById('research')?.scrollIntoView({ behavior: 'smooth' }); }} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 14, padding: '8px 16px', border: '1px solid rgba(240,120,50,0.3)', borderRadius: 5, color: '#F07832', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', cursor: 'pointer' }}>Full methodology in Research section ↓</a>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
           {['Taxonomy Design','Literature Review','AI Safety','ACM CSUR'].map(t => <Tag key={t} color="#F07832">{t}</Tag>)}
         </div>
@@ -456,7 +505,7 @@ function Projects() {
   const { ref, visible } = useReveal();
   return (
     <Section id="projects">
-      <SH n="04" label="Bodies of Work" sub="Each project a different operating condition. Click any card for the full case study." color="#F0B429" />
+      <SH n="03" label="Bodies of Work" sub="Each project a different operating condition. Click any card for the full case study." color="#F0B429" />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}
         style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
         {projects.map((p) => (
@@ -507,12 +556,29 @@ function Research() {
             { metric: '4', label: 'Pillars in taxonomy', color: '#F0B429' },
             { metric: '2025', label: 'ACM CSUR submission', color: '#A78BFA' },
           ].map((m) => (
-            <div key={m.label} style={{ padding: '24px', background: 'rgba(242,237,216,0.025)', borderTop: `1px solid ${m.color}22`, borderRight: `1px solid ${m.color}22`, borderBottom: `1px solid ${m.color}22`, borderRadius: 8, borderLeft: `2px solid ${m.color}` }}>
+            <div key={m.label} style={{ padding: '24px', background: `${m.color}08`, border: `1px solid ${m.color}33`, borderRadius: 8 }}>
               <div style={{ fontFamily: SERIF, fontSize: 38, fontWeight: 400, color: '#F2EDD8', lineHeight: 1, paddingBottom: '0.05em' }}>{m.metric}</div>
               <div style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 8 }}>{m.label}</div>
             </div>
           ))}
         </div>
+        <div style={{ marginTop: 24, display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }} className="two-col-pillars">
+          {[
+            { n: '01', label: 'Data-Environment Mismatch', color: '#4B7BF5', desc: 'Training distributions that diverge from deployment conditions. The initiating mechanism in 18 of 37 documented failures.' },
+            { n: '02', label: 'Oversight-Gap Amplification', color: '#F0B429', desc: 'Monitoring blind spots that allow small deviations to compound undetected until failure becomes irreversible.' },
+            { n: '03', label: 'Distributional Brittleness', color: '#2DD4C8', desc: 'Systems that perform on benchmarks but fail at the boundary of their training manifold under novel real-world inputs.' },
+            { n: '04', label: 'Multi-Agent Instability', color: '#A78BFA', desc: 'Emergent failure modes from agent interactions producing unsafe equilibria that are absent in single-agent testing.' },
+          ].map(p => (
+            <div key={p.n} style={{ padding: '18px 22px', border: `1px solid ${p.color}22`, background: `${p.color}06`, borderRadius: 8 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                <span style={{ fontFamily: MONO, fontSize: 10, color: p.color, opacity: 0.7 }}>{p.n}</span>
+                <span style={{ fontFamily: MONO, fontSize: 11, color: p.color, letterSpacing: '0.07em', textTransform: 'uppercase' }}>{p.label}</span>
+              </div>
+              <p style={{ fontSize: 13, lineHeight: 1.7, color: '#B8B4A4' }}>{p.desc}</p>
+            </div>
+          ))}
+        </div>
+        <style>{`@media(max-width:640px){.two-col-pillars{grid-template-columns:1fr!important}}`}</style>
       </div>
     </Section>
   );
@@ -529,8 +595,10 @@ function FeaturedIn() {
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}
         style={{ background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 10, overflow: 'hidden' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 0 }} className="featured-in-grid">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/Images/athletics_group_pics.png" alt="UToledo Athletics feature" style={{ width: '100%', height: '100%', minHeight: 220, objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
+          <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 0, background: '#0d0f1a', width: '100%', height: '100%', minHeight: 220 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/Images/athletics_group_pics.png" alt="UToledo Athletics feature" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
+          </div>
           <div style={{ padding: '28px 36px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <div style={{ fontFamily: MONO, fontSize: 10, color: '#F07832', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 14, opacity: 0.9 }}>Featured In</div>
             <h3 style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, color: '#F2EDD8', lineHeight: 1.3 }}>
@@ -543,6 +611,7 @@ function FeaturedIn() {
             <a
               href="https://utrockets.com/news/2026/4/20/toledo-athletics-data-internship-program-aids-the-rockets-spurs-student-careers.aspx"
               target="_blank" rel="noopener noreferrer"
+              data-magnetic=""
               style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 20, padding: '9px 18px', border: '1px solid rgba(45,212,200,0.27)', borderRadius: 6, color: '#2DD4C8', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', width: 'fit-content', transition: 'all 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(45,212,200,0.07)'; e.currentTarget.style.borderColor = '#2DD4C8'; }}
               onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(45,212,200,0.27)'; }}
@@ -581,6 +650,32 @@ const affiliations = [
   { n: 'UToledo Athletics',  role: 'Data Science Intern',      color: '#2DD4C8', short: 'University of Toledo Department of Athletics', desc: 'Embedded within UT Athletics as a Sports Analytics & Data Science Intern. Featured in official UToledo Rockets media for bridging technical modeling with direct communication to athletics leadership.', imgs: ['/Images/athletics_group_pics.png'] },
 ];
 
+// ── Skill Group Card (progressive disclosure) ──
+function SkillGroupCard({ group }: { group: { label: string; color: string; skills: string[] } }) {
+  const SHOW = 6;
+  const [showAll, setShowAll] = React.useState(false);
+  const visible = showAll ? group.skills : group.skills.slice(0, SHOW);
+  const hidden = group.skills.length - SHOW;
+  return (
+    <div style={{ background: 'rgba(242,237,216,0.025)', borderTop: `2px solid ${group.color}`, borderRight: '1px solid rgba(242,237,216,0.08)', borderBottom: '1px solid rgba(242,237,216,0.08)', borderLeft: '1px solid rgba(242,237,216,0.08)', borderRadius: 8, padding: '22px 20px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 14 }}>
+        <div style={{ width: 5, height: 5, background: group.color, borderRadius: 1, flexShrink: 0 }} />
+        <span style={{ fontFamily: MONO, fontSize: 11, color: group.color, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{group.label}</span>
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+        {visible.map(s => <SkillChip key={s} color={group.color}>{s}</SkillChip>)}
+        {!showAll && hidden > 0 && (
+          <span
+            role="button"
+            onClick={() => setShowAll(true)}
+            style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${group.color}0a`, border: `1px solid ${group.color}30`, borderRadius: 4, color: group.color, letterSpacing: '0.03em', cursor: 'pointer', opacity: 0.75 }}
+          >+{hidden}</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function SkillChip({ color, children }: { color: string; children: React.ReactNode }) {
   return (
     <span
@@ -602,15 +697,7 @@ function Skills() {
         {/* Skill grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }} className="three-col-skills">
           {skillGroups.map((group) => (
-            <div key={group.label} style={{ background: 'rgba(242,237,216,0.025)', borderTop: `2px solid ${group.color}`, borderRight: '1px solid rgba(242,237,216,0.08)', borderBottom: '1px solid rgba(242,237,216,0.08)', borderLeft: '1px solid rgba(242,237,216,0.08)', borderRadius: 8, padding: '22px 20px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 14 }}>
-                <div style={{ width: 5, height: 5, background: group.color, borderRadius: 1, flexShrink: 0 }} />
-                <span style={{ fontFamily: MONO, fontSize: 11, color: group.color, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{group.label}</span>
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                {group.skills.map(s => <SkillChip key={s} color={group.color}>{s}</SkillChip>)}
-              </div>
-            </div>
+            <SkillGroupCard key={group.label} group={group} />
           ))}
         </div>
 
@@ -634,9 +721,12 @@ function Skills() {
                 </div>
                 {openAward === i && (
                   <div style={{ padding: '0 18px 18px', borderTop: '1px solid rgba(242,237,216,0.06)' }}>
-                    <div style={{ display: 'flex', gap: 8, marginTop: 14, overflowX: 'auto' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.imgs.length}, 1fr)`, gap: 8, marginTop: 14 }}>
                       {a.imgs.map((src, j) => (
-                        <img key={j} src={src} alt={a.t} style={{ height: 140, borderRadius: 6, objectFit: 'cover', flexShrink: 0, maxWidth: '100%' }} />
+                        <div key={j} style={{ width: '100%', height: 180, background: '#0B0D14', borderRadius: 6, overflow: 'hidden' }}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={src} alt={a.t} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -667,9 +757,12 @@ function Skills() {
                 </div>
                 {openAffil === i && (
                   <div style={{ padding: '0 22px 22px', borderTop: '1px solid rgba(242,237,216,0.06)' }}>
-                    <div style={{ display: 'flex', gap: 8, marginTop: 14, overflowX: 'auto' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.imgs.length}, 1fr)`, gap: 8, marginTop: 14 }}>
                       {a.imgs.map((src, j) => (
-                        <img key={j} src={src} alt={a.n} style={{ height: 140, borderRadius: 6, objectFit: 'cover', flexShrink: 0, maxWidth: '100%' }} />
+                        <div key={j} style={{ width: '100%', height: 180, background: '#0B0D14', borderRadius: 6, overflow: 'hidden' }}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={src} alt={a.n} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
+                        </div>
                       ))}
                     </div>
                     <p style={{ fontSize: 13, lineHeight: 1.75, color: '#B8B4A4', marginTop: 14 }}>{a.desc}</p>
@@ -704,6 +797,105 @@ function Skills() {
 }
 
 // ─────────────────────────────────────────────
+// NOW
+// ─────────────────────────────────────────────
+function Now() {
+  const { ref, visible } = useReveal();
+
+  const cards = [
+    {
+      icon: '◎',
+      category: 'Learning',
+      status: 'In Progress',
+      statusColor: '#4B7BF5',
+      color: '#4B7BF5',
+      items: [
+        { title: 'Drive AI Transformation in Your Organization', sub: 'Microsoft · Course AB-731T00-A' },
+      ],
+    },
+    {
+      icon: '◇',
+      category: 'Building',
+      status: 'Active',
+      statusColor: '#2DD4C8',
+      color: '#A78BFA',
+      items: [
+        { title: 'Student Athlete Health Insurance Site', sub: 'Toledo Athletics' },
+        { title: 'Athletics Onboarding Website', sub: 'Toledo Athletics' },
+        { title: 'Football Performance Metrics: CV Model', sub: 'Computer Vision · In progress' },
+      ],
+    },
+    {
+      icon: '◎',
+      category: 'Pursuing',
+      status: 'Upcoming',
+      statusColor: '#F07832',
+      color: '#F07832',
+      items: [
+        { title: 'Full-Time Role', sub: 'Actively interviewing' },
+        { title: 'Microsoft Certified: AI Transformation Leader', sub: 'Exam prep underway' },
+      ],
+    },
+  ];
+
+  return (
+    <Section id="now" style={{ background: 'rgba(15,17,25,0.92)' }}>
+      {/* Header */}
+      <div style={{ marginBottom: 52 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 10 }}>
+          <span style={{ display: 'inline-block', width: 22, height: 1.5, background: '#2DD4C8', opacity: 0.6, flexShrink: 0 }} />
+          <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#2DD4C8' }}>Now</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Updated · May 2026</span>
+        </div>
+        <p style={{ fontSize: 15, color: '#B8B4A4', maxWidth: 460, lineHeight: 1.65, fontFamily: SANS }}>
+          What I&apos;m actively learning, building, and chasing outside of work.
+        </p>
+      </div>
+
+      <div ref={ref} className={`reveal ${visible ? 'in' : ''} now-grid`}
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+        {cards.map((card) => (
+          <div key={card.category} style={{
+            background: 'rgba(242,237,216,0.02)',
+            border: `1px solid ${card.color}44`,
+            borderRadius: 10,
+            padding: '24px 26px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 18,
+          }}>
+            {/* Card header */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ color: card.color, fontSize: 13, opacity: 0.85 }}>{card.icon}</span>
+                <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: card.color }}>
+                  {card.category}
+                </span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: card.statusColor, display: 'inline-block', flexShrink: 0 }} className={card.statusColor === '#2DD4C8' || card.statusColor === '#4B7BF5' ? 'pulse' : ''} />
+                <span style={{ fontFamily: MONO, fontSize: 10, color: card.statusColor, letterSpacing: '0.08em', textTransform: 'uppercase' }}>{card.status}</span>
+              </div>
+            </div>
+
+            {/* Items */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              {card.items.map((item) => (
+                <div key={item.title}>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: '#F2EDD8', lineHeight: 1.4 }}>{item.title}</div>
+                  <div style={{ fontSize: 12, color: '#6E6B60', marginTop: 3 }}>{item.sub}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <style>{`@media(max-width:860px){#now .reveal{grid-template-columns:repeat(2,1fr)!important}}@media(max-width:560px){#now .reveal{grid-template-columns:1fr!important}}`}</style>
+    </Section>
+  );
+}
+
+// ─────────────────────────────────────────────
 // CONTACT
 // ─────────────────────────────────────────────
 function Contact() {
@@ -720,12 +912,12 @@ function Contact() {
             Whether it&apos;s a full-time opportunity, research collaboration, or just a conversation about autonomous systems — I&apos;m listening.
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <a href="mailto:firas.azfar@gmail.com">
+            <a href="mailto:firas.azfar@gmail.com" data-magnetic="">
               <NeonButton style={{ fontFamily: MONO, fontSize: 11, padding: '12px 24px', letterSpacing: '0.06em', background: '#F0B429', color: '#0B0D14', border: 'none', borderRadius: 5, textTransform: 'uppercase' }}>
                 firas.azfar@gmail.com
               </NeonButton>
             </a>
-            <a href="/docs/Ahmad_Resume_Developer_I_FirstSolar.pdf" target="_blank" rel="noopener">
+            <a href="/docs/Ahmad_Resume_Developer_I_FirstSolar.pdf" target="_blank" rel="noopener" data-magnetic="">
               <NeonButton variant="ghost" style={{ fontFamily: MONO, fontSize: 11, padding: '12px 24px', letterSpacing: '0.06em', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', borderRadius: 5, textTransform: 'uppercase' }}>
                 Resume ↓
               </NeonButton>
@@ -739,7 +931,7 @@ function Contact() {
             { label: 'GitHub', value: '/aahmadf123', href: 'https://github.com/aahmadf123', color: '#2DD4C8' },
             { label: 'Location', value: 'Toledo, OH', href: null, color: '#A78BFA' },
           ].map((c) => (
-            <div key={c.label} style={{ padding: '20px', background: 'rgba(242,237,216,0.025)', borderTop: '1px solid rgba(242,237,216,0.07)', borderRight: '1px solid rgba(242,237,216,0.07)', borderBottom: '1px solid rgba(242,237,216,0.07)', borderRadius: 8, borderLeft: `2px solid ${c.color}` }}>
+            <div key={c.label} style={{ padding: '20px', background: `${c.color}08`, border: `1px solid ${c.color}2a`, borderRadius: 8 }}>
               <div style={{ fontFamily: MONO, fontSize: 10, color: c.color, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 6 }}>{c.label}</div>
               {c.href ? (
                 <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel={c.href.startsWith('http') ? 'noopener' : undefined} style={{ fontSize: 14, color: '#F2EDD8', wordBreak: 'break-all' }}>{c.value}</a>
@@ -770,11 +962,12 @@ export default function Portfolio() {
         <Research />
         <FeaturedIn />
         <Skills />
+        <Now />
         <Contact />
       </main>
       <footer style={{ position: 'relative', zIndex: 20, borderTop: '1px solid rgba(242,237,216,0.06)', padding: '28px 52px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
         <span style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.12em', textTransform: 'uppercase' }}>© 2026 Ahmad Firas. All rights reserved.</span>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Built with ♥ by Ahmad Firas</span>
+        <span style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Next.js · TypeScript · Framer Motion</span>
       </footer>
     </>
   );

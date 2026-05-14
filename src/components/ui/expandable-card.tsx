@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { createPortal } from "react-dom";
+import { createPortal, flushSync } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -40,15 +40,29 @@ export function ExpandableCard({
   const [mounted, setMounted] = React.useState(false);
   const cardRef = React.useRef<HTMLDivElement>(null);
   const id = React.useId();
+  const vtId = `vt${id.replace(/:/g, '')}`;
+
+  // Stable ref so click-outside effect always calls the latest version
+  const closeCardFn = React.useRef(() => setActive(false));
+  React.useEffect(() => {
+    closeCardFn.current = () => {
+      if ('startViewTransition' in document) {
+        try { (document as any).startViewTransition(() => { flushSync(() => setActive(false)); }); }
+        catch { setActive(false); }
+      } else {
+        setActive(false);
+      }
+    };
+  });
 
   React.useEffect(() => { setMounted(true); }, []);
 
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActive(false);
+      if (event.key === "Escape") closeCardFn.current();
     };
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      if (cardRef.current && !cardRef.current.contains(event.target as Node)) setActive(false);
+      if (cardRef.current && !cardRef.current.contains(event.target as Node)) closeCardFn.current();
     };
     window.addEventListener("keydown", onKeyDown);
     document.addEventListener("mousedown", handleClickOutside);
@@ -95,9 +109,9 @@ export function ExpandableCard({
               )}
               {...props}
             >
-              <motion.div layoutId={`image-${title}-${id}`} className="shrink-0">
-                <img src={src} alt={title} className="w-full h-64 sm:h-72 object-cover object-center" />
-              </motion.div>
+              <div className="shrink-0" style={{ width: '100%', height: 360, background: '#0B0D14', overflow: 'hidden', viewTransitionName: `card-img-${vtId}` } as React.CSSProperties}>
+                <img src={src} alt={title} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
+              </div>
               <div className="flex justify-between items-start p-6 sm:p-8 pb-4 shrink-0 gap-4">
                 <div className="min-w-0">
                   <motion.p layoutId={`description-${description}-${id}`} className={descClass}>{description}</motion.p>
@@ -111,7 +125,7 @@ export function ExpandableCard({
                   aria-label="Close card"
                   layoutId={`button-${title}-${id}`}
                   className="h-10 w-10 shrink-0 flex items-center justify-center rounded-full bg-[#1A1D2C] text-[#B8B4A4] hover:text-[#F2EDD8] border border-white/10 hover:border-white/20 transition-colors duration-300 focus:outline-none"
-                  onClick={() => setActive(false)}
+                  onClick={() => closeCardFn.current()}
                 >
                   <motion.div animate={{ rotate: active ? 45 : 0 }} transition={{ duration: 0.4 }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -140,7 +154,14 @@ export function ExpandableCard({
         role="button"
         aria-label={`${title} — click to expand`}
         layoutId={`card-${title}-${id}`}
-        onClick={() => setActive(true)}
+        onClick={() => {
+          if ('startViewTransition' in document) {
+            try { (document as any).startViewTransition(() => { flushSync(() => setActive(true)); }); }
+            catch { setActive(true); }
+          } else {
+            setActive(true);
+          }
+        }}
         style={{
           background: 'rgba(242,237,216,0.025)',
           borderTop: `2px solid ${accentColor}`,
@@ -152,6 +173,13 @@ export function ExpandableCard({
           cursor: 'pointer',
           transition: 'border-color 0.25s, background 0.25s',
           width: '100%',
+          position: 'relative',
+        }}
+        onMouseMove={e => {
+          const el = e.currentTarget;
+          const r = el.getBoundingClientRect();
+          el.style.setProperty('--gx', `${e.clientX - r.left}px`);
+          el.style.setProperty('--gy', `${e.clientY - r.top}px`);
         }}
         onMouseEnter={e => {
           const el = e.currentTarget as HTMLElement;
@@ -167,16 +195,14 @@ export function ExpandableCard({
           el.style.borderBottom = '1px solid rgba(242,237,216,0.08)';
           el.style.borderLeft = '1px solid rgba(242,237,216,0.08)';
         }}
-        className={cn(className)}
+        className={cn('card-project', className)}
       >
+        {/* Cursor-tracked ambient glow */}
+        <div className="card-glow-el" aria-hidden="true" />
         {/* Image */}
-        <motion.div layoutId={`image-${title}-${id}`}>
-          {thumbnailAspect ? (
-            <img src={src} alt={title} style={{ width: '100%', aspectRatio: thumbnailAspect, objectFit: 'cover', objectPosition: 'center', display: 'block' }} />
-          ) : (
-            <img src={src} alt={title} className="w-64 h-48 object-cover object-center" />
-          )}
-        </motion.div>
+        <div style={{ width: '100%', aspectRatio: thumbnailAspect || '4/3', background: '#0B0D14', overflow: 'hidden', flexShrink: 0, viewTransitionName: `card-img-${vtId}` } as React.CSSProperties}>
+          <img src={src} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
+        </div>
 
         {/* Info bar */}
         <div style={{ padding: '14px 16px 16px' }}>
@@ -191,6 +217,7 @@ export function ExpandableCard({
             <motion.button
               aria-label="Open card"
               layoutId={`button-${title}-${id}`}
+              data-magnetic=""
               style={{ height: 28, width: 28, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: '#1A1D2C', color: '#B8B4A4', border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer', outline: 'none' }}
             >
               <motion.div animate={{ rotate: active ? 45 : 0 }} transition={{ duration: 0.4 }}>

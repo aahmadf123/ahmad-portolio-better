@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Chakra_Petch } from "next/font/google";
 import "./globals.css";
+import { MagneticCursor } from "@/components/ui/magnetic-cursor";
 
 const chakraPetch = Chakra_Petch({
   subsets: ["latin"],
@@ -35,7 +36,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={chakraPetch.variable}>
-      <body>
+      <body suppressHydrationWarning>
+        <MagneticCursor />
         <div id="scroll-bar" suppressHydrationWarning />
         {children}
         <script

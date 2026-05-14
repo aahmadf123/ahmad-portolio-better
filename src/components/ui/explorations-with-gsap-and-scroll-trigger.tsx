@@ -224,7 +224,7 @@ export function NebulaCube({ children }: { children?: React.ReactNode }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     mountElement.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 

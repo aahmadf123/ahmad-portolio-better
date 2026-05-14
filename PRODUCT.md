@@ -1,0 +1,50 @@
+# Product
+
+## Register
+
+brand
+
+## Users
+
+Hiring managers and technical leads at AI, robotics, and software companies — opening the portfolio to decide whether to bring Ahmad in for an interview. They skim fast, anchor on results, and need to feel the depth before reading a single line of code.
+
+Research collaborators — professors, lab directors, and co-authors assessing whether Ahmad is someone worth working with. They read methodology, look for publication signals, and notice when someone thinks rigorously.
+
+Secondary: conference attendees and open-source readers who arrived from a paper citation or LinkedIn post.
+
+All three groups open this on a laptop, likely during a 2–5 minute window, and the portfolio needs to win that window.
+
+## Product Purpose
+
+Ahmad Firas Azfar's personal portfolio. Its job is to communicate a single thesis — that Ahmad is not a generalist with a list of buzzwords, but a researcher and engineer who ships real work in AI, robotics, and autonomous systems.
+
+Success looks like: the visitor reaches the projects or research section, feels the specificity of the results (72.8% zero-shot deployment, R² = 0.976, sub-100ms HITL), and leaves with a concrete picture of what Ahmad actually builds.
+
+## Brand Personality
+
+Precise. Deliberate. Credible.
+
+The voice is that of a researcher who has shipped production code — not a student who has learned frameworks. Quiet confidence, no hype. The interface should feel like it was made by the same person who built the things it describes.
+
+## Anti-references
+
+- Generic dark-mode portfolio templates: hero section, animated skills bar chart, timeline, contact form, done. The visual language of a tutorial, not a person.
+- SaaS landing pages: gradient meshes, glassmorphism cards, "hero metric" stat blocks (big number, small label, colored glow). Decorative noise that signals nothing.
+- Agency portfolios: full-bleed imagery, heavy scroll animations, style-as-substitute-for-substance. Makes designers look good; makes engineers look lost.
+- Academic CVs turned into websites: wall of text, no visual hierarchy, achievements buried in dense paragraphs. The opposite failure mode — all substance, zero communication.
+
+## Design Principles
+
+1. **Credibility is the product.** Every visual choice either builds trust in Ahmad's technical depth or it costs it. Decoration that doesn't reinforce the work is a liability.
+
+2. **Structure communicates precision.** Numbered sections, monospaced labels, disciplined grid — these aren't aesthetic choices, they're signals about how Ahmad thinks. The form echoes the person.
+
+3. **Color carries domain, not decoration.** The six-accent system maps loosely to research areas (blue for AI/ML research, amber for engineering milestones, teal for robotics/systems, etc.). Color should never be arbitrary.
+
+4. **Density is earned, not imposed.** The work is deep — the portfolio can be too, but whitespace must be intentional. Every dense block needs enough surrounding breath that it reads as deliberate concentration, not overwhelm.
+
+5. **The work speaks first, the interface recedes.** Components should disappear when content is strong. Only emerge — expand, animate, highlight — when doing so adds meaning that the content alone can't carry.
+
+## Accessibility & Inclusion
+
+WCAG 2.1 AA minimum. Reasonable contrast on all text. Respect `prefers-reduced-motion` — animations should degrade to opacity/visibility, not layout shifts. No critical information conveyed through color alone.
