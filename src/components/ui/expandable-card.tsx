@@ -47,7 +47,11 @@ export function ExpandableCard({
   React.useEffect(() => {
     closeCardFn.current = () => {
       if ('startViewTransition' in document) {
-        try { (document as any).startViewTransition(() => { flushSync(() => setActive(false)); }); }
+        try {
+          const vt = (document as any).startViewTransition(() => { flushSync(() => setActive(false)); });
+          vt?.ready?.catch(() => {});
+          vt?.finished?.catch(() => {});
+        }
         catch { setActive(false); }
       } else {
         setActive(false);
@@ -93,51 +97,83 @@ export function ExpandableCard({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', width: '100%', height: '100%', zIndex: 9998 }}
+            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', width: '100%', height: '100%', zIndex: 9998 }}
           />
         )}
       </AnimatePresence>
       <AnimatePresence>
         {active && (
-          <div style={{ position: 'fixed', inset: 0, display: 'grid', placeItems: 'center', zIndex: 9999, padding: '1rem', overflowY: 'auto' }}>
+          <div style={{ position: 'fixed', inset: 0, display: 'grid', placeItems: 'center', zIndex: 9999, padding: 'clamp(12px,2vw,24px)', overflowY: 'auto' }}>
             <motion.div
               layoutId={`card-${title}-${id}`}
               ref={cardRef}
               className={cn(
-                "w-full max-w-[850px] my-auto max-h-[min(900px,calc(100vh-6rem))] flex flex-col overflow-hidden rounded-2xl bg-[#131520] border border-white/[0.07] shadow-2xl relative",
+                "w-full max-w-[860px] my-auto max-h-[min(920px,calc(100vh-3rem))] flex flex-col overflow-hidden rounded-2xl shadow-2xl relative",
                 classNameExpanded,
               )}
+              style={{ background: '#0F111A', border: '1px solid rgba(242,237,216,0.08)' }}
               {...props}
             >
-              <div className="shrink-0" style={{ width: '100%', height: 360, background: '#0B0D14', overflow: 'hidden', viewTransitionName: `card-img-${vtId}` } as React.CSSProperties}>
-                <img src={src} alt={title} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
-              </div>
-              <div className="flex justify-between items-start p-6 sm:p-8 pb-4 shrink-0 gap-4">
+              {/* ── Fixed header: category label + title + close ── */}
+              <div
+                className="shrink-0 flex justify-between items-start gap-4"
+                style={{ padding: '22px 28px 18px', borderBottom: '1px solid rgba(242,237,216,0.07)', background: '#0F111A' }}
+              >
                 <div className="min-w-0">
-                  <motion.p layoutId={`description-${description}-${id}`} className={descClass}>{description}</motion.p>
+                  <motion.p
+                    layoutId={`description-${description}-${id}`}
+                    className={descClass}
+                    style={{ color: accentColor, marginBottom: 6 }}
+                  >{description}</motion.p>
                   <motion.h3
                     layoutId={`title-${title}-${id}`}
-                    className="text-[#F2EDD8] text-2xl sm:text-3xl mt-2 leading-tight"
-                    style={{ ...titleStyle, paddingBottom: '0.08em' }}
+                    className="text-[#F2EDD8] leading-tight"
+                    style={{ ...titleStyle, fontSize: 'clamp(20px,3vw,28px)', paddingBottom: '0.06em' }}
                   >{title}</motion.h3>
                 </div>
                 <motion.button
                   aria-label="Close card"
                   layoutId={`button-${title}-${id}`}
-                  className="h-10 w-10 shrink-0 flex items-center justify-center rounded-full bg-[#1A1D2C] text-[#B8B4A4] hover:text-[#F2EDD8] border border-white/10 hover:border-white/20 transition-colors duration-300 focus:outline-none"
+                  className="h-9 w-9 shrink-0 flex items-center justify-center rounded-full text-[#B8B4A4] hover:text-[#F2EDD8] transition-colors duration-300 focus:outline-none"
+                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', marginTop: 2 }}
                   onClick={() => closeCardFn.current()}
                 >
                   <motion.div animate={{ rotate: active ? 45 : 0 }} transition={{ duration: 0.4 }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12h14" /><path d="M12 5v14" />
                     </svg>
                   </motion.div>
                 </motion.button>
               </div>
-              <div className="px-6 sm:px-8 pb-8 overflow-y-auto flex-1 [scrollbar-width:thin]">
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ delay: 0.1 }} className="text-[#B8B4A4] text-sm flex flex-col items-start gap-4">
-                  {children}
-                </motion.div>
+
+              {/* ── Scrollable body: image + content ── */}
+              <div className="overflow-y-auto flex-1 [scrollbar-width:thin]">
+                {/* Image with padding and rounded corners */}
+                <div
+                  style={{ padding: '20px 28px 0', background: '#0A0C13', viewTransitionName: `card-img-${vtId}` } as React.CSSProperties}
+                >
+                  <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${accentColor}18`, background: '#06080E' }}>
+                    <img
+                      src={src}
+                      alt={title}
+                      style={{ width: '100%', height: 'clamp(200px,28vh,320px)', objectFit: 'contain', display: 'block', padding: '12px 0' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div style={{ padding: '24px 28px 32px' }}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ delay: 0.08, duration: 0.3 }}
+                    className="text-[#B8B4A4] text-sm"
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: 0, width: '100%' }}
+                  >
+                    {children}
+                  </motion.div>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -156,7 +192,11 @@ export function ExpandableCard({
         layoutId={`card-${title}-${id}`}
         onClick={() => {
           if ('startViewTransition' in document) {
-            try { (document as any).startViewTransition(() => { flushSync(() => setActive(true)); }); }
+            try {
+              const vt = (document as any).startViewTransition(() => { flushSync(() => setActive(true)); });
+              vt?.ready?.catch(() => {});
+              vt?.finished?.catch(() => {});
+            }
             catch { setActive(true); }
           } else {
             setActive(true);

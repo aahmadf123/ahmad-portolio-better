@@ -17,11 +17,15 @@ export function Header({ links }: { links?: HeaderLink[] }) {
   const scrolled = useScroll(10);
 
   const defaultLinks: HeaderLink[] = links || [
-    { label: 'About',      href: '#about' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Work',       href: '#projects' },
-    { label: 'Research',   href: '#research' },
-    { label: 'Contact',    href: '#contact' },
+    { label: 'About',        href: '#about' },
+    { label: 'Experience',   href: '#experience' },
+    { label: 'Work',         href: '#projects' },
+    { label: 'Research',     href: '#research' },
+    { label: 'Skills',       href: '#skills' },
+    { label: 'Press',        href: '#featured-in' },
+    { label: 'Now',          href: '#now' },
+    { label: 'Field Notes',  href: '#field-notes' },
+    { label: 'Contact',      href: '#contact' },
   ];
 
   // Lock body scroll when mobile menu open

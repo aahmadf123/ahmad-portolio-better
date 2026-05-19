@@ -13,389 +13,350 @@ export function NebulaCube({ children }: { children?: React.ReactNode }) {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const cubeRef = useRef<THREE.Mesh | null>(null);
-  const cubeGroupRef = useRef<THREE.Group | null>(null);
-  const ambientLightRef = useRef<THREE.AmbientLight | null>(null);
-  const pointLightRef = useRef<THREE.PointLight | null>(null);
-  const directionalLightRef = useRef<THREE.DirectionalLight | null>(null);
+  const pointsRef = useRef<THREE.Points | null>(null);
+  const linesRef = useRef<THREE.LineSegments | null>(null);
+  const synapseGroupRef = useRef<THREE.Group | null>(null);
+  const mouse = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
+  const scrollProgress = useRef(0);
 
-  const mouse = useRef({ x: 0, y: 0 });
-  const uniformsRef = useRef({
-    iTime: { value: 0 },
-    iResolution: { value: new THREE.Vector2(512, 512) },
-    scrollProgress: { value: 0.0 }
-  });
-
-  function createStarTexture() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 64; canvas.height = 64;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return null;
-    const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    gradient.addColorStop(0.1, 'rgba(255, 255, 255, 0.95)');
-    gradient.addColorStop(0.3, 'rgba(200, 200, 255, 0.7)');
-    gradient.addColorStop(0.6, 'rgba(140, 140, 230, 0.4)');
-    gradient.addColorStop(1, 'rgba(40, 40, 120, 0)');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 64, 64);
-    ctx.globalCompositeOperation = 'lighten';
-    const linearGradient = ctx.createLinearGradient(32, 0, 32, 64);
-    linearGradient.addColorStop(0, 'rgba(100, 100, 230, 0)');
-    linearGradient.addColorStop(0.5, 'rgba(250, 250, 255, 0.7)');
-    linearGradient.addColorStop(1, 'rgba(100, 100, 230, 0)');
-    ctx.fillStyle = linearGradient;
-    ctx.fillRect(28, 0, 8, 64);
-    const horizontalGradient = ctx.createLinearGradient(0, 32, 64, 32);
-    horizontalGradient.addColorStop(0, 'rgba(100, 100, 230, 0)');
-    horizontalGradient.addColorStop(0.5, 'rgba(250, 250, 255, 0.7)');
-    horizontalGradient.addColorStop(1, 'rgba(100, 100, 230, 0)');
-    ctx.fillStyle = horizontalGradient;
-    ctx.fillRect(0, 28, 64, 8);
-    const texture = new THREE.Texture(canvas);
-    texture.needsUpdate = true;
-    return texture;
-  }
-
-  const vertexShader = `
-    varying vec2 vUv;
-    varying vec3 vPosition;
-    varying vec3 vNormal;
-    void main() {
-      vUv = uv; vPosition = position;
-      vNormal = normalize(normalMatrix * normal);
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `;
-
-  const fragmentShader = `
-    uniform float iTime;
-    uniform vec2 iResolution;
-    uniform float scrollProgress;
-    varying vec2 vUv;
-    varying vec3 vPosition;
-    varying vec3 vNormal;
-    void mainImage(out vec4 O, vec2 I) {
-        vec2 r = iResolution.xy; vec2 z; vec2 i;
-        vec2 f = I*(z+=4.-4.*abs(.7-dot(I=(I+I-r)/r.y, I)));
-        float timeOffset = sin(iTime * 0.2) * 0.1;
-        f.x += timeOffset; f.y -= timeOffset;
-        float iterations = mix(8.0, 12.0, scrollProgress);
-        for(O *= 0.; i.y++<iterations; O += (sin(f += cos(f.yx*i.y+i+iTime)/i.y+.7)+1.).xyyx * abs(f.x-f.y));
-        O = tanh(7.*exp(z.x-4.-I.y*vec4(-1,1,2,0))/O);
-        float pulse = 1.0 + 0.2 * sin(iTime * 0.5);
-        O.rgb *= pulse;
-        float nebula = sin(I.x * 0.01 + iTime * 0.3) * sin(I.y * 0.01 - iTime * 0.2);
-        nebula = abs(nebula) * 0.5;
-        vec3 color1 = mix(vec3(0.1, 0.2, 0.8), vec3(0.8, 0.1, 0.5), scrollProgress);
-        vec3 color2 = mix(vec3(0.8, 0.2, 0.7), vec3(0.2, 0.8, 0.7), scrollProgress);
-        vec3 colorMix = mix(color1, color2, sin(iTime * 0.2) * 0.5 + 0.5);
-        O.rgb = mix(O.rgb, colorMix, nebula * (1.0 - length(O.rgb)));
-    }
-    void main() {
-        vec2 cubeUV = vUv * iResolution;
-        vec4 fragColor;
-        mainImage(fragColor, cubeUV);
-        float depthFactor = abs(dot(vNormal, vec3(0.0, 0.0, 1.0)));
-        fragColor.rgb *= 0.7 + 0.3 * depthFactor;
-        float edge = 1.0 - max(abs(vUv.x - 0.5), abs(vUv.y - 0.5)) * 2.0;
-        edge = pow(edge, 4.0);
-        fragColor.rgb += edge * vec3(0.1, 0.2, 0.8) * (0.6 + scrollProgress * 0.4);
-        fragColor.rgb *= 2.0;
-        gl_FragColor = fragColor;
-    }
-  `;
-
-  const particleSystemRef = useRef<THREE.Points | null>(null);
-  const constellationSystemRef = useRef<THREE.LineSegments | null>(null);
-  const particleSettingsRef = useRef({
-    PARTICLE_COUNT: 2000,
-    PARTICLE_MOUSE_INFLUENCE: 0.0001,
-    PARTICLE_REPULSION_RADIUS: 0.8,
-    PARTICLE_REPULSION_STRENGTH: 0.00008,
-    PARTICLE_CONNECTION_DISTANCE: 0.5,
-    PARTICLE_DEPTH_RANGE: 12
-  });
-
-  function createEnhancedParticles(starTexture: THREE.Texture | null) {
-    const particleGeometry = new THREE.BufferGeometry();
-    const particleCount = particleSettingsRef.current.PARTICLE_COUNT;
-    const positions = new Float32Array(particleCount * 3);
-    const originalPositions = new Float32Array(particleCount * 3);
-    const velocities = new Float32Array(particleCount * 3);
-    const sizes = new Float32Array(particleCount);
-    const colors = new Float32Array(particleCount * 3);
-    const depths = new Float32Array(particleCount);
-
-    for (let i = 0; i < particleCount; i++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-      const radius = 3 + Math.random() * 3;
-      const depthExtension = Math.random() * particleSettingsRef.current.PARTICLE_DEPTH_RANGE - particleSettingsRef.current.PARTICLE_DEPTH_RANGE / 2;
-      positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      positions[i * 3 + 2] = radius * Math.cos(phi) + depthExtension;
-      originalPositions[i * 3] = positions[i * 3];
-      originalPositions[i * 3 + 1] = positions[i * 3 + 1];
-      originalPositions[i * 3 + 2] = positions[i * 3 + 2];
-      depths[i] = positions[i * 3 + 2];
-      velocities[i * 3] = (Math.random() - 0.5) * 0.0004;
-      velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.0004;
-      velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.0002;
-      const z = positions[i * 3 + 2];
-      const normalizedDepth = (z + particleSettingsRef.current.PARTICLE_DEPTH_RANGE / 2) / particleSettingsRef.current.PARTICLE_DEPTH_RANGE;
-      sizes[i] = 0.008 + 0.03 * (1 - normalizedDepth);
-      const brightness = 0.5 + 0.5 * (1 - normalizedDepth);
-      colors[i * 3] = 0.4 + 0.3 * brightness;
-      colors[i * 3 + 1] = 0.4 + 0.3 * brightness;
-      colors[i * 3 + 2] = 0.7 + 0.3 * brightness;
-    }
-
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    particleGeometry.setAttribute('originalPosition', new THREE.BufferAttribute(originalPositions, 3));
-    particleGeometry.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3));
-    particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-    particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    particleGeometry.setAttribute('depth', new THREE.BufferAttribute(depths, 1));
-
-    const particleMaterial = new THREE.PointsMaterial({
-      size: 0.03, map: starTexture ?? undefined, transparent: true, vertexColors: true,
-      opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
-    });
-    const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
-    sceneRef.current?.add(particleSystem);
-
-    const constellationMaterial = new THREE.LineBasicMaterial({ color: 0x4488ff, transparent: true, opacity: 0.08, blending: THREE.AdditiveBlending });
-    const constellationGeometry = new THREE.BufferGeometry();
-    const constellationSystem = new THREE.LineSegments(constellationGeometry, constellationMaterial);
-    sceneRef.current?.add(constellationSystem);
-
-    return { particleSystem, constellationSystem };
-  }
-
-  function updateParticleZoom(scrollProgress: number) {
-    if (!particleSystemRef.current) return;
-    const particleSystem = particleSystemRef.current;
-    const positions = particleSystem.geometry.attributes.position.array as Float32Array;
-    const originalPositions = particleSystem.geometry.attributes.originalPosition.array as Float32Array;
-    const sizes = particleSystem.geometry.attributes.size.array as Float32Array;
-    const colors = particleSystem.geometry.attributes.color.array as Float32Array;
-    const particleCount = positions.length / 3;
-    let zoomCurve = scrollProgress < 0.5 ? gsap.utils.clamp(0, 1, scrollProgress * 2) : gsap.utils.clamp(0, 1, 2 - scrollProgress * 2);
-    zoomCurve = gsap.parseEase('power2.inOut')(zoomCurve);
-    for (let i = 0; i < particleCount; i++) {
-      const i3 = i * 3;
-      const zPosition = originalPositions[i3 + 2];
-      positions[i3] = originalPositions[i3] * (1 + zoomCurve * 1.5);
-      positions[i3 + 1] = originalPositions[i3 + 1] * (1 + zoomCurve * 1.5);
-      let targetZ = Math.abs(zPosition) > 1 ? zPosition * (1 - zoomCurve * 0.5) : zPosition - zoomCurve * Math.sign(zPosition) * 2;
-      positions[i3 + 2] = lerp(positions[i3 + 2], targetZ, 0.1);
-      const distFromCamera = Math.abs(positions[i3 + 2]);
-      const closenessFactor = Math.max(0, 1 - distFromCamera / 5);
-      const sizeBoost = 1 + zoomCurve * 4.0;
-      sizes[i] = (0.008 + 0.03 * closenessFactor) * sizeBoost;
-      const brightnessBoost = zoomCurve * 0.3;
-      const baseBrightness = 0.5 + closenessFactor * 0.5;
-      const brightness = baseBrightness + brightnessBoost;
-      colors[i3] = 0.4 + 0.3 * brightness;
-      colors[i3 + 1] = 0.4 + 0.3 * brightness;
-      colors[i3 + 2] = 0.7 + 0.3 * brightness;
-    }
-    particleSystem.geometry.attributes.position.needsUpdate = true;
-    particleSystem.geometry.attributes.size.needsUpdate = true;
-    particleSystem.geometry.attributes.color.needsUpdate = true;
-  }
+  // Knowledge-graph constants — fewer, clearly clustered nodes
+  const NUM_POINTS = 900;
+  const NUM_HUBS = 14;
+  const positionsArray = useRef<Float32Array | null>(null);
+  const initialPositions = useRef<Float32Array | null>(null);
+  const speedsArray = useRef<Float32Array | null>(null);
 
   useEffect(() => {
     const mountElement = mountRef.current;
     if (!mountElement) return;
 
+    // ── 1. Scene ──────────────────────────────────────────────────────────────
     const scene = new THREE.Scene();
-    scene.background = null;
     sceneRef.current = scene;
 
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, 5);
-    camera.lookAt(0, 0, 0);
+    // ── 2. Camera ─────────────────────────────────────────────────────────────
+    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0, 10);
     cameraRef.current = camera;
 
+    // ── 3. Renderer ───────────────────────────────────────────────────────────
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFShadowMap;
     mountElement.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
     const canvas = renderer.domElement;
     canvas.style.position = 'fixed';
-    canvas.style.top = '0'; canvas.style.left = '0';
-    canvas.style.width = '100%'; canvas.style.height = '100%';
-    canvas.style.zIndex = '10'; canvas.style.pointerEvents = 'none';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+    canvas.style.zIndex = '1';
+    canvas.style.pointerEvents = 'none';
+    // Dim so overlaid text stays fully readable
+    canvas.style.opacity = '0.42';
 
-    const cubeGroup = new THREE.Group();
-    scene.add(cubeGroup);
-    cubeGroupRef.current = cubeGroup;
+    // ── 4. Group ──────────────────────────────────────────────────────────────
+    const synapseGroup = new THREE.Group();
+    scene.add(synapseGroup);
+    synapseGroupRef.current = synapseGroup;
 
-    const geometry = new THREE.BoxGeometry(2, 2, 2, 4, 4, 4);
-    const material = new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms: uniformsRef.current, transparent: true, opacity: 1.0, side: THREE.DoubleSide });
-    const cube = new THREE.Mesh(geometry, material);
-    cube.castShadow = true; cube.receiveShadow = true;
-    cubeRef.current = cube;
-    cubeGroup.add(cube);
-
-    const wireframe = new THREE.LineSegments(new THREE.EdgesGeometry(geometry, 10), new THREE.LineBasicMaterial({ color: 0x4488ff, linewidth: 1.5, transparent: true, opacity: 0.1 }));
-    wireframe.scale.setScalar(1.001);
-    cubeGroup.add(wireframe);
-
-    const starTexture = createStarTexture();
-    const particlesData = createEnhancedParticles(starTexture);
-    if (particlesData) {
-      particleSystemRef.current = particlesData.particleSystem;
-      constellationSystemRef.current = particlesData.constellationSystem;
+    // ── 5. Knowledge-graph geometry ───────────────────────────────────────────
+    // Build hub "concept" centers — denser, brighter anchor nodes
+    const hubs: THREE.Vector3[] = [];
+    for (let h = 0; h < NUM_HUBS; h++) {
+      hubs.push(new THREE.Vector3(
+        (Math.random() - 0.5) * 18,
+        (Math.random() - 0.5) * 7,
+        (Math.random() - 0.5) * 5,
+      ));
     }
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-    scene.add(ambientLight);
-    ambientLightRef.current = ambientLight;
+    const pointsGeometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(NUM_POINTS * 3);
+    const originals = new Float32Array(NUM_POINTS * 3);
+    const speeds = new Float32Array(NUM_POINTS);
+    const colors = new Float32Array(NUM_POINTS * 3);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-    directionalLight.position.set(5, 10, 7);
-    directionalLight.castShadow = true;
-    scene.add(directionalLight);
-    directionalLightRef.current = directionalLight;
+    const baseColor1 = new THREE.Color('#4B7BF5'); // sapphire
+    const baseColor2 = new THREE.Color('#2DD4C8'); // teal
+    const baseColor3 = new THREE.Color('#F0B429'); // gold — hubs & cursor highlight
 
-    const pointLight = new THREE.PointLight(0x3366ff, 1.5, 20);
-    pointLight.position.set(-3, 2, 5);
-    scene.add(pointLight);
-    pointLightRef.current = pointLight;
+    for (let i = 0; i < NUM_POINTS; i++) {
+      const isHub = i < NUM_HUBS;
+      const hub = hubs[isHub ? i : Math.floor(Math.random() * NUM_HUBS)];
 
-    const scrollTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: document.documentElement, start: 'top top', end: 'bottom bottom', scrub: 1.5, markers: false,
-        onUpdate: (self) => {
-          uniformsRef.current.scrollProgress.value = self.progress;
-          updateParticleZoom(self.progress);
-          let zoomCurve = self.progress < 0.5 ? gsap.utils.clamp(0, 1, self.progress * 2) : gsap.utils.clamp(0, 1, 2 - self.progress * 2);
-          zoomCurve = gsap.parseEase('power2.inOut')(zoomCurve);
-          if (cameraRef.current) { cameraRef.current.fov = 60 - (60 - 20) * zoomCurve; cameraRef.current.updateProjectionMatrix(); }
-          if (cubeGroupRef.current) { cubeGroupRef.current.scale.setScalar(1 + (1.2 - 1) * zoomCurve); }
+      // Hub nodes cluster at center; satellites orbit loosely around each hub
+      const spread = isHub ? 0 : 1.6 + Math.random() * 1.6;
+      const theta = Math.random() * Math.PI * 2;
+      const phi   = Math.acos(2 * Math.random() - 1);
+
+      const x = hub.x + spread * Math.sin(phi) * Math.cos(theta);
+      const y = hub.y + spread * Math.sin(phi) * Math.sin(theta) * 0.45;
+      const z = hub.z + spread * Math.cos(phi) * 0.6;
+
+      positions[i * 3]     = x;
+      positions[i * 3 + 1] = y;
+      positions[i * 3 + 2] = z;
+      originals[i * 3]     = x;
+      originals[i * 3 + 1] = y;
+      originals[i * 3 + 2] = z;
+
+      // Very slow drift — almost imperceptible
+      speeds[i] = 0.12 + Math.random() * 0.28;
+
+      // Hub nodes glow gold; satellites are blue/teal
+      const mixedColor = new THREE.Color();
+      if (isHub) {
+        mixedColor.copy(baseColor3);
+      } else {
+        const t = Math.random();
+        if (t < 0.55) mixedColor.copy(baseColor1).lerp(baseColor2, Math.random() * 0.5);
+        else           mixedColor.copy(baseColor2).lerp(baseColor1, Math.random() * 0.4);
+      }
+
+      colors[i * 3]     = mixedColor.r;
+      colors[i * 3 + 1] = mixedColor.g;
+      colors[i * 3 + 2] = mixedColor.b;
+    }
+
+    positionsArray.current  = positions;
+    initialPositions.current = originals;
+    speedsArray.current     = speeds;
+
+    pointsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    pointsGeometry.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
+
+    // Crisp glow sprite
+    const makeGlowTexture = () => {
+      const c = document.createElement('canvas');
+      c.width = 64; c.height = 64;
+      const ctx = c.getContext('2d');
+      if (ctx) {
+        const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+        g.addColorStop(0,    'rgba(255,255,255,1)');
+        g.addColorStop(0.2,  'rgba(180,220,255,0.75)');
+        g.addColorStop(0.55, 'rgba(60,100,240,0.18)');
+        g.addColorStop(1,    'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, 64, 64);
+      }
+      const t = new THREE.Texture(c);
+      t.needsUpdate = true;
+      return t;
+    };
+
+    const pointMaterial = new THREE.PointsMaterial({
+      size: 0.2,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.72,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      map: makeGlowTexture(),
+    });
+
+    const points = new THREE.Points(pointsGeometry, pointMaterial);
+    synapseGroup.add(points);
+    pointsRef.current = points;
+
+    // 5. Connective Synapses (Lines)
+    const connectionsLimit = 650;
+    const linePositions = new Float32Array(connectionsLimit * 2 * 3);
+    const lineColors = new Float32Array(connectionsLimit * 2 * 3);
+    const linesGeometry = new THREE.BufferGeometry();
+
+    linesGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+    linesGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+
+    const lineMaterial = new THREE.LineBasicMaterial({
+      transparent: true,
+      opacity: 0.26,
+      blending: THREE.AdditiveBlending,
+      vertexColors: true,
+      depthWrite: false,
+    });
+
+    const lineSegments = new THREE.LineSegments(linesGeometry, lineMaterial);
+    synapseGroup.add(lineSegments);
+    linesRef.current = lineSegments;
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+
+    // 6. Scroll — gentle camera depth parallax, no rotation
+    ScrollTrigger.create({
+      trigger: document.documentElement,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 3,
+      onUpdate: (self) => {
+        scrollProgress.current = self.progress;
+        if (cameraRef.current) {
+          cameraRef.current.position.z = lerp(10, 8.2, self.progress);
+          cameraRef.current.position.y = lerp(0, -1.0, self.progress);
+          cameraRef.current.lookAt(new THREE.Vector3(0, cameraRef.current.position.y * 0.3, 0));
         }
       }
     });
 
-    scrollTimeline
-      .to(cubeGroupRef.current?.rotation, { x: Math.PI * 1.2, y: Math.PI * 2, z: Math.PI * 0.3, ease: 'power2.inOut', immediateRender: false })
-      .to(cameraRef.current?.position, { z: 0.8, y: 0.2, x: 0, ease: 'power2.inOut' }, 0.5)
-      .to(cameraRef.current?.position, { z: 4.0, y: 0, x: 0, ease: 'power2.inOut' }, 1.0)
-      .to({}, { duration: 1, onUpdate: function () { if (cameraRef.current && cubeGroupRef.current) cameraRef.current.lookAt(cubeGroupRef.current.position); } }, 0);
-
-    scrollTimeline.to(ambientLightRef.current, { intensity: 1.2, ease: 'power1.inOut' }, 0);
-
-    const titles = document.querySelectorAll('.title');
-    const descriptions = document.querySelectorAll('.description');
-    document.querySelectorAll('.section').forEach((section, index) => {
-      const tl = gsap.timeline({ scrollTrigger: { trigger: section, start: 'top 80%', end: 'top 20%', scrub: 1, toggleActions: 'play none none reverse' } });
-      tl.to(titles[index], { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, 0);
-      tl.to(descriptions[index], { opacity: 1, y: 0, duration: 1, ease: 'power2.out', delay: 0.2 }, 0);
-      if (cubeGroupRef.current) tl.to(cubeGroupRef.current.position, { z: -1 * index, duration: 1 }, 0);
-    });
-
+    // 7. Event Listeners
     const handleResize = () => {
       if (cameraRef.current && rendererRef.current) {
         cameraRef.current.aspect = window.innerWidth / window.innerHeight;
         cameraRef.current.updateProjectionMatrix();
         rendererRef.current.setSize(window.innerWidth, window.innerHeight);
         rendererRef.current.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        uniformsRef.current.iResolution.value.set(window.innerWidth, window.innerHeight);
       }
     };
     window.addEventListener('resize', handleResize);
 
     const handleMouseMove = (event: MouseEvent) => {
-      mouse.current = { x: (event.clientX / window.innerWidth) * 2 - 1, y: -(event.clientY / window.innerHeight) * 2 + 1 };
-      if (!ScrollTrigger.isScrolling() && cubeGroupRef.current) {
-        gsap.to(cubeGroupRef.current.rotation, {
-          x: '+=0.03', y: '+=0.03', duration: 1, ease: 'power2.out', overwrite: 'auto',
-          modifiers: { x: (x) => parseFloat(x) + (mouse.current.y * 0.03 - parseFloat(x) * 0.02), y: (y) => parseFloat(y) + (mouse.current.x * 0.03 - parseFloat(y) * 0.02) }
-        });
-      }
+      mouse.current.targetX = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.targetY = -(event.clientY / window.innerHeight) * 2 + 1;
     };
     window.addEventListener('mousemove', handleMouseMove);
 
-    const handleClick = () => {
-      if (cubeGroupRef.current) {
-        gsap.to(cubeGroupRef.current.rotation, {
-          x: cubeGroupRef.current.rotation.x + Math.PI * 0.25 * (Math.random() - 0.5),
-          y: cubeGroupRef.current.rotation.y + Math.PI * 0.25 * (Math.random() - 0.5),
-          z: cubeGroupRef.current.rotation.z + Math.PI * 0.25 * (Math.random() - 0.5),
-          duration: 1, ease: 'back.out(1.5)'
-        });
-      }
-    };
-    document.addEventListener('click', handleClick);
-
+    // 8. Animation loop
     let animationFrameId: number;
-    function animate(timestamp: number) {
+    const startTime = performance.now();
+
+    const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const timeSeconds = timestamp * 0.001;
-      uniformsRef.current.iTime.value = timeSeconds;
-      if (!ScrollTrigger.isScrolling() && cubeGroupRef.current) {
-        cubeGroupRef.current.rotation.x += 0.0005;
-        cubeGroupRef.current.rotation.y += 0.0008;
+      const elapsed = (performance.now() - startTime) * 0.001;
+
+      // Very slow mouse interpolation
+      mouse.current.x = lerp(mouse.current.x, mouse.current.targetX, 0.03);
+      mouse.current.y = lerp(mouse.current.y, mouse.current.targetY, 0.03);
+
+      // Gentle 3-D parallax tilt towards cursor — no spin
+      if (synapseGroup) {
+        synapseGroup.rotation.x = lerp(synapseGroup.rotation.x, mouse.current.y * 0.06, 0.018);
+        synapseGroup.rotation.y = lerp(synapseGroup.rotation.y, mouse.current.x * 0.06, 0.018);
       }
-      if (particleSystemRef.current && constellationSystemRef.current) {
-        const particleSystem = particleSystemRef.current;
-        const constellationSystem = constellationSystemRef.current;
-        const positions = particleSystem.geometry.attributes.position.array as Float32Array;
-        const velocities = particleSystem.geometry.attributes.velocity.array as Float32Array;
-        const particleCount = positions.length / 3;
-        const connectedPoints: number[] = [];
-        const scrollProgress = uniformsRef.current.scrollProgress.value;
-        for (let i = 0; i < particleCount; i++) {
+
+      if (positionsArray.current && initialPositions.current && speedsArray.current && pointsRef.current) {
+        const pos  = positionsArray.current;
+        const init = initialPositions.current;
+        const sp   = speedsArray.current;
+        const colorsAttr = pointsRef.current.geometry.attributes.color.array as Float32Array;
+
+        const mouseX3D = mouse.current.x * 6;
+        const mouseY3D = mouse.current.y * 4;
+
+        let connectionsCount = 0;
+        const linesGeo = linesRef.current?.geometry;
+        const linePos  = linesGeo?.attributes.position.array as Float32Array;
+        const lineCols = linesGeo?.attributes.color.array as Float32Array;
+
+        // Wide connection threshold = denser knowledge-graph topology
+        const maxDist2 = 2.6 * 2.6;
+        const connectedIndexes: number[] = [];
+
+        for (let i = 0; i < NUM_POINTS; i++) {
           const i3 = i * 3;
-          positions[i3] += velocities[i3]; positions[i3 + 1] += velocities[i3 + 1]; positions[i3 + 2] += velocities[i3 + 2];
-          positions[i3] += (mouse.current.x * 3 - positions[i3]) * particleSettingsRef.current.PARTICLE_MOUSE_INFLUENCE;
-          positions[i3 + 1] += (mouse.current.y * 3 - positions[i3 + 1]) * particleSettingsRef.current.PARTICLE_MOUSE_INFLUENCE;
-          const distFromCenter = Math.sqrt(positions[i3] ** 2 + positions[i3 + 1] ** 2 + positions[i3 + 2] ** 2);
-          if (distFromCenter > 10) {
-            const theta = Math.random() * Math.PI * 2; const phi = Math.acos(2 * Math.random() - 1); const radius = 5 + Math.random() * 2;
-            positions[i3] = radius * Math.sin(phi) * Math.cos(theta); positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta); positions[i3 + 2] = radius * Math.cos(phi) * (1 - scrollProgress * 0.3);
-            velocities[i3] = (Math.random() - 0.5) * 0.0004; velocities[i3 + 1] = (Math.random() - 0.5) * 0.0004; velocities[i3 + 2] = (Math.random() - 0.5) * 0.0002;
+          const origX = init[i3];
+          const origY = init[i3 + 1];
+          const origZ = init[i3 + 2];
+
+          // Very slow, subtle breathing oscillation
+          const wavePhase = elapsed * 0.055 * sp[i];
+          const xOffset = Math.sin(origX * 0.28 + wavePhase) * 0.12;
+          const yOffset = Math.cos(origZ * 0.22 - wavePhase) * 0.08;
+
+          let targetX = origX + xOffset;
+          let targetY = origY + yOffset;
+
+          // Mouse cursor: nearby particles glow gold and gently shift
+          const dxM = targetX - mouseX3D;
+          const dyM = targetY - mouseY3D;
+          const distM = Math.sqrt(dxM * dxM + dyM * dyM);
+
+          if (distM < 2.8) {
+            const inf = (1.0 - distM / 2.8) * 0.55;
+            targetX += dxM * inf * 0.22;
+            targetY += dyM * inf * 0.22;
+            colorsAttr[i3]     = lerp(colorsAttr[i3],     baseColor3.r * 1.5, inf * 0.12);
+            colorsAttr[i3 + 1] = lerp(colorsAttr[i3 + 1], baseColor3.g * 1.5, inf * 0.12);
+            colorsAttr[i3 + 2] = lerp(colorsAttr[i3 + 2], baseColor3.b * 1.5, inf * 0.12);
+          } else {
+            colorsAttr[i3]     = lerp(colorsAttr[i3],     colors[i3],     0.04);
+            colorsAttr[i3 + 1] = lerp(colorsAttr[i3 + 1], colors[i3 + 1], 0.04);
+            colorsAttr[i3 + 2] = lerp(colorsAttr[i3 + 2], colors[i3 + 2], 0.04);
           }
-          if (i % 50 === 0 && scrollProgress > 0.6) {
-            for (let j = i + 1; j < Math.min(i + 100, particleCount); j += 10) {
-              const j3 = j * 3;
-              const dx = positions[i3] - positions[j3]; const dy = positions[i3 + 1] - positions[j3 + 1]; const dz = positions[i3 + 2] - positions[j3 + 2];
-              const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-              if (distance < 0.5 && positions[i3 + 2] < 3 && positions[j3 + 2] < 3) {
-                connectedPoints.push(positions[i3], positions[i3 + 1], positions[i3 + 2], positions[j3], positions[j3 + 1], positions[j3 + 2]);
+
+          pos[i3]     = targetX;
+          pos[i3 + 1] = targetY;
+          pos[i3 + 2] = origZ;
+
+          // Sample every 4th point for connection building
+          if (i % 4 === 0) connectedIndexes.push(i);
+        }
+
+        if (linePos && lineCols) {
+          for (let k = 0; k < connectedIndexes.length; k++) {
+            if (connectionsCount >= connectionsLimit) break;
+            const idx1 = connectedIndexes[k];
+            const i3 = idx1 * 3;
+            const x1 = pos[i3], y1 = pos[i3 + 1], z1 = pos[i3 + 2];
+
+            for (let l = k + 1; l < connectedIndexes.length; l++) {
+              if (connectionsCount >= connectionsLimit) break;
+              const idx2 = connectedIndexes[l];
+              const j3 = idx2 * 3;
+              const dx = x1 - pos[j3], dy = y1 - pos[j3 + 1], dz = z1 - pos[j3 + 2];
+
+              if (dx * dx + dy * dy + dz * dz < maxDist2) {
+                const lc = connectionsCount * 6;
+
+                linePos[lc]     = x1;       linePos[lc + 1] = y1;        linePos[lc + 2] = z1;
+                linePos[lc + 3] = pos[j3];  linePos[lc + 4] = pos[j3+1]; linePos[lc + 5] = pos[j3+2];
+
+                lineCols[lc]     = colorsAttr[i3];     lineCols[lc + 1] = colorsAttr[i3+1]; lineCols[lc + 2] = colorsAttr[i3+2];
+                lineCols[lc + 3] = colorsAttr[j3];     lineCols[lc + 4] = colorsAttr[j3+1]; lineCols[lc + 5] = colorsAttr[j3+2];
+
+                connectionsCount++;
               }
             }
           }
+
+          for (let m = connectionsCount; m < connectionsLimit; m++) {
+            const lc = m * 6;
+            linePos[lc]=linePos[lc+1]=linePos[lc+2]=linePos[lc+3]=linePos[lc+4]=linePos[lc+5]=0;
+          }
+
+          if (linesGeo) {
+            linesGeo.attributes.position.needsUpdate = true;
+            linesGeo.attributes.color.needsUpdate    = true;
+          }
         }
-        const constellationGeometry = constellationSystem.geometry;
-        constellationGeometry.setAttribute('position', new THREE.Float32BufferAttribute(connectedPoints, 3));
-        constellationGeometry.attributes.position.needsUpdate = true;
-        (constellationSystem.material as THREE.LineBasicMaterial).opacity = Math.max(0, scrollProgress - 0.6) * 0.15;
-        particleSystem.geometry.attributes.position.needsUpdate = true;
+
+        pointsRef.current.geometry.attributes.position.needsUpdate = true;
+        pointsRef.current.geometry.attributes.color.needsUpdate    = true;
       }
+
       rendererRef.current?.render(scene, cameraRef.current!);
-    }
-    animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animate();
 
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('click', handleClick);
       cancelAnimationFrame(animationFrameId);
-      if (rendererRef.current) { mountElement.removeChild(rendererRef.current.domElement); rendererRef.current.dispose(); }
+
+      if (rendererRef.current && mountElement.contains(rendererRef.current.domElement)) {
+        mountElement.removeChild(rendererRef.current.domElement);
+        rendererRef.current.dispose();
+      }
+
       sceneRef.current?.traverse((object) => {
         if ((object as THREE.Mesh).geometry) (object as THREE.Mesh).geometry.dispose();
         if ((object as THREE.Mesh).material) {
           const mat = (object as THREE.Mesh).material;
-          if (Array.isArray(mat)) mat.forEach(m => m.dispose()); else (mat as THREE.Material).dispose();
+          if (Array.isArray(mat)) mat.forEach(m => m.dispose());
+          else (mat as THREE.Material).dispose();
         }
       });
       ScrollTrigger.getAll().forEach(t => t.kill());

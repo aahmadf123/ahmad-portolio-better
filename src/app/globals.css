@@ -85,6 +85,8 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "ss01", "cv11";
+  /* Subtle dark halo keeps text readable over the animated knowledge graph */
+  text-shadow: 0 0 24px rgba(11, 13, 20, 0.85), 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 body::before {

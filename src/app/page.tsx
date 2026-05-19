@@ -7,8 +7,11 @@ import { ExpandableCard } from '@/components/ui/expandable-card';
 import { AnimatedFeatureSpotlight } from '@/components/ui/feature-spotlight';
 import { HoverPeek } from '@/components/ui/link-preview';
 import { NeonButton } from '@/components/ui/neon-button';
+import { Lightbox } from '@/components/ui/image-lightbox';
 import { FlaskConical } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { fieldNotes } from '@/lib/field-notes';
+import { FieldNoteCard } from '@/components/ui/field-notes/field-note-card';
 
 const NebulaCube = dynamic(
   () => import('@/components/ui/explorations-with-gsap-and-scroll-trigger').then(m => ({ default: m.NebulaCube })),
@@ -19,6 +22,10 @@ const NebulaCube = dynamic(
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 const SANS  = "var(--font-chakra), 'Chakra Petch', sans-serif";
+
+// ── Lightbox context ──
+const LightboxCtx = React.createContext<(src: string, alt?: string) => void>(() => {});
+function useLightboxOpen() { return React.useContext(LightboxCtx); }
 
 // ── Section Header ──
 function SH({ n, label, sub = '', color = '#F0B429' }: { n: string; label: string; sub?: string; color?: string }) {
@@ -142,18 +149,7 @@ function Hero() {
           {/* photo — natural aspect ratio, never cropped */}
           <div style={{ borderRadius: 8, overflow: 'hidden', flexShrink: 0 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/Images/my%20pic.png"
-              alt="Ahmad Firas"
-              style={{
-                display: 'block',
-                width: '100%',
-                height: 'auto',
-                maxHeight: 'clamp(220px, calc(100svh - 370px), 390px)',
-                objectFit: 'contain',
-                objectPosition: 'center top',
-              }}
-            />
+            <HeroPhoto />
           </div>
 
           {/* info cards */}
@@ -187,6 +183,27 @@ function Hero() {
         }
       `}</style>
     </section>
+  );
+}
+
+function HeroPhoto() {
+  const openLb = useLightboxOpen();
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/Images/my%20pic.png"
+      alt="Ahmad Firas"
+      onClick={() => openLb('/Images/my%20pic.png', 'Ahmad Firas')}
+      style={{
+        display: 'block',
+        width: '100%',
+        height: 'auto',
+        maxHeight: 'clamp(220px, calc(100svh - 370px), 390px)',
+        objectFit: 'contain',
+        objectPosition: 'center top',
+        cursor: 'zoom-in',
+      }}
+    />
   );
 }
 
@@ -305,50 +322,91 @@ function Projects() {
     {
       idx: '01', dom: 'Autonomy', color: '#F0B429',
       title: 'Graph-Based RL for UAV Autonomy',
-      tag: 'USRCAP Fellowship · $3,000',
+      tag: 'USRCAP Summer 2025 · LION Lab · $3,000',
       fr: 'Autonomy that holds up when the map runs out.',
       src: '/Images/graph_RL.png', span: 2,
-      stacks: ['MAML', 'GAT', 'PPO', 'SAC', 'AirSim', 'SHAP/LIME'],
+      stacks: ['Graph-Based RL', 'MAML', 'GNN/GAT', 'PINN', 'ROS 2', 'Jetson Orin NX', 'ArduPilot', 'AirSim'],
       detail: (<>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 16 }}>
-          {[['72.8%','Zero-shot deploy'],['97.3%','HITL success'],['<100ms','Intervention']].map(([v,l]) => (
+        {/* Metrics */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8, marginBottom: 20 }}>
+          {[['73%','Zero-shot success'],['89%','After 5 episodes'],['<20ms','Control-loop latency'],['<500ms','Voice-to-action'],['1000+','Simulated envs'],['95%','Infra cost reduction']].map(([v,l]) => (
             <div key={l} style={{ padding: '10px 12px', background: 'rgba(240,180,41,0.06)', border: '1px solid rgba(240,180,41,0.2)', borderRadius: 6 }}>
-              <div style={{ fontFamily: SERIF, fontSize: 22, color: '#F0B429', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
+              <div style={{ fontFamily: SERIF, fontSize: 19, color: '#F0B429', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
               <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 4 }}>{l}</div>
             </div>
           ))}
         </div>
-        <h4 style={{ color: '#F0B429', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Approach</h4>
-        <p>Graph Attention Networks encoded the environment relationally, generalizing across topologies rather than memorizing textures. MAML enabled rapid adaptation to unseen environments. Human-in-the-loop safety gates at sub-100ms ensured any degraded state could be interrupted without vehicle loss.</p>
-        <h4 style={{ color: '#F0B429', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14 }}>Key Insight</h4>
-        <p>Zero-shot generalization required structured representations and a recovery system the team would actually trust. The 97.3% HITL rate proved the boundary between autonomous and human control was designed deliberately.</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
-          {['MAML','GAT','PPO','SAC','AirSim','SHAP/LIME'].map(t => <Tag key={t} color="#F0B429">{t}</Tag>)}
+
+        {/* Overview */}
+        <h4 style={{ color: '#F0B429', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Overview</h4>
+        <p>AeroSynapse is an edge-first UAV autonomy research framework for navigation in GPS-denied, map-free, and communication-denied environments. The system converts the local environment into a dynamic graph — obstacles, waypoints, targets, and free-space regions become nodes; spatial and risk relationships become edges. A graph-based RL policy reasons over this structure without pre-mapping or cloud inference.</p>
+
+        {/* Architecture */}
+        <h4 style={{ color: '#F0B429', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Architecture</h4>
+        <p>Stereo vision, LiDAR, and IMU feeds enter a PINN-based state estimator for physically consistent predictions. The environment is encoded as a real-time dynamic graph. A GNN policy with Q-Prop actor-critic selects navigation actions. MAML-style meta-learning trained across 1000+ randomized environments enables zero-shot and few-shot adaptation to unseen layouts. A safety layer with runtime assurance and control-barrier constraints governs the policy, with human-in-the-loop override via direct control, supervised autonomy, and natural-language command modes.</p>
+
+        {/* My Role */}
+        <h4 style={{ color: '#F0B429', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>My Role</h4>
+        <p>Led the full AI and autonomy architecture direction: graph-based RL framework design, zero-shot/few-shot learning methodology, PINN state estimation integration, human-in-the-loop workflow design, Jetson Orin NX edge deployment strategy, and the research framing, validation plan, and performance metrics for the USRCAP fellowship report.</p>
+
+        {/* Stack */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
+          {['Graph-Based RL','GNN/GAT','MAML','PINN','Q-Prop','ROS 2','ArduPilot','Jetson Orin NX','AirSim','SHAP/LIME','OAK-D Pro','SLAMTEC C1'].map(t => <Tag key={t} color="#F0B429">{t}</Tag>)}
+        </div>
+
+        {/* Key Insight */}
+        <h4 style={{ color: '#F0B429', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Key Insight</h4>
+        <p>Navigation is a relational problem. A flat perception model sees objects — a graph sees relationships between obstacles, goals, risk, and motion constraints. That structural representation is what makes zero-shot generalization tractable. The safety layer exists not because the policy is weak, but because a UAV autonomy system must fail safely, recover predictably, and keep humans at the right level of control.</p>
+
+        {/* Action buttons */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 22, paddingTop: 16, borderTop: '1px solid rgba(240,180,41,0.15)' }}>
+          <a href="/case-study/graph-based-rl-uav-autonomy" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#F0B429', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</a>
+          <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid rgba(240,180,41,0.35)', color: '#F0B429', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Final Report ↓</a>
         </div>
       </>),
     },
     {
       idx: '02', dom: 'Research Tools', color: '#4B7BF5',
-      title: 'Deep Flyer',
-      tag: 'AWS DeepRacer-Inspired UAV Platform',
-      fr: 'A training platform so the next experiment starts faster.',
-      src: '/Images/graph_RL.png', span: 1,
-      stacks: ['PyTorch', 'ROS 2', 'YOLO11', 'PX4', 'NVIDIA Jetson'],
+      title: 'DeepFlyer',
+      tag: 'Educational Drone RL Platform · LION Lab',
+      fr: 'Reinforcement learning made visible through autonomous drone flight.',
+      src: '/Images/DeepFlyer_pics.png', span: 1,
+      stacks: ['PPO', 'ROS 2', 'Gazebo', 'Stable-Baselines3', 'React', 'MLflow'],
       detail: (<>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 16 }}>
-          {[['<5ms','Control latency'],['PPO','Policy'],['Zero-shot','Sim-to-real']].map(([v,l]) => (
+        {/* Metrics */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8, marginBottom: 20 }}>
+          {[['80%','PPO success rate'],['<1s','Sim cold start'],['10ms','Reward API latency'],['1M','PPO training steps'],['<5%','Collision false positives'],['40%','URDF mesh optimization']].map(([v,l]) => (
             <div key={l} style={{ padding: '10px 12px', background: 'rgba(75,123,245,0.06)', border: '1px solid rgba(75,123,245,0.2)', borderRadius: 6 }}>
-              <div style={{ fontFamily: SERIF, fontSize: 22, color: '#4B7BF5', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
+              <div style={{ fontFamily: SERIF, fontSize: 18, color: '#4B7BF5', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
               <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 4 }}>{l}</div>
             </div>
           ))}
         </div>
-        <h4 style={{ color: '#4B7BF5', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Architecture</h4>
-        <p>Direct PX4-ROS2 bridge replaced MAVROS, cutting latency below 5ms. YOLO11 with ZED Mini and OAK-D Pro gave spatial understanding from real-time stereo vision. Reward functions were student-modifiable without touching core code.</p>
-        <h4 style={{ color: '#4B7BF5', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14 }}>Key Insight</h4>
-        <p>The hardest constraint was latency, not accuracy. A well-trained policy at 20ms is a crashed drone. Documentation is infrastructure.</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
-          {['PyTorch','ROS 2','YOLO11','Gazebo','PX4','ZED Mini','NVIDIA Jetson'].map(t => <Tag key={t} color="#4B7BF5">{t}</Tag>)}
+
+        {/* Overview */}
+        <h4 style={{ color: '#4B7BF5', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Overview</h4>
+        <p>DeepFlyer is a 3D educational drone RL platform inspired by AWS DeepRacer. Instead of racing a 2D car around a track, students train a drone in simulation to fly through hoops, avoid obstacles, and improve through reward-function design. The goal: make reinforcement learning visible — if the reward is poorly shaped, the drone behaves poorly.</p>
+
+        {/* Architecture */}
+        <h4 style={{ color: '#4B7BF5', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Platform Stack</h4>
+        <p>A React reward editor sits above a Node/Express backend with MongoDB session storage. Reward presets are dynamically switchable through API endpoints consumed by a Gym environment wrapper. Stable-Baselines3 runs PPO training; ROS 2 Humble + Gazebo Fortress simulate the X500 drone with validated URDF, contact sensors, and course elements. MLflow tracks every experiment run.</p>
+
+        {/* My Role */}
+        <h4 style={{ color: '#4B7BF5', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>My Role</h4>
+        <p>Led the RL and AI side of the platform: reward preset design, Path-Efficiency preset concept, PPO benchmarking, Gym/Stable-Baselines3 training workflow, curriculum learning strategy, and connecting the platform to broader UAV autonomy research and sim-to-real learning principles.</p>
+
+        {/* Stack */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
+          {['PPO','Stable-Baselines3','Gym','ROS 2','Gazebo Fortress','React','Node.js','Express','MongoDB','MLflow','X500 URDF','ZED Mini'].map(t => <Tag key={t} color="#4B7BF5">{t}</Tag>)}
+        </div>
+
+        {/* Key Insight */}
+        <h4 style={{ color: '#4B7BF5', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Key Insight</h4>
+        <p>Reward functions are not just math — they encode behavior. A student who increases the collision penalty and watches the drone become more conservative has understood something that no lecture can teach as directly. That physical intuition is what DeepFlyer is built to create.</p>
+
+        {/* Action button */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 22, paddingTop: 16, borderTop: '1px solid rgba(75,123,245,0.15)' }}>
+          <a href="/case-study/deepflyer-drone-reinforcement-learning" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#4B7BF5', color: '#fff', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</a>
         </div>
       </>),
     },
@@ -379,125 +437,263 @@ function Projects() {
     {
       idx: '04', dom: 'MLOps', color: '#A78BFA',
       title: 'Homeowner Loss Prediction',
-      tag: 'Grange Insurance × UToledo',
+      tag: 'Grange Insurance × UToledo · Senior Design',
       fr: 'Risk modeling as a continuous operating system, not a batch job.',
       src: '/Images/SeniorDesign_Pipeline.jpeg', span: 2,
-      stacks: ['XGBoost', 'Airflow', 'MLflow', 'AWS S3', 'Bayesian Opt.'],
+      stacks: ['XGBoost', 'Airflow', 'MLflow', 'AWS S3/EC2', 'Pandera', 'Prometheus', 'Hyperopt', 'SHAP'],
       detail: (<>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 16 }}>
-          {[['R² 0.976','Model accuracy'],['75%','Manual review reduction'],['25%','Claim lift']].map(([v,l]) => (
+        {/* Metrics */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8, marginBottom: 20 }}>
+          {[['R² 0.982','Model accuracy'],['RMSE 7216','Prediction error'],['26%','vs GLM baseline'],['75%','Manual review ↓']].map(([v,l]) => (
             <div key={l} style={{ padding: '10px 12px', background: 'rgba(167,139,250,0.06)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: 6 }}>
-              <div style={{ fontFamily: SERIF, fontSize: 22, color: '#A78BFA', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
+              <div style={{ fontFamily: SERIF, fontSize: 19, color: '#A78BFA', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
               <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 4 }}>{l}</div>
             </div>
           ))}
         </div>
-        <h4 style={{ color: '#A78BFA', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Architecture</h4>
-        <p>XGBoost with Bayesian optimization. Airflow + MLflow orchestration. AI drift agents triggered retraining. HITL gates required sign-off only on low-confidence predictions, reducing review volume 75% while maintaining oversight where it mattered.</p>
-        <h4 style={{ color: '#A78BFA', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14 }}>Key Insight</h4>
-        <p>The 75% reduction didn&apos;t happen because we removed humans. It happened because we gave humans a better loop to be in.</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
-          {['XGBoost','Airflow','MLflow','AWS S3','Bayesian Opt.','CI/CD'].map(t => <Tag key={t} color="#A78BFA">{t}</Tag>)}
+
+        {/* Overview */}
+        <h4 style={{ color: '#A78BFA', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Overview</h4>
+        <p>A production-grade MLOps automation pipeline built with Grange Insurance to modernize homeowner risk and pure premium predictions. The project reframed risk modeling as a continuously operating system — automating the full ML lifecycle from raw data ingestion through drift detection, model training, experiment tracking, and human-approved deployment.</p>
+
+        {/* Problem */}
+        <h4 style={{ color: '#A78BFA', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Problem</h4>
+        <p>Traditional actuarial workflows depend on manual data pulls, notebook-based preprocessing, and repeated model rebuilds. Risk patterns shift faster than manual processes can adapt — claim volatility, inflation, weather events, and regional property trends all create windows where stale models drive pricing decisions.</p>
+
+        {/* Architecture */}
+        <h4 style={{ color: '#A78BFA', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Architecture</h4>
+        <p>Airflow orchestrates ingestion and scheduling. Pandera validates schemas. XGBoost with Hyperopt/Bayesian optimization handles prediction across 100+ engineered features. MLflow tracks every experiment, artifact, and model version. Prometheus monitors system health. Drift detection triggers self-healing retraining workflows. Slack delivers alerts and approval requests. Human-in-the-loop gates require analyst sign-off before retraining or model promotion — automation with accountability, not without it.</p>
+
+        {/* My Role */}
+        <h4 style={{ color: '#A78BFA', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>My Role</h4>
+        <p>Led MLOps architecture design, pipeline decomposition, ingestion/preprocessing modules, drift detection, schema validation, AWS infrastructure (EC2, S3, Prometheus), Airflow orchestration strategy, Slack-based human-in-the-loop workflows, testing automation, and dashboard design.</p>
+
+        {/* Stack */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
+          {['XGBoost','Hyperopt','Airflow','MLflow','AWS S3','AWS EC2','Pandera','Prometheus','Slack API','Docker','GitHub Actions','SHAP','scikit-learn'].map(t => <Tag key={t} color="#A78BFA">{t}</Tag>)}
+        </div>
+
+        {/* Key Insight */}
+        <h4 style={{ color: '#A78BFA', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Key Insight</h4>
+        <p>The 75% reduction in manual review didn&apos;t happen because humans were removed from the workflow. It happened because the system moved humans to the right point in the loop — intervening only where judgment actually matters: drift remediation, suspicious model behavior, hyperparameter override, rollback, or production promotion.</p>
+
+        {/* Action buttons */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 22, paddingTop: 16, borderTop: '1px solid rgba(167,139,250,0.15)' }}>
+          <a href="/case-study/homeowner-loss-prediction" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#A78BFA', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</a>
+          <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid rgba(167,139,250,0.35)', color: '#A78BFA', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Final Report ↓</a>
+          <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid rgba(242,237,216,0.12)', color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>GitHub ↗</a>
         </div>
       </>),
     },
     {
       idx: '05', dom: 'Infrastructure', color: '#2DD4C8',
-      title: 'Security Discovery Database',
-      tag: 'Park Place Technologies',
+      title: 'Security Discovery Tool',
+      tag: 'Park Place Technologies · AIIS Summer 2023',
       fr: 'Security operations gained one dependable source of truth.',
-      src: '/Images/aess.jpg', span: 1,
-      stacks: ['PostgreSQL', 'Active Directory', 'Cisco AMP'],
+      src: '/Images/sdt_tool.png', span: 1,
+      stacks: ['PostgreSQL', 'pgAdmin', 'Active Directory', 'Cisco AMP', 'Microsoft Defender', 'SQL'],
       detail: (<>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 16 }}>
-          {[['15%','Faster incident response'],['95%','Data integrity'],['Zero','Data loss in DR tests']].map(([v,l]) => (
+          {[['15%','Faster incident response'],['95%','Data integrity improvement'],['Zero','Data loss in DR tests'],['3','Consolidated security sources'],['AIIS','Summer 2023'],['100%','On-time delivery']].map(([v,l]) => (
             <div key={l} style={{ padding: '10px 12px', background: 'rgba(45,212,200,0.06)', border: '1px solid rgba(45,212,200,0.2)', borderRadius: 6 }}>
-              <div style={{ fontFamily: SERIF, fontSize: 22, color: '#2DD4C8', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
+              <div style={{ fontFamily: SERIF, fontSize: 20, color: '#2DD4C8', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
               <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 4 }}>{l}</div>
             </div>
           ))}
         </div>
-        <h4 style={{ color: '#2DD4C8', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>What Was Built</h4>
-        <p>Disparate security feeds from Active Directory, Cisco AMP, and Microsoft Defender consolidated into a single PostgreSQL architecture with principled validation and quarterly-tested disaster recovery.</p>
-        <h4 style={{ color: '#2DD4C8', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14 }}>Key Insight</h4>
-        <p>Most data quality problems in security ops aren&apos;t adversarial: they&apos;re inconsistent tooling assumptions meeting at a data boundary.</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
-          {['PostgreSQL','Active Directory','Cisco AMP','Disaster Recovery'].map(t => <Tag key={t} color="#2DD4C8">{t}</Tag>)}
+        <h4 style={{ color: '#2DD4C8', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Overview</h4>
+        <p>Industry case study with Park Place Technologies. Designed a centralized PostgreSQL security database consolidating fragmented feeds from Active Directory, Cisco AMP, and Microsoft Defender — enforcing validation rules, building disaster-recovery procedures, and enabling faster analyst queries.</p>
+        <h4 style={{ color: '#2DD4C8', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>My Role</h4>
+        <p>Database engineering on the AIIS Database I team: schema design, SQL, data-integrity validation, DR simulation planning, and technical documentation.</p>
+        <h4 style={{ color: '#2DD4C8', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>Key Insight</h4>
+        <p>Most data-quality problems in security ops aren&apos;t adversarial — they&apos;re inconsistent tooling assumptions meeting at a shared data boundary. A validated schema is a security control.</p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12, marginBottom: 16 }}>
+          {['PostgreSQL','pgAdmin','Active Directory','Cisco AMP','Microsoft Defender','Data Governance','Disaster Recovery','SQL'].map(t => <Tag key={t} color="#2DD4C8">{t}</Tag>)}
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8, paddingTop: 14, borderTop: '1px solid rgba(45,212,200,0.15)' }}>
+          <a href="/case-study/security-discovery-tool" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#2DD4C8', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</a>
         </div>
       </>),
     },
     {
       idx: '06', dom: 'Hackathon', color: '#F0B429',
-      title: 'Deep Truth',
+      title: 'DeepTruth',
       tag: 'RocketHacks 2025 · Best Use of MongoDB Atlas',
-      fr: 'News credibility assessment, built in 24 hours.',
+      fr: 'AI-assisted credibility analysis for a noisy internet.',
       src: '/Images/DeepTruth_Group.png', span: 1,
-      stacks: ['MongoDB Atlas', 'Python', 'ML', 'NLP'],
+      stacks: ['Gemini AI', 'DistilBERT', 'Django', 'React', 'MongoDB', 'Chrome Extension'],
       detail: (<>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10, marginBottom: 16 }}>
-          {[['#1','MongoDB Atlas prize'],['24h','Build sprint']].map(([v,l]) => (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 16 }}>
+          {[['#1','Best Use of MongoDB Atlas'],['24h','Build sprint'],['70/30','Gemini / DistilBERT weight'],['2','Interfaces: web + extension'],['9.5K','Training data points'],['2025','RocketHacks']].map(([v,l]) => (
             <div key={l} style={{ padding: '10px 12px', background: 'rgba(240,180,41,0.06)', border: '1px solid rgba(240,180,41,0.2)', borderRadius: 6 }}>
-              <div style={{ fontFamily: SERIF, fontSize: 22, color: '#F0B429', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
+              <div style={{ fontFamily: SERIF, fontSize: 20, color: '#F0B429', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
               <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 4 }}>{l}</div>
             </div>
           ))}
         </div>
         <h4 style={{ color: '#F0B429', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>What Was Built</h4>
-        <p>Users submit a news article and receive an AI-powered credibility verdict with plain-language explanation and five sourced references. Explainability was a first-class constraint, not a retrofit.</p>
-        <h4 style={{ color: '#F0B429', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14 }}>Key Insight</h4>
-        <p>The 24-hour clock produced the best decision: build explainability from the start.</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
-          {['MongoDB Atlas','Python','ML','NLP'].map(t => <Tag key={t} color="#F0B429">{t}</Tag>)}
+        <p>A web app and Chrome extension that analyze article titles using dual-model AI — Gemini handles high-level reasoning and explanation, DistilBERT adds NLP classification, and a 70/30 weighted fusion produces a credibility score, veracity assessment, reasoning, and independent source links. Claims stored in MongoDB.</p>
+        <h4 style={{ color: '#F0B429', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>Key Insight</h4>
+        <p>Credibility systems need explanations, not only scores — and multi-model architectures are more honest than trusting a single signal. The goal was never to decide truth; it was to help users ask better questions faster.</p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12, marginBottom: 16 }}>
+          {['Gemini AI','DistilBERT','Django REST','React','Vite','MongoDB','Chrome Extension','NLP','Hugging Face'].map(t => <Tag key={t} color="#F0B429">{t}</Tag>)}
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8, paddingTop: 14, borderTop: '1px solid rgba(240,180,41,0.15)' }}>
+          <a href="/case-study/deeptruth-ai-fact-checking" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#F0B429', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</a>
+          <a href="https://github.com/TheChozenWon/DeepTruth.git" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid rgba(240,180,41,0.35)', color: '#F0B429', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>GitHub ↗</a>
+          <a href="https://youtu.be/whTYKriT5JU?si=M-0yUWXURhPrvy--" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid rgba(242,237,216,0.12)', color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Watch Demo ↗</a>
         </div>
       </>),
     },
     {
       idx: '07', dom: 'Embedded', color: '#F07832',
-      title: 'ChemE Car',
-      tag: 'AIChE · Most Innovative Design (Worldwide)',
-      fr: 'Precision control. No second chances.',
+      title: 'Camel Car',
+      tag: 'AIChE 2025 · Most Innovative Car Design · 3rd Poster · 24th Overall',
+      fr: 'Chemical propulsion. Pressure-triggered stop. No second chances.',
       src: '/Images/AIChE%20ChemECar_International.jpg', span: 1,
-      stacks: ['Arduino', 'C/C++', 'MATLAB', 'Sensor Fusion'],
+      stacks: ['Arduino', 'Pressure Sensing', 'Solenoid Control', 'Embedded C', 'Calibration'],
       detail: (<>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10, marginBottom: 16 }}>
-          {[['Worldwide','Most Innovative award'],['National','Qualifier 2024']].map(([v,l]) => (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 16 }}>
+          {[['#1','Most Innovative Car Design'],['3rd','Poster & Presentation'],['24th','Overall at AIChE 2025'],['Boston','AIChE Annual Conf.'],['~5 psi','Stop threshold setpoint'],['2025','National qualifier']].map(([v,l]) => (
             <div key={l} style={{ padding: '10px 12px', background: 'rgba(240,120,50,0.06)', border: '1px solid rgba(240,120,50,0.2)', borderRadius: 6 }}>
-              <div style={{ fontFamily: SERIF, fontSize: 22, color: '#F07832', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
+              <div style={{ fontFamily: SERIF, fontSize: 20, color: '#F07832', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
               <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 4 }}>{l}</div>
             </div>
           ))}
         </div>
         <h4 style={{ color: '#F07832', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>What Was Built</h4>
-        <p>Arduino-based automation integrated pressure sensors, load cells, wheel encoders, IMU, and temperature data into stopping algorithms reliable under live competition conditions.</p>
-        <h4 style={{ color: '#F07832', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14 }}>Key Insight</h4>
-        <p>Competition constraints produce better engineering than open-ended briefs. Design for worst case.</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
-          {['Arduino','C/C++','MATLAB','Simulink','Sensor Fusion'].map(t => <Tag key={t} color="#F07832">{t}</Tag>)}
+        <p>University of Toledo&apos;s competition vehicle using CO₂ generation for propulsion and H₂O₂ decomposition for stopping. As Control Team Lead, I built the Arduino-based pressure-sensing and shutoff system — monitor the stopping reaction, detect the ~5 psi setpoint, trigger the solenoid to cut gas flow to the motor. Calibrated via KI volume vs. time-to-pressure experiments for the target competition distance.</p>
+        <h4 style={{ color: '#F07832', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>Key Insight</h4>
+        <p>The chemistry creates the signal. The control system is what turns that signal into a repeatable vehicle action. A well-calibrated threshold controller beats a complex one when variability is chemical, not electrical.</p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12, marginBottom: 16 }}>
+          {['Arduino','Pressure Sensing','Solenoid Control','Embedded C','Calibration','Safety Systems','CO₂ Propulsion'].map(t => <Tag key={t} color="#F07832">{t}</Tag>)}
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8, paddingTop: 14, borderTop: '1px solid rgba(240,120,50,0.15)' }}>
+          <a href="/case-study/camel-car-cheme-car-control-system" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#F07832', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</a>
         </div>
       </>),
     },
     {
       idx: '08', dom: 'Civic Tech', color: '#F472B6',
       title: 'Batting Cleanup',
-      tag: 'Toledo Codes · Active Deployment',
-      fr: 'QR codes and data science for city maintenance.',
+      tag: 'City of Toledo · Applied Labs · In Production',
+      fr: 'Cleaner cities need better feedback loops.',
       src: '/Images/Batting_Cleanup.jpg', span: 1,
-      stacks: ['AI', 'QR Code Tech', 'Data Science', 'Project Management'],
+      stacks: ['Deno', 'PostGIS', 'Cloudflare Workers', 'Drizzle ORM', 'Docker', 'Hono'],
       detail: (<>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10, marginBottom: 16 }}>
-          {[['Active','Live deployment'],['Toledo','City partnership']].map(([v,l]) => (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 16 }}>
+          {[['Live','Production deployment'],['10K+','Simulated localized assets'],['<10ms','ST_DWithin geofence query'],['7-dev','Docker Compose team env'],['GiST','Spatial index — no table scans'],['QR','Public reporting workflow']].map(([v,l]) => (
             <div key={l} style={{ padding: '10px 12px', background: 'rgba(244,114,182,0.06)', border: '1px solid rgba(244,114,182,0.2)', borderRadius: 6 }}>
-              <div style={{ fontFamily: SERIF, fontSize: 22, color: '#F472B6', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
+              <div style={{ fontFamily: SERIF, fontSize: 20, color: '#F472B6', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
               <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 4 }}>{l}</div>
             </div>
           ))}
         </div>
         <h4 style={{ color: '#F472B6', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>What Was Built</h4>
-        <p>QR codes at community locations let residents report issues in seconds. The backend surfaces clusters to prioritize municipal response patterns.</p>
-        <h4 style={{ color: '#F472B6', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14 }}>Key Insight</h4>
-        <p>One extra step kills adoption. Infrastructure that generates no data is not data infrastructure.</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
-          {['AI','QR Code Tech','Data Science','Project Management'].map(t => <Tag key={t} color="#F472B6">{t}</Tag>)}
+        <p>A production smart-city waste reporting system for downtown Toledo. Residents scan QR codes on public trash assets to instantly file maintenance reports. I contributed to backend architecture: modernized raw init scripts into a type-safe Deno monorepo, built PostGIS geospatial models with GiST indexing, benchmarked ST_DWithin queries against 10,000+ assets, designed Docker Compose local infra for the 7-person team, and implemented location-verification and anti-spoofing layers.</p>
+        <h4 style={{ color: '#F472B6', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>Key Insight</h4>
+        <p>The hard part was not making a form. The hard part was making location-aware public reporting reliable enough for real city use — GPS noise, indoor submissions, spoofing attempts, and all.</p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12, marginBottom: 16 }}>
+          {['Deno','PostGIS','Cloudflare Workers','Hono','Drizzle ORM','Docker','GiST Indexing','Geospatial Validation','Anti-Spoofing'].map(t => <Tag key={t} color="#F472B6">{t}</Tag>)}
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8, paddingTop: 14, borderTop: '1px solid rgba(244,114,182,0.15)' }}>
+          <a href="/case-study/batting-cleanup-smart-city-waste-reporting" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#F472B6', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</a>
+          <a href="https://battingcleanup.appliedlabs.org/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid rgba(244,114,182,0.35)', color: '#F472B6', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Documentation ↗</a>
+          <a href="https://toledofreepress.com/batting-cleanup-aims-to-improve-toledo-maintenance-with-tech/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid rgba(242,237,216,0.12)', color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>News Article ↗</a>
+        </div>
+      </>),
+    },
+    {
+      idx: '09', dom: 'Athletics', color: '#0EA5E9',
+      title: 'Champions Complex Digital Campaign',
+      tag: 'University of Toledo Athletics · Digital Fundraising Campaign',
+      fr: 'The physical facility builds champions. The digital campaign builds belief.',
+      src: '/Images/Champion_Complex_Render1.jpg', span: 2,
+      stacks: ['Web Strategy', 'Sidearm Sports', 'Donor UX', 'Information Architecture', 'Digital Fundraising', 'Brand Strategy'],
+      detail: (<>
+        {/* Metrics */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8, marginBottom: 20 }}>
+          {[['74K sq ft','Renovation scope'],['450+','Student-athletes impacted'],['10','Architectural renderings'],['6','Donor journey stages'],['Sidearm','Narrator platform'],['UToledo','Brand-aligned']].map(([v,l]) => (
+            <div key={l} style={{ padding: '10px 12px', background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 6 }}>
+              <div style={{ fontFamily: SERIF, fontSize: 19, color: '#0EA5E9', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
+              <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 4 }}>{l}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Overview */}
+        <h4 style={{ color: '#0EA5E9', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Overview</h4>
+        <p>The Champions Complex Digital Campaign is a strategic webpage and digital fundraising blueprint for University of Toledo Athletics. The project supports the Champions Complex initiative — a 74,000-square-foot renovation of the Health Education Building into a centralized home for student-athlete development, bringing academics, nutrition, wellness, training, and team spaces under one roof while returning baseball and softball to main campus.</p>
+
+        {/* My Role */}
+        <h4 style={{ color: '#0EA5E9', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>My Role</h4>
+        <p>Created the full digital campaign strategy: information architecture, scroll-based donor journey, rendering-to-section narrative mapping, Sidearm Sports / Narrator implementation planning, donation CTA flow, naming-rights structure, UToledo brand alignment, and digital donor recognition concepts. The work sits at the intersection of web development, UX, sports marketing, and donor psychology.</p>
+
+        {/* Digital Strategy */}
+        <h4 style={{ color: '#0EA5E9', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Digital Strategy</h4>
+        <p>The page follows a deliberate six-stage donor psychology sequence: Awe → Understanding → Trust → Exploration → Legacy → Action. Each architectural rendering is assigned to a specific narrative section rather than a generic gallery — exterior dusk rendering opens the hero, Academic Center renders anchor the excellence section, Champions Corridor ties donor recognition to legacy. Sidearm Narrator enables the immersive single-page experience using parallax, sliders, and scroll-triggered animation within the existing athletics web ecosystem.</p>
+
+        {/* Stack */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
+          {['Sidearm Sports','Sidearm Narrator','Web Strategy','Information Architecture','Donor UX','Digital Fundraising','Sports Marketing','Brand Strategy','UToledo Design System','Naming-Rights Planning','Conversion Psychology'].map(t => <Tag key={t} color="#0EA5E9">{t}</Tag>)}
+        </div>
+
+        {/* Key Insight */}
+        <h4 style={{ color: '#0EA5E9', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Key Insight</h4>
+        <p>Capital campaign websites are conversion systems, not information pages. Donor trust is built through clarity, momentum, and proof — not renderings alone. The donation flow must be designed as carefully as the visual experience: a donor who is emotionally convinced should not have to search for the next step.</p>
+
+        {/* Action buttons */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 22, paddingTop: 16, borderTop: '1px solid rgba(14,165,233,0.15)' }}>
+          <a href="/case-study/champions-complex-digital-campaign" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#0EA5E9', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</a>
+        </div>
+      </>),
+    },
+    {
+      idx: '10', dom: 'Internal Tools', color: '#22C55E',
+      title: 'Toledo Athletics Onboarding Portal',
+      tag: 'University of Toledo Athletics · Internal Platform',
+      fr: 'Great onboarding is infrastructure for institutional memory.',
+      src: '/Images/Toledo_Athletics_Onboarding.png', span: 2,
+      stacks: ['Cloudflare Workers', 'Hono', 'React', 'Cloudflare D1', 'Workers AI', 'TypeScript'],
+      detail: (<>
+        {/* Metrics */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8, marginBottom: 20 }}>
+          {[['14','DB schema tables'],['5','Core services'],['10+','Onboarding content areas'],['Serverless','Edge deployment'],['Workers AI','Chat assistant'],['Moderated','Tips workflow']].map(([v,l]) => (
+            <div key={l} style={{ padding: '10px 12px', background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.2)', borderRadius: 6 }}>
+              <div style={{ fontFamily: SERIF, fontSize: 19, color: '#22C55E', lineHeight: 1, paddingBottom: '0.05em' }}>{v}</div>
+              <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 4 }}>{l}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Overview */}
+        <h4 style={{ color: '#22C55E', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Overview</h4>
+        <p>A serverless internal onboarding platform built for University of Toledo Athletics staff. The portal centralizes official onboarding articles, staff hierarchy, key contacts, HR timelines, compliance resources, systems directories, policy links, quick links, and moderated employee tips — replacing scattered documents and tribal knowledge with a single searchable source of truth.</p>
+
+        {/* Problem */}
+        <h4 style={{ color: '#22C55E', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Problem</h4>
+        <p>New staff entering a Division I athletics department must simultaneously navigate university HR, NCAA compliance, Title IX, NIL rules, FERPA, IT systems, campus logistics, facilities, brand standards, and athletics-specific workflows. Without a centralized system, onboarding is inconsistent, supervisors repeat themselves, and outdated information creates operational and compliance risk.</p>
+
+        {/* Architecture */}
+        <h4 style={{ color: '#22C55E', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Architecture</h4>
+        <p>React SPA frontend → Cloudflare Worker API → Hono routes → Cloudflare D1 (SQLite relational schema) → Workers AI chat assistant. The database separates official published content from employee submissions behind a moderation layer: staff submit tips, which remain pending until a moderator approves or rejects them. This captures practical knowledge without letting unverified guidance become official policy.</p>
+
+        {/* My Role */}
+        <h4 style={{ color: '#22C55E', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>My Role</h4>
+        <p>Designed and built the full platform: onboarding content architecture, relational schema design across 14 tables, Cloudflare Workers + Hono serverless API, React SPA, Workers AI chat integration, moderated knowledge-management workflow, and a maintenance guide for future staff to update content, contacts, policies, and systems without touching the codebase.</p>
+
+        {/* Stack */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
+          {['Cloudflare Workers','Hono','TypeScript','React','Cloudflare D1','SQLite','Workers AI','Wrangler','Serverless','Knowledge Management','NCAA Compliance','HR Onboarding'].map(t => <Tag key={t} color="#22C55E">{t}</Tag>)}
+        </div>
+
+        {/* Key Insight */}
+        <h4 style={{ color: '#22C55E', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 16, marginBottom: 8 }}>Key Insight</h4>
+        <p>Onboarding is a knowledge-management problem, not a documentation problem. The moderation layer matters most: athletics onboarding covers compliance topics where incorrect guidance about NCAA rules, Title IX, NIL, FERPA, or HR policy creates institutional risk. The portal captures real staff knowledge while preserving administrative control over what becomes official.</p>
+
+        {/* Action buttons */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 22, paddingTop: 16, borderTop: '1px solid rgba(34,197,94,0.15)' }}>
+          <a href="/case-study/toledo-athletics-onboarding-portal" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#22C55E', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</a>
         </div>
       </>),
     },
@@ -534,6 +730,7 @@ function Projects() {
 // ─────────────────────────────────────────────
 function Research() {
   const { ref, visible } = useReveal();
+  const openLb = useLightboxOpen();
   return (
     <Section id="research" style={{ background: 'rgba(15,17,25,0.92)' }}>
       <SH n="04" label="Research" sub="Published work and ongoing investigations." color="#4B7BF5" />
@@ -547,6 +744,7 @@ function Research() {
           buttonProps={{ onClick: () => window.open('/docs/Manuscript.pdf', '_blank'), style: { background: '#4B7BF5', color: '#fff', border: 'none' } }}
           imageUrl="/Images/4-Pillars.png"
           imageAlt="4-Pillars AI failure taxonomy"
+          onImageClick={() => openLb('/Images/4-Pillars.png', '4-Pillars AI Failure Taxonomy')}
           style={{ border: 'none', background: 'transparent' }}
         />
         <div style={{ marginTop: 40, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
@@ -589,15 +787,17 @@ function Research() {
 // ─────────────────────────────────────────────
 function FeaturedIn() {
   const { ref, visible } = useReveal();
+  const openLb = useLightboxOpen();
   return (
     <Section id="featured-in">
-      <SH n="05" label="Featured In" sub="Press coverage and public recognition." color="#2DD4C8" />
+      <SH n="06" label="Featured In" sub="Press coverage and public recognition." color="#2DD4C8" />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}
         style={{ background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 10, overflow: 'hidden' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 0 }} className="featured-in-grid">
           <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 0, background: '#0d0f1a', width: '100%', height: '100%', minHeight: 220 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/Images/athletics_group_pics.png" alt="UToledo Athletics feature" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/Images/athletics_group_pics.png" alt="UToledo Athletics feature" onClick={() => openLb('/Images/athletics_group_pics.png', 'UToledo Athletics feature')} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', cursor: 'zoom-in' }} />
           </div>
           <div style={{ padding: '28px 36px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <div style={{ fontFamily: MONO, fontSize: 10, color: '#F07832', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 14, opacity: 0.9 }}>Featured In</div>
@@ -637,17 +837,18 @@ const skillGroups = [
 ];
 
 const awards = [
-  { t: 'USRCAP Research Fellowship',  d: '$3,000 · Graph-Based RL UAV Research', y: '2025', color: '#F0B429', imgs: ['/Images/graph_RL.png'] },
-  { t: 'Best Use of MongoDB Atlas',   d: 'RocketHacks 2025 · Deep Truth',        y: '2025', color: '#F07832', imgs: ['/Images/DeepTruth_Group.png'] },
-  { t: 'Most Innovative Car Design',  d: 'AIChE Chem-E Car · Worldwide',         y: '2024', color: '#4B7BF5', imgs: ['/Images/AIChE%20ChemECar_International.jpg', '/Images/AIChE.jpg'] },
-  { t: 'Poster & Presentation',       d: 'AIChE · Worldwide Recognition',        y: '2024', color: '#4B7BF5', imgs: ['/Images/AIChE.jpg'] },
+  { t: 'AIChE Chem E Car Poster & Presentation', d: 'AIChE · Worldwide',                     y: 'Nov 2025', color: '#4B7BF5', imgs: ['/Images/AIChE.jpg'],                                                               imgFit: 'cover',    imgPos: 'center',  ratio: '4/3' },
+  { t: 'Most Innovative Car Design',             d: 'AIChE Chem-E Car · Worldwide',           y: 'Nov 2025', color: '#4B7BF5', imgs: ['/Images/AIChE%20ChemECar_International.jpg', '/Images/AIChE.jpg'], imgFit: 'cover',    imgPos: 'center',  ratio: '4/3' },
+  { t: 'USRCAP Research Fellowship',             d: '$3,000 · Graph-Based RL UAV Research',   y: 'May 2025', color: '#F0B429', imgs: ['/Images/graph_RL.png'],                                                                imgFit: 'contain',  imgPos: 'center',  ratio: '4/3' },
+  { t: 'AIChE Chem E Car – Regional',            d: '3rd Place · AIChE Regional',             y: 'Mar 2025', color: '#F07832', imgs: ['/Images/AIChE_Regional_Pics.jpg'],                                                          imgFit: 'cover',    imgPos: 'center',  ratio: '16/9' },
+  { t: 'Best Use of MongoDB Atlas',              d: 'RocketHacks 2025 · Deep Truth',          y: 'Mar 2025', color: '#F07832', imgs: ['/Images/DeepTruth_Group.png'],                                                             imgFit: 'cover',    imgPos: 'top',     ratio: '16/9' },
 ];
 
 const affiliations = [
-  { n: 'IEEE & AESS',        role: 'Member',                   color: '#2DD4C8', short: 'Institute of Electrical & Electronics Engineers / Aerospace & Electronic Systems Society', desc: 'Active member of IEEE and AESS. Engaged in technical communities around autonomous systems, AI safety, and engineering standards.', imgs: ['/Images/IEEE.jpg', '/Images/aess.jpg'] },
-  { n: 'AIChE / Chem-E Car', role: 'Team Member & Competitor', color: '#F07832', short: 'American Institute of Chemical Engineers — University of Toledo Chapter', desc: 'Competed on the UT AIChE Chem-E Car team. Contributed to Arduino-based automation integrating pressure sensors, load cells, and stopping algorithms. Won Most Innovative Car Design worldwide.', imgs: ['/Images/AIChE.jpg', '/Images/AIChE%20ChemECar_International.jpg'] },
-  { n: 'Pi Sigma Epsilon',   role: 'Member',                   color: '#A78BFA', short: 'National Co-Educational Professional Fraternity — Sales, Marketing & Management', desc: 'Member of Pi Sigma Epsilon, the only national professional co-educational fraternity in sales, marketing, and management.', imgs: ['/Images/PSE_1.jpg', '/Images/PSE_2.jpg', '/Images/PSE_3.jpg'] },
-  { n: 'UToledo Athletics',  role: 'Data Science Intern',      color: '#2DD4C8', short: 'University of Toledo Department of Athletics', desc: 'Embedded within UT Athletics as a Sports Analytics & Data Science Intern. Featured in official UToledo Rockets media for bridging technical modeling with direct communication to athletics leadership.', imgs: ['/Images/athletics_group_pics.png'] },
+  { n: 'IEEE & AESS',        role: 'Member',                   color: '#2DD4C8', short: 'Institute of Electrical & Electronics Engineers / Aerospace & Electronic Systems Society', desc: 'Active member of IEEE and AESS. Engaged in technical communities around autonomous systems, AI safety, and engineering standards.', imgs: ['/Images/IEEE.jpg', '/Images/aess.jpg'],                                                                imgFit: 'contain', imgPos: 'center', ratio: '4/3'  },
+  { n: 'AIChE / Chem-E Car', role: 'Team Member & Competitor', color: '#F07832', short: 'American Institute of Chemical Engineers — University of Toledo Chapter', desc: 'Competed on the UT AIChE Chem-E Car team. Contributed to Arduino-based automation integrating pressure sensors, load cells, and stopping algorithms. Won Most Innovative Car Design worldwide.', imgs: ['/Images/AIChE.jpg', '/Images/AIChE%20ChemECar_International.jpg'], imgFit: 'cover',   imgPos: 'center', ratio: '4/3'  },
+  { n: 'Pi Sigma Epsilon',   role: 'Member',                   color: '#A78BFA', short: 'National Co-Educational Professional Fraternity — Sales, Marketing & Management', desc: 'Member of Pi Sigma Epsilon, the only national professional co-educational fraternity in sales, marketing, and management.', imgs: ['/Images/PSE_1.jpg', '/Images/PSE_2.jpg', '/Images/PSE_3.jpg'],                                                         imgFit: 'contain', imgPos: 'center', ratio: '3/4'  },
+  { n: 'UToledo Athletics',  role: 'Data Science Intern',      color: '#2DD4C8', short: 'University of Toledo Department of Athletics', desc: 'Embedded within UT Athletics as a Sports Analytics & Data Science Intern. Featured in official UToledo Rockets media for bridging technical modeling with direct communication to athletics leadership.', imgs: ['/Images/athletics_group_pics.png'],                                                                    imgFit: 'cover',   imgPos: 'top',    ratio: '16/9' },
 ];
 
 // ── Skill Group Card (progressive disclosure) ──
@@ -690,9 +891,10 @@ function Skills() {
   const { ref, visible } = useReveal();
   const [openAward, setOpenAward] = React.useState<number | null>(null);
   const [openAffil, setOpenAffil] = React.useState<number | null>(null);
+  const openLb = useLightboxOpen();
   return (
     <Section id="skills">
-      <SH n="06" label="Capabilities" sub="Technical stack built across research, industry, and deployment." color="#F0B429" />
+      <SH n="05" label="Capabilities" sub="Technical stack built across research, industry, and deployment." color="#F0B429" />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}>
         {/* Skill grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }} className="three-col-skills">
@@ -704,7 +906,7 @@ function Skills() {
         {/* Awards */}
         <div style={{ marginTop: 52 }}>
           <div style={{ fontFamily: MONO, fontSize: 11, color: '#6E6B60', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Awards & Recognition</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }} className="two-col-awards">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, alignItems: 'start' }} className="two-col-awards">
             {awards.map((a, i) => (
               <div key={i}
                 onClick={() => setOpenAward(openAward === i ? null : i)}
@@ -723,9 +925,10 @@ function Skills() {
                   <div style={{ padding: '0 18px 18px', borderTop: '1px solid rgba(242,237,216,0.06)' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.imgs.length}, 1fr)`, gap: 8, marginTop: 14 }}>
                       {a.imgs.map((src, j) => (
-                        <div key={j} style={{ width: '100%', height: 180, background: '#0B0D14', borderRadius: 6, overflow: 'hidden' }}>
+                        <div key={j} style={{ width: '100%', aspectRatio: a.ratio ?? '16/9', background: '#0B0D14', borderRadius: 6, overflow: 'hidden' }}>
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={src} alt={a.t} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={src} alt={a.t} onClick={e => { e.stopPropagation(); openLb(src, a.t); }} style={{ width: '100%', height: '100%', objectFit: (a.imgFit ?? 'cover') as React.CSSProperties['objectFit'], objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
                         </div>
                       ))}
                     </div>
@@ -739,7 +942,7 @@ function Skills() {
         {/* Affiliations */}
         <div style={{ marginTop: 52 }}>
           <div style={{ fontFamily: MONO, fontSize: 11, color: '#6E6B60', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Professional Affiliations</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }} className="two-col-awards">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, alignItems: 'start' }} className="two-col-awards">
             {affiliations.map((a, i) => (
               <div key={i}
                 onClick={() => setOpenAffil(openAffil === i ? null : i)}
@@ -759,9 +962,10 @@ function Skills() {
                   <div style={{ padding: '0 22px 22px', borderTop: '1px solid rgba(242,237,216,0.06)' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.imgs.length}, 1fr)`, gap: 8, marginTop: 14 }}>
                       {a.imgs.map((src, j) => (
-                        <div key={j} style={{ width: '100%', height: 180, background: '#0B0D14', borderRadius: 6, overflow: 'hidden' }}>
+                        <div key={j} style={{ width: '100%', aspectRatio: a.ratio ?? '16/9', background: '#0B0D14', borderRadius: 6, overflow: 'hidden' }}>
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={src} alt={a.n} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={src} alt={a.n} onClick={e => { e.stopPropagation(); openLb(src, a.n); }} style={{ width: '100%', height: '100%', objectFit: (a.imgFit ?? 'cover') as React.CSSProperties['objectFit'], objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
                         </div>
                       ))}
                     </div>
@@ -902,7 +1106,7 @@ function Contact() {
   const { ref, visible } = useReveal();
   return (
     <Section id="contact">
-      <SH n="07" label="Contact" sub="Let's talk about building something real." color="#F0B429" />
+      <SH n="09" label="Contact" sub="Let's talk about building something real." color="#F0B429" />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 48, alignItems: 'center' }}>
         <div>
           <h2 style={{ fontFamily: SERIF, fontSize: 40, fontWeight: 400, lineHeight: 1.2, letterSpacing: '-0.02em', color: '#F2EDD8', marginBottom: 20, paddingBottom: '0.08em' }}>
@@ -947,29 +1151,106 @@ function Contact() {
 }
 
 // ─────────────────────────────────────────────
+// FIELD NOTES (preview)
+// ─────────────────────────────────────────────
+function FieldNotesSection() {
+  const { ref, visible } = useReveal();
+  const published = fieldNotes
+    .filter(n => n.published && n.date)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+
+  return (
+    <Section id="field-notes">
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', marginBottom: 52 }}>
+        <div style={{ position: 'relative', paddingTop: 8, flex: 1 }}>
+          <div aria-hidden style={{ position: 'absolute', top: -32, left: -8, fontFamily: SERIF, fontSize: 'clamp(72px,11vw,160px)', fontWeight: 400, color: '#F0B429', opacity: 0.05, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em', zIndex: 0 }}>08</div>
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+              <span style={{ display: 'inline-block', width: 22, height: 1.5, background: '#F0B429', opacity: 0.6, flexShrink: 0 }} />
+              <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#F0B429' }}>Field Notes</span>
+            </div>
+            <p style={{ fontSize: 15, color: '#B8B4A4', maxWidth: 500, lineHeight: 1.65, marginTop: 4, fontFamily: SANS }}>
+              Thinking in public — dispatches from the edge of AI, robotics, and real-world systems.
+            </p>
+          </div>
+        </div>
+        <a
+          href="/field-notes"
+          style={{
+            fontFamily: MONO, fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase',
+            color: '#F0B429', border: '1px solid rgba(240,180,41,0.3)', borderRadius: 5,
+            padding: '9px 18px', textDecoration: 'none', flexShrink: 0, marginTop: 8,
+            display: 'inline-block',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(240,180,41,0.08)'; e.currentTarget.style.borderColor = '#F0B429'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(240,180,41,0.3)'; }}
+        >
+          View All ↗
+        </a>
+      </div>
+
+      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))', gap: 20 }}>
+        {published.length > 0
+          ? published.map(note => <FieldNoteCard key={note.slug} note={note} />)
+          : (
+            <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '64px 0', color: '#6E6B60', fontFamily: MONO, fontSize: 12, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+              New field notes coming soon.
+            </div>
+          )
+        }
+      </div>
+
+      <div style={{ marginTop: 40, display: 'flex', justifyContent: 'center' }}>
+        <a
+          href="/field-notes"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            padding: '12px 28px', background: '#F0B429', color: '#0B0D14',
+            fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em',
+            borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = '0.88'; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
+        >
+          Browse All Field Notes ↗
+        </a>
+      </div>
+    </Section>
+  );
+}
+
+// ─────────────────────────────────────────────
 // PAGE
 // ─────────────────────────────────────────────
 export default function Portfolio() {
+  const [lb, setLb] = useState<{ src: string; alt: string } | null>(null);
+  const openLb = React.useCallback((src: string, alt = '') => setLb({ src, alt }), []);
   return (
-    <>
-      <Header />
-      <NebulaCube />
-      <main style={{ position: 'relative', zIndex: 20, background: 'transparent' }}>
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Research />
-        <FeaturedIn />
-        <Skills />
-        <Now />
-        <Contact />
-      </main>
-      <footer style={{ position: 'relative', zIndex: 20, borderTop: '1px solid rgba(242,237,216,0.06)', padding: '28px 52px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.12em', textTransform: 'uppercase' }}>© 2026 Ahmad Firas. All rights reserved.</span>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Next.js · TypeScript · Framer Motion</span>
-      </footer>
-    </>
+    <LightboxCtx.Provider value={openLb}>
+      <>
+        <Header />
+        <NebulaCube />
+        <main style={{ position: 'relative', zIndex: 20, background: 'transparent' }}>
+          <Hero />
+          <About />
+          <Experience />
+          <Projects />
+          <Research />
+          <Skills />
+          <FeaturedIn />
+          <Now />
+          <FieldNotesSection />
+          <Contact />
+        </main>
+        <footer style={{ position: 'relative', zIndex: 20, borderTop: '1px solid rgba(242,237,216,0.06)', padding: '28px 52px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.12em', textTransform: 'uppercase' }}>© 2026 Ahmad Firas. All rights reserved.</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Next.js · TypeScript · Framer Motion</span>
+        </footer>
+        {lb && <Lightbox src={lb.src} alt={lb.alt} onClose={() => setLb(null)} />}
+      </>
+    </LightboxCtx.Provider>
   );
 }
 

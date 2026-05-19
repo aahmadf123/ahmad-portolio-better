@@ -11,10 +11,11 @@ interface AnimatedFeatureSpotlightProps extends React.HTMLAttributes<HTMLElement
   buttonProps?: ButtonProps;
   imageUrl: string;
   imageAlt?: string;
+  onImageClick?: () => void;
 }
 
 const AnimatedFeatureSpotlight = React.forwardRef<HTMLElement, AnimatedFeatureSpotlightProps>(
-  ({ className, preheaderIcon, preheaderText, heading, description, buttonText, buttonProps, imageUrl, imageAlt = 'Feature illustration', ...props }, ref) => {
+  ({ className, preheaderIcon, preheaderText, heading, description, buttonText, buttonProps, imageUrl, imageAlt = 'Feature illustration', onImageClick, ...props }, ref) => {
     return (
       <section
         ref={ref}
@@ -39,7 +40,13 @@ const AnimatedFeatureSpotlight = React.forwardRef<HTMLElement, AnimatedFeatureSp
             </div>
           </div>
           <div className="relative w-full min-h-[250px] md:min-h-[320px] flex items-center justify-center animate-in fade-in zoom-in-95 duration-700 delay-200">
-            <img src={imageUrl} alt={imageAlt} className="w-full max-w-md object-contain animate-float" />
+            <img
+              src={imageUrl}
+              alt={imageAlt}
+              className="w-full max-w-md object-contain animate-float"
+              onClick={onImageClick}
+              style={onImageClick ? { cursor: 'zoom-in' } : undefined}
+            />
           </div>
         </div>
       </section>
