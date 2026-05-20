@@ -1,4 +1,5 @@
 import React from 'react';
+import { ViewTransition } from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getFieldNote, fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
@@ -63,7 +64,7 @@ export default async function FieldNotePage({ params }: PageProps) {
           color: '#B8B4A4', fontFamily: MONO, fontSize: 10,
           letterSpacing: '0.08em', textTransform: 'uppercase',
           textDecoration: 'none', transition: 'color 0.2s',
-        }}>
+        }} transitionTypes={['nav-back']}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5" /><path d="M12 5l-7 7 7 7" />
           </svg>
@@ -90,11 +91,11 @@ export default async function FieldNotePage({ params }: PageProps) {
       }}>
         {/* Meta row */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
-          <span style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.06em' }}>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
             {formatDate(note.date)}
           </span>
           <span style={{ fontFamily: MONO, fontSize: 10, color: '#4A4843' }}>·</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.06em' }}>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
             {note.readingTime} min read
           </span>
         </div>
@@ -124,7 +125,7 @@ export default async function FieldNotePage({ params }: PageProps) {
               fontFamily: MONO, fontSize: 9, padding: '3px 8px',
               background: 'rgba(242,237,216,0.04)',
               border: '1px solid rgba(242,237,216,0.1)',
-              borderRadius: 3, color: '#6E6B60',
+              borderRadius: 3, color: 'var(--text3)',
               letterSpacing: '0.04em',
             }}>
               {tag}
@@ -134,18 +135,20 @@ export default async function FieldNotePage({ params }: PageProps) {
 
         {/* Hero image */}
         {note.heroImage && (
-          <div style={{
-            width: '100%', borderRadius: 12, overflow: 'hidden',
-            border: '1px solid rgba(242,237,216,0.08)',
-            marginBottom: 48, background: '#06080E',
-          }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={note.heroImage}
-              alt={`${note.title} — hero visualization`}
-              style={{ width: '100%', height: 'auto', display: 'block' }}
-            />
-          </div>
+          <ViewTransition name={`fn-img-${note.slug}`} share="morph">
+            <div style={{
+              width: '100%', borderRadius: 12, overflow: 'hidden',
+              border: '1px solid rgba(242,237,216,0.08)',
+              marginBottom: 48, background: '#06080E',
+            }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={note.heroImage}
+                alt={`${note.title} — hero visualization`}
+                style={{ width: '100%', height: 'auto', display: 'block' }}
+              />
+            </div>
+          </ViewTransition>
         )}
       </div>
 
@@ -186,7 +189,7 @@ export default async function FieldNotePage({ params }: PageProps) {
           </div>
           <div>
             <div style={{ fontFamily: SERIF, fontSize: 14, color: '#F2EDD8', marginBottom: 2 }}>Ahmad Firas</div>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.04em' }}>
+            <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.04em' }}>
               AI Researcher · University of Toledo
             </div>
           </div>

@@ -20,11 +20,11 @@ export function Header({ links }: { links?: HeaderLink[] }) {
     { label: 'About',        href: '#about' },
     { label: 'Experience',   href: '#experience' },
     { label: 'Work',         href: '#projects' },
+    { label: 'Field Notes',  href: '#field-notes' },
     { label: 'Research',     href: '#research' },
     { label: 'Skills',       href: '#skills' },
     { label: 'Press',        href: '#featured-in' },
     { label: 'Now',          href: '#now' },
-    { label: 'Field Notes',  href: '#field-notes' },
     { label: 'Contact',      href: '#contact' },
   ];
 
@@ -165,12 +165,13 @@ export function Header({ links }: { links?: HeaderLink[] }) {
             : 'border-b border-transparent',
         )}
         style={{
+          viewTransitionName: 'site-header',
           background: scrolled || open
             ? 'rgba(11,13,20,0.94)'
             : 'transparent',
           backdropFilter: scrolled || open ? 'blur(24px) saturate(1.4)' : 'none',
           WebkitBackdropFilter: scrolled || open ? 'blur(24px) saturate(1.4)' : 'none',
-        }}
+        } as React.CSSProperties}
       >
         {/* ── Main bar: 3-column grid for true centering ── */}
         <nav
@@ -253,12 +254,10 @@ export function Header({ links }: { links?: HeaderLink[] }) {
             }}
           >
             <a
-              href="/docs/Ahmad_Resume_Developer_I_FirstSolar.pdf"
-              target="_blank"
-              rel="noopener"
+              href="/docs"
               className="resume-btn hidden md:inline-flex"
             >
-              Resume ↓
+              Docs
             </a>
 
             {/* Hamburger — mobile only */}
@@ -305,9 +304,8 @@ export function Header({ links }: { links?: HeaderLink[] }) {
             ))}
 
             <a
-              href="/docs/Ahmad_Resume_Developer_I_FirstSolar.pdf"
-              target="_blank"
-              rel="noopener"
+              href="/docs"
+              onClick={() => setOpen(false)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -329,7 +327,7 @@ export function Header({ links }: { links?: HeaderLink[] }) {
                 transition: `opacity 0.3s ease ${defaultLinks.length * 45 + 40}ms, transform 0.3s ease ${defaultLinks.length * 45 + 40}ms`,
               }}
             >
-              Resume ↓
+              Docs
             </a>
           </div>
         </div>

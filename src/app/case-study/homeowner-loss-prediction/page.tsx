@@ -1,6 +1,7 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
 
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -29,7 +30,7 @@ function Metric({ value, label, color = ACCENT }: { value: string; label: string
   return (
     <div style={{ padding: '18px 20px', background: `${color}08`, border: `1px solid ${color}28`, borderRadius: 8 }}>
       <div style={{ fontFamily: SERIF, fontSize: 32, fontWeight: 400, color: '#F2EDD8', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 8 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 8 }}>{label}</div>
     </div>
   );
 }
@@ -45,7 +46,7 @@ function PipelineStep({ n, title, sub, color = ACCENT, isLast = false }: { n: st
       </div>
       <div style={{ paddingLeft: 14, paddingBottom: isLast ? 0 : 20, paddingTop: 6 }}>
         <div style={{ fontSize: 14, fontWeight: 600, color: '#F2EDD8', lineHeight: 1.3, marginBottom: 4 }}>{title}</div>
-        <div style={{ fontSize: 13, color: '#6E6B60', lineHeight: 1.55 }}>{sub}</div>
+        <div style={{ fontSize: 13, color: 'var(--text3)', lineHeight: 1.55 }}>{sub}</div>
       </div>
     </div>
   );
@@ -112,12 +113,12 @@ export default function HomeownerLossCaseStudy() {
         height: 56,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
       }}>
-        <a href="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B8B4A4', textDecoration: 'none', transition: 'color 0.2s' }}
+        <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B8B4A4', textDecoration: 'none', transition: 'color 0.2s' }}
           onMouseEnter={e => { e.currentTarget.style.color = ACCENT; }}
           onMouseLeave={e => { e.currentTarget.style.color = '#B8B4A4'; }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
           Back to Portfolio
-        </a>
+        </Link>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
           <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(167,139,250,0.3)', borderRadius: 4, color: ACCENT, fontFamily: MONO, fontSize: 9, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.background = `${ACCENT}14`; }}
@@ -139,7 +140,7 @@ export default function HomeownerLossCaseStudy() {
             <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: `${ACCENT}14`, border: `1px solid ${ACCENT}33`, borderRadius: 20, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>MLOps</span>
             <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(240,180,41,0.08)', border: '1px solid rgba(240,180,41,0.25)', borderRadius: 20, color: '#F0B429', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Insurance AI</span>
             <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(75,123,245,0.08)', border: '1px solid rgba(75,123,245,0.25)', borderRadius: 20, color: '#4B7BF5', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Risk Modeling</span>
-            <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(242,237,216,0.1)', borderRadius: 20, color: '#6E6B60', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Senior Design · 2024–2025</span>
+            <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(242,237,216,0.1)', borderRadius: 20, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Senior Design · 2024–2025</span>
           </div>
 
           <h1 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(32px, 6vw, 58px)', lineHeight: 1.05, letterSpacing: '-0.025em', color: '#F2EDD8', margin: 0, paddingBottom: '0.08em', marginBottom: 16 }}>
@@ -181,7 +182,7 @@ export default function HomeownerLossCaseStudy() {
               style={{
                 padding: '14px 16px', background: 'none', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
                 fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
-                color: active === s.id ? ACCENT : '#6E6B60',
+                color: active === s.id ? ACCENT : 'var(--text3)',
                 borderBottom: active === s.id ? `2px solid ${ACCENT}` : '2px solid transparent',
                 transition: 'color 0.2s, border-color 0.2s',
               }}
@@ -330,7 +331,7 @@ export default function HomeownerLossCaseStudy() {
             </div>
           </div>
           <div>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 14 }}>Alternatives Considered</div>
+            <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 14 }}>Alternatives Considered</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {[
                 { name: 'GLM Pipeline', why: 'Baseline — 26% worse RMSE' },
@@ -340,8 +341,8 @@ export default function HomeownerLossCaseStudy() {
                 { name: 'Deep Learning / MLP', why: 'Too opaque for actuarial review' },
               ].map(item => (
                 <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8, fontSize: 13, padding: '6px 0', borderBottom: '1px solid rgba(242,237,216,0.05)' }}>
-                  <span style={{ color: '#6E6B60' }}>{item.name}</span>
-                  <span style={{ color: '#6E6B60', fontSize: 11, textAlign: 'right' }}>{item.why}</span>
+                  <span style={{ color: 'var(--text3)' }}>{item.name}</span>
+                  <span style={{ color: 'var(--text3)', fontSize: 11, textAlign: 'right' }}>{item.why}</span>
                 </div>
               ))}
             </div>
@@ -480,7 +481,7 @@ export default function HomeownerLossCaseStudy() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
             <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Download Final Report ↓</a>
             <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: `1px solid ${ACCENT}44`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View on GitHub ↗</a>
-            <a href="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: '1px solid rgba(242,237,216,0.12)', color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Portfolio</a>
+            <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: '1px solid rgba(242,237,216,0.12)', color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Portfolio</Link>
           </div>
         </div>
       </section>

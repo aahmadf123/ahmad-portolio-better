@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Chakra_Petch } from "next/font/google";
+import { ViewTransition } from "react";
 import "./globals.css";
 import { MagneticCursor } from "@/components/ui/magnetic-cursor";
 
@@ -37,9 +38,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={chakraPetch.variable}>
       <body suppressHydrationWarning>
+        <a href="#hero" className="skip-link">
+          Skip to main content
+        </a>
         <MagneticCursor />
         <div id="scroll-bar" suppressHydrationWarning />
-        {children}
+        <ViewTransition
+          default="page-enter"
+          enter={{ 'nav-forward': 'nav-forward', 'nav-back': 'nav-back', default: 'page-enter' }}
+          exit={{ 'nav-forward': 'nav-forward', 'nav-back': 'nav-back', default: 'page-enter' }}
+        >
+          {children}
+        </ViewTransition>
         <script
           dangerouslySetInnerHTML={{
             __html: `

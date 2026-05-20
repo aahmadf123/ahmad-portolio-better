@@ -48,7 +48,7 @@ export default function FieldNotesPage() {
           </span>
         </div>
 
-        <div style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.06em' }}>
+        <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
           {published.length} of {totalCount} published
         </div>
       </nav>
@@ -124,8 +124,8 @@ export default function FieldNotesPage() {
         paddingTop: 64,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
-          <span style={{ display: 'inline-block', width: 22, height: 1.5, background: '#6E6B60', opacity: 0.5 }} />
-          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#6E6B60' }}>
+          <span style={{ display: 'inline-block', width: 22, height: 1.5, background: 'var(--text3)', opacity: 0.5 }} />
+          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text3)' }}>
             Coming to Field Notes
           </span>
         </div>
@@ -145,14 +145,14 @@ export default function FieldNotesPage() {
                 borderLeft: catCfg ? `2px solid ${catCfg.color}40` : undefined,
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-                  <span style={{ fontFamily: MONO, fontSize: 10, color: catCfg?.color ?? '#6E6B60', letterSpacing: '0.06em' }}>
+                  <span style={{ fontFamily: MONO, fontSize: 10, color: catCfg?.color ?? 'var(--text3)', letterSpacing: '0.06em' }}>
                     {catCfg?.label ?? category}
                   </span>
                   <span style={{
                     fontFamily: MONO, fontSize: 9, padding: '1px 6px',
                     background: 'rgba(242,237,216,0.04)',
                     border: '1px solid rgba(242,237,216,0.08)',
-                    borderRadius: 3, color: '#6E6B60',
+                    borderRadius: 3, color: 'var(--text3)',
                     marginLeft: 'auto',
                   }}>
                     {upcomingCount} upcoming
@@ -161,13 +161,13 @@ export default function FieldNotesPage() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {notes.filter(n => !n.published).slice(0, 3).map(note => (
                     <div key={note.slug} style={{
-                      fontFamily: SERIF, fontSize: 12, color: '#6E6B60',
+                      fontFamily: SERIF, fontSize: 12, color: 'var(--text3)',
                       lineHeight: 1.4, paddingLeft: 10, position: 'relative',
                     }}>
                       <span style={{
                         position: 'absolute', left: 0, top: '0.55em',
                         width: 3, height: 3, borderRadius: '50%',
-                        background: catCfg?.color ?? '#6E6B60', opacity: 0.4,
+                        background: catCfg?.color ?? 'var(--text3)', opacity: 0.4,
                       }} />
                       {note.title}
                     </div>

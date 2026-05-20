@@ -1,6 +1,7 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -28,7 +29,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ padding: '16px 18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}25`, borderRadius: 8 }}>
       <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
   );
 }
@@ -100,7 +101,7 @@ export default function BattingCleanupCaseStudy() {
         .accent-card { padding: 16px 18px; background: ${ACCENT}06; border: 1px solid ${ACCENT}18; border-radius: 8px; }
         .live-badge { display: inline-flex; align-items: center; gap: 6px; padding: '4px 10px'; font-family: ${MONO}; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #4ade80; background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); border-radius: 20px; }
         .entity-card { padding: 16px 18px; background: ${ACCENT}06; border: 1px solid ${ACCENT}18; border-radius: 8px; }
-        .entity-field { font-family: ${MONO}; font-size: 10px; color: #6E6B60; padding: 2px 0; letter-spacing: 0.03em; }
+        .entity-field { font-family: ${MONO}; font-size: 10px; color: var(--text3); padding: 2px 0; letter-spacing: 0.03em; }
         .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.06); border-radius: 8px; align-items: flex-start; }
         .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
         code { font-family: ${MONO}; font-size: 12px; background: rgba(242,237,216,0.06); padding: 1px 5px; border-radius: 3px; color: #F2EDD8; }
@@ -116,10 +117,10 @@ export default function BattingCleanupCaseStudy() {
         padding: '0 clamp(20px, 5vw, 80px)',
         height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
       }}>
-        <a href="/#projects" style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6E6B60', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Link href="/#projects" transitionTypes={['nav-back']} style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
           Portfolio
-        </a>
+        </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#4ade80', background: 'rgba(74,222,128,0.08)', border: '1px solid rgba(74,222,128,0.25)', borderRadius: 20 }}>
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#4ade80', display: 'inline-block' }} />
@@ -146,7 +147,7 @@ export default function BattingCleanupCaseStudy() {
           <p style={{ fontFamily: SERIF, fontSize: 'clamp(15px,2vw,18px)', color: '#B8B4A4', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>
             QR-code waste reporting for a smarter Toledo.
           </p>
-          <p style={{ fontFamily: SERIF, fontSize: 15, color: '#6E6B60', maxWidth: 640, lineHeight: 1.6, margin: '0 0 40px' }}>
+          <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--text3)', maxWidth: 640, lineHeight: 1.6, margin: '0 0 40px' }}>
             A production civic-tech platform connecting public QR-code reports, edge APIs, and PostGIS geospatial validation to improve downtown Toledo maintenance workflows.
           </p>
 
@@ -301,8 +302,8 @@ export default function BattingCleanupCaseStudy() {
 
               <div className="two-col-bc" style={{ marginBottom: 24 }}>
                 <div className="info-card">
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Before — B-Tree Index</div>
-                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: '#6E6B60' }}>Full table scan on every geofence query. Latency grows linearly with asset count. Not viable at city scale — every report submission triggers an O(n) scan across all assets.</p>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Before — B-Tree Index</div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: 'var(--text3)' }}>Full table scan on every geofence query. Latency grows linearly with asset count. Not viable at city scale — every report submission triggers an O(n) scan across all assets.</p>
                 </div>
                 <div className="accent-card">
                   <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>After — GiST Spatial Index</div>
@@ -459,7 +460,7 @@ export default function BattingCleanupCaseStudy() {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <a href="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</a>
+                <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</Link>
                 <a href="https://battingcleanup.appliedlabs.org/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Documentation ↗</a>
                 <a href="https://toledofreepress.com/batting-cleanup-aims-to-improve-toledo-maintenance-with-tech/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid rgba(242,237,216,0.12)', color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Toledo Free Press ↗</a>
               </div>
@@ -469,13 +470,13 @@ export default function BattingCleanupCaseStudy() {
 
           {/* ── Sticky section nav ── */}
           <nav style={{ position: 'sticky', top: 72, alignSelf: 'start' }}>
-            <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#6E6B60', marginBottom: 14 }}>On This Page</div>
+            <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
                 <button
                   key={id}
                   className="nav-link"
-                  style={{ color: active === id ? ACCENT : '#6E6B60', textAlign: 'left' }}
+                  style={{ color: active === id ? ACCENT : 'var(--text3)', textAlign: 'left' }}
                   onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   {SECTION_LABELS[i]}

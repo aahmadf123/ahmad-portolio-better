@@ -127,7 +127,7 @@ export function AgentArchitectureLayers() {
       {/* Caption */}
       <div style={{
         marginTop: 12, fontFamily: MONO, fontSize: 10,
-        color: '#6E6B60', letterSpacing: '0.05em', textAlign: 'center',
+        color: 'var(--text3)', letterSpacing: '0.05em', textAlign: 'center',
       }}>
         Every production agent relies on all five layers. Weakness in any one compounds across the rest.
       </div>
@@ -142,7 +142,7 @@ const STAGES = [
     n: 1, name: 'Prompted Model',
     trigger: 'One-step, low-risk task',
     question: 'Is the answer good enough with a strong prompt and examples?',
-    color: '#6E6B60',
+    color: 'var(--text3)',
   },
   {
     n: 2, name: 'Workflow',
@@ -189,7 +189,7 @@ export function MaturityLadder() {
           position: 'absolute', left: -28, top: '50%', transform: 'translateY(-50%) rotate(-90deg)',
           transformOrigin: 'center center',
           fontFamily: MONO, fontSize: 8, letterSpacing: '0.15em',
-          textTransform: 'uppercase', color: '#6E6B60', whiteSpace: 'nowrap',
+          textTransform: 'uppercase', color: 'var(--text3)', whiteSpace: 'nowrap',
         }}>
           More Agentic →
         </div>
@@ -230,11 +230,11 @@ export function MaturityLadder() {
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'flex-start' }}>
                 <div>
-                  <div style={{ fontFamily: MONO, fontSize: 8, color: '#6E6B60', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 2 }}>Use when</div>
+                  <div style={{ fontFamily: MONO, fontSize: 8, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 2 }}>Use when</div>
                   <div style={{ fontFamily: SERIF, fontSize: 12, color: '#A09C8E', lineHeight: 1.5 }}>{stage.trigger}</div>
                 </div>
                 <div style={{ flex: 1, minWidth: 180 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 8, color: '#6E6B60', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 2 }}>Production question</div>
+                  <div style={{ fontFamily: MONO, fontSize: 8, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 2 }}>Production question</div>
                   <div style={{ fontFamily: SERIF, fontSize: 12, color: '#C8C4B4', lineHeight: 1.5 }}>{stage.question}</div>
                 </div>
               </div>
@@ -245,7 +245,7 @@ export function MaturityLadder() {
 
       <div style={{
         marginTop: 12, fontFamily: MONO, fontSize: 10,
-        color: '#6E6B60', letterSpacing: '0.05em', textAlign: 'center',
+        color: 'var(--text3)', letterSpacing: '0.05em', textAlign: 'center',
       }}>
         Move up only when the current stage genuinely cannot handle the task's variability.
       </div>
@@ -303,7 +303,7 @@ export function AutonomyTradeoff() {
               {b.label}
             </div>
             <div style={{
-              fontFamily: SERIF, fontSize: 10, color: '#6E6B60',
+              fontFamily: SERIF, fontSize: 10, color: 'var(--text3)',
               lineHeight: 1.4, whiteSpace: 'pre-line',
             }}>
               {b.sub}
@@ -314,7 +314,7 @@ export function AutonomyTradeoff() {
 
       <div style={{
         marginTop: 14, display: 'flex', justifyContent: 'space-between',
-        fontFamily: MONO, fontSize: 9, color: '#6E6B60', letterSpacing: '0.08em',
+        fontFamily: MONO, fontSize: 9, color: 'var(--text3)', letterSpacing: '0.08em',
       }}>
         <span>← Safer / Less Useful</span>
         <span>More Useful / Higher Stakes →</span>
@@ -322,7 +322,7 @@ export function AutonomyTradeoff() {
 
       <div style={{
         marginTop: 10, fontFamily: MONO, fontSize: 10,
-        color: '#6E6B60', letterSpacing: '0.05em', textAlign: 'center',
+        color: 'var(--text3)', letterSpacing: '0.05em', textAlign: 'center',
       }}>
         Permissions, not personality, determine how dangerous a wrong step can be.
       </div>

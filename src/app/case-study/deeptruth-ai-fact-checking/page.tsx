@@ -1,6 +1,7 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -28,7 +29,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ padding: '16px 18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}25`, borderRadius: 8 }}>
       <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
   );
 }
@@ -116,10 +117,10 @@ export default function DeepTruthCaseStudy() {
         padding: '0 clamp(20px, 5vw, 80px)',
         height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
       }}>
-        <a href="/#projects" style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6E6B60', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Link href="/#projects" transitionTypes={['nav-back']} style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
           Portfolio
-        </a>
+        </Link>
         <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>DeepTruth</span>
         <div style={{ width: 80 }} />
       </header>
@@ -140,7 +141,7 @@ export default function DeepTruthCaseStudy() {
           <p style={{ fontFamily: SERIF, fontSize: 'clamp(15px,2vw,18px)', color: '#B8B4A4', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>
             AI-powered fact-checking for a noisy internet.
           </p>
-          <p style={{ fontFamily: SERIF, fontSize: 15, color: '#6E6B60', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
+          <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--text3)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
             A Rocket Hacks project combining Gemini AI, DistilBERT, Django REST, React, MongoDB, and a Chrome extension to help users evaluate online claims before they spread.
           </p>
 
@@ -249,7 +250,7 @@ export default function DeepTruthCaseStudy() {
                     <span style={{ fontFamily: MONO, fontSize: 10, color: method === 'POST' ? ACCENT : '#4B7BF5', background: method === 'POST' ? `${ACCENT}14` : 'rgba(75,123,245,0.12)', padding: '2px 8px', borderRadius: 3, flexShrink: 0, marginTop: 1 }}>{method}</span>
                     <div>
                       <code style={{ fontFamily: MONO, fontSize: 12, color: '#F2EDD8' }}>{path}</code>
-                      <p style={{ margin: '4px 0 0', fontSize: 12, color: '#6E6B60', lineHeight: 1.5 }}>{desc}</p>
+                      <p style={{ margin: '4px 0 0', fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{desc}</p>
                     </div>
                   </div>
                 ))}
@@ -303,7 +304,7 @@ export default function DeepTruthCaseStudy() {
               <p>
                 The system flows from user input through two interface layers, a REST API backend, AI inference, MongoDB storage, and back to a structured result.
               </p>
-              <div style={{ fontFamily: MONO, fontSize: 11, color: '#6E6B60', letterSpacing: '0.06em', textAlign: 'center', padding: '12px 0', marginBottom: 16 }}>
+              <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.06em', textAlign: 'center', padding: '12px 0', marginBottom: 16 }}>
                 User input → React app or Chrome extension → Django REST API → Gemini + DistilBERT → MongoDB → credibility result + reasoning + sources
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
@@ -359,7 +360,7 @@ export default function DeepTruthCaseStudy() {
 
               {/* Responsible framing callout */}
               <div style={{ padding: '20px 24px', background: 'rgba(242,237,216,0.03)', border: '1px solid rgba(242,237,216,0.1)', borderRadius: 10 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>Responsible framing</div>
+                <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>Responsible framing</div>
                 <p style={{ margin: '0 0 8px', fontSize: 14, color: '#B8B4A4', lineHeight: 1.6 }}>
                   DeepTruth should be read as an AI-assisted credibility platform, not an absolute truth detector.
                 </p>
@@ -401,7 +402,7 @@ export default function DeepTruthCaseStudy() {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <a href="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</a>
+                <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</Link>
                 <a href="https://github.com/TheChozenWon/DeepTruth.git" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>GitHub ↗</a>
                 <a href="https://youtu.be/whTYKriT5JU?si=M-0yUWXURhPrvy--" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid rgba(242,237,216,0.12)', color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Watch Demo ↗</a>
               </div>
@@ -411,13 +412,13 @@ export default function DeepTruthCaseStudy() {
 
           {/* ── Sticky section nav ── */}
           <nav style={{ position: 'sticky', top: 72, alignSelf: 'start' }}>
-            <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#6E6B60', marginBottom: 14 }}>On This Page</div>
+            <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
                 <button
                   key={id}
                   className="nav-link"
-                  style={{ color: active === id ? ACCENT : '#6E6B60', textAlign: 'left' }}
+                  style={{ color: active === id ? ACCENT : 'var(--text3)', textAlign: 'left' }}
                   onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   {SECTION_LABELS[i]}

@@ -39,6 +39,7 @@ export function ExpandableCard({
   const [active, setActive] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
   const cardRef = React.useRef<HTMLDivElement>(null);
+  const closeButtonRef = React.useRef<HTMLButtonElement>(null);
   const id = React.useId();
   const vtId = `vt${id.replace(/:/g, '')}`;
 
@@ -60,6 +61,7 @@ export function ExpandableCard({
   });
 
   React.useEffect(() => { setMounted(true); }, []);
+  React.useEffect(() => { if (active) closeButtonRef.current?.focus(); }, [active]);
 
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -78,7 +80,34 @@ export function ExpandableCard({
     };
   }, []);
 
-  const descClass = "text-[#6E6B60] text-xs uppercase tracking-wider";
+  const handleOpen = React.useCallback(() => {
+    if ('startViewTransition' in document) {
+      try {
+        const vt = (document as any).startViewTransition(() => { flushSync(() => setActive(true)); });
+        vt?.ready?.catch(() => {});
+        vt?.finished?.catch(() => {});
+      } catch { setActive(true); }
+    } else {
+      setActive(true);
+    }
+  }, []);
+
+  const handleModalKeyDown = (e: React.KeyboardEvent<Element>) => {
+    if (e.key !== 'Tab') return;
+    const focusable = cardRef.current?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusable || focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  };
+
+  const descClass = "text-[var(--text3)] text-xs uppercase tracking-wider";
   const titleStyle: React.CSSProperties = { fontFamily: "var(--font-chakra), 'Chakra Petch', sans-serif", fontWeight: 400 };
 
   React.useEffect(() => {
@@ -113,6 +142,10 @@ export function ExpandableCard({
               )}
               style={{ background: '#0F111A', border: '1px solid rgba(242,237,216,0.08)' }}
               {...props}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={`modal-title-${id}`}
+              onKeyDown={handleModalKeyDown}
             >
               {/* ── Fixed header: category label + title + close ── */}
               <div
@@ -126,15 +159,17 @@ export function ExpandableCard({
                     style={{ color: accentColor, marginBottom: 6 }}
                   >{description}</motion.p>
                   <motion.h3
+                    id={`modal-title-${id}`}
                     layoutId={`title-${title}-${id}`}
                     className="text-[#F2EDD8] leading-tight"
                     style={{ ...titleStyle, fontSize: 'clamp(20px,3vw,28px)', paddingBottom: '0.06em' }}
                   >{title}</motion.h3>
                 </div>
                 <motion.button
+                  ref={closeButtonRef}
                   aria-label="Close card"
                   layoutId={`button-${title}-${id}`}
-                  className="h-9 w-9 shrink-0 flex items-center justify-center rounded-full text-[#B8B4A4] hover:text-[#F2EDD8] transition-colors duration-300 focus:outline-none"
+                  className="h-9 w-9 shrink-0 flex items-center justify-center rounded-full text-[#B8B4A4] hover:text-[#F2EDD8] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-1 focus-visible:ring-offset-[#0F111A]"
                   style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', marginTop: 2 }}
                   onClick={() => closeCardFn.current()}
                 >
@@ -188,20 +223,11 @@ export function ExpandableCard({
 
       <motion.div
         role="button"
+        tabIndex={0}
         aria-label={`${title} — click to expand`}
         layoutId={`card-${title}-${id}`}
-        onClick={() => {
-          if ('startViewTransition' in document) {
-            try {
-              const vt = (document as any).startViewTransition(() => { flushSync(() => setActive(true)); });
-              vt?.ready?.catch(() => {});
-              vt?.finished?.catch(() => {});
-            }
-            catch { setActive(true); }
-          } else {
-            setActive(true);
-          }
-        }}
+        onClick={handleOpen}
+        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleOpen(); } }}
         style={{
           background: 'rgba(242,237,216,0.025)',
           borderTop: `2px solid ${accentColor}`,
@@ -256,6 +282,7 @@ export function ExpandableCard({
             </div>
             <motion.button
               aria-label="Open card"
+              tabIndex={-1}
               layoutId={`button-${title}-${id}`}
               data-magnetic=""
               style={{ height: 28, width: 28, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: '#1A1D2C', color: '#B8B4A4', border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer', outline: 'none' }}

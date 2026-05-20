@@ -1,6 +1,7 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -28,7 +29,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ padding: '16px 18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}25`, borderRadius: 8 }}>
       <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
   );
 }
@@ -116,10 +117,10 @@ export default function CamelCarCaseStudy() {
         padding: '0 clamp(20px, 5vw, 80px)',
         height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
       }}>
-        <a href="/#projects" style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6E6B60', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Link href="/#projects" transitionTypes={['nav-back']} style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
           Portfolio
-        </a>
+        </Link>
         <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Camel Car</span>
         <div style={{ width: 80 }} />
       </header>
@@ -139,7 +140,7 @@ export default function CamelCarCaseStudy() {
           <p style={{ fontFamily: SERIF, fontSize: 'clamp(15px,2vw,18px)', color: '#B8B4A4', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>
             Chemical propulsion. Pressure-triggered stop. No second chances.
           </p>
-          <p style={{ fontFamily: SERIF, fontSize: 15, color: '#6E6B60', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
+          <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--text3)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
             University of Toledo&apos;s Chem-E Car competition vehicle — CO₂-powered propulsion, H₂O₂ decomposition stopping, and Arduino-based pressure-threshold control. Competed at the 2025 AIChE Annual Student Conference in Boston against teams from across the globe.
           </p>
 
@@ -199,7 +200,7 @@ export default function CamelCarCaseStudy() {
                       <div style={{ fontFamily: SERIF, fontSize: 26, color: ACCENT, lineHeight: 1, flexShrink: 0, minWidth: 52 }}>{place}</div>
                       <div>
                         <div style={{ fontFamily: MONO, fontSize: 11, color: '#F2EDD8', letterSpacing: '0.04em', marginBottom: 4 }}>{label}</div>
-                        <div style={{ fontFamily: SERIF, fontSize: 12, color: '#6E6B60', lineHeight: 1.5 }}>{note}</div>
+                        <div style={{ fontFamily: SERIF, fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{note}</div>
                       </div>
                     </div>
                   ))}
@@ -330,7 +331,7 @@ if (pressure >= target_pressure_threshold) {
               </div>
 
               <div style={{ padding: '16px 20px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.07)', borderRadius: 8, marginBottom: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>Calibration workflow</div>
+                <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>Calibration workflow</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {[
                     'Run stopping reaction at several KI volumes — record pressure vs. time',
@@ -370,7 +371,7 @@ if (pressure >= target_pressure_threshold) {
                   </div>
                 ))}
               </div>
-              <p style={{ fontSize: 13, color: '#6E6B60' }}>
+              <p style={{ fontSize: 13, color: 'var(--text3)' }}>
                 Required PPE: lab coat, safety goggles, chemical-resistant gloves, closed-toe shoes, long pants, fume hood for preparation. All testing followed controlled procedures with a checklist.
               </p>
             </Section>
@@ -428,7 +429,7 @@ if (pressure >= target_pressure_threshold) {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <a href="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</a>
+                <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</Link>
               </div>
             </Section>
 
@@ -436,13 +437,13 @@ if (pressure >= target_pressure_threshold) {
 
           {/* ── Sticky section nav ── */}
           <nav style={{ position: 'sticky', top: 72, alignSelf: 'start' }}>
-            <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#6E6B60', marginBottom: 14 }}>On This Page</div>
+            <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
                 <button
                   key={id}
                   className="nav-link"
-                  style={{ color: active === id ? ACCENT : '#6E6B60', textAlign: 'left' }}
+                  style={{ color: active === id ? ACCENT : 'var(--text3)', textAlign: 'left' }}
                   onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   {SECTION_LABELS[i]}

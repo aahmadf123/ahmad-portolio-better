@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { ViewTransition } from 'react';
 import type { FieldNote } from '@/lib/field-notes';
 import { CATEGORY_CONFIG } from '@/lib/field-notes';
 
@@ -20,7 +21,7 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
   const accentColor = catCfg?.color ?? '#F0B429';
 
   return (
-    <Link href={`/field-notes/${note.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+    <Link href={`/field-notes/${note.slug}`} style={{ textDecoration: 'none', display: 'block' }} transitionTypes={['nav-forward']}>
       <article
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -36,18 +37,20 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
       >
         {/* Hero image */}
         {note.heroImage && (
-          <div style={{
-            width: '100%', height: 220, overflow: 'hidden',
-            background: '#06080E',
-            borderBottom: '1px solid rgba(242,237,216,0.06)',
-          }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={note.heroImage}
-              alt={note.title}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-          </div>
+          <ViewTransition name={`fn-img-${note.slug}`} share="morph">
+            <div style={{
+              width: '100%', height: 220, overflow: 'hidden',
+              background: '#06080E',
+              borderBottom: '1px solid rgba(242,237,216,0.06)',
+            }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={note.heroImage}
+                alt={note.title}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
+          </ViewTransition>
         )}
 
         <div style={{ padding: '20px 22px 24px' }}>
@@ -64,10 +67,10 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
                 {catCfg.label}
               </span>
             )}
-            <span style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', letterSpacing: '0.06em' }}>
+            <span style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', letterSpacing: '0.06em' }}>
               {formatDate(note.date)}
             </span>
-            <span style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', letterSpacing: '0.06em', marginLeft: 'auto' }}>
+            <span style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', letterSpacing: '0.06em', marginLeft: 'auto' }}>
               {note.readingTime} min read
             </span>
           </div>
@@ -98,7 +101,7 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
                   fontFamily: MONO, fontSize: 9, padding: '2px 7px',
                   background: 'rgba(242,237,216,0.04)',
                   border: '1px solid rgba(242,237,216,0.1)',
-                  borderRadius: 3, color: '#6E6B60',
+                  borderRadius: 3, color: 'var(--text3)',
                   letterSpacing: '0.04em',
                 }}>
                   {tag}

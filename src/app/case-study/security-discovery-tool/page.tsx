@@ -1,6 +1,7 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -28,7 +29,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ padding: '16px 18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}25`, borderRadius: 8 }}>
       <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
   );
 }
@@ -97,7 +98,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
         @media (max-width: 700px) { .three-col-sdt { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-sdt { grid-template-columns: 1fr; } }
         .entity-card { padding: 16px 18px; background: ${ACCENT}06; border: 1px solid ${ACCENT}18; border-radius: 8px; }
-        .entity-field { font-family: ${MONO}; font-size: 10px; color: #6E6B60; padding: '2px 0'; letter-spacing: 0.03em; }
+        .entity-field { font-family: ${MONO}; font-size: 10px; color: var(--text3); padding: '2px 0'; letter-spacing: 0.03em; }
         .entity-key { color: ${ACCENT}; }
         .principle-card { padding: 16px 18px; background: rgba(242,237,216,0.03); border: 1px solid rgba(242,237,216,0.07); border-radius: 8px; }
         .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.06); border-radius: 8px; align-items: flex-start; }
@@ -114,10 +115,10 @@ export default function SecurityDiscoveryToolCaseStudy() {
         padding: '0 clamp(20px, 5vw, 80px)',
         height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
       }}>
-        <a href="/#projects" style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6E6B60', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Link href="/#projects" transitionTypes={['nav-back']} style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
           Portfolio
-        </a>
+        </Link>
         <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Security Discovery Tool</span>
         <div style={{ width: 80 }} />
       </header>
@@ -368,7 +369,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <a href="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</a>
+                <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</Link>
               </div>
             </Section>
 
@@ -376,13 +377,13 @@ export default function SecurityDiscoveryToolCaseStudy() {
 
           {/* ── Sticky section nav ── */}
           <nav style={{ position: 'sticky', top: 72, alignSelf: 'start' }}>
-            <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#6E6B60', marginBottom: 14 }}>On This Page</div>
+            <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
                 <button
                   key={id}
                   className="nav-link"
-                  style={{ color: active === id ? ACCENT : '#6E6B60', textAlign: 'left' }}
+                  style={{ color: active === id ? ACCENT : 'var(--text3)', textAlign: 'left' }}
                   onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   {SECTION_LABELS[i]}

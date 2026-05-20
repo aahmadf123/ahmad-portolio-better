@@ -1,6 +1,7 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -28,7 +29,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ padding: '16px 18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}25`, borderRadius: 8 }}>
       <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 9, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
   );
 }
@@ -92,10 +93,10 @@ export default function DeepFlyerCaseStudy() {
         padding: '0 clamp(20px,4vw,52px)',
         transition: 'background 0.3s, border-color 0.3s',
       }}>
-        <a href="/#projects" style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none' }}>
+        <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none' }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="M12 5l-7 7 7 7" /></svg>
           Back to Portfolio
-        </a>
+        </Link>
         <span style={{ fontFamily: MONO, fontSize: 10, padding: '6px 14px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Prototype · Research Platform</span>
       </header>
 
@@ -138,7 +139,7 @@ export default function DeepFlyerCaseStudy() {
 
         {/* CTA */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, paddingBottom: 'clamp(48px,6vw,72px)', borderBottom: '1px solid rgba(242,237,216,0.07)' }}>
-          <a href="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</a>
+          <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</Link>
         </div>
       </div>
 
@@ -152,7 +153,7 @@ export default function DeepFlyerCaseStudy() {
               style={{
                 fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase',
                 padding: '14px 16px', background: 'transparent', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
-                color: active === id ? ACCENT : '#6E6B60',
+                color: active === id ? ACCENT : 'var(--text3)',
                 borderBottom: active === id ? `2px solid ${ACCENT}` : '2px solid transparent',
                 transition: 'color 0.2s, border-color 0.2s',
               }}
@@ -189,7 +190,7 @@ export default function DeepFlyerCaseStudy() {
                 { l: 'Hardware Target', v: 'Holybro S500 · Pixhawk 6C · ZED Mini' },
               ].map(({ l, v }) => (
                 <div key={l} style={{ display: 'flex', gap: 12, padding: '10px 0', borderBottom: '1px solid rgba(242,237,216,0.06)' }}>
-                  <span style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', flexShrink: 0, minWidth: 90 }}>{l}</span>
+                  <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.08em', flexShrink: 0, minWidth: 90 }}>{l}</span>
                   <span style={{ fontSize: 13, color: '#B8B4A4' }}>{v}</span>
                 </div>
               ))}
@@ -223,7 +224,7 @@ export default function DeepFlyerCaseStudy() {
             ].map(({ t, d }) => (
               <div key={t} style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 11, color: '#F2EDD8', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
-                <p style={{ fontSize: 13, lineHeight: 1.7, color: '#6E6B60' }}>{d}</p>
+                <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{d}</p>
               </div>
             ))}
           </div>
@@ -231,9 +232,9 @@ export default function DeepFlyerCaseStudy() {
           {/* DeepRacer vs DeepFlyer comparison */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="two-col-df">
             <div style={{ padding: '20px 22px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>AWS DeepRacer</div>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>AWS DeepRacer</div>
               {['2D track navigation', 'RC car (ground vehicle)', 'Fixed action space', '2D obstacle avoidance', 'Cloud training only', 'Pre-built course only'].map(p => (
-                <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, fontSize: 13, color: '#6E6B60' }}>
+                <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, fontSize: 13, color: 'var(--text3)' }}>
                   <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgba(242,237,216,0.2)', flexShrink: 0, display: 'inline-block' }} />{p}
                 </div>
               ))}
@@ -277,7 +278,7 @@ export default function DeepFlyerCaseStudy() {
               <div style={{ fontFamily: MONO, fontSize: 10, color: '#B8B4A4', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Course Type B — Obstacle Course</div>
               <p style={{ fontSize: 13, lineHeight: 1.7, color: '#B8B4A4', marginBottom: 10 }}>A straight path from start to finish with static obstacles requiring lateral maneuvering. Fixed altitude. Easier to compare across reward functions. Best for controlled benchmarking.</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
-                {['Static obstacles', 'Lateral maneuver', 'Fixed altitude', 'Benchmark-friendly', 'Used in Week 3'].map(t => <Tag key={t} color="#6E6B60">{t}</Tag>)}
+                {['Static obstacles', 'Lateral maneuver', 'Fixed altitude', 'Benchmark-friendly', 'Used in Week 3'].map(t => <Tag key={t} color="var(--text3)">{t}</Tag>)}
               </div>
             </div>
           </div>
@@ -314,7 +315,7 @@ export default function DeepFlyerCaseStudy() {
                 <span key={obs} style={{ fontFamily: MONO, fontSize: 10, padding: '4px 9px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(242,237,216,0.1)', borderRadius: 4, color: '#B8B4A4' }}>{obs}</span>
               ))}
             </div>
-            <p style={{ fontSize: 13, lineHeight: 1.7, color: '#6E6B60', marginTop: 12 }}>
+            <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)', marginTop: 12 }}>
               The observation space teaches students that RL agents don&apos;t learn from magic — they learn from state representations. Better observations consistently produce better policies.
             </p>
           </div>
@@ -354,7 +355,7 @@ export default function DeepFlyerCaseStudy() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 28 }}>
             {[
               {
-                week: 'Week 1', color: '#6E6B60',
+                week: 'Week 1', color: 'var(--text3)',
                 items: ['ROS 2 Humble + Gazebo Fortress installed and configured', 'Simulation startup performance validated', 'React frontend repo initialized with ESLint/Prettier', 'Gym + Stable-Baselines3 Docker environment', 'YAML reward-interface schema defined', 'CI builds passing'],
               },
               {
@@ -411,7 +412,7 @@ export default function DeepFlyerCaseStudy() {
             ].map(({ t, d }) => (
               <div key={t} style={{ padding: '18px 20px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 11, color: '#F2EDD8', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
-                <p style={{ fontSize: 13, lineHeight: 1.7, color: '#6E6B60' }}>{d}</p>
+                <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{d}</p>
               </div>
             ))}
           </div>
@@ -449,9 +450,9 @@ export default function DeepFlyerCaseStudy() {
             <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4', maxWidth: 520, margin: '0 auto 24px' }}>
               Reward design, PPO training, ROS 2 simulation, and a future path to real drone hardware — all accessible through a browser.
             </p>
-            <a href="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
+            <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
               ← Back to Portfolio
-            </a>
+            </Link>
           </div>
         </Section>
       </div>

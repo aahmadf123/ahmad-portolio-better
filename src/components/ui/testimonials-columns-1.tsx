@@ -46,7 +46,7 @@ export const TestimonialsColumn = (props: {
                   <img width={36} height={36} src={image} alt={name} style={{ width: 36, height: 36, borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(242,237,216,0.08)' }} />
                   <div>
                     <div style={{ fontSize: 13, fontWeight: 600, color: '#F2EDD8', lineHeight: 1.3 }}>{name}</div>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: '#6E6B60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 2 }}>{role}</div>
+                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 2 }}>{role}</div>
                   </div>
                 </div>
               </div>
