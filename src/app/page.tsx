@@ -335,7 +335,7 @@ function Experience() {
     },
     {
       r: 'Sports Analytics & Data Science Intern',
-      co: 'UToledo Athletics',
+      co: 'Toledo Athletics',
       p: 'Oct 2025 – Present',
       loc: 'Toledo, OH',
       t: 'Internship',
@@ -973,7 +973,7 @@ const affiliations = [
   { n: 'IEEE & AESS',        role: 'Member',                   color: '#2DD4C8', short: 'Institute of Electrical & Electronics Engineers / Aerospace & Electronic Systems Society', desc: 'Active member of IEEE and AESS. Engaged in technical communities around autonomous systems, AI safety, and engineering standards.', imgs: ['/Images/IEEE.jpg', '/Images/aess.jpg'],                                                                imgFit: 'contain', imgPos: 'center', ratio: '4/3'  },
   { n: 'AIChE / Chem-E Car', role: 'Team Member & Competitor', color: '#F07832', short: 'American Institute of Chemical Engineers — University of Toledo Chapter', desc: 'Competed on the UT AIChE Chem-E Car team. Contributed to Arduino-based automation integrating pressure sensors, load cells, and stopping algorithms. Won Most Innovative Car Design worldwide.', imgs: ['/Images/AIChE.jpg', '/Images/AIChE%20ChemECar_International.jpg'], imgFit: 'cover',   imgPos: 'center', ratio: '4/3'  },
   { n: 'Pi Sigma Epsilon',   role: 'Member',                   color: '#A78BFA', short: 'National Co-Educational Professional Fraternity — Sales, Marketing & Management', desc: 'Member of Pi Sigma Epsilon, the only national professional co-educational fraternity in sales, marketing, and management.', imgs: ['/Images/PSE_1.jpg', '/Images/PSE_2.jpg', '/Images/PSE_3.jpg'],                                                         imgFit: 'contain', imgPos: 'center', ratio: '3/4'  },
-  { n: 'UToledo Athletics',  role: 'Data Science Intern',      color: '#2DD4C8', short: 'University of Toledo Department of Athletics', desc: 'Embedded within UT Athletics as a Sports Analytics & Data Science Intern. Featured in official UToledo Rockets media for bridging technical modeling with direct communication to athletics leadership.', imgs: ['/Images/athletics_group_pics.png'],                                                                    imgFit: 'cover',   imgPos: 'top',    ratio: '16/9' },
+  { n: 'Toledo Athletics',    role: 'Data Science Intern',      color: '#2DD4C8', short: 'University of Toledo Department of Athletics', desc: 'Embedded within UT Athletics as a Sports Analytics & Data Science Intern. Featured in official UToledo Rockets media for bridging technical modeling with direct communication to athletics leadership.', imgs: ['/Images/Sport Analytics Intern Image 2026.jpg', '/Images/athletics_group_pics.png'],                              imgFit: 'cover',   imgPos: 'top',    ratio: '16/9' },
 ];
 
 // ── Skill Group Card (progressive disclosure) ──
