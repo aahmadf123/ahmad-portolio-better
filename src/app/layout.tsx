@@ -4,6 +4,7 @@ import { ViewTransition } from "react";
 import "./globals.css";
 import { MagneticCursor } from "@/components/ui/magnetic-cursor";
 import { PostHogProvider } from "@/components/PostHogProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 const chakraPetch = Chakra_Petch({
   subsets: ["latin"],
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         </PostHogProvider>
+        <Analytics />
       </body>
     </html>
   );
