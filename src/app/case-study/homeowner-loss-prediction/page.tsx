@@ -192,7 +192,7 @@ export default function HomeownerLossCaseStudy() {
             <button key={s.id}
               onClick={() => document.getElementById(s.id)?.scrollIntoView({ behavior: 'smooth' })}
               style={{
-                padding: '14px 16px', background: 'none', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
+                padding: '14px 16px', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
                 fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
                 color: active === s.id ? ACCENT : 'var(--text3)',
                 borderBottom: active === s.id ? `2px solid ${ACCENT}` : '2px solid transparent',
