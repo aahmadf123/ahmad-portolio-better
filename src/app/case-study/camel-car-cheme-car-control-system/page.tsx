@@ -118,6 +118,28 @@ export default function CamelCarCaseStudy() {
         .reaction-box { padding: 14px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.08); border-radius: 8px; font-family: ${MONO}; font-size: 12px; color: #B8B4A4; line-height: 1.7; }
         .reaction-box .eq { color: ${ACCENT}; }
         code { font-family: ${MONO}; font-size: 11px; background: ${ACCENT}12; border: 1px solid ${ACCENT}25; padding: 2px 5px; border-radius: 4px; color: #F2EDD8; }
+        .cs-grid-container {
+          display: grid;
+          grid-template-columns: 1fr 200px;
+          gap: 48px;
+          align-items: start;
+          max-width: 1060px;
+          margin: 0 auto;
+        }
+        .cs-sidebar-nav {
+          position: sticky;
+          top: 72px;
+          align-self: start;
+        }
+        @media (max-width: 900px) {
+          .cs-grid-container {
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
+          .cs-sidebar-nav {
+            display: none;
+          }
+        }
       `}</style>
 
       {/* ── Sticky header ── */}
@@ -176,7 +198,7 @@ export default function CamelCarCaseStudy() {
 
       {/* ── Body ── */}
       <div style={{ padding: '0 clamp(20px,5vw,80px)', maxWidth: 860 + 160, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 200px', gap: 48, alignItems: 'start', maxWidth: 1060, margin: '0 auto' }}>
+        <div className="cs-grid-container">
 
           {/* Content column */}
           <div className="cs-body">
@@ -449,7 +471,7 @@ if (pressure >= target_pressure_threshold) {
           </div>
 
           {/* ── Sticky section nav ── */}
-          <nav style={{ position: 'sticky', top: 72, alignSelf: 'start' }}>
+          <nav className="cs-sidebar-nav">
             <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (

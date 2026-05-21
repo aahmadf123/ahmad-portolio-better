@@ -127,6 +127,7 @@ function Hero() {
       <div style={{
         flex: 1,
         display: 'flex',
+        flexWrap: 'wrap',
         position: 'relative',
         zIndex: 1,
         opacity: rdy ? 1 : 0,
@@ -209,9 +210,10 @@ function Hero() {
         @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
         @keyframes pulse-a { 0%{box-shadow:0 0 0 0 rgba(45,212,200,0.5)} 70%{box-shadow:0 0 0 7px rgba(45,212,200,0)} 100%{box-shadow:0 0 0 0 rgba(45,212,200,0)} }
         @media (max-width: 960px) {
+          #hero > div { flex-direction: column !important; }
           #hero .hero-left { flex: none !important; width: 100% !important; }
           #hero .hero-right { flex: none !important; width: 100% !important; border-left: none !important; border-top: 1px solid rgba(240,180,41,0.08) !important; }
-          #hero .hero-right img { max-height: 44vw !important; min-height: 180px; }
+          #hero .hero-right img { max-height: 440px !important; min-height: 180px; width: 100% !important; object-fit: cover !important; }
         }
         @media (max-width: 600px) {
           #hero .hero-left h1 { font-size: clamp(48px,13vw,80px) !important; }
@@ -269,7 +271,7 @@ function About() {
   return (
     <Section id="about">
       <SH n="01" label="About" color="var(--blue)" />
-      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 48 }}>
+      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 48 }}>
         <div>
           <h2 style={{ fontFamily: SERIF, fontSize: 32, fontWeight: 400, lineHeight: 1.25, letterSpacing: '-0.02em', color: '#F2EDD8', paddingBottom: '0.08em' }}>
             Chasing the gap between what AI can do in a lab and what it actually does when someone&apos;s counting on it.
@@ -1291,7 +1293,7 @@ function Contact() {
             <div style={{ marginTop: 52, paddingTop: 24, borderTop: '1px solid rgba(242,237,216,0.05)', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
               <span style={{ fontFamily: MONO, fontSize: 9, color: '#3A3830', letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 4 }}>Open to</span>
               {['AI Research', 'ML Engineering', 'Data Science', 'Robotics & Autonomy', 'Computer Vision', 'Sports Analytics', 'Full-Time Roles', 'Research Collab'].map(t => (
-                <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '3px 8px', border: '1px solid rgba(242,237,216,0.06)', borderRadius: 3, color: '#3E3B32', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{t}</span>
+                <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '3px 8px', border: '1px solid rgba(242,237,216,0.06)', borderRadius: 3, color: '#3E3B32', letterSpacing: '0.04em', textTransform: 'uppercase', wordBreak: 'break-word' }}>{t}</span>
               ))}
             </div>
           </div>

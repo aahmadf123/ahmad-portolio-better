@@ -118,6 +118,28 @@ export default function DeepTruthCaseStudy() {
         .weight-bar { display: flex; border-radius: 6px; overflow: hidden; height: 32px; margin-bottom: 12px; }
         .weight-bar .gemini { display: flex; align-items: center; justify-content: center; width: 70%; background: ${ACCENT}22; border: 1px solid ${ACCENT}40; font-family: ${MONO}; font-size: 10px; color: ${ACCENT}; letter-spacing: 0.06em; }
         .weight-bar .distil { display: flex; align-items: center; justify-content: center; width: 30%; background: rgba(75,123,245,0.15); border: 1px solid rgba(75,123,245,0.3); border-left: none; font-family: ${MONO}; font-size: 10px; color: #4B7BF5; letter-spacing: 0.06em; }
+        .cs-grid-container {
+          display: grid;
+          grid-template-columns: 1fr 200px;
+          gap: 48px;
+          align-items: start;
+          max-width: 1060px;
+          margin: 0 auto;
+        }
+        .cs-sidebar-nav {
+          position: sticky;
+          top: 72px;
+          align-self: start;
+        }
+        @media (max-width: 900px) {
+          .cs-grid-container {
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
+          .cs-sidebar-nav {
+            display: none;
+          }
+        }
       `}</style>
 
       {/* ── Sticky header ── */}
@@ -177,7 +199,7 @@ export default function DeepTruthCaseStudy() {
 
       {/* ── Body ── */}
       <div style={{ padding: '0 clamp(20px,5vw,80px)', maxWidth: 860 + 160, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 200px', gap: 48, alignItems: 'start', maxWidth: 1060, margin: '0 auto' }}>
+        <div className="cs-grid-container">
 
           {/* Content column */}
           <div className="cs-body">
@@ -424,7 +446,7 @@ export default function DeepTruthCaseStudy() {
           </div>
 
           {/* ── Sticky section nav ── */}
-          <nav style={{ position: 'sticky', top: 72, alignSelf: 'start' }}>
+          <nav className="cs-sidebar-nav">
             <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
