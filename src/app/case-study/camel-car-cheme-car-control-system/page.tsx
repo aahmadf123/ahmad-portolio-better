@@ -3,14 +3,23 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
+import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
 const ACCENT = '#F07832';
 
-function Tag({ children, color = ACCENT }: { children: React.ReactNode; color?: string }) {
+const PALETTE = ['#F0B429','#4B7BF5','#2DD4C8','#F07832','#A78BFA','#F472B6','#0EA5E9','#22C55E','#EF4444'];
+function pickColor(text: string) {
+  let h = 0;
+  for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
+  return PALETTE[h % PALETTE.length];
+}
+
+function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
+  const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${color}14`, border: `1px solid ${color}30`, borderRadius: 3, color, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 3, color: c, letterSpacing: '0.03em' }}>
       {children}
     </span>
   );
@@ -27,7 +36,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function Metric({ value, label }: { value: string; label: string }) {
   return (
-    <div style={{ padding: '16px 18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}25`, borderRadius: 8 }}>
+    <div style={{ padding: '16px 18px', background: `linear-gradient(180deg, ${ACCENT}0d, ${ACCENT}04)`, border: `1px solid ${ACCENT}35`, boxShadow: `0 4px 20px ${ACCENT}05`, borderRadius: 8 }}>
       <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
       <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
@@ -41,9 +50,9 @@ function LayerRow({ n, title, items, color = ACCENT }: { n: string; title: strin
       <div style={{ flex: 1 }}>
         <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
-          {items.map(item => (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: '#B8B4A4', padding: '2px 7px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 3 }}>{item}</span>
-          ))}
+          {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
+            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 3 }}>{item}</span>
+          ); })}
         </div>
       </div>
     </div>
@@ -88,6 +97,7 @@ export default function CamelCarCaseStudy() {
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
+        .cs-body li::marker { color: ${ACCENT}; }
         .cs-h2 { font-family: ${SERIF}; font-size: clamp(22px, 3vw, 30px); color: #F2EDD8; font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
         .metrics-grid-cc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
@@ -97,14 +107,17 @@ export default function CamelCarCaseStudy() {
         .three-col-cc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-cc { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-cc { grid-template-columns: 1fr; } }
-        .info-card { padding: 16px 18px; background: rgba(242,237,216,0.03); border: 1px solid rgba(242,237,216,0.07); border-radius: 8px; }
-        .accent-card { padding: 16px 18px; background: ${ACCENT}06; border: 1px solid ${ACCENT}18; border-radius: 8px; }
+        .info-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.07); border-left: 2px solid ${ACCENT}50; border-radius: 8px; transition: all 0.2s ease; }
+        .info-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
+        .accent-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-left: 2px solid ${ACCENT}90; border-radius: 8px; transition: all 0.2s ease; }
+        .accent-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
         .award-banner { padding: 20px 24px; background: ${ACCENT}10; border: 1px solid ${ACCENT}35; border-radius: 10px; margin-bottom: 32px; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.06); border-radius: 8px; align-items: flex-start; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.06); border-left: 2px solid ${ACCENT}30; border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
         .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
         .reaction-box { padding: 14px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.08); border-radius: 8px; font-family: ${MONO}; font-size: 12px; color: #B8B4A4; line-height: 1.7; }
         .reaction-box .eq { color: ${ACCENT}; }
-        code { font-family: ${MONO}; font-size: 12px; background: rgba(242,237,216,0.06); padding: 1px 5px; border-radius: 3px; color: #F2EDD8; }
+        code { font-family: ${MONO}; font-size: 11px; background: ${ACCENT}12; border: 1px solid ${ACCENT}25; padding: 2px 5px; border-radius: 4px; color: #F2EDD8; }
       `}</style>
 
       {/* ── Sticky header ── */}
@@ -112,7 +125,7 @@ export default function CamelCarCaseStudy() {
         position: 'sticky', top: 0, zIndex: 100,
         background: scrolled ? 'rgba(9,11,18,0.95)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(242,237,216,0.06)' : '1px solid transparent',
+        borderBottom: scrolled ? `1px solid ${ACCENT}35` : '1px solid transparent',
         transition: 'background 0.3s, border-color 0.3s',
         padding: '0 clamp(20px, 5vw, 80px)',
         height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
@@ -134,7 +147,7 @@ export default function CamelCarCaseStudy() {
             <Tag>AIChE 2025</Tag>
             <Tag>University of Toledo</Tag>
           </div>
-          <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(32px,5vw,56px)', color: '#F2EDD8', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em' }}>
+          <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(32px,5vw,56px)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, #F2EDD8 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
             Camel Car
           </h1>
           <p style={{ fontFamily: SERIF, fontSize: 'clamp(15px,2vw,18px)', color: '#B8B4A4', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>
@@ -443,7 +456,7 @@ if (pressure >= target_pressure_threshold) {
                 <button
                   key={id}
                   className="nav-link"
-                  style={{ color: active === id ? ACCENT : 'var(--text3)', textAlign: 'left' }}
+                  style={{ color: active === id ? ACCENT : 'var(--text3)', textAlign: 'left', borderLeft: `2px solid ${active === id ? ACCENT : 'transparent'}`, paddingLeft: active === id ? 12 : 6, background: active === id ? `${ACCENT}0d` : 'transparent', borderRadius: '0 4px 4px 0', transition: 'all 0.2s ease', display: 'block', width: '100%' }}
                   onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   {SECTION_LABELS[i]}

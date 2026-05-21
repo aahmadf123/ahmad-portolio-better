@@ -2,14 +2,23 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 const ACCENT = '#F0B429';
 
-function Tag({ children, color = ACCENT }: { children: React.ReactNode; color?: string }) {
+const PALETTE = ['#F0B429','#4B7BF5','#2DD4C8','#F07832','#A78BFA','#F472B6','#0EA5E9','#22C55E','#EF4444'];
+function pickColor(text: string) {
+  let h = 0;
+  for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
+  return PALETTE[h % PALETTE.length];
+}
+
+function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
+  const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${color}14`, border: `1px solid ${color}30`, borderRadius: 3, color, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 3, color: c, letterSpacing: '0.03em' }}>
       {children}
     </span>
   );
@@ -26,7 +35,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function Metric({ value, label }: { value: string; label: string }) {
   return (
-    <div style={{ padding: '16px 18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}25`, borderRadius: 8 }}>
+    <div style={{ padding: '16px 18px', background: `linear-gradient(180deg, ${ACCENT}0d, ${ACCENT}04)`, border: `1px solid ${ACCENT}35`, boxShadow: `0 4px 20px ${ACCENT}05`, borderRadius: 8 }}>
       <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
       <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
@@ -40,9 +49,9 @@ function ArchLayer({ n, title, items }: { n: string; title: string; items: strin
       <div style={{ flex: 1 }}>
         <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
-          {items.map(item => (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: '#B8B4A4', padding: '2px 7px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 3 }}>{item}</span>
-          ))}
+          {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
+            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 3 }}>{item}</span>
+          ); })}
         </div>
       </div>
     </div>
@@ -93,7 +102,7 @@ export default function UAVCaseStudy() {
       {/* ── Sticky header ── */}
       <header style={{
         position: 'sticky', top: 0, zIndex: 100, height: 56,
-        borderBottom: scrolled ? '1px solid rgba(242,237,216,0.07)' : '1px solid transparent',
+        borderBottom: scrolled ? `1px solid ${ACCENT}35` : '1px solid transparent',
         background: scrolled ? 'rgba(11,13,20,0.95)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -220,7 +229,7 @@ export default function UAVCaseStudy() {
               { t: 'Sim-to-Reality Gap', d: 'Deep RL policies can achieve near-perfect simulation scores while failing entirely when facing real-world sensor noise and dynamics.' },
               { t: 'No Safe Failure Mode', d: 'When constraints are violated, most autonomy stacks have no principled fallback — leading to unpredictable or catastrophic failure.' },
             ].map(({ t, d }) => (
-              <div key={t} style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
+              <div key={t} style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.07)', borderLeft: `2px solid ${ACCENT}50`, borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 11, color: '#F2EDD8', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{d}</p>
               </div>
@@ -314,7 +323,7 @@ export default function UAVCaseStudy() {
               { v: '1000+', l: 'Randomized environments used for meta-learning training' },
               { v: '13%', l: 'Simulation-to-reality transfer gap in reported validation' },
             ].map(({ v, l }) => (
-              <div key={l} style={{ padding: '16px 18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}25`, borderRadius: 8 }}>
+              <div key={l} style={{ padding: '16px 18px', background: `linear-gradient(180deg, ${ACCENT}0d, ${ACCENT}04)`, border: `1px solid ${ACCENT}35`, boxShadow: `0 4px 20px ${ACCENT}05`, borderRadius: 8 }}>
                 <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em', marginBottom: 8 }}>{v}</div>
                 <p style={{ fontSize: 12, lineHeight: 1.6, color: '#B8B4A4' }}>{l}</p>
               </div>

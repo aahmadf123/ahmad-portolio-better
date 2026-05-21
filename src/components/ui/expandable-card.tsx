@@ -4,6 +4,7 @@ import * as React from "react";
 import { createPortal, flushSync } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { resolveSkillColor } from "@/lib/skill-colors";
 
 interface ExpandableCardProps {
   title: string;
@@ -42,6 +43,7 @@ export function ExpandableCard({
   const closeButtonRef = React.useRef<HTMLButtonElement>(null);
   const id = React.useId();
   const vtId = `vt${id.replace(/:/g, '')}`;
+  const bodyId = `ecmb${id.replace(/:/g, '')}`;
 
   // Stable ref so click-outside effect always calls the latest version
   const closeCardFn = React.useRef(() => setActive(false));
@@ -197,7 +199,8 @@ export function ExpandableCard({
                 </div>
 
                 {/* Content */}
-                <div style={{ padding: '24px 28px 32px' }}>
+                <div className={bodyId} style={{ padding: '24px 28px 32px' }}>
+                  <style>{`.${bodyId} h4:nth-of-type(6n+1){color:${accentColor}!important}.${bodyId} h4:nth-of-type(6n+2){color:#4B7BF5!important}.${bodyId} h4:nth-of-type(6n+3){color:#2DD4C8!important}.${bodyId} h4:nth-of-type(6n+4){color:#F07832!important}.${bodyId} h4:nth-of-type(6n+5){color:#A78BFA!important}.${bodyId} h4:nth-of-type(6n+6){color:#22C55E!important}`}</style>
                   <motion.div
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -229,11 +232,11 @@ export function ExpandableCard({
         onClick={handleOpen}
         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleOpen(); } }}
         style={{
-          background: 'rgba(242,237,216,0.025)',
+          background: `${accentColor}0d`,
           borderTop: `2px solid ${accentColor}`,
-          borderRight: `1px solid rgba(242,237,216,0.08)`,
-          borderBottom: `1px solid rgba(242,237,216,0.08)`,
-          borderLeft: `1px solid rgba(242,237,216,0.08)`,
+          borderRight: `1px solid ${accentColor}28`,
+          borderBottom: `1px solid ${accentColor}28`,
+          borderLeft: `1px solid ${accentColor}28`,
           borderRadius: 10,
           overflow: 'hidden',
           cursor: 'pointer',
@@ -249,17 +252,17 @@ export function ExpandableCard({
         }}
         onMouseEnter={e => {
           const el = e.currentTarget as HTMLElement;
-          el.style.background = `${accentColor}12`;
-          el.style.borderRight = `1px solid ${accentColor}44`;
-          el.style.borderBottom = `1px solid ${accentColor}44`;
-          el.style.borderLeft = `1px solid ${accentColor}44`;
+          el.style.background = `${accentColor}1e`;
+          el.style.borderRight = `1px solid ${accentColor}60`;
+          el.style.borderBottom = `1px solid ${accentColor}60`;
+          el.style.borderLeft = `1px solid ${accentColor}60`;
         }}
         onMouseLeave={e => {
           const el = e.currentTarget as HTMLElement;
-          el.style.background = 'rgba(242,237,216,0.025)';
-          el.style.borderRight = '1px solid rgba(242,237,216,0.08)';
-          el.style.borderBottom = '1px solid rgba(242,237,216,0.08)';
-          el.style.borderLeft = '1px solid rgba(242,237,216,0.08)';
+          el.style.background = `${accentColor}0d`;
+          el.style.borderRight = `1px solid ${accentColor}28`;
+          el.style.borderBottom = `1px solid ${accentColor}28`;
+          el.style.borderLeft = `1px solid ${accentColor}28`;
         }}
         className={cn('card-project', className)}
       >
@@ -301,18 +304,18 @@ export function ExpandableCard({
 
           {thumbnailTags && thumbnailTags.length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 6 }}>
-              {thumbnailTags.map(tag => (
+              {thumbnailTags.map(tag => { const tc = resolveSkillColor(tag) ?? accentColor; return (
                 <span key={tag} style={{
                   fontFamily: "var(--font-mono), 'JetBrains Mono', monospace",
                   fontSize: 10,
                   padding: '3px 7px',
-                  background: `${accentColor}12`,
-                  border: `1px solid ${accentColor}30`,
+                  background: `${tc}14`,
+                  border: `1px solid ${tc}33`,
                   borderRadius: 3,
-                  color: accentColor,
+                  color: tc,
                   letterSpacing: '0.02em',
                 }}>{tag}</span>
-              ))}
+              ); })}
             </div>
           )}
         </div>

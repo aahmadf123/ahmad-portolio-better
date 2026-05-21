@@ -3,15 +3,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
+import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 const SANS  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const ACCENT = '#A78BFA';
 
-function Tag({ color = ACCENT, children }: { color?: string; children: React.ReactNode }) {
+const PALETTE = ['#F0B429','#4B7BF5','#2DD4C8','#F07832','#A78BFA','#F472B6','#0EA5E9','#22C55E','#EF4444'];
+function pickColor(text: string) {
+  let h = 0;
+  for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
+  return PALETTE[h % PALETTE.length];
+}
+
+function Tag({ color, children }: { color?: string; children: React.ReactNode }) {
+  const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? ACCENT) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${color}14`, border: `1px solid ${color}33`, borderRadius: 4, color, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}33`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
       {children}
     </span>
   );
@@ -28,7 +37,7 @@ function SectionLabel({ label }: { label: string }) {
 
 function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
   return (
-    <div style={{ padding: '18px 20px', background: `${color}08`, border: `1px solid ${color}28`, borderRadius: 8 }}>
+    <div style={{ padding: '18px 20px', background: `linear-gradient(180deg, ${color}0d, ${color}04)`, border: `1px solid ${color}35`, boxShadow: `0 4px 20px ${color}05`, borderRadius: 8 }}>
       <div style={{ fontFamily: SERIF, fontSize: 32, fontWeight: 400, color: '#F2EDD8', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
       <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 8 }}>{label}</div>
     </div>
@@ -101,13 +110,16 @@ export default function HomeownerLossCaseStudy() {
 
   return (
     <div style={{ background: '#0B0D14', minHeight: '100vh', color: '#B8B4A4' }}>
+      <style>{`
+        li::marker { color: ${ACCENT}; }
+      `}</style>
 
       {/* ── Sticky top bar ── */}
       <header style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         background: scrolled ? 'rgba(11,13,20,0.95)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(167,139,250,0.1)' : '1px solid transparent',
+        borderBottom: scrolled ? `1px solid ${ACCENT}35` : '1px solid transparent',
         transition: 'all 0.3s ease',
         padding: '0 clamp(20px,4vw,52px)',
         height: 56,
@@ -184,7 +196,8 @@ export default function HomeownerLossCaseStudy() {
                 fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
                 color: active === s.id ? ACCENT : 'var(--text3)',
                 borderBottom: active === s.id ? `2px solid ${ACCENT}` : '2px solid transparent',
-                transition: 'color 0.2s, border-color 0.2s',
+                background: active === s.id ? `${ACCENT}0d` : 'transparent',
+                transition: 'all 0.2s ease',
               }}
             >{s.label}</button>
           ))}

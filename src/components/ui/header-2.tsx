@@ -105,6 +105,24 @@ export function Header({ links }: { links?: HeaderLink[] }) {
           left: 50%;
           transform: translateX(-50%);
         }
+        .nav-link[href="#about"].active { color: var(--blue); }
+        .nav-link[href="#about"].active::after { background: var(--blue); }
+        .nav-link[href="#experience"].active { color: var(--purple); }
+        .nav-link[href="#experience"].active::after { background: var(--purple); }
+        .nav-link[href="#projects"].active { color: var(--orange); }
+        .nav-link[href="#projects"].active::after { background: var(--orange); }
+        .nav-link[href="#field-notes"].active { color: var(--amber); }
+        .nav-link[href="#field-notes"].active::after { background: var(--amber); }
+        .nav-link[href="#research"].active { color: var(--blue); }
+        .nav-link[href="#research"].active::after { background: var(--blue); }
+        .nav-link[href="#skills"].active { color: var(--pink); }
+        .nav-link[href="#skills"].active::after { background: var(--pink); }
+        .nav-link[href="#featured-in"].active { color: var(--teal); }
+        .nav-link[href="#featured-in"].active::after { background: var(--teal); }
+        .nav-link[href="#now"].active { color: var(--teal); }
+        .nav-link[href="#now"].active::after { background: var(--teal); }
+        .nav-link[href="#contact"].active { color: var(--sky); }
+        .nav-link[href="#contact"].active::after { background: var(--sky); }
         .resume-btn {
           font-family: ${MONO};
           font-size: 10px;
@@ -148,6 +166,15 @@ export function Header({ links }: { links?: HeaderLink[] }) {
         .mobile-link.active {
           color: #F0B429;
         }
+        .mobile-link[href="#about"].active { color: var(--blue); }
+        .mobile-link[href="#experience"].active { color: var(--purple); }
+        .mobile-link[href="#projects"].active { color: var(--orange); }
+        .mobile-link[href="#field-notes"].active { color: var(--amber); }
+        .mobile-link[href="#research"].active { color: var(--blue); }
+        .mobile-link[href="#skills"].active { color: var(--pink); }
+        .mobile-link[href="#featured-in"].active { color: var(--teal); }
+        .mobile-link[href="#now"].active { color: var(--teal); }
+        .mobile-link[href="#contact"].active { color: var(--sky); }
         .mobile-link:hover {
           color: #F2EDD8;
         }

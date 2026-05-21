@@ -42,7 +42,7 @@ export default function FieldNotesPage() {
         </Link>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: 2, background: '#F0B429', boxShadow: '0 0 8px rgba(240,180,41,0.6)' }} />
+          <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: 2, background: '#4B7BF5', boxShadow: '0 0 8px rgba(75,123,245,0.6)' }} />
           <span style={{ fontFamily: MONO, fontSize: 11, color: '#F2EDD8', letterSpacing: '0.08em' }}>
             Field Notes
           </span>
@@ -63,7 +63,7 @@ export default function FieldNotesPage() {
         <div aria-hidden style={{
           position: 'absolute', top: 0, right: -20,
           fontFamily: SERIF, fontSize: 'clamp(180px,25vw,320px)',
-          fontWeight: 400, color: '#F0B429', opacity: 0.025,
+          fontWeight: 400, color: '#4B7BF5', opacity: 0.025,
           lineHeight: 1, userSelect: 'none', pointerEvents: 'none',
           letterSpacing: '-0.05em', zIndex: 0,
         }}>
@@ -72,8 +72,8 @@ export default function FieldNotesPage() {
 
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-            <span style={{ display: 'inline-block', width: 28, height: 1.5, background: '#F0B429', opacity: 0.6 }} />
-            <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#F0B429' }}>
+            <span style={{ display: 'inline-block', width: 28, height: 1.5, background: 'linear-gradient(90deg, #4B7BF5, #F472B6)', opacity: 0.8 }} />
+            <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#4B7BF5' }}>
               Field Notes
             </span>
           </div>
@@ -85,7 +85,12 @@ export default function FieldNotesPage() {
             marginBottom: 24, paddingBottom: '0.04em',
           }}>
             Essays from<br />
-            <span style={{ color: '#F0B429' }}>the frontier.</span>
+            <span style={{
+              background: 'linear-gradient(135deg, #4B7BF5, #F472B6)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              display: 'inline-block'
+            }}>the frontier.</span>
           </h1>
 
           <p style={{
@@ -102,8 +107,8 @@ export default function FieldNotesPage() {
       {published.length > 0 && (
         <div style={{ padding: '0 clamp(20px,4vw,52px) 80px', maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
-            <span style={{ display: 'inline-block', width: 22, height: 1.5, background: '#F0B429', opacity: 0.5 }} />
-            <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#F0B429' }}>
+            <span style={{ display: 'inline-block', width: 22, height: 1.5, background: '#4B7BF5', opacity: 0.8 }} />
+            <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4B7BF5' }}>
               Published
             </span>
           </div>

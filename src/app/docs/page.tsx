@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
-const AMBER = '#F0B429';
+const ACCENT = '#2DD4C8';
 
 const DOCS = [
   {
@@ -43,7 +43,7 @@ export default function DocsPage() {
         background: 'var(--background)',
         color: 'var(--foreground)',
         fontFamily: MONO,
-        backgroundImage: 'radial-gradient(circle, rgba(240,180,41,0.04) 1px, transparent 1px)',
+        backgroundImage: 'radial-gradient(circle, rgba(45,212,200,0.04) 1px, transparent 1px)',
         backgroundSize: '28px 48px',
         backgroundPosition: '14px 24px',
       }}
@@ -71,7 +71,7 @@ export default function DocsPage() {
             marginBottom: 56,
             transition: 'color 0.2s ease',
           }}
-          onMouseEnter={e => (e.currentTarget.style.color = AMBER)}
+          onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
           onMouseLeave={e => (e.currentTarget.style.color = 'var(--text2)')}
         >
           <span style={{ fontSize: 13 }}>←</span>&nbsp;Portfolio
@@ -88,7 +88,7 @@ export default function DocsPage() {
               fontFamily: SERIF,
               fontSize: 'clamp(72px, 11vw, 120px)',
               fontWeight: 400,
-              color: 'rgba(240,180,41,0.04)',
+              color: 'rgba(45,212,200,0.04)',
               lineHeight: 1,
               userSelect: 'none',
               pointerEvents: 'none',
@@ -103,7 +103,7 @@ export default function DocsPage() {
                 display: 'inline-block',
                 width: 22,
                 height: 1.5,
-                background: AMBER,
+                background: ACCENT,
                 opacity: 0.5,
                 flexShrink: 0,
               }}
@@ -114,7 +114,7 @@ export default function DocsPage() {
                 fontSize: 10,
                 letterSpacing: '0.12em',
                 textTransform: 'uppercase',
-                color: AMBER,
+                color: ACCENT,
               }}
             >
               Documents
@@ -163,13 +163,13 @@ export default function DocsPage() {
                   letterSpacing: '0.1em',
                   textTransform: 'uppercase',
                   padding: '9px 20px',
-                  border: `1px solid ${isActive ? 'rgba(240,180,41,0.5)' : 'rgba(242,237,216,0.1)'}`,
+                  border: `1px solid ${isActive ? 'rgba(45,212,200,0.5)' : 'rgba(242,237,216,0.1)'}`,
                   borderRadius: 4,
-                  background: isActive ? 'rgba(240,180,41,0.08)' : 'rgba(242,237,216,0.02)',
+                  background: isActive ? 'rgba(45,212,200,0.08)' : 'rgba(242,237,216,0.02)',
                   color: !doc.available
                     ? 'rgba(184,180,164,0.3)'
                     : isActive
-                    ? AMBER
+                    ? ACCENT
                     : 'var(--text2)',
                   cursor: doc.available ? 'pointer' : 'not-allowed',
                   transition: 'all 0.2s ease',
@@ -300,21 +300,21 @@ export default function DocsPage() {
                       textTransform: 'uppercase',
                       color: '#F2EDD8',
                       padding: '5px 14px',
-                      border: '1px solid rgba(240,180,41,0.4)',
+                      border: '1px solid rgba(45,212,200,0.4)',
                       borderRadius: 3,
-                      background: 'rgba(240,180,41,0.08)',
+                      background: 'rgba(45,212,200,0.08)',
                       textDecoration: 'none',
                       transition: 'all 0.2s ease',
                       whiteSpace: 'nowrap',
                     }}
                     onMouseEnter={e => {
-                      e.currentTarget.style.background = 'rgba(240,180,41,0.18)';
-                      e.currentTarget.style.borderColor = 'rgba(240,180,41,0.65)';
-                      e.currentTarget.style.color = AMBER;
+                      e.currentTarget.style.background = 'rgba(45,212,200,0.18)';
+                      e.currentTarget.style.borderColor = 'rgba(45,212,200,0.65)';
+                      e.currentTarget.style.color = ACCENT;
                     }}
                     onMouseLeave={e => {
-                      e.currentTarget.style.background = 'rgba(240,180,41,0.08)';
-                      e.currentTarget.style.borderColor = 'rgba(240,180,41,0.4)';
+                      e.currentTarget.style.background = 'rgba(45,212,200,0.08)';
+                      e.currentTarget.style.borderColor = 'rgba(45,212,200,0.4)';
                       e.currentTarget.style.color = '#F2EDD8';
                     }}
                   >
@@ -376,9 +376,9 @@ export default function DocsPage() {
                       fontSize: 10,
                       letterSpacing: '0.1em',
                       textTransform: 'uppercase',
-                      color: AMBER,
+                      color: ACCENT,
                       textDecoration: 'none',
-                      border: `1px solid rgba(240,180,41,0.35)`,
+                      border: `1px solid rgba(45,212,200,0.35)`,
                       borderRadius: 4,
                       padding: '8px 16px',
                     }}
@@ -407,12 +407,12 @@ export default function DocsPage() {
                   style={{
                     width: 44,
                     height: 44,
-                    border: '1px solid rgba(240,180,41,0.15)',
+                    border: '1px solid rgba(45,212,200,0.15)',
                     borderRadius: 8,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: 'rgba(240,180,41,0.04)',
+                    background: 'rgba(45,212,200,0.04)',
                   }}
                 >
                   <svg
@@ -420,7 +420,7 @@ export default function DocsPage() {
                     height="18"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="rgba(240,180,41,0.35)"
+                    stroke="rgba(45,212,200,0.35)"
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"

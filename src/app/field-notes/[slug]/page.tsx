@@ -180,12 +180,12 @@ export default async function FieldNotePage({ params }: PageProps) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{
             width: 40, height: 40, borderRadius: '50%',
-            background: 'rgba(240,180,41,0.1)',
-            border: '1px solid rgba(240,180,41,0.25)',
+            background: catCfg ? `${catCfg.color}1c` : 'rgba(240,180,41,0.1)',
+            border: `1px solid ${catCfg ? catCfg.color + '40' : 'rgba(240,180,41,0.25)'}`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             flexShrink: 0,
           }}>
-            <span style={{ fontFamily: MONO, fontSize: 11, color: '#F0B429' }}>AF</span>
+            <span style={{ fontFamily: MONO, fontSize: 11, color: catCfg?.color ?? '#F0B429' }}>AF</span>
           </div>
           <div>
             <div style={{ fontFamily: SERIF, fontSize: 14, color: '#F2EDD8', marginBottom: 2 }}>Ahmad Firas</div>

@@ -31,6 +31,7 @@ function LinkedinIcon({ size = 24, color = 'currentColor', strokeWidth = 2 }: { 
 }
 import { fieldNotes } from '@/lib/field-notes';
 import { FieldNoteCard } from '@/components/ui/field-notes/field-note-card';
+import { resolveSkillColor } from '@/lib/skill-colors';
 
 const NebulaCube = dynamic(
   () => import('@/components/ui/explorations-with-gsap-and-scroll-trigger').then(m => ({ default: m.NebulaCube })),
@@ -82,8 +83,17 @@ function useReveal() {
 }
 
 // ── Tag ──
-function Tag({ color = '#4B7BF5', children }: { color?: string; children: React.ReactNode }) {
-  return <span style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${color}14`, border: `1px solid ${color}33`, borderRadius: 4, color, letterSpacing: '0.03em' }}>{children}</span>;
+const PALETTE = ['#F0B429','#4B7BF5','#2DD4C8','#F07832','#A78BFA','#F472B6','#0EA5E9','#22C55E','#EF4444'];
+function pickColor(text: string) {
+  let h = 0;
+  for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
+  return PALETTE[h % PALETTE.length];
+}
+
+function Tag({ color, children }: { color?: string; children: React.ReactNode }) {
+  const skillColor = typeof children === 'string' ? resolveSkillColor(children) : undefined;
+  const c = color ?? skillColor ?? (typeof children === 'string' ? pickColor(children) : '#4B7BF5');
+  return <span style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}33`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>{children}</span>;
 }
 
 // ── Section wrapper (overflow-x clipped, vertical visible so italic descenders aren't cut) ──
@@ -258,7 +268,7 @@ function About() {
   const { ref, visible } = useReveal();
   return (
     <Section id="about">
-      <SH n="01" label="About" color="var(--amber)" />
+      <SH n="01" label="About" color="var(--blue)" />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 48 }}>
         <div>
           <h2 style={{ fontFamily: SERIF, fontSize: 32, fontWeight: 400, lineHeight: 1.25, letterSpacing: '-0.02em', color: '#F2EDD8', paddingBottom: '0.08em' }}>
@@ -295,7 +305,7 @@ function About() {
             <div style={{ fontSize: 14, color: '#B8B4A4', marginTop: 3 }}>B.S. Computer Science &amp; Engineering · Minor in Mathematics</div>
             <div style={{ fontFamily: MONO, fontSize: 10, color: '#F0B429', marginTop: 8 }}>2021 – 2026 · Graduated · GPA 3.23</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
-              {['Machine Learning', 'Neural Networks', 'Databases', 'Software Eng.', 'Embedded Systems'].map(c => <Tag key={c} color="#4B7BF5">{c}</Tag>)}
+              {['Machine Learning', 'Neural Networks', 'Databases', 'Software Eng.', 'Embedded Systems'].map(c => <Tag key={c}>{c}</Tag>)}
             </div>
           </div>
         </div>
@@ -310,42 +320,143 @@ function About() {
 function Experience() {
   const [open, setOpen] = useState<number | null>(null);
   const jobs = [
-    { r: 'Sports Analytics & Data Science Intern', co: 'UToledo Athletics', p: 'Oct 2025 – Present', loc: 'Toledo, OH', t: 'Internship', active: true, color: '#2DD4C8', d: 'ML-powered statistical models for roster efficiency and student-athlete benefit allocation. Interactive DOMO dashboards translating performance metrics into coaching insights.', s: ['Python', 'scikit-learn', 'DOMO', 'Statistical Modeling'] },
-    { r: 'Microsoft Solution Developer', co: 'First Solar', p: 'Jan 2026 – May 2026', loc: 'Perrysburg, OH', t: 'Full-time', color: '#F0B429', d: 'Design and ship agentic AI solutions in Microsoft Copilot Studio, translating business requirements into autonomous multi-step workflows. Lead intern team on code reviews, delivery milestones, and enterprise governance.', s: ['Copilot Studio', 'Azure AI', 'Power Automate', 'M365', 'Python'] },
-    { r: 'Undergraduate Researcher', co: 'LION Lab · CPHS Lab', p: 'May – Dec 2025', loc: 'University of Toledo', t: 'Research Co-Op', color: '#4B7BF5', d: '72.8% zero-shot UAV deployment via MAML across 1,000+ simulated environments. 97.3% HITL success at sub-100ms. Built Deep Flyer drone training platform. Authored ACM Computing Surveys paper on AI failure taxonomy.', s: ['PyTorch', 'ROS 2', 'MAML', 'YOLO11', 'AirSim', 'NVIDIA Jetson'] },
-    { r: 'Senior Design Team Lead', co: 'Grange Insurance × UToledo', p: 'Aug 2024 – May 2025', loc: 'Toledo, OH', t: 'Industry Project', color: '#A78BFA', d: 'Led interdisciplinary team delivering MLOps insurance risk model (R² = 0.976). Airflow + MLflow pipeline with drift monitoring and HITL gates, reducing manual intervention by 75%.', s: ['XGBoost', 'Airflow', 'MLflow', 'AWS S3', 'Bayesian Opt.'] },
-    { r: 'Database Engineer Co-Op', co: 'Park Place Technologies', p: 'May – Aug 2023', loc: 'Toledo, OH', t: 'Co-Op', color: '#F07832', d: 'Centralized PostgreSQL security database consolidating Active Directory, Cisco AMP, and Microsoft Defender. 15% faster incident response, 95% data integrity, zero data loss in quarterly DR tests.', s: ['PostgreSQL', 'pgAdmin', 'Active Directory', 'Cisco AMP'] },
+    {
+      r: 'Sports Analytics & Data Science Intern',
+      co: 'UToledo Athletics',
+      p: 'Oct 2025 – Present',
+      loc: 'Toledo, OH',
+      t: 'Internship',
+      active: true,
+      color: '#2DD4C8',
+      d: 'Collaborate with Athletics Directors and Coaches to develop ML-Powered analytics solutions for athletic performance improvement. Developed statistical models for evaluating roster efficiency and optimizing student-athlete benefit allocation. Created DOMO dashboards translating complex data into actionable insights for coaches and administrators. Facilitated onboarding and technical training for incoming interns.',
+      achievements: ['ML-powered roster efficiency models', 'DOMO dashboards for coaches & admins', 'Onboarded & trained incoming interns', 'Featured in official UToledo Rockets media'],
+      s: ['Python', 'scikit-learn', 'DOMO', 'Statistical Modeling', 'ML'],
+    },
+    {
+      r: 'Microsoft Solution Developer',
+      co: 'First Solar',
+      p: 'Jan 2026 – May 2026',
+      loc: 'Perrysburg, OH',
+      t: 'Full-time',
+      color: '#F0B429',
+      d: 'Functioned as an AI Engineer & Data Engineer, delivering AI solutions within Microsoft for the Business. Developed and tested automated workflows using Power Automate. Integrated Azure AI services into Microsoft 365 applications for enhanced functionality. Spearheaded project workflows for a team of two additional interns, coordinating contributions to meet critical milestones. Created connectors and scripts to support enterprise-level automation.',
+      achievements: ['Agentic AI solutions in Copilot Studio', 'Automated Power Automate workflows', 'Led intern team across project milestones', 'Azure AI × M365 enterprise integration'],
+      s: ['Copilot Studio', 'Azure AI', 'Power Automate', 'M365', 'Python'],
+    },
+    {
+      r: 'Undergraduate Researcher',
+      co: 'LION Lab · CPHS Lab',
+      p: 'May – Dec 2025',
+      loc: 'University of Toledo',
+      t: 'Research Co-Op',
+      color: '#4B7BF5',
+      d: 'Led research on next-generation drone autonomy integrating Graph-Based Reinforcement Learning, Visual-Inertial Odometry, UWB, and real-time Human-in-the-Loop collaboration for indoor/outdoor GPS-denied navigation. Built GNN/GAT with PPO/SAC algorithms and MAML meta-learning for rapid policy adaptation. Designed AWS DeepRacer-inspired interface for real-time reward shaping. Authored ACM CSUR survey paper on AI failure taxonomy.',
+      achievements: ['72.8% zero-shot UAV deployment via MAML', '97.3% HITL success at sub-100ms', 'ACM CSUR survey paper (under review)', 'USRCAP $3,000 fellowship'],
+      s: ['PyTorch', 'ROS 2', 'MAML', 'YOLO11', 'AirSim', 'NVIDIA Jetson', 'GNN/GAT'],
+    },
+    {
+      r: 'Senior Design Team Lead',
+      co: 'Grange Insurance × UToledo',
+      p: 'Aug 2024 – May 2025',
+      loc: 'Toledo, OH',
+      t: 'Industry Project',
+      color: '#A78BFA',
+      d: 'Led interdisciplinary team delivering a production-grade MLOps insurance risk model. Designed Airflow + MLflow pipeline with drift monitoring and HITL gates — automating the full ML lifecycle from data ingestion through deployment. Achieved R² = 0.982, outperforming the GLM baseline by 26%, while reducing manual actuarial review by 75%.',
+      achievements: ['R² = 0.982 · 26% over GLM baseline', '75% reduction in manual review', 'Airflow + MLflow full MLOps pipeline', 'AWS S3/EC2 production infrastructure'],
+      s: ['XGBoost', 'Airflow', 'MLflow', 'AWS S3/EC2', 'Bayesian Opt.', 'SHAP', 'Docker'],
+    },
+    {
+      r: 'Database Engineer Co-Op',
+      co: 'Park Place Technologies',
+      p: 'May – Aug 2023',
+      loc: 'Toledo, OH',
+      t: 'Co-Op',
+      color: '#F07832',
+      d: 'Architected and implemented a data governance framework consolidating security data from Active Directory, Cisco AMP, and Microsoft Defender into a centralized PostgreSQL database. Implemented validation rules catching 95% of non-compliant entries during ingestion. Revamped disaster recovery protocol — achieving zero data loss across all quarterly DR simulations.',
+      achievements: ['15% faster incident response', '95% data integrity rate', 'Zero data loss across all DR tests', '3 enterprise security sources unified'],
+      s: ['PostgreSQL', 'pgAdmin', 'Active Directory', 'Cisco AMP', 'Data Governance', 'SQL'],
+    },
+    {
+      r: 'IT Student Assistant',
+      co: 'The University of Toledo',
+      p: 'Oct 2022 – Feb 2023',
+      loc: 'Toledo, OH',
+      t: 'Part-time',
+      color: '#22C55E',
+      d: 'Resolved 60% of recurring IT issues by streamlining account troubleshooting for students and medical staff. Achieved 100% compliance with FERPA and HIPAA guidelines while handling sensitive data across platforms. Revamped the account access troubleshooting system by authoring detailed guides that slashed repeat issues by 40%. Delivered cross-platform support for students, faculty, patients, and Doctors.',
+      achievements: ['60% fewer recurring IT issues', '100% FERPA & HIPAA compliance', '40% reduction in repeat incidents', 'Cross-platform support: students & medical staff'],
+      s: ['IT Support', 'FERPA', 'HIPAA', 'Troubleshooting', 'Documentation'],
+    },
   ];
   const { ref, visible } = useReveal();
   return (
     <Section id="experience" style={{ background: 'rgba(15,17,25,0.92)' }}>
-      <SH n="02" label="Experience" sub="Where the work actually happened." color="var(--amber)" />
-      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <SH n="02" label="Experience" sub="Where the work actually happened." color="var(--purple)" />
+      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {jobs.map((job, i) => (
-          <div key={i} onClick={() => setOpen(open === i ? null : i)}
-            style={{ padding: '22px 26px', border: `1px solid ${open === i ? job.color + '55' : 'rgba(242,237,216,0.07)'}`, cursor: 'pointer', background: open === i ? `${job.color}0a` : 'rgba(242,237,216,0.02)', transition: 'all 0.25s', borderRadius: 8 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-                  {job.active && <span className="pulse" style={{ width: 6, height: 6, borderRadius: '50%', background: job.color, display: 'inline-block', flexShrink: 0 }} />}
-                  <span style={{ fontFamily: MONO, fontSize: 10, color: job.color, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{job.t}</span>
+          <div
+            key={i}
+            onClick={() => setOpen(open === i ? null : i)}
+            style={{
+              cursor: 'pointer',
+              background: open === i ? `${job.color}13` : `${job.color}08`,
+              border: `1px solid ${open === i ? job.color + '60' : job.color + '30'}`,
+              transition: 'all 0.28s cubic-bezier(0.16,1,0.3,1)',
+              borderRadius: 10,
+              overflow: 'hidden',
+              position: 'relative',
+            }}
+          >
+            {/* Left accent bar */}
+            <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(to bottom, ${job.color}, ${job.color}70)`, borderRadius: '10px 0 0 10px' }} />
+
+            <div style={{ padding: '20px 24px 20px 30px' }}>
+              {/* Header row */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                    {job.active && <span className="pulse" style={{ width: 6, height: 6, borderRadius: '50%', background: job.color, display: 'inline-block', flexShrink: 0 }} />}
+                    <span style={{ fontFamily: MONO, fontSize: 10, color: job.color, letterSpacing: '0.1em', textTransform: 'uppercase', background: `${job.color}18`, padding: '2px 9px', borderRadius: 3 }}>{job.t}</span>
+                  </div>
+                  <div style={{ fontFamily: SERIF, fontSize: 19, fontWeight: 400, color: '#F2EDD8', letterSpacing: '-0.01em', lineHeight: 1.25, paddingBottom: '0.05em' }}>{job.r}</div>
+                  <div style={{ fontSize: 13, color: '#B8B4A4', marginTop: 4 }}>{job.co} · {job.loc}</div>
                 </div>
-                <div style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 400, color: '#F2EDD8', letterSpacing: '-0.01em', lineHeight: 1.25, paddingBottom: '0.05em' }}>{job.r}</div>
-                <div style={{ fontSize: 14, color: '#B8B4A4', marginTop: 4 }}>{job.co} · {job.loc}</div>
+                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 11, color: job.color, letterSpacing: '0.06em' }}>{job.p}</div>
+                  <span style={{ fontSize: 18, color: job.color, marginTop: 8, display: 'inline-block', transition: 'transform 0.3s', transform: open === i ? 'rotate(45deg)' : 'none' }}>+</span>
+                </div>
               </div>
-              <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: '#B8B4A4', letterSpacing: '0.06em' }}>{job.p}</div>
-                <span style={{ fontSize: 18, color: job.color, marginTop: 8, display: 'inline-block', transition: 'transform 0.3s', transform: open === i ? 'rotate(45deg)' : 'none' }}>+</span>
-              </div>
+
+              {/* Collapsed preview — 2 achievement chips */}
+              {open !== i && (
+                <div style={{ marginTop: 12, display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                  {job.achievements.slice(0, 2).map((a, ai) => { const ac = pickColor(a); return (
+                    <span key={ai} style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${ac}12`, border: `1px solid ${ac}30`, borderRadius: 3, color: ac, letterSpacing: '0.02em' }}>{a}</span>
+                  ); })}
+                </div>
+              )}
+
+              {/* Expanded detail */}
+              {open === i && (
+                <div style={{ marginTop: 18, paddingTop: 16, borderTop: `1px solid ${job.color}22` }} onClick={e => e.stopPropagation()}>
+                  <p style={{ fontSize: 15, lineHeight: 1.8, color: '#B8B4A4', marginBottom: 18 }}>{job.d}</p>
+
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: job.color, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10, opacity: 0.8 }}>Key Achievements</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 8, marginBottom: 18 }}>
+                    {job.achievements.map((a, ai) => (
+                      <div key={ai} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, padding: '10px 14px', background: `${job.color}0a`, borderRadius: 6, border: `1px solid ${job.color}22` }}>
+                        <span style={{ color: job.color, fontSize: 10, marginTop: 2, flexShrink: 0 }}>▸</span>
+                        <span style={{ fontSize: 13, color: '#C8C4B4', lineHeight: 1.45 }}>{a}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                    {job.s.map(s => <Tag key={s}>{s}</Tag>)}
+                  </div>
+                </div>
+              )}
             </div>
-            {open === i && (
-              <div style={{ marginTop: 18, paddingTop: 16, borderTop: '1px solid rgba(242,237,216,0.06)' }} onClick={e => e.stopPropagation()}>
-                <p style={{ fontSize: 15, lineHeight: 1.8, color: '#B8B4A4', marginBottom: 14 }}>{job.d}</p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                  {job.s.map(s => <Tag key={s} color={job.color}>{s}</Tag>)}
-                </div>
-              </div>
-            )}
           </div>
         ))}
       </div>
@@ -383,7 +494,7 @@ function Projects() {
 
         {/* Stack */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
-          {['Graph-Based RL','GNN/GAT','MAML','PINN','Q-Prop','ROS 2','ArduPilot','Jetson Orin NX','AirSim','SHAP/LIME','OAK-D Pro','SLAMTEC C1'].map(t => <Tag key={t} color="#F0B429">{t}</Tag>)}
+          {['Graph-Based RL','GNN/GAT','MAML','PINN','Q-Prop','ROS 2','ArduPilot','Jetson Orin NX','AirSim','SHAP/LIME','OAK-D Pro','SLAMTEC C1'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
 
         {/* Key Insight */}
@@ -418,7 +529,7 @@ function Projects() {
 
         {/* Stack */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
-          {['PPO','Stable-Baselines3','Gym','ROS 2','Gazebo Fortress','React','Node.js','Express','MongoDB','MLflow','X500 URDF','ZED Mini'].map(t => <Tag key={t} color="#4B7BF5">{t}</Tag>)}
+          {['PPO','Stable-Baselines3','Gym','ROS 2','Gazebo Fortress','React','Node.js','Express','MongoDB','MLflow','X500 URDF','ZED Mini'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
 
         {/* Key Insight */}
@@ -443,7 +554,7 @@ function Projects() {
         <p>A four-pillar taxonomy of AI failures in safety-critical autonomous environments, synthesized from 37 documented incidents across 127 sources. Submitted to ACM Computing Surveys in April 2026, currently under review.</p>
         <a href="#research" onClick={(e) => { e.preventDefault(); document.getElementById('research')?.scrollIntoView({ behavior: 'smooth' }); }} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 14, padding: '8px 16px', border: '1px solid rgba(240,120,50,0.3)', borderRadius: 5, color: '#F07832', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', cursor: 'pointer' }}>Full methodology in Research section ↓</a>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
-          {['Taxonomy Design','Literature Review','AI Safety','ACM CSUR'].map(t => <Tag key={t} color="#F07832">{t}</Tag>)}
+          {['Taxonomy Design','Literature Review','AI Safety','ACM CSUR'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
       </>),
     },
@@ -472,7 +583,7 @@ function Projects() {
 
         {/* Stack */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
-          {['XGBoost','Hyperopt','Airflow','MLflow','AWS S3','AWS EC2','Pandera','Prometheus','Slack API','Docker','GitHub Actions','SHAP','scikit-learn'].map(t => <Tag key={t} color="#A78BFA">{t}</Tag>)}
+          {['XGBoost','Hyperopt','Airflow','MLflow','AWS S3','AWS EC2','Pandera','Prometheus','Slack API','Docker','GitHub Actions','SHAP','scikit-learn'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
 
         {/* Key Insight */}
@@ -502,7 +613,7 @@ function Projects() {
         <h4 style={{ color: '#2DD4C8', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>Key Insight</h4>
         <p>Most data-quality problems in security ops aren&apos;t adversarial — they&apos;re inconsistent tooling assumptions meeting at a shared data boundary. A validated schema is a security control.</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12, marginBottom: 16 }}>
-          {['PostgreSQL','pgAdmin','Active Directory','Cisco AMP','Microsoft Defender','Data Governance','Disaster Recovery','SQL'].map(t => <Tag key={t} color="#2DD4C8">{t}</Tag>)}
+          {['PostgreSQL','pgAdmin','Active Directory','Cisco AMP','Microsoft Defender','Data Governance','Disaster Recovery','SQL'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8, paddingTop: 14, borderTop: '1px solid rgba(45,212,200,0.15)' }}>
           <Link href="/case-study/security-discovery-tool" transitionTypes={['nav-forward']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#2DD4C8', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</Link>
@@ -522,7 +633,7 @@ function Projects() {
         <h4 style={{ color: '#F0B429', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>Key Insight</h4>
         <p>Credibility systems need explanations, not only scores — and multi-model architectures are more honest than trusting a single signal. The goal was never to decide truth; it was to help users ask better questions faster.</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12, marginBottom: 16 }}>
-          {['Gemini AI','DistilBERT','Django REST','React','Vite','MongoDB','Chrome Extension','NLP','Hugging Face'].map(t => <Tag key={t} color="#F0B429">{t}</Tag>)}
+          {['Gemini AI','DistilBERT','Django REST','React','Vite','MongoDB','Chrome Extension','NLP','Hugging Face'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8, paddingTop: 14, borderTop: '1px solid rgba(240,180,41,0.15)' }}>
           <Link href="/case-study/deeptruth-ai-fact-checking" transitionTypes={['nav-forward']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#F0B429', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</Link>
@@ -544,7 +655,7 @@ function Projects() {
         <h4 style={{ color: '#F07832', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>Key Insight</h4>
         <p>The chemistry creates the signal. The control system is what turns that signal into a repeatable vehicle action. A well-calibrated threshold controller beats a complex one when variability is chemical, not electrical.</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12, marginBottom: 16 }}>
-          {['Arduino','Pressure Sensing','Solenoid Control','Embedded C','Calibration','Safety Systems','CO₂ Propulsion'].map(t => <Tag key={t} color="#F07832">{t}</Tag>)}
+          {['Arduino','Pressure Sensing','Solenoid Control','Embedded C','Calibration','Safety Systems','CO₂ Propulsion'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8, paddingTop: 14, borderTop: '1px solid rgba(240,120,50,0.15)' }}>
           <Link href="/case-study/camel-car-cheme-car-control-system" transitionTypes={['nav-forward']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#F07832', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</Link>
@@ -564,7 +675,7 @@ function Projects() {
         <h4 style={{ color: '#F472B6', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>Key Insight</h4>
         <p>The hard part was not making a form. The hard part was making location-aware public reporting reliable enough for real city use — GPS noise, indoor submissions, spoofing attempts, and all.</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12, marginBottom: 16 }}>
-          {['Deno','PostGIS','Cloudflare Workers','Hono','Drizzle ORM','Docker','GiST Indexing','Geospatial Validation','Anti-Spoofing'].map(t => <Tag key={t} color="#F472B6">{t}</Tag>)}
+          {['Deno','PostGIS','Cloudflare Workers','Hono','Drizzle ORM','Docker','GiST Indexing','Geospatial Validation','Anti-Spoofing'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8, paddingTop: 14, borderTop: '1px solid rgba(244,114,182,0.15)' }}>
           <Link href="/case-study/batting-cleanup-smart-city-waste-reporting" transitionTypes={['nav-forward']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', background: '#F472B6', color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View Full Case Study ↗</Link>
@@ -595,7 +706,7 @@ function Projects() {
 
         {/* Stack */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
-          {['Sidearm Sports','Sidearm Narrator','Web Strategy','Information Architecture','Donor UX','Digital Fundraising','Sports Marketing','Brand Strategy','UToledo Design System','Naming-Rights Planning','Conversion Psychology'].map(t => <Tag key={t} color="#0EA5E9">{t}</Tag>)}
+          {['Sidearm Sports','Sidearm Narrator','Web Strategy','Information Architecture','Donor UX','Digital Fundraising','Sports Marketing','Brand Strategy','UToledo Design System','Naming-Rights Planning','Conversion Psychology'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
 
         {/* Key Insight */}
@@ -634,7 +745,7 @@ function Projects() {
 
         {/* Stack */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
-          {['Cloudflare Workers','Hono','TypeScript','React','Cloudflare D1','SQLite','Workers AI','Wrangler','Serverless','Knowledge Management','NCAA Compliance','HR Onboarding'].map(t => <Tag key={t} color="#22C55E">{t}</Tag>)}
+          {['Cloudflare Workers','Hono','TypeScript','React','Cloudflare D1','SQLite','Workers AI','Wrangler','Serverless','Knowledge Management','NCAA Compliance','HR Onboarding'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
 
         {/* Key Insight */}
@@ -673,7 +784,7 @@ function Projects() {
 
         {/* Stack */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
-          {['YOLO','RF-DETR','ByteTrack','BoT-SORT','RTMPose','FastAPI','React','Postgres','pgvector','Cloudflare R2','MLflow','PyTorch','FFmpeg','CUDA'].map(t => <Tag key={t} color="#EF4444">{t}</Tag>)}
+          {['YOLO','RF-DETR','ByteTrack','BoT-SORT','RTMPose','FastAPI','React','Postgres','pgvector','Cloudflare R2','MLflow','PyTorch','FFmpeg','CUDA'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
 
         {/* Key Insight */}
@@ -690,7 +801,7 @@ function Projects() {
   const { ref, visible } = useReveal();
   return (
     <Section id="projects">
-      <SH n="03" label="Bodies of Work" sub="Each project a different operating condition. Click any card for the full case study." color="var(--amber)" />
+      <SH n="03" label="Bodies of Work" sub="Each project a different operating condition. Click any card for the full case study." color="var(--orange)" />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}
         style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
         {projects.map((p) => (
@@ -817,12 +928,13 @@ function FeaturedIn() {
 // SKILLS
 // ─────────────────────────────────────────────
 const skillGroups = [
-  { label: 'Languages',    color: '#F0B429', skills: ['Python','JavaScript','C++','Java','SQL','HTML/CSS','Embedded C','MATLAB','Simulink','Bash'] },
-  { label: 'ML & AI',      color: '#4B7BF5', skills: ['PyTorch','TensorFlow','scikit-learn','RL','GNNs','Meta-Learning','NLP','Computer Vision'] },
-  { label: 'MLOps & Data', color: '#F07832', skills: ['Airflow','MLflow','Pandas','NumPy','AWS','Docker','Git','CI/CD','Linux','DOMO'] },
-  { label: 'Robotics',     color: '#A78BFA', skills: ['ROS 2','OpenCV','YOLO11','NVIDIA Jetson','Sensor Fusion','VINS-Mono','HITL','AirSim'] },
-  { label: 'Databases',    color: '#2DD4C8', skills: ['PostgreSQL','MySQL','MongoDB','SQLite','ETL','pgAdmin 4'] },
-  { label: 'Microsoft',    color: '#F472B6', skills: ['Azure AI','Copilot Studio','Power Automate','Power BI','M365','SharePoint'] },
+  { label: 'Languages',    color: '#F0B429', skills: ['Python','JavaScript','TypeScript','C++','Java','SQL','HTML/CSS','Embedded C','MATLAB','Simulink','Bash'] },
+  { label: 'ML & AI',      color: '#4B7BF5', skills: ['PyTorch','TensorFlow','scikit-learn','RL','MAML','GNNs','GNN/GAT','PPO','Stable-Baselines3','Gym','Meta-Learning','NLP','Computer Vision','DistilBERT','Gemini AI'] },
+  { label: 'MLOps & Data', color: '#F07832', skills: ['Airflow','MLflow','Pandas','NumPy','AWS','AWS S3','AWS EC2','Docker','Git','GitHub Actions','CI/CD','Linux','Pandera','Prometheus','Hyperopt','DOMO','Slack API'] },
+  { label: 'Robotics',     color: '#A78BFA', skills: ['ROS 2','Gazebo','Gazebo Fortress','ArduPilot','OpenCV','YOLO11','NVIDIA Jetson','Jetson Orin NX','Sensor Fusion','VINS-Mono','HITL','AirSim','OAK-D Pro','SLAMTEC C1','X500 URDF','Q-Prop'] },
+  { label: 'Web & Edge',   color: '#0EA5E9', skills: ['React','Node.js','Express','FastAPI','Django','Cloudflare Workers','Hono','Deno','Cloudflare D1','Cloudflare R2','Drizzle ORM','Chrome Extension'] },
+  { label: 'Databases',    color: '#2DD4C8', skills: ['PostgreSQL','MySQL','MongoDB','SQLite','PostGIS','pgvector','ETL','pgAdmin 4','Active Directory','Cisco AMP','Microsoft Defender'] },
+  { label: 'Microsoft',    color: '#F472B6', skills: ['Azure AI','Copilot Studio','Power Automate','Power BI','M365','SharePoint','Microsoft Defender'] },
 ];
 
 const awards = [
@@ -847,7 +959,7 @@ function SkillGroupCard({ group }: { group: { label: string; color: string; skil
   const visible = showAll ? group.skills : group.skills.slice(0, SHOW);
   const hidden = group.skills.length - SHOW;
   return (
-    <div style={{ background: 'rgba(242,237,216,0.025)', borderTop: `2px solid ${group.color}`, borderRight: '1px solid rgba(242,237,216,0.08)', borderBottom: '1px solid rgba(242,237,216,0.08)', borderLeft: '1px solid rgba(242,237,216,0.08)', borderRadius: 8, padding: '22px 20px' }}>
+    <div style={{ background: `${group.color}0a`, borderTop: `2px solid ${group.color}`, borderRight: `1px solid ${group.color}28`, borderBottom: `1px solid ${group.color}28`, borderLeft: `1px solid ${group.color}28`, borderRadius: 8, padding: '22px 20px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 14 }}>
         <div style={{ width: 5, height: 5, background: group.color, borderRadius: 1, flexShrink: 0 }} />
         <span style={{ fontFamily: MONO, fontSize: 11, color: group.color, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{group.label}</span>
@@ -866,12 +978,13 @@ function SkillGroupCard({ group }: { group: { label: string; color: string; skil
   );
 }
 
-function SkillChip({ color, children }: { color: string; children: React.ReactNode }) {
+function SkillChip({ color, children }: { color?: string; children: React.ReactNode }) {
+  const c = color ?? (typeof children === 'string' ? pickColor(children) : '#4B7BF5');
   return (
     <span
-      style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: 'rgba(242,237,216,0.03)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 4, color: '#B8B4A4', letterSpacing: '0.02em', cursor: 'default', transition: 'background 0.18s, color 0.18s' }}
-      onMouseEnter={e => { e.currentTarget.style.background = `${color}18`; e.currentTarget.style.color = '#F2EDD8'; }}
-      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(242,237,216,0.03)'; e.currentTarget.style.color = '#B8B4A4'; }}
+      style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}35`, borderRadius: 4, color: `${c}dd`, letterSpacing: '0.02em', cursor: 'default', transition: 'background 0.18s, color 0.18s' }}
+      onMouseEnter={e => { e.currentTarget.style.background = `${c}2a`; e.currentTarget.style.color = '#F2EDD8'; }}
+      onMouseLeave={e => { e.currentTarget.style.background = `${c}14`; e.currentTarget.style.color = `${c}dd`; }}
     >{children}</span>
   );
 }
@@ -883,7 +996,7 @@ function Skills() {
   const openLb = useLightboxOpen();
   return (
     <Section id="skills">
-      <SH n="06" label="Capabilities" sub="Technical stack built across research, industry, and deployment." color="var(--amber)" />
+      <SH n="06" label="Capabilities" sub="Technical stack built across research, industry, and deployment." color="var(--pink)" />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}>
         {/* Skill grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }} className="three-col-skills">
@@ -899,7 +1012,7 @@ function Skills() {
             {awards.map((a, i) => (
               <div key={i}
                 onClick={() => setOpenAward(openAward === i ? null : i)}
-                style={{ background: 'rgba(242,237,216,0.025)', borderTop: `2px solid ${a.color}`, borderRight: `1px solid ${openAward === i ? a.color + '44' : 'rgba(242,237,216,0.08)'}`, borderBottom: `1px solid ${openAward === i ? a.color + '44' : 'rgba(242,237,216,0.08)'}`, borderLeft: `1px solid ${openAward === i ? a.color + '44' : 'rgba(242,237,216,0.08)'}`, borderRadius: 8, cursor: 'pointer', transition: 'border-color 0.25s', overflow: 'hidden' }}>
+                style={{ background: openAward === i ? `${a.color}10` : `${a.color}07`, borderTop: `2px solid ${a.color}`, borderRight: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderBottom: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderLeft: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderRadius: 8, cursor: 'pointer', transition: 'all 0.25s', overflow: 'hidden' }}>
                 <div style={{ padding: '18px 22px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <div style={{ fontFamily: SANS, fontSize: 14, fontWeight: 600, color: '#F2EDD8' }}>{a.t}</div>
@@ -935,7 +1048,7 @@ function Skills() {
             {affiliations.map((a, i) => (
               <div key={i}
                 onClick={() => setOpenAffil(openAffil === i ? null : i)}
-                style={{ background: 'rgba(242,237,216,0.025)', borderTop: `1px solid ${openAffil === i ? a.color + '44' : 'rgba(242,237,216,0.08)'}`, borderRight: `1px solid ${openAffil === i ? a.color + '44' : 'rgba(242,237,216,0.08)'}`, borderBottom: `1px solid ${openAffil === i ? a.color + '44' : 'rgba(242,237,216,0.08)'}`, borderLeft: `1px solid ${openAffil === i ? a.color + '44' : 'rgba(242,237,216,0.08)'}`, borderRadius: 10, cursor: 'pointer', transition: 'border-color 0.25s', overflow: 'hidden' }}>
+                style={{ background: openAffil === i ? `${a.color}10` : `${a.color}07`, borderTop: `1px solid ${openAffil === i ? a.color + '55' : a.color + '25'}`, borderRight: `1px solid ${openAffil === i ? a.color + '55' : a.color + '25'}`, borderBottom: `1px solid ${openAffil === i ? a.color + '55' : a.color + '25'}`, borderLeft: `1px solid ${openAffil === i ? a.color + '55' : a.color + '25'}`, borderRadius: 10, cursor: 'pointer', transition: 'all 0.25s', overflow: 'hidden' }}>
                 <div style={{ padding: '20px 22px', display: 'flex', alignItems: 'flex-start', gap: 12 }}>
                   <div style={{ width: 44, height: 44, borderRadius: 8, background: `${a.color}15`, border: `1px solid ${a.color}33`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <div style={{ width: 10, height: 10, borderRadius: 2, background: a.color }} />
@@ -1100,20 +1213,20 @@ function Contact() {
         @keyframes contact-blink { 0%,100%{opacity:.55}50%{opacity:0} }
         @keyframes contact-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.55)}60%{box-shadow:0 0 0 5px rgba(34,197,94,0)} }
         @keyframes contact-scan { 0%{transform:translateY(-100%)}100%{transform:translateY(100vh)} }
-        .contact-email-wrap:hover .contact-email-text { color: #FFD166; }
-        .contact-email-wrap:hover { border-color: rgba(240,180,41,0.65); background: rgba(240,180,41,0.10); }
+        .contact-email-wrap:hover .contact-email-text { color: #38BDF8; }
+        .contact-email-wrap:hover { border-color: rgba(14,165,233,0.65); background: rgba(14,165,233,0.10); }
         .contact-channel-row:hover { background: rgba(242,237,216,0.03); }
         .contact-resume-link:hover { color: #B8B4A4; border-bottom-color: rgba(242,237,216,0.2); }
       `}</style>
 
       {/* Ghost watermark */}
-      <div aria-hidden style={{ position: 'absolute', top: -28, right: -4, fontFamily: SERIF, fontSize: 'clamp(110px,17vw,210px)', fontWeight: 400, color: '#F0B429', opacity: 0.04, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em', zIndex: 0 }}>09</div>
+      <div aria-hidden style={{ position: 'absolute', top: -28, right: -4, fontFamily: SERIF, fontSize: 'clamp(110px,17vw,210px)', fontWeight: 400, color: 'var(--sky)', opacity: 0.04, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em', zIndex: 0 }}>09</div>
 
       {/* Section header row */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginBottom: 56, position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ display: 'inline-block', width: 22, height: 1.5, background: '#F0B429', opacity: 0.6, flexShrink: 0 }} />
-          <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#F0B429' }}>Contact</span>
+          <span style={{ display: 'inline-block', width: 22, height: 1.5, background: 'var(--sky)', opacity: 0.6, flexShrink: 0 }} />
+          <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--sky)' }}>Contact</span>
           <span style={{ fontFamily: MONO, fontSize: 10, color: '#4E4B40', letterSpacing: '0.06em' }}>— Let&apos;s talk about building something real.</span>
         </div>
         {/* Live status badge */}
@@ -1144,21 +1257,21 @@ function Contact() {
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 18,
                 padding: '18px 28px',
-                background: emailHovered ? 'rgba(240,180,41,0.10)' : 'rgba(240,180,41,0.06)',
-                border: `1px solid ${emailHovered ? 'rgba(240,180,41,0.65)' : 'rgba(240,180,41,0.32)'}`,
+                background: emailHovered ? 'rgba(14,165,233,0.10)' : 'rgba(14,165,233,0.06)',
+                border: `1px solid ${emailHovered ? 'rgba(14,165,233,0.65)' : 'rgba(14,165,233,0.32)'}`,
                 borderRadius: 6, textDecoration: 'none',
                 marginBottom: 20, position: 'relative', overflow: 'hidden',
                 transition: 'background 0.18s, border-color 0.18s',
               }}
             >
               {/* Corner brackets */}
-              <span aria-hidden style={{ position: 'absolute', top: 0, left: 0, width: 20, height: 20, borderTop: '2px solid rgba(240,180,41,0.55)', borderLeft: '2px solid rgba(240,180,41,0.55)' }} />
-              <span aria-hidden style={{ position: 'absolute', bottom: 0, right: 0, width: 20, height: 20, borderBottom: '2px solid rgba(240,180,41,0.55)', borderRight: '2px solid rgba(240,180,41,0.55)' }} />
-              <span style={{ fontFamily: MONO, fontSize: 9, color: '#F0B429', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.1em', flexShrink: 0 }}>SEND →</span>
-              <span className="contact-email-text" style={{ fontFamily: MONO, fontSize: 'clamp(13px,1.5vw,17px)', color: '#F0B429', letterSpacing: '0.04em', transition: 'color 0.18s' }}>
+              <span aria-hidden style={{ position: 'absolute', top: 0, left: 0, width: 20, height: 20, borderTop: '2px solid rgba(14,165,233,0.55)', borderLeft: '2px solid rgba(14,165,233,0.55)' }} />
+              <span aria-hidden style={{ position: 'absolute', bottom: 0, right: 0, width: 20, height: 20, borderBottom: '2px solid rgba(14,165,233,0.55)', borderRight: '2px solid rgba(14,165,233,0.55)' }} />
+              <span style={{ fontFamily: MONO, fontSize: 9, color: 'var(--sky)', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.1em', flexShrink: 0 }}>SEND →</span>
+              <span className="contact-email-text" style={{ fontFamily: MONO, fontSize: 'clamp(13px,1.5vw,17px)', color: 'var(--sky)', letterSpacing: '0.04em', transition: 'color 0.18s' }}>
                 firas.azfar@gmail.com
               </span>
-              <span aria-hidden style={{ fontFamily: MONO, fontSize: 15, color: '#F0B429', opacity: 0.5, animation: 'contact-blink 1s step-end infinite' }}>▮</span>
+              <span aria-hidden style={{ fontFamily: MONO, fontSize: 15, color: 'var(--sky)', opacity: 0.5, animation: 'contact-blink 1s step-end infinite' }}>▮</span>
             </a>
 
             <div>
