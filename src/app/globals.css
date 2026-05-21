@@ -207,13 +207,12 @@ a { text-decoration: none; color: inherit; }
   to   { opacity: 0.05; transform: none; }
 }
 
-/* Pulse */
-@keyframes pulse-a {
-  0% { box-shadow: 0 0 0 0 rgba(240, 180, 41, 0.5); }
-  70% { box-shadow: 0 0 0 7px rgba(240, 180, 41, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(240, 180, 41, 0); }
+/* Pulse — glass breathe (no box-shadow glow) */
+@keyframes glass-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.35; transform: scale(0.78); }
 }
-.pulse { animation: pulse-a 2.4s ease-out infinite; }
+.pulse { animation: glass-pulse 2.4s ease-in-out infinite; }
 
 /* Float */
 @keyframes float {
@@ -253,23 +252,25 @@ a { text-decoration: none; color: inherit; }
   *, *::before, *::after { cursor: none !important; }
 }
 
-/* ── Card cursor-tracked ambient glow ─────────────────────────── */
+/* ── Card glass specular sheen (replaces cursor-tracked glow) ─── */
 .card-project { position: relative; isolation: isolate; }
-.card-glow-el {
+.card-glass-sheen {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 2;
   border-radius: inherit;
-  background: radial-gradient(
-    200px circle at var(--gx, 50%) var(--gy, 50%),
-    rgba(240, 180, 41, 0.07),
-    transparent 65%
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.055) 0%,
+    transparent 38%,
+    transparent 62%,
+    rgba(255, 255, 255, 0.018) 100%
   );
   opacity: 0;
   transition: opacity 0.35s ease;
 }
-.card-project:hover .card-glow-el { opacity: 1; }
+.card-project:hover .card-glass-sheen { opacity: 1; }
 
 /* ── View Transitions ─────────────────────────────────────────── */
 @supports (view-transition-name: none) {

@@ -232,7 +232,9 @@ export function ExpandableCard({
         onClick={handleOpen}
         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleOpen(); } }}
         style={{
-          background: `${accentColor}0d`,
+          background: `color-mix(in oklch, ${accentColor} 3%, transparent)`,
+          backdropFilter: 'blur(10px) saturate(1.2)',
+          WebkitBackdropFilter: 'blur(10px) saturate(1.2)',
           borderTop: `2px solid ${accentColor}`,
           borderRight: `1px solid ${accentColor}28`,
           borderBottom: `1px solid ${accentColor}28`,
@@ -244,30 +246,24 @@ export function ExpandableCard({
           width: '100%',
           position: 'relative',
         }}
-        onMouseMove={e => {
-          const el = e.currentTarget;
-          const r = el.getBoundingClientRect();
-          el.style.setProperty('--gx', `${e.clientX - r.left}px`);
-          el.style.setProperty('--gy', `${e.clientY - r.top}px`);
-        }}
         onMouseEnter={e => {
           const el = e.currentTarget as HTMLElement;
-          el.style.background = `${accentColor}1e`;
+          el.style.background = `color-mix(in oklch, ${accentColor} 7%, transparent)`;
           el.style.borderRight = `1px solid ${accentColor}60`;
           el.style.borderBottom = `1px solid ${accentColor}60`;
           el.style.borderLeft = `1px solid ${accentColor}60`;
         }}
         onMouseLeave={e => {
           const el = e.currentTarget as HTMLElement;
-          el.style.background = `${accentColor}0d`;
+          el.style.background = `color-mix(in oklch, ${accentColor} 3%, transparent)`;
           el.style.borderRight = `1px solid ${accentColor}28`;
           el.style.borderBottom = `1px solid ${accentColor}28`;
           el.style.borderLeft = `1px solid ${accentColor}28`;
         }}
         className={cn('card-project', className)}
       >
-        {/* Cursor-tracked ambient glow */}
-        <div className="card-glow-el" aria-hidden="true" />
+        {/* Glass specular sheen */}
+        <div className="card-glass-sheen" aria-hidden="true" />
         {/* Image */}
         <div style={{ width: '100%', aspectRatio: thumbnailAspect || '4/3', background: '#0B0D14', overflow: 'hidden', flexShrink: 0, viewTransitionName: `card-img-${vtId}` } as React.CSSProperties}>
           <img src={src} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />

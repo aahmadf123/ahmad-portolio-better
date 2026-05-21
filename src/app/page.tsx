@@ -7,7 +7,6 @@ import { Header } from '@/components/ui/header-2';
 import { ExpandableCard } from '@/components/ui/expandable-card';
 import { AnimatedFeatureSpotlight } from '@/components/ui/feature-spotlight';
 import { HoverPeek } from '@/components/ui/link-preview';
-import { NeonButton } from '@/components/ui/neon-button';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { FlaskConical, Mail, MapPin, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -99,7 +98,7 @@ function Tag({ color, children }: { color?: string; children: React.ReactNode })
 // ── Section wrapper (overflow-x clipped, vertical visible so italic descenders aren't cut) ──
 function Section({ id, children, style }: { id?: string; children: React.ReactNode; style?: React.CSSProperties }) {
   return (
-    <section id={id} style={{ padding: 'clamp(64px, 8vw, 100px) clamp(20px, 4vw, 52px)', position: 'relative', overflowX: 'clip', overflowY: 'visible', background: 'rgba(11,13,20,0.88)', zIndex: 20, ...style }}>
+    <section id={id} style={{ padding: 'clamp(64px, 8vw, 100px) clamp(20px, 4vw, 52px)', position: 'relative', overflowX: 'clip', overflowY: 'visible', background: 'rgba(11,13,20,0.80)', zIndex: 20, ...style }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         {children}
       </div>
@@ -189,11 +188,11 @@ function Hero() {
           </div>
 
           {/* info cards */}
-          <div style={{ marginTop: 20 }}>
+          <div style={{ marginTop: 20, backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', borderRadius: 8, boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)' }}>
             {([
-              { l: 'Now',      v: 'Sports Analytics Intern',  s: 'UToledo Athletics',             c: '#2DD4C8' },
+              { l: 'Now',      v: 'Developer I',               s: 'First Solar · Jun 2026',        c: '#F0B429' },
               { l: 'Research', v: 'LION Lab · CPHS Lab',       s: 'University of Toledo',          c: '#4B7BF5' },
-              { l: 'Degree',   v: 'B.S. CS & Engineering',     s: 'Minor: Math · GPA 3.23 · 2026', c: '#A78BFA' },
+              { l: 'Degree',   v: 'B.S. CS & Engineering',     s: 'GPA 3.23 · 2026',               c: '#A78BFA' },
               { l: 'Focus',    v: 'Agentic AI · UAV · MLOps',  s: null,                            c: '#F0B429' },
             ] as const).map((f) => (
               <div key={f.l} style={{ padding: '10px 0', borderBottom: '1px solid rgba(242,237,216,0.07)' }}>
@@ -208,7 +207,6 @@ function Hero() {
 
       <style>{`
         @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
-        @keyframes pulse-a { 0%{box-shadow:0 0 0 0 rgba(45,212,200,0.5)} 70%{box-shadow:0 0 0 7px rgba(45,212,200,0)} 100%{box-shadow:0 0 0 0 rgba(45,212,200,0)} }
         @media (max-width: 960px) {
           #hero > div { flex-direction: column !important; }
           #hero .hero-left { flex: none !important; width: 100% !important; }
@@ -304,7 +302,7 @@ function About() {
           <div style={{ marginTop: 16, padding: '20px', background: 'rgba(242,237,216,0.025)', borderRadius: 8, border: '1px solid rgba(242,237,216,0.08)' }}>
             <div style={{ fontFamily: MONO, fontSize: 11, color: '#A78BFA', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 10 }}>Education</div>
             <div style={{ fontSize: 20, fontWeight: 400, color: '#F2EDD8', fontFamily: SERIF, paddingBottom: '0.05em' }}>University of Toledo</div>
-            <div style={{ fontSize: 14, color: '#B8B4A4', marginTop: 3 }}>B.S. Computer Science &amp; Engineering · Minor in Mathematics</div>
+            <div style={{ fontSize: 14, color: '#B8B4A4', marginTop: 3 }}>B.S. Computer Science &amp; Engineering</div>
             <div style={{ fontFamily: MONO, fontSize: 10, color: '#F0B429', marginTop: 8 }}>2021 – 2026 · Graduated · GPA 3.23</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 12 }}>
               {['Machine Learning', 'Neural Networks', 'Databases', 'Software Eng.', 'Embedded Systems'].map(c => <Tag key={c}>{c}</Tag>)}
@@ -323,13 +321,26 @@ function Experience() {
   const [open, setOpen] = useState<number | null>(null);
   const jobs = [
     {
+      r: 'Developer I',
+      co: 'First Solar',
+      p: 'Jun 2026 – Present',
+      loc: 'Perrysburg, OH',
+      t: 'Full-time',
+      active: true,
+      color: '#F0B429',
+      logo: '/Images/first%20solar_logo.png',
+      d: 'Develops and supports First Solar\'s Enterprise Applications based on Oracle technologies. Builds and maintains Oracle Cloud applications using Visual Builder (VBCS), Oracle Integration Cloud (OIC), and Oracle BI Publisher Reports (BIP). Designs and implements application components, REST API integrations, and web services. Conducts unit and system testing, participates in code reviews, maintains coding standards, and collaborates with cross-functional teams and senior architects to deliver high-quality enterprise software solutions.',
+      achievements: ['Oracle Cloud VBCS & OIC development', 'REST API & web service integrations', 'Enterprise application deployment pipelines', 'Cross-team Oracle stack collaboration'],
+      s: ['Oracle Cloud', 'VBCS', 'OIC', 'BIP', 'PL/SQL', 'JavaScript', 'HTML/CSS', 'REST APIs', 'Git'],
+    },
+    {
       r: 'Sports Analytics & Data Science Intern',
       co: 'UToledo Athletics',
       p: 'Oct 2025 – Present',
       loc: 'Toledo, OH',
       t: 'Internship',
-      active: true,
       color: '#2DD4C8',
+      logo: '/Images/Primary_Logo_for_Dark_Background.png',
       d: 'Collaborate with Athletics Directors and Coaches to develop ML-Powered analytics solutions for athletic performance improvement. Developed statistical models for evaluating roster efficiency and optimizing student-athlete benefit allocation. Created DOMO dashboards translating complex data into actionable insights for coaches and administrators. Facilitated onboarding and technical training for incoming interns.',
       achievements: ['ML-powered roster efficiency models', 'DOMO dashboards for coaches & admins', 'Onboarded & trained incoming interns', 'Featured in official UToledo Rockets media'],
       s: ['Python', 'scikit-learn', 'DOMO', 'Statistical Modeling', 'ML'],
@@ -339,8 +350,9 @@ function Experience() {
       co: 'First Solar',
       p: 'Jan 2026 – May 2026',
       loc: 'Perrysburg, OH',
-      t: 'Full-time',
+      t: 'Internship',
       color: '#F0B429',
+      logo: '/Images/first%20solar_logo.png',
       d: 'Functioned as an AI Engineer & Data Engineer, delivering AI solutions within Microsoft for the Business. Developed and tested automated workflows using Power Automate. Integrated Azure AI services into Microsoft 365 applications for enhanced functionality. Spearheaded project workflows for a team of two additional interns, coordinating contributions to meet critical milestones. Created connectors and scripts to support enterprise-level automation.',
       achievements: ['Agentic AI solutions in Copilot Studio', 'Automated Power Automate workflows', 'Led intern team across project milestones', 'Azure AI × M365 enterprise integration'],
       s: ['Copilot Studio', 'Azure AI', 'Power Automate', 'M365', 'Python'],
@@ -352,6 +364,7 @@ function Experience() {
       loc: 'University of Toledo',
       t: 'Research Co-Op',
       color: '#4B7BF5',
+      logo: '/Images/VERT%20UToledo%20Logos%202019%20OL_RGB_VERT%20Reverse.png',
       d: 'Led research on next-generation drone autonomy integrating Graph-Based Reinforcement Learning, Visual-Inertial Odometry, UWB, and real-time Human-in-the-Loop collaboration for indoor/outdoor GPS-denied navigation. Built GNN/GAT with PPO/SAC algorithms and MAML meta-learning for rapid policy adaptation. Designed AWS DeepRacer-inspired interface for real-time reward shaping. Authored ACM CSUR survey paper on AI failure taxonomy.',
       achievements: ['72.8% zero-shot UAV deployment via MAML', '97.3% HITL success at sub-100ms', 'ACM CSUR survey paper (under review)', 'USRCAP $3,000 fellowship'],
       s: ['PyTorch', 'ROS 2', 'MAML', 'YOLO11', 'AirSim', 'NVIDIA Jetson', 'GNN/GAT'],
@@ -363,6 +376,7 @@ function Experience() {
       loc: 'Toledo, OH',
       t: 'Industry Project',
       color: '#A78BFA',
+      logo: '/Images/grange_insurance_logo.png',
       d: 'Led interdisciplinary team delivering a production-grade MLOps insurance risk model. Designed Airflow + MLflow pipeline with drift monitoring and HITL gates — automating the full ML lifecycle from data ingestion through deployment. Achieved R² = 0.982, outperforming the GLM baseline by 26%, while reducing manual actuarial review by 75%.',
       achievements: ['R² = 0.982 · 26% over GLM baseline', '75% reduction in manual review', 'Airflow + MLflow full MLOps pipeline', 'AWS S3/EC2 production infrastructure'],
       s: ['XGBoost', 'Airflow', 'MLflow', 'AWS S3/EC2', 'Bayesian Opt.', 'SHAP', 'Docker'],
@@ -374,6 +388,7 @@ function Experience() {
       loc: 'Toledo, OH',
       t: 'Co-Op',
       color: '#F07832',
+      logo: '/Images/park%20place_logo.png',
       d: 'Architected and implemented a data governance framework consolidating security data from Active Directory, Cisco AMP, and Microsoft Defender into a centralized PostgreSQL database. Implemented validation rules catching 95% of non-compliant entries during ingestion. Revamped disaster recovery protocol — achieving zero data loss across all quarterly DR simulations.',
       achievements: ['15% faster incident response', '95% data integrity rate', 'Zero data loss across all DR tests', '3 enterprise security sources unified'],
       s: ['PostgreSQL', 'pgAdmin', 'Active Directory', 'Cisco AMP', 'Data Governance', 'SQL'],
@@ -385,6 +400,7 @@ function Experience() {
       loc: 'Toledo, OH',
       t: 'Part-time',
       color: '#22C55E',
+      logo: '/Images/VERT%20UToledo%20Logos%202019%20OL_RGB_VERT%20Reverse.png',
       d: 'Resolved 60% of recurring IT issues by streamlining account troubleshooting for students and medical staff. Achieved 100% compliance with FERPA and HIPAA guidelines while handling sensitive data across platforms. Revamped the account access troubleshooting system by authoring detailed guides that slashed repeat issues by 40%. Delivered cross-platform support for students, faculty, patients, and Doctors.',
       achievements: ['60% fewer recurring IT issues', '100% FERPA & HIPAA compliance', '40% reduction in repeat incidents', 'Cross-platform support: students & medical staff'],
       s: ['IT Support', 'FERPA', 'HIPAA', 'Troubleshooting', 'Documentation'],
@@ -392,7 +408,7 @@ function Experience() {
   ];
   const { ref, visible } = useReveal();
   return (
-    <Section id="experience" style={{ background: 'rgba(15,17,25,0.92)' }}>
+    <Section id="experience" style={{ background: 'rgba(15,17,25,0.82)' }}>
       <SH n="02" label="Experience" sub="Where the work actually happened." color="var(--purple)" />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {jobs.map((job, i) => (
@@ -401,7 +417,9 @@ function Experience() {
             onClick={() => setOpen(open === i ? null : i)}
             style={{
               cursor: 'pointer',
-              background: open === i ? `${job.color}13` : `${job.color}08`,
+              background: open === i ? `color-mix(in oklch, ${job.color} 7%, transparent)` : `color-mix(in oklch, ${job.color} 3%, transparent)`,
+              backdropFilter: 'blur(10px) saturate(1.15)',
+              WebkitBackdropFilter: 'blur(10px) saturate(1.15)',
               border: `1px solid ${open === i ? job.color + '60' : job.color + '30'}`,
               transition: 'all 0.28s cubic-bezier(0.16,1,0.3,1)',
               borderRadius: 10,
@@ -423,9 +441,13 @@ function Experience() {
                   <div style={{ fontFamily: SERIF, fontSize: 19, fontWeight: 400, color: '#F2EDD8', letterSpacing: '-0.01em', lineHeight: 1.25, paddingBottom: '0.05em' }}>{job.r}</div>
                   <div style={{ fontSize: 13, color: '#B8B4A4', marginTop: 4 }}>{job.co} · {job.loc}</div>
                 </div>
-                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                <div style={{ textAlign: 'right', flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+                  {job.logo && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={job.logo} alt={`${job.co} logo`} style={{ height: 50, maxWidth: 150, objectFit: 'contain', objectPosition: 'right center', opacity: 0.95 }} />
+                  )}
                   <div style={{ fontFamily: MONO, fontSize: 11, color: job.color, letterSpacing: '0.06em' }}>{job.p}</div>
-                  <span style={{ fontSize: 18, color: job.color, marginTop: 8, display: 'inline-block', transition: 'transform 0.3s', transform: open === i ? 'rotate(45deg)' : 'none' }}>+</span>
+                  <span style={{ fontSize: 18, color: job.color, display: 'inline-block', transition: 'transform 0.3s', transform: open === i ? 'rotate(45deg)' : 'none' }}>+</span>
                 </div>
               </div>
 
@@ -1119,6 +1141,7 @@ function Now() {
       color: '#4B7BF5',
       items: [
         { title: 'Drive AI Transformation in Your Organization', sub: 'Microsoft · Course AB-731T00-A' },
+        { title: 'Oracle Cloud Foundations Associate', sub: 'Oracle · Certification prep underway' },
       ],
     },
     {
@@ -1140,14 +1163,14 @@ function Now() {
       statusColor: '#F07832',
       color: '#F07832',
       items: [
-        { title: 'Full-Time Role', sub: 'Actively interviewing' },
+        { title: 'Developer I · First Solar', sub: 'Offer accepted · Starting June 1, 2026' },
         { title: 'Microsoft Certified: AI Transformation Leader', sub: 'Exam prep underway' },
       ],
     },
   ];
 
   return (
-    <Section id="now" style={{ background: 'rgba(15,17,25,0.92)' }}>
+    <Section id="now" style={{ background: 'rgba(15,17,25,0.82)' }}>
       {/* Header */}
       <div style={{ marginBottom: 52 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 10 }}>
@@ -1164,7 +1187,10 @@ function Now() {
         style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
         {cards.map((card) => (
           <div key={card.category} style={{
-            background: 'rgba(242,237,216,0.02)',
+            background: 'color-mix(in oklch, var(--foreground) 2%, transparent)',
+            backdropFilter: 'blur(12px) saturate(1.2)',
+            WebkitBackdropFilter: 'blur(12px) saturate(1.2)',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.12)',
             border: `1px solid ${card.color}44`,
             borderRadius: 10,
             padding: '24px 26px',
