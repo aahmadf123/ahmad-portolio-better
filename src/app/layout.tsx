@@ -3,6 +3,7 @@ import { Chakra_Petch } from "next/font/google";
 import { ViewTransition } from "react";
 import "./globals.css";
 import { MagneticCursor } from "@/components/ui/magnetic-cursor";
+import { PostHogProvider } from "@/components/PostHogProvider";
 
 const chakraPetch = Chakra_Petch({
   subsets: ["latin"],
@@ -15,6 +16,11 @@ const chakraPetch = Chakra_Petch({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ahmadfx.xyz"),
   title: "Ahmad Firas — AI Researcher & Engineer",
+  icons: {
+    icon: "/Images/portfolio_logo_new.png",
+    shortcut: "/Images/portfolio_logo_new.png",
+    apple: "/Images/portfolio_logo_new.png",
+  },
   description:
     "Ahmad Firas — AI Researcher, Microsoft Solution Developer. Building agentic AI, autonomous UAV systems, and production-grade ML infrastructure.",
   keywords: ["AI Research", "Machine Learning", "Computer Engineering", "UAV", "MLOps", "Agentic AI"],
@@ -25,12 +31,12 @@ export const metadata: Metadata = {
     title: "Ahmad Firas — AI Researcher & Engineer",
     description:
       "Building AI systems for uncertain environments: from UAV autonomy research to enterprise agentic workflows.",
-    images: [{ url: "/Images/portfolio_logo.png" }],
+    images: [{ url: "/Images/portfolio_logo_new.png" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Ahmad Firas — AI Researcher & Engineer",
-    images: ["/Images/portfolio_logo.png"],
+    images: ["/Images/portfolio_logo_new.png"],
   },
 };
 
@@ -38,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={chakraPetch.variable}>
       <body suppressHydrationWarning>
+        <PostHogProvider>
         <a href="#hero" className="skip-link">
           Skip to main content
         </a>
@@ -51,18 +58,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </ViewTransition>
         <script
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: `
-              (function(){
-                window.addEventListener('scroll',function(){
-                  var p=window.scrollY/Math.max(1,document.body.scrollHeight-window.innerHeight);
-                  var b=document.getElementById('scroll-bar');
-                  if(b)b.style.transform='scaleX('+p+')';
-                },{passive:true});
-              })();
-            `,
+            __html: `(function(){window.addEventListener('scroll',function(){var p=window.scrollY/Math.max(1,document.body.scrollHeight-window.innerHeight);var b=document.getElementById('scroll-bar');if(b)b.style.transform='scaleX('+p+')';},{passive:true});})();`,
           }}
         />
+        </PostHogProvider>
       </body>
     </html>
   );

@@ -274,7 +274,7 @@ function About() {
           <h2 style={{ fontFamily: SERIF, fontSize: 32, fontWeight: 400, lineHeight: 1.25, letterSpacing: '-0.02em', color: '#F2EDD8', paddingBottom: '0.08em' }}>
             Chasing the gap between what AI can do in a lab and what it actually does when someone&apos;s counting on it.
           </h2>
-          <p style={{ fontSize: 16, lineHeight: 1.75, color: '#B8B4A4', marginTop: 24 }}>I&apos;m a Computer Science &amp; Engineering graduate from the University of Toledo. My work has moved across autonomous drone systems, enterprise AI, sports analytics, and data engineering — not because I planned a portfolio, but because I follow whatever problem is genuinely hard.</p>
+          <p style={{ fontSize: 16, lineHeight: 1.75, color: '#B8B4A4', marginTop: 24 }}>Computer Science &amp; Engineering graduate from the University of Toledo. My work spans autonomous drone systems, enterprise AI, sports analytics, and data engineering. Not by design, but by instinct: I go where the hardest problems are.</p>
           <div style={{ marginTop: 28, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <HoverPeek url="https://linkedin.com/in/ahmadfirasazfar">
               <a href="https://linkedin.com/in/ahmadfirasazfar" target="_blank" rel="noopener" style={{ fontFamily: MONO, fontSize: 11, padding: '10px 20px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', borderRadius: 5, textTransform: 'uppercase', letterSpacing: '0.06em' }}>LinkedIn ↗</a>
@@ -1217,6 +1217,9 @@ function Contact() {
         .contact-email-wrap:hover { border-color: rgba(14,165,233,0.65); background: rgba(14,165,233,0.10); }
         .contact-channel-row:hover { background: rgba(242,237,216,0.03); }
         .contact-resume-link:hover { color: #B8B4A4; border-bottom-color: rgba(242,237,216,0.2); }
+        @media (max-width: 767px) {
+          .contact-layout-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+        }
       `}</style>
 
       {/* Ghost watermark */}
@@ -1237,7 +1240,7 @@ function Contact() {
       </div>
 
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`} style={{ position: 'relative', zIndex: 1 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: 52, alignItems: 'start' }}>
+        <div className="contact-layout-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: 52, alignItems: 'start' }}>
 
           {/* ── Left ── */}
           <div>

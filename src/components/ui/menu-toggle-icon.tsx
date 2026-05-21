@@ -10,41 +10,45 @@ type MenuToggleProps = React.ComponentProps<'svg'> & {
 export function MenuToggleIcon({
   open,
   className,
-  fill = 'none',
-  stroke = 'currentColor',
-  strokeWidth = 2.5,
-  strokeLinecap = 'round',
-  strokeLinejoin = 'round',
-  duration = 500,
+  duration = 300,
   ...props
 }: MenuToggleProps) {
   return (
     <svg
-      strokeWidth={strokeWidth}
-      fill={fill}
-      stroke={stroke}
-      viewBox="0 0 32 32"
-      strokeLinecap={strokeLinecap}
-      strokeLinejoin={strokeLinejoin}
-      className={cn(
-        'transition-transform ease-in-out',
-        open && '-rotate-45',
-        className,
-      )}
-      style={{ transitionDuration: `${duration}ms` }}
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      className={cn('overflow-visible', className)}
       {...props}
     >
-      <path
-        className={cn(
-          'transition-all ease-in-out',
-          open
-            ? '[stroke-dasharray:20_300] [stroke-dashoffset:-32.42px]'
-            : '[stroke-dasharray:12_63]',
-        )}
-        style={{ transitionDuration: `${duration}ms` }}
-        d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
+      {/* Top bar */}
+      <line
+        x1="2" y1="5" x2="18" y2="5"
+        style={{
+          transformOrigin: '10px 5px',
+          transition: `transform ${duration}ms ease`,
+          transform: open ? 'translateY(5px) rotate(45deg)' : 'none',
+        }}
       />
-      <path d="M7 16 27 16" />
+      {/* Middle bar */}
+      <line
+        x1="2" y1="10" x2="18" y2="10"
+        style={{
+          transition: `opacity ${duration}ms ease`,
+          opacity: open ? 0 : 1,
+        }}
+      />
+      {/* Bottom bar */}
+      <line
+        x1="2" y1="15" x2="18" y2="15"
+        style={{
+          transformOrigin: '10px 15px',
+          transition: `transform ${duration}ms ease`,
+          transform: open ? 'translateY(-5px) rotate(-45deg)' : 'none',
+        }}
+      />
     </svg>
   );
 }
