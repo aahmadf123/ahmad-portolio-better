@@ -162,6 +162,7 @@ function Hero() {
               <a href="#projects" data-magnetic="" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', background: '#F0B429', color: '#0B0D14', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase' }}>View Work ↗</a>
               <a href="#contact" data-magnetic="" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase' }}>Get in Touch</a>
               <a href="/docs/Ahmad_Resume_Developer_I_FirstSolar.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid rgba(242,237,216,0.1)', color: FG3, fontFamily: MONO, fontSize: 10, letterSpacing: '0.07em', borderRadius: 5, textTransform: 'uppercase' }}>Resume ↓</a>
+              <a href="/docs/CeD.26D8-NDTX-AGEW.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid rgba(45,212,200,0.35)', color: '#2DD4C8', fontFamily: MONO, fontSize: 10, letterSpacing: '0.07em', borderRadius: 5, textTransform: 'uppercase' }}>Degree ↓</a>
             </div>
           </div>
 
@@ -1312,6 +1313,13 @@ function Contact() {
                 className="contact-resume-link"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: '#4E4B40', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', paddingBottom: 4, borderBottom: '1px solid rgba(242,237,216,0.08)', transition: 'color 0.15s, border-color 0.15s' }}>
                 Resume PDF ↓
+              </a>
+              <a
+                href="/docs/CeD.26D8-NDTX-AGEW.pdf"
+                target="_blank" rel="noopener"
+                className="contact-resume-link"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: '#4E4B40', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', paddingBottom: 4, borderBottom: '1px solid rgba(242,237,216,0.08)', transition: 'color 0.15s, border-color 0.15s', marginLeft: 16 }}>
+                Degree PDF ↓
               </a>
             </div>
 

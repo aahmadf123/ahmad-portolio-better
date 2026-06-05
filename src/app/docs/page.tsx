@@ -23,6 +23,13 @@ const DOCS = [
     available: true,
   },
   {
+    id: 'diploma',
+    label: 'Degree',
+    description: 'Official digital degree certificate. Certificate appears on page 1; verification metadata on page 2.',
+    file: '/docs/CeD.26D8-NDTX-AGEW.pdf',
+    available: true,
+  },
+  {
     id: 'academic-cv',
     label: 'Academic CV',
     description: 'Research history, publications, conference contributions, and affiliations.',
