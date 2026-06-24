@@ -1107,16 +1107,47 @@ function Skills() {
         {/* Certifications */}
         <div style={{ marginTop: 52 }}>
           <div style={{ fontFamily: MONO, fontSize: 11, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Certifications</div>
-          <div style={{ background: 'rgba(167,139,250,0.05)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: 12, padding: '28px 32px', display: 'flex', alignItems: 'flex-start', gap: 28 }}>
-            <div style={{ width: 52, height: 52, borderRadius: 10, background: 'rgba(167,139,250,0.12)', border: '1px solid rgba(167,139,250,0.28)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 700, color: '#A78BFA', letterSpacing: '0.04em' }}>BO</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+            {/* Oracle Cloud Infrastructure Foundations Associate */}
+            <div style={{ background: 'rgba(240,120,50,0.05)', border: '1px solid rgba(240,120,50,0.22)', borderRadius: 12, padding: '28px 32px', display: 'flex', alignItems: 'flex-start', gap: 28 }}>
+              <img src="/Images/Oracle_Foundation_Badge.jpg" alt="Oracle Cloud Infrastructure Foundations Associate badge" title="Click to enlarge" onClick={() => openLb('/Images/Oracle_Foundation_Badge.jpg', 'Oracle Cloud Infrastructure Foundations Associate')} style={{ width: 76, height: 76, borderRadius: 10, objectFit: 'contain', flexShrink: 0, cursor: 'zoom-in', background: 'rgba(240,120,50,0.08)', border: '1px solid rgba(240,120,50,0.2)' }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: MONO, fontSize: 11, color: '#F07832', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Oracle · Cloud Infrastructure</div>
+                <div style={{ fontFamily: SANS, fontSize: 20, fontWeight: 700, color: '#F2EDD8', lineHeight: 1.2, marginBottom: 10 }}>Cloud Infrastructure Foundations Associate</div>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: '#B8B4A4', maxWidth: 600, marginBottom: 14 }}>Foundational knowledge of Oracle Cloud Infrastructure (OCI) core services — compute, storage, networking, identity and access management, security, pricing, and the OCI architecture model.</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 16 }}>
+                  {['OCI', 'Cloud Computing', 'IAM', 'Networking', 'Cloud Security'].map(s => <SkillChip key={s} color="#F07832">{s}</SkillChip>)}
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, alignItems: 'center' }}>
+                  <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=FD6DAFE9CD1BB5971BDD46D7138EF1789ACED34BB47B6CE5764199FFF18FD6DC" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: '#F07832', letterSpacing: '0.07em', textTransform: 'uppercase' }}>Verify Badge ↗</a>
+                  <a href="/docs/Oracle_Foundation_eCertificate.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.07em', textTransform: 'uppercase' }}>Certificate ↓</a>
+                </div>
+              </div>
             </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: MONO, fontSize: 11, color: '#A78BFA', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Black Opal · Quantum Computing</div>
-              <div style={{ fontFamily: SANS, fontSize: 20, fontWeight: 700, color: '#F2EDD8', lineHeight: 1.2, marginBottom: 10 }}>Superposition</div>
-              <p style={{ fontSize: 14, lineHeight: 1.7, color: '#B8B4A4', maxWidth: 600, marginBottom: 14 }}>Qubit state manipulation, superposition principles, and measurement postulates. Foundational for quantum circuit design and quantum-enhanced autonomous systems research.</p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
-                {['Quantum Computing', 'Qubits', 'Superposition', 'Quantum Circuits'].map(s => <SkillChip key={s} color="#A78BFA">{s}</SkillChip>)}
+            {/* Q-CTRL Black Opal · Introduction */}
+            <div style={{ background: 'rgba(167,139,250,0.05)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: 12, padding: '28px 32px', display: 'flex', alignItems: 'flex-start', gap: 28 }}>
+              <img src="/Images/BlackOpal_IntroductionBadge.png" alt="Q-CTRL Black Opal Introduction badge" title="Click to enlarge" onClick={() => openLb('/Images/BlackOpal_IntroductionBadge.png', 'Q-CTRL Black Opal · Introduction')} style={{ width: 76, height: 76, borderRadius: 10, objectFit: 'contain', flexShrink: 0, cursor: 'zoom-in', background: 'rgba(167,139,250,0.08)', border: '1px solid rgba(167,139,250,0.2)' }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: MONO, fontSize: 11, color: '#A78BFA', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Q-CTRL Black Opal · Quantum Computing</div>
+                <div style={{ fontFamily: SANS, fontSize: 20, fontWeight: 700, color: '#F2EDD8', lineHeight: 1.2, marginBottom: 10 }}>Introduction</div>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: '#B8B4A4', maxWidth: 600, marginBottom: 14 }}>An introduction to quantum technology and how it works. Covers what quantum computing is, how quantum computers work, whether they&apos;ll break the internet, how to build one, and a foundational analogy toolbox.</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 16 }}>
+                  {['Quantum Computing', 'Fundamentals', 'Quantum Hardware'].map(s => <SkillChip key={s} color="#A78BFA">{s}</SkillChip>)}
+                </div>
+                <a href="https://black.q-ctrl.com/badge/df0a24e3-c81f-4696-b879-860c7b777fb3" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: '#A78BFA', letterSpacing: '0.07em', textTransform: 'uppercase' }}>Verify Badge ↗</a>
+              </div>
+            </div>
+            {/* Q-CTRL Black Opal · Superposition */}
+            <div style={{ background: 'rgba(167,139,250,0.05)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: 12, padding: '28px 32px', display: 'flex', alignItems: 'flex-start', gap: 28 }}>
+              <img src="/Images/BlackOpal_SuperpositionBadge.png" alt="Q-CTRL Black Opal Superposition badge" title="Click to enlarge" onClick={() => openLb('/Images/BlackOpal_SuperpositionBadge.png', 'Q-CTRL Black Opal · Superposition')} style={{ width: 76, height: 76, borderRadius: 10, objectFit: 'contain', flexShrink: 0, cursor: 'zoom-in', background: 'rgba(167,139,250,0.08)', border: '1px solid rgba(167,139,250,0.2)' }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: MONO, fontSize: 11, color: '#A78BFA', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Q-CTRL Black Opal · Quantum Computing</div>
+                <div style={{ fontFamily: SANS, fontSize: 20, fontWeight: 700, color: '#F2EDD8', lineHeight: 1.2, marginBottom: 10 }}>Superposition</div>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: '#B8B4A4', maxWidth: 600, marginBottom: 14 }}>The superposition principle — where it comes from, why it&apos;s necessary, and what you can do with it. Covers superposition in waves, in the quantum world, in the abstract, and its role in quantum computing.</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 16 }}>
+                  {['Quantum Computing', 'Qubits', 'Superposition', 'Quantum Circuits'].map(s => <SkillChip key={s} color="#A78BFA">{s}</SkillChip>)}
+                </div>
+                <a href="https://black.q-ctrl.com/badge/70fdb1da-8ba7-40ea-ad6b-2460f7542376" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: '#A78BFA', letterSpacing: '0.07em', textTransform: 'uppercase' }}>Verify Badge ↗</a>
               </div>
             </div>
           </div>
@@ -1142,7 +1173,6 @@ function Now() {
       color: '#4B7BF5',
       items: [
         { title: 'Drive AI Transformation in Your Organization', sub: 'Microsoft · Course AB-731T00-A' },
-        { title: 'Oracle Cloud Foundations Associate', sub: 'Oracle · Certification prep underway' },
       ],
     },
     {

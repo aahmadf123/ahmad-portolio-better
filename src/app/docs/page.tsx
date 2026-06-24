@@ -30,6 +30,13 @@ const DOCS = [
     available: true,
   },
   {
+    id: 'oci-foundations',
+    label: 'Oracle OCI Cert',
+    description: 'Oracle Cloud Infrastructure Foundations Associate — official eCertificate. Verifiable via Oracle CertView.',
+    file: '/docs/Oracle_Foundation_eCertificate.pdf',
+    available: true,
+  },
+  {
     id: 'academic-cv',
     label: 'Academic CV',
     description: 'Research history, publications, conference contributions, and affiliations.',
