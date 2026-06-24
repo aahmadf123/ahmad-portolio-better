@@ -1172,6 +1172,7 @@ function Now() {
       statusColor: '#4B7BF5',
       color: '#4B7BF5',
       items: [
+        { title: 'Become an Application Integration Professional', sub: 'Oracle · OCI Application Integration' },
         { title: 'Drive AI Transformation in Your Organization', sub: 'Microsoft · Course AB-731T00-A' },
       ],
     },
@@ -1194,7 +1195,7 @@ function Now() {
       statusColor: '#F07832',
       color: '#F07832',
       items: [
-        { title: 'Developer I · First Solar', sub: 'Offer accepted · Starting June 1, 2026' },
+        { title: 'OCI Certified Application Integration Professional', sub: 'Oracle · Exam 1Z0-1042-26' },
         { title: 'Microsoft Certified: AI Transformation Leader', sub: 'Exam prep underway' },
       ],
     },
@@ -1207,7 +1208,7 @@ function Now() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 10 }}>
           <span style={{ display: 'inline-block', width: 22, height: 1.5, background: '#2DD4C8', opacity: 0.6, flexShrink: 0 }} />
           <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#2DD4C8' }}>Now</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Updated · May 2026</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Updated · June 2026</span>
         </div>
         <p style={{ fontSize: 15, color: '#B8B4A4', maxWidth: 460, lineHeight: 1.65, fontFamily: SANS }}>
           What I&apos;m actively learning, building, and chasing outside of work.
