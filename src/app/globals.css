@@ -1,5 +1,29 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "../styles/theme.css";
+
+/* Expose design tokens as Tailwind v4 utilities (bg-surface, text-primary, …) */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-primary: var(--primary);
+  --color-gold: var(--gold);
+  --color-blue: var(--blue);
+  --color-purple: var(--purple);
+  --color-pink: var(--pink);
+  --color-sky: var(--sky);
+  --color-orange: var(--orange);
+  --color-green: var(--green);
+  --color-red: var(--red);
+  --color-text2: var(--text2);
+  --color-text3: var(--text3);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-code: var(--font-code);
+  --font-hand: var(--font-hand);
+}
 
 .skip-link {
   position: absolute;
@@ -9,81 +33,13 @@
   padding: 10px 18px;
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-chakra);
+  font-family: var(--font-code);
   font-size: 13px;
   text-decoration: none;
-  outline: 2px solid var(--amber);
+  outline: 2px solid var(--primary);
 }
 .skip-link:focus {
   top: 8px;
-}
-
-:root {
-  --background: #0B0D14;
-  --foreground: #F2EDD8;
-  --card: #131520;
-  --card-foreground: #F2EDD8;
-  --popover: #131520;
-  --popover-foreground: #F2EDD8;
-  --primary: #F0B429;
-  --primary-foreground: #0B0D14;
-  --secondary: #131520;
-  --secondary-foreground: #F2EDD8;
-  --muted: #1A1D2C;
-  --muted-foreground: #B8B4A4;
-  --accent: #1A1D2C;
-  --accent-foreground: #F2EDD8;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: rgba(242, 237, 216, 0.08);
-  --input: rgba(242, 237, 216, 0.08);
-  --ring: #F0B429;
-  --radius: 0.5rem;
-
-  --amber: #F0B429;
-  --blue: #4B7BF5;
-  --teal: #2DD4C8;
-  --orange: #F07832;
-  --purple: #A78BFA;
-  --pink: #F472B6;
-  --sky: #0EA5E9;
-  --green: #22C55E;
-  --red: #EF4444;
-  --surf: #131520;
-  --surf2: #1A1D2C;
-  --text2: #B8B4A4;
-  --text3: #86837A;
-  --bd: rgba(242, 237, 216, 0.08);
-  --bd2: rgba(242, 237, 216, 0.15);
-
-  --color-primary: #0B0D14;
-  --color-secondary: #131520;
-  --color-accent: #F0B429;
-  --color-text: #F2EDD8;
-  --color-text-muted: rgba(245, 245, 245, 0.7);
-  --color-border: rgba(255, 255, 255, 0.05);
-  --color-overlay: rgba(0, 0, 0, 0.5);
-  --font-primary: var(--font-chakra), 'Chakra Petch', sans-serif;
-  --font-display: var(--font-chakra), 'Chakra Petch', sans-serif;
-  --font-serif-stack: var(--font-chakra), 'Chakra Petch', sans-serif;
-  --font-mono-stack: var(--font-chakra), 'Chakra Petch', monospace;
-  --text-xs: 0.7rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.2rem;
-  --text-xl: 1.5rem;
-  --text-2xl: 2rem;
-  --text-3xl: 3rem;
-  --text-mega: clamp(7rem, 15vw, 12rem);
-  --transition-fast: 0.2s ease;
-  --transition-medium: 0.3s ease;
-  --transition-slow: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
 }
 
 *, *::before, *::after {
@@ -100,15 +56,13 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-chakra), 'Chakra Petch', sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
   line-height: 1.65;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  font-feature-settings: "ss01", "cv11";
-  /* Subtle dark halo keeps text readable over the animated knowledge graph */
-  text-shadow: 0 0 24px rgba(11, 13, 20, 0.85), 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
+/* Faint dotted grid — atmospheric texture, teal-tinted */
 body::before {
   content: '';
   position: fixed;
@@ -116,21 +70,21 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background-image:
-    radial-gradient(circle, rgba(240, 180, 41, 0.045) 1px, transparent 1px),
-    radial-gradient(circle, rgba(240, 180, 41, 0.022) 1px, transparent 1px);
+    radial-gradient(circle, rgba(45, 212, 191, 0.035) 1px, transparent 1px),
+    radial-gradient(circle, rgba(45, 212, 191, 0.016) 1px, transparent 1px);
   background-size: 28px 48px, 28px 48px;
   background-position: 0 0, 14px 24px;
 }
 
-::selection { background: rgba(240, 180, 41, 0.22); color: #fff; }
+::selection { background: rgba(45, 212, 191, 0.24); color: #fff; }
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--background); }
-::-webkit-scrollbar-thumb { background: rgba(240, 180, 41, 0.28); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: rgba(45, 212, 191, 0.3); border-radius: 2px; }
 @media (max-width: 768px) { ::-webkit-scrollbar { width: 0; } }
 
 a { text-decoration: none; color: inherit; }
 
-/* NebulaCube section layout */
+/* Legacy NebulaCube section layout (retired with the old background in Phase 2) */
 .content { position: relative; z-index: 1; }
 .section {
   min-height: 100vh;
@@ -140,38 +94,6 @@ a { text-decoration: none; color: inherit; }
   padding: 0 8vw;
 }
 .section-inner { max-width: 640px; }
-.title {
-  font-family: var(--font-chakra), 'Chakra Petch', sans-serif;
-  font-size: clamp(56px, 10vw, 128px);
-  font-weight: 400;
-  line-height: 0.92;
-  letter-spacing: -0.025em;
-  color: #F2EDD8;
-  opacity: 0;
-  transform: translateY(30px);
-}
-.description {
-  font-size: 18px;
-  line-height: 1.72;
-  color: #B8B4A4;
-  max-width: 480px;
-  margin-top: 24px;
-  opacity: 0;
-  transform: translateY(20px);
-}
-.footer {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-chakra), 'Chakra Petch', monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  color: rgba(242, 237, 216, 0.3);
-  text-transform: uppercase;
-  z-index: 20;
-  pointer-events: none;
-}
 
 /* Reveal */
 .reveal {
@@ -182,7 +104,6 @@ a { text-decoration: none; color: inherit; }
 .reveal.in { opacity: 1; transform: translateY(0); }
 
 /* ── Scroll-Driven Reveals (Progressive Enhancement) ─────────── */
-/* Chrome/Edge/Safari: override JS-based reveal with scroll timeline */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .reveal {
@@ -207,7 +128,7 @@ a { text-decoration: none; color: inherit; }
   to   { opacity: 0.05; transform: none; }
 }
 
-/* Pulse — glass breathe (no box-shadow glow) */
+/* Pulse — glass breathe */
 @keyframes glass-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.35; transform: scale(0.78); }
@@ -227,14 +148,15 @@ a { text-decoration: none; color: inherit; }
   50% { transform: translateY(5px); }
 }
 
-/* Scroll progress bar */
+/* Scroll progress bar — the film-reel position marker */
 #scroll-bar {
   position: fixed;
   top: 0;
   left: 0;
   height: 2px;
-  background: var(--amber);
-  opacity: 0.85;
+  background: linear-gradient(90deg, var(--primary), var(--gold));
+  box-shadow: 0 0 12px rgba(45, 212, 191, 0.45);
+  opacity: 0.9;
   z-index: 9997;
   transform-origin: left;
   transform: scaleX(0);
@@ -252,7 +174,7 @@ a { text-decoration: none; color: inherit; }
   *, *::before, *::after { cursor: none !important; }
 }
 
-/* ── Card glass specular sheen (replaces cursor-tracked glow) ─── */
+/* ── Card glass specular sheen ────────────────────────────────── */
 .card-project { position: relative; isolation: isolate; }
 .card-glass-sheen {
   position: absolute;
@@ -280,7 +202,6 @@ a { text-decoration: none; color: inherit; }
     animation: none;
   }
 
-  /* Shared element groups: expo ease */
   ::view-transition-group(*) {
     animation-duration: 420ms;
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -299,34 +220,48 @@ a { text-decoration: none; color: inherit; }
     animation: vt-fade-in 300ms cubic-bezier(0.16, 1, 0.3, 1) 60ms both;
   }
 
-  /* Directional: forward (going deeper) */
+  /* Directional film-strip: forward (going deeper) — letterbox bars close in,
+     the frame slides, then the bars release */
   ::view-transition-old(.nav-forward) {
-    --vt-slide: -50px;
-    animation: vt-fade-out 150ms ease-in both,
-               vt-slide-out 400ms ease-in-out both;
+    --vt-slide: -60px;
+    animation: vt-fade-out 160ms ease-in both,
+               vt-slide-out 420ms ease-in-out both,
+               vt-letterbox-out 420ms ease-in-out both;
   }
   ::view-transition-new(.nav-forward) {
-    --vt-slide: 50px;
-    animation: vt-fade-in 210ms ease-out 150ms both,
-               vt-slide-in 400ms ease-in-out both;
+    --vt-slide: 60px;
+    animation: vt-fade-in 220ms ease-out 150ms both,
+               vt-slide-in 420ms ease-in-out both,
+               vt-letterbox-in 420ms ease-in-out both;
   }
 
   /* Directional: back */
   ::view-transition-old(.nav-back) {
-    --vt-slide: 50px;
-    animation: vt-fade-out 150ms ease-in both,
-               vt-slide-out 400ms ease-in-out both;
+    --vt-slide: 60px;
+    animation: vt-fade-out 160ms ease-in both,
+               vt-slide-out 420ms ease-in-out both,
+               vt-letterbox-out 420ms ease-in-out both;
   }
   ::view-transition-new(.nav-back) {
-    --vt-slide: -50px;
-    animation: vt-fade-in 210ms ease-out 150ms both,
-               vt-slide-in 400ms ease-in-out both;
+    --vt-slide: -60px;
+    animation: vt-fade-in 220ms ease-out 150ms both,
+               vt-slide-in 420ms ease-in-out both,
+               vt-letterbox-in 420ms ease-in-out both;
   }
 
   @keyframes vt-fade-out  { to   { opacity: 0; } }
   @keyframes vt-fade-in   { from { opacity: 0; } }
   @keyframes vt-slide-out { to   { translate: var(--vt-slide, 0); } }
   @keyframes vt-slide-in  { from { translate: var(--vt-slide, 0); } }
+  @keyframes vt-letterbox-out {
+    0%   { clip-path: inset(0 0 0 0); }
+    100% { clip-path: inset(7% 0 7% 0); filter: blur(2px); }
+  }
+  @keyframes vt-letterbox-in {
+    0%   { clip-path: inset(7% 0 7% 0); filter: blur(2px); }
+    55%  { clip-path: inset(7% 0 7% 0); filter: blur(1px); }
+    100% { clip-path: inset(0 0 0 0); filter: blur(0); }
+  }
 
   /* Shared element morph (field note hero image) */
   ::view-transition-group(.morph) {

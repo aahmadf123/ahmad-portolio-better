@@ -1,0 +1,103 @@
+'use client';
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import { MONO, SERIF, SANS } from '@/components/shared/section-helpers';
+import { projectStatusLabel, type Project } from '@/lib/data/projects';
+
+const STATUS_COLOR: Record<Project['status'], string> = {
+  live: 'var(--green)',
+  'active-build': 'var(--red)',
+  shipped: 'var(--primary)',
+  research: 'var(--blue)',
+};
+
+/**
+ * Movie-poster treatment: dark minimal base (image, title, status); on hover
+ * the image scales, the scrim deepens, and the story line + stat + stacks rise
+ * into view. Click opens the detail modal (shared layoutId morph).
+ */
+export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpen: (p: Project) => void }) {
+  const p = project;
+  const wide = p.span === 2;
+  return (
+    <motion.button
+      layoutId={`poster-${p.idx}`}
+      onClick={() => onOpen(p)}
+      whileHover="hover"
+      initial="rest"
+      animate="rest"
+      data-magnetic=""
+      aria-label={`${p.title} — open project details`}
+      style={{
+        position: 'relative',
+        display: 'block',
+        width: '100%',
+        aspectRatio: wide ? '16/8.2' : '3/3.7',
+        borderRadius: 12,
+        overflow: 'hidden',
+        border: `1px solid color-mix(in srgb, ${p.color} 22%, transparent)`,
+        background: 'var(--surface)',
+        cursor: 'pointer',
+        padding: 0,
+        textAlign: 'left',
+        isolation: 'isolate',
+      }}
+    >
+      {/* image — dimmed and desaturated at rest so bright screenshots stay moody */}
+      <motion.img
+        src={p.image}
+        alt=""
+        variants={{
+          rest: { scale: 1, opacity: 0.34, filter: 'brightness(0.62) saturate(0.7)' },
+          hover: { scale: 1.05, opacity: 0.85, filter: 'brightness(0.95) saturate(1)' },
+        }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', zIndex: 0 }}
+      />
+      {/* scrim */}
+      <motion.div
+        aria-hidden
+        variants={{ rest: { opacity: 1 }, hover: { opacity: 0.92 } }}
+        style={{
+          position: 'absolute', inset: 0, zIndex: 1,
+          background: `linear-gradient(to top, rgba(10,11,15,0.98) 14%, rgba(10,11,15,0.78) 50%, rgba(10,11,15,0.42) 100%), linear-gradient(135deg, color-mix(in srgb, ${p.color} 16%, transparent), transparent 50%)`,
+        }}
+      />
+      {/* edge light on hover */}
+      <motion.div aria-hidden variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }} transition={{ duration: 0.3 }}
+        style={{ position: 'absolute', inset: 0, zIndex: 2, borderRadius: 12, boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${p.color} 55%, transparent), 0 8px 40px -12px color-mix(in srgb, ${p.color} 30%, transparent)` }} />
+
+      {/* content */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 3, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '16px 18px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: p.color, background: 'rgba(10,11,15,0.55)', padding: '3px 8px', borderRadius: 3, backdropFilter: 'blur(4px)' }}>
+            {p.domain} · {p.idx}
+          </span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: STATUS_COLOR[p.status], background: 'rgba(10,11,15,0.55)', padding: '3px 8px', borderRadius: 3, backdropFilter: 'blur(4px)' }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: STATUS_COLOR[p.status], display: 'inline-block' }} />
+            {projectStatusLabel[p.status]}
+          </span>
+        </div>
+
+        <div>
+          <h4 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: wide ? 'clamp(24px, 2.2vw, 34px)' : 'clamp(20px, 1.8vw, 26px)', lineHeight: 1.08, letterSpacing: '-0.015em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.05em' }}>
+            {p.title}
+          </h4>
+          <motion.div
+            variants={{ rest: { opacity: 0, y: 12 }, hover: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <p style={{ fontFamily: SANS, fontSize: 13, lineHeight: 1.6, color: 'var(--text2)', margin: '8px 0 0', maxWidth: 460 }}>{p.story}</p>
+            <div style={{ fontFamily: MONO, fontSize: 10, color: p.color, letterSpacing: '0.05em', marginTop: 8 }}>{p.headline}</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 10 }}>
+              {p.stacks.slice(0, wide ? 6 : 4).map((t) => (
+                <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '2px 7px', background: 'rgba(10,11,15,0.6)', border: '1px solid var(--bd2)', borderRadius: 3, color: 'var(--text2)', letterSpacing: '0.03em' }}>{t}</span>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </motion.button>
+  );
+}

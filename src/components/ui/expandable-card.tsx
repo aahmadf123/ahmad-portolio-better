@@ -51,7 +51,7 @@ export function ExpandableCard({
     closeCardFn.current = () => {
       if ('startViewTransition' in document) {
         try {
-          const vt = (document as any).startViewTransition(() => { flushSync(() => setActive(false)); });
+          const vt = (document as Document & { startViewTransition?: (cb: () => void) => { ready?: Promise<void>; finished?: Promise<void> } }).startViewTransition?.(() => { flushSync(() => setActive(false)); });
           vt?.ready?.catch(() => {});
           vt?.finished?.catch(() => {});
         }
@@ -85,7 +85,7 @@ export function ExpandableCard({
   const handleOpen = React.useCallback(() => {
     if ('startViewTransition' in document) {
       try {
-        const vt = (document as any).startViewTransition(() => { flushSync(() => setActive(true)); });
+        const vt = (document as Document & { startViewTransition?: (cb: () => void) => { ready?: Promise<void>; finished?: Promise<void> } }).startViewTransition?.(() => { flushSync(() => setActive(true)); });
         vt?.ready?.catch(() => {});
         vt?.finished?.catch(() => {});
       } catch { setActive(true); }

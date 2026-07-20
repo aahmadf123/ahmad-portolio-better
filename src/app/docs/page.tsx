@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
@@ -70,7 +71,7 @@ export default function DocsPage() {
         }}
       >
         {/* Back navigation */}
-        <a
+        <Link
           href="/"
           style={{
             display: 'inline-flex',
@@ -89,7 +90,7 @@ export default function DocsPage() {
           onMouseLeave={e => (e.currentTarget.style.color = 'var(--text2)')}
         >
           <span style={{ fontSize: 13 }}>←</span>&nbsp;Portfolio
-        </a>
+        </Link>
 
         {/* Section header */}
         <div style={{ marginBottom: 40, position: 'relative' }}>
