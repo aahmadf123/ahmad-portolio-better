@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ahmadfx.xyz — cinematic portfolio
 
-## Getting Started
+Ahmad Firas's portfolio: a scroll-driven, cinematic personal journey built on
+Next.js 16 (App Router), TypeScript, Tailwind v4, framer-motion, GSAP, and
+vanilla three.js. Deployed on Vercel.
 
-First, run the development server:
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build (Turbopack)
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Editing content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+All site content lives in typed data modules — no component surgery needed:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| What | Where |
+| --- | --- |
+| Identity, tagline, availability, Now Playing status | `src/lib/data/site.ts` |
+| Jobs / experience | `src/lib/data/jobs.ts` |
+| Projects (incl. flagship Football IQ) | `src/lib/data/projects.ts` |
+| Skills + constellation | `src/lib/data/skills.ts` |
+| Certifications (earned + in progress) | `src/lib/data/certs.ts` |
+| Awards / affiliations / research / press | `src/lib/data/*.ts` |
+| Story chapters | `src/lib/data/story.ts` |
+| About lenses + sign-off | `src/lib/data/about.ts` |
+| "Now" section | `src/lib/data/now.ts` |
+| Testimonials (add real quotes here) | `src/lib/data/testimonials.ts` |
+| Technical insight cards | `src/lib/data/insights.ts` |
+| Field notes registry + MDX | `src/lib/field-notes.ts`, `src/content/field-notes/` |
 
-## Learn More
+The sitemap derives from these registries automatically.
 
-To learn more about Next.js, take a look at the following resources:
+## Ask Ahmad (AI assistant)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The floating chat is provider-agnostic and ships dormant until a key exists.
+Set env vars in Vercel → Project → Settings → Environment Variables:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Variable | Required | Notes |
+| --- | --- | --- |
+| `ANTHROPIC_API_KEY` | one of these two | Uses Claude (default model `claude-haiku-4-5`) |
+| `OPENAI_API_KEY` | one of these two | Used only if no Anthropic key (default `gpt-4o-mini`) |
+| `ASK_AHMAD_MODEL` | optional | Override the model id for whichever provider is active |
+| `RATE_LIMIT_SECRET` | recommended | Random string; signs the rate-limit cookie |
 
-## Deploy on Vercel
+Without a key, the panel shows a "warming up" state with canned FAQ + email.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Abuse controls (no database): signed-cookie sliding window (10 messages /
+10 min, 30 / day), a per-instance IP backstop, message count/length caps, and
+a 600-token output cap. These bound cost but are best-effort on serverless —
+**set a spend limit in the provider console** as the final backstop.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Fonts
+
+Display: Instrument Serif · Body: Figtree (stand-in for Satoshi) · Code:
+JetBrains Mono · Handwritten: Caveat — all via `next/font`. To switch the body
+font to Satoshi: download the variable WOFF2 from
+[fontshare.com/fonts/satoshi](https://www.fontshare.com/fonts/satoshi), drop it
+in `src/app/fonts/`, and swap the `Figtree` loader in `src/app/layout.tsx` for
+`next/font/local`. Every component reads `var(--font-body)`.
+
+## Asset pipeline
+
+`node scripts/optimize-images.mjs` regenerates the optimized headshot,
+favicons, and the OG card into `public/Images/optimized/` (commit the output).
