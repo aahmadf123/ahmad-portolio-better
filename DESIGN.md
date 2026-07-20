@@ -1,72 +1,73 @@
 ---
 name: Ahmad Firas Portfolio
-description: Dark technical portfolio and content platform for an AI researcher and engineer who ships production systems.
+description: Cinematic, scroll-driven dark portfolio — a documentary-style journey for an agentic AI engineer. Tokens live in src/styles/theme.css; this doc mirrors them.
 colors:
   # ── Structural palette ──
-  background: "#0B0D14"
-  foreground: "#F2EDD8"
-  surface-1: "#131520"
-  surface-2: "#1A1D2C"
-  text-secondary: "#B8B4A4"
-  text-tertiary: "#6E6B60"
-  border-default: "rgba(242,237,216,0.08)"
-  border-elevated: "rgba(242,237,216,0.15)"
-  # ── Primary structural accent ──
-  amber: "#F0B429"
+  background: "#0d0e12"
+  foreground: "#f4f4f2"
+  surface-1: "#13151b"
+  surface-2: "#1a1d25"
+  text-secondary: "#a3a8b0"
+  text-tertiary: "#6b7078"
+  border-default: "rgba(244,244,242,0.08)"
+  border-elevated: "rgba(244,244,242,0.16)"
+  # ── Primary identity accent (teal) + gold for milestones ──
+  primary: "#2dd4bf"
+  gold: "#f59e0b"
   # ── Project-aesthetic accents (original six) ──
-  blue: "#4B7BF5"
-  teal: "#2DD4C8"
-  orange: "#F07832"
+  blue: "#5b8af5"
+  teal: "#2dd4bf"
+  orange: "#f0823c"
   purple: "#A78BFA"
   pink: "#F472B6"
   # ── Project-specific extension accents ──
   red: "#EF4444"
   green: "#22C55E"
-  sky: "#0EA5E9"
+  sky: "#38bdf8"
 typography:
   display:
-    fontFamily: "var(--font-chakra), 'Chakra Petch', sans-serif"
+    fontFamily: "var(--font-display), Georgia, serif"
     fontSize: "clamp(7rem, 15vw, 12rem)"
     fontWeight: 400
     lineHeight: 1
     letterSpacing: "-0.03em"
   hero-name:
-    fontFamily: "var(--font-chakra), 'Chakra Petch', sans-serif"
+    fontFamily: "var(--font-display), Georgia, serif"
     fontSize: "clamp(56px, 10vw, 132px)"
     fontWeight: 400
     lineHeight: 0.95
     letterSpacing: "-0.025em"
   section-ghost:
-    fontFamily: "var(--font-chakra), 'Chakra Petch', sans-serif"
+    fontFamily: "var(--font-display), Georgia, serif"
     fontSize: "clamp(72px, 11vw, 160px)"
     fontWeight: 400
     lineHeight: 1
     letterSpacing: "-0.03em"
   title:
-    fontFamily: "var(--font-chakra), 'Chakra Petch', sans-serif"
+    fontFamily: "var(--font-body), system-ui, sans-serif"
     fontSize: "20px"
     fontWeight: 400
     lineHeight: 1.25
     letterSpacing: "-0.01em"
   body:
-    fontFamily: "var(--font-chakra), 'Chakra Petch', sans-serif"
+    fontFamily: "var(--font-body), system-ui, sans-serif"
     fontSize: "15px"
     fontWeight: 400
     lineHeight: 1.65
   label:
-    fontFamily: "var(--font-chakra), 'Chakra Petch', monospace"
+    fontFamily: "var(--font-code), monospace"
     fontSize: "11px"
     fontWeight: 400
     lineHeight: 1.4
     letterSpacing: "0.1em"
   label-sm:
-    fontFamily: "var(--font-chakra), 'Chakra Petch', monospace"
+    fontFamily: "var(--font-code), monospace"
     fontSize: "10px"
     fontWeight: 400
     lineHeight: 1.4
     letterSpacing: "0.12em"
   metadata:
-    fontFamily: "var(--font-chakra), 'Chakra Petch', monospace"
+    fontFamily: "var(--font-code), monospace"
     fontSize: "12px"
     fontWeight: 400
     lineHeight: 1.5

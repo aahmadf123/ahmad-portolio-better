@@ -5,8 +5,8 @@ import type { Metadata } from 'next';
 import { getFieldNote, fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
 import { notFound } from 'next/navigation';
 
-const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
-const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
+const SERIF = 'var(--font-display), Georgia, serif';
+const MONO  = 'var(--font-code), monospace';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -47,8 +47,24 @@ export default async function FieldNotePage({ params }: PageProps) {
   const { default: Article } = await import(`@/content/field-notes/${slug}.mdx`);
   const catCfg = CATEGORY_CONFIG[note.category];
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: note.title,
+    description: note.excerpt,
+    datePublished: note.date,
+    author: { '@type': 'Person', name: 'Ahmad Firas', url: 'https://ahmadfx.xyz' },
+    ...(note.heroImage ? { image: [`https://ahmadfx.xyz${note.heroImage}`] } : {}),
+    mainEntityOfPage: `https://ahmadfx.xyz/field-notes/${note.slug}`,
+  };
+
   return (
-    <div style={{ background: '#0B0D14', color: '#F2EDD8', minHeight: '100vh', fontFamily: SERIF }}>
+    <div style={{ background: 'var(--background)', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd).replace(/</g, '\\u003c') }}
+      />
 
       {/* ── Sticky Header ── */}
       <header style={{
@@ -56,7 +72,7 @@ export default async function FieldNotePage({ params }: PageProps) {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 clamp(20px,4vw,52px)',
         borderBottom: '1px solid rgba(242,237,216,0.07)',
-        background: 'rgba(11,13,20,0.97)',
+        background: 'rgba(13,14,18,0.97)',
         backdropFilter: 'blur(20px)',
       }}>
         <Link href="/field-notes" style={{

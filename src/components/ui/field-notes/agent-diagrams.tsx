@@ -247,7 +247,7 @@ export function MaturityLadder() {
         marginTop: 12, fontFamily: MONO, fontSize: 10,
         color: 'var(--text3)', letterSpacing: '0.05em', textAlign: 'center',
       }}>
-        Move up only when the current stage genuinely cannot handle the task's variability.
+        Move up only when the current stage genuinely cannot handle the task&apos;s variability.
       </div>
     </div>
   );

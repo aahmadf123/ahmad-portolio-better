@@ -14,6 +14,14 @@ interface LayoutNode extends SkillNode {
   radius: number;
 }
 
+interface Tooltip {
+  x: number;
+  y: number;
+  name: string;
+  group: string;
+  color: string;
+}
+
 /** Deterministic radial-cluster layout: 7 group hubs on an ellipse, skills in rings. */
 function computeLayout(): LayoutNode[] {
   const rand = seededRandom(41683);
@@ -53,7 +61,7 @@ function computeLayout(): LayoutNode[] {
  */
 export function ConstellationCanvas({ onSelect }: { onSelect: (node: SkillNode | null) => void }) {
   const mountRef = useRef<HTMLDivElement>(null);
-  const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; group: string; color: string } | null>(null);
+  const [tooltip, setTooltip] = useState<Tooltip | null>(null);
   const [hubScreens, setHubScreens] = useState<{ id: string; label: string; color: string; x: number; y: number }[]>([]);
   const [ready, setReady] = useState(false);
 
@@ -155,13 +163,21 @@ export function ConstellationCanvas({ onSelect }: { onSelect: (node: SkillNode |
     host.start();
     setReady(true);
 
+    const makeTooltip = (n: LayoutNode, clientX: number, clientY: number): Tooltip => {
+      const rect = mount.getBoundingClientRect();
+      return {
+        // clamp inside the canvas so the tooltip never reads layout during render
+        x: Math.min(clientX - rect.left + 14, rect.width - 160),
+        y: clientY - rect.top - 12,
+        name: n.name,
+        group: skillGroups.find((g) => g.id === n.group)?.label ?? n.group,
+        color: n.color,
+      };
+    };
+
     const setHover = (idx: number, clientX: number, clientY: number) => {
       if (idx === hovered) {
-        if (idx >= 0) {
-          const n = layout[idx];
-          const rect = mount.getBoundingClientRect();
-          setTooltip({ x: clientX - rect.left, y: clientY - rect.top, name: n.name, group: skillGroups.find((g) => g.id === n.group)?.label ?? n.group, color: n.color });
-        }
+        if (idx >= 0) setTooltip(makeTooltip(layout[idx], clientX, clientY));
         return;
       }
       // restore previous
@@ -179,8 +195,7 @@ export function ConstellationCanvas({ onSelect }: { onSelect: (node: SkillNode |
         dummy.scale.setScalar(n.radius * 1.7);
         dummy.updateMatrix();
         mesh.setMatrixAt(idx, dummy.matrix);
-        const rect = mount.getBoundingClientRect();
-        setTooltip({ x: clientX - rect.left, y: clientY - rect.top, name: n.name, group: skillGroups.find((g) => g.id === n.group)?.label ?? n.group, color: n.color });
+        setTooltip(makeTooltip(n, clientX, clientY));
         // highlight connected edges
         const pos: number[] = [];
         constellation.edges.forEach((e) => {
@@ -243,7 +258,7 @@ export function ConstellationCanvas({ onSelect }: { onSelect: (node: SkillNode |
       ))}
       {/* tooltip */}
       {tooltip && (
-        <div role="status" style={{ position: 'absolute', left: Math.min(tooltip.x + 14, (mountRef.current?.clientWidth ?? 300) - 150), top: tooltip.y - 12, pointerEvents: 'none', background: 'rgba(13,14,18,0.92)', border: `1px solid ${tooltip.color}55`, borderRadius: 6, padding: '7px 11px', backdropFilter: 'blur(6px)', zIndex: 3 }}>
+        <div role="status" style={{ position: 'absolute', left: tooltip.x, top: tooltip.y, pointerEvents: 'none', background: 'rgba(13,14,18,0.92)', border: `1px solid ${tooltip.color}55`, borderRadius: 6, padding: '7px 11px', backdropFilter: 'blur(6px)', zIndex: 3 }}>
           <div style={{ fontFamily: MONO, fontSize: 12, color: 'var(--foreground)', letterSpacing: '0.02em' }}>{tooltip.name}</div>
           <div style={{ fontFamily: MONO, fontSize: 9, color: tooltip.color, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>{tooltip.group} · click for context</div>
         </div>

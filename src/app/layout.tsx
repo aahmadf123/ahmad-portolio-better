@@ -5,6 +5,9 @@ import "./globals.css";
 import { MagneticCursor } from "@/components/ui/magnetic-cursor";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import { ChatLauncher } from "@/components/chat/ChatLauncher";
+import { ChapterNav } from "@/components/layout/ChapterNav";
+import { NowPlayingBar } from "@/components/layout/NowPlayingBar";
+import { FootballEasterEgg } from "@/components/effects/FootballEasterEgg";
 import { Analytics } from "@vercel/analytics/next";
 import { site } from "@/lib/data/site";
 
@@ -131,6 +134,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
         />
+        <ChapterNav />
+        <NowPlayingBar />
+        <FootballEasterEgg />
         <ChatLauncher />
         </PostHogProvider>
         <Analytics />

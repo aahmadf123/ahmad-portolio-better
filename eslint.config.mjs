@@ -13,6 +13,14 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      // SSR-safe environment detection (matchMedia / sessionStorage reads on
+      // mount) intentionally sets state inside a one-shot effect; keep the
+      // signal as a warning rather than an error.
+      "react-hooks/set-state-in-effect": "warn",
+    },
+  },
 ]);
 
 export default eslintConfig;
