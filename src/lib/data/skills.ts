@@ -126,9 +126,10 @@ function buildConstellation(): Constellation {
   // Edges: skills that co-occur in the same source, capped per node to keep the
   // graph legible (strongest first).
   const edgeMap = new Map<string, SkillEdge>();
-  const byName = new Map(nodes.map((n) => [n.name, n]));
   for (const src of sources) {
-    const present = nodes.filter((n) => src.tags.some((t) => matches(n.name, t))).map((n) => n.name);
+    // Dedupe — the same skill name can live in multiple groups (e.g. Microsoft
+    // Defender), which would otherwise create self-edges.
+    const present = [...new Set(nodes.filter((n) => src.tags.some((t) => matches(n.name, t))).map((n) => n.name))];
     for (let i = 0; i < present.length; i++) {
       for (let j = i + 1; j < present.length; j++) {
         const [a, b] = [present[i], present[j]].sort();
@@ -152,7 +153,6 @@ function buildConstellation(): Constellation {
     }
   }
 
-  void byName;
   return { nodes, edges };
 }
 

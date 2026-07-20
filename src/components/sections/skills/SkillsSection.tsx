@@ -14,6 +14,7 @@ function SkillGroupCard({ group }: { group: SkillGroup }) {
   const [showAll, setShowAll] = React.useState(false);
   const visible = showAll ? group.skills : group.skills.slice(0, SHOW);
   const hidden = group.skills.length - SHOW;
+  const expandKey = (e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowAll(true); } };
   return (
     <div style={{ background: `${group.color}0a`, borderTop: `2px solid ${group.color}`, borderRight: `1px solid ${group.color}28`, borderBottom: `1px solid ${group.color}28`, borderLeft: `1px solid ${group.color}28`, borderRadius: 8, padding: '22px 20px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 14 }}>
@@ -25,7 +26,9 @@ function SkillGroupCard({ group }: { group: SkillGroup }) {
         {!showAll && hidden > 0 && (
           <span
             role="button"
+            tabIndex={0}
             onClick={() => setShowAll(true)}
+            onKeyDown={expandKey}
             style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${group.color}0a`, border: `1px solid ${group.color}30`, borderRadius: 4, color: group.color, letterSpacing: '0.03em', cursor: 'pointer', opacity: 0.75 }}
           >+{hidden}</span>
         )}
@@ -57,6 +60,10 @@ export function SkillsSection() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, alignItems: 'start' }} className="two-col-awards">
             {awards.map((a, i) => (
               <div key={i}
+                role="button"
+                tabIndex={0}
+                aria-expanded={openAward === i}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpenAward(openAward === i ? null : i); } }}
                 onClick={() => setOpenAward(openAward === i ? null : i)}
                 style={{ background: openAward === i ? `${a.color}10` : `${a.color}07`, borderTop: `2px solid ${a.color}`, borderRight: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderBottom: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderLeft: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderRadius: 8, cursor: 'pointer', transition: 'all 0.25s', overflow: 'hidden' }}>
                 <div style={{ padding: '18px 22px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -92,6 +99,10 @@ export function SkillsSection() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, alignItems: 'start' }} className="two-col-awards">
             {affiliations.map((a, i) => (
               <div key={i}
+                role="button"
+                tabIndex={0}
+                aria-expanded={openAffil === i}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpenAffil(openAffil === i ? null : i); } }}
                 onClick={() => setOpenAffil(openAffil === i ? null : i)}
                 style={{ background: openAffil === i ? `${a.color}10` : `${a.color}07`, border: `1px solid ${openAffil === i ? a.color + '55' : a.color + '25'}`, borderRadius: 10, cursor: 'pointer', transition: 'all 0.25s', overflow: 'hidden' }}>
                 <div style={{ padding: '20px 22px', display: 'flex', alignItems: 'flex-start', gap: 12 }}>
