@@ -1,87 +1,94 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
-import { Section, SH, Tag, useReveal, MONO, FG2 } from '@/components/shared/section-helpers';
-import { ExpandableCard } from '@/components/ui/expandable-card';
-import { projects, type Project, type ProjectLink } from '@/lib/data/projects';
+import React, { useMemo, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { Section, SH, MONO } from '@/components/shared/section-helpers';
+import { projects, projectCategories, type Project, type ProjectCategory } from '@/lib/data/projects';
 import { sectionById } from '@/lib/data/sections';
+import { ProjectPosterCard } from './ProjectPosterCard';
+import { ProjectDetailModal } from './ProjectDetailModal';
+import { FootballIQFeature } from './FootballIQFeature';
 
-/** Renders a project's structured detail sections inside the expandable modal. */
-export function ProjectDetail({ project }: { project: Project }) {
-  return (
-    <>
-      {project.detail.map((sec, i) => (
-        <React.Fragment key={sec.label}>
-          <h4 style={{ color: project.color, fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: i === 0 ? 0 : 16, marginBottom: 8 }}>{sec.label}</h4>
-          <p>{sec.body}</p>
-        </React.Fragment>
-      ))}
-
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 14, marginBottom: 4 }}>
-        {project.detailStacks.map(t => <Tag key={t}>{t}</Tag>)}
-      </div>
-
-      {project.links.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 22, paddingTop: 16, borderTop: `1px solid color-mix(in srgb, ${project.color} 13%, transparent)` }}>
-          {project.links.map((l, i) => <ProjectLinkButton key={l.href} link={l} color={project.color} primary={i === 0} />)}
-        </div>
-      )}
-    </>
-  );
-}
-
-function ProjectLinkButton({ link, color, primary }: { link: ProjectLink; color: string; primary: boolean }) {
-  const base: React.CSSProperties = {
-    display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px',
-    fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5,
-    textTransform: 'uppercase', textDecoration: 'none',
-  };
-  const style: React.CSSProperties = primary
-    ? { ...base, background: color, color: 'var(--background)', fontWeight: 700 }
-    : { ...base, border: `1px solid color-mix(in srgb, ${color} 35%, transparent)`, color };
-
-  if (link.kind === 'case-study') {
-    return <Link href={link.href} transitionTypes={['nav-forward']} style={style}>{link.label} ↗</Link>;
-  }
-  if (link.kind === 'anchor') {
-    return (
-      <a
-        href={link.href}
-        onClick={(e) => { e.preventDefault(); document.getElementById(link.href.slice(1))?.scrollIntoView({ behavior: 'smooth' }); }}
-        style={{ ...style, cursor: 'pointer' }}
-      >{link.label} ↓</a>
-    );
-  }
-  const suffix = link.kind === 'pdf' ? '↓' : '↗';
-  return <a href={link.href} target="_blank" rel="noopener" style={style}>{link.label} {suffix}</a>;
-}
-
+/**
+ * Dynamic showcase gallery: the Football-IQ flagship panel on top (always
+ * visible), then category filters re-flowing a bento grid of movie-poster
+ * cards. Clicking a poster morphs it into the detail modal.
+ */
 export function ProjectsSection() {
-  const { ref, visible } = useReveal();
   const def = sectionById('projects')!;
+  const reduced = useReducedMotion();
+  const [category, setCategory] = useState<ProjectCategory | 'all'>('all');
+  const [openProject, setOpenProject] = useState<Project | null>(null);
+
+  const gridProjects = useMemo(
+    () => projects.filter((p) => !p.flagship && (category === 'all' || p.category === category)),
+    [category]
+  );
+
   return (
     <Section id="projects">
-      <SH n={def.n} label="Bodies of Work" sub="Each project a different operating condition. Click any card for the full case study." color={def.color} />
-      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}
-        style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
-        {projects.map((p) => (
-          <div key={p.title} style={{ gridColumn: `span ${p.span}` }}>
-            <ExpandableCard
-              title={p.title}
-              src={p.image}
-              description={`${p.domain.toUpperCase()} · ${p.idx}`}
-              thumbnailAspect={p.span === 2 ? '16/7' : '4/3'}
-              thumbnailSubtitle={p.headline}
-              thumbnailTags={p.stacks}
-              accentColor={p.color}
+      <SH n={def.n} label="Bodies of Work" sub="Each project a different operating condition. Hover a poster for the story; click for the full picture." color={def.color} />
+
+      <FootballIQFeature />
+
+      {/* filter chips */}
+      <div role="tablist" aria-label="Filter projects by category" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, margin: '4px 0 22px' }}>
+        {projectCategories.map((c) => {
+          const active = category === c.id;
+          return (
+            <button
+              key={c.id}
+              role="tab"
+              aria-selected={active}
+              onClick={() => setCategory(c.id)}
+              style={{
+                fontFamily: MONO, fontSize: 10, letterSpacing: '0.09em', textTransform: 'uppercase',
+                padding: '7px 15px', borderRadius: 99, cursor: 'pointer',
+                border: `1px solid ${active ? 'var(--primary)' : 'var(--bd2)'}`,
+                background: active ? 'rgba(45,212,191,0.12)' : 'transparent',
+                color: active ? 'var(--primary)' : 'var(--text3)',
+                transition: 'all 0.2s ease',
+              }}
             >
-              <ProjectDetail project={p} />
-            </ExpandableCard>
-          </div>
-        ))}
+              {c.label}
+            </button>
+          );
+        })}
+        <span aria-live="polite" style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', alignSelf: 'center', marginLeft: 'auto', letterSpacing: '0.06em' }}>
+          {gridProjects.length} / {projects.length - 1}
+        </span>
       </div>
-      <style>{`@media(max-width:900px){#projects .reveal{grid-template-columns:repeat(2,1fr)!important}#projects .reveal>div[style*="span 2"]{grid-column:span 2!important}}@media(max-width:600px){#projects .reveal{grid-template-columns:1fr!important}#projects .reveal>div[style*="span 2"]{grid-column:span 1!important}}`}</style>
+
+      {/* bento poster grid */}
+      <motion.div layout={!reduced} className="poster-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
+        <AnimatePresence mode="popLayout" initial={false}>
+          {gridProjects.map((p) => (
+            <motion.div
+              key={p.idx}
+              layout={!reduced}
+              initial={reduced ? false : { opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={reduced ? undefined : { opacity: 0, scale: 0.96 }}
+              transition={{ duration: reduced ? 0 : 0.22, ease: [0.16, 1, 0.3, 1] }}
+              style={{ gridColumn: p.span === 2 ? 'span 2' : 'span 1', minWidth: 0 }}
+            >
+              <ProjectPosterCard project={p} onOpen={setOpenProject} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
+
+      <ProjectDetailModal project={openProject} onClose={() => setOpenProject(null)} />
+
+      <style>{`
+        @media (max-width: 900px) {
+          .poster-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 600px) {
+          .poster-grid { grid-template-columns: 1fr !important; }
+          .poster-grid > div { grid-column: span 1 !important; }
+        }
+      `}</style>
     </Section>
   );
 }

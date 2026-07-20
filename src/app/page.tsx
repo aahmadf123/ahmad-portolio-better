@@ -20,11 +20,11 @@ export default function Home() {
       <main style={{ position: 'relative', zIndex: 20, background: 'transparent' }}>
         <HeroSection />
         <StorySection />
-        <AboutSection />
         <ExperienceSection />
         <ProjectsSection />
-        <FieldNotesSection />
         <ResearchSection />
+        <AboutSection />
+        <FieldNotesSection />
         <SkillsSection />
         <PressSection />
         <NowSection />
