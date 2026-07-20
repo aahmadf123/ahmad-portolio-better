@@ -132,6 +132,7 @@ function buildConstellation(): Constellation {
     for (let i = 0; i < present.length; i++) {
       for (let j = i + 1; j < present.length; j++) {
         const [a, b] = [present[i], present[j]].sort();
+        if (a === b) continue;
         const key = `${a}|${b}`;
         const existing = edgeMap.get(key);
         if (existing) existing.strength += 1;

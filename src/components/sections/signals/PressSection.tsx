@@ -11,6 +11,7 @@ export function PressSection() {
   const openLb = useLightboxOpen();
   const def = sectionById('signals')!;
   const feature = press[0];
+  if (!feature) return null;
   return (
     <Section id="signals">
       <SH n={def.n} label="Featured In" sub="Press coverage and public recognition." color={def.color} />

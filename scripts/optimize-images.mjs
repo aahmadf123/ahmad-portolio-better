@@ -3,8 +3,10 @@
 import sharp from 'sharp';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = path.resolve(import.meta.dirname, '..');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..');
 const IMAGES = path.join(ROOT, 'public', 'Images');
 const OUT = path.join(IMAGES, 'optimized');
 

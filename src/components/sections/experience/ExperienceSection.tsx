@@ -16,7 +16,10 @@ export function ExperienceSection() {
         {jobs.map((job, i) => (
           <div
             key={job.id}
+            role="button"
+            tabIndex={0}
             onClick={() => setOpen(open === i ? null : i)}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(open === i ? null : i); } }}
             style={{
               cursor: 'pointer',
               background: open === i ? `color-mix(in oklch, ${job.color} 7%, transparent)` : `color-mix(in oklch, ${job.color} 3%, transparent)`,
