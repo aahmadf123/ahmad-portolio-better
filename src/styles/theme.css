@@ -1,0 +1,98 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Design tokens — single authoritative sheet for the cinematic redesign.
+   Dark-only by decision. Legacy variable names (--amber, --teal, --font-chakra …)
+   are remapped here so every untouched page re-skins without edits.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Core surfaces */
+  --background: #0d0e12;
+  --surface: #13151b;
+  --surface-2: #1a1d25;
+
+  /* Identity accents */
+  --primary: #2dd4bf;            /* teal-cyan — the site's voice */
+  --gold: #f59e0b;               /* milestones & achievements only */
+
+  /* Supporting accent range (data-driven chips, per-section identities) */
+  --blue: #5b8af5;
+  --purple: #a78bfa;
+  --pink: #f472b6;
+  --sky: #38bdf8;
+  --orange: #f0823c;
+  --green: #22c55e;
+  --red: #ef4444;
+
+  /* Text ramp */
+  --foreground: #f4f4f2;
+  --text2: #a3a8b0;
+  --text3: #6b7078;
+
+  /* Borders / hairlines */
+  --bd: rgba(244, 244, 242, 0.08);
+  --bd2: rgba(244, 244, 242, 0.16);
+
+  /* Semantic (shadcn-style) */
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface);
+  --popover-foreground: var(--foreground);
+  --primary-foreground: #06211e;
+  --secondary: var(--surface);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--text2);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--foreground);
+  --destructive: #f43f5e;
+  --destructive-foreground: #ffffff;
+  --border: var(--bd);
+  --input: var(--bd);
+  --ring: var(--primary);
+  --radius: 0.5rem;
+
+  /* Type system.
+     --font-display / --font-body / --font-code / --font-hand are set by
+     next/font on <html>. Body is Figtree today — swap to Satoshi by replacing
+     the loader in src/app/layout.tsx (see README "Fonts"). */
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-micro: 180ms;
+  --dur-section: 700ms;
+  --dur-cinematic: 1400ms;
+
+  /* ── Legacy alias remap (re-skins untouched pages instantly) ── */
+  --amber: var(--gold);
+  --teal: var(--primary);
+  --surf: var(--surface);
+  --surf2: var(--surface-2);
+
+  /* Legacy secondary token set (still referenced by older components) */
+  --color-primary: var(--background);
+  --color-secondary: var(--surface);
+  --color-accent: var(--primary);
+  --color-text: var(--foreground);
+  --color-text-muted: rgba(244, 244, 242, 0.7);
+  --color-border: rgba(255, 255, 255, 0.05);
+  --color-overlay: rgba(0, 0, 0, 0.5);
+  --font-primary: var(--font-body);
+  --font-display-legacy: var(--font-display);
+  --font-serif-stack: var(--font-display);
+  --font-mono-stack: var(--font-code);
+  --text-xs: 0.7rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.2rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 3rem;
+  --text-mega: clamp(7rem, 15vw, 12rem);
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --transition-slow: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Legacy font shim — every inline "var(--font-chakra), 'Chakra Petch', …"
+     stack now resolves to the body font. Chakra Petch is no longer loaded. */
+  --font-chakra: var(--font-body);
+}

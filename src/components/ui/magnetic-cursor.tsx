@@ -104,15 +104,15 @@ export function MagneticCursor() {
         ctx.beginPath();
         ctx.arc(rx, ry, Math.max(1, ringR), 0, Math.PI * 2);
         ctx.strokeStyle = isMagnetic
-          ? 'rgba(240,180,41,0.92)'
-          : 'rgba(240,180,41,0.58)';
+          ? 'rgba(245,158,11,0.92)'
+          : 'rgba(45,212,191,0.58)';
         ctx.lineWidth = isMagnetic ? 1.6 : 1.2;
         ctx.stroke();
 
         // Dot – always at exact mouse position
         ctx.beginPath();
         ctx.arc(mx, my, isDown ? 2.5 : 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = '#F0B429';
+        ctx.fillStyle = '#2dd4bf';
         ctx.fill();
 
         ctx.restore();

@@ -1,21 +1,8 @@
 import type { MetadataRoute } from 'next'
+import { fieldNotes } from '@/lib/field-notes'
+import { caseStudySlugs } from '@/lib/data/projects'
 
 const baseUrl = 'https://ahmadfx.xyz'
-
-const caseStudies = [
-  'batting-cleanup-smart-city-waste-reporting',
-  'camel-car-cheme-car-control-system',
-  'champions-complex-digital-campaign',
-  'deepflyer-drone-reinforcement-learning',
-  'deeptruth-ai-fact-checking',
-  'graph-based-rl-uav-autonomy',
-  'homeowner-loss-prediction',
-  'security-discovery-tool',
-  'toledo-athletics-onboarding-portal',
-  'toledo-football-iq-computer-vision-analytics',
-]
-
-const fieldNoteSlugs = ['agentic-ai-in-production']
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Static routes
@@ -40,21 +27,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // Case study routes
-  const caseStudyRoutes: MetadataRoute.Sitemap = caseStudies.map((slug) => ({
+  // Case study routes — derived from the projects data module
+  const caseStudyRoutes: MetadataRoute.Sitemap = caseStudySlugs.map((slug) => ({
     url: `${baseUrl}/case-study/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: 0.7,
   }))
 
-  // Field note dynamic routes
-  const fieldNoteRoutes: MetadataRoute.Sitemap = fieldNoteSlugs.map((slug) => ({
-    url: `${baseUrl}/field-notes/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.6,
-  }))
+  // Field note routes — derived from the registry, so publishing a note
+  // updates the sitemap automatically
+  const fieldNoteRoutes: MetadataRoute.Sitemap = fieldNotes
+    .filter((n) => n.published && n.date)
+    .map((n) => ({
+      url: `${baseUrl}/field-notes/${n.slug}`,
+      lastModified: new Date(n.date),
+      changeFrequency: 'weekly',
+      priority: 0.6,
+    }))
 
   return [...staticRoutes, ...caseStudyRoutes, ...fieldNoteRoutes]
 }
