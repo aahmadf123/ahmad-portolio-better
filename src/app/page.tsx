@@ -2,12 +2,13 @@ import { SiteHeader } from '@/components/layout/SiteHeader';
 import { LightboxProvider } from '@/components/layout/LightboxProvider';
 import { HeroSection } from '@/components/sections/hero/HeroSection';
 import { StorySection } from '@/components/sections/story/StorySection';
-import { AboutSection } from '@/components/sections/about/AboutSection';
-import { ExperienceSection } from '@/components/sections/experience/ExperienceSection';
-import { ProjectsSection } from '@/components/sections/projects/ProjectsSection';
-import { FieldNotesSection } from '@/components/sections/field-notes/FieldNotesSection';
-import { ResearchSection } from '@/components/sections/research/ResearchSection';
 import { SkillsSection } from '@/components/sections/skills/SkillsSection';
+import { TimelineSection } from '@/components/sections/timeline/TimelineSection';
+import { ProjectsSection } from '@/components/sections/projects/ProjectsSection';
+import { ResearchSection } from '@/components/sections/research/ResearchSection';
+import { AboutSection } from '@/components/sections/about/AboutSection';
+import { CredentialsSection } from '@/components/sections/credentials/CredentialsSection';
+import { FieldNotesSection } from '@/components/sections/field-notes/FieldNotesSection';
 import { PressSection } from '@/components/sections/signals/PressSection';
 import { NowSection } from '@/components/sections/now/NowSection';
 import { ContactSection } from '@/components/sections/contact/ContactSection';
@@ -20,12 +21,13 @@ export default function Home() {
       <main style={{ position: 'relative', zIndex: 20, background: 'transparent' }}>
         <HeroSection />
         <StorySection />
-        <ExperienceSection />
+        <SkillsSection />
+        <TimelineSection />
         <ProjectsSection />
         <ResearchSection />
         <AboutSection />
+        <CredentialsSection />
         <FieldNotesSection />
-        <SkillsSection />
         <PressSection />
         <NowSection />
         <ContactSection />

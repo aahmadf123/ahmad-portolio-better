@@ -1,165 +1,70 @@
 'use client';
 
-import React from 'react';
-import { Section, SH, SkillChip, useReveal, MONO, SANS, FG3 } from '@/components/shared/section-helpers';
-import { useLightboxOpen } from '@/components/layout/LightboxProvider';
-import { skillGroups, type SkillGroup } from '@/lib/data/skills';
-import { awards } from '@/lib/data/awards';
-import { affiliations } from '@/lib/data/affiliations';
-import { certs } from '@/lib/data/certs';
+import React, { useCallback, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { Section, SH, MONO } from '@/components/shared/section-helpers';
 import { sectionById } from '@/lib/data/sections';
+import type { SkillNode } from '@/lib/data/skills';
+import { SkillListFallback } from './SkillListFallback';
+import { RadialSkills } from './RadialSkills';
+import { SkillDetailCard } from './SkillDetailCard';
 
-function SkillGroupCard({ group }: { group: SkillGroup }) {
-  const SHOW = 6;
-  const [showAll, setShowAll] = React.useState(false);
-  const visible = showAll ? group.skills : group.skills.slice(0, SHOW);
-  const hidden = group.skills.length - SHOW;
-  const expandKey = (e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowAll(true); } };
-  return (
-    <div style={{ background: `${group.color}0a`, borderTop: `2px solid ${group.color}`, borderRight: `1px solid ${group.color}28`, borderBottom: `1px solid ${group.color}28`, borderLeft: `1px solid ${group.color}28`, borderRadius: 8, padding: '22px 20px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 14 }}>
-        <div style={{ width: 5, height: 5, background: group.color, borderRadius: 1, flexShrink: 0 }} />
-        <span style={{ fontFamily: MONO, fontSize: 11, color: group.color, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{group.label}</span>
-      </div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-        {visible.map(s => <SkillChip key={s} color={group.color}>{s}</SkillChip>)}
-        {!showAll && hidden > 0 && (
-          <span
-            role="button"
-            tabIndex={0}
-            onClick={() => setShowAll(true)}
-            onKeyDown={expandKey}
-            style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${group.color}0a`, border: `1px solid ${group.color}30`, borderRadius: 4, color: group.color, letterSpacing: '0.03em', cursor: 'pointer', opacity: 0.75 }}
-          >+{hidden}</span>
-        )}
-      </div>
-    </div>
-  );
-}
+const ConstellationCanvas = dynamic(
+  () => import('./ConstellationCanvas').then((m) => ({ default: m.ConstellationCanvas })),
+  { ssr: false }
+);
 
+type Mode = 'pending' | 'constellation' | 'radial' | 'list';
+
+/**
+ * Skills as an interactive constellation (desktop, fine pointer, motion OK),
+ * a swipeable radial carousel (touch), or the full chip inventory (reduced
+ * motion / by choice). Every one of the ~130 skills stays reachable as text.
+ */
 export function SkillsSection() {
-  const { ref, visible } = useReveal();
-  const [openAward, setOpenAward] = React.useState<number | null>(null);
-  const [openAffil, setOpenAffil] = React.useState<number | null>(null);
-  const openLb = useLightboxOpen();
   const def = sectionById('skills')!;
+  const [mode, setMode] = useState<Mode>('pending');
+  const [listOpen, setListOpen] = useState(false);
+  const [selected, setSelected] = useState<SkillNode | null>(null);
+
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fine = window.matchMedia('(pointer: fine) and (min-width: 860px)').matches;
+    setMode(reduced ? 'list' : fine ? 'constellation' : 'radial');
+  }, []);
+
+  const onSelect = useCallback((node: SkillNode | null) => setSelected(node), []);
+
   return (
     <Section id="skills">
-      <SH n={def.n} label="Capabilities" sub="Technical stack built across research, industry, and deployment." color={def.color} />
-      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}>
-        {/* Skill grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }} className="three-col-skills">
-          {skillGroups.map((group) => (
-            <SkillGroupCard key={group.id} group={group} />
-          ))}
-        </div>
-
-        {/* Awards */}
-        <div style={{ marginTop: 52 }}>
-          <div style={{ fontFamily: MONO, fontSize: 11, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Awards & Recognition</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, alignItems: 'start' }} className="two-col-awards">
-            {awards.map((a, i) => (
-              <div key={i}
-                role="button"
-                tabIndex={0}
-                aria-expanded={openAward === i}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpenAward(openAward === i ? null : i); } }}
-                onClick={() => setOpenAward(openAward === i ? null : i)}
-                style={{ background: openAward === i ? `${a.color}10` : `${a.color}07`, borderTop: `2px solid ${a.color}`, borderRight: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderBottom: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderLeft: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderRadius: 8, cursor: 'pointer', transition: 'all 0.25s', overflow: 'hidden' }}>
-                <div style={{ padding: '18px 22px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div>
-                    <div style={{ fontFamily: SANS, fontSize: 14, fontWeight: 600, color: 'var(--foreground)' }}>{a.title}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text2)', marginTop: 3 }}>{a.detail}</div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0, marginLeft: 10 }}>
-                    <span style={{ fontFamily: MONO, fontSize: 11, color: a.color }}>{a.date}</span>
-                    <span style={{ fontSize: 14, color: FG3, transition: 'transform 0.3s', transform: openAward === i ? 'rotate(45deg)' : 'none' }}>+</span>
-                  </div>
-                </div>
-                {openAward === i && (
-                  <div style={{ padding: '0 18px 18px', borderTop: '1px solid var(--bd)' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.images.length}, 1fr)`, gap: 8, marginTop: 14 }}>
-                      {a.images.map((src, j) => (
-                        <div key={j} style={{ width: '100%', aspectRatio: a.ratio ?? '16/9', background: 'var(--background)', borderRadius: 6, overflow: 'hidden' }}>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={src} alt={a.title} onClick={e => { e.stopPropagation(); openLb(src, a.title); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Affiliations */}
-        <div style={{ marginTop: 52 }}>
-          <div style={{ fontFamily: MONO, fontSize: 11, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Professional Affiliations</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, alignItems: 'start' }} className="two-col-awards">
-            {affiliations.map((a, i) => (
-              <div key={i}
-                role="button"
-                tabIndex={0}
-                aria-expanded={openAffil === i}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpenAffil(openAffil === i ? null : i); } }}
-                onClick={() => setOpenAffil(openAffil === i ? null : i)}
-                style={{ background: openAffil === i ? `${a.color}10` : `${a.color}07`, border: `1px solid ${openAffil === i ? a.color + '55' : a.color + '25'}`, borderRadius: 10, cursor: 'pointer', transition: 'all 0.25s', overflow: 'hidden' }}>
-                <div style={{ padding: '20px 22px', display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 8, background: `${a.color}15`, border: `1px solid ${a.color}33`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <div style={{ width: 10, height: 10, borderRadius: 2, background: a.color }} />
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontFamily: SANS, fontSize: 14, fontWeight: 600, color: 'var(--foreground)', lineHeight: 1.3 }}>{a.name}</div>
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: a.color, marginTop: 3 }}>{a.role}</div>
-                    <div style={{ fontSize: 12, color: FG3, marginTop: 3, lineHeight: 1.4 }}>{a.short}</div>
-                  </div>
-                  <span style={{ fontSize: 16, color: FG3, transition: 'transform 0.3s', transform: openAffil === i ? 'rotate(45deg)' : 'none', flexShrink: 0, marginTop: 2 }}>+</span>
-                </div>
-                {openAffil === i && (
-                  <div style={{ padding: '0 22px 22px', borderTop: '1px solid var(--bd)' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.images.length}, 1fr)`, gap: 8, marginTop: 14 }}>
-                      {a.images.map((src, j) => (
-                        <div key={j} style={{ width: '100%', aspectRatio: a.ratio ?? '16/9', background: 'var(--background)', borderRadius: 6, overflow: 'hidden' }}>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={src} alt={a.name} onClick={e => { e.stopPropagation(); openLb(src, a.name); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
-                        </div>
-                      ))}
-                    </div>
-                    <p style={{ fontSize: 13, lineHeight: 1.75, color: 'var(--text2)', marginTop: 14 }}>{a.desc}</p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Certifications */}
-        <div style={{ marginTop: 52 }}>
-          <div style={{ fontFamily: MONO, fontSize: 11, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Certifications</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            {certs.map((cert) => (
-              <div key={cert.id} style={{ background: `${cert.color}0d`, border: `1px solid ${cert.color}38`, borderRadius: 12, padding: '28px 32px', display: 'flex', alignItems: 'flex-start', gap: 28 }} className="cert-row">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={cert.badgeImage} alt={`${cert.issuer} ${cert.title} badge`} title="Click to enlarge" onClick={() => openLb(cert.badgeImage, `${cert.issuer} · ${cert.title}`)} style={{ width: 76, height: 76, borderRadius: 10, objectFit: 'contain', flexShrink: 0, cursor: 'zoom-in', background: `${cert.color}14`, border: `1px solid ${cert.color}33` }} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 11, color: cert.color, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>{cert.issuer} · {cert.track}</div>
-                  <div style={{ fontFamily: SANS, fontSize: 20, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.2, marginBottom: 10 }}>{cert.title}</div>
-                  <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--text2)', maxWidth: 600, marginBottom: 14 }}>{cert.description}</p>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 16 }}>
-                    {cert.skills.map(s => <SkillChip key={s} color={cert.color}>{s}</SkillChip>)}
-                  </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, alignItems: 'center' }}>
-                    {cert.verifyUrl && <a href={cert.verifyUrl} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: cert.color, letterSpacing: '0.07em', textTransform: 'uppercase' }}>Verify Badge ↗</a>}
-                    {cert.certificateUrl && <a href={cert.certificateUrl} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.07em', textTransform: 'uppercase' }}>Certificate ↓</a>}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 14, flexWrap: 'wrap' }}>
+        <SH n={def.n} label="Capabilities" sub="The stack as a constellation — clusters that orbit each other, stars sized by how often they carry real work." color={def.color} />
+        {mode === 'constellation' && (
+          <button
+            onClick={() => setListOpen((v) => !v)}
+            aria-pressed={listOpen}
+            style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.09em', textTransform: 'uppercase', padding: '8px 16px', borderRadius: 5, border: '1px solid var(--bd2)', background: listOpen ? 'rgba(45,212,191,0.1)' : 'transparent', color: listOpen ? 'var(--primary)' : 'var(--text3)', cursor: 'pointer', marginBottom: 52 }}
+          >
+            {listOpen ? 'Hide list' : 'View as list'}
+          </button>
+        )}
       </div>
-      <style>{`@media(max-width:860px){.three-col-skills{grid-template-columns:repeat(2,1fr)!important}.two-col-awards{grid-template-columns:1fr!important}}@media(max-width:560px){.three-col-skills{grid-template-columns:1fr!important}.cert-row{flex-direction:column!important}}`}</style>
+
+      {mode === 'constellation' && (
+        <div style={{ position: 'relative' }}>
+          <ConstellationCanvas onSelect={onSelect} />
+          <SkillDetailCard node={selected} onClose={() => setSelected(null)} />
+        </div>
+      )}
+      {mode === 'radial' && <RadialSkills />}
+      {(mode === 'list' || mode === 'pending') && <SkillListFallback />}
+
+      {/* the full inventory stays in the DOM for search/SR; visually revealed on toggle */}
+      {mode === 'constellation' && (
+        <div style={listOpen ? { marginTop: 20 } : { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clipPath: 'inset(50%)' }} aria-hidden={false}>
+          <SkillListFallback />
+        </div>
+      )}
     </Section>
   );
 }
