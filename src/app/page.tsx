@@ -9,7 +9,8 @@ import { ResearchSection } from '@/components/sections/research/ResearchSection'
 import { AboutSection } from '@/components/sections/about/AboutSection';
 import { CredentialsSection } from '@/components/sections/credentials/CredentialsSection';
 import { FieldNotesSection } from '@/components/sections/field-notes/FieldNotesSection';
-import { PressSection } from '@/components/sections/signals/PressSection';
+import { SignalsSection } from '@/components/sections/signals/SignalsSection';
+import { InsightsSection } from '@/components/sections/insights/InsightsSection';
 import { NowSection } from '@/components/sections/now/NowSection';
 import { ContactSection } from '@/components/sections/contact/ContactSection';
 import { SiteFooter } from '@/components/layout/SiteFooter';
@@ -28,7 +29,8 @@ export default function Home() {
         <AboutSection />
         <CredentialsSection />
         <FieldNotesSection />
-        <PressSection />
+        <SignalsSection />
+        <InsightsSection />
         <NowSection />
         <ContactSection />
       </main>

@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: 'Technical essays on AI engineering, systems thinking, sports analytics, and the path from research to production.',
 };
 
-const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
-const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
+const SERIF = 'var(--font-display), Georgia, serif';
+const MONO  = 'var(--font-code), monospace';
 
 export default function FieldNotesPage() {
   const published = fieldNotes.filter(n => n.published);
@@ -18,20 +18,20 @@ export default function FieldNotesPage() {
   const totalCount = fieldNotes.length;
 
   return (
-    <div style={{ background: '#0B0D14', color: '#F2EDD8', minHeight: '100vh', fontFamily: SERIF }}>
+    <div style={{ background: 'var(--background)', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
 
       {/* ── Nav ── */}
       <nav style={{
         position: 'sticky', top: 0, zIndex: 50, height: 56,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 clamp(20px,4vw,52px)',
-        borderBottom: '1px solid rgba(242,237,216,0.06)',
-        background: 'rgba(11,13,20,0.96)',
+        borderBottom: '1px solid var(--bd)',
+        background: 'rgba(13,14,18,0.96)',
         backdropFilter: 'blur(20px)',
       }}>
         <Link href="/" style={{
           display: 'flex', alignItems: 'center', gap: 8,
-          color: '#B8B4A4', fontFamily: MONO, fontSize: 10,
+          color: 'var(--text2)', fontFamily: MONO, fontSize: 10,
           letterSpacing: '0.08em', textTransform: 'uppercase',
           textDecoration: 'none', transition: 'color 0.2s',
         }}>
@@ -42,8 +42,8 @@ export default function FieldNotesPage() {
         </Link>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: 2, background: '#4B7BF5', boxShadow: '0 0 8px rgba(75,123,245,0.6)' }} />
-          <span style={{ fontFamily: MONO, fontSize: 11, color: '#F2EDD8', letterSpacing: '0.08em' }}>
+          <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: 2, background: 'var(--primary)', boxShadow: '0 0 8px rgba(45,212,191,0.6)' }} />
+          <span style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.08em' }}>
             Field Notes
           </span>
         </div>
@@ -63,7 +63,7 @@ export default function FieldNotesPage() {
         <div aria-hidden style={{
           position: 'absolute', top: 0, right: -20,
           fontFamily: SERIF, fontSize: 'clamp(180px,25vw,320px)',
-          fontWeight: 400, color: '#4B7BF5', opacity: 0.025,
+          fontWeight: 400, color: 'var(--primary)', opacity: 0.03,
           lineHeight: 1, userSelect: 'none', pointerEvents: 'none',
           letterSpacing: '-0.05em', zIndex: 0,
         }}>
@@ -72,8 +72,8 @@ export default function FieldNotesPage() {
 
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-            <span style={{ display: 'inline-block', width: 28, height: 1.5, background: 'linear-gradient(90deg, #4B7BF5, #F472B6)', opacity: 0.8 }} />
-            <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#4B7BF5' }}>
+            <span style={{ display: 'inline-block', width: 28, height: 1.5, background: 'linear-gradient(90deg, var(--primary), var(--gold))', opacity: 0.8 }} />
+            <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--primary)' }}>
               Field Notes
             </span>
           </div>
@@ -81,12 +81,12 @@ export default function FieldNotesPage() {
           <h1 style={{
             fontFamily: SERIF, fontWeight: 400,
             fontSize: 'clamp(40px,7vw,88px)', lineHeight: 1.0,
-            letterSpacing: '-0.03em', color: '#F2EDD8',
+            letterSpacing: '-0.03em', color: 'var(--foreground)',
             marginBottom: 24, paddingBottom: '0.04em',
           }}>
             Essays from<br />
             <span style={{
-              background: 'linear-gradient(135deg, #4B7BF5, #F472B6)',
+              background: 'linear-gradient(135deg, var(--primary), var(--gold))',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               display: 'inline-block'
@@ -94,8 +94,8 @@ export default function FieldNotesPage() {
           </h1>
 
           <p style={{
-            fontSize: 17, lineHeight: 1.75, color: '#B8B4A4',
-            maxWidth: 560, marginBottom: 0, fontFamily: SERIF,
+            fontSize: 17, lineHeight: 1.75, color: 'var(--text2)',
+            maxWidth: 560, marginBottom: 0, fontFamily: 'var(--font-body), sans-serif',
           }}>
             What actually works, what fails in production, and what I am still figuring out —
             across AI engineering, autonomous systems, sports analytics, and the path from research to shipping.
@@ -107,8 +107,8 @@ export default function FieldNotesPage() {
       {published.length > 0 && (
         <div style={{ padding: '0 clamp(20px,4vw,52px) 80px', maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
-            <span style={{ display: 'inline-block', width: 22, height: 1.5, background: '#4B7BF5', opacity: 0.8 }} />
-            <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4B7BF5' }}>
+            <span style={{ display: 'inline-block', width: 22, height: 1.5, background: 'var(--primary)', opacity: 0.8 }} />
+            <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--primary)' }}>
               Published
             </span>
           </div>
@@ -125,7 +125,7 @@ export default function FieldNotesPage() {
       <div style={{
         padding: '0 clamp(20px,4vw,52px) 100px',
         maxWidth: 1200, margin: '0 auto',
-        borderTop: '1px solid rgba(242,237,216,0.06)',
+        borderTop: '1px solid var(--bd)',
         paddingTop: 64,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
@@ -144,8 +144,8 @@ export default function FieldNotesPage() {
             return (
               <div key={category} style={{
                 padding: '16px 18px',
-                background: 'rgba(242,237,216,0.02)',
-                border: '1px solid rgba(242,237,216,0.06)',
+                background: 'rgba(244,244,242,0.02)',
+                border: '1px solid var(--bd)',
                 borderRadius: 10,
                 borderLeft: catCfg ? `2px solid ${catCfg.color}40` : undefined,
               }}>
@@ -155,8 +155,8 @@ export default function FieldNotesPage() {
                   </span>
                   <span style={{
                     fontFamily: MONO, fontSize: 9, padding: '1px 6px',
-                    background: 'rgba(242,237,216,0.04)',
-                    border: '1px solid rgba(242,237,216,0.08)',
+                    background: 'rgba(244,244,242,0.04)',
+                    border: '1px solid var(--bd)',
                     borderRadius: 3, color: 'var(--text3)',
                     marginLeft: 'auto',
                   }}>
@@ -178,7 +178,7 @@ export default function FieldNotesPage() {
                     </div>
                   ))}
                   {upcomingCount > 3 && (
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: '#4A4843', paddingLeft: 10, marginTop: 2 }}>
+                    <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', paddingLeft: 10, marginTop: 2 }}>
                       +{upcomingCount - 3} more
                     </div>
                   )}
@@ -191,16 +191,16 @@ export default function FieldNotesPage() {
 
       {/* ── Footer ── */}
       <footer style={{
-        borderTop: '1px solid rgba(242,237,216,0.06)',
+        borderTop: '1px solid var(--bd)',
         padding: '32px clamp(20px,4vw,52px)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         flexWrap: 'wrap', gap: 12,
       }}>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: '#4A4843', letterSpacing: '0.06em' }}>
+        <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
           Field Notes — Ahmad Firas · {totalCount} essays planned
         </span>
         <Link href="/" style={{
-          fontFamily: MONO, fontSize: 10, color: '#B8B4A4',
+          fontFamily: MONO, fontSize: 10, color: 'var(--text2)',
           textDecoration: 'none', letterSpacing: '0.08em',
           textTransform: 'uppercase',
         }}>

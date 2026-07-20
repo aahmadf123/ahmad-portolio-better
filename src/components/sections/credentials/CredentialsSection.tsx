@@ -1,12 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Section, SH, SkillChip, useReveal, MONO, SANS, FG3 } from '@/components/shared/section-helpers';
+import { Section, SH, useReveal, MONO, SANS, FG3 } from '@/components/shared/section-helpers';
 import { useLightboxOpen } from '@/components/layout/LightboxProvider';
 import { awards } from '@/lib/data/awards';
 import { affiliations } from '@/lib/data/affiliations';
 import { certs } from '@/lib/data/certs';
 import { sectionById } from '@/lib/data/sections';
+import { CertFlipCard } from './CertFlipCard';
+import { LearningMarquee } from './LearningMarquee';
 
 /**
  * Credentials wall: certifications, awards & recognition, and professional
@@ -23,29 +25,15 @@ export function CredentialsSection() {
     <Section id="credentials" style={{ background: 'rgba(15,17,23,0.86)' }}>
       <SH n={def.n} label="Credentials" sub="Certifications, awards, and the communities behind the work." color={def.color} />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}>
-        {/* Certifications */}
+        {/* Certifications — 3D flip badges */}
         <div>
-          <div style={{ fontFamily: MONO, fontSize: 11, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Certifications</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+          <div style={{ fontFamily: MONO, fontSize: 11, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Certifications · hover or tap to flip</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }} className="cert-flip-grid">
             {certs.map((cert) => (
-              <div key={cert.id} style={{ background: `${cert.color}0d`, border: `1px solid ${cert.color}38`, borderRadius: 12, padding: '28px 32px', display: 'flex', alignItems: 'flex-start', gap: 28 }} className="cert-row">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={cert.badgeImage} alt={`${cert.issuer} ${cert.title} badge`} title="Click to enlarge" onClick={() => openLb(cert.badgeImage, `${cert.issuer} · ${cert.title}`)} style={{ width: 76, height: 76, borderRadius: 10, objectFit: 'contain', flexShrink: 0, cursor: 'zoom-in', background: `${cert.color}14`, border: `1px solid ${cert.color}33` }} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 11, color: cert.color, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>{cert.issuer} · {cert.track}</div>
-                  <div style={{ fontFamily: SANS, fontSize: 20, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.2, marginBottom: 10 }}>{cert.title}</div>
-                  <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--text2)', maxWidth: 600, marginBottom: 14 }}>{cert.description}</p>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 16 }}>
-                    {cert.skills.map(s => <SkillChip key={s} color={cert.color}>{s}</SkillChip>)}
-                  </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, alignItems: 'center' }}>
-                    {cert.verifyUrl && <a href={cert.verifyUrl} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: cert.color, letterSpacing: '0.07em', textTransform: 'uppercase' }}>Verify Badge ↗</a>}
-                    {cert.certificateUrl && <a href={cert.certificateUrl} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.07em', textTransform: 'uppercase' }}>Certificate ↓</a>}
-                  </div>
-                </div>
-              </div>
+              <CertFlipCard key={cert.id} cert={cert} />
             ))}
           </div>
+          <LearningMarquee />
         </div>
 
         {/* Awards */}
@@ -128,7 +116,7 @@ export function CredentialsSection() {
           </div>
         </div>
       </div>
-      <style>{`@media(max-width:860px){.two-col-awards{grid-template-columns:1fr!important}}@media(max-width:560px){.cert-row{flex-direction:column!important}}`}</style>
+      <style>{`@media(max-width:900px){.cert-flip-grid{grid-template-columns:1fr!important}}@media(max-width:860px){.two-col-awards{grid-template-columns:1fr!important}}`}</style>
     </Section>
   );
 }
