@@ -1,4 +1,4 @@
-import { streamText, convertToModelMessages, type UIMessage } from 'ai';
+import { streamText, convertToModelMessages, gateway, type UIMessage } from 'ai';
 import { anthropic } from '@ai-sdk/anthropic';
 import { openai } from '@ai-sdk/openai';
 import { getSystemPrompt } from '@/lib/ai/system-prompt';
@@ -10,13 +10,31 @@ export const maxDuration = 30;
 const MAX_MESSAGES = 12;
 const MAX_CHARS = 500;
 
+const DEFAULT_GATEWAY_MODEL = 'openai/gpt-5.5';
+const DEFAULT_ANTHROPIC_MODEL = 'claude-3-5-haiku-20241022';
+const DEFAULT_OPENAI_MODEL = 'gpt-4o-mini';
+
+function isGatewayModel(id?: string): id is string {
+  return !!id && id.includes('/');
+}
+
 function pickModel() {
+  const envModel = process.env.ASK_AHMAD_MODEL;
+
+  // Prefer Vercel AI Gateway when a key or Vercel OIDC token is present.
+  // `vc env pull` populates VERCEL_OIDC_TOKEN, which the AI SDK uses for Gateway auth.
+  if (process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN) {
+    return gateway(envModel ?? DEFAULT_GATEWAY_MODEL);
+  }
+
+  // Local/direct-provider fallback so the chat still works without a gateway key.
   if (process.env.ANTHROPIC_API_KEY) {
-    return anthropic(process.env.ASK_AHMAD_MODEL ?? 'claude-haiku-4-5');
+    return anthropic(isGatewayModel(envModel) ? DEFAULT_ANTHROPIC_MODEL : (envModel ?? DEFAULT_ANTHROPIC_MODEL));
   }
   if (process.env.OPENAI_API_KEY) {
-    return openai(process.env.ASK_AHMAD_MODEL ?? 'gpt-4o-mini');
+    return openai(isGatewayModel(envModel) ? DEFAULT_OPENAI_MODEL : (envModel ?? DEFAULT_OPENAI_MODEL));
   }
+
   return null;
 }
 
@@ -26,6 +44,8 @@ export async function POST(req: Request) {
   if (!model) {
     return Response.json({ error: 'not-configured' }, { status: 503 });
   }
+  // The gateway provider string already encodes the provider/model; no need
+  // to keep separate ANTHROPIC_API_KEY / OPENAI_API_KEY handling here.
 
   // Same-origin only (browser fetches send sec-fetch-site: same-origin).
   const fetchSite = req.headers.get('sec-fetch-site');

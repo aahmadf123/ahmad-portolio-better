@@ -113,7 +113,20 @@ export const ParticleNameCanvas = React.forwardRef<ParticleNameHandle, {
       if (disposed) return;
 
       const fontFamily = getComputedStyle(title).fontFamily || 'Georgia, serif';
+      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+      const isLowPower = 'deviceMemory' in navigator && (navigator as { deviceMemory?: number }).deviceMemory != null && (navigator as { deviceMemory?: number }).deviceMemory! < 4;
+
+      // Degrade to a static hero on reduced motion, touch-only devices, or low-memory hardware.
+      if (isReduced || (isCoarse && isLowPower)) {
+        onFormed?.();
+        onSettled?.();
+        return;
+      }
+
       let stride = 4;
+      // Reduce density on phones/tablets to keep the GPU budget small.
+      if (isCoarse || window.innerWidth < 768 || isLowPower) stride = 8;
       let sampled = sampleTextPoints({ lines: ['Ahmad', 'Firas'], fontFamily, stride });
       if (sampled.count > 4600) sampled = sampleTextPoints({ lines: ['Ahmad', 'Firas'], fontFamily, stride: (stride = 6) });
       else if (sampled.count < 1600) sampled = sampleTextPoints({ lines: ['Ahmad', 'Firas'], fontFamily, stride: (stride = 3) });
@@ -121,11 +134,13 @@ export const ParticleNameCanvas = React.forwardRef<ParticleNameHandle, {
       if (N === 0) return;
 
       const rand = seededRandom(20260720);
+      // Cap DPR on mobile so the fragment shader stays cheap.
+      const dprMax = isCoarse ? 1 : 1.75;
       const uniforms = {
         uProgress: { value: instant ? 1 : 0 },
         uDisperse: { value: instant ? 1 : 0 },
         uTime: { value: 0 },
-        uSize: { value: 2.6 * Math.min(window.devicePixelRatio || 1, 1.75) },
+        uSize: { value: 2.6 * Math.min(window.devicePixelRatio || 1, dprMax) },
         uScale: { value: 1 },
         uOffset: { value: new THREE.Vector2(0, 0) },
       };
@@ -207,7 +222,9 @@ export const ParticleNameCanvas = React.forwardRef<ParticleNameHandle, {
         mouse.tx = (e.clientX / window.innerWidth - 0.5) * 2;
         mouse.ty = (e.clientY / window.innerHeight - 0.5) * 2;
       };
-      window.addEventListener('mousemove', onMouse, { passive: true });
+      if (!isCoarse) {
+        window.addEventListener('mousemove', onMouse, { passive: true });
+      }
 
       // Fit the glyph to the DOM h1 rect (world units at z=0 plane).
       // Declared before createSceneHost — onResize fires during construction.
@@ -226,7 +243,8 @@ export const ParticleNameCanvas = React.forwardRef<ParticleNameHandle, {
         mount,
         fov: 40,
         z: 14,
-        fpsCap: 30,
+        fpsCap: isCoarse ? 24 : 30,
+        dprMax,
         onFrame: (t) => {
           uniforms.uTime.value = t;
           mouse.x += (mouse.tx - mouse.x) * 0.03;
