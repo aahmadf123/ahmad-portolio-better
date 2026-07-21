@@ -1,80 +1,23 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import dynamic from 'next/dynamic';
+import React, { useEffect, useState } from 'react';
 import { MONO, SERIF, SANS, FG3 } from '@/components/shared/section-helpers';
 import { useLightboxOpen } from '@/components/layout/LightboxProvider';
 import { site, heroFacts } from '@/lib/data/site';
 import { TypedTagline } from './TypedTagline';
-import type { ParticleNameHandle } from './ParticleNameCanvas';
-
-const ParticleNameCanvas = dynamic(
-  () => import('./ParticleNameCanvas').then((m) => ({ default: m.ParticleNameCanvas })),
-  { ssr: false }
-);
-
-type Phase = 'intro' | 'formed' | 'settled';
 
 /**
- * Cinematic entry portal. The server-rendered h1 is the LCP element; the
- * particle canvas forms the name over it (3–4s, skippable via button, scroll,
- * or any key), then the DOM text solidifies and particles disperse into an
- * ambient drift. Reduced motion / no WebGL: static hero with a soft glow.
+ * Static hero: server-rendered h1 as the LCP element, typed tagline, soft
+ * atmosphere glow. Reduced motion renders the tagline instantly.
  */
 export function HeroSection() {
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const canvasRef = useRef<ParticleNameHandle>(null);
-  const [phase, setPhase] = useState<Phase>('intro');
-  const [mode, setMode] = useState<'pending' | 'cinematic' | 'static'>('pending');
+  const [instantTagline, setInstantTagline] = useState(false);
+  const [taglineActive, setTaglineActive] = useState(false);
 
-  // Decide the mode on mount: static for reduced motion or repeat visits.
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const seen = sessionStorage.getItem('introSeen') === '1';
-    if (reduced) {
-      setMode('static');
-      setPhase('settled');
-    } else {
-      setMode('cinematic');
-      if (seen) setPhase('settled');
-    }
+    setInstantTagline(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    setTaglineActive(true);
   }, []);
-
-  const instant = mode === 'cinematic' && phase === 'settled';
-
-  const onFormed = useCallback(() => {
-    setPhase((p) => (p === 'intro' ? 'formed' : p));
-  }, []);
-  const onSettled = useCallback(() => {
-    setPhase('settled');
-    try { sessionStorage.setItem('introSeen', '1'); } catch { /* private mode */ }
-  }, []);
-
-  // Watchdog: whatever happens to the canvas, content reveals within 5s.
-  useEffect(() => {
-    if (mode !== 'cinematic' || phase !== 'intro') return;
-    const t = window.setTimeout(() => {
-      setPhase((p) => (p === 'intro' ? 'formed' : p));
-    }, 5000);
-    return () => window.clearTimeout(t);
-  }, [mode, phase]);
-
-  // Any scroll or keypress skips the intro.
-  useEffect(() => {
-    if (mode !== 'cinematic' || phase !== 'intro') return;
-    const skip = () => canvasRef.current?.skip();
-    const onKey = (e: KeyboardEvent) => { if (!e.metaKey && !e.ctrlKey) skip(); };
-    window.addEventListener('wheel', skip, { passive: true, once: true });
-    window.addEventListener('touchmove', skip, { passive: true, once: true });
-    window.addEventListener('keydown', onKey, { once: true });
-    return () => {
-      window.removeEventListener('wheel', skip);
-      window.removeEventListener('touchmove', skip);
-      window.removeEventListener('keydown', onKey);
-    };
-  }, [mode, phase]);
-
-  const revealed = phase !== 'intro' || mode === 'static';
 
   return (
     <section id="hero" tabIndex={-1} style={{
@@ -86,31 +29,11 @@ export function HeroSection() {
       background: 'transparent',
       zIndex: 20,
     }}>
-      {/* particle stage */}
-      {mode === 'cinematic' && (
-        <ParticleNameCanvas ref={canvasRef} titleRef={titleRef} instant={instant} onFormed={onFormed} onSettled={onSettled} />
-      )}
-      {/* static / underlying atmosphere */}
+      {/* atmosphere */}
       <div aria-hidden style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
         background: 'radial-gradient(ellipse 60% 45% at 30% 42%, rgba(45,212,191,0.07), transparent 70%)',
       }} />
-
-      {/* Skip control */}
-      {mode === 'cinematic' && phase === 'intro' && (
-        <button
-          onClick={() => canvasRef.current?.skip()}
-          style={{
-            position: 'absolute', bottom: 24, right: 24, zIndex: 5,
-            background: 'rgba(13,14,18,0.6)', color: 'var(--text2)',
-            border: '1px solid var(--bd2)', borderRadius: 5,
-            fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
-            padding: '8px 14px', cursor: 'pointer',
-          }}
-        >
-          Skip intro →
-        </button>
-      )}
 
       <div style={{ flex: 1, display: 'flex', flexWrap: 'wrap', position: 'relative', zIndex: 1 }}>
 
@@ -125,24 +48,18 @@ export function HeroSection() {
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 24 }}>
             <div style={{ marginBottom: 20, minHeight: 17 }}>
-              <TypedTagline segments={site.taglineSegments} active={revealed} instant={phase === 'settled' || mode === 'static'} />
+              <TypedTagline segments={site.taglineSegments} active={taglineActive} instant={instantTagline} />
             </div>
-            <h1 ref={titleRef} style={{
+            <h1 style={{
               fontFamily: SERIF, fontWeight: 400,
               fontSize: 'clamp(56px, 10vw, 132px)',
               lineHeight: 0.95, letterSpacing: '-0.025em', color: 'var(--foreground)',
               margin: 0, paddingBottom: '0.08em',
-              opacity: mode === 'cinematic' && phase === 'intro' ? 0.06 : 1,
-              transition: 'opacity 0.7s cubic-bezier(0.16,1,0.3,1)',
               width: 'fit-content',
             }}>
-              <span style={{ color: 'var(--primary)', transition: 'inherit' }}>Ahmad</span><br />Firas
+              <span style={{ color: 'var(--primary)' }}>Ahmad</span><br />Firas
             </h1>
-            <div style={{
-              opacity: revealed ? 1 : 0,
-              transform: revealed ? 'none' : 'translateY(14px)',
-              transition: 'opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.15s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.15s',
-            }}>
+            <div>
               <p style={{ fontSize: 16, lineHeight: 1.72, color: 'var(--text2)', maxWidth: 440, marginTop: 26, fontFamily: SANS }}>
                 {site.heroSub}
               </p>
@@ -156,7 +73,7 @@ export function HeroSection() {
           </div>
 
           {/* bottom scroll hint */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, opacity: revealed ? 0.45 : 0, transition: 'opacity 0.6s ease 0.6s', animation: revealed ? 'bob 2.2s ease-in-out 2s infinite' : 'none' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, opacity: 0.45, animation: 'bob 2.2s ease-in-out 2s infinite' }}>
             <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, var(--primary), transparent)' }} />
             <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', color: FG3, textTransform: 'uppercase' }}>Scroll to explore</span>
           </div>
@@ -170,9 +87,6 @@ export function HeroSection() {
           flexDirection: 'column',
           padding: 'clamp(64px,6vw,80px) clamp(24px,3.5vw,48px) clamp(40px,4vw,56px)',
           background: 'transparent',
-          opacity: revealed ? 1 : 0,
-          transform: revealed ? 'none' : 'translateY(10px)',
-          transition: 'opacity 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s',
         }}>
           <div style={{ borderRadius: 8, overflow: 'hidden', flexShrink: 0 }}>
             <HeroPhoto />

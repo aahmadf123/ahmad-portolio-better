@@ -1,29 +1,18 @@
 import { site } from '@/lib/data/site';
 
 const MONO = 'var(--font-code), monospace';
-const SERIF = 'var(--font-display), Georgia, serif';
 const HAND = 'var(--font-hand), cursive';
 
 /**
- * Cinematic closing credits: gradient keyline, drifting ghost-name marquee,
- * a handwritten sign-off, and the link columns. CSS-only motion (the global
- * reduced-motion kill-switch stops the marquee).
+ * Closing credits: gradient keyline, a handwritten sign-off, and the link
+ * columns.
  */
 export function SiteFooter() {
   const year = 2026;
-  const ghost = 'AHMAD FIRAS · ';
   return (
     <footer style={{ position: 'relative', zIndex: 20, background: 'var(--background)', borderTop: '1px solid var(--bd)', overflow: 'hidden' }}>
       {/* keyline */}
       <div aria-hidden style={{ height: 2, background: 'linear-gradient(90deg, var(--primary), var(--gold))', opacity: 0.7 }} />
-
-      {/* ghost marquee */}
-      <div aria-hidden style={{ overflow: 'hidden', whiteSpace: 'nowrap', padding: '34px 0 0', maskImage: 'linear-gradient(90deg, transparent, black 12%, black 88%, transparent)', WebkitMaskImage: 'linear-gradient(90deg, transparent, black 12%, black 88%, transparent)' }}>
-        <div className="footer-marquee" style={{ display: 'inline-block', fontFamily: SERIF, fontSize: 'clamp(64px, 9vw, 128px)', lineHeight: 1, color: 'var(--foreground)', opacity: 0.045, letterSpacing: '-0.02em' }}>
-          <span>{ghost.repeat(4)}</span>
-          <span>{ghost.repeat(4)}</span>
-        </div>
-      </div>
 
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: 'clamp(28px, 4vw, 56px) clamp(20px, 4vw, 52px)' }}>
         <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: 'clamp(28px, 5vw, 72px)', alignItems: 'start' }}>
@@ -63,8 +52,6 @@ export function SiteFooter() {
       </div>
 
       <style>{`
-        .footer-marquee { animation: footer-slide 40s linear infinite; }
-        @keyframes footer-slide { to { transform: translateX(-50%); } }
         @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </footer>
