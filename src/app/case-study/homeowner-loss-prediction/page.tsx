@@ -466,7 +466,7 @@ export default function HomeownerLossCaseStudy() {
           What broke, and what I&apos;d do differently
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, marginBottom: 24, maxWidth: 680 }}>
-          The governance layer wasn&apos;t academic — it existed because the failure modes were real. Two of them are worth naming directly.
+          The governance layer wasn&apos;t academic — it existed because the failure modes were real. One of them — and one design limit I&apos;d address first — are worth naming directly.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 10 }}>
           <div style={{ padding: '20px 22px', background: `${ACCENT}0a`, border: `1px solid ${ACCENT}28`, borderRadius: 10 }}>

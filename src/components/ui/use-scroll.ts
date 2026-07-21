@@ -16,16 +16,20 @@ export function useScroll(threshold: number) {
 
   React.useEffect(() => {
     let ticking = false;
+    let rafId = 0;
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(() => {
+      rafId = requestAnimationFrame(() => {
         ticking = false;
         apply();
       });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(rafId);
+    };
   }, [apply]);
 
   React.useEffect(() => {

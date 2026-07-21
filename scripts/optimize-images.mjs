@@ -6,7 +6,8 @@ import { mkdir, readdir, readFile, writeFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const SCRIPT_PATH = fileURLToPath(import.meta.url);
+const ROOT = path.resolve(path.dirname(SCRIPT_PATH), '..');
 const IMAGES = path.join(ROOT, 'public', 'Images');
 const OUT = path.join(IMAGES, 'optimized');
 
@@ -58,7 +59,13 @@ const ogSvg = `
   <circle cx="1050" cy="150" r="44" fill="none" stroke="#f59e0b" stroke-opacity="0.3" stroke-width="1.5"/>
   <circle cx="1050" cy="150" r="5" fill="#2dd4bf"/>
 </svg>`;
-await emit('og.png', sharp(Buffer.from(ogSvg)).png({ compressionLevel: 9 }));
+const ogOutPath = path.join(OUT, 'og.png');
+const ogUpToDate = (await fileExists(ogOutPath)) && (await stat(ogOutPath)).mtimeMs >= (await stat(SCRIPT_PATH)).mtimeMs;
+if (ogUpToDate) {
+  report.push(`og.png: (unchanged, script not newer)`);
+} else {
+  await emit('og.png', sharp(Buffer.from(ogSvg)).png({ compressionLevel: 9 }));
+}
 
 // ───────────────────────────────────────────────────────────────────────
 // 4. Responsive pipeline — every /Images/... original referenced by the

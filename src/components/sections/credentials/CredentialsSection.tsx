@@ -64,7 +64,7 @@ export function CredentialsSection() {
                     <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.images.length}, 1fr)`, gap: 8, marginTop: 14 }}>
                       {a.images.map((src, j) => (
                         <div key={j} style={{ width: '100%', aspectRatio: a.ratio ?? '16/9', background: 'var(--background)', borderRadius: 6, overflow: 'hidden' }}>
-                          <Pic src={src} alt={a.title} onClick={e => { e.stopPropagation(); openLb(src, a.title); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
+                          <Pic src={src} alt={a.title} sizes={`(max-width: 860px) ${Math.round(100 / a.images.length)}vw, ${Math.round(50 / a.images.length)}vw`} onClick={e => { e.stopPropagation(); openLb(src, a.title); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
                         </div>
                       ))}
                     </div>
@@ -103,7 +103,7 @@ export function CredentialsSection() {
                     <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.images.length}, 1fr)`, gap: 8, marginTop: 14 }}>
                       {a.images.map((src, j) => (
                         <div key={j} style={{ width: '100%', aspectRatio: a.ratio ?? '16/9', background: 'var(--background)', borderRadius: 6, overflow: 'hidden' }}>
-                          <Pic src={src} alt={a.name} onClick={e => { e.stopPropagation(); openLb(src, a.name); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
+                          <Pic src={src} alt={a.name} sizes={`(max-width: 860px) ${Math.round(100 / a.images.length)}vw, ${Math.round(50 / a.images.length)}vw`} onClick={e => { e.stopPropagation(); openLb(src, a.name); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
                         </div>
                       ))}
                     </div>

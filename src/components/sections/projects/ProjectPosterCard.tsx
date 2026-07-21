@@ -34,7 +34,7 @@ function responsiveAttrs(src: string, wide: boolean) {
     src: `${entry.base}-${largest}.webp`,
     srcSet: entry.widths.map((w) => `${entry.base}-${w}.webp ${w}w`).join(', '),
     sizes: wide
-      ? '(max-width: 600px) 100vw, (max-width: 900px) 100vw, 860px'
+      ? '(max-width: 900px) 100vw, 860px'
       : '(max-width: 600px) 100vw, (max-width: 900px) 50vw, 420px',
   };
 }
@@ -82,7 +82,16 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
   return (
     <m.button
       layoutId={`poster-${p.idx}`}
-      onClick={() => { resetTilt?.(); onOpen(p); }}
+      onClick={() => {
+        resetTilt?.();
+        // Jump (not set) the rendered spring outputs straight to 0 — set() on
+        // tiltX/tiltY above only re-targets the spring, which would still be
+        // mid-flight when the layoutId morph starts measuring. jump() snaps
+        // rotateX/rotateY themselves so the morph begins from an exact 0° pose.
+        rotateX.jump(0);
+        rotateY.jump(0);
+        onOpen(p);
+      }}
       onPointerMove={onTiltMove}
       onPointerLeave={resetTilt}
       whileHover="hover"

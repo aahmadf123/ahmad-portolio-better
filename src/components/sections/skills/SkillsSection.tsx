@@ -20,8 +20,7 @@ type Mode = 'pending' | 'constellation' | 'radial' | 'list';
 /**
  * Skills as an interactive constellation (desktop, fine pointer, motion OK),
  * a swipeable radial carousel (touch), or the full chip inventory (reduced
- * motion / by choice). Every one of the full skill inventory (currently 88)
- * skills stays reachable as text.
+ * motion / by choice). All 88 skills stay reachable as text in every mode.
  */
 export function SkillsSection() {
   const def = sectionById('skills')!;

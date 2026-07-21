@@ -2,6 +2,9 @@
 // About/Experience/press text; every number and fact is real. Scenes are
 // code-drawn (see story/ChapterScene.tsx) — swap in photography later if desired.
 
+import { nowUpdated } from './now';
+import { site } from './site';
+
 export type StoryScene = 'map' | 'systems' | 'neural' | 'solar' | 'field' | 'horizon';
 
 export interface StoryChapter {
@@ -66,13 +69,12 @@ export const storyChapters: StoryChapter[] = [
   },
   {
     id: 'whats-next',
-    // kicker mirrors nowUpdated in now.ts ('June 2026'); keep in sync when that updates.
-    kicker: 'Epilogue · June 2026',
+    kicker: `Epilogue · ${nowUpdated}`,
     title: 'The next chapter.',
     body: "Two certifications in flight — Oracle's Application Integration Professional, Microsoft's AI Transformation Leader. A football computer-vision model still in progress, athletics platforms in build alongside it: a student-athlete health-insurance site, an onboarding portal. Still in Toledo, still open — AI research, ML engineering, sports analytics. Same instinct as chapter one: go where the hardest problems are.",
     scene: 'horizon',
     accent: '#f59e0b',
     milestone: false,
-    stat: { value: 'Open', label: 'Available · Toledo, OH' },
+    stat: { value: 'Open', label: site.availability.label },
   },
 ];

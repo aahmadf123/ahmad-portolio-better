@@ -50,7 +50,7 @@ export function CertFlipCard({ cert }: { cert: Cert }) {
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           gap: 14, padding: 22, textAlign: 'center',
         }}>
-          <Pic src={cert.badgeImage} alt="" style={{ width: 108, height: 108, objectFit: 'contain', borderRadius: 12, background: `${cert.color}14`, border: `1px solid ${cert.color}33`, padding: 8 }} />
+          <Pic src={cert.badgeImage} alt="" sizes="108px" style={{ width: 108, height: 108, objectFit: 'contain', borderRadius: 12, background: `${cert.color}14`, border: `1px solid ${cert.color}33`, padding: 8 }} />
           <div>
             <div style={{ fontFamily: MONO, fontSize: 10, color: cert.color, letterSpacing: '0.12em', textTransform: 'uppercase' }}>{cert.issuer} · {cert.track}</div>
             <div style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.25, marginTop: 6 }}>{cert.title}</div>
