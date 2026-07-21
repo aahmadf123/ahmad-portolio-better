@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Section, SH, MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { useLightboxOpen } from '@/components/layout/LightboxProvider';
+import { Pic } from '@/components/ui/pic';
 import { press } from '@/lib/data/press';
 import { testimonials, type Testimonial } from '@/lib/data/testimonials';
 import { sectionById } from '@/lib/data/sections';
@@ -43,8 +44,7 @@ export function SignalsSection() {
           >
             <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 0 }} className="featured-in-grid">
               <div style={{ position: 'relative', overflow: 'hidden', background: 'var(--surface)', minHeight: 210 }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={feature.image} alt={feature.imageAlt} title="Click to enlarge" onClick={() => openLb(feature.image, feature.imageAlt)} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', cursor: 'zoom-in' }} />
+                <Pic src={feature.image} alt={feature.imageAlt} title="Click to enlarge" onClick={() => openLb(feature.image, feature.imageAlt)} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', cursor: 'zoom-in' }} />
               </div>
               <div style={{ padding: '26px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--orange)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 12, opacity: 0.9 }}>Featured In</div>

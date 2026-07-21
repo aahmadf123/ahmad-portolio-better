@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
+import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -186,12 +187,12 @@ export default function ToledoFootballIQCaseStudy() {
 
           {/* Hero image */}
           <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: '#06080E', marginBottom: 64 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Pic
               src="/Images/Football_IQ_Analytics.png"
               alt="Toledo Football IQ Analytics Platform"
               onClick={() => setLb('/Images/Football_IQ_Analytics.png')}
               style={{ width: '100%', display: 'block', objectFit: 'cover', cursor: 'zoom-in' }}
+              priority
             />
           </div>
         </div>

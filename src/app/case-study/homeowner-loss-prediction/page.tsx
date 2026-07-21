@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
+import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -221,7 +222,7 @@ export default function HomeownerLossCaseStudy() {
         </p>
 
         <div style={{ marginTop: 28, overflow: 'hidden', borderRadius: 10, border: '1px solid rgba(167,139,250,0.15)', background: '#0B0D14' }}>
-          <img src="/Images/SeniorDesign_Pipeline.jpeg" alt="MLOps pipeline architecture" onClick={() => setLb('/Images/SeniorDesign_Pipeline.jpeg')} style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 400, cursor: 'zoom-in' }} />
+          <Pic src="/Images/SeniorDesign_Pipeline.jpeg" alt="MLOps pipeline architecture" onClick={() => setLb('/Images/SeniorDesign_Pipeline.jpeg')} style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 400, cursor: 'zoom-in' }} />
         </div>
       </Section>
 

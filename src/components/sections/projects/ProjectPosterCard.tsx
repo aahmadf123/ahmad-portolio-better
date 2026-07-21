@@ -3,7 +3,40 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { MONO, SERIF, SANS } from '@/components/shared/section-helpers';
+import manifest from '@/lib/image-manifest.json';
 import { projectStatusLabel, type Project } from '@/lib/data/projects';
+
+interface ManifestEntry {
+  base: string;
+  widths: number[];
+}
+
+const IMAGE_MANIFEST = manifest as Record<string, ManifestEntry>;
+
+function decodeKey(src: string): string {
+  try {
+    return decodeURIComponent(src);
+  } catch {
+    return src;
+  }
+}
+
+/** Tiny local lookup — mirrors <Pic>'s manifest logic without pulling in the
+ * component itself (this image stays `motion.img` until the framer-motion →
+ * `m` migration lands in a later phase). Manifest miss falls back to the
+ * original path with no srcSet/sizes, same graceful degradation as <Pic>. */
+function responsiveAttrs(src: string, wide: boolean) {
+  const entry = IMAGE_MANIFEST[decodeKey(src)];
+  if (!entry) return { src };
+  const largest = entry.widths[entry.widths.length - 1];
+  return {
+    src: `${entry.base}-${largest}.webp`,
+    srcSet: entry.widths.map((w) => `${entry.base}-${w}.webp ${w}w`).join(', '),
+    sizes: wide
+      ? '(max-width: 600px) 100vw, (max-width: 900px) 100vw, 860px'
+      : '(max-width: 600px) 100vw, (max-width: 900px) 50vw, 420px',
+  };
+}
 
 const STATUS_COLOR: Record<Project['status'], string> = {
   live: 'var(--green)',
@@ -46,8 +79,10 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
     >
       {/* image — dimmed and desaturated at rest so bright screenshots stay moody */}
       <motion.img
-        src={p.image}
+        {...responsiveAttrs(p.image, wide)}
         alt=""
+        loading="lazy"
+        decoding="async"
         variants={{
           rest: { scale: 1, opacity: 0.34, filter: 'brightness(0.62) saturate(0.7)' },
           hover: { scale: 1.05, opacity: 0.85, filter: 'brightness(0.95) saturate(1)' },

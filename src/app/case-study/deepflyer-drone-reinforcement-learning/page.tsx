@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
+import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -119,12 +120,12 @@ export default function DeepFlyerCaseStudy() {
 
         {/* Hero image */}
         <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}22`, marginBottom: 36, background: '#06080E' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Pic
             src="/Images/DeepFlyer_pics.png"
             alt="DeepFlyer platform dashboard — drone, reward editor, hoop navigation course, and edge hardware overview"
             onClick={() => setLb('/Images/DeepFlyer_pics.png')}
             style={{ width: '100%', height: 'auto', display: 'block', cursor: 'zoom-in' }}
+            priority
           />
         </div>
 

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { Button, type ButtonProps } from '@/components/ui/button';
+import { Pic } from '@/components/ui/pic';
 
 interface AnimatedFeatureSpotlightProps extends React.HTMLAttributes<HTMLElement> {
   preheaderIcon?: React.ReactNode;
@@ -40,7 +41,7 @@ const AnimatedFeatureSpotlight = React.forwardRef<HTMLElement, AnimatedFeatureSp
             </div>
           </div>
           <div className="relative w-full min-h-[250px] md:min-h-[320px] flex items-center justify-center animate-in fade-in zoom-in-95 duration-700 delay-200">
-            <img
+            <Pic
               src={imageUrl}
               alt={imageAlt}
               title={onImageClick ? 'Click to enlarge' : undefined}

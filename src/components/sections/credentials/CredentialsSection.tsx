@@ -3,6 +3,7 @@
 import React from 'react';
 import { Section, SH, useReveal, MONO, SANS, FG3 } from '@/components/shared/section-helpers';
 import { useLightboxOpen } from '@/components/layout/LightboxProvider';
+import { Pic } from '@/components/ui/pic';
 import { awards } from '@/lib/data/awards';
 import { affiliations } from '@/lib/data/affiliations';
 import { certs } from '@/lib/data/certs';
@@ -63,8 +64,7 @@ export function CredentialsSection() {
                     <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.images.length}, 1fr)`, gap: 8, marginTop: 14 }}>
                       {a.images.map((src, j) => (
                         <div key={j} style={{ width: '100%', aspectRatio: a.ratio ?? '16/9', background: 'var(--background)', borderRadius: 6, overflow: 'hidden' }}>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={src} alt={a.title} onClick={e => { e.stopPropagation(); openLb(src, a.title); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
+                          <Pic src={src} alt={a.title} onClick={e => { e.stopPropagation(); openLb(src, a.title); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
                         </div>
                       ))}
                     </div>
@@ -103,8 +103,7 @@ export function CredentialsSection() {
                     <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.images.length}, 1fr)`, gap: 8, marginTop: 14 }}>
                       {a.images.map((src, j) => (
                         <div key={j} style={{ width: '100%', aspectRatio: a.ratio ?? '16/9', background: 'var(--background)', borderRadius: 6, overflow: 'hidden' }}>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={src} alt={a.name} onClick={e => { e.stopPropagation(); openLb(src, a.name); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
+                          <Pic src={src} alt={a.name} onClick={e => { e.stopPropagation(); openLb(src, a.name); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
                         </div>
                       ))}
                     </div>

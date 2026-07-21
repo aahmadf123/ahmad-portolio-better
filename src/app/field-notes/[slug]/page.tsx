@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { getFieldNote, fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
 import { site } from '@/lib/data/site';
 import { notFound } from 'next/navigation';
+import { Pic } from '@/components/ui/pic';
 
 const SERIF = 'var(--font-display), Georgia, serif';
 const MONO  = 'var(--font-code), monospace';
@@ -170,11 +171,11 @@ export default async function FieldNotePage({ params }: PageProps) {
               border: '1px solid rgba(242,237,216,0.08)',
               marginBottom: 48, background: '#06080E',
             }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Pic
                 src={note.heroImage}
                 alt={`${note.title} — hero visualization`}
                 style={{ width: '100%', height: 'auto', display: 'block' }}
+                priority
               />
             </div>
           </ViewTransition>
