@@ -219,6 +219,16 @@
     "w": 2268,
     "h": 1283
   },
+  "/Images/field-notes/opponent-digital-twins/opponent-twin-mirror.png": {
+    "base": "/Images/optimized/opponent-twin-mirror",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 1600,
+    "h": 900
+  },
   "/Images/field-notes/small-data-college-sports-ai/small-data-season-noise.png": {
     "base": "/Images/optimized/small-data-season-noise",
     "widths": [

@@ -1,0 +1,84 @@
+import { TwinAnatomy, FilmBudget, GamePlanSimulator, AdaptationDecay } from '@/components/ui/field-notes/opponent-twin-diagrams'
+
+export const metadata = {
+  title: 'Opponent digital twins: what it takes to simulate next Saturday’s rival',
+  date: '2026-07-21',
+  excerpt: 'Engineering has spent two decades building digital twins of jet engines and factory lines. Now sports wants one of next week’s opponent — a simulated rival you can rehearse against before kickoff. Some of that transfers. The most important parts don’t, because a play-caller, unlike a turbine, watches film of you too.',
+  tags: ['AI', 'Sports Analytics', 'Digital Twins', 'Simulation', 'Game Planning'],
+  category: 'Sports Analytics',
+  readingTime: 12,
+}
+
+The phrase "digital twin" comes from an unglamorous corner of engineering. The idea — commonly credited to [Michael Grieves' work on product lifecycle management in 2002](https://en.wikipedia.org/wiki/Digital_twin), with NASA's mirrored ground simulators as the spiritual ancestor — is a virtual replica of a physical system, updated continuously with real data, that you can experiment on without touching the real thing. Airlines run twins of jet engines to predict maintenance. Factories run twins of production lines to test changes before committing steel.
+
+Sports noticed. The NFL and AWS built the ["Digital Athlete"](https://aws.amazon.com/sports/nfl/), a virtual-player framework that simulates game scenarios to predict injury risk before it happens. And somewhere in every analytics meeting, the same question eventually surfaces, usually phrased casually: *could we build one of next week's opponent?* A simulated rival — their coordinator's habits, their personnel, their tells — that the staff could game-plan against on Tuesday instead of finding out on Saturday.
+
+I find this question genuinely worth taking seriously, which is why it deserves better than the two default answers: the vendor's *yes, absolutely* and the skeptic's *that's science fiction*. The honest answer is that an opponent twin is several different objects stacked in a trench coat, some of which you can build today with public data, and one of which may be unbuildable even in principle. This note is about which is which.
+
+## A turbine doesn't scheme
+
+Start with what makes engineering twins work, because the contrast is the whole story.
+
+A jet engine twin succeeds for three quiet reasons. The physics is stationary — titanium fatigues the same way on Tuesday as it did in the certification lab. The instrumentation is dense — thousands of sensors streaming continuously from the actual system being twinned. And the system is indifferent to being modeled — the engine does not know about the twin, and would not change its behavior if it did.
+
+An opponent twin inherits none of these. The "physics" is a coaching staff that redesigns itself weekly. The instrumentation is [twelve games of charted film](/field-notes/small-data-college-sports-ai) if you're lucky — my earlier note on the small-data problem is, in hindsight, the prequel to this one. And the system being modeled is *adversarial*: the moment your behavior reveals that you've modeled them, they change, precisely because they employ people whose job is to notice.
+
+So the right mental model is not "a flight simulator for Saturday." It's a stack of models with very different reliability grades, and it helps to be precise about the layers:
+
+<TwinAnatomy />
+
+The load-bearing observation: each layer down the stack needs richer data and delivers less certainty. A play-calling policy can be estimated from public play-by-play. Matchup priors need graded film. And the adaptation layer — how they respond *to you* — needs data that mostly does not exist, because it's data about a counterfactual.
+
+## The film budget
+
+Even the buildable layers run into an arithmetic wall fast, and it's worth feeling exactly where the wall sits.
+
+Suppose you chart every snap of an opponent's season. The tendencies a coordinator's twin most needs are *conditional* — not "they run 52% of the time" but "they run 71% of the time on third-and-short with a heavy set." Conditioning is where the value lives, and conditioning is also where the sample goes to die. An FBS offense sees first-and-ten thirty times a game. It attempts a fourth down about once or twice.
+
+<FilmBudget />
+
+Slide the film budget around and the pattern is brutal: the situations that occur constantly are pinned down within a month, and the situations that actually decide games — fourth downs, red-zone calls, two-minute drills — stay wide-open guesses even with a full season charted. A tendency you "know" within ±25 percentage points is not knowledge. It's a horoscope with a decimal point.
+
+This is the small-data problem wearing a different jersey, with one aggravation: for an opponent twin you get *their* twelve games, not yours. No practice data, no sideline context, no ability to ask the coordinator what he was thinking. The public rows — and to be clear, [CollegeFootballData.com](https://collegefootballdata.com/) and [cfbfastR](https://cfbfastr.sportsdataverse.org/) will hand anyone the play-by-play to build a v1 tendency twin this afternoon — are the *most visible* and therefore *least private* layer of the stack. Everyone in your conference has the same rows. A twin built only from them is a twin your rival also owns.
+
+## Rehearsal, not prophecy
+
+Here's the reframe that I think separates useful twin projects from doomed ones: a good opponent twin is not a prediction machine. It's a rehearsal environment. The question it answers is not "what will they call on the first drive?" — it can't know that — but "across the whole distribution of things they plausibly do, how does *our plan* hold up?"
+
+That reframe matters because it changes what accuracy the twin needs. A prophecy has to be right about a specific future. A rehearsal only has to be right *on average* about the opponent's behavior — and wrong in ways that don't systematically mislead your preparation.
+
+Which raises the question the sales deck never gets to: how right does the twin have to be before rehearsing against it beats generic preparation?
+
+<GamePlanSimulator />
+
+The asymmetry in that simulator is the part I'd defend to a coaching staff. Preparation is not free — reps spent on a look the opponent never shows are reps *not* spent on fundamentals that work against anyone. Preparing precisely for the wrong thing costs more than preparing correctly gains, which means the value of a twin crosses zero well above coin-flip accuracy. A twin that reads the opponent right 55% of the time doesn't add a little value. It subtracts value, while radiating the confidence of a system with a dashboard.
+
+That break-even line is why fidelity honesty matters more than fidelity itself. A staff that knows its twin is only trustworthy on first and second down can use it surgically and bank the edge. A staff told the twin is "AI-powered opponent simulation" full stop will spend its practice week on rabbit holes. The most dangerous twin is not an inaccurate one — it's an inaccurate one with good production values.
+
+## The twin shoots back
+
+Now for the layer that separates opponents from turbines for good: suppose the twin *works*. It finds a real tell — the opponent really does run 78% of the time from a particular look on second-and-short. You build a plan around it. What happens next?
+
+What happens next is that the exploit goes on film. Their quality-control staff runs the same self-scout every good program runs, sees the tendency you saw — or simply sees you sitting on it — and breaks the pattern. Usually by the following week. Sometimes by halftime.
+
+<AdaptationDecay />
+
+This is the game-theoretic floor under the whole enterprise: **in an adversarial setting, a tendency is a perishable asset, and exploiting it is what perishes it.** The engineering-twin mindset assumes the modeled system is indifferent to the model. Football's version of model drift is an opponent who is actively trying to cause it. Fully modeling *that* — an adaptation layer that anticipates how they'll respond to your response — stops being statistics and becomes game theory with a sample size of zero, because the data you'd need is data about games that haven't been played against plans you haven't shown.
+
+I don't think that makes twins worthless. It makes them *wasting assets* that need spending decisions attached — which is a coaching judgment, not a modeling output. The twin can tell you the tell exists and roughly what it's worth. Whether to cash it this week or bank it for the rivalry game is a question no simulator should be allowed to answer.
+
+## What I'd actually build
+
+Strip away what can't work and a realistic college-program twin looks less like a video game and more like a disciplined stack of small, honest models:
+
+A **tendency layer** from public play-by-play, opponent-adjusted, with intervals displayed — never point estimates — and situations flagged red when the film budget can't support them. A **personnel grammar** from your own charting, because that's where private labels beat the shared public rows. **Matchup priors** stated as priors, blended from recruiting composites and graded film, wide by construction. A **Monte Carlo rehearsal harness** on top: not "what will they do," but "here are forty plausible opponent-Saturdays; here's the distribution of how our plan does." And an explicit **staleness policy**: every exploited tendency gets a decay clock the moment it appears on your own film.
+
+Notice what's absent: nothing in that stack requires deep learning, tracking data you can't get, or a rendering engine. The expensive ingredient is the same one it always is in [small-data environments](/field-notes/small-data-college-sports-ai) — proximity. The charting, the corrections from coaches who watched the actual film, the practice-week feedback about which simulated looks turned out to be real. A twin is only as alive as the data pipeline feeding it, and in college sports the richest pipeline is the one running through your own building.
+
+## The line I would draw
+
+If someone pitches you an opponent twin as a crystal ball — a simulated rival that tells you what's coming — walk away. The sample sizes can't support it, and the opponent's whole job is to make yesterday's model wrong.
+
+If someone frames it as a rehearsal environment with honest error bars — a machine for spending your practice week's attention slightly better than the other staff spends theirs — that's real, it's buildable at college scale, and the edge compounds.
+
+**A digital twin of a machine tells you what the machine will do. A digital twin of an opponent, at its very best, tells you what you should practice.** Programs that internalize the difference will get quietly better on the margins that decide close games. Programs that don't will own a very expensive video game — and a rival who thanks them for the predictability.
