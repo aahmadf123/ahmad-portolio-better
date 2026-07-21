@@ -14,35 +14,24 @@ const DOCS = [
     label: 'Resume',
     description: 'One-page engineering summary — built for a 30-second skim, survives deep reading.',
     file: '/docs/Ahmad_Resume_Developer_I_FirstSolar.pdf',
-    available: true,
   },
   {
     id: 'industry-cv',
     label: 'Industry CV',
     description: 'Full credentials: work history, technical stack, projects, and impact metrics.',
     file: '/docs/Ahmad_CV_Developer_I_FirstSolar.pdf',
-    available: true,
   },
   {
     id: 'diploma',
     label: 'Degree',
     description: 'Official digital degree certificate. Certificate appears on page 1; verification metadata on page 2.',
     file: '/docs/CeD.26D8-NDTX-AGEW.pdf',
-    available: true,
   },
   {
     id: 'oci-foundations',
     label: 'Oracle OCI Cert',
     description: 'Oracle Cloud Infrastructure Foundations Associate — official eCertificate. Verifiable via Oracle CertView.',
     file: '/docs/Oracle_Foundation_eCertificate.pdf',
-    available: true,
-  },
-  {
-    id: 'academic-cv',
-    label: 'Academic CV',
-    description: 'Research history, publications, conference contributions, and affiliations.',
-    file: null,
-    available: false,
   },
 ] as const;
 
@@ -170,8 +159,7 @@ export default function DocsPage() {
             return (
               <button
                 key={doc.id}
-                onClick={() => doc.available && setSelected(doc as DocItem)}
-                disabled={!doc.available}
+                onClick={() => setSelected(doc as DocItem)}
                 style={{
                   fontFamily: MONO,
                   fontSize: 10,
@@ -181,12 +169,8 @@ export default function DocsPage() {
                   border: `1px solid ${isActive ? 'rgba(45,212,200,0.5)' : 'rgba(242,237,216,0.1)'}`,
                   borderRadius: 4,
                   background: isActive ? 'rgba(45,212,200,0.08)' : 'rgba(242,237,216,0.02)',
-                  color: !doc.available
-                    ? 'rgba(184,180,164,0.3)'
-                    : isActive
-                    ? ACCENT
-                    : 'var(--text2)',
-                  cursor: doc.available ? 'pointer' : 'not-allowed',
+                  color: isActive ? ACCENT : 'var(--text2)',
+                  cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -194,21 +178,6 @@ export default function DocsPage() {
                 }}
               >
                 {doc.label}
-                {!doc.available && (
-                  <span
-                    style={{
-                      fontSize: 8,
-                      padding: '2px 5px',
-                      background: 'rgba(184,180,164,0.06)',
-                      border: '1px solid rgba(184,180,164,0.12)',
-                      borderRadius: 2,
-                      color: 'rgba(184,180,164,0.35)',
-                      letterSpacing: '0.08em',
-                    }}
-                  >
-                    Soon
-                  </span>
-                )}
               </button>
             );
           })}
@@ -274,7 +243,7 @@ export default function DocsPage() {
             </span>
 
             <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
-              {selected.available && selected.file && (
+              {selected.file && (
                 <>
                   <a
                     href={selected.file}
@@ -342,7 +311,7 @@ export default function DocsPage() {
 
           {/* Content area */}
           <AnimatePresence mode="wait">
-            {selected.available && selected.file ? (
+            {selected.file && (
               <motion.div
                 key={selected.id + '-preview'}
                 initial={{ opacity: 0 }}
@@ -400,76 +369,6 @@ export default function DocsPage() {
                   >
                     Open PDF ↗
                   </a>
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="coming-soon"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.22 }}
-                style={{
-                  height: 'clamp(280px, 40vh, 440px)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 18,
-                }}
-              >
-                <div
-                  style={{
-                    width: 44,
-                    height: 44,
-                    border: '1px solid rgba(45,212,200,0.15)',
-                    borderRadius: 8,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'rgba(45,212,200,0.04)',
-                  }}
-                >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="rgba(45,212,200,0.35)"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="12" y1="18" x2="12" y2="12" />
-                    <line x1="9" y1="15" x2="15" y2="15" />
-                  </svg>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <p
-                    style={{
-                      fontFamily: MONO,
-                      fontSize: 10,
-                      letterSpacing: '0.15em',
-                      textTransform: 'uppercase',
-                      color: 'rgba(184,180,164,0.45)',
-                      marginBottom: 8,
-                    }}
-                  >
-                    Coming Soon
-                  </p>
-                  <p
-                    style={{
-                      fontFamily: MONO,
-                      fontSize: 12,
-                      color: 'rgba(184,180,164,0.3)',
-                      letterSpacing: '0.03em',
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    Academic CV is being prepared
-                  </p>
                 </div>
               </motion.div>
             )}

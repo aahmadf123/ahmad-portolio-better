@@ -32,7 +32,7 @@ function buildDossier(): string {
     lines.push(`- ${j.role} @ ${j.company} (${j.period}, ${j.type}${j.active ? ', current' : ''}). ${j.description} Highlights: ${j.achievements.join('; ')}. Stack: ${j.stack.join(', ')}.`);
   }
 
-  lines.push(`\n## Projects (11 total)`);
+  lines.push(`\n## Projects (10 total)`);
   for (const p of projects) {
     const link = p.slug ? ` Case study: ${site.url}/case-study/${p.slug}` : '';
     const extLinks = p.links.filter((l) => l.kind === 'github' || l.kind === 'external' || l.kind === 'video').map((l) => `${l.label}: ${l.href}`).join('; ');

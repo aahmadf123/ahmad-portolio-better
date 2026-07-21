@@ -15,6 +15,11 @@ export function ResearchSection() {
   return (
     <Section id="research" style={{ background: 'rgba(17,19,26,0.92)' }}>
       <SH n={def.n} label="Research" sub="Published work and ongoing investigations." color={def.color} />
+      {research.storyLine && (
+        <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 15, color: FG2, maxWidth: 560, lineHeight: 1.65, marginTop: -30, marginBottom: 28 }}>
+          {research.storyLine}
+        </p>
+      )}
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}>
         <AnimatedFeatureSpotlight
           preheaderIcon={<FlaskConical className="h-4 w-4" />}

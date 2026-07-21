@@ -15,7 +15,6 @@ const MONO  = 'var(--font-code), monospace';
 export default function FieldNotesPage() {
   const published = fieldNotes.filter(n => n.published);
   const byCategory = getNotesByCategory();
-  const totalCount = fieldNotes.length;
 
   return (
     <div style={{ background: 'var(--background)', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
@@ -49,7 +48,7 @@ export default function FieldNotesPage() {
         </div>
 
         <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
-          {published.length} of {totalCount} published
+          Essays
         </div>
       </nav>
 
@@ -160,7 +159,7 @@ export default function FieldNotesPage() {
                     borderRadius: 3, color: 'var(--text3)',
                     marginLeft: 'auto',
                   }}>
-                    {upcomingCount} upcoming
+                    upcoming
                   </span>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -179,7 +178,7 @@ export default function FieldNotesPage() {
                   ))}
                   {upcomingCount > 3 && (
                     <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', paddingLeft: 10, marginTop: 2 }}>
-                      +{upcomingCount - 3} more
+                      + more
                     </div>
                   )}
                 </div>
@@ -197,7 +196,7 @@ export default function FieldNotesPage() {
         flexWrap: 'wrap', gap: 12,
       }}>
         <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
-          Field Notes — Ahmad Firas · {totalCount} essays planned
+          Field Notes — Ahmad Firas · more in the darkroom
         </span>
         <Link href="/" style={{
           fontFamily: MONO, fontSize: 10, color: 'var(--text2)',

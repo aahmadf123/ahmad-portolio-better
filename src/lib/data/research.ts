@@ -24,9 +24,11 @@ export interface ResearchMeta {
   imageAlt: string;
   metrics: ResearchMetric[];
   pillars: ResearchPillar[];
+  storyLine?: string;
 }
 
 export const research: ResearchMeta = {
+  // PROMPT FOR AHMAD: confirm CSUR submission date (2025 vs April 2026)
   preheader: 'ACM Computing Surveys · Under Review · 2025',
   headingAccent: 'AI Failure',
   headingRest: 'Taxonomy for Autonomous Systems',
@@ -68,4 +70,5 @@ export const research: ResearchMeta = {
       desc: 'Emergent failure modes from agent interactions producing unsafe equilibria that are absent in single-agent testing.',
     },
   ],
+  storyLine: 'Thirty-seven real AI failures, distilled into the four ways autonomous systems actually break.',
 };

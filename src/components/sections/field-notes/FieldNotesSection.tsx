@@ -129,7 +129,7 @@ export function FieldNotesSection() {
         <div style={{ border: '1px dashed var(--bd2)', borderRadius: 10, padding: '18px 20px', background: 'rgba(244,244,242,0.012)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
             <span className="pulse" style={{ width: 5, height: 5, borderRadius: '50%', background: def.color, display: 'inline-block' }} />
-            <span style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.14em', textTransform: 'uppercase' }}>In the darkroom · {fieldNotes.filter(n => !n.published).length} essays planned</span>
+            <span style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.14em', textTransform: 'uppercase' }}>In the darkroom — more essays in progress</span>
           </div>
           <div className="fn-upnext" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px 20px' }}>
             {upNext.map((n) => (

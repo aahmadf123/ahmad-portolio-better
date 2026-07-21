@@ -13,7 +13,7 @@ export interface ProjectDetailSection {
   body: string;
 }
 
-export type ProjectCategory = 'autonomy' | 'ml-mlops' | 'sports' | 'web-civic' | 'embedded' | 'research';
+export type ProjectCategory = 'autonomy' | 'ml-mlops' | 'sports' | 'web-civic' | 'embedded';
 
 export const projectCategories: { id: ProjectCategory | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
@@ -22,7 +22,6 @@ export const projectCategories: { id: ProjectCategory | 'all'; label: string }[]
   { id: 'sports', label: 'Sports' },
   { id: 'web-civic', label: 'Web & Civic' },
   { id: 'embedded', label: 'Embedded' },
-  { id: 'research', label: 'Research' },
 ];
 
 export type ProjectStatus = 'live' | 'active-build' | 'shipped' | 'research';
@@ -36,7 +35,7 @@ export const projectStatusLabel: Record<ProjectStatus, string> = {
 
 export interface Project {
   idx: string;
-  /** Case-study route slug where one exists (10 of 11). */
+  /** Case-study route slug — every project has one. */
   slug?: string;
   domain: string;
   color: string;
@@ -134,28 +133,6 @@ export const projects: Project[] = [
   },
   {
     idx: '03',
-    domain: 'ACM CSUR',
-    color: '#f0823c',
-    title: '4-Pillars Taxonomy',
-    tag: 'ACM Computing Surveys · Under Review',
-    headline: '37 incidents · 127 sources · ACM Computing Surveys, under review',
-    image: '/Images/4-Pillars.png',
-    span: 1,
-    stacks: ['Taxonomy Design', 'Literature Review', 'AI Safety'],
-    detailStacks: ['Taxonomy Design', 'Literature Review', 'AI Safety', 'ACM CSUR'],
-    detail: [
-      {
-        label: 'Overview',
-        body: 'A four-pillar taxonomy of AI failures in safety-critical autonomous environments, synthesized from 37 documented incidents across 127 sources. Submitted to ACM Computing Surveys in April 2026, currently under review.',
-      },
-    ],
-    links: [{ label: 'Full methodology in Research section', href: '#research', kind: 'anchor' }],
-    category: 'research',
-    status: 'research',
-    story: 'Thirty-seven real AI failures, distilled into the four ways autonomous systems actually break.',
-  },
-  {
-    idx: '04',
     slug: 'homeowner-loss-prediction',
     domain: 'MLOps',
     color: '#a78bfa',
@@ -198,7 +175,7 @@ export const projects: Project[] = [
     story: 'An insurance risk model rebuilt as a living system — one that notices when the world drifts away from it.',
   },
   {
-    idx: '05',
+    idx: '04',
     slug: 'security-discovery-tool',
     domain: 'Infrastructure',
     color: '#2dd4bf',
@@ -229,7 +206,7 @@ export const projects: Project[] = [
     story: 'Three security tools that disagreed about reality, reconciled into one database that tells the truth.',
   },
   {
-    idx: '06',
+    idx: '05',
     slug: 'deeptruth-ai-fact-checking',
     domain: 'Hackathon',
     color: '#f59e0b',
@@ -260,7 +237,7 @@ export const projects: Project[] = [
     story: 'A 24-hour build that refuses to declare truth — it hands you the evidence and better questions instead.',
   },
   {
-    idx: '07',
+    idx: '06',
     slug: 'camel-car-cheme-car-control-system',
     domain: 'Embedded',
     color: '#f0823c',
@@ -287,7 +264,7 @@ export const projects: Project[] = [
     story: 'A car driven by chemistry and stopped by a threshold controller — innovative enough to win worldwide.',
   },
   {
-    idx: '08',
+    idx: '07',
     slug: 'batting-cleanup-smart-city-waste-reporting',
     domain: 'Civic Tech',
     color: '#f472b6',
@@ -318,7 +295,7 @@ export const projects: Project[] = [
     story: 'Scan a QR code on a Toledo trash can, and the city hears about the problem before you walk away.',
   },
   {
-    idx: '09',
+    idx: '08',
     slug: 'champions-complex-digital-campaign',
     domain: 'Athletics',
     color: '#38bdf8',
@@ -353,7 +330,7 @@ export const projects: Project[] = [
     story: 'Ten architectural renderings arranged into a psychological journey that ends with a donation, not a dead end.',
   },
   {
-    idx: '10',
+    idx: '09',
     slug: 'toledo-athletics-onboarding-portal',
     domain: 'Internal Tools',
     color: '#22c55e',
@@ -392,7 +369,7 @@ export const projects: Project[] = [
     story: 'Tribal knowledge from a Division I athletics department, captured behind a moderation layer at the edge.',
   },
   {
-    idx: '11',
+    idx: '10',
     slug: 'toledo-football-iq-computer-vision-analytics',
     domain: 'Sports Analytics',
     color: '#ef4444',
