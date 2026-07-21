@@ -392,6 +392,20 @@ export default function DeepTruthCaseStudy() {
                   </div>
                 ))}
               </div>
+              <div className="two-col-dt" style={{ marginBottom: 24 }}>
+                <div style={{ padding: '16px 18px', background: `${ACCENT}0c`, border: `1px solid ${ACCENT}30`, borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What broke</div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
+                    The demo was the easy part. Getting DistilBERT inference, Gemini API calls, MongoDB writes, and the Chrome extension to talk to one another — all at once, on a 24-hour clock — is where the integration debt piled up fastest.
+                  </p>
+                </div>
+                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
+                    The 70/30 fusion reasons from what the two models already know — neither one actually retrieves evidence. I&apos;d add a RAG step before the explanation so a verdict cites fetched sources instead of leaning on model priors.
+                  </p>
+                </div>
+              </div>
 
               {/* Responsible framing callout */}
               <div style={{ padding: '20px 24px', background: 'rgba(242,237,216,0.03)', border: '1px solid rgba(242,237,216,0.1)', borderRadius: 10 }}>

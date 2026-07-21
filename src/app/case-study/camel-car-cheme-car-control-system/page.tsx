@@ -430,6 +430,20 @@ if (pressure >= target_pressure_threshold) {
                   </div>
                 ))}
               </div>
+              <div className="two-col-cc">
+                <div style={{ padding: '16px 18px', background: `${ACCENT}0c`, border: `1px solid ${ACCENT}30`, borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What broke</div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
+                    The competition controller read raw pressure and fired at ~5 psi — no filtering, no hysteresis, no logging. Between chemical run-to-run variability, sensor noise, solenoid actuation delay, and post-cutoff coast, that bare threshold never mapped cleanly to a stop distance on its own. The calibration table existed precisely because the controller couldn&apos;t be trusted alone.
+                  </p>
+                </div>
+                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
+                    Log every run and trigger on the pressure slope, not just the level. We tuned against a stopwatch with no on-car recording; writing pressure to an SD card each run — plus a low-pass filter and hysteresis — would let the calibration come from real traces instead of timed guesses.
+                  </p>
+                </div>
+              </div>
             </Section>
 
             {/* FUTURE */}

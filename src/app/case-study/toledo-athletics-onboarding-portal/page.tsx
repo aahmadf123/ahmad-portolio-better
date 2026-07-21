@@ -392,6 +392,13 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
                   </div>
                 ))}
               </div>
+              {/* PROMPT FOR AHMAD: what actually broke while building the onboarding portal? The page documents the moderation design as a success, not a failure. If a concrete setback surfaced (a data-model rewrite, a Workers AI limitation, a seed/migration issue), name it and a "What broke" block can go here. */}
+              <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
+                  The moderation pipeline assumes a trusted moderator, but the current build has no authenticated login or role-based access yet — the compliance boundary is designed, not enforced. Before staff actually rely on it, I&apos;d wire up UToledo SSO and role-based permissions so approving official content is gated by real identity, not convention.
+                </p>
+              </div>
             </Section>
 
             {/* FUTURE */}

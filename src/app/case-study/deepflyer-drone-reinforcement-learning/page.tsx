@@ -426,6 +426,20 @@ export default function DeepFlyerCaseStudy() {
               </div>
             ))}
           </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12, marginTop: 12 }} className="two-col-df">
+            <div style={{ padding: '18px 20px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 8 }}>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What broke</div>
+              <p style={{ fontSize: 13, lineHeight: 1.75, color: '#B8B4A4' }}>
+                The X500 URDF came in too mesh-heavy to simulate smoothly — I cut its complexity 40% (mass and inertia still validated within 2%) to hold a sub-1-second Gazebo start. Training had its own ceiling: PPO plateaued around 80% success, with convergence flattening near 9e5 of the 1M steps.
+              </p>
+            </div>
+            <div style={{ padding: '18px 20px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What I&apos;d do differently</div>
+              <p style={{ fontSize: 13, lineHeight: 1.75, color: '#B8B4A4' }}>
+                Wire experiment tracking in on day one. MLflow only went in during Week 3, and it surfaced the ~9e5-step plateau immediately — had it been logging from the first PPO run, I&apos;d have seen that ceiling before spending a full 1M-step run to find it.
+              </p>
+            </div>
+          </div>
         </Section>
 
         {/* ─ Future ─ */}

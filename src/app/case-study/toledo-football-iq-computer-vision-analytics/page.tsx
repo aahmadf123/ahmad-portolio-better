@@ -439,6 +439,8 @@ export default function ToledoFootballIQCaseStudy() {
                   </div>
                 ))}
               </div>
+              {/* PROMPT FOR AHMAD: what actually broke on Toledo Football IQ? It is a Phase 0 build, so the numbers on this page are targets, not results — nothing has failed in production yet. Once real clips run through the pipeline (line-of-scrimmage occlusion, homography drift, re-ID misses), name the concrete failure and a "What broke" block can go here. */}
+              {/* PROMPT FOR AHMAD: what would you do differently on Toledo Football IQ? It is too early for an honest retrospective — the build is pre-MVP and the design principles above already capture the intended ordering. Fill this in once Phase 0/1 surfaces a real "I should have done X sooner." */}
 
               <div style={{ padding: '24px 28px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10, marginTop: 32 }}>
                 <p style={{ fontFamily: SERIF, fontSize: 15, color: '#F2EDD8', margin: '0 0 8px', lineHeight: 1.5 }}>
