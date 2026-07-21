@@ -12,7 +12,7 @@ const D = 1;      // wipe duration (timeline units)
 const HOLD = 0.5; // dwell on each chapter
 
 /**
- * "Walking through" narrative — a pinned 100vh stage where five chapters wipe
+ * "Walking through" narrative — a pinned 100vh stage where six chapters wipe
  * over each other, scrubbed by scroll (GSAP ScrollTrigger). On mobile and under
  * reduced motion the chapters stack and reveal normally: same components, no pin.
  */
@@ -98,7 +98,7 @@ export function StorySection() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, position: 'relative', zIndex: 1 }}>
           <span style={{ display: 'inline-block', width: 22, height: 1.5, background: def.color, opacity: 0.6 }} />
           <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: def.color }}>The Story</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>— five chapters, scroll to walk through</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>{`— ${CH} chapters, scroll to walk through`}</span>
         </div>
       </div>
 
