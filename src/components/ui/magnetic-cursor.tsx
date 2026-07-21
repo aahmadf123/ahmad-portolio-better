@@ -7,11 +7,17 @@ import { useEffect } from 'react';
  * Renders only on pointer-fine devices; hidden on touch.
  * Respects prefers-reduced-motion by removing spring lag.
  *
- * Perf: magnetic zone rects are cached in document-space coordinates so that
- * scrolling never forces a layout read; the cache is only rebuilt on mount,
- * debounced resize, and debounced DOM mutations. The rAF loop pauses when the
- * tab is hidden or the pointer has been idle >2s (and the cursor has faded
- * out), and resumes on the next mousemove or on visibility regain.
+ * Perf: magnetic zone rects are cached in document-space coordinates (or
+ * viewport coordinates for zones anchored to a `position:fixed` element in
+ * their ancestor chain) so that scrolling never forces a layout read; the
+ * cache is only rebuilt on mount, debounced resize, and debounced DOM
+ * mutations. The rAF loop pauses when the tab is hidden, or when the pointer
+ * has been idle >2s AND the dot/ring/opacity physics have fully settled —
+ * the canvas simply keeps its last painted frame, so the cursor stays
+ * visible and static at zero cost (idle never fades the cursor: the site
+ * hides the native cursor via `cursor:none`, so this canvas cursor is the
+ * only pointer indicator). Resumes on the next mousemove or on visibility
+ * regain.
  */
 export function MagneticCursor() {
   useEffect(() => {
@@ -48,15 +54,16 @@ export function MagneticCursor() {
     let raf: number;
 
     // rAF pause state – the loop stops rescheduling itself when hidden or
-    // idle+faded, and is resumed explicitly (mousemove / visibility regain).
+    // idle+settled, and is resumed explicitly (mousemove / visibility regain).
     let running = false;
     let idle = false;
     let idleTimer: ReturnType<typeof setTimeout> | undefined;
     const armIdleTimer = () => {
       if (idleTimer) clearTimeout(idleTimer);
       idleTimer = setTimeout(() => {
-        idle = true;
-        opTarget = 0; // fade the cursor out once idle
+        idle = true; // does NOT touch opacity/opTarget — the native cursor
+        // is hidden (cursor:none), so this canvas cursor must stay visible
+        // while idle. The loop only pauses once physics separately settle.
       }, 2000);
     };
 
@@ -73,6 +80,22 @@ export function MagneticCursor() {
     // would visibly drift from the element while the page is scrolled.
     type MagneticZone = { el: HTMLElement; cx: number; cy: number; rx: number; ry: number; fixed: boolean };
     let zones: MagneticZone[] = [];
+
+    // True if `node` or any ancestor up to (and including) document.body is
+    // position:fixed — such a chain anchors the element to the viewport
+    // regardless of scroll, even when `node` itself isn't the fixed one
+    // (e.g. a future magnetic button inside a fixed panel/toolbar). Only
+    // called from rebuildZones, never from the mousemove hot path.
+    const isViewportAnchored = (node: HTMLElement): boolean => {
+      let cur: HTMLElement | null = node;
+      while (cur) {
+        if (getComputedStyle(cur).position === 'fixed') return true;
+        if (cur === document.body) return false;
+        cur = cur.parentElement;
+      }
+      return false;
+    };
+
     const rebuildZones = () => {
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
@@ -80,7 +103,7 @@ export function MagneticCursor() {
       const next: MagneticZone[] = [];
       for (const el of found) {
         const r = el.getBoundingClientRect();
-        const fixed = getComputedStyle(el).position === 'fixed';
+        const fixed = isViewportAnchored(el);
         next.push({
           el,
           cx: r.left + (fixed ? 0 : scrollX) + r.width / 2,
@@ -157,13 +180,33 @@ export function MagneticCursor() {
         ctx.restore();
       }
 
-      // Pause: tab hidden, or pointer idle >2s with visuals fully faded.
-      // Resumes on mousemove (onMove) or visibility regain (onVisibility).
-      if (document.hidden || (idle && opacity < 0.01)) {
+      // Pause: tab hidden, or pointer idle >2s AND the physics have fully
+      // settled (position/radius/opacity all within epsilon of target).
+      // Nothing would visibly change on the next frame either, so the
+      // canvas simply keeps its last painted frame — cursor stays visible
+      // and static at zero cost. Resumes on mousemove (onMove), mouseleave
+      // (onLeave), or visibility regain (onVisibility).
+      const settled =
+        Math.abs(rx - rtx) < 0.1 &&
+        Math.abs(ry - rty) < 0.1 &&
+        Math.abs(ringR - ringRTarget) < 0.1 &&
+        Math.abs(opacity - opTarget) < 0.005;
+      if (document.hidden || (idle && settled)) {
         running = false;
         return;
       }
       raf = requestAnimationFrame(tick);
+    };
+
+    // Resume the loop if it had paused (idle+settled) and something just
+    // changed a spring target (opacity, ring radius, pull target) — called
+    // from every handler that mutates one of those, so a frozen frame is
+    // never left stale. No-op if already running or the tab is hidden.
+    const wake = () => {
+      if (!running && !document.hidden) {
+        running = true;
+        raf = requestAnimationFrame(tick);
+      }
     };
 
     const onMove = (e: MouseEvent) => {
@@ -173,11 +216,7 @@ export function MagneticCursor() {
       pointerInside = true;
       idle = false;
       armIdleTimer();
-
-      if (!running && !document.hidden) {
-        running = true;
-        raf = requestAnimationFrame(tick);
-      }
+      wake();
 
       // Reset to plain follow
       rtx = mx; rty = my;
@@ -209,9 +248,9 @@ export function MagneticCursor() {
       }
     };
 
-    const onLeave = () => { opTarget = 0; pointerInside = false; };
-    const onDown  = () => { isDown = true; ringRTarget = 5; };
-    const onUp    = () => { isDown = false; ringRTarget = isMagnetic ? 30 : 13; };
+    const onLeave = () => { opTarget = 0; pointerInside = false; wake(); };
+    const onDown  = () => { isDown = true; ringRTarget = 5; wake(); };
+    const onUp    = () => { isDown = false; ringRTarget = isMagnetic ? 30 : 13; wake(); };
 
     const onVisibility = () => {
       if (document.hidden) {
@@ -219,9 +258,8 @@ export function MagneticCursor() {
           cancelAnimationFrame(raf);
           running = false;
         }
-      } else if (pointerInside && !running) {
-        running = true;
-        raf = requestAnimationFrame(tick);
+      } else if (pointerInside) {
+        wake();
       }
     };
 
