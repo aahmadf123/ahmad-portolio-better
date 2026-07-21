@@ -1,6 +1,8 @@
-// Technical insights — code-aesthetic perspective cards. Takeaways are lifted from
-// the projects' own "Key Insight" prose; snippets are short illustrative sketches
-// of the described mechanism (labeled as such in the UI), not production excerpts.
+// Technical insights — code-aesthetic perspective cards. Each takeaway is original
+// commentary on the mechanism actually shown in that card's snippet — distinct from,
+// and narrower than, the matching project's "Key Insight" prose. Snippets are short
+// illustrative sketches of the described mechanism (labeled as such in the UI), not
+// production excerpts.
 
 export interface Insight {
   id: string;
@@ -29,7 +31,7 @@ export const insights: Insight[] = [
         r += 25.0                           # the moment worth learning
     return r`,
     takeaway:
-      'Reward functions are not just math — they encode behavior. A student who increases the collision penalty and watches the drone become more conservative has understood something no lecture can teach as directly.',
+      'The coefficients form a hierarchy, not just a sum: clearing the hoop (+25.0) outweighs a collision (-6.0), which outweighs hoop progress (+4.0), which outweighs path drift (-0.8) and the flat time cost (-0.05). Reorder those numbers and the policy learns a different priority entirely.',
     source: { label: 'DeepFlyer · LION Lab', href: '/case-study/deepflyer-drone-reinforcement-learning' },
     color: '#5b8af5',
   },
@@ -50,7 +52,7 @@ export const insights: Insight[] = [
     )
     promote  = deploy(evaluate.winner, after=approval)`,
     takeaway:
-      'The 75% reduction in manual review did not happen because humans were removed. The system moved them to the right point in the loop — intervening only where judgment actually matters: drift, suspicious behavior, rollback, promotion.',
+      'SlackApprovalGate sits inside the DAG as a typed stage, not a side process — it takes drift.report and evaluate.shap_summary as inputs, and promote explicitly waits on it. The scheduler treats a human decision exactly like any other pipeline dependency.',
     source: { label: 'Homeowner Loss Prediction · Grange Insurance', href: '/case-study/homeowner-loss-prediction' },
     color: '#a78bfa',
   },
@@ -70,7 +72,7 @@ export const insights: Insight[] = [
     # the policy reasons over relationships, not pixels
     return g`,
     takeaway:
-      'A flat perception model sees objects — a graph sees relationships between obstacles, goals, risk, and motion constraints. That structural representation is what makes zero-shot generalization tractable.',
+      'Every edge from g.connect() carries risk and cost — not a bare topological link, but collision risk and traversal cost engineered in as domain knowledge before the policy ever trains. Typed nodes (obstacle, waypoint, free-space) do the same for perception: structure applied before learning starts.',
     source: { label: 'Graph-Based RL for UAV Autonomy', href: '/case-study/graph-based-rl-uav-autonomy' },
     color: '#f59e0b',
   },
@@ -89,7 +91,7 @@ export const insights: Insight[] = [
   CONSTRAINT fresh CHECK (last_seen > now() - interval '90 days')
 );`,
     takeaway:
-      'Most data-quality problems in security ops are not adversarial — they are inconsistent tooling assumptions meeting at a shared data boundary. Validation rules caught 95% of non-compliant entries at ingestion.',
+      'Three CHECK constraints do three separate jobs here: the source enum rejects any tool the schema does not recognize, the hostname regex rejects malformed identifiers, and the 90-day freshness constraint rejects stale rows. The table enforces its own boundary instead of trusting application code to remember.',
     source: { label: 'Security Discovery Tool · Park Place', href: '/case-study/security-discovery-tool' },
     color: '#2dd4bf',
   },
@@ -109,7 +111,7 @@ export const insights: Insight[] = [
   exported_to_dataset boolean DEFAULT false
 );`,
     takeaway:
-      'Correction workflows must be built before advanced models. Private, corrected, domain-specific data beats any off-the-shelf model at Toledo football terminology — the flywheel is the competitive advantage.',
+      'old_value/new_value store the exact delta and corrected_by attributes it to the coach, not the model — this table is a provenance log, not a labels table. label_id and clip_id tie every correction back to the exact evidence it came from, and exported_to_dataset marks whether it has already been folded into training data.',
     source: { label: 'Toledo Football IQ', href: '/case-study/toledo-football-iq-computer-vision-analytics' },
     color: '#ef4444',
   },

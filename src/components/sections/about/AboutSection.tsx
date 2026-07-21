@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion';
 import { Section, SH, Tag, MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
+import { MetricsBand } from '@/components/shared/MetricsBand';
 import { HoverPeek } from '@/components/ui/link-preview';
 import { about, type Lens } from '@/lib/data/about';
 import { education } from '@/lib/data/education';
@@ -25,6 +26,8 @@ export function AboutSection() {
   return (
     <Section id="about" style={{ background: 'rgba(15,17,23,0.86)' }}>
       <SH n={def.n} label="About" sub="Beyond the résumé — who is actually doing the work." color={def.color} />
+
+      <MetricsBand />
 
       {/* manifesto intro */}
       <div style={{ maxWidth: 780, marginBottom: 'clamp(36px, 5vw, 64px)' }}>
