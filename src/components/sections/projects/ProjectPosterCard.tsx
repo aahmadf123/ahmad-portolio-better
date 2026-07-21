@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { m } from 'framer-motion';
+import { m, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 import { MONO, SERIF, SANS } from '@/components/shared/section-helpers';
 import manifest from '@/lib/image-manifest.json';
 import { projectStatusLabel, type Project } from '@/lib/data/projects';
@@ -54,14 +54,42 @@ const STATUS_COLOR: Record<Project['status'], string> = {
 export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpen: (p: Project) => void }) {
   const p = project;
   const wide = p.span === 2;
+
+  // GPU-only pointer tilt (rotateX/rotateY, capped ±4°). Spring-smoothed follow
+  // and reset. Disabled entirely under reduced motion — no handlers attached.
+  const reduced = useReducedMotion();
+  const tiltX = useMotionValue(0);
+  const tiltY = useMotionValue(0);
+  const rotateX = useSpring(tiltX, { stiffness: 220, damping: 26, mass: 0.5 });
+  const rotateY = useSpring(tiltY, { stiffness: 220, damping: 26, mass: 0.5 });
+
+  const onTiltMove = reduced
+    ? undefined
+    : (e: React.PointerEvent<HTMLButtonElement>) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5; // -0.5..0.5
+        const ny = (e.clientY - r.top) / r.height - 0.5;
+        tiltY.set(Math.max(-4, Math.min(4, nx * 8)));
+        tiltX.set(Math.max(-4, Math.min(4, -ny * 8)));
+      };
+  const resetTilt = reduced
+    ? undefined
+    : () => {
+        tiltX.set(0);
+        tiltY.set(0);
+      };
+
   return (
     <m.button
       layoutId={`poster-${p.idx}`}
-      onClick={() => onOpen(p)}
+      onClick={() => { resetTilt?.(); onOpen(p); }}
+      onPointerMove={onTiltMove}
+      onPointerLeave={resetTilt}
       whileHover="hover"
       initial="rest"
       animate="rest"
       data-magnetic=""
+      className="card-project"
       aria-label={`${p.title} — open project details`}
       style={{
         position: 'relative',
@@ -76,6 +104,12 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
         padding: 0,
         textAlign: 'left',
         isolation: 'isolate',
+        // Motion values stay at 0 under reduced motion (handlers aren't attached),
+        // so they're bound unconditionally — no `reduced`-dependent render output,
+        // which keeps SSR/hydration output identical.
+        rotateX,
+        rotateY,
+        transformPerspective: 800,
       }}
     >
       {/* image — dimmed and desaturated at rest so bright screenshots stay moody */}
@@ -103,6 +137,9 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
       {/* edge light on hover */}
       <m.div aria-hidden variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }} transition={{ duration: 0.3 }}
         style={{ position: 'absolute', inset: 0, zIndex: 2, borderRadius: 12, boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${p.color} 55%, transparent), 0 8px 40px -12px color-mix(in srgb, ${p.color} 30%, transparent)` }} />
+
+      {/* specular glass sheen — CSS-driven on .card-project:hover (globals.css) */}
+      <span className="card-glass-sheen" aria-hidden />
 
       {/* content */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 3, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '16px 18px' }}>

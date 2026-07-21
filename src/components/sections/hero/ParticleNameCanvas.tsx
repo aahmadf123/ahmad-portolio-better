@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { gsap } from '@/lib/motion/gsap';
+import { gsap, ScrollTrigger } from '@/lib/motion/gsap';
 import { createSceneHost, seededRandom, supportsWebGL } from '@/lib/three/scene-kit';
 import { sampleTextPoints } from '@/lib/three/text-sampling';
 
@@ -19,6 +19,7 @@ const VERT = /* glsl */ `
   uniform float uSize;
   uniform float uScale;
   uniform vec2 uOffset;
+  uniform float uScrollFade;
   varying float vSeed;
   varying float vGold;
   varying float vAlpha;
@@ -38,6 +39,8 @@ const VERT = /* glsl */ `
       sin(uTime * 0.22 + aSeed * 17.0),
       cos(uTime * 0.19 + aSeed * 23.0)
     ) * 0.35 * uDisperse;
+    // scroll-out dissolve: particles lift (per-seed spread) and fade as the hero exits
+    p.y += uScrollFade * (0.6 + aSeed);
 
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
     float twinkle = 0.75 + 0.25 * sin(uTime * (1.5 + aSeed) + aSeed * 40.0);
@@ -46,7 +49,7 @@ const VERT = /* glsl */ `
 
     vSeed = aSeed;
     vGold = aGold;
-    vAlpha = mix(0.9, 0.3, uDisperse) * twinkle;
+    vAlpha = mix(0.9, 0.3, uDisperse) * twinkle * (1.0 - uScrollFade);
   }
 `;
 
@@ -144,6 +147,7 @@ export const ParticleNameCanvas = React.forwardRef<ParticleNameHandle, {
         uSize: { value: 2.6 * Math.min(window.devicePixelRatio || 1, dprMax) },
         uScale: { value: 1 },
         uOffset: { value: new THREE.Vector2(0, 0) },
+        uScrollFade: { value: 0 },
       };
 
       const geo = new THREE.BufferGeometry();
@@ -266,6 +270,27 @@ export const ParticleNameCanvas = React.forwardRef<ParticleNameHandle, {
       host.start();
 
       let settled = instant;
+
+      // Scroll-out dissolve: ONE scrubbed ScrollTrigger on the hero section,
+      // created only once the intro has settled (never while forming). Reduced
+      // motion / no-WebGL already returned above, so reaching here implies the
+      // cinematic path is live. Idempotent + null-guarded.
+      let scrollFadeST: ScrollTrigger | null = null;
+      const startScrollFade = () => {
+        if (scrollFadeST || disposed) return;
+        const heroEl = document.getElementById('hero');
+        if (!heroEl) return;
+        scrollFadeST = ScrollTrigger.create({
+          trigger: heroEl,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.6,
+          onUpdate: (self) => {
+            uniforms.uScrollFade.value = self.progress;
+          },
+        });
+      };
+
       const disperse = () => {
         tweens.push(
           gsap.to(uniforms.uDisperse, {
@@ -275,6 +300,7 @@ export const ParticleNameCanvas = React.forwardRef<ParticleNameHandle, {
             onComplete: () => {
               settled = true;
               onSettled?.();
+              startScrollFade();
             },
           })
         );
@@ -295,6 +321,7 @@ export const ParticleNameCanvas = React.forwardRef<ParticleNameHandle, {
       } else {
         onFormed?.();
         onSettled?.();
+        startScrollFade();
       }
 
       skipRef.current = () => {
@@ -312,6 +339,7 @@ export const ParticleNameCanvas = React.forwardRef<ParticleNameHandle, {
             onComplete: () => {
               settled = true;
               onSettled?.();
+              startScrollFade();
             },
           })
         );
@@ -319,6 +347,8 @@ export const ParticleNameCanvas = React.forwardRef<ParticleNameHandle, {
 
       cleanupExtras = () => {
         window.removeEventListener('mousemove', onMouse);
+        scrollFadeST?.kill();
+        scrollFadeST = null;
       };
     };
 

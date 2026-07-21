@@ -20,6 +20,8 @@ interface LayoutNode extends SkillNode {
   z: number;
   color: string;
   radius: number;
+  ring: number;      // 0 = innermost; used by the intro-assembly stagger
+  idxInRing: number; // 0..6 position within the ring
 }
 
 interface Tooltip {
@@ -66,6 +68,8 @@ function computeLayout(): LayoutNode[] {
           z: (rand() - 0.5) * 1.2,
           color: byGroup.get(group.id)!.color,
           radius: 0.075 + Math.min(0.11, n.weight * 0.022),
+          ring,
+          idxInRing,
         });
       });
   });
@@ -86,6 +90,12 @@ function computeHubs(): HubInfo[] {
       anchorY: Math.sin(angle) * 3.6 + 1.35,
     };
   });
+}
+
+/** GLSL-style smoothstep — eases the intro-assembly edge/label fade-in. */
+function smoothstep(a: number, b: number, x: number): number {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
 }
 
 /** '#RRGGBB' → 'rgba(r,g,b,a)' for canvas fills that need a specific alpha. */
@@ -219,6 +229,20 @@ export function ConstellationCanvas({
     const projVec = new THREE.Vector3();
     let prevT = 0;
 
+    // ── Intro assembly (one-shot: stars stream out from their group hub) ─────
+    // Matrix-ownership contract: while q<1 the intro OWNS every instance matrix —
+    // applyFocus() may recolor but must NOT rewrite matrices, and hover scale-up
+    // is suppressed (tooltip still shows). At q>=1 we write the final seat
+    // matrices once, then reconcile focus/zoom exactly once, and never touch
+    // matrices from the intro path again. Reduced motion jumps straight to q=1.
+    const prefersReducedMotion =
+      typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let introT0 = -1;
+    let introDone = prefersReducedMotion;
+    let introAlpha = prefersReducedMotion ? 1 : 0; // edge + label fade-in multiplier
+    const introHub = layout.map((n) => hubById.get(n.group)!);
+    const introStagger = layout.map((n) => n.idxInRing * 0.05 + n.ring * 0.08);
+
     // ── Label overlay ──────────────────────────────────────────────────────
     const monoFamily =
       (typeof getComputedStyle !== 'undefined'
@@ -243,6 +267,7 @@ export function ConstellationCanvas({
       ctx.textBaseline = 'middle';
       ctx.shadowColor = 'rgba(0,0,0,0.9)';
       ctx.shadowBlur = 4;
+      ctx.globalAlpha = introAlpha; // labels fade in as the assembly lands (1 when settled)
 
       // Hub labels — projected through the SAME world matrix as the stars, so
       // they ride the rotating clusters instead of drifting.
@@ -319,6 +344,7 @@ export function ConstellationCanvas({
         ctx.fillText(p.name, p.sx, p.y);
       }
       ctx.shadowBlur = 0;
+      ctx.globalAlpha = 1;
     };
 
     // ── Focus / zoom (ref-driven; no scene rebuild) ────────────────────────
@@ -333,7 +359,9 @@ export function ConstellationCanvas({
         if (dim) tmpColor.lerp(DARK, DIM);
         mesh.setColorAt(i, tmpColor);
         halo.setColorAt(i, tmpColor);
-        if (i !== hovered) {
+        // Matrix-ownership: during the intro the assembly owns matrices; recolor
+        // only. Scales resume once the stars have landed (introDone).
+        if (introDone && i !== hovered) {
           const s = dim ? DIM_SCALE : 1;
           dummy.position.set(n.x, n.y, n.z);
           dummy.scale.setScalar(n.radius * s);
@@ -347,8 +375,10 @@ export function ConstellationCanvas({
       }
       if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
       if (halo.instanceColor) halo.instanceColor.needsUpdate = true;
-      mesh.instanceMatrix.needsUpdate = true;
-      halo.instanceMatrix.needsUpdate = true;
+      if (introDone) {
+        mesh.instanceMatrix.needsUpdate = true;
+        halo.instanceMatrix.needsUpdate = true;
+      }
 
       const baseMatMat = edgesBase.material as THREE.LineBasicMaterial;
       const focusMatMat = edgesFocus.material as THREE.LineBasicMaterial;
@@ -390,6 +420,65 @@ export function ConstellationCanvas({
       onFrame: (t, _dt, h) => {
         const dt = prevT ? Math.min(t - prevT, 0.1) : 0.033;
         prevT = t;
+
+        // ── One-shot assembly: each star streams from its group hub to its seat.
+        if (!introDone) {
+          if (introT0 < 0) introT0 = t; // captured on the first visible frame
+          const q = Math.min(1, Math.max(0, (t - introT0) / 1.1));
+          const e = 1 - Math.pow(1 - q, 4); // easeOutQuart
+          for (let i = 0; i < layout.length; i++) {
+            const n = layout[i];
+            const hub = introHub[i];
+            const p = Math.min(1, Math.max(0, e * 1.3 - introStagger[i]));
+            const lx = hub.hubX + (n.x - hub.hubX) * p;
+            const ly = hub.hubY + (n.y - hub.hubY) * p;
+            const lz = n.z * p; // hub sits at z=0
+            dummy.position.set(lx, ly, lz);
+            dummy.scale.setScalar(n.radius);
+            dummy.updateMatrix();
+            mesh.setMatrixAt(i, dummy.matrix);
+            dummy.position.set(lx, ly, lz - 0.01);
+            dummy.scale.setScalar(n.radius * 2.4);
+            dummy.updateMatrix();
+            halo.setMatrixAt(i, dummy.matrix);
+          }
+          mesh.instanceMatrix.needsUpdate = true;
+          halo.instanceMatrix.needsUpdate = true;
+          introAlpha = smoothstep(0.6, 1, q);
+          // edges fade in as the stars land (focus-aware base, overridden by applyFocus once done)
+          (edgesBase.material as THREE.LineBasicMaterial).opacity = (focusRef.current ? 0.08 : 0.28) * introAlpha;
+
+          if (q >= 1) {
+            introDone = true;
+            // write the final seat matrices once…
+            for (let i = 0; i < layout.length; i++) {
+              const n = layout[i];
+              dummy.position.set(n.x, n.y, n.z);
+              dummy.scale.setScalar(n.radius);
+              dummy.updateMatrix();
+              mesh.setMatrixAt(i, dummy.matrix);
+              dummy.position.set(n.x, n.y, n.z - 0.01);
+              dummy.scale.setScalar(n.radius * 2.4);
+              dummy.updateMatrix();
+              halo.setMatrixAt(i, dummy.matrix);
+            }
+            mesh.instanceMatrix.needsUpdate = true;
+            halo.instanceMatrix.needsUpdate = true;
+            introAlpha = 1;
+            // …then reconcile any focus/zoom picked mid-intro, exactly once.
+            applyFocusRef.current?.();
+            // if the pointer was resting on a star, restore its enlarged state.
+            if (hovered >= 0) {
+              const n = layout[hovered];
+              dummy.position.set(n.x, n.y, n.z + 0.05);
+              dummy.scale.setScalar(n.radius * 1.7);
+              dummy.updateMatrix();
+              mesh.setMatrixAt(hovered, dummy.matrix);
+              mesh.instanceMatrix.needsUpdate = true;
+            }
+          }
+        }
+
         const focused = focusRef.current !== null;
 
         mouse.x += (mouse.tx - mouse.x) * 0.05;
@@ -404,6 +493,7 @@ export function ConstellationCanvas({
 
         camVec.set(camTarget.x, camTarget.y, camTarget.z);
         h.camera.position.lerp(camVec, k);
+        h.camera.updateMatrixWorld(); // keep matrixWorldInverse fresh so labels don't lag a frame
 
         drawLabels(h);
       },
@@ -444,6 +534,20 @@ export function ConstellationCanvas({
     const setHover = (idx: number, clientX: number, clientY: number) => {
       if (idx === hovered) {
         if (idx >= 0) setTooltip(makeTooltip(layout[idx], clientX, clientY));
+        return;
+      }
+      // While the intro owns matrices, only the tooltip/cursor track the pointer —
+      // no scale-up, no edge highlight. hovered is still recorded so the finalize
+      // can restore the enlarged state if the pointer is resting on a star.
+      if (!introDone) {
+        hovered = idx;
+        if (idx >= 0) {
+          setTooltip(makeTooltip(layout[idx], clientX, clientY));
+          mount.style.cursor = 'pointer';
+        } else {
+          setTooltip(null);
+          mount.style.cursor = '';
+        }
         return;
       }
       // restore previous at its focus-aware scale
