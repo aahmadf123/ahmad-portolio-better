@@ -4,6 +4,7 @@
 
 import { projects } from './projects';
 import { jobs } from './jobs';
+import { SKILL_GROUP_COLORS } from '@/lib/skill-colors';
 
 export interface SkillGroup {
   id: string;
@@ -16,44 +17,44 @@ export const skillGroups: SkillGroup[] = [
   {
     id: 'languages',
     label: 'Languages',
-    color: '#f59e0b',
+    color: SKILL_GROUP_COLORS.languages,
     skills: ['Python', 'JavaScript', 'TypeScript', 'C++', 'Java', 'SQL', 'HTML/CSS', 'Embedded C', 'MATLAB', 'Simulink', 'Bash'],
   },
   {
     id: 'ml-ai',
     label: 'ML & AI',
-    color: '#5b8af5',
+    color: SKILL_GROUP_COLORS['ml-ai'],
     skills: ['PyTorch', 'TensorFlow', 'scikit-learn', 'RL', 'MAML', 'GNNs', 'GNN/GAT', 'PPO', 'Stable-Baselines3', 'Gym', 'Meta-Learning', 'NLP', 'Computer Vision', 'DistilBERT', 'Gemini AI'],
   },
   {
     id: 'mlops-data',
     label: 'MLOps & Data',
-    color: '#f0823c',
+    color: SKILL_GROUP_COLORS['mlops-data'],
     skills: ['Airflow', 'MLflow', 'Pandas', 'NumPy', 'AWS', 'AWS S3', 'AWS EC2', 'Docker', 'Git', 'GitHub Actions', 'CI/CD', 'Linux', 'Pandera', 'Prometheus', 'Hyperopt', 'DOMO', 'Slack API'],
   },
   {
     id: 'robotics',
     label: 'Robotics',
-    color: '#a78bfa',
+    color: SKILL_GROUP_COLORS.robotics,
     skills: ['ROS 2', 'Gazebo', 'Gazebo Fortress', 'ArduPilot', 'OpenCV', 'YOLO11', 'NVIDIA Jetson', 'Jetson Orin NX', 'Sensor Fusion', 'VINS-Mono', 'HITL', 'AirSim', 'OAK-D Pro', 'SLAMTEC C1', 'X500 URDF', 'Q-Prop'],
   },
   {
     id: 'web-edge',
     label: 'Web & Edge',
-    color: '#38bdf8',
+    color: SKILL_GROUP_COLORS['web-edge'],
     skills: ['React', 'Node.js', 'Express', 'FastAPI', 'Django', 'Cloudflare Workers', 'Hono', 'Deno', 'Cloudflare D1', 'Cloudflare R2', 'Drizzle ORM', 'Chrome Extension'],
   },
   {
     id: 'databases',
     label: 'Databases',
-    color: '#2dd4bf',
+    color: SKILL_GROUP_COLORS.databases,
     skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'SQLite', 'PostGIS', 'pgvector', 'ETL', 'pgAdmin 4', 'Active Directory', 'Cisco AMP', 'Microsoft Defender'],
   },
   {
     id: 'microsoft',
     label: 'Microsoft',
-    color: '#f472b6',
-    skills: ['Azure AI', 'Copilot Studio', 'Power Automate', 'Power BI', 'M365', 'SharePoint', 'Microsoft Defender'],
+    color: SKILL_GROUP_COLORS.microsoft,
+    skills: ['Azure AI', 'Copilot Studio', 'Power Automate', 'Power BI', 'M365', 'SharePoint'],
   },
 ];
 
@@ -127,8 +128,9 @@ function buildConstellation(): Constellation {
   // graph legible (strongest first).
   const edgeMap = new Map<string, SkillEdge>();
   for (const src of sources) {
-    // Dedupe — the same skill name can live in multiple groups (e.g. Microsoft
-    // Defender), which would otherwise create self-edges.
+    // Defensive de-dupe: every skill now lives in exactly one group, but
+    // collapsing names here keeps any future cross-group duplicate from ever
+    // pairing with itself and forming a self-edge.
     const present = [...new Set(nodes.filter((n) => src.tags.some((t) => matches(n.name, t))).map((n) => n.name))];
     for (let i = 0; i < present.length; i++) {
       for (let j = i + 1; j < present.length; j++) {

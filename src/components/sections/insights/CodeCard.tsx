@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { Section, SH, MONO, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import type { Insight } from '@/lib/data/insights';
 import type { SectionDef } from '@/lib/data/sections';
@@ -33,7 +33,7 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
   const reduced = useReducedMotion();
 
   return (
-    <motion.article
+    <m.article
       initial={reduced ? false : { opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -58,7 +58,7 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
       </div>
 
       {/* code */}
-      <motion.div
+      <m.div
         initial={reduced ? 'shown' : 'hidden'}
         whileInView="shown"
         viewport={{ once: true, amount: 0.25 }}
@@ -66,7 +66,7 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
         style={{ padding: '16px 18px', overflowX: 'auto', fontFamily: MONO, fontSize: 12.5, lineHeight: 1.75 }}
       >
         {lines.map((line, li) => (
-          <motion.div
+          <m.div
             key={li}
             variants={{
               hidden: { opacity: 0, backgroundColor: 'rgba(45,212,191,0.0)' },
@@ -78,12 +78,12 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
             {line.length === 0 ? ' ' : line.map((t, ti) => (
               <span key={ti} style={{ color: t.color }}>{t.content}</span>
             ))}
-          </motion.div>
+          </m.div>
         ))}
         {!reduced && (
           <span aria-hidden style={{ display: 'inline-block', width: 7, height: 14, background: insight.color, opacity: 0.7, animation: 'insight-caret 1s step-end infinite', verticalAlign: 'text-bottom' }} />
         )}
-      </motion.div>
+      </m.div>
 
       {/* takeaway */}
       <div style={{ padding: '16px 18px 18px', borderTop: '1px solid var(--bd)' }}>
@@ -95,6 +95,6 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
       </div>
 
       <style>{`@keyframes insight-caret { 0%,100% { opacity: 0.7; } 50% { opacity: 0; } }`}</style>
-    </motion.article>
+    </m.article>
   );
 }

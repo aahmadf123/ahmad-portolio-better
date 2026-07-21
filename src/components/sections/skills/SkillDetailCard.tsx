@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
-import { MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
+import { AnimatePresence, m } from 'framer-motion';
+import { MONO, SERIF, FG2, FG3 } from '@/components/shared/section-helpers';
 import { skillGroups, type SkillNode } from '@/lib/data/skills';
 
 /** Expanded context for a clicked constellation node: where the skill was actually used. */
@@ -12,7 +12,7 @@ export function SkillDetailCard({ node, onClose }: { node: SkillNode | null; onC
   return (
     <AnimatePresence>
       {node && group && (
-        <motion.aside
+        <m.aside
           key={node.name}
           initial={{ opacity: 0, y: 16, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -39,10 +39,12 @@ export function SkillDetailCard({ node, onClose }: { node: SkillNode | null; onC
           >✕</button>
           <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: group.color }}>{group.label}</div>
           <div style={{ fontFamily: SERIF, fontSize: 24, color: 'var(--foreground)', margin: '4px 0 2px', paddingBottom: '0.05em' }}>{node.name}</div>
-          <div style={{ fontFamily: SANS, fontSize: 12, color: FG2 }}>
-            {node.usedIn.length > 0
-              ? `Used across ${node.usedIn.length} ${node.usedIn.length === 1 ? 'project or role' : 'projects & roles'}:`
-              : 'Part of the working toolkit.'}
+          <div style={{ fontFamily: MONO, fontSize: 11, color: FG2, letterSpacing: '0.02em', lineHeight: 1.5, marginTop: 1 }}>
+            {node.usedIn.length > 1
+              ? `Carried real work across ${node.usedIn.length} projects & roles`
+              : node.usedIn.length === 1
+              ? `Used in ${node.usedIn[0].title}`
+              : 'Part of the working toolkit'}
           </div>
           {node.usedIn.length > 0 && (
             <ul style={{ listStyle: 'none', margin: '10px 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 180, overflowY: 'auto' }}>
@@ -63,7 +65,7 @@ export function SkillDetailCard({ node, onClose }: { node: SkillNode | null; onC
               ))}
             </ul>
           )}
-        </motion.aside>
+        </m.aside>
       )}
     </AnimatePresence>
   );

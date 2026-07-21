@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
+import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -94,6 +95,7 @@ const NAV_SECTIONS = [
   { id: 'cs-model',        label: 'Model' },
   { id: 'cs-results',      label: 'Results' },
   { id: 'cs-insights',     label: 'Insights' },
+  { id: 'cs-lessons',      label: 'Lessons' },
   { id: 'cs-future',       label: 'Future' },
 ];
 
@@ -221,7 +223,7 @@ export default function HomeownerLossCaseStudy() {
         </p>
 
         <div style={{ marginTop: 28, overflow: 'hidden', borderRadius: 10, border: '1px solid rgba(167,139,250,0.15)', background: '#0B0D14' }}>
-          <img src="/Images/SeniorDesign_Pipeline.jpeg" alt="MLOps pipeline architecture" onClick={() => setLb('/Images/SeniorDesign_Pipeline.jpeg')} style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 400, cursor: 'zoom-in' }} />
+          <Pic src="/Images/SeniorDesign_Pipeline.jpeg" alt="MLOps pipeline architecture" onClick={() => setLb('/Images/SeniorDesign_Pipeline.jpeg')} style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 400, cursor: 'zoom-in' }} />
         </div>
       </Section>
 
@@ -457,8 +459,33 @@ export default function HomeownerLossCaseStudy() {
         </div>
       </Section>
 
-      {/* ── 8. FUTURE WORK ── */}
-      <Section id="cs-future" alt>
+      {/* ── 8. LESSONS ── */}
+      <Section id="cs-lessons" alt>
+        <SectionLabel label="Lessons" />
+        <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(22px,3vw,30px)', letterSpacing: '-0.02em', color: '#F2EDD8', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
+          What broke, and what I&apos;d do differently
+        </h2>
+        <p style={{ fontSize: 15, lineHeight: 1.8, marginBottom: 24, maxWidth: 680 }}>
+          The governance layer wasn&apos;t academic — it existed because the failure modes were real. One of them — and one design limit I&apos;d address first — are worth naming directly.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 10 }}>
+          <div style={{ padding: '20px 22px', background: `${ACCENT}0a`, border: `1px solid ${ACCENT}28`, borderRadius: 10 }}>
+            <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>What broke</div>
+            <p style={{ fontSize: 14, lineHeight: 1.75, margin: 0 }}>
+              Schema changes broke training silently. A shifted column type or a missing field could pass straight through preprocessing and corrupt a model run with no visible error — the pipeline only looked wrong once the predictions came out wrong. That is the whole reason a Pandera validation layer and schema snapshots now sit in front of training.
+            </p>
+          </div>
+          <div style={{ padding: '20px 22px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 10 }}>
+            <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>What I&apos;d do differently</div>
+            <p style={{ fontSize: 14, lineHeight: 1.75, margin: 0 }}>
+              One XGBoost model carries every peril, and ingestion runs in batch. I&apos;d split it into separate model tracks for water, wind/hail, fire, and property loss so each can be tuned and monitored on its own drift, and move toward event-driven scoring rather than waiting for the next batch cycle.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 9. FUTURE WORK ── */}
+      <Section id="cs-future">
         <SectionLabel label="Future Work" />
         <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(22px,3vw,30px)', letterSpacing: '-0.02em', color: '#F2EDD8', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
           Where the platform goes next

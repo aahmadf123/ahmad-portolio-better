@@ -3,7 +3,7 @@
 import * as RdxHoverCard from "@radix-ui/react-hover-card";
 import { encode } from "qss";
 import React, { useState, useMemo, useCallback, useEffect } from "react";
-import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import { AnimatePresence, m, useMotionValue, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 function usePreviewSource(url: string, width: number, height: number, quality: number, isStatic: boolean, staticImageSrc?: string) {
@@ -105,7 +105,7 @@ export const HoverPeek = ({
         >
           <AnimatePresence>
             {isPeeking && (
-              <motion.div variants={cardMotionVariants} initial="initial" animate="animate" exit="exit"
+              <m.div variants={cardMotionVariants} initial="initial" animate="animate" exit="exit"
                 style={{ x: enableMouseFollow ? followX : 0, pointerEvents: 'auto' }}
               >
                 <a href={url} target="_blank" rel="noopener noreferrer"
@@ -124,7 +124,7 @@ export const HoverPeek = ({
                   )}
                   <AnimatePresence>
                     {enableLensEffect && isHoveringLens && !imageLoadFailed && (
-                      <motion.div className="absolute inset-0 pointer-events-none overflow-hidden rounded-lg"
+                      <m.div className="absolute inset-0 pointer-events-none overflow-hidden rounded-lg"
                         variants={lensMotionVariants} initial="initial" animate="animate" exit="exit"
                         style={{
                           maskImage: `radial-gradient(circle ${lensSize / 2}px at ${lensMousePosition.x}px ${lensMousePosition.y}px, black ${lensSize / 2}px, transparent ${lensSize / 2}px)`,
@@ -134,11 +134,11 @@ export const HoverPeek = ({
                         <div className="absolute inset-0" style={{ transform: `scale(${lensZoomFactor})`, transformOrigin: `${lensMousePosition.x}px ${lensMousePosition.y}px` }}>
                           <img src={finalImageSrc} width={peekWidth} height={peekHeight} className="block rounded-[5px] bg-neutral-50 dark:bg-neutral-800 align-top" alt="" aria-hidden="true" />
                         </div>
-                      </motion.div>
+                      </m.div>
                     )}
                   </AnimatePresence>
                 </a>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </RdxHoverCard.Content>

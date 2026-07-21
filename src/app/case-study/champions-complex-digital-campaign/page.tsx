@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
+import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -194,8 +195,7 @@ export default function ChampionsComplexCaseStudy() {
 
           {/* Hero image */}
           <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: '#06080E', marginBottom: 64 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/Images/Champion_Complex_Render1.jpg" alt="Champions Complex architectural rendering" onClick={() => setLb('/Images/Champion_Complex_Render1.jpg')} style={{ width: '100%', display: 'block', objectFit: 'cover', cursor: 'zoom-in' }} />
+            <Pic src="/Images/Champion_Complex_Render1.jpg" alt="Champions Complex architectural rendering" onClick={() => setLb('/Images/Champion_Complex_Render1.jpg')} style={{ width: '100%', display: 'block', objectFit: 'cover', cursor: 'zoom-in' }} priority />
           </div>
         </div>
       </div>
@@ -443,6 +443,13 @@ export default function ChampionsComplexCaseStudy() {
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>{body}</p>
                   </div>
                 ))}
+              </div>
+              {/* PROMPT FOR AHMAD: what actually broke on the Champions Complex campaign? This shipped as a strategy + content blueprint, not a deployed page, so nothing has failed in production. If a real setback surfaced during the strategy or stakeholder work, name it and a "What broke" block can go here. */}
+              <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
+                  This is a blueprint, not a shipped page — the six-stage donor sequence is a hypothesis about what converts, not a measured result. If I take it further, I&apos;d get it live with funnel analytics and A/B testing on CTA copy and placement, so the sequence is validated rather than asserted.
+                </p>
               </div>
             </Section>
 

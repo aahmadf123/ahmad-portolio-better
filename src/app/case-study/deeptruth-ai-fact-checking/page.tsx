@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
+import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -191,8 +192,7 @@ export default function DeepTruthCaseStudy() {
 
           {/* Hero image */}
           <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: '#06080E', marginBottom: 64 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/Images/DeepTruth_Group.png" alt="DeepTruth team and demo" onClick={() => setLb('/Images/DeepTruth_Group.png')} style={{ width: '100%', display: 'block', objectFit: 'cover', cursor: 'zoom-in' }} />
+            <Pic src="/Images/DeepTruth_Group.png" alt="DeepTruth team and demo" onClick={() => setLb('/Images/DeepTruth_Group.png')} style={{ width: '100%', display: 'block', objectFit: 'cover', cursor: 'zoom-in' }} priority />
           </div>
         </div>
       </div>
@@ -391,6 +391,20 @@ export default function DeepTruthCaseStudy() {
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>{body}</p>
                   </div>
                 ))}
+              </div>
+              <div className="two-col-dt" style={{ marginBottom: 24 }}>
+                <div style={{ padding: '16px 18px', background: `${ACCENT}0c`, border: `1px solid ${ACCENT}30`, borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What broke</div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
+                    The demo was the easy part. Getting DistilBERT inference, Gemini API calls, MongoDB writes, and the Chrome extension to talk to one another — all at once, on a 24-hour clock — is where the integration debt piled up fastest.
+                  </p>
+                </div>
+                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
+                    The 70/30 fusion reasons from what the two models already know — neither one actually retrieves evidence. I&apos;d add a RAG step before the explanation so a verdict cites fetched sources instead of leaning on model priors.
+                  </p>
+                </div>
               </div>
 
               {/* Responsible framing callout */}

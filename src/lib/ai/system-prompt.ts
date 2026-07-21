@@ -32,13 +32,13 @@ function buildDossier(): string {
     lines.push(`- ${j.role} @ ${j.company} (${j.period}, ${j.type}${j.active ? ', current' : ''}). ${j.description} Highlights: ${j.achievements.join('; ')}. Stack: ${j.stack.join(', ')}.`);
   }
 
-  lines.push(`\n## Projects (11 total)`);
+  lines.push(`\n## Projects (${projects.length} total)`);
   for (const p of projects) {
     const link = p.slug ? ` Case study: ${site.url}/case-study/${p.slug}` : '';
     const extLinks = p.links.filter((l) => l.kind === 'github' || l.kind === 'external' || l.kind === 'video').map((l) => `${l.label}: ${l.href}`).join('; ');
     lines.push(`- ${p.title}${p.flagship ? ' (FLAGSHIP)' : ''} — ${p.tag}. Result: ${p.headline}. ${p.story} Status: ${p.status}.${link}${extLinks ? ` ${extLinks}` : ''}`);
   }
-  lines.push(`Flagship detail — Toledo Football IQ: 10-stage CV pipeline (video ingest → play segmentation → field calibration → detection YOLO/RF-DETR → tracking ByteTrack/BoT-SORT → Re-ID → event detection → football labels → metrics → overlays), 18+ table schema, coach-correction flywheel. Active build; no public live URL yet.`);
+  lines.push(`Flagship detail — Toledo Football IQ: 10-stage CV pipeline (video ingest → play segmentation → field calibration → detection YOLO/RF-DETR → tracking ByteTrack/BoT-SORT → Re-ID → event detection → football labels → metrics → overlays), 18+ table schema, coach-correction flywheel (coaches verify and correct AI labels; every corrected label becomes Toledo-specific training data, so the private, domain-specific dataset improves with use). Active build; no public live URL yet.`);
 
   lines.push(`\n## Skills`);
   for (const g of skillGroups) lines.push(`- ${g.label}: ${g.skills.join(', ')}`);

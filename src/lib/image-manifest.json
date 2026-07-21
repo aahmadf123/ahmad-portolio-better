@@ -1,0 +1,287 @@
+{
+  "/Images/4-Pillars.png": {
+    "base": "/Images/optimized/4-pillars",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 2932,
+    "h": 1538
+  },
+  "/Images/AIChE ChemECar_International.jpg": {
+    "base": "/Images/optimized/aiche-chemecar-international",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1365,
+    "h": 1024
+  },
+  "/Images/AIChE.jpg": {
+    "base": "/Images/optimized/aiche",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1167,
+    "h": 1228
+  },
+  "/Images/AIChE_Regional_Pics.jpg": {
+    "base": "/Images/optimized/aiche-regional-pics",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 1904,
+    "h": 1428
+  },
+  "/Images/Batting_Cleanup.jpg": {
+    "base": "/Images/optimized/batting-cleanup",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1280,
+    "h": 720
+  },
+  "/Images/BlackOpal_IntroductionBadge.png": {
+    "base": "/Images/optimized/blackopal-introductionbadge",
+    "widths": [
+      480
+    ],
+    "w": 820,
+    "h": 812
+  },
+  "/Images/BlackOpal_SuperpositionBadge.png": {
+    "base": "/Images/optimized/blackopal-superpositionbadge",
+    "widths": [
+      480
+    ],
+    "w": 806,
+    "h": 824
+  },
+  "/Images/Champion_Complex_Render1.jpg": {
+    "base": "/Images/optimized/champion-complex-render1",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1276,
+    "h": 659
+  },
+  "/Images/DeepFlyer_pics.png": {
+    "base": "/Images/optimized/deepflyer-pics",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1536,
+    "h": 1024
+  },
+  "/Images/DeepTruth_Group.png": {
+    "base": "/Images/optimized/deeptruth-group",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1276,
+    "h": 820
+  },
+  "/Images/Football_IQ_Analytics.png": {
+    "base": "/Images/optimized/football-iq-analytics",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1536,
+    "h": 1024
+  },
+  "/Images/IEEE.jpg": {
+    "base": "/Images/optimized/ieee",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 2700,
+    "h": 788
+  },
+  "/Images/Oracle_Foundation_Badge.jpg": {
+    "base": "/Images/optimized/oracle-foundation-badge",
+    "widths": [
+      480
+    ],
+    "w": 552,
+    "h": 276
+  },
+  "/Images/PSE_1.jpg": {
+    "base": "/Images/optimized/pse-1",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1512,
+    "h": 2016
+  },
+  "/Images/PSE_2.jpg": {
+    "base": "/Images/optimized/pse-2",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1512,
+    "h": 2016
+  },
+  "/Images/PSE_3.jpg": {
+    "base": "/Images/optimized/pse-3",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 2016,
+    "h": 1512
+  },
+  "/Images/Primary_Logo_for_Dark_Background.png": {
+    "base": "/Images/optimized/primary-logo-for-dark-background",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 2021,
+    "h": 1177
+  },
+  "/Images/SeniorDesign_Pipeline.jpeg": {
+    "base": "/Images/optimized/seniordesign-pipeline",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 4655,
+    "h": 3478
+  },
+  "/Images/Sport Analytics Intern Image 2026.jpg": {
+    "base": "/Images/optimized/sport-analytics-intern-image-2026",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1448,
+    "h": 1086
+  },
+  "/Images/Toledo_Athletics_Onboarding.png": {
+    "base": "/Images/optimized/toledo-athletics-onboarding",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1536,
+    "h": 1024
+  },
+  "/Images/VERT UToledo Logos 2019 OL_RGB_VERT Reverse.png": {
+    "base": "/Images/optimized/vert-utoledo-logos-2019-ol-rgb-vert-reverse",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1201,
+    "h": 1200
+  },
+  "/Images/aess.jpg": {
+    "base": "/Images/optimized/aess",
+    "widths": [
+      480
+    ],
+    "w": 760,
+    "h": 570
+  },
+  "/Images/athletics_group_pics.png": {
+    "base": "/Images/optimized/athletics-group-pics",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 1896,
+    "h": 1078
+  },
+  "/Images/field-notes/agentic-ai-in-production/agentic-ai-production-control-loop.png": {
+    "base": "/Images/optimized/agentic-ai-production-control-loop",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 2268,
+    "h": 1283
+  },
+  "/Images/first solar_logo.png": {
+    "base": "/Images/optimized/first-solar-logo",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 1942,
+    "h": 1667
+  },
+  "/Images/grange_insurance_logo.png": {
+    "base": "/Images/optimized/grange-insurance-logo",
+    "widths": [
+      480
+    ],
+    "w": 680,
+    "h": 392
+  },
+  "/Images/graph_RL.png": {
+    "base": "/Images/optimized/graph-rl",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 1692,
+    "h": 1270
+  },
+  "/Images/my pic.png": {
+    "base": "/Images/optimized/my-pic",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1447,
+    "h": 2489
+  },
+  "/Images/park place_logo.png": {
+    "base": "/Images/optimized/park-place-logo",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 1800,
+    "h": 1200
+  },
+  "/Images/portfolio_logo_new.png": {
+    "base": "/Images/optimized/portfolio-logo-new",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1254,
+    "h": 1254
+  },
+  "/Images/sdt_tool.png": {
+    "base": "/Images/optimized/sdt-tool",
+    "widths": [
+      480,
+      960
+    ],
+    "w": 1536,
+    "h": 1024
+  }
+}

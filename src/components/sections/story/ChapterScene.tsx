@@ -218,5 +218,56 @@ export function ChapterScene({ scene, accent }: { scene: StoryScene; accent: str
           <text x="300" y="566" textAnchor="middle" fill={accent} fillOpacity="0.65" fontSize="13" letterSpacing="5" fontFamily="var(--font-code), monospace">EVERY METRIC → A CLIP A COACH CAN CHECK</text>
         </svg>
       );
+
+    case 'horizon':
+      return (
+        <svg {...common}>
+          <defs>
+            <linearGradient id="sc-hor-sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor={accent} stopOpacity="0.18" />
+              <stop offset="1" stopColor={accent} stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <rect width="600" height="372" fill="url(#sc-hor-sky)" />
+          {/* drifting halo around the rising sun */}
+          <circle cx="300" cy="372" r="98" stroke={accent} strokeOpacity="0.22" strokeWidth="1" strokeDasharray="3 9" className="scene-drift" />
+          {/* rising half-sun */}
+          <path d="M 230 372 A 70 70 0 0 1 370 372" stroke={accent} strokeWidth="1.6" strokeOpacity="0.85" />
+          <path d="M 256 372 A 44 44 0 0 1 344 372" stroke={accent} strokeWidth="1.3" strokeOpacity="0.45" />
+          {/* radiating dashes */}
+          {[205, 230, 255, 270, 285, 310, 335].map((deg) => {
+            const a = (deg * Math.PI) / 180;
+            return (
+              <line
+                key={deg}
+                className="scene-flow"
+                x1={300 + 84 * Math.cos(a)}
+                y1={372 + 84 * Math.sin(a)}
+                x2={300 + 116 * Math.cos(a)}
+                y2={372 + 116 * Math.sin(a)}
+                stroke={accent}
+                strokeOpacity="0.5"
+                strokeWidth="1.4"
+                strokeDasharray="4 8"
+              />
+            );
+          })}
+          {/* horizon line */}
+          <line x1="44" y1="372" x2="556" y2="372" stroke={accent} strokeOpacity="0.5" strokeWidth="1.4" />
+          {/* perspective rails converging to the horizon */}
+          <line x1="150" y1="536" x2="296" y2="376" stroke={accent} strokeOpacity="0.14" strokeWidth="1.2" />
+          <line x1="450" y1="536" x2="304" y2="376" stroke={accent} strokeOpacity="0.14" strokeWidth="1.2" />
+          {/* dashed path from foreground toward the horizon */}
+          <path className="scene-flow" d="M 300 532 C 297 474, 303 422, 300 378" stroke={accent} strokeWidth="1.8" strokeOpacity="0.6" strokeDasharray="6 10" />
+          {/* waypoints along the path */}
+          {[[300, 500, 6], [300, 452, 4.6], [301, 408, 3.2]].map(([x, y, r], i) => (
+            <g key={i}>
+              <circle cx={x} cy={y} r={r} fill={accent} fillOpacity="0.85" />
+              <circle cx={x} cy={y} r={r + 5} stroke={accent} strokeOpacity="0.3" strokeWidth="1" />
+            </g>
+          ))}
+          <text x="300" y="580" textAnchor="middle" fill={accent} fillOpacity="0.6" fontSize="13" letterSpacing="5" fontFamily="var(--font-code), monospace">LEARNING · BUILDING · PURSUING</text>
+        </svg>
+      );
   }
 }

@@ -84,8 +84,8 @@ function useActiveSection(ids: string[]) {
   return active;
 }
 
-const SECTION_IDS = ['overview', 'problem', 'architecture', 'stack', 'results', 'insights', 'human-loop', 'future'];
-const SECTION_LABELS = ['Overview', 'Problem', 'Architecture', 'Stack', 'Results', 'Insights', 'Human-in-Loop', 'Future'];
+const SECTION_IDS = ['overview', 'problem', 'architecture', 'stack', 'results', 'insights', 'human-loop', 'lessons', 'future'];
+const SECTION_LABELS = ['Overview', 'Problem', 'Architecture', 'Stack', 'Results', 'Insights', 'Human-in-Loop', 'Lessons', 'Future'];
 
 export default function UAVCaseStudy() {
   const active = useActiveSection(SECTION_IDS);
@@ -397,6 +397,28 @@ export default function UAVCaseStudy() {
               {['Runtime State Monitoring', 'Collision-Distance Constraints', 'Altitude Limits', 'Battery Safety Bounds', 'Emergency Fallback', 'Human Override', 'Baseline Controller Takeover', 'Decision Logging'].map(m => (
                 <span key={m} style={{ fontFamily: MONO, fontSize: 10, padding: '4px 9px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(242,237,216,0.1)', borderRadius: 4, color: '#B8B4A4' }}>{m}</span>
               ))}
+            </div>
+          </div>
+        </Section>
+
+        {/* ─ Lessons ─ */}
+        <Section id="lessons">
+          <SectionLabel>Lessons</SectionLabel>
+          <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', maxWidth: 720, marginBottom: 28 }}>
+            The most useful discipline on this project was separating what the architecture is designed to do from what has actually been validated. The graph representation, PINN-based estimation, and safety layer are coherent as a system — but a research framework earns trust by being honest about its own edges.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }} className="two-col-uav">
+            <div style={{ padding: '20px 22px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}22`, borderRadius: 8 }}>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What broke</div>
+              <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4' }}>
+                The distance between designed and validated is real. Most numbers here come from simulation and hardware-in-the-loop, not real flight, and a 13% sim-to-reality transfer gap already shows up in the reported validation. A deep RL policy can score near-perfect in simulation and still fail once it meets real sensor noise and dynamics — which is exactly why the safety layer and the deliberately measurable claims exist.
+              </p>
+            </div>
+            <div style={{ padding: '20px 22px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What I&apos;d do differently</div>
+              <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4' }}>
+                Benchmark earlier. The graph-representation advantage is argued more than it is measured — a small GNN policy trained against PPO/SAC baselines on the same randomized suite would turn that claim into a number. I&apos;d also ground the metrics in real flight logs sooner, so the sim-to-reality gap becomes an empirical result instead of an estimate.
+              </p>
             </div>
           </div>
         </Section>

@@ -26,8 +26,8 @@ export function StoryChapter({ chapter, index, pinned }: { chapter: Chapter; ind
         padding: 'clamp(48px, 6vw, 80px) clamp(20px, 4vw, 52px)',
       }}
     >
-      {/* chapter accent atmosphere */}
-      <div aria-hidden style={{
+      {/* chapter accent atmosphere — parallaxed (slowest depth layer) in pinned mode */}
+      <div data-story-bg aria-hidden style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
         background: `radial-gradient(ellipse 55% 60% at 72% 45%, color-mix(in srgb, ${chapter.accent} 7%, transparent), transparent 72%)`,
       }} />

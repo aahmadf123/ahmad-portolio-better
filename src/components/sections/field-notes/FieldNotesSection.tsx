@@ -3,8 +3,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { ViewTransition } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { Section, MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
+import { Pic } from '@/components/ui/pic';
 import { fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
 import { sectionById } from '@/lib/data/sections';
 
@@ -57,7 +58,7 @@ export function FieldNotesSection() {
 
       {/* Featured editorial spread */}
       {featured && (
-        <motion.div
+        <m.div
           initial={reduced ? false : { opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.25 }}
@@ -103,14 +104,13 @@ export function FieldNotesSection() {
             {featured.heroImage && (
               <div style={{ position: 'relative', minHeight: 260, background: 'var(--background)' }}>
                 <ViewTransition name={`fn-img-${featured.slug}`} share="morph">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={featured.heroImage} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
+                  <Pic src={featured.heroImage} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
                 </ViewTransition>
                 <div aria-hidden style={{ position: 'absolute', inset: 0, background: `linear-gradient(to right, var(--surface) 0%, transparent 30%)` }} />
               </div>
             )}
           </Link>
-        </motion.div>
+        </m.div>
       )}
 
       {/* Secondary published (when more essays ship) + darkroom strip */}
@@ -129,7 +129,7 @@ export function FieldNotesSection() {
         <div style={{ border: '1px dashed var(--bd2)', borderRadius: 10, padding: '18px 20px', background: 'rgba(244,244,242,0.012)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
             <span className="pulse" style={{ width: 5, height: 5, borderRadius: '50%', background: def.color, display: 'inline-block' }} />
-            <span style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.14em', textTransform: 'uppercase' }}>In the darkroom · {fieldNotes.filter(n => !n.published).length} essays planned</span>
+            <span style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.14em', textTransform: 'uppercase' }}>In the darkroom — more essays in progress</span>
           </div>
           <div className="fn-upnext" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px 20px' }}>
             {upNext.map((n) => (

@@ -62,7 +62,7 @@ Set env vars in Vercel → Project → Settings → Environment Variables:
 | `AI_GATEWAY_API_KEY` | fallback | Vercel AI Gateway API key (used if `VERCEL_OIDC_TOKEN` is not set) |
 | `ANTHROPIC_API_KEY` | fallback | Direct Claude key (used only if no gateway key / token) |
 | `OPENAI_API_KEY` | fallback | Direct OpenAI key (used only if no Claude direct key) |
-| `ASK_AHMAD_MODEL` | optional | Gateway model id, e.g. `openai/gpt-5.5` or `openai/gpt-4o-mini` |
+| `ASK_AHMAD_MODEL` | optional | Gateway model id, e.g. `openai/gpt-4o-mini` |
 | `RATE_LIMIT_SECRET` | recommended | Random string; signs the rate-limit cookie |
 
 Without a gateway token or direct provider key, the panel shows a "warming up" state with canned FAQ + email.

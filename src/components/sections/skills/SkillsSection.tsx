@@ -8,6 +8,7 @@ import type { SkillNode } from '@/lib/data/skills';
 import { SkillListFallback } from './SkillListFallback';
 import { RadialSkills } from './RadialSkills';
 import { SkillDetailCard } from './SkillDetailCard';
+import { ConstellationLegend } from './ConstellationLegend';
 
 const ConstellationCanvas = dynamic(
   () => import('./ConstellationCanvas').then((m) => ({ default: m.ConstellationCanvas })),
@@ -19,13 +20,14 @@ type Mode = 'pending' | 'constellation' | 'radial' | 'list';
 /**
  * Skills as an interactive constellation (desktop, fine pointer, motion OK),
  * a swipeable radial carousel (touch), or the full chip inventory (reduced
- * motion / by choice). Every one of the ~130 skills stays reachable as text.
+ * motion / by choice). All 88 skills stay reachable as text in every mode.
  */
 export function SkillsSection() {
   const def = sectionById('skills')!;
   const [mode, setMode] = useState<Mode>('pending');
   const [listOpen, setListOpen] = useState(false);
   const [selected, setSelected] = useState<SkillNode | null>(null);
+  const [focusGroup, setFocusGroup] = useState<string | null>(null);
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -51,10 +53,13 @@ export function SkillsSection() {
       </div>
 
       {mode === 'constellation' && (
-        <div style={{ position: 'relative' }}>
-          <ConstellationCanvas onSelect={onSelect} />
-          <SkillDetailCard node={selected} onClose={() => setSelected(null)} />
-        </div>
+        <>
+          <ConstellationLegend focus={focusGroup} onToggle={setFocusGroup} />
+          <div style={{ position: 'relative' }}>
+            <ConstellationCanvas focusGroup={focusGroup} onSelect={onSelect} />
+            <SkillDetailCard node={selected} onClose={() => setSelected(null)} />
+          </div>
+        </>
       )}
       {mode === 'radial' && <RadialSkills />}
       {(mode === 'list' || mode === 'pending') && <SkillListFallback />}

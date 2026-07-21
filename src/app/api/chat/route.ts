@@ -19,7 +19,7 @@ const MAX_MESSAGES = 12;
 const MAX_CHARS = 500;
 const GATEWAY_BASE_URL = 'https://ai-gateway.vercel.sh/v1';
 
-const DEFAULT_GATEWAY_MODEL = 'openai/gpt-5.5';
+const DEFAULT_GATEWAY_MODEL = 'openai/gpt-4o-mini';
 const DEFAULT_ANTHROPIC_MODEL = 'claude-3-5-haiku-20241022';
 const DEFAULT_OPENAI_MODEL = 'gpt-4o-mini';
 

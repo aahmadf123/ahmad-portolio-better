@@ -12,7 +12,7 @@ const D = 1;      // wipe duration (timeline units)
 const HOLD = 0.5; // dwell on each chapter
 
 /**
- * "Walking through" narrative — a pinned 100vh stage where five chapters wipe
+ * "Walking through" narrative — a pinned 100vh stage where six chapters wipe
  * over each other, scrubbed by scroll (GSAP ScrollTrigger). On mobile and under
  * reduced motion the chapters stack and reveal normally: same components, no pin.
  */
@@ -66,16 +66,19 @@ export function StorySection() {
         const prevLines = panels[i - 1].querySelectorAll<HTMLElement>('.story-line');
         const lines = panels[i].querySelectorAll<HTMLElement>('.story-line');
         const media = panels[i].querySelector<HTMLElement>('.story-media');
+        const bg = panels[i].querySelector<HTMLElement>('[data-story-bg]');
         const flash = panels[i].querySelector<HTMLElement>('[data-story-flash]');
 
         tl.to(prevLines, { y: -30, autoAlpha: 0, duration: D * 0.4, stagger: 0.03, ease: 'power1.in' }, pos);
+        // parallax depth: bg drifts slowest (whole dwell), media mid, text lines fastest.
+        if (bg) tl.fromTo(bg, { yPercent: 6 }, { yPercent: -3, duration: D + HOLD, ease: 'none' }, pos);
         tl.fromTo(
           panels[i],
           { clipPath: i % 2 ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)' },
           { clipPath: 'inset(0% 0% 0% 0%)', duration: D, ease: 'power2.inOut' },
           pos + D * 0.1
         );
-        if (media) tl.fromTo(media, { yPercent: 7 }, { yPercent: 0, duration: D, ease: 'power2.out' }, pos + D * 0.1);
+        if (media) tl.fromTo(media, { yPercent: 10 }, { yPercent: 0, duration: D, ease: 'power2.out' }, pos + D * 0.1);
         tl.fromTo(lines, { y: 36, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: D * 0.5, stagger: 0.05, ease: 'power2.out' }, pos + D * 0.45);
         if (flash) {
           tl.fromTo(flash, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: 'power1.in' }, pos + D * 0.3)
@@ -98,7 +101,7 @@ export function StorySection() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, position: 'relative', zIndex: 1 }}>
           <span style={{ display: 'inline-block', width: 22, height: 1.5, background: def.color, opacity: 0.6 }} />
           <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: def.color }}>The Story</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>— five chapters, scroll to walk through</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>{`— ${CH} chapters, scroll to walk through`}</span>
         </div>
       </div>
 

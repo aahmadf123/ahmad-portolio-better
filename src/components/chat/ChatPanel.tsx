@@ -3,15 +3,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { site } from '@/lib/data/site';
 
 const SUGGESTED = [
-  'What is Toledo Football IQ?',
-  'Tell me about the UAV research',
-  "What's Ahmad building right now?",
-  'Is Ahmad available for work?',
+  'How does the Football IQ flywheel work?',
+  'What was the result of the Grange pipeline?',
+  'What certifications is Ahmad pursuing?',
+  'What are the results of the UAV research?',
+  'What does Ahmad do at First Solar now?',
+  "What's the AI failure taxonomy paper about?",
 ];
 
 const FALLBACK_FAQ: { q: string; a: string }[] = [
@@ -75,7 +77,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <motion.div
+    <m.div
       role="dialog"
       aria-label="Ask Ahmad — AI assistant"
       className="chat-panel"
@@ -206,7 +208,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
           }
         }
       `}</style>
-    </motion.div>
+    </m.div>
   );
 }
 

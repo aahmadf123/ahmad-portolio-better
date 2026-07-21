@@ -2,8 +2,9 @@
 
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { MONO, SERIF } from '@/components/shared/section-helpers';
+import { Pic } from '@/components/ui/pic';
 import type { Project } from '@/lib/data/projects';
 import { ProjectDetail } from './ProjectDetail';
 
@@ -44,7 +45,7 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
   return createPortal(
     <AnimatePresence>
       {project && (
-        <motion.div
+        <m.div
           key="scrim"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -63,7 +64,7 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
           aria-modal="true"
           aria-label={`${project.title} details`}
         >
-          <motion.div
+          <m.div
             ref={panelRef}
             layoutId={`poster-${project.idx}`}
             onClick={(e) => e.stopPropagation()}
@@ -80,8 +81,7 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
           >
             {/* header image */}
             <div style={{ position: 'relative', aspectRatio: '16/6', overflow: 'hidden', borderRadius: '14px 14px 0 0', background: 'var(--background)' }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', opacity: 0.9 }} />
+              <Pic src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', opacity: 0.9 }} />
               <div aria-hidden style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, var(--surface) 4%, transparent 55%), linear-gradient(135deg, color-mix(in srgb, ${project.color} 12%, transparent), transparent 50%)` }} />
               <button
                 onClick={onClose}
@@ -109,8 +109,8 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
                 <ProjectDetail project={project} />
               </div>
             </div>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       )}
     </AnimatePresence>,
     document.body

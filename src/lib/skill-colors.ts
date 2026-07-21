@@ -10,6 +10,22 @@ export const SKILL_COLOR_PALETTE = {
   red:    '#EF4444',
 } as const;
 
+/**
+ * Single authority for the 7 skill-group hues. The constellation nodes, the
+ * legend chips, the radial cards and the fallback list all resolve their color
+ * from here (via `skillGroups[i].color`), so the graph and every chip agree.
+ * Seven separated hues — no two are confusable at a glance.
+ */
+export const SKILL_GROUP_COLORS: Record<string, string> = {
+  'languages':  '#F0B429', // amber
+  'ml-ai':      '#4B7BF5', // blue
+  'mlops-data': '#EF4444', // red
+  'robotics':   '#A78BFA', // purple
+  'web-edge':   '#22C55E', // green
+  'databases':  '#2DD4C8', // teal
+  'microsoft':  '#F472B6', // pink
+};
+
 // Plain object — keys are lowercase, values are hex colors
 const SKILL_COLORS: Record<string, string> = {
   // ── Languages ──────────────────────────────────────────
@@ -53,24 +69,24 @@ const SKILL_COLORS: Record<string, string> = {
   'ai safety':         '#4B7BF5',
 
   // ── MLOps & Data ───────────────────────────────────────
-  'airflow':        '#F07832',
-  'mlflow':         '#F07832',
-  'pandas':         '#F07832',
-  'numpy':          '#F07832',
-  'aws':            '#F07832',
-  'aws s3':         '#F07832',
-  'aws ec2':        '#F07832',
-  'aws s3/ec2':     '#F07832',
-  'docker':         '#F07832',
-  'git':            '#F07832',
-  'github actions': '#F07832',
-  'ci/cd':          '#F07832',
-  'linux':          '#F07832',
-  'pandera':        '#F07832',
-  'prometheus':     '#F07832',
-  'hyperopt':       '#F07832',
-  'domo':           '#F07832',
-  'slack api':      '#F07832',
+  'airflow':        '#EF4444',
+  'mlflow':         '#EF4444',
+  'pandas':         '#EF4444',
+  'numpy':          '#EF4444',
+  'aws':            '#EF4444',
+  'aws s3':         '#EF4444',
+  'aws ec2':        '#EF4444',
+  'aws s3/ec2':     '#EF4444',
+  'docker':         '#EF4444',
+  'git':            '#EF4444',
+  'github actions': '#EF4444',
+  'ci/cd':          '#EF4444',
+  'linux':          '#EF4444',
+  'pandera':        '#EF4444',
+  'prometheus':     '#EF4444',
+  'hyperopt':       '#EF4444',
+  'domo':           '#EF4444',
+  'slack api':      '#EF4444',
 
   // ── Robotics & Embedded ────────────────────────────────
   'ros 2':           '#A78BFA',
@@ -100,26 +116,26 @@ const SKILL_COLORS: Record<string, string> = {
   'calibration':     '#A78BFA',
 
   // ── Web & Edge ─────────────────────────────────────────
-  'react':              '#0EA5E9',
-  'node.js':            '#0EA5E9',
-  'express':            '#0EA5E9',
-  'fastapi':            '#0EA5E9',
-  'django':             '#0EA5E9',
-  'cloudflare workers': '#0EA5E9',
-  'hono':               '#0EA5E9',
-  'deno':               '#0EA5E9',
-  'cloudflare d1':      '#0EA5E9',
-  'cloudflare r2':      '#0EA5E9',
-  'drizzle orm':        '#0EA5E9',
-  'chrome extension':   '#0EA5E9',
-  'workers ai':         '#0EA5E9',
-  'wrangler':           '#0EA5E9',
-  'sidearm sports':     '#0EA5E9',
-  'donor ux':           '#0EA5E9',
-  'information architecture': '#0EA5E9',
-  'digital fundraising':      '#0EA5E9',
-  'brand strategy':           '#0EA5E9',
-  'web strategy':             '#0EA5E9',
+  'react':              '#22C55E',
+  'node.js':            '#22C55E',
+  'express':            '#22C55E',
+  'fastapi':            '#22C55E',
+  'django':             '#22C55E',
+  'cloudflare workers': '#22C55E',
+  'hono':               '#22C55E',
+  'deno':               '#22C55E',
+  'cloudflare d1':      '#22C55E',
+  'cloudflare r2':      '#22C55E',
+  'drizzle orm':        '#22C55E',
+  'chrome extension':   '#22C55E',
+  'workers ai':         '#22C55E',
+  'wrangler':           '#22C55E',
+  'sidearm sports':     '#22C55E',
+  'donor ux':           '#22C55E',
+  'information architecture': '#22C55E',
+  'digital fundraising':      '#22C55E',
+  'brand strategy':           '#22C55E',
+  'web strategy':             '#22C55E',
 
   // ── Databases ──────────────────────────────────────────
   'postgresql':       '#2DD4C8',

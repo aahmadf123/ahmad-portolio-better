@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ViewTransition } from 'react';
+import { Pic } from '@/components/ui/pic';
 import type { FieldNote } from '@/lib/field-notes';
 import { CATEGORY_CONFIG } from '@/lib/field-notes';
 
@@ -43,8 +44,7 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
               background: '#06080E',
               borderBottom: '1px solid rgba(242,237,216,0.06)',
             }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Pic
                 src={note.heroImage}
                 alt={note.title}
                 style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}

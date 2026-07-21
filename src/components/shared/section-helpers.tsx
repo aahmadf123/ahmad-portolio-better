@@ -16,16 +16,23 @@ export const FG3 = 'var(--text3)';
 export const BG = 'var(--background)';
 
 // ── Section Header (ghost numeral + kicker) ──
+// Kinetic: self-reveals on scroll-in via useReveal (transform/opacity only, no
+// layout shift). `.reveal`/`.in` transitions + the reduced-motion force-visible
+// rule live in globals.css; the inline transitionDelay staggers kicker → sub.
+// This module is 'use client', so SH is already a client component — safe to
+// hook here and still renderable from server components.
 export function SH({ n, label, sub = '', color = 'var(--primary)' }: { n: string; label: string; sub?: string; color?: string }) {
+  const { ref, visible } = useReveal();
+  const revealCls = 'reveal' + (visible ? ' in' : '');
   return (
-    <div style={{ position: 'relative', marginBottom: 52, paddingTop: 8 }}>
+    <div ref={ref} style={{ position: 'relative', marginBottom: 52, paddingTop: 8 }}>
       <div aria-hidden className="ghost-num" style={{ position: 'absolute', top: -32, left: -8, fontFamily: SERIF, fontSize: 'clamp(72px,11vw,160px)', fontWeight: 400, color, opacity: 0.05, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em', zIndex: 0 }}>{n}</div>
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: sub ? 10 : 0 }}>
+        <div className={revealCls} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: sub ? 10 : 0, transitionDelay: '0ms' }}>
           <span style={{ display: 'inline-block', width: 22, height: 1.5, background: color, opacity: 0.6, flexShrink: 0 }} />
           <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color }}>{label}</span>
         </div>
-        {sub && <p style={{ fontSize: 15, color: FG2, maxWidth: 460, lineHeight: 1.65, marginTop: 4, fontFamily: SANS }}>{sub}</p>}
+        {sub && <p className={revealCls} style={{ fontSize: 15, color: FG2, maxWidth: 460, lineHeight: 1.65, marginTop: 4, fontFamily: SANS, transitionDelay: '60ms' }}>{sub}</p>}
       </div>
     </div>
   );

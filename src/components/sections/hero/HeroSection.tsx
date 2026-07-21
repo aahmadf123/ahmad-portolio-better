@@ -215,7 +215,7 @@ function HeroPhoto() {
         src="/Images/optimized/headshot-800.webp"
         alt="Ahmad Firas"
         title="Click to enlarge"
-        onClick={() => openLb('/Images/my%20pic.png', 'Ahmad Firas')}
+        onClick={() => openLb('/Images/optimized/headshot-1600.webp', 'Ahmad Firas')}
         style={{
           display: 'block',
           width: '100%',

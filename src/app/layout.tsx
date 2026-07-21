@@ -4,6 +4,7 @@ import { ViewTransition } from "react";
 import "./globals.css";
 import { MagneticCursor } from "@/components/ui/magnetic-cursor";
 import { PostHogProvider } from "@/components/PostHogProvider";
+import { MotionProvider } from "@/lib/motion/lazy";
 import { ChatLauncher } from "@/components/chat/ChatLauncher";
 import { ChapterNav } from "@/components/layout/ChapterNav";
 import { NowPlayingBar } from "@/components/layout/NowPlayingBar";
@@ -161,6 +162,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body suppressHydrationWarning>
         <PostHogProvider>
+        <MotionProvider>
         <a href="#hero" className="skip-link">
           Skip to main content
         </a>
@@ -191,6 +193,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <NowPlayingBar />
         <FootballEasterEgg />
         <ChatLauncher />
+        </MotionProvider>
         </PostHogProvider>
         <Analytics />
       </body>

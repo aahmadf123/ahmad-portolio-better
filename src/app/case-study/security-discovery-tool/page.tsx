@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Lightbox } from '@/components/ui/image-lightbox';
+import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -185,8 +186,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
 
           {/* Hero image */}
           <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: '#06080E', marginBottom: 64 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/Images/sdt_tool.png" alt="Security Discovery Tool" onClick={() => setLb('/Images/sdt_tool.png')} style={{ width: '100%', display: 'block', objectFit: 'cover', cursor: 'zoom-in' }} />
+            <Pic src="/Images/sdt_tool.png" alt="Security Discovery Tool" onClick={() => setLb('/Images/sdt_tool.png')} style={{ width: '100%', display: 'block', objectFit: 'cover', cursor: 'zoom-in' }} priority />
           </div>
         </div>
       </div>
@@ -369,6 +369,20 @@ export default function SecurityDiscoveryToolCaseStudy() {
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>{body}</p>
                   </div>
                 ))}
+              </div>
+              <div className="two-col-sdt">
+                <div style={{ padding: '16px 18px', background: `${ACCENT}0c`, border: `1px solid ${ACCENT}30`, borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What broke</div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
+                    The validation layer was the real friction, not the schema. Rules strict enough to kill duplicate and stale records also threatened to reject legitimate entries — and a rule that blocks useful data fails its purpose. Tuning that balance, run after run, was the part that actually took the time.
+                  </p>
+                </div>
+                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
+                    Ingestion was manual — records were imported and normalized by hand. I&apos;d build automated connectors for Active Directory, Cisco AMP, and Defender from the start, so the central database stays continuously fresh instead of depending on someone remembering to pull the next export.
+                  </p>
+                </div>
               </div>
             </Section>
 
