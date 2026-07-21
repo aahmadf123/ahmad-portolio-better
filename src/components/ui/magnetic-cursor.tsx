@@ -121,7 +121,11 @@ export function MagneticCursor() {
     // immediate so the viewport never looks stretched mid-drag.
     let resizeRebuildTimer: ReturnType<typeof setTimeout> | undefined;
     const onResize = () => {
-      resize();
+      resize(); // reassigning canvas.width/height resets the bitmap to
+      // transparent per the Canvas spec, wiping any frozen paused frame —
+      // wake() below repaints it immediately even with no mouse movement
+      // (DevTools toggle, window snap, browser zoom all fire `resize`).
+      wake();
       if (resizeRebuildTimer) clearTimeout(resizeRebuildTimer);
       resizeRebuildTimer = setTimeout(rebuildZones, 150);
     };
