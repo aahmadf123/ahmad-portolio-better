@@ -98,9 +98,15 @@ export function ConstellationCanvas({ onSelect }: { onSelect: (node: SkillNode |
       halo.setColorAt(i, baseColor.set(n.color));
     });
 
-    // edges
+    const isMobile = typeof window !== 'undefined' && (
+      window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768
+    );
+
+    // edges — drop weaker ones on mobile
     const edgePos: number[] = [];
+    const edgeThreshold = isMobile ? 0.7 : 0;
     constellation.edges.forEach((e) => {
+      if ((e.strength ?? 0) < edgeThreshold) return;
       const a = byName.get(e.a);
       const b = byName.get(e.b);
       if (!a || !b) return;

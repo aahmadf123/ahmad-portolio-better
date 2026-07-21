@@ -36,12 +36,20 @@ export function createSceneHost(opts: {
 }): SceneHost {
   const { mount, fov = 40, z = 14, fpsCap = 30, dprMax = 1.75 } = opts;
 
+  const isMobile = typeof window !== 'undefined' && (
+    window.matchMedia('(pointer: coarse)').matches ||
+    window.matchMedia('(max-width: 768px)').matches ||
+    (navigator.hardwareConcurrency ?? 8) <= 4
+  );
+  const effectiveDprMax = isMobile ? 1 : dprMax;
+  const powerPreference: WebGLPowerPreference = isMobile ? 'low-power' : 'high-performance';
+
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(fov, 1, 0.1, 200);
   camera.position.set(0, 0, z);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, dprMax));
+  const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, effectiveDprMax));
   renderer.setClearColor(0x000000, 0);
   mount.appendChild(renderer.domElement);
   renderer.domElement.style.display = 'block';

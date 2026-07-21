@@ -78,6 +78,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
     <motion.div
       role="dialog"
       aria-label="Ask Ahmad — AI assistant"
+      className="chat-panel"
       initial={reduced ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={reduced ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.98 }}
@@ -194,6 +195,16 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
       <style>{`
         .chat-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); display: inline-block; animation: chat-bounce 1s ease-in-out infinite; }
         @keyframes chat-bounce { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+        @media (max-width: 420px) {
+          .chat-panel {
+            right: 12px !important;
+            left: 12px !important;
+            width: auto !important;
+            bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+            height: min(520px, calc(100svh - 100px)) !important;
+            border-radius: 12px !important;
+          }
+        }
       `}</style>
     </motion.div>
   );

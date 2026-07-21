@@ -3,6 +3,7 @@ import { ViewTransition } from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getFieldNote, fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
+import { site } from '@/lib/data/site';
 import { notFound } from 'next/navigation';
 
 const SERIF = 'var(--font-display), Georgia, serif';
@@ -16,13 +17,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const note = getFieldNote(slug);
   if (!note) return {};
+  const url = `${site.url}/field-notes/${note.slug}`;
   return {
     title: `${note.title} — Field Notes`,
     description: note.excerpt,
+    keywords: note.tags,
+    alternates: { canonical: url },
     openGraph: {
+      type: 'article',
+      url,
+      siteName: site.name,
       title: note.title,
       description: note.excerpt,
-      images: note.heroImage ? [{ url: note.heroImage }] : [],
+      images: note.heroImage ? [{ url: `${site.url}${note.heroImage}` }] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: note.title,
+      description: note.excerpt,
+      images: note.heroImage ? [`${site.url}${note.heroImage}`] : [],
     },
   };
 }

@@ -113,19 +113,21 @@ export const ParticleNameCanvas = React.forwardRef<ParticleNameHandle, {
       if (disposed) return;
 
       const fontFamily = getComputedStyle(title).fontFamily || 'Georgia, serif';
-      let stride = 4;
+      const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
+      let stride = isMobile ? 6 : 4;
       let sampled = sampleTextPoints({ lines: ['Ahmad', 'Firas'], fontFamily, stride });
-      if (sampled.count > 4600) sampled = sampleTextPoints({ lines: ['Ahmad', 'Firas'], fontFamily, stride: (stride = 6) });
-      else if (sampled.count < 1600) sampled = sampleTextPoints({ lines: ['Ahmad', 'Firas'], fontFamily, stride: (stride = 3) });
+      if (sampled.count > (isMobile ? 2400 : 4600)) sampled = sampleTextPoints({ lines: ['Ahmad', 'Firas'], fontFamily, stride: (stride = isMobile ? 8 : 6) });
+      else if (sampled.count < (isMobile ? 800 : 1600)) sampled = sampleTextPoints({ lines: ['Ahmad', 'Firas'], fontFamily, stride: (stride = isMobile ? 5 : 3) });
       const N = sampled.count;
       if (N === 0) return;
 
       const rand = seededRandom(20260720);
+      const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.75);
       const uniforms = {
         uProgress: { value: instant ? 1 : 0 },
         uDisperse: { value: instant ? 1 : 0 },
         uTime: { value: 0 },
-        uSize: { value: 2.6 * Math.min(window.devicePixelRatio || 1, 1.75) },
+        uSize: { value: 2.6 * dpr },
         uScale: { value: 1 },
         uOffset: { value: new THREE.Vector2(0, 0) },
       };

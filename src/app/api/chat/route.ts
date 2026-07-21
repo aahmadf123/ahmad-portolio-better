@@ -1,6 +1,11 @@
-import { streamText, convertToModelMessages, type UIMessage } from 'ai';
-import { anthropic } from '@ai-sdk/anthropic';
-import { openai } from '@ai-sdk/openai';
+import {
+  streamText,
+  convertToModelMessages,
+  createUIMessageStreamResponse,
+  toUIMessageStream,
+  type UIMessage,
+} from 'ai';
+import { createOpenAI } from '@ai-sdk/openai';
 import { getSystemPrompt } from '@/lib/ai/system-prompt';
 import { checkRateLimit } from '@/lib/ai/rate-limit';
 
@@ -9,20 +14,21 @@ export const maxDuration = 30;
 
 const MAX_MESSAGES = 12;
 const MAX_CHARS = 500;
+const GATEWAY_BASE_URL = 'https://ai-gateway.vercel.sh/v1';
 
-function pickModel() {
-  if (process.env.ANTHROPIC_API_KEY) {
-    return anthropic(process.env.ASK_AHMAD_MODEL ?? 'claude-haiku-4-5');
-  }
-  if (process.env.OPENAI_API_KEY) {
-    return openai(process.env.ASK_AHMAD_MODEL ?? 'gpt-4o-mini');
-  }
-  return null;
+function createModel() {
+  // Prefer Vercel AI Gateway; fall back to direct OpenAI if only OPENAI_API_KEY is set.
+  const apiKey = process.env.AI_GATEWAY_API_KEY ?? process.env.OPENAI_API_KEY;
+  const baseURL = process.env.AI_GATEWAY_BASE_URL ?? GATEWAY_BASE_URL;
+  if (!apiKey) return null;
+
+  const openai = createOpenAI({ baseURL, apiKey });
+  return openai(process.env.ASK_AHMAD_MODEL ?? 'openai/gpt-4o-mini');
 }
 
 export async function POST(req: Request) {
   // Provider not configured yet — the panel shows its warm-up fallback.
-  const model = pickModel();
+  const model = createModel();
   if (!model) {
     return Response.json({ error: 'not-configured' }, { status: 503 });
   }
@@ -78,7 +84,8 @@ export async function POST(req: Request) {
     temperature: 0.6,
   });
 
-  return result.toUIMessageStreamResponse({
+  return createUIMessageStreamResponse({
+    stream: toUIMessageStream({ stream: result.stream }),
     headers: rate.setCookie ? { 'Set-Cookie': rate.setCookie } : undefined,
   });
 }

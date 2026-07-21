@@ -62,6 +62,9 @@ export function ChatLauncher() {
         }
         @keyframes chat-ping { 0% { transform: scale(0.8); opacity: 0.8; } 70%, 100% { transform: scale(2.1); opacity: 0; } }
         @media print { .chat-launcher { display: none; } }
+        @media (max-width: 420px) {
+          .chat-launcher { right: 12px !important; bottom: calc(12px + env(safe-area-inset-bottom)) !important; padding: 10px 14px 10px 12px !important; }
+        }
       `}</style>
     </>
   );

@@ -36,14 +36,14 @@ The sitemap derives from these registries automatically.
 
 ## Ask Ahmad (AI assistant)
 
-The floating chat is provider-agnostic and ships dormant until a key exists.
-Set env vars in Vercel → Project → Settings → Environment Variables:
+The floating chat routes through Vercel AI Gateway. Set env vars in Vercel → Project → Settings → Environment Variables:
 
 | Variable | Required | Notes |
 | --- | --- | --- |
-| `ANTHROPIC_API_KEY` | one of these two | Uses Claude (default model `claude-haiku-4-5`) |
-| `OPENAI_API_KEY` | one of these two | Used only if no Anthropic key (default `gpt-4o-mini`) |
-| `ASK_AHMAD_MODEL` | optional | Override the model id for whichever provider is active |
+| `AI_GATEWAY_API_KEY` | one of these two | Vercel AI Gateway API key or access token |
+| `OPENAI_API_KEY` | one of these two | Direct OpenAI fallback if `AI_GATEWAY_API_KEY` is not set |
+| `AI_GATEWAY_BASE_URL` | optional | Default: `https://ai-gateway.vercel.sh/v1` |
+| `ASK_AHMAD_MODEL` | optional | Default: `openai/gpt-4o-mini` |
 | `RATE_LIMIT_SECRET` | recommended | Random string; signs the rate-limit cookie |
 
 Without a key, the panel shows a "warming up" state with canned FAQ + email.

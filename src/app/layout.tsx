@@ -43,7 +43,10 @@ const handFont = Caveat({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ahmadfx.xyz"),
-  title: "Ahmad Firas — Agentic AI Engineer",
+  title: {
+    default: "Ahmad Firas — Agentic AI Engineer",
+    template: "%s · Ahmad Firas",
+  },
   icons: {
     icon: "/Images/optimized/favicon-192.png",
     shortcut: "/Images/optimized/favicon-192.png",
@@ -59,11 +62,18 @@ export const metadata: Metadata = {
     "Computer Engineering",
     "UAV",
     "MLOps",
+    "Reinforcement Learning",
+    "Computer Vision",
+    "Autonomous Systems",
   ],
   authors: [{ name: "Ahmad Firas" }],
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     url: "https://ahmadfx.xyz/",
+    siteName: "Ahmad Firas",
+    locale: "en_US",
     title: "Ahmad Firas — Agentic AI Engineer",
     description:
       "Building AI systems for uncertain environments: from UAV autonomy research to enterprise agentic workflows.",
