@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { Section, SH, MONO } from '@/components/shared/section-helpers';
 import { projects, projectCategories, type Project, type ProjectCategory } from '@/lib/data/projects';
 import { sectionById } from '@/lib/data/sections';
@@ -60,10 +60,10 @@ export function ProjectsSection() {
       </div>
 
       {/* bento poster grid */}
-      <motion.div layout={!reduced} className="poster-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
+      <m.div layout={!reduced} className="poster-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
         <AnimatePresence mode="popLayout" initial={false}>
           {gridProjects.map((p) => (
-            <motion.div
+            <m.div
               key={p.idx}
               layout={!reduced}
               initial={reduced ? false : { opacity: 0, scale: 0.96 }}
@@ -73,10 +73,10 @@ export function ProjectsSection() {
               style={{ gridColumn: p.span === 2 ? 'span 2' : 'span 1', minWidth: 0 }}
             >
               <ProjectPosterCard project={p} onOpen={setOpenProject} />
-            </motion.div>
+            </m.div>
           ))}
         </AnimatePresence>
-      </motion.div>
+      </m.div>
 
       <ProjectDetailModal project={openProject} onClose={() => setOpenProject(null)} />
 

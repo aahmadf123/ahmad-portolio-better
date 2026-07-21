@@ -1,21 +1,36 @@
 'use client';
 import React from 'react';
 
+/**
+ * Threshold-crossing scroll flag: true once window.scrollY > threshold.
+ * The listener is passive and rAF-throttled (one read per frame, at most),
+ * and the setter only fires when the boolean actually flips.
+ */
 export function useScroll(threshold: number) {
   const [scrolled, setScrolled] = React.useState(false);
 
-  const onScroll = React.useCallback(() => {
-    setScrolled(window.scrollY > threshold);
+  const apply = React.useCallback(() => {
+    const next = window.scrollY > threshold;
+    setScrolled((prev) => (prev === next ? prev : next));
   }, [threshold]);
 
   React.useEffect(() => {
-    window.addEventListener('scroll', onScroll);
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        apply();
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, [onScroll]);
+  }, [apply]);
 
   React.useEffect(() => {
-    onScroll();
-  }, [onScroll]);
+    apply();
+  }, [apply]);
 
   return scrolled;
 }

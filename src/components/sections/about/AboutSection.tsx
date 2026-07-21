@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion';
 import { Section, SH, Tag, MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { HoverPeek } from '@/components/ui/link-preview';
 import { about, type Lens } from '@/lib/data/about';
@@ -49,7 +49,7 @@ export function AboutSection() {
           <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: FG3, marginBottom: 14 }}>Three lenses</div>
           <div style={{ position: 'relative', minHeight: 96 }}>
             <AnimatePresence mode="wait">
-              <motion.div
+              <m.div
                 key={activeLens.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ export function AboutSection() {
                 <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(40px, 4.5vw, 68px)', lineHeight: 1, color: 'var(--foreground)', letterSpacing: '-0.02em' }}>
                   {activeLens.title}
                 </div>
-              </motion.div>
+              </m.div>
             </AnimatePresence>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 22 }}>
@@ -112,7 +112,7 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
   const beliefs = about.beliefs.filter((b) => lens.beliefIds.includes(b.n));
 
   return (
-    <motion.article
+    <m.article
       id={`lens-${lens.id}`}
       ref={ref}
       initial={reduced ? false : { opacity: 0, y: 24 }}
@@ -189,6 +189,6 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
           )}
         </div>
       </div>
-    </motion.article>
+    </m.article>
   );
 }

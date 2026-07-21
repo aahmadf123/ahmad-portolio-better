@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { MONO, SERIF } from '@/components/shared/section-helpers';
 import { Pic } from '@/components/ui/pic';
 import type { Project } from '@/lib/data/projects';
@@ -45,7 +45,7 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
   return createPortal(
     <AnimatePresence>
       {project && (
-        <motion.div
+        <m.div
           key="scrim"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -64,7 +64,7 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
           aria-modal="true"
           aria-label={`${project.title} details`}
         >
-          <motion.div
+          <m.div
             ref={panelRef}
             layoutId={`poster-${project.idx}`}
             onClick={(e) => e.stopPropagation()}
@@ -109,8 +109,8 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
                 <ProjectDetail project={project} />
               </div>
             </div>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       )}
     </AnimatePresence>,
     document.body

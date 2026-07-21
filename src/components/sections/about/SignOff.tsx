@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { HAND, MONO } from '@/components/shared/section-helpers';
 
 /** Handwritten close: Caveat script with a hand-drawn underline that draws itself in. */
@@ -9,7 +9,7 @@ export function SignOff({ text, sub }: { text: string; sub: string }) {
   const reduced = useReducedMotion();
   return (
     <div style={{ marginTop: 'clamp(40px, 6vw, 72px)', textAlign: 'center' }}>
-      <motion.div
+      <m.div
         initial={reduced ? false : { opacity: 0, y: 14, rotate: -1.5 }}
         whileInView={{ opacity: 1, y: 0, rotate: 0 }}
         viewport={{ once: true, amount: 0.6 }}
@@ -20,7 +20,7 @@ export function SignOff({ text, sub }: { text: string; sub: string }) {
           {text}
         </div>
         <svg viewBox="0 0 320 22" width="min(320px, 70%)" style={{ display: 'block', margin: '2px auto 0' }} aria-hidden>
-          <motion.path
+          <m.path
             d="M 8 14 C 60 8, 120 18, 170 12 S 280 8, 312 13"
             fill="none"
             stroke="var(--gold)"
@@ -36,7 +36,7 @@ export function SignOff({ text, sub }: { text: string; sub: string }) {
         <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: 8 }}>
           Toledo, OH · est. chapter one
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { skillGroups, type SkillNode } from '@/lib/data/skills';
 
@@ -12,7 +12,7 @@ export function SkillDetailCard({ node, onClose }: { node: SkillNode | null; onC
   return (
     <AnimatePresence>
       {node && group && (
-        <motion.aside
+        <m.aside
           key={node.name}
           initial={{ opacity: 0, y: 16, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -63,7 +63,7 @@ export function SkillDetailCard({ node, onClose }: { node: SkillNode | null; onC
               ))}
             </ul>
           )}
-        </motion.aside>
+        </m.aside>
       )}
     </AnimatePresence>
   );

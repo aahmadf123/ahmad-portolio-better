@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { site } from '@/lib/data/site';
 
@@ -75,7 +75,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <motion.div
+    <m.div
       role="dialog"
       aria-label="Ask Ahmad — AI assistant"
       className="chat-panel"
@@ -206,7 +206,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
           }
         }
       `}</style>
-    </motion.div>
+    </m.div>
   );
 }
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { MONO, SERIF, SANS } from '@/components/shared/section-helpers';
 import manifest from '@/lib/image-manifest.json';
 import { projectStatusLabel, type Project } from '@/lib/data/projects';
@@ -22,9 +22,10 @@ function decodeKey(src: string): string {
 }
 
 /** Tiny local lookup — mirrors <Pic>'s manifest logic without pulling in the
- * component itself (this image stays `motion.img` until the framer-motion →
- * `m` migration lands in a later phase). Manifest miss falls back to the
- * original path with no srcSet/sizes, same graceful degradation as <Pic>. */
+ * component itself (this image renders as `m.img` so it can carry the
+ * hover `variants`/`transition` props; the dependency-free <Pic> is a plain
+ * <img> and can't). Manifest miss falls back to the original path with no
+ * srcSet/sizes, same graceful degradation as <Pic>. */
 function responsiveAttrs(src: string, wide: boolean) {
   const entry = IMAGE_MANIFEST[decodeKey(src)];
   if (!entry) return { src };
@@ -54,7 +55,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
   const p = project;
   const wide = p.span === 2;
   return (
-    <motion.button
+    <m.button
       layoutId={`poster-${p.idx}`}
       onClick={() => onOpen(p)}
       whileHover="hover"
@@ -78,7 +79,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
       }}
     >
       {/* image — dimmed and desaturated at rest so bright screenshots stay moody */}
-      <motion.img
+      <m.img
         {...responsiveAttrs(p.image, wide)}
         alt=""
         loading="lazy"
@@ -91,7 +92,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', zIndex: 0 }}
       />
       {/* scrim */}
-      <motion.div
+      <m.div
         aria-hidden
         variants={{ rest: { opacity: 1 }, hover: { opacity: 0.92 } }}
         style={{
@@ -100,7 +101,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
         }}
       />
       {/* edge light on hover */}
-      <motion.div aria-hidden variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }} transition={{ duration: 0.3 }}
+      <m.div aria-hidden variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }} transition={{ duration: 0.3 }}
         style={{ position: 'absolute', inset: 0, zIndex: 2, borderRadius: 12, boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${p.color} 55%, transparent), 0 8px 40px -12px color-mix(in srgb, ${p.color} 30%, transparent)` }} />
 
       {/* content */}
@@ -119,7 +120,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
           <h4 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: wide ? 'clamp(24px, 2.2vw, 34px)' : 'clamp(20px, 1.8vw, 26px)', lineHeight: 1.08, letterSpacing: '-0.015em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.05em' }}>
             {p.title}
           </h4>
-          <motion.div
+          <m.div
             variants={{ rest: { opacity: 0, y: 12 }, hover: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
@@ -130,9 +131,9 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
                 <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '2px 7px', background: 'rgba(10,11,15,0.6)', border: '1px solid var(--bd2)', borderRadius: 3, color: 'var(--text2)', letterSpacing: '0.03em' }}>{t}</span>
               ))}
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
-    </motion.button>
+    </m.button>
   );
 }

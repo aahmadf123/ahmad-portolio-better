@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -185,7 +185,7 @@ export default function DocsPage() {
 
         {/* Selected doc description */}
         <AnimatePresence mode="wait">
-          <motion.p
+          <m.p
             key={selected.id + '-desc'}
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
@@ -201,7 +201,7 @@ export default function DocsPage() {
             }}
           >
             {selected.description}
-          </motion.p>
+          </m.p>
         </AnimatePresence>
 
         {/* PDF viewer container */}
@@ -312,7 +312,7 @@ export default function DocsPage() {
           {/* Content area */}
           <AnimatePresence mode="wait">
             {selected.file && (
-              <motion.div
+              <m.div
                 key={selected.id + '-preview'}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -370,7 +370,7 @@ export default function DocsPage() {
                     Open PDF ↗
                   </a>
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>

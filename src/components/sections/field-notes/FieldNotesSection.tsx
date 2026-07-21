@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ViewTransition } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { Section, MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { Pic } from '@/components/ui/pic';
 import { fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
@@ -58,7 +58,7 @@ export function FieldNotesSection() {
 
       {/* Featured editorial spread */}
       {featured && (
-        <motion.div
+        <m.div
           initial={reduced ? false : { opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.25 }}
@@ -110,7 +110,7 @@ export function FieldNotesSection() {
               </div>
             )}
           </Link>
-        </motion.div>
+        </m.div>
       )}
 
       {/* Secondary published (when more essays ship) + darkroom strip */}
