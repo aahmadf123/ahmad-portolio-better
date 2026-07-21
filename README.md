@@ -36,17 +36,36 @@ The sitemap derives from these registries automatically.
 
 ## Ask Ahmad (AI assistant)
 
-The floating chat routes through Vercel AI Gateway. Set env vars in Vercel → Project → Settings → Environment Variables:
+The floating chat is wired through the **Vercel AI Gateway** by default.
+
+### Local development
+
+Use the Vercel CLI to pull the project's OIDC token and environment variables:
+
+```bash
+npm install -D vercel
+npx vercel link
+npx vercel env pull .env.local
+```
+
+This creates `.env.local` with `VERCEL_OIDC_TOKEN`, which the `ai` SDK uses to authenticate AI Gateway requests. No separate AI Gateway API key is needed.
+
+For deployed previews/production, enable **Secure Backend Access with OIDC Federation** in Vercel → Project → Settings → Security so `VERCEL_OIDC_TOKEN` is injected into Vercel Functions. Without it, the chat falls back to the "warming up" state unless you set `AI_GATEWAY_API_KEY`.
+
+### Vercel deployment
+
+Set env vars in Vercel → Project → Settings → Environment Variables:
 
 | Variable | Required | Notes |
 | --- | --- | --- |
-| `AI_GATEWAY_API_KEY` | one of these two | Vercel AI Gateway API key or access token |
-| `OPENAI_API_KEY` | one of these two | Direct OpenAI fallback if `AI_GATEWAY_API_KEY` is not set |
-| `AI_GATEWAY_BASE_URL` | optional | Default: `https://ai-gateway.vercel.sh/v1` |
-| `ASK_AHMAD_MODEL` | optional | Default: `openai/gpt-4o-mini` |
+| `VERCEL_OIDC_TOKEN` | auto | Pulled automatically by `vc env pull`; available in Vercel deployments |
+| `AI_GATEWAY_API_KEY` | fallback | Vercel AI Gateway API key (used if `VERCEL_OIDC_TOKEN` is not set) |
+| `ANTHROPIC_API_KEY` | fallback | Direct Claude key (used only if no gateway key / token) |
+| `OPENAI_API_KEY` | fallback | Direct OpenAI key (used only if no Claude direct key) |
+| `ASK_AHMAD_MODEL` | optional | Gateway model id, e.g. `openai/gpt-5.5` or `openai/gpt-4o-mini` |
 | `RATE_LIMIT_SECRET` | recommended | Random string; signs the rate-limit cookie |
 
-Without a key, the panel shows a "warming up" state with canned FAQ + email.
+Without a gateway token or direct provider key, the panel shows a "warming up" state with canned FAQ + email.
 
 Abuse controls (no database): signed-cookie sliding window (10 messages /
 10 min, 30 / day), a per-instance IP backstop, message count/length caps, and

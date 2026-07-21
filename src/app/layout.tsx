@@ -47,11 +47,6 @@ export const metadata: Metadata = {
     default: "Ahmad Firas — Agentic AI Engineer",
     template: "%s · Ahmad Firas",
   },
-  icons: {
-    icon: "/Images/optimized/favicon-192.png",
-    shortcut: "/Images/optimized/favicon-192.png",
-    apple: "/Images/optimized/favicon-512.png",
-  },
   description:
     "Ahmad Firas — Agentic AI Engineer, Sports Analytics, Researcher. Building agentic AI, autonomous UAV systems, sports analytics, and production-grade ML infrastructure.",
   keywords: [
@@ -64,11 +59,22 @@ export const metadata: Metadata = {
     "MLOps",
     "Reinforcement Learning",
     "Computer Vision",
-    "Autonomous Systems",
+    "Sports Technology",
   ],
-  authors: [{ name: "Ahmad Firas" }],
-  alternates: { canonical: "/" },
-  robots: { index: true, follow: true },
+  authors: [{ name: "Ahmad Firas", url: "https://ahmadfx.xyz" }],
+  creator: "Ahmad Firas",
+  publisher: "Ahmad Firas",
+  category: "Technology",
+  classification: "Artificial Intelligence, Machine Learning, Sports Analytics",
+  alternates: {
+    canonical: "/",
+  },
+  icons: {
+    icon: "/Images/optimized/favicon-192.png",
+    shortcut: "/Images/optimized/favicon-192.png",
+    apple: "/Images/optimized/favicon-512.png",
+  },
+  manifest: "/manifest.json",
   openGraph: {
     type: "website",
     url: "https://ahmadfx.xyz/",
@@ -77,12 +83,31 @@ export const metadata: Metadata = {
     title: "Ahmad Firas — Agentic AI Engineer",
     description:
       "Building AI systems for uncertain environments: from UAV autonomy research to enterprise agentic workflows.",
-    images: [{ url: "/Images/optimized/og.png", width: 1200, height: 630 }],
+    images: [
+      {
+        url: "/Images/optimized/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Ahmad Firas — Agentic AI Engineer portfolio preview",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
+    creator: "@ahmadfirasazfar",
     title: "Ahmad Firas — Agentic AI Engineer",
+    description:
+      "Building AI systems for uncertain environments: from UAV autonomy research to enterprise agentic workflows.",
     images: ["/Images/optimized/og.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+    },
   },
 };
 
@@ -111,6 +136,20 @@ const personJsonLd = {
     "MLOps",
     "UAV Autonomy",
   ],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Ahmad Firas — Agentic AI Engineer",
+  url: site.url,
+  inLanguage: "en",
+  author: { "@type": "Person", name: "Ahmad Firas" },
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${site.url}/field-notes?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -143,6 +182,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd).replace(/</g, "\\u003c") }}
         />
         <ChapterNav />
         <NowPlayingBar />

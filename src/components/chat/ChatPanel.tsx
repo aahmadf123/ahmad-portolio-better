@@ -43,7 +43,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
 
   const { messages, sendMessage, status, error } = useChat({
     transport: new DefaultChatTransport({ api: '/api/chat' }),
-    onError: async (err) => {
+    onError: (err) => {
       const msg = String(err?.message ?? '');
       if (msg.includes('not-configured') || msg.includes('503')) setUnconfigured(true);
       else if (msg.includes('rate-limited') || msg.includes('429')) setLimited(true);
@@ -86,10 +86,10 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
       style={{
         position: 'fixed',
         bottom: 'calc(24px + env(safe-area-inset-bottom))',
-        right: 20,
+        right: 'clamp(12px, 2.5vw, 20px)',
         zIndex: 9600,
-        width: 'min(390px, calc(100vw - 32px))',
-        height: 'min(560px, calc(100svh - 110px))',
+        width: 'min(390px, calc(100vw - 24px))',
+        height: 'min(560px, calc(100svh - 100px))',
         display: 'flex',
         flexDirection: 'column',
         background: 'rgba(15,17,23,0.98)',
