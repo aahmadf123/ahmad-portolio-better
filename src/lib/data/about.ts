@@ -74,7 +74,7 @@ export const about: AboutData = {
       id: 'builder',
       title: 'Builder',
       kicker: 'Lens 02',
-      lead: 'Eleven projects, each a different operating condition.',
+      lead: 'Ten projects, each a different operating condition.',
       body: 'A drone that navigates unseen worlds, a city reporting tool in production downtown, an insurance model that watches itself drift, a chemical car that won worldwide. Not by design, but by instinct: going where the hardest problems are — and shipping.',
       beliefIds: ['01'],
       dataPoint: { label: 'In production', value: 'battingcleanup.appliedlabs.org · downtown Toledo' },
