@@ -1,6 +1,7 @@
-import { streamText, convertToModelMessages, gateway, type UIMessage } from 'ai';
+import { streamText, convertToModelMessages, createGateway, type UIMessage } from 'ai';
 import { anthropic } from '@ai-sdk/anthropic';
 import { openai } from '@ai-sdk/openai';
+import { getVercelOidcToken } from '@vercel/oidc';
 import { getSystemPrompt } from '@/lib/ai/system-prompt';
 import { checkRateLimit } from '@/lib/ai/rate-limit';
 
@@ -18,16 +19,29 @@ function isGatewayModel(id?: string): id is string {
   return !!id && id.includes('/');
 }
 
-function pickModel() {
+async function resolveGatewayToken(): Promise<string | null> {
+  if (process.env.AI_GATEWAY_API_KEY) {
+    return process.env.AI_GATEWAY_API_KEY;
+  }
+  try {
+    return await getVercelOidcToken();
+  } catch {
+    return null;
+  }
+}
+
+async function pickModel() {
   const envModel = process.env.ASK_AHMAD_MODEL;
 
-  // Prefer Vercel AI Gateway when a key or Vercel OIDC token is present.
-  // `vc env pull` populates VERCEL_OIDC_TOKEN, which the AI SDK uses for Gateway auth.
-  if (process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN) {
-    return gateway(envModel ?? DEFAULT_GATEWAY_MODEL);
+  // Prefer Vercel AI Gateway: use an explicit API key, otherwise try the
+  // Vercel OIDC token (available via `vc env pull` locally and injected into
+  // Functions when OIDC Federation is enabled).
+  const gatewayToken = await resolveGatewayToken();
+  if (gatewayToken) {
+    return createGateway({ apiKey: gatewayToken }).languageModel(envModel ?? DEFAULT_GATEWAY_MODEL);
   }
 
-  // Local/direct-provider fallback so the chat still works without a gateway key.
+  // Direct-provider fallback so the chat still works without a gateway key.
   if (process.env.ANTHROPIC_API_KEY) {
     return anthropic(isGatewayModel(envModel) ? DEFAULT_ANTHROPIC_MODEL : (envModel ?? DEFAULT_ANTHROPIC_MODEL));
   }
@@ -40,7 +54,7 @@ function pickModel() {
 
 export async function POST(req: Request) {
   // Provider not configured yet — the panel shows its warm-up fallback.
-  const model = pickModel();
+  const model = await pickModel();
   if (!model) {
     return Response.json({ error: 'not-configured' }, { status: 503 });
   }

@@ -50,6 +50,8 @@ npx vercel env pull .env.local
 
 This creates `.env.local` with `VERCEL_OIDC_TOKEN`, which the `ai` SDK uses to authenticate AI Gateway requests. No separate AI Gateway API key is needed.
 
+For deployed previews/production, enable **Secure Backend Access with OIDC Federation** in Vercel → Project → Settings → Security so `VERCEL_OIDC_TOKEN` is injected into Vercel Functions. Without it, the chat falls back to the "warming up" state unless you set `AI_GATEWAY_API_KEY`.
+
 ### Vercel deployment
 
 Set env vars in Vercel → Project → Settings → Environment Variables:
