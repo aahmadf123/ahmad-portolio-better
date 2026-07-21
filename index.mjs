@@ -1,7 +1,7 @@
 import { streamText } from 'ai';
 
 const result = streamText({
-  model: 'openai/gpt-5.5',
+  model: 'openai/gpt-4o-mini',
   prompt: 'Explain quantum computing in simple terms.',
 });
 
