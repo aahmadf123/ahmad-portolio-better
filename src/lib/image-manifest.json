@@ -219,6 +219,16 @@
     "w": 2268,
     "h": 1283
   },
+  "/Images/field-notes/small-data-college-sports-ai/small-data-season-noise.png": {
+    "base": "/Images/optimized/small-data-season-noise",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 2130,
+    "h": 1117
+  },
   "/Images/first solar_logo.png": {
     "base": "/Images/optimized/first-solar-logo",
     "widths": [

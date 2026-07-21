@@ -47,6 +47,17 @@ export const fieldNotes: FieldNote[] = [
   { slug: 'ppo-vs-sac-reinforcement-learning', title: 'PPO vs SAC: a practical guide to choosing the right reinforcement learning algorithm', date: '', excerpt: '', tags: ['Reinforcement Learning', 'PPO', 'SAC'], category: 'AI & Machine Learning', readingTime: 10, published: false },
 
   // ── Sports Analytics ───────────────────────────────────────────
+  {
+    slug: 'small-data-college-sports-ai',
+    title: "The small-data problem: why college sports AI can't just copy the pros",
+    date: '2026-07-21',
+    excerpt: 'Pro sports analytics runs on oceans of data. A college season gives you twelve games, a roster that dissolves every year, and no time to wait for statistical significance. Building AI that works here is a different discipline — and a more interesting one.',
+    tags: ['AI', 'Sports Analytics', 'Small Data', 'Statistics', 'College Athletics'],
+    category: 'Sports Analytics',
+    heroImage: '/Images/field-notes/small-data-college-sports-ai/small-data-season-noise.png',
+    readingTime: 12,
+    published: true,
+  },
   { slug: 'sports-analytics-platform-architecture', title: 'How to architect a sports analytics platform from scratch — a practical guide', date: '', excerpt: '', tags: ['Sports Analytics', 'Architecture', 'Engineering'], category: 'Sports Analytics', readingTime: 13, published: false },
   { slug: 'context-adjusted-metrics-coaching', title: 'Why raw stats lie: how context-adjusted metrics make better coaching decisions', date: '', excerpt: '', tags: ['Sports Analytics', 'Metrics', 'Coaching'], category: 'Sports Analytics', readingTime: 9, published: false },
   { slug: 'sports-data-dashboards-coaches', title: 'How to turn complex sports data into dashboards coaches actually use', date: '', excerpt: '', tags: ['Data Visualization', 'Dashboards', 'Sports'], category: 'Sports Analytics', readingTime: 8, published: false },
