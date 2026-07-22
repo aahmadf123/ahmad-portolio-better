@@ -9,7 +9,6 @@ import { affiliations } from '@/lib/data/affiliations';
 import { certs } from '@/lib/data/certs';
 import { sectionById } from '@/lib/data/sections';
 import { CertFlipCard } from './CertFlipCard';
-import { LearningMarquee } from './LearningMarquee';
 
 /**
  * Credentials wall: certifications, awards & recognition, and professional
@@ -34,7 +33,6 @@ export function CredentialsSection() {
               <CertFlipCard key={cert.id} cert={cert} />
             ))}
           </div>
-          <LearningMarquee />
         </div>
 
         {/* Awards */}

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
@@ -103,10 +103,10 @@ export default function DeepFlyerCaseStudy() {
         padding: '0 clamp(20px,4vw,52px)',
         transition: 'background 0.3s, border-color 0.3s',
       }}>
-        <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none' }}>
+        <SmartBackLink fallbackHref="/#projects" style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none' }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="M12 5l-7 7 7 7" /></svg>
           Back to Portfolio
-        </Link>
+        </SmartBackLink>
         <span style={{ fontFamily: MONO, fontSize: 10, padding: '6px 14px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Prototype · Research Platform</span>
       </header>
 
@@ -149,7 +149,7 @@ export default function DeepFlyerCaseStudy() {
 
         {/* CTA */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, paddingBottom: 'clamp(48px,6vw,72px)', borderBottom: '1px solid rgba(242,237,216,0.07)' }}>
-          <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</Link>
+          <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</SmartBackLink>
         </div>
       </div>
 
@@ -474,9 +474,9 @@ export default function DeepFlyerCaseStudy() {
             <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4', maxWidth: 520, margin: '0 auto 24px' }}>
               Reward design, PPO training, ROS 2 simulation, and a future path to real drone hardware - all accessible through a browser.
             </p>
-            <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
+            <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
               ← Back to Portfolio
-            </Link>
+            </SmartBackLink>
           </div>
         </Section>
       </div>

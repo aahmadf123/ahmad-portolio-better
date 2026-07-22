@@ -90,7 +90,7 @@ export const about: AboutData = {
       lead: 'Writing down what the work keeps teaching.',
       body: 'An ACM Computing Surveys taxonomy of how AI actually fails. Field notes on what "agentic" really means in production. Quantum computing certificates earned for curiosity, not the résumé. The questions compound faster than the answers - that is the point.',
       beliefIds: ['01', '02'],
-      dataPoint: { label: 'Thinking in public', value: '46 field notes planned · 8 categories' },
+      dataPoint: { label: 'Thinking in public', value: 'Essays written when the work earns them' },
       artifacts: [
         { label: 'Field notes', href: '/field-notes' },
         { label: 'Research', href: '#research' },

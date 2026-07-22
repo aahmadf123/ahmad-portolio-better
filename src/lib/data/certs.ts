@@ -65,7 +65,7 @@ export const certs: Cert[] = [
   },
 ];
 
-/** In-progress certifications - feed the LearningMarquee and Now section. */
+/** In-progress certifications - feed the Now section. */
 export const certPursuits: CertPursuit[] = [
   { title: 'OCI Certified Application Integration Professional', sub: 'Oracle · Exam 1Z0-1042-26' },
   { title: 'Microsoft Certified: AI Transformation Leader', sub: 'Exam prep underway' },

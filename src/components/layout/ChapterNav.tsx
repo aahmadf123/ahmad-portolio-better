@@ -1,39 +1,24 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { sections } from '@/lib/data/sections';
 import { MONO } from '@/components/shared/section-helpers';
+import { useScrollSpy } from '@/components/ui/use-scroll-spy';
 
 const CHAPTERS = sections.filter((s) => s.id !== 'hero');
+const CHAPTER_IDS = CHAPTERS.map((s) => s.id);
 
 /**
  * Fixed left-side chapter rail (desktop only): one dot per chapter, active dot
  * grows and takes the section color, labels slide out on hover.
  */
 export function ChapterNav() {
-  const [active, setActive] = useState('');
-  const [show, setShow] = useState(false);
+  // Shared scroll-spy keeps the rail in lockstep with the header and stays
+  // correct across route changes / hash landings. Only meaningful on the
+  // homepage where the chapters exist - the found gate hides it elsewhere.
+  const { active, found } = useScrollSpy(CHAPTER_IDS);
 
-  useEffect(() => {
-    // Only meaningful on the homepage where the chapters exist.
-    const observers: IntersectionObserver[] = [];
-    let found = 0;
-    CHAPTERS.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      found += 1;
-      const io = new IntersectionObserver(
-        ([e]) => { if (e.isIntersecting) setActive(id); },
-        { threshold: 0, rootMargin: '-35% 0px -55% 0px' }
-      );
-      io.observe(el);
-      observers.push(io);
-    });
-    setShow(found > 4);
-    return () => observers.forEach((o) => o.disconnect());
-  }, []);
-
-  if (!show) return null;
+  if (found <= 4) return null;
 
   return (
     <nav aria-label="Chapters" className="chapter-nav" style={{

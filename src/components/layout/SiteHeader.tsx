@@ -5,7 +5,10 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
-import { navSections } from '@/lib/data/sections';
+import { useScrollSpy } from '@/components/ui/use-scroll-spy';
+import { navSections, sections } from '@/lib/data/sections';
+
+const ALL_SECTION_IDS = sections.map((s) => s.id);
 
 const MONO = 'var(--font-code), monospace';
 const SERIF = 'var(--font-display), Georgia, serif';
@@ -23,9 +26,21 @@ const NAV_LABELS: Record<string, string> = {
 /** Registry-driven sticky header - links, order, and active colors come from sections.ts. */
 export function SiteHeader() {
   const [open, setOpen] = React.useState(false);
-  const [active, setActive] = React.useState('');
   const [mobileVisible, setMobileVisible] = React.useState(false);
   const scrolled = useScroll(10);
+
+  // Shared scroll-spy over the full registry; when the reader is in a
+  // section that has no header pill (research, credentials, ...), the
+  // nearest preceding nav section stays lit so the header and the chapter
+  // rail never disagree.
+  const { active: activeSection } = useScrollSpy(ALL_SECTION_IDS);
+  const active = React.useMemo(() => {
+    const i = sections.findIndex((s) => s.id === activeSection);
+    for (let k = i; k >= 0; k--) {
+      if (sections[k].nav) return `#${sections[k].id}`;
+    }
+    return '';
+  }, [activeSection]);
 
   const links = navSections.map((s) => ({ id: s.id, label: NAV_LABELS[s.id] ?? s.label, href: `#${s.id}`, color: s.color }));
 
@@ -38,22 +53,6 @@ export function SiteHeader() {
     if (open) requestAnimationFrame(() => setMobileVisible(true));
     else setMobileVisible(false);
   }, [open]);
-
-  // Scroll-spy on registry ids
-  React.useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    navSections.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const io = new IntersectionObserver(
-        ([e]) => { if (e.isIntersecting) setActive(`#${id}`); },
-        { threshold: 0.1, rootMargin: '-20% 0px -60% 0px' }
-      );
-      io.observe(el);
-      observers.push(io);
-    });
-    return () => observers.forEach((o) => o.disconnect());
-  }, []);
 
   const activeCss = links
     .map(

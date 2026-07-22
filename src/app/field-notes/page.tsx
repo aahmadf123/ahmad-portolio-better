@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 import type { Metadata } from 'next';
+import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { fieldNotes } from '@/lib/field-notes';
 import { FieldNoteCard } from '@/components/ui/field-notes/field-note-card';
 
@@ -27,7 +27,7 @@ export default function FieldNotesPage() {
         background: 'rgba(13,14,18,0.96)',
         backdropFilter: 'blur(20px)',
       }}>
-        <Link href="/" style={{
+        <SmartBackLink fallbackHref="/#field-notes" style={{
           display: 'flex', alignItems: 'center', gap: 8,
           color: 'var(--text2)', fontFamily: MONO, fontSize: 10,
           letterSpacing: '0.08em', textTransform: 'uppercase',
@@ -37,7 +37,7 @@ export default function FieldNotesPage() {
             <path d="M19 12H5" /><path d="M12 5l-7 7 7 7" />
           </svg>
           Ahmad.dev
-        </Link>
+        </SmartBackLink>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: 2, background: 'var(--primary)', boxShadow: '0 0 8px rgba(45,212,191,0.6)' }} />
@@ -129,13 +129,13 @@ export default function FieldNotesPage() {
         <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
           Field Notes · Ahmad Firas
         </span>
-        <Link href="/" style={{
+        <SmartBackLink fallbackHref="/#field-notes" style={{
           fontFamily: MONO, fontSize: 10, color: 'var(--text2)',
           textDecoration: 'none', letterSpacing: '0.08em',
           textTransform: 'uppercase',
         }}>
           ← Portfolio
-        </Link>
+        </SmartBackLink>
       </footer>
     </div>
   );

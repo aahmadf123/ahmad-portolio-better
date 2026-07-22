@@ -13,6 +13,7 @@ import { affiliations } from '@/lib/data/affiliations';
 import { research } from '@/lib/data/research';
 import { nowCards, nowUpdated } from '@/lib/data/now';
 import { press } from '@/lib/data/press';
+import { getPublishedNotes } from '@/lib/field-notes';
 
 function buildDossier(): string {
   const lines: string[] = [];
@@ -68,7 +69,10 @@ function buildDossier(): string {
   }
 
   lines.push(`\n## Field Notes`);
-  lines.push(`Essay hub at ${site.url}/field-notes - published: "What agentic AI actually means in production - beyond the buzzword" (${site.url}/field-notes/agentic-ai-in-production); 45 more essays planned.`);
+  lines.push(`Essay hub at ${site.url}/field-notes - published essays:`);
+  for (const note of getPublishedNotes()) {
+    lines.push(`- "${note.title}" (${site.url}/field-notes/${note.slug})`);
+  }
 
   return lines.join('\n');
 }
