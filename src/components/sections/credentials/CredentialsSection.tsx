@@ -26,7 +26,7 @@ export function CredentialsSection() {
     <Section id="credentials" style={{ background: 'rgba(15,17,23,0.86)' }}>
       <SH n={def.n} label="Credentials" sub="Certifications, awards, and the communities behind the work." color={def.color} />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}>
-        {/* Certifications — 3D flip badges */}
+        {/* Certifications - 3D flip badges */}
         <div>
           <div style={{ fontFamily: MONO, fontSize: 11, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Certifications · hover or tap to flip</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }} className="cert-flip-grid">

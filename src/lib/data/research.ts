@@ -1,4 +1,4 @@
-// Research — extracted verbatim from the original Research section.
+// Research - extracted verbatim from the original Research section.
 
 export interface ResearchPillar {
   n: string;

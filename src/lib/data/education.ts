@@ -1,4 +1,4 @@
-// Education — extracted verbatim from the original About section.
+// Education - extracted verbatim from the original About section.
 
 export interface Education {
   school: string;

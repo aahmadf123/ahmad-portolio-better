@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -234,11 +234,11 @@ export default function HomeownerLossCaseStudy() {
           Risk patterns shift faster than manual modeling can adapt
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, marginBottom: 20 }}>
-          Insurance companies need accurate homeowner risk models for pricing, underwriting, and financial stability. However, many modeling workflows are still too manual for modern claim volatility — claim volatility, inflation, weather events, and regional property-risk trends all create windows where stale models make pricing decisions.
+          Insurance companies need accurate homeowner risk models for pricing, underwriting, and financial stability. However, many modeling workflows are still too manual for modern claim volatility - claim volatility, inflation, weather events, and regional property-risk trends all create windows where stale models make pricing decisions.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 10 }}>
           {[
-            { title: 'Manual rebuilds are slow', desc: 'Model updates required manual data pulls, notebook-based preprocessing, and repeated rebuilds — consuming actuarial time that should be focused on interpretation.', color: '#F07832' },
+            { title: 'Manual rebuilds are slow', desc: 'Model updates required manual data pulls, notebook-based preprocessing, and repeated rebuilds - consuming actuarial time that should be focused on interpretation.', color: '#F07832' },
             { title: 'Silent schema failures', desc: 'Data schema changes could silently break downstream training with no validation layer catching type mismatches or missing columns before they corrupted model runs.', color: '#4B7BF5' },
             { title: 'No drift detection', desc: 'Model drift was difficult to detect early without automated monitoring. Stale models could price risk for weeks before a human noticed performance degradation.', color: ACCENT },
             { title: 'No experiment lineage', desc: 'Without tracking, experiments and model versions were hard to reproduce. There was no audit trail for when a model was promoted, what data it saw, or who approved it.', color: '#2DD4C8' },
@@ -257,7 +257,7 @@ export default function HomeownerLossCaseStudy() {
       <Section id="cs-architecture">
         <SectionLabel label="System Architecture" />
         <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(22px,3vw,30px)', letterSpacing: '-0.02em', color: '#F2EDD8', lineHeight: 1.25, marginBottom: 8, paddingBottom: '0.05em' }}>
-          Modular MLOps pipeline — end-to-end
+          Modular MLOps pipeline - end-to-end
         </h2>
         <p style={{ fontSize: 14, lineHeight: 1.75, marginBottom: 28 }}>
           The architecture was built as a modular MLOps workflow instead of a single monolithic script. Each stage is independently testable, observable, and replaceable.
@@ -322,10 +322,10 @@ export default function HomeownerLossCaseStudy() {
       <Section id="cs-model">
         <SectionLabel label="Model Design" />
         <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(22px,3vw,30px)', letterSpacing: '-0.02em', color: '#F2EDD8', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
-          Why XGBoost — and what it took to govern it
+          Why XGBoost - and what it took to govern it
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, marginBottom: 20 }}>
-          XGBoost was chosen because it offered the best balance between predictive performance, explainability, speed, and insurance-industry practicality — not just the highest raw metric.
+          XGBoost was chosen because it offered the best balance between predictive performance, explainability, speed, and insurance-industry practicality - not just the highest raw metric.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }} className="model-grid">
           <div>
@@ -349,7 +349,7 @@ export default function HomeownerLossCaseStudy() {
             <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 14 }}>Alternatives Considered</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {[
-                { name: 'GLM Pipeline', why: 'Baseline — 26% worse RMSE' },
+                { name: 'GLM Pipeline', why: 'Baseline - 26% worse RMSE' },
                 { name: 'Random Forest', why: 'Slower, less interpretable' },
                 { name: 'LightGBM', why: 'Strong but less insurance-standard' },
                 { name: 'CatBoost', why: 'Good, but SHAP integration less mature' },
@@ -397,7 +397,7 @@ export default function HomeownerLossCaseStudy() {
                 'Manual override dashboard for human governance',
               ].map(item => (
                 <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 13, lineHeight: 1.6, color: '#B8B4A4' }}>
-                  <span style={{ color: ACCENT, flexShrink: 0, marginTop: 2 }}>—</span>
+                  <span style={{ color: ACCENT, flexShrink: 0, marginTop: 2 }}>-</span>
                   {item}
                 </div>
               ))}
@@ -415,7 +415,7 @@ export default function HomeownerLossCaseStudy() {
                 'Stronger deployment readiness than notebook-only model',
               ].map(item => (
                 <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 13, lineHeight: 1.6, color: '#B8B4A4' }}>
-                  <span style={{ color: '#2DD4C8', flexShrink: 0, marginTop: 2 }}>—</span>
+                  <span style={{ color: '#2DD4C8', flexShrink: 0, marginTop: 2 }}>-</span>
                   {item}
                 </div>
               ))}
@@ -432,7 +432,7 @@ export default function HomeownerLossCaseStudy() {
           The real value: automation with governance
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, marginBottom: 28, maxWidth: 680 }}>
-          The 75% reduction didn&apos;t happen because humans were removed from the workflow. It happened because the system moved humans to the right point in the loop — intervening only where judgment matters, not at every routine validation step.
+          The 75% reduction didn&apos;t happen because humans were removed from the workflow. It happened because the system moved humans to the right point in the loop - intervening only where judgment matters, not at every routine validation step.
         </p>
         <div style={{ padding: '24px 28px', background: `${ACCENT}0a`, border: `1px solid ${ACCENT}28`, borderRadius: 10, marginBottom: 20 }}>
           <div style={{ fontFamily: SERIF, fontSize: 18, color: '#F2EDD8', lineHeight: 1.5, fontStyle: 'italic', marginBottom: 10 }}>
@@ -444,7 +444,7 @@ export default function HomeownerLossCaseStudy() {
           {[
             { title: 'Schema validation is not optional in production ML', desc: 'It prevents silent failures from cascading into bad model training. Data schema changes can break downstream training without any visible error until the model produces wrong outputs.', color: '#F0B429' },
             { title: 'Monitoring matters as much as modeling', desc: 'Prometheus-style metrics and alerting helped expose system-level problems earlier. A model that works but can\'t be observed isn\'t production-ready.', color: '#4B7BF5' },
-            { title: 'Human oversight increases trust', desc: 'Actuary involvement and manual approval gates made the automation more credible to stakeholders, not less. Governance isn\'t overhead — it\'s what makes automation trustworthy.', color: ACCENT },
+            { title: 'Human oversight increases trust', desc: 'Actuary involvement and manual approval gates made the automation more credible to stakeholders, not less. Governance isn\'t overhead - it\'s what makes automation trustworthy.', color: ACCENT },
             { title: 'Experiment tracking is essential', desc: 'MLflow made it easier to compare runs, preserve model lineage, and reproduce results. Without it, the question of "which configuration produced this model?" has no good answer.', color: '#2DD4C8' },
             { title: 'Drift response must be governed', desc: 'Automatic retraining is powerful, but unsafe without approval, rollback, and explanation. Self-healing workflows need human checkpoints before they touch production.', color: '#F07832' },
           ].map(item => (
@@ -466,13 +466,13 @@ export default function HomeownerLossCaseStudy() {
           What broke, and what I&apos;d do differently
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, marginBottom: 24, maxWidth: 680 }}>
-          The governance layer wasn&apos;t academic — it existed because the failure modes were real. One of them — and one design limit I&apos;d address first — are worth naming directly.
+          The governance layer wasn&apos;t academic - it existed because the failure modes were real. One of them - and one design limit I&apos;d address first - are worth naming directly.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 10 }}>
           <div style={{ padding: '20px 22px', background: `${ACCENT}0a`, border: `1px solid ${ACCENT}28`, borderRadius: 10 }}>
             <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>What broke</div>
             <p style={{ fontSize: 14, lineHeight: 1.75, margin: 0 }}>
-              Schema changes broke training silently. A shifted column type or a missing field could pass straight through preprocessing and corrupt a model run with no visible error — the pipeline only looked wrong once the predictions came out wrong. That is the whole reason a Pandera validation layer and schema snapshots now sit in front of training.
+              Schema changes broke training silently. A shifted column type or a missing field could pass straight through preprocessing and corrupt a model run with no visible error - the pipeline only looked wrong once the predictions came out wrong. That is the whole reason a Pandera validation layer and schema snapshots now sit in front of training.
             </p>
           </div>
           <div style={{ padding: '20px 22px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 10 }}>
@@ -496,7 +496,7 @@ export default function HomeownerLossCaseStudy() {
             { title: 'Multi-model peril registry', desc: 'Separate model tracks for water, wind/hail, fire, and property-loss categories rather than a single monolithic model.', color: ACCENT },
             { title: 'AWS SageMaker integration', desc: 'Managed training, hosted endpoints, model monitoring, and registry workflows through SageMaker to reduce operational overhead.', color: '#F0B429' },
             { title: 'Fairness automation', desc: 'AIF360 or Fairlearn integration to continuously audit model outputs for demographic fairness and flag bias drift.', color: '#2DD4C8' },
-            { title: 'AI fix-proposal sandbox', desc: 'Secure sandbox where AI agents can propose drift fixes before human approval — explanation tracing included.', color: '#F07832' },
+            { title: 'AI fix-proposal sandbox', desc: 'Secure sandbox where AI agents can propose drift fixes before human approval - explanation tracing included.', color: '#F07832' },
             { title: 'Cohort-level dashboard', desc: 'Actual-vs-predicted premium overlays and cohort-level variance views to give actuaries richer inspection of model behavior by risk segment.', color: '#F472B6' },
           ].map(item => (
             <div key={item.title} style={{ padding: '18px 20px', background: `${item.color}06`, border: `1px solid ${item.color}22`, borderRadius: 8 }}>

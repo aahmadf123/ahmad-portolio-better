@@ -62,7 +62,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Faint dotted grid — atmospheric texture, teal-tinted */
+/* Faint dotted grid - atmospheric texture, teal-tinted */
 body::before {
   content: '';
   position: fixed;
@@ -128,7 +128,7 @@ a { text-decoration: none; color: inherit; }
   to   { opacity: 0.05; transform: none; }
 }
 
-/* Pulse — glass breathe */
+/* Pulse - glass breathe */
 @keyframes glass-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.35; transform: scale(0.78); }
@@ -148,7 +148,7 @@ a { text-decoration: none; color: inherit; }
   50% { transform: translateY(5px); }
 }
 
-/* Scroll progress bar — the film-reel position marker */
+/* Scroll progress bar - the film-reel position marker */
 #scroll-bar {
   position: fixed;
   top: 0;
@@ -196,7 +196,7 @@ a { text-decoration: none; color: inherit; }
 
 /* ── View Transitions ─────────────────────────────────────────── */
 @supports (view-transition-name: none) {
-  /* Suppress root crossfade — React ViewTransition handles page transitions */
+  /* Suppress root crossfade - React ViewTransition handles page transitions */
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none;
@@ -220,7 +220,7 @@ a { text-decoration: none; color: inherit; }
     animation: vt-fade-in 300ms cubic-bezier(0.16, 1, 0.3, 1) 60ms both;
   }
 
-  /* Directional film-strip: forward (going deeper) — letterbox bars close in,
+  /* Directional film-strip: forward (going deeper) - letterbox bars close in,
      the frame slides, then the bars release */
   ::view-transition-old(.nav-forward) {
     --vt-slide: -60px;

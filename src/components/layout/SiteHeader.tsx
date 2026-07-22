@@ -20,7 +20,7 @@ const NAV_LABELS: Record<string, string> = {
   contact: 'Contact',
 };
 
-/** Registry-driven sticky header — links, order, and active colors come from sections.ts. */
+/** Registry-driven sticky header - links, order, and active colors come from sections.ts. */
 export function SiteHeader() {
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState('');
@@ -169,7 +169,7 @@ export function SiteHeader() {
             gap: 16,
           }}
         >
-          {/* LEFT — Logo */}
+          {/* LEFT - Logo */}
           <a href="#hero" style={{ display: 'flex', alignItems: 'center', gap: 9, textDecoration: 'none', justifySelf: 'start' }}>
             <span
               style={{
@@ -187,7 +187,7 @@ export function SiteHeader() {
             </span>
           </a>
 
-          {/* CENTER — Desktop nav */}
+          {/* CENTER - Desktop nav */}
           <div
             className="hidden md:flex"
             style={{
@@ -206,7 +206,7 @@ export function SiteHeader() {
             ))}
           </div>
 
-          {/* RIGHT — Docs CTA + mobile toggle */}
+          {/* RIGHT - Docs CTA + mobile toggle */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifySelf: 'end' }}>
             <a href="/docs" className="resume-btn hidden md:inline-flex">
               Docs

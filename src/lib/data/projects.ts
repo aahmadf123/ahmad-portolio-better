@@ -1,4 +1,4 @@
-// Projects ("Bodies of Work") — extracted verbatim from the original Projects section.
+// Projects ("Bodies of Work") - extracted verbatim from the original Projects section.
 // The JSX detail bodies became structured sections; every heading, paragraph, tag list,
 // and link is preserved 1:1.
 
@@ -35,7 +35,7 @@ export const projectStatusLabel: Record<ProjectStatus, string> = {
 
 export interface Project {
   idx: string;
-  /** Case-study route slug — every project has one. */
+  /** Case-study route slug - every project has one. */
   slug?: string;
   domain: string;
   color: string;
@@ -73,7 +73,7 @@ export const projects: Project[] = [
     detail: [
       {
         label: 'Overview',
-        body: 'AeroSynapse is an edge-first UAV autonomy research framework for navigation in GPS-denied, map-free, and communication-denied environments. The system converts the local environment into a dynamic graph — obstacles, waypoints, targets, and free-space regions become nodes; spatial and risk relationships become edges. A graph-based RL policy reasons over this structure without pre-mapping or cloud inference. Across 1,000+ randomized simulation environments, the framework achieves 73% zero-shot navigation success on unseen layouts, reaching 89% after 5 episodes. The control loop runs under 20ms on a Jetson Orin NX; voice-to-action commands resolve in under 500ms.',
+        body: 'AeroSynapse is an edge-first UAV autonomy research framework for navigation in GPS-denied, map-free, and communication-denied environments. The system converts the local environment into a dynamic graph - obstacles, waypoints, targets, and free-space regions become nodes; spatial and risk relationships become edges. A graph-based RL policy reasons over this structure without pre-mapping or cloud inference. Across 1,000+ randomized simulation environments, the framework achieves 73% zero-shot navigation success on unseen layouts, reaching 89% after 5 episodes. The control loop runs under 20ms on a Jetson Orin NX; voice-to-action commands resolve in under 500ms.',
       },
       {
         label: 'Architecture',
@@ -85,7 +85,7 @@ export const projects: Project[] = [
       },
       {
         label: 'Key Insight',
-        body: 'Navigation is a relational problem. A flat perception model sees objects — a graph sees relationships between obstacles, goals, risk, and motion constraints. That structural representation is what makes zero-shot generalization tractable. The safety layer exists not because the policy is weak, but because a UAV autonomy system must fail safely, recover predictably, and keep humans at the right level of control.',
+        body: 'Navigation is a relational problem. A flat perception model sees objects - a graph sees relationships between obstacles, goals, risk, and motion constraints. That structural representation is what makes zero-shot generalization tractable. The safety layer exists not because the policy is weak, but because a UAV autonomy system must fail safely, recover predictably, and keep humans at the right level of control.',
       },
     ],
     links: [
@@ -94,7 +94,7 @@ export const projects: Project[] = [
     ],
     category: 'autonomy',
     status: 'research',
-    story: 'A drone that reasons over relationships, not pixels — and generalizes to worlds it has never seen.',
+    story: 'A drone that reasons over relationships, not pixels - and generalizes to worlds it has never seen.',
   },
   {
     idx: '02',
@@ -111,7 +111,7 @@ export const projects: Project[] = [
     detail: [
       {
         label: 'Overview',
-        body: 'DeepFlyer is a 3D educational drone RL platform inspired by AWS DeepRacer. Instead of racing a 2D car around a track, students train a drone in simulation to fly through hoops, avoid obstacles, and improve through reward-function design. The goal: make reinforcement learning visible — if the reward is poorly shaped, the drone behaves poorly. PPO training converges to 80% hoop-navigation success over 1M steps. Gazebo cold-starts in under 1 second, the reward API responds in under 10ms, and URDF mesh optimization reduced scene complexity by 40% without impacting physics fidelity.',
+        body: 'DeepFlyer is a 3D educational drone RL platform inspired by AWS DeepRacer. Instead of racing a 2D car around a track, students train a drone in simulation to fly through hoops, avoid obstacles, and improve through reward-function design. The goal: make reinforcement learning visible - if the reward is poorly shaped, the drone behaves poorly. PPO training converges to 80% hoop-navigation success over 1M steps. Gazebo cold-starts in under 1 second, the reward API responds in under 10ms, and URDF mesh optimization reduced scene complexity by 40% without impacting physics fidelity.',
       },
       {
         label: 'Platform Stack',
@@ -123,13 +123,13 @@ export const projects: Project[] = [
       },
       {
         label: 'Key Insight',
-        body: 'Reward functions are not just math — they encode behavior. A student who increases the collision penalty and watches the drone become more conservative has understood something that no lecture can teach as directly. That physical intuition is what DeepFlyer is built to create.',
+        body: 'Reward functions are not just math - they encode behavior. A student who increases the collision penalty and watches the drone become more conservative has understood something that no lecture can teach as directly. That physical intuition is what DeepFlyer is built to create.',
       },
     ],
     links: [{ label: 'View Full Case Study', href: '/case-study/deepflyer-drone-reinforcement-learning', kind: 'case-study' }],
     category: 'autonomy',
     status: 'shipped',
-    story: 'Reinforcement learning you can watch — students shape a reward and the drone shows them what they taught it.',
+    story: 'Reinforcement learning you can watch - students shape a reward and the drone shows them what they taught it.',
   },
   {
     idx: '03',
@@ -146,15 +146,15 @@ export const projects: Project[] = [
     detail: [
       {
         label: 'Overview',
-        body: 'A production-grade MLOps automation pipeline built with Grange Insurance to modernize homeowner risk and pure premium predictions. The project reframed risk modeling as a continuously operating system — automating the full ML lifecycle from raw data ingestion through drift detection, model training, experiment tracking, and human-approved deployment. The XGBoost pipeline achieved R² = 0.982, outperforming the incumbent GLM baseline by 26% on holdout data (RMSE 7,216), while reducing manual actuarial review by 75%.',
+        body: 'A production-grade MLOps automation pipeline built with Grange Insurance to modernize homeowner risk and pure premium predictions. The project reframed risk modeling as a continuously operating system - automating the full ML lifecycle from raw data ingestion through drift detection, model training, experiment tracking, and human-approved deployment. The XGBoost pipeline achieved R² = 0.982, outperforming the incumbent GLM baseline by 26% on holdout data (RMSE 7,216), while reducing manual actuarial review by 75%.',
       },
       {
         label: 'Problem',
-        body: 'Traditional actuarial workflows depend on manual data pulls, notebook-based preprocessing, and repeated model rebuilds. Risk patterns shift faster than manual processes can adapt — claim volatility, inflation, weather events, and regional property trends all create windows where stale models drive pricing decisions.',
+        body: 'Traditional actuarial workflows depend on manual data pulls, notebook-based preprocessing, and repeated model rebuilds. Risk patterns shift faster than manual processes can adapt - claim volatility, inflation, weather events, and regional property trends all create windows where stale models drive pricing decisions.',
       },
       {
         label: 'Architecture',
-        body: 'Airflow orchestrates ingestion and scheduling. Pandera validates schemas. XGBoost with Hyperopt/Bayesian optimization handles prediction across 100+ engineered features. MLflow tracks every experiment, artifact, and model version. Prometheus monitors system health. Drift detection triggers self-healing retraining workflows. Slack delivers alerts and approval requests. Human-in-the-loop gates require analyst sign-off before retraining or model promotion — automation with accountability, not without it.',
+        body: 'Airflow orchestrates ingestion and scheduling. Pandera validates schemas. XGBoost with Hyperopt/Bayesian optimization handles prediction across 100+ engineered features. MLflow tracks every experiment, artifact, and model version. Prometheus monitors system health. Drift detection triggers self-healing retraining workflows. Slack delivers alerts and approval requests. Human-in-the-loop gates require analyst sign-off before retraining or model promotion - automation with accountability, not without it.',
       },
       {
         label: 'My Role',
@@ -162,7 +162,7 @@ export const projects: Project[] = [
       },
       {
         label: 'Key Insight',
-        body: "The 75% reduction in manual review didn't happen because humans were removed from the workflow. It happened because the system moved humans to the right point in the loop — intervening only where judgment actually matters: drift remediation, suspicious model behavior, hyperparameter override, rollback, or production promotion.",
+        body: "The 75% reduction in manual review didn't happen because humans were removed from the workflow. It happened because the system moved humans to the right point in the loop - intervening only where judgment actually matters: drift remediation, suspicious model behavior, hyperparameter override, rollback, or production promotion.",
       },
     ],
     links: [
@@ -172,7 +172,7 @@ export const projects: Project[] = [
     ],
     category: 'ml-mlops',
     status: 'shipped',
-    story: 'An insurance risk model rebuilt as a living system — one that notices when the world drifts away from it.',
+    story: 'An insurance risk model rebuilt as a living system - one that notices when the world drifts away from it.',
   },
   {
     idx: '04',
@@ -189,7 +189,7 @@ export const projects: Project[] = [
     detail: [
       {
         label: 'Overview',
-        body: 'Industry case study with Park Place Technologies (AIIS Summer 2023). Designed a centralized PostgreSQL security database consolidating fragmented feeds from 3 sources — Active Directory, Cisco AMP, and Microsoft Defender — enforcing validation rules, building disaster-recovery procedures, and enabling faster analyst queries. Result: 15% faster incident response, 95% improvement in data integrity, and zero data loss across all disaster-recovery tests.',
+        body: 'Industry case study with Park Place Technologies (AIIS Summer 2023). Designed a centralized PostgreSQL security database consolidating fragmented feeds from 3 sources - Active Directory, Cisco AMP, and Microsoft Defender - enforcing validation rules, building disaster-recovery procedures, and enabling faster analyst queries. Result: 15% faster incident response, 95% improvement in data integrity, and zero data loss across all disaster-recovery tests.',
       },
       {
         label: 'My Role',
@@ -197,7 +197,7 @@ export const projects: Project[] = [
       },
       {
         label: 'Key Insight',
-        body: "Most data-quality problems in security ops aren't adversarial — they're inconsistent tooling assumptions meeting at a shared data boundary. A validated schema is a security control.",
+        body: "Most data-quality problems in security ops aren't adversarial - they're inconsistent tooling assumptions meeting at a shared data boundary. A validated schema is a security control.",
       },
     ],
     links: [{ label: 'View Full Case Study', href: '/case-study/security-discovery-tool', kind: 'case-study' }],
@@ -220,11 +220,11 @@ export const projects: Project[] = [
     detail: [
       {
         label: 'What Was Built',
-        body: 'Built in 24 hours at RocketHacks 2025, winning Best Use of MongoDB Atlas. A web app and Chrome extension that analyze article titles using dual-model AI across 9,500+ training data points — Gemini handles high-level reasoning and explanation, DistilBERT adds NLP classification, and a 70/30 weighted fusion produces a credibility score, veracity assessment, reasoning, and independent source links. Claims stored in MongoDB.',
+        body: 'Built in 24 hours at RocketHacks 2025, winning Best Use of MongoDB Atlas. A web app and Chrome extension that analyze article titles using dual-model AI across 9,500+ training data points - Gemini handles high-level reasoning and explanation, DistilBERT adds NLP classification, and a 70/30 weighted fusion produces a credibility score, veracity assessment, reasoning, and independent source links. Claims stored in MongoDB.',
       },
       {
         label: 'Key Insight',
-        body: 'Credibility systems need explanations, not only scores — and multi-model architectures are more honest than trusting a single signal. The goal was never to decide truth; it was to help users ask better questions faster.',
+        body: 'Credibility systems need explanations, not only scores - and multi-model architectures are more honest than trusting a single signal. The goal was never to decide truth; it was to help users ask better questions faster.',
       },
     ],
     links: [
@@ -234,7 +234,7 @@ export const projects: Project[] = [
     ],
     category: 'ml-mlops',
     status: 'shipped',
-    story: 'A 24-hour build that refuses to declare truth — it hands you the evidence and better questions instead.',
+    story: 'A 24-hour build that refuses to declare truth - it hands you the evidence and better questions instead.',
   },
   {
     idx: '06',
@@ -251,7 +251,7 @@ export const projects: Project[] = [
     detail: [
       {
         label: 'What Was Built',
-        body: "University of Toledo's entry placed 24th overall at AIChE 2025 in Boston — earning Most Innovative Car Design and 3rd in Poster & Presentation nationally. CO₂ generation provides propulsion; H₂O₂ decomposition provides stopping. As Control Team Lead, I built the Arduino-based pressure-sensing and shutoff system: monitor the stopping reaction, detect the ~5 psi setpoint, trigger the solenoid to cut gas flow to the motor. Calibrated via KI volume vs. time-to-pressure experiments for the target competition distance.",
+        body: "University of Toledo's entry placed 24th overall at AIChE 2025 in Boston - earning Most Innovative Car Design and 3rd in Poster & Presentation nationally. CO₂ generation provides propulsion; H₂O₂ decomposition provides stopping. As Control Team Lead, I built the Arduino-based pressure-sensing and shutoff system: monitor the stopping reaction, detect the ~5 psi setpoint, trigger the solenoid to cut gas flow to the motor. Calibrated via KI volume vs. time-to-pressure experiments for the target competition distance.",
       },
       {
         label: 'Key Insight',
@@ -261,7 +261,7 @@ export const projects: Project[] = [
     links: [{ label: 'View Full Case Study', href: '/case-study/camel-car-cheme-car-control-system', kind: 'case-study' }],
     category: 'embedded',
     status: 'shipped',
-    story: 'A car driven by chemistry and stopped by a threshold controller — innovative enough to win worldwide.',
+    story: 'A car driven by chemistry and stopped by a threshold controller - innovative enough to win worldwide.',
   },
   {
     idx: '07',
@@ -282,7 +282,7 @@ export const projects: Project[] = [
       },
       {
         label: 'Key Insight',
-        body: 'The hard part was not making a form. The hard part was making location-aware public reporting reliable enough for real city use — GPS noise, indoor submissions, spoofing attempts, and all.',
+        body: 'The hard part was not making a form. The hard part was making location-aware public reporting reliable enough for real city use - GPS noise, indoor submissions, spoofing attempts, and all.',
       },
     ],
     links: [
@@ -309,7 +309,7 @@ export const projects: Project[] = [
     detail: [
       {
         label: 'Overview',
-        body: 'The Champions Complex Digital Campaign is a strategic webpage and digital fundraising blueprint for University of Toledo Athletics. The project supports the Champions Complex initiative — a 74,000-square-foot renovation of the Health Education Building that centralizes resources for 450+ student-athletes, bringing academics, nutrition, wellness, training, and team spaces under one roof while returning baseball and softball to main campus. The campaign deploys 10 architectural renderings across a six-stage donor psychology sequence built on the Sidearm Narrator platform.',
+        body: 'The Champions Complex Digital Campaign is a strategic webpage and digital fundraising blueprint for University of Toledo Athletics. The project supports the Champions Complex initiative - a 74,000-square-foot renovation of the Health Education Building that centralizes resources for 450+ student-athletes, bringing academics, nutrition, wellness, training, and team spaces under one roof while returning baseball and softball to main campus. The campaign deploys 10 architectural renderings across a six-stage donor psychology sequence built on the Sidearm Narrator platform.',
       },
       {
         label: 'My Role',
@@ -317,11 +317,11 @@ export const projects: Project[] = [
       },
       {
         label: 'Digital Strategy',
-        body: 'The page follows a deliberate six-stage donor psychology sequence: Awe → Understanding → Trust → Exploration → Legacy → Action. Each architectural rendering is assigned to a specific narrative section rather than a generic gallery — exterior dusk rendering opens the hero, Academic Center renders anchor the excellence section, Champions Corridor ties donor recognition to legacy. Sidearm Narrator enables the immersive single-page experience using parallax, sliders, and scroll-triggered animation within the existing athletics web ecosystem.',
+        body: 'The page follows a deliberate six-stage donor psychology sequence: Awe → Understanding → Trust → Exploration → Legacy → Action. Each architectural rendering is assigned to a specific narrative section rather than a generic gallery - exterior dusk rendering opens the hero, Academic Center renders anchor the excellence section, Champions Corridor ties donor recognition to legacy. Sidearm Narrator enables the immersive single-page experience using parallax, sliders, and scroll-triggered animation within the existing athletics web ecosystem.',
       },
       {
         label: 'Key Insight',
-        body: 'Capital campaign websites are conversion systems, not information pages. Donor trust is built through clarity, momentum, and proof — not renderings alone. The donation flow must be designed as carefully as the visual experience: a donor who is emotionally convinced should not have to search for the next step.',
+        body: 'Capital campaign websites are conversion systems, not information pages. Donor trust is built through clarity, momentum, and proof - not renderings alone. The donation flow must be designed as carefully as the visual experience: a donor who is emotionally convinced should not have to search for the next step.',
       },
     ],
     links: [{ label: 'View Full Case Study', href: '/case-study/champions-complex-digital-campaign', kind: 'case-study' }],
@@ -344,7 +344,7 @@ export const projects: Project[] = [
     detail: [
       {
         label: 'Overview',
-        body: 'A serverless internal onboarding platform built for University of Toledo Athletics staff, spanning 5 core services and a 14-table relational schema. The portal centralizes 10+ onboarding content areas — articles, staff hierarchy, key contacts, HR timelines, compliance resources, systems directories, policy links, quick links, and moderated employee tips — replacing scattered documents and tribal knowledge with a single searchable source of truth, deployed at the edge via Cloudflare Workers.',
+        body: 'A serverless internal onboarding platform built for University of Toledo Athletics staff, spanning 5 core services and a 14-table relational schema. The portal centralizes 10+ onboarding content areas - articles, staff hierarchy, key contacts, HR timelines, compliance resources, systems directories, policy links, quick links, and moderated employee tips - replacing scattered documents and tribal knowledge with a single searchable source of truth, deployed at the edge via Cloudflare Workers.',
       },
       {
         label: 'Problem',
@@ -383,7 +383,7 @@ export const projects: Project[] = [
     detail: [
       {
         label: 'Overview',
-        body: 'An active computer vision platform for Toledo Football — a 10-stage pipeline from video ingest to coach dashboard, targeting 90%+ field-marking accuracy across a 18+ table database schema. In Phase 0, the system works through 50–100 annotated evaluation clips to validate each pipeline stage before advancing. Every output connects to the exact clip, overlay, confidence score, and correction path. If a coach cannot verify it, correct it, and teach from it — it is not a production metric.',
+        body: 'An active computer vision platform for Toledo Football - a 10-stage pipeline from video ingest to coach dashboard, targeting 90%+ field-marking accuracy across a 18+ table database schema. In Phase 0, the system works through 50–100 annotated evaluation clips to validate each pipeline stage before advancing. Every output connects to the exact clip, overlay, confidence score, and correction path. If a coach cannot verify it, correct it, and teach from it - it is not a production metric.',
       },
       {
         label: 'Problem',
@@ -399,7 +399,7 @@ export const projects: Project[] = [
       },
       {
         label: 'Key Insight',
-        body: 'Correction workflows must be built before advanced models. The coach-correction flywheel — where every corrected label becomes Toledo-specific training data — is the competitive moat. Private, corrected, domain-specific data beats any off-the-shelf model at Toledo football terminology.',
+        body: 'Correction workflows must be built before advanced models. The coach-correction flywheel - where every corrected label becomes Toledo-specific training data - is the competitive moat. Private, corrected, domain-specific data beats any off-the-shelf model at Toledo football terminology.',
       },
     ],
     links: [{ label: 'View Full Case Study', href: '/case-study/toledo-football-iq-computer-vision-analytics', kind: 'case-study' }],
@@ -411,11 +411,11 @@ export const projects: Project[] = [
       { value: '18+', label: 'Structured metrics' },
       { value: '90%+', label: 'Field-marking accuracy' },
     ],
-    story: 'Practice film becomes evidence a coach can verify, correct, and teach from — trust is the product.',
+    story: 'Practice film becomes evidence a coach can verify, correct, and teach from - trust is the product.',
   },
 ];
 
 export const flagshipProject = projects.find((p) => p.flagship)!;
 
-/** Case-study route slugs — feeds sitemap.ts so it can never drift again. */
+/** Case-study route slugs - feeds sitemap.ts so it can never drift again. */
 export const caseStudySlugs = projects.flatMap((p) => (p.slug ? [p.slug] : []));

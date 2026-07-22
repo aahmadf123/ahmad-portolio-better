@@ -6,15 +6,15 @@ import { certPursuits } from '@/lib/data/certs';
 import { nowCards } from '@/lib/data/now';
 
 /**
- * "Currently learning" strip — continuous CSS marquee of active pursuits and
+ * "Currently learning" strip - continuous CSS marquee of active pursuits and
  * learning tracks; shimmering gold to signal in-progress work. Pauses on hover;
  * the global reduced-motion kill-switch freezes it into a plain row.
  */
 export function LearningMarquee() {
   const learning = nowCards.find((c) => c.category === 'Learning')?.items ?? [];
   const items = [
-    ...certPursuits.map((p) => `${p.title} — ${p.sub}`),
-    ...learning.map((l) => `${l.title} — ${l.sub}`),
+    ...certPursuits.map((p) => `${p.title} - ${p.sub}`),
+    ...learning.map((l) => `${l.title} - ${l.sub}`),
   ];
   const row = items.map((t) => `⟢ ${t}`).join('   ·   ');
 

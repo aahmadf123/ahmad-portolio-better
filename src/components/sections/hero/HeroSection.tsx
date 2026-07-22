@@ -37,7 +37,7 @@ export function HeroSection() {
 
       <div style={{ flex: 1, display: 'flex', flexWrap: 'wrap', position: 'relative', zIndex: 1 }}>
 
-        {/* LEFT — 58% */}
+        {/* LEFT - 58% */}
         <div className="hero-left" style={{
           flex: '1 1 58%',
           display: 'flex',
@@ -79,7 +79,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* RIGHT — 42% */}
+        {/* RIGHT - 42% */}
         <div className="hero-right" style={{
           flex: '0 0 42%',
           borderLeft: '1px solid rgba(45,212,191,0.08)',

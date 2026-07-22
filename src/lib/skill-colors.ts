@@ -14,7 +14,7 @@ export const SKILL_COLOR_PALETTE = {
  * Single authority for the 7 skill-group hues. The constellation nodes, the
  * legend chips, the radial cards and the fallback list all resolve their color
  * from here (via `skillGroups[i].color`), so the graph and every chip agree.
- * Seven separated hues — no two are confusable at a glance.
+ * Seven separated hues - no two are confusable at a glance.
  */
 export const SKILL_GROUP_COLORS: Record<string, string> = {
   'languages':  '#F0B429', // amber
@@ -26,7 +26,7 @@ export const SKILL_GROUP_COLORS: Record<string, string> = {
   'microsoft':  '#F472B6', // pink
 };
 
-// Plain object — keys are lowercase, values are hex colors
+// Plain object - keys are lowercase, values are hex colors
 const SKILL_COLORS: Record<string, string> = {
   // ── Languages ──────────────────────────────────────────
   'python':        '#F0B429',

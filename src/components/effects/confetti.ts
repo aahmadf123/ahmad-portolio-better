@@ -1,4 +1,4 @@
-// Hand-rolled canvas confetti — one burst, self-cleaning, no dependency.
+// Hand-rolled canvas confetti - one burst, self-cleaning, no dependency.
 
 export function fireConfetti(opts?: { count?: number; duration?: number }) {
   const count = opts?.count ?? 130;

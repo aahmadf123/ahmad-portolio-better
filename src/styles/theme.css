@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   Design tokens — single authoritative sheet for the cinematic redesign.
+   Design tokens - single authoritative sheet for the cinematic redesign.
    Dark-only by decision. Legacy variable names (--amber, --teal, --font-chakra …)
    are remapped here so every untouched page re-skins without edits.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -11,7 +11,7 @@
   --surface-2: #1a1d25;
 
   /* Identity accents */
-  --primary: #2dd4bf;            /* teal-cyan — the site's voice */
+  --primary: #2dd4bf;            /* teal-cyan - the site's voice */
   --gold: #f59e0b;               /* milestones & achievements only */
 
   /* Supporting accent range (data-driven chips, per-section identities) */
@@ -53,7 +53,7 @@
 
   /* Type system.
      --font-display / --font-body / --font-code / --font-hand are set by
-     next/font on <html>. Body is Figtree today — swap to Satoshi by replacing
+     next/font on <html>. Body is Figtree today - swap to Satoshi by replacing
      the loader in src/app/layout.tsx (see README "Fonts"). */
 
   /* Motion */
@@ -92,7 +92,7 @@
   --transition-medium: 0.3s ease;
   --transition-slow: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Legacy font shim — every inline "var(--font-chakra), 'Chakra Petch', …"
+  /* Legacy font shim - every inline "var(--font-chakra), 'Chakra Petch', …"
      stack now resolves to the body font. Chakra Petch is no longer loaded. */
   --font-chakra: var(--font-body);
 }

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -178,7 +178,7 @@ export default function UAVCaseStudy() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }} className="two-col-uav">
             <div>
               <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', marginBottom: 16 }}>
-                AeroSynapse investigates a hard autonomy problem: how can a UAV operate in a new environment without GPS, pre-mapping, or cloud inference? The project treats UAV autonomy as a layered system rather than a single model — perception, graph construction, control, learning, safety, and human supervision are separated into coordinated modules.
+                AeroSynapse investigates a hard autonomy problem: how can a UAV operate in a new environment without GPS, pre-mapping, or cloud inference? The project treats UAV autonomy as a layered system rather than a single model - perception, graph construction, control, learning, safety, and human supervision are separated into coordinated modules.
               </p>
               <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', marginBottom: 16 }}>
                 The core idea is to represent the UAV&apos;s local environment as a dynamic graph. Obstacles, targets, waypoints, free-space regions, and semantic objects become nodes; spatial and risk relationships become edges. A graph-based RL policy then reasons over this structure to make navigation decisions.
@@ -189,7 +189,7 @@ export default function UAVCaseStudy() {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
-                { l: 'Project', v: 'AeroSynapse — Graph-Based RL for UAV Autonomy' },
+                { l: 'Project', v: 'AeroSynapse - Graph-Based RL for UAV Autonomy' },
                 { l: 'Program', v: 'USRCAP Summer 2025 · $3,000 Fellowship' },
                 { l: 'Institution', v: 'LION Lab, University of Toledo' },
                 { l: 'Mentor', v: 'Dr. Liang Cheng' },
@@ -222,12 +222,12 @@ export default function UAVCaseStudy() {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 32 }} className="three-col-uav">
             {[
-              { t: 'GPS / GNSS Dependency', d: 'Conventional systems lose localization immediately when GPS is unavailable — a common condition indoors, underground, or in contested environments.' },
+              { t: 'GPS / GNSS Dependency', d: 'Conventional systems lose localization immediately when GPS is unavailable - a common condition indoors, underground, or in contested environments.' },
               { t: 'Pre-Built Map Requirement', d: 'SLAM-based systems require pre-mapping runs. In emergency scenarios or degraded environments, no prior map is available.' },
               { t: 'Cloud Inference Latency', d: 'Cloud-dependent AI adds hundreds of milliseconds of latency and becomes unavailable when communication is denied.' },
               { t: 'Environment-Specific Training', d: 'Models trained on one environment fail to generalize. Re-training for each new deployment is impractical at operational scale.' },
               { t: 'Sim-to-Reality Gap', d: 'Deep RL policies can achieve near-perfect simulation scores while failing entirely when facing real-world sensor noise and dynamics.' },
-              { t: 'No Safe Failure Mode', d: 'When constraints are violated, most autonomy stacks have no principled fallback — leading to unpredictable or catastrophic failure.' },
+              { t: 'No Safe Failure Mode', d: 'When constraints are violated, most autonomy stacks have no principled fallback - leading to unpredictable or catastrophic failure.' },
             ].map(({ t, d }) => (
               <div key={t} style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.07)', borderLeft: `2px solid ${ACCENT}50`, borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 11, color: '#F2EDD8', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
@@ -247,7 +247,7 @@ export default function UAVCaseStudy() {
         <Section id="architecture">
           <SectionLabel>Architecture</SectionLabel>
           <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(22px,3vw,32px)', fontWeight: 400, color: '#F2EDD8', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
-            A layered autonomy stack — each module coordinates, none is monolithic.
+            A layered autonomy stack - each module coordinates, none is monolithic.
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', maxWidth: 720, marginBottom: 28 }}>
             Rather than one large model, AeroSynapse decomposes autonomy into coordinated layers: sensing, state estimation, graph representation, decision-making, adaptation, safety, and human interaction.
@@ -349,7 +349,7 @@ export default function UAVCaseStudy() {
           <div style={{ padding: '28px 32px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}20`, borderRadius: 12, marginBottom: 28 }}>
             <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Why Graph-Based RL</div>
             <p style={{ fontSize: 16, lineHeight: 1.8, color: '#F2EDD8' }}>
-              Navigation is a relational problem. A flat perception model sees objects — a graph sees relationships between obstacles, goals, risk, and motion constraints. UAV navigation is naturally relational: which gap is safest? which path preserves battery? which region should be avoided? Graphs make these relationships explicit. By using graph-based RL, AeroSynapse gives the UAV a stronger representation for decisions in cluttered and unfamiliar environments.
+              Navigation is a relational problem. A flat perception model sees objects - a graph sees relationships between obstacles, goals, risk, and motion constraints. UAV navigation is naturally relational: which gap is safest? which path preserves battery? which region should be avoided? Graphs make these relationships explicit. By using graph-based RL, AeroSynapse gives the UAV a stronger representation for decisions in cluttered and unfamiliar environments.
             </p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }} className="two-col-uav">
@@ -357,7 +357,7 @@ export default function UAVCaseStudy() {
               { t: 'Generalization over Peak Performance', d: 'A policy that scores 99% in one simulation environment but fails immediately in any other is not useful for real deployment. Meta-learning shifts the objective from memorization to adaptation.' },
               { t: 'Edge Deployment Changes Every Design Decision', d: 'Inference time, model size, power consumption, and memory constraints are hard limits on a UAV. Every AI component must be designed with those constraints from the beginning.' },
               { t: 'Safety Must Be Designed Around the Policy', d: 'A safety layer added after training is already too late. Runtime assurance, control barriers, and fallback controllers must be designed as first-class components of the autonomy stack.' },
-              { t: 'Graph Representations Enable Relational Reasoning', d: 'The most valuable thing about the graph representation isn\'t performance — it\'s interpretability. An operator can understand a graph of obstacles and goals in a way they cannot understand an opaque neural network state.' },
+              { t: 'Graph Representations Enable Relational Reasoning', d: 'The most valuable thing about the graph representation isn\'t performance - it\'s interpretability. An operator can understand a graph of obstacles and goals in a way they cannot understand an opaque neural network state.' },
               { t: 'Human Oversight Is a Control Layer, Not a Weakness', d: 'Full autonomy is not always the right answer. The human-in-the-loop modes exist because some decisions require human judgment, and a system that removes that option is more dangerous, not more capable.' },
               { t: 'Credible Research Requires Measurable Claims', d: 'The most important discipline in this project was separating what the architecture is designed to achieve from what has actually been validated. Strong framing with honest limitations is what makes research credible.' },
             ].map(({ t, d }) => (
@@ -373,7 +373,7 @@ export default function UAVCaseStudy() {
         <Section id="human-loop">
           <SectionLabel>Human-in-the-Loop Design</SectionLabel>
           <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(22px,3vw,32px)', fontWeight: 400, color: '#F2EDD8', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
-            The goal is not to remove the human — it&apos;s to put the human at the right level of control.
+            The goal is not to remove the human - it&apos;s to put the human at the right level of control.
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', maxWidth: 720, marginBottom: 28 }}>
             AeroSynapse uses a tiered human-in-the-loop model. Each mode reflects a different operating condition and trust level in the autonomous system.
@@ -405,19 +405,19 @@ export default function UAVCaseStudy() {
         <Section id="lessons">
           <SectionLabel>Lessons</SectionLabel>
           <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', maxWidth: 720, marginBottom: 28 }}>
-            The most useful discipline on this project was separating what the architecture is designed to do from what has actually been validated. The graph representation, PINN-based estimation, and safety layer are coherent as a system — but a research framework earns trust by being honest about its own edges.
+            The most useful discipline on this project was separating what the architecture is designed to do from what has actually been validated. The graph representation, PINN-based estimation, and safety layer are coherent as a system - but a research framework earns trust by being honest about its own edges.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }} className="two-col-uav">
             <div style={{ padding: '20px 22px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}22`, borderRadius: 8 }}>
               <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What broke</div>
               <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4' }}>
-                The distance between designed and validated is real. Most numbers here come from simulation and hardware-in-the-loop, not real flight, and a 13% sim-to-reality transfer gap already shows up in the reported validation. A deep RL policy can score near-perfect in simulation and still fail once it meets real sensor noise and dynamics — which is exactly why the safety layer and the deliberately measurable claims exist.
+                The distance between designed and validated is real. Most numbers here come from simulation and hardware-in-the-loop, not real flight, and a 13% sim-to-reality transfer gap already shows up in the reported validation. A deep RL policy can score near-perfect in simulation and still fail once it meets real sensor noise and dynamics - which is exactly why the safety layer and the deliberately measurable claims exist.
               </p>
             </div>
             <div style={{ padding: '20px 22px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
               <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What I&apos;d do differently</div>
               <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4' }}>
-                Benchmark earlier. The graph-representation advantage is argued more than it is measured — a small GNN policy trained against PPO/SAC baselines on the same randomized suite would turn that claim into a number. I&apos;d also ground the metrics in real flight logs sooner, so the sim-to-reality gap becomes an empirical result instead of an estimate.
+                Benchmark earlier. The graph-representation advantage is argued more than it is measured - a small GNN policy trained against PPO/SAC baselines on the same randomized suite would turn that claim into a number. I&apos;d also ground the metrics in real flight logs sooner, so the sim-to-reality gap becomes an empirical result instead of an estimate.
               </p>
             </div>
           </div>
@@ -453,7 +453,7 @@ export default function UAVCaseStudy() {
               Edge AI for the environments that matter most.
             </h3>
             <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4', maxWidth: 540, margin: '0 auto 24px' }}>
-              Graph learning, meta-learning, safety assurance, and human-AI teaming — composed into a practical autonomy stack for GPS-denied, map-free UAV navigation.
+              Graph learning, meta-learning, safety assurance, and human-AI teaming - composed into a practical autonomy stack for GPS-denied, map-free UAV navigation.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
               <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>

@@ -40,7 +40,7 @@ export function SkillsSection() {
   return (
     <Section id="skills">
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 14, flexWrap: 'wrap' }}>
-        <SH n={def.n} label="Capabilities" sub="The stack as a constellation — clusters that orbit each other, stars sized by how often they carry real work." color={def.color} />
+        <SH n={def.n} label="Capabilities" sub="The stack as a constellation: clusters that orbit each other, with stars sized by how often they carry real work." color={def.color} />
         {mode === 'constellation' && (
           <button
             onClick={() => setListOpen((v) => !v)}

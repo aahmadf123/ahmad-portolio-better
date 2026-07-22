@@ -182,7 +182,7 @@ export function MaturityLadder() {
         Agentic Maturity Progression
       </div>
 
-      {/* Staircase layout — each stage is offset to the right */}
+      {/* Staircase layout - each stage is offset to the right */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, position: 'relative' }}>
         {/* Vertical axis label */}
         <div style={{

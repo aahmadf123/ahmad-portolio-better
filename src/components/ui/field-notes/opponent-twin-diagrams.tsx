@@ -46,31 +46,31 @@ const ANATOMY = [
     n: '01', title: 'The play-calling policy',
     color: GREEN,
     summary: 'A probability distribution over what they run, conditioned on situation.',
-    detail: 'The spine of any opponent twin: given down, distance, field position, score, and personnel, what does this coordinator call — and how often? Built from charted play-by-play, it is the one layer you can construct from public data today. It is also just a conditional distribution, which means everything downstream inherits its sample-size problems.',
+    detail: 'The spine of any opponent twin: given down, distance, field position, score, and personnel, what does this coordinator call - and how often? Built from charted play-by-play, it is the one layer you can construct from public data today. It is also just a conditional distribution, which means everything downstream inherits its sample-size problems.',
   },
   {
     n: '02', title: 'Personnel & formation grammar',
     color: BLUE,
     summary: 'Who is on the field constrains what can happen next.',
-    detail: 'Coordinators do not choose plays from the full playbook on every snap — they choose from what the personnel package allows. Modeling the grammar (which formations flow from which personnel, which plays flow from which formations) shrinks the prediction space dramatically. This is where film charting beats box scores: the same "11 personnel" label hides very different bodies.',
+    detail: 'Coordinators do not choose plays from the full playbook on every snap - they choose from what the personnel package allows. Modeling the grammar (which formations flow from which personnel, which plays flow from which formations) shrinks the prediction space dramatically. This is where film charting beats box scores: the same "11 personnel" label hides very different bodies.',
   },
   {
     n: '03', title: 'Matchup priors',
     color: GOLD,
     summary: 'Player-vs-player ratings that decide whether the called play works.',
-    detail: 'Predicting the call is only half a simulation. The other half is resolving it: their left tackle against your edge rusher, their slot receiver against your nickel. In the pros this layer runs on tracking data. In college it runs on graded film, recruiting composites, and honest priors — which is to say, it is wide-interval and should be treated that way.',
+    detail: 'Predicting the call is only half a simulation. The other half is resolving it: their left tackle against your edge rusher, their slot receiver against your nickel. In the pros this layer runs on tracking data. In college it runs on graded film, recruiting composites, and honest priors - which is to say, it is wide-interval and should be treated that way.',
   },
   {
     n: '04', title: 'Situational overrides',
     color: PURPLE,
     summary: 'Red zone, third-and-long, two-minute: the coordinator becomes a different person.',
-    detail: 'Aggregate tendencies lie, because coordinators are not one policy — they are a bundle of situational policies with different authors. One scripts the openers. Another owns a red-zone package installed by a different assistant. The twin needs these seams modeled explicitly, and each seam has a far smaller sample than the aggregate.',
+    detail: 'Aggregate tendencies lie, because coordinators are not one policy - they are a bundle of situational policies with different authors. One scripts the openers. Another owns a red-zone package installed by a different assistant. The twin needs these seams modeled explicitly, and each seam has a far smaller sample than the aggregate.',
   },
   {
     n: '05', title: 'The adaptation model',
     color: RED,
     summary: 'The hardest layer: how they change when you hurt them.',
-    detail: 'A real opponent watches film of themselves, finds their own tells, and breaks them — especially after you exploit one. Almost every twin skips this layer, which is why twins are most accurate in the first quarter and quietly wrong by the fourth. Modeling adaptation honestly usually means widening your intervals, not sharpening your predictions.',
+    detail: 'A real opponent watches film of themselves, finds their own tells, and breaks them - especially after you exploit one. Almost every twin skips this layer, which is why twins are most accurate in the first quarter and quietly wrong by the fourth. Modeling adaptation honestly usually means widening your intervals, not sharpening your predictions.',
   },
 ];
 
@@ -137,7 +137,7 @@ export function TwinAnatomy() {
       </div>
 
       <Caption>
-        Each layer down needs richer data than the one above it — and the last one
+        Each layer down needs richer data than the one above it - and the last one
         needs data that mostly doesn&apos;t exist yet: evidence about how they respond to you.
       </Caption>
     </div>
@@ -247,14 +247,14 @@ export function FilmBudget() {
           fontFamily: SERIF, fontSize: 13, color: '#C8C4B4', lineHeight: 1.65,
         }}>
           The band is the 95% range for their <em>measured</em> run rate around a fixed true tendency
-          (gold tick). First-and-ten firms up in a month. Fourth down — the situation your game may
-          actually hinge on — stays a rumor all season.
+          (gold tick). First-and-ten firms up in a month. Fourth down - the situation your game may
+          actually hinge on - stays a rumor all season.
         </div>
       </div>
 
       <Caption>
         Binomial intervals at typical per-game snap counts for one FBS offense.
-        ✓ marks a tendency pinned within ±10 points — a bar real coordinators would call generous.
+        ✓ marks a tendency pinned within ±10 points - a bar real coordinators would call generous.
       </Caption>
     </div>
   );
@@ -263,7 +263,7 @@ export function FilmBudget() {
 // ── 3. Game-Plan Simulator ──────────────────────────────────────────────────
 // Monte Carlo: what a twin-informed game plan is worth as a function of twin
 // fidelity. Preparing precisely for the wrong opponent costs more than the
-// right preparation gains — so the value curve crosses zero above 50%.
+// right preparation gains - so the value curve crosses zero above 50%.
 
 const N_GAMES = 2000;
 const LEVERAGE_CALLS = 12;   // twin-informed decisions per game
@@ -308,7 +308,7 @@ export function GamePlanSimulator() {
   const [result, setResult] = useState<SimOut | null>(null);
   const [runKey, setRunKey] = useState(0);
 
-  // Client-only, post-mount — keeps SSR output deterministic.
+  // Client-only, post-mount - keeps SSR output deterministic.
   useEffect(() => {
     setResult(simulateSeason(fidelity / 100));
   }, [fidelity, runKey]);
@@ -316,10 +316,10 @@ export function GamePlanSimulator() {
   const maxCount = result ? Math.max(...result.bins, 1) : 1;
   const verdictColor = fidelity < BREAK_EVEN ? RED : fidelity < 75 ? ORANGE : GREEN;
   const verdict = fidelity < BREAK_EVEN
-    ? 'Below break-even. This twin is actively worse than generic preparation — you are rehearsing against a rival that doesn’t exist.'
+    ? 'Below break-even. This twin is actively worse than generic preparation - you are rehearsing against a rival that doesn’t exist.'
     : fidelity < 75
       ? 'Marginally useful. The twin earns points on net, but a bad week of charting could flip its sign.'
-      : 'Genuinely valuable — and this is roughly the fidelity ceiling honest college data supports in common situations only.';
+      : 'Genuinely valuable - and this is roughly the fidelity ceiling honest college data supports in common situations only.';
 
   return (
     <div style={{ margin: '2.5rem 0' }}>
@@ -330,7 +330,7 @@ export function GamePlanSimulator() {
         background: `${GOLD}04`, padding: '18px 18px 16px',
       }}>
         <div style={{ fontFamily: SERIF, fontSize: 13, color: '#A09C8E', lineHeight: 1.6, marginBottom: 14 }}>
-          Two even teams. Your staff makes {LEVERAGE_CALLS} twin-informed calls per game — each worth{' '}
+          Two even teams. Your staff makes {LEVERAGE_CALLS} twin-informed calls per game - each worth{' '}
           +{PTS_RIGHT} points when the twin read the opponent right, {PTS_WRONG} when it read them wrong,
           because preparing precisely for the wrong look costs more than it gains.
         </div>
@@ -461,7 +461,7 @@ export function GamePlanSimulator() {
 
 // ── 4. Adaptation Decay ─────────────────────────────────────────────────────
 // Tendencies are perishable. Once you exploit one, the opponent self-scouts
-// and breaks it — and how hard you hammer it decides how fast it dies.
+// and breaks it - and how hard you hammer it decides how fast it dies.
 
 const WEEKS = 6;
 const EDGE_0 = 2.5; // points/game the tell is worth at full exploitation, week 1
@@ -513,7 +513,7 @@ export function AdaptationDecay() {
       }}>
         <div style={{ fontFamily: SERIF, fontSize: 13, color: '#A09C8E', lineHeight: 1.6, marginBottom: 14 }}>
           Your twin finds a real tell worth {EDGE_0} points a game. But every snap you spend
-          exploiting it goes on film — and their self-scout is watching too. Choose how to spend it.
+          exploiting it goes on film - and their self-scout is watching too. Choose how to spend it.
         </div>
 
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 16 }}>
@@ -595,7 +595,7 @@ export function AdaptationDecay() {
           <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: BLUE, marginRight: 10 }}>
             The exception
           </span>
-          If only one game matters — a rivalry, a conference title — hammering the tell is correct:
+          If only one game matters - a rivalry, a conference title - hammering the tell is correct:
           you cash {series.find(s => s.key === 'hammer')!.weekly[0].toFixed(1)} points in week one and
           don&apos;t care what survives. Over a season, restraint wins. The twin can find the tell;
           only the staff can decide what it&apos;s for.
@@ -604,7 +604,7 @@ export function AdaptationDecay() {
 
       <Caption>
         Illustrative model: value cashed weekly = remaining edge × usage; the edge erodes faster the more
-        film of the exploit exists. Exact numbers are inputs, not measurements — the shape is the point.
+        film of the exploit exists. Exact numbers are inputs, not measurements - the shape is the point.
       </Caption>
     </div>
   );

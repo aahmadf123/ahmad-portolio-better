@@ -4,7 +4,7 @@ import { sections } from '@/lib/data/sections';
 import { InsightsGrid, type TokenLine } from './CodeCard';
 
 /**
- * Technical insights — server component: shiki tokenizes every snippet at
+ * Technical insights - server component: shiki tokenizes every snippet at
  * render time (zero highlighter JS in the client bundle); the client grid
  * animates the pre-tokenized lines in one by one.
  */

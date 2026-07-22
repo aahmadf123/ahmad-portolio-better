@@ -31,7 +31,7 @@ export const site: SiteConfig = {
   role: 'Agentic AI Engineer · Sports Analytics · Researcher',
   taglineSegments: ['Agentic AI Engineer', 'Sports Analytics', 'Researcher'],
   heroSub:
-    'Building AI systems for uncertain environments — from UAV autonomy research to enterprise agentic workflows.',
+    'Building AI systems for uncertain environments, from UAV autonomy research to enterprise agentic workflows.',
   email: 'firas.azfar@gmail.com',
   location: 'Toledo, OH',
   socials: {
@@ -58,7 +58,7 @@ export const site: SiteConfig = {
   nowPlaying: {
     icon: 'build',
     label: 'Now building',
-    detail: 'Toledo Football IQ — 10-stage CV pipeline',
+    detail: 'Toledo Football IQ - 10-stage CV pipeline',
     href: '#projects',
   },
   url: 'https://ahmadfx.xyz',

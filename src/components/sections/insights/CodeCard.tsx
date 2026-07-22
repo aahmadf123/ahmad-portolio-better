@@ -12,7 +12,7 @@ export type TokenLine = { content: string; color: string }[];
 export function InsightsGrid({ def, cards }: { def: SectionDef; cards: { insight: Insight; lines: TokenLine[] }[] }) {
   return (
     <Section id="insights" style={{ background: 'rgba(15,17,23,0.9)' }}>
-      <SH n={def.n} label="Technical Insights" sub="Not tutorials — perspective. The mechanisms behind the work, sketched in code, each traced back to the project that taught it." color={def.color} />
+      <SH n={def.n} label="Technical Insights" sub="Not tutorials, but perspective. The mechanisms behind the work are sketched in code and traced back to the project that taught them." color={def.color} />
       <div className="insights-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
         {cards.map(({ insight, lines }, i) => (
           <CodeCard key={insight.id} insight={insight} lines={lines} wide={i === 0} />

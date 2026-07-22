@@ -54,7 +54,7 @@ export function ChapterNav() {
             key={s.id}
             href={`#${s.id}`}
             className="chapter-dot"
-            aria-label={`${s.n ? `Chapter ${s.n} — ` : ''}${s.label}`}
+            aria-label={`${s.n ? `Chapter ${s.n} - ` : ''}${s.label}`}
             aria-current={isActive ? 'true' : undefined}
             style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', minHeight: 12 }}
           >

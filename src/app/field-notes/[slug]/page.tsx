@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!note) return {};
   const url = `${site.url}/field-notes/${note.slug}`;
   return {
-    title: `${note.title} — Field Notes`,
+    title: `${note.title} - Field Notes`,
     description: note.excerpt,
     keywords: note.tags,
     alternates: { canonical: url },
@@ -173,7 +173,7 @@ export default async function FieldNotePage({ params }: PageProps) {
             }}>
               <Pic
                 src={note.heroImage}
-                alt={`${note.title} — hero visualization`}
+                alt={`${note.title} - hero visualization`}
                 style={{ width: '100%', height: 'auto', display: 'block' }}
                 priority
               />

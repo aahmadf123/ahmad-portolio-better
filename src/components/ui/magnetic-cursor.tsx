@@ -12,7 +12,7 @@ import { useEffect } from 'react';
  * their ancestor chain) so that scrolling never forces a layout read; the
  * cache is only rebuilt on mount, debounced resize, and debounced DOM
  * mutations. The rAF loop pauses when the tab is hidden, or when the pointer
- * has been idle >2s AND the dot/ring/opacity physics have fully settled —
+ * has been idle >2s AND the dot/ring/opacity physics have fully settled -
  * the canvas simply keeps its last painted frame, so the cursor stays
  * visible and static at zero cost (idle never fades the cursor: the site
  * hides the native cursor via `cursor:none`, so this canvas cursor is the
@@ -61,7 +61,7 @@ export function MagneticCursor() {
     const armIdleTimer = () => {
       if (idleTimer) clearTimeout(idleTimer);
       idleTimer = setTimeout(() => {
-        idle = true; // does NOT touch opacity/opTarget — the native cursor
+        idle = true; // does NOT touch opacity/opTarget - the native cursor
         // is hidden (cursor:none), so this canvas cursor must stay visible
         // while idle. The loop only pauses once physics separately settle.
       }, 2000);
@@ -76,13 +76,13 @@ export function MagneticCursor() {
     // coordinates (rect + scroll offset) so scrolling never invalidates the
     // cache; rx/ry are viewport-stable half-extents (width/2, height/2).
     // `fixed` zones (e.g. the floating chat launcher) don't move in document
-    // space — their center is stored in viewport coordinates instead, or it
+    // space - their center is stored in viewport coordinates instead, or it
     // would visibly drift from the element while the page is scrolled.
     type MagneticZone = { el: HTMLElement; cx: number; cy: number; rx: number; ry: number; fixed: boolean };
     let zones: MagneticZone[] = [];
 
     // True if `node` or any ancestor up to (and including) document.body is
-    // position:fixed — such a chain anchors the element to the viewport
+    // position:fixed - such a chain anchors the element to the viewport
     // regardless of scroll, even when `node` itself isn't the fixed one
     // (e.g. a future magnetic button inside a fixed panel/toolbar). Only
     // called from rebuildZones, never from the mousemove hot path.
@@ -122,7 +122,7 @@ export function MagneticCursor() {
     let resizeRebuildTimer: ReturnType<typeof setTimeout> | undefined;
     const onResize = () => {
       resize(); // reassigning canvas.width/height resets the bitmap to
-      // transparent per the Canvas spec, wiping any frozen paused frame —
+      // transparent per the Canvas spec, wiping any frozen paused frame -
       // wake() below repaints it immediately even with no mouse movement
       // (DevTools toggle, window snap, browser zoom all fire `resize`).
       wake();
@@ -187,7 +187,7 @@ export function MagneticCursor() {
       // Pause: tab hidden, or pointer idle >2s AND the physics have fully
       // settled (position/radius/opacity all within epsilon of target).
       // Nothing would visibly change on the next frame either, so the
-      // canvas simply keeps its last painted frame — cursor stays visible
+      // canvas simply keeps its last painted frame - cursor stays visible
       // and static at zero cost. Resumes on mousemove (onMove), mouseleave
       // (onLeave), or visibility regain (onVisibility).
       const settled =
@@ -203,7 +203,7 @@ export function MagneticCursor() {
     };
 
     // Resume the loop if it had paused (idle+settled) and something just
-    // changed a spring target (opacity, ring radius, pull target) — called
+    // changed a spring target (opacity, ring radius, pull target) - called
     // from every handler that mutates one of those, so a frozen frame is
     // never left stale. No-op if already running or the tab is hidden.
     const wake = () => {

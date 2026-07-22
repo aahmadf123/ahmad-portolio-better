@@ -25,7 +25,7 @@ export function AboutSection() {
 
   return (
     <Section id="about" style={{ background: 'rgba(15,17,23,0.86)' }}>
-      <SH n={def.n} label="About" sub="Beyond the résumé — who is actually doing the work." color={def.color} />
+      <SH n={def.n} label="About" sub="Beyond the résumé: who is actually doing the work." color={def.color} />
 
       <MetricsBand />
 

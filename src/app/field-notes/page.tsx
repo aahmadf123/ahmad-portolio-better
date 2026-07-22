@@ -1,11 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { fieldNotes, CATEGORY_CONFIG, getNotesByCategory } from '@/lib/field-notes';
+import { fieldNotes } from '@/lib/field-notes';
 import { FieldNoteCard } from '@/components/ui/field-notes/field-note-card';
 
 export const metadata: Metadata = {
-  title: 'Field Notes — Ahmad Firas',
+  title: 'Field Notes - Ahmad Firas',
   description: 'Technical essays on AI engineering, systems thinking, sports analytics, and the path from research to production.',
 };
 
@@ -14,7 +14,6 @@ const MONO  = 'var(--font-code), monospace';
 
 export default function FieldNotesPage() {
   const published = fieldNotes.filter(n => n.published);
-  const byCategory = getNotesByCategory();
 
   return (
     <div style={{ background: 'var(--background)', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
@@ -96,19 +95,19 @@ export default function FieldNotesPage() {
             fontSize: 17, lineHeight: 1.75, color: 'var(--text2)',
             maxWidth: 560, marginBottom: 0, fontFamily: 'var(--font-body), sans-serif',
           }}>
-            What actually works, what fails in production, and what I am still figuring out —
+            What actually works, what fails in production, and what I am still figuring out -
             across AI engineering, autonomous systems, sports analytics, and the path from research to shipping.
           </p>
         </div>
       </div>
 
-      {/* ── Published articles ── */}
+      {/* ── Essays ── */}
       {published.length > 0 && (
         <div style={{ padding: '0 clamp(20px,4vw,52px) 80px', maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
             <span style={{ display: 'inline-block', width: 22, height: 1.5, background: 'var(--primary)', opacity: 0.8 }} />
             <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--primary)' }}>
-              Published
+              Essays
             </span>
           </div>
 
@@ -120,74 +119,6 @@ export default function FieldNotesPage() {
         </div>
       )}
 
-      {/* ── Coming soon — by category ── */}
-      <div style={{
-        padding: '0 clamp(20px,4vw,52px) 100px',
-        maxWidth: 1200, margin: '0 auto',
-        borderTop: '1px solid var(--bd)',
-        paddingTop: 64,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
-          <span style={{ display: 'inline-block', width: 22, height: 1.5, background: 'var(--text3)', opacity: 0.5 }} />
-          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text3)' }}>
-            Coming to Field Notes
-          </span>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
-          {Object.entries(byCategory).map(([category, notes]) => {
-            const catCfg = CATEGORY_CONFIG[category];
-            const upcomingCount = notes.filter(n => !n.published).length;
-            if (upcomingCount === 0) return null;
-
-            return (
-              <div key={category} style={{
-                padding: '16px 18px',
-                background: 'rgba(244,244,242,0.02)',
-                border: '1px solid var(--bd)',
-                borderRadius: 10,
-                borderLeft: catCfg ? `2px solid ${catCfg.color}40` : undefined,
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-                  <span style={{ fontFamily: MONO, fontSize: 10, color: catCfg?.color ?? 'var(--text3)', letterSpacing: '0.06em' }}>
-                    {catCfg?.label ?? category}
-                  </span>
-                  <span style={{
-                    fontFamily: MONO, fontSize: 9, padding: '1px 6px',
-                    background: 'rgba(244,244,242,0.04)',
-                    border: '1px solid var(--bd)',
-                    borderRadius: 3, color: 'var(--text3)',
-                    marginLeft: 'auto',
-                  }}>
-                    upcoming
-                  </span>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  {notes.filter(n => !n.published).slice(0, 3).map(note => (
-                    <div key={note.slug} style={{
-                      fontFamily: SERIF, fontSize: 12, color: 'var(--text3)',
-                      lineHeight: 1.4, paddingLeft: 10, position: 'relative',
-                    }}>
-                      <span style={{
-                        position: 'absolute', left: 0, top: '0.55em',
-                        width: 3, height: 3, borderRadius: '50%',
-                        background: catCfg?.color ?? 'var(--text3)', opacity: 0.4,
-                      }} />
-                      {note.title}
-                    </div>
-                  ))}
-                  {upcomingCount > 3 && (
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', paddingLeft: 10, marginTop: 2 }}>
-                      + more
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
       {/* ── Footer ── */}
       <footer style={{
         borderTop: '1px solid var(--bd)',
@@ -196,7 +127,7 @@ export default function FieldNotesPage() {
         flexWrap: 'wrap', gap: 12,
       }}>
         <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
-          Field Notes — Ahmad Firas · more in the darkroom
+          Field Notes · Ahmad Firas
         </span>
         <Link href="/" style={{
           fontFamily: MONO, fontSize: 10, color: 'var(--text2)',

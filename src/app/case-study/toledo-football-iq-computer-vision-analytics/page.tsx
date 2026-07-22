@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -207,37 +207,37 @@ export default function ToledoFootballIQCaseStudy() {
 
             {/* OVERVIEW */}
             <Section id="overview">
-              <SectionLabel>01 — Overview</SectionLabel>
+              <SectionLabel>01 - Overview</SectionLabel>
               <h2 className="cs-h2">Trust is the product</h2>
               <p>
                 Toledo Football IQ is an active computer vision and sports analytics platform for University of Toledo Football. It is designed to convert drone-based overhead practice footage into structured, coach-verifiable football intelligence.
               </p>
               <p>
-                The core principle is evidence-first analytics. Every output connects to the exact clip, overlay, confidence score, correction path, and model version. If a coach cannot verify it, correct it, and teach from it — it should not be treated as a production metric.
+                The core principle is evidence-first analytics. Every output connects to the exact clip, overlay, confidence score, correction path, and model version. If a coach cannot verify it, correct it, and teach from it - it should not be treated as a production metric.
               </p>
               <p>
-                The system is built as a coach-in-the-loop football intelligence platform. It starts with reliable practice-film infrastructure — video ingestion, play segmentation, field calibration, player tracking, clip-linked metrics, coach correction — and grows toward formation and motion analysis, route and coverage analytics, self-scout, pose-lite biomechanics, player development profiles, similar-rep search, zero-shot concept discovery, and same-session feedback.
+                The system is built as a coach-in-the-loop football intelligence platform. It starts with reliable practice-film infrastructure - video ingestion, play segmentation, field calibration, player tracking, clip-linked metrics, coach correction - and grows toward formation and motion analysis, route and coverage analytics, self-scout, pose-lite biomechanics, player development profiles, similar-rep search, zero-shot concept discovery, and same-session feedback.
               </p>
               <div style={{ padding: '18px 22px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 8, marginTop: 8 }}>
                 <p style={{ fontFamily: SERIF, fontSize: 15, color: '#F2EDD8', margin: 0, lineHeight: 1.5 }}>
-                  Product north star: a Toledo-owned CV platform that converts drone and practice film into verified football intelligence — faster coaching feedback, better self-scout, better opponent prep, objective player development, and health-aware workload context.
+                  Product north star: a Toledo-owned CV platform that converts drone and practice film into verified football intelligence - faster coaching feedback, better self-scout, better opponent prep, objective player development, and health-aware workload context.
                 </p>
               </div>
             </Section>
 
             {/* PROBLEM */}
             <Section id="problem">
-              <SectionLabel>02 — Problem</SectionLabel>
+              <SectionLabel>02 - Problem</SectionLabel>
               <h2 className="cs-h2">Raw film is valuable but expensive to review</h2>
               <p>
-                Football programs already use film heavily. Coaches and analysts manually tag plays, identify formations, evaluate routes, track player effort, study tendencies, and create cutups. This works — but it is time-intensive, and the bottleneck gets worse as the volume of drone and practice footage grows.
+                Football programs already use film heavily. Coaches and analysts manually tag plays, identify formations, evaluate routes, track player effort, study tendencies, and create cutups. This works - but it is time-intensive, and the bottleneck gets worse as the volume of drone and practice footage grows.
               </p>
               <p>
                 The challenge is not just automation. The challenge is trust. A football computer vision system must handle:
               </p>
               <div className="two-col-fiq" style={{ marginBottom: 24 }}>
                 {[
-                  ['Drone camera movement', 'Overhead drone footage involves dynamic homography — the camera moves, drifts, and reorients, meaning field calibration must be recomputed continuously, not once.'],
+                  ['Drone camera movement', 'Overhead drone footage involves dynamic homography - the camera moves, drifts, and reorients, meaning field calibration must be recomputed continuously, not once.'],
                   ['Occlusion at the line', 'Players in crowded line-of-scrimmage situations overlap heavily. Standard detection and tracking methods degrade significantly in high-occlusion football scenarios.'],
                   ['Re-identification difficulty', 'Players wear helmets and similar uniforms. Jersey numbers blur at distance or are never visible from overhead. Identity association requires multiple signal types.'],
                   ['Coach-specific terminology', 'Generic CV labels like "mesh" or "outside zone" may not match Toledo\'s internal call language. A system that speaks wrong terminology loses coach adoption immediately.'],
@@ -257,17 +257,17 @@ export default function ToledoFootballIQCaseStudy() {
 
             {/* CV PIPELINE */}
             <Section id="pipeline">
-              <SectionLabel>03 — CV Pipeline</SectionLabel>
+              <SectionLabel>03 - CV Pipeline</SectionLabel>
               <h2 className="cs-h2">10 stages from raw video to coach dashboard</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
                 {[
                   ['01', 'Video Ingest', 'Probe FPS, resolution, codec, duration, corruption, and metadata. Store raw video and queue processing jobs.'],
                   ['02', 'Play Segmentation', 'Split continuous practice video into per-play clips with editable boundaries. Manual correction is a first-class feature, not an afterthought.'],
-                  ['03', 'Field Calibration', 'Detect sidelines, yard lines, hash marks, field numbers, and boundaries. Estimate homography into standardized football field coordinates. Output calibration confidence and analytics-safe status — weak calibration suppresses downstream metrics.'],
+                  ['03', 'Field Calibration', 'Detect sidelines, yard lines, hash marks, field numbers, and boundaries. Estimate homography into standardized football field coordinates. Output calibration confidence and analytics-safe status - weak calibration suppresses downstream metrics.'],
                   ['04', 'Player Detection', 'YOLO or RF-DETR detects players, officials, and the ball. Detection confidence feeds the calibration-safe gating layer.'],
                   ['05', 'Player Tracking', 'ByteTrack for speed and throughput. BoT-SORT for identity-aware tracking. SAM + CSRT-style approaches for heavy occlusion cases at the line of scrimmage.'],
                   ['06', 'Identity Association (Re-ID)', 'Combine jersey OCR, roster priors, height/weight/position priors, equipment cues, biometric ratios, and movement signatures. Every identity assignment carries a confidence score and a correction path.'],
-                  ['07', 'Event Detection', 'Detect snap, motion start/end, handoff, throw, catch, contact, tackle, and end-of-play events. Manual correction is supported early — automated event detection improves as corrections accumulate.'],
+                  ['07', 'Event Detection', 'Detect snap, motion start/end, handoff, throw, catch, contact, tackle, and end-of-play events. Manual correction is supported early - automated event detection improves as corrections accumulate.'],
                   ['08', 'Football Labels', 'Propose offensive formation, defensive front, coverage shell, motion, shift, route family, and pressure candidates. Separate generic labels from Toledo-specific terminology.'],
                   ['09', 'Metric Computation', 'Compute cushion, separation, distance traveled, max speed, return-to-huddle speed, time to throw, dropback depth, gap width proxy, pass-set depth, pursuit effort, and downfield blocking participation.'],
                   ['10', 'Overlay Rendering & Dashboard Indexing', 'Render clips with field grids, tracks, route paths, motion arrows, coverage shells, confidence warnings, and metric callouts. Index for dashboard search and coach review.'],
@@ -285,16 +285,16 @@ export default function ToledoFootballIQCaseStudy() {
 
             {/* ARCHITECTURE */}
             <Section id="architecture">
-              <SectionLabel>04 — Architecture</SectionLabel>
+              <SectionLabel>04 - Architecture</SectionLabel>
               <h2 className="cs-h2">Evidence-first system design</h2>
               <p>
                 Every layer of the stack is chosen to serve the evidence-first contract: every metric must be traceable to a clip, a model version, a confidence score, and a correction path.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
-                <DbLayer n="FE" title="React Frontend" items={['Practice Inbox — upload status, QA flags, calibration warnings', 'Clip Review — overlays, boundary correction, identity assignment, label correction', 'Coach Dashboards — formations, effort, tempo, clip-linked charts', 'Labeling Queue — low-confidence plays, identity conflicts, regression examples']} />
+                <DbLayer n="FE" title="React Frontend" items={['Practice Inbox - upload status, QA flags, calibration warnings', 'Clip Review - overlays, boundary correction, identity assignment, label correction', 'Coach Dashboards - formations, effort, tempo, clip-linked charts', 'Labeling Queue - low-confidence plays, identity conflicts, regression examples']} />
                 <DbLayer n="API" title="FastAPI Backend" items={['Videos API','Clips API','Metrics API','Labels API','Corrections API','Jobs API','Players API','Model versions API']} />
                 <DbLayer n="DB" title="Managed Postgres + pgvector" items={['18+ relational tables','pgvector for play embeddings and similar-rep search','Alembic migrations','Full evidence lineage per output']} />
-                <DbLayer n="GPU" title="GPU Processing" items={['Local NVIDIA workstation — Phase 0/1','Burst cloud GPU workers — Phase 2+','CUDA + cuDNN','FFmpeg NVDEC/NVENC','PyTorch model pipeline','Zero-copy GPU pipelines for high-res video']} />
+                <DbLayer n="GPU" title="GPU Processing" items={['Local NVIDIA workstation - Phase 0/1','Burst cloud GPU workers - Phase 2+','CUDA + cuDNN','FFmpeg NVDEC/NVENC','PyTorch model pipeline','Zero-copy GPU pipelines for high-res video']} />
                 <DbLayer n="STORE" title="Object Storage" items={['Cloudflare R2 or S3-compatible','Raw videos','Per-play clips','Overlay renders','Model artifacts','Training dataset exports']} />
                 <DbLayer n="QUEUE" title="Job Queue" items={['Cloudflare Queues / BullMQ / Celery','Video processing queue','Nightly training export queue','Same-session lightweight queue']} />
                 <DbLayer n="MLR" title="Model Registry" items={['MLflow or internal registry','Every output tied to model version + dataset snapshot','Training data export from coach corrections','Version-gated metric computation']} />
@@ -303,7 +303,7 @@ export default function ToledoFootballIQCaseStudy() {
 
             {/* DATABASE */}
             <Section id="database">
-              <SectionLabel>05 — Database Design</SectionLabel>
+              <SectionLabel>05 - Database Design</SectionLabel>
               <h2 className="cs-h2">Schema built around evidence and lineage</h2>
               <p>
                 Every table answers one question for any output: where did this metric come from, what model produced it, what evidence supports it, and has a coach corrected it?
@@ -332,20 +332,20 @@ export default function ToledoFootballIQCaseStudy() {
                     <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>{name}</div>
                     {fields.map(f => (
                       <div key={f} className="entity-field" style={{ paddingBottom: 3 }}>
-                        <span className="entity-key">— </span>{f}
+                        <span className="entity-key">- </span>{f}
                       </div>
                     ))}
                   </div>
                 ))}
               </div>
               <p>
-                The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>coach_corrections</code> table is the flywheel engine — every correction to any output type is recorded, timestamped, and exported to <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>training_datasets</code> for model retraining. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>metrics.suppressed</code> flag prevents analytics from surfacing when calibration confidence is below threshold.
+                The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>coach_corrections</code> table is the flywheel engine - every correction to any output type is recorded, timestamped, and exported to <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>training_datasets</code> for model retraining. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>metrics.suppressed</code> flag prevents analytics from surfacing when calibration confidence is below threshold.
               </p>
             </Section>
 
             {/* KEY FEATURES */}
             <Section id="features">
-              <SectionLabel>06 — Key Features</SectionLabel>
+              <SectionLabel>06 - Key Features</SectionLabel>
               <h2 className="cs-h2">From reliable foundations to Toledo differentiators</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
                 {[
@@ -373,7 +373,7 @@ export default function ToledoFootballIQCaseStudy() {
 
             {/* ROADMAP */}
             <Section id="roadmap">
-              <SectionLabel>07 — Phased Roadmap</SectionLabel>
+              <SectionLabel>07 - Phased Roadmap</SectionLabel>
               <h2 className="cs-h2">Foundations before frontier analytics</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
@@ -421,16 +421,16 @@ export default function ToledoFootballIQCaseStudy() {
 
             {/* LESSONS */}
             <Section id="lessons">
-              <SectionLabel>08 — Lessons & Design Principles</SectionLabel>
+              <SectionLabel>08 - Lessons & Design Principles</SectionLabel>
               <h2 className="cs-h2">What this project reinforces</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
-                  ['Trust beats novelty', 'A coach who does not trust the system will not use it. Building trust — through evidence links, correction paths, confidence scores, and conservative suppression — is more important than adding advanced features early.'],
+                  ['Trust beats novelty', 'A coach who does not trust the system will not use it. Building trust - through evidence links, correction paths, confidence scores, and conservative suppression - is more important than adding advanced features early.'],
                   ['Correction workflows come before advanced models', 'The coach-correction flywheel must exist before pose-lite biomechanics, similar-rep search, or zero-shot discovery. Without corrections, there is no Toledo-specific training data. Without Toledo data, the models are generic.'],
                   ['Calibration confidence is a safety gate', 'A model that reports confident metrics on a poorly calibrated clip is actively harmful. Suppressing metrics when calibration is weak is a feature, not a limitation.'],
                   ['Drone footage is powerful but technically messy', 'Dynamic homography, camera drift, high-occlusion football scenarios, and helmeted players with similar uniforms make drone footage harder than broadcast footage. These constraints need to be part of the design, not discovered during development.'],
-                  ['Speed matters as much as accuracy', 'A system that takes 24 hours to process a practice session cannot change practice behavior. Same-session feedback — even lightweight — is worth more than overnight perfect analysis.'],
-                  ['R&D must not destabilize the MVP', 'Frontier experiments — zero-shot discovery, quantum AI sandbox, advanced health fusion — need isolation from the production coaching workflow. Experimental outputs must be clearly labeled and role-gated.'],
+                  ['Speed matters as much as accuracy', 'A system that takes 24 hours to process a practice session cannot change practice behavior. Same-session feedback - even lightweight - is worth more than overnight perfect analysis.'],
+                  ['R&D must not destabilize the MVP', 'Frontier experiments - zero-shot discovery, quantum AI sandbox, advanced health fusion - need isolation from the production coaching workflow. Experimental outputs must be clearly labeled and role-gated.'],
                   ['Health outputs require governance, not just disclaimers', 'Effort, load, and biomechanics data touch athlete welfare. Role-based access, conservative labeling, and a strict no-automated-medical-inference rule are non-negotiable from the start, not retrofitted later.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
@@ -439,15 +439,15 @@ export default function ToledoFootballIQCaseStudy() {
                   </div>
                 ))}
               </div>
-              {/* PROMPT FOR AHMAD: what actually broke on Toledo Football IQ? It is a Phase 0 build, so the numbers on this page are targets, not results — nothing has failed in production yet. Once real clips run through the pipeline (line-of-scrimmage occlusion, homography drift, re-ID misses), name the concrete failure and a "What broke" block can go here. */}
-              {/* PROMPT FOR AHMAD: what would you do differently on Toledo Football IQ? It is too early for an honest retrospective — the build is pre-MVP and the design principles above already capture the intended ordering. Fill this in once Phase 0/1 surfaces a real "I should have done X sooner." */}
+              {/* PROMPT FOR AHMAD: what actually broke on Toledo Football IQ? It is a Phase 0 build, so the numbers on this page are targets, not results - nothing has failed in production yet. Once real clips run through the pipeline (line-of-scrimmage occlusion, homography drift, re-ID misses), name the concrete failure and a "What broke" block can go here. */}
+              {/* PROMPT FOR AHMAD: what would you do differently on Toledo Football IQ? It is too early for an honest retrospective - the build is pre-MVP and the design principles above already capture the intended ordering. Fill this in once Phase 0/1 surfaces a real "I should have done X sooner." */}
 
               <div style={{ padding: '24px 28px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10, marginTop: 32 }}>
                 <p style={{ fontFamily: SERIF, fontSize: 15, color: '#F2EDD8', margin: '0 0 8px', lineHeight: 1.5 }}>
                   In football analytics, trust is the product.
                 </p>
                 <p style={{ fontFamily: SERIF, fontSize: 14, color: '#B8B4A4', margin: 0, lineHeight: 1.6 }}>
-                  Toledo Football IQ demonstrates that computer vision in sports is not a model problem — it is a product problem. The best moat is private, corrected, domain-specific data. Every coach correction is a training example. Every trusted output extends what the system can do next.
+                  Toledo Football IQ demonstrates that computer vision in sports is not a model problem - it is a product problem. The best moat is private, corrected, domain-specific data. Every coach correction is a training example. Every trusted output extends what the system can do next.
                 </p>
               </div>
 

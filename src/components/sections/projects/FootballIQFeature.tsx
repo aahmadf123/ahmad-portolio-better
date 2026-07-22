@@ -80,7 +80,7 @@ export function FootballIQFeature() {
             {p.title}
           </h3>
           <p style={{ fontFamily: SANS, fontSize: 15, lineHeight: 1.75, color: 'var(--text2)', maxWidth: 520, marginTop: 16 }}>
-            {p.story} A 10-stage pipeline from drone footage to coach dashboard — every output connects to the exact clip, overlay, confidence score, and correction path.
+            {p.story} A 10-stage pipeline from drone footage to coach dashboard - every output connects to the exact clip, overlay, confidence score, and correction path.
           </p>
 
           <div style={{ display: 'flex', gap: 'clamp(16px, 2.5vw, 36px)', marginTop: 26, flexWrap: 'wrap' }}>
@@ -110,7 +110,7 @@ export function FootballIQFeature() {
         <div style={{ minWidth: 0 }}>
           <PlayDiagram />
           <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textAlign: 'center', marginTop: 10 }}>
-            Detection → tracking → labels — rendered from the pipeline&apos;s point of view
+            Detection → tracking → labels - rendered from the pipeline&apos;s point of view
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -206,7 +206,7 @@ export default function DeepTruthCaseStudy() {
 
             {/* OVERVIEW */}
             <Section id="overview">
-              <SectionLabel>01 — Overview</SectionLabel>
+              <SectionLabel>01 - Overview</SectionLabel>
               <h2 className="cs-h2">Because in a world full of noise, clarity is power</h2>
               <p>
                 DeepTruth is an AI-powered fact-checking platform built for RocketHacks 2025. The project was designed to help users evaluate online claims, article titles, and suspicious headlines before misinformation has a chance to spread further.
@@ -215,13 +215,13 @@ export default function DeepTruthCaseStudy() {
                 The platform combines a web app, Chrome extension, AI reasoning, NLP classification, and source verification into one workflow. Users can enter an article title or analyze content while browsing, then receive a credibility score, veracity assessment, reasoning, confidence signal, and independent sources for cross-checking.
               </p>
               <p>
-                The goal was never to replace human judgment. The goal was to give users a faster first-pass credibility tool — one that helps them think critically before trusting or sharing information. DeepTruth won Best Use of MongoDB Atlas at RocketHacks 2025.
+                The goal was never to replace human judgment. The goal was to give users a faster first-pass credibility tool - one that helps them think critically before trusting or sharing information. DeepTruth won Best Use of MongoDB Atlas at RocketHacks 2025.
               </p>
             </Section>
 
             {/* PROBLEM */}
             <Section id="problem">
-              <SectionLabel>02 — Problem</SectionLabel>
+              <SectionLabel>02 - Problem</SectionLabel>
               <h2 className="cs-h2">Misinformation spreads because verification is slow</h2>
               <p>
                 The internet makes information easy to access but difficult to trust. Misleading headlines, AI-generated content, and low-quality sources spread quickly because users often see claims without context, source comparison, or evidence-based verification. Most people do not have time to manually investigate every article they encounter.
@@ -229,10 +229,10 @@ export default function DeepTruthCaseStudy() {
               <div className="two-col-dt" style={{ marginBottom: 24 }}>
                 {[
                   ['Misleading titles', 'Headlines are designed to drive clicks, not accuracy. Framing alone can bias how a claim is understood.'],
-                  ['No quick tools', 'Fact-checking sites exist but require manual navigation — creating friction that most users skip.'],
+                  ['No quick tools', 'Fact-checking sites exist but require manual navigation - creating friction that most users skip.'],
                   ['AI-generated content', 'Synthetic text can look credible and pass casual inspection, but carries no ground-truth accountability.'],
                   ['Source opacity', 'Users rarely know who is behind a claim or whether the source has a history of corrections.'],
-                  ['Sharing before checking', 'Social media rewards speed — content spreads before it is verified, and retractions rarely catch up.'],
+                  ['Sharing before checking', 'Social media rewards speed - content spreads before it is verified, and retractions rarely catch up.'],
                   ['Single-source trust', 'Readers often rely on one outlet rather than cross-referencing multiple independent sources.'],
                 ].map(([title, body]) => (
                   <div key={title} className="info-card">
@@ -242,13 +242,13 @@ export default function DeepTruthCaseStudy() {
                 ))}
               </div>
               <p>
-                DeepTruth addresses this by turning fact-checking into a faster, AI-assisted workflow — reducing the friction between encountering a claim and getting credibility context for it.
+                DeepTruth addresses this by turning fact-checking into a faster, AI-assisted workflow - reducing the friction between encountering a claim and getting credibility context for it.
               </p>
             </Section>
 
             {/* SOLUTION */}
             <Section id="solution">
-              <SectionLabel>03 — Solution</SectionLabel>
+              <SectionLabel>03 - Solution</SectionLabel>
               <h2 className="cs-h2">Two interfaces, one credibility pipeline</h2>
               <p>
                 DeepTruth provides two primary user interfaces that feed into the same backend analysis pipeline.
@@ -278,7 +278,7 @@ export default function DeepTruthCaseStudy() {
               <h3 className="cs-h3">API endpoints</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 8 }}>
                 {[
-                  { method: 'POST', path: '/api/verify-claim/', desc: 'Analyze an article title or claim — returns credibility, veracity, reasoning, and source links.' },
+                  { method: 'POST', path: '/api/verify-claim/', desc: 'Analyze an article title or claim - returns credibility, veracity, reasoning, and source links.' },
                   { method: 'GET',  path: '/api/false-news/',   desc: 'Retrieve previously analyzed or flagged claims stored in MongoDB.' },
                 ].map(({ method, path, desc }) => (
                   <div key={path} style={{ padding: '12px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 6, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
@@ -294,7 +294,7 @@ export default function DeepTruthCaseStudy() {
 
             {/* AI APPROACH */}
             <Section id="ai-approach">
-              <SectionLabel>04 — AI Approach</SectionLabel>
+              <SectionLabel>04 - AI Approach</SectionLabel>
               <h2 className="cs-h2">Model fusion over single-signal trust</h2>
               <p>
                 The core technical decision behind DeepTruth is model fusion: combining two complementary AI systems rather than relying on one signal. A single model is both overconfident and undercalibrated for the complexity of credibility assessment.
@@ -302,8 +302,8 @@ export default function DeepTruthCaseStudy() {
 
               <h3 className="cs-h3">Weighted fusion: 70% Gemini / 30% DistilBERT</h3>
               <div className="weight-bar" style={{ marginBottom: 16 }}>
-                <div className="gemini">70% — Gemini AI</div>
-                <div className="distil">30% — DistilBERT</div>
+                <div className="gemini">70% - Gemini AI</div>
+                <div className="distil">30% - DistilBERT</div>
               </div>
               <p>
                 More weight goes to Gemini because reasoning and explanation quality are primary user-facing values. DistilBERT adds a specialized classification signal without dominating the output.
@@ -311,13 +311,13 @@ export default function DeepTruthCaseStudy() {
 
               <div className="two-col-dt" style={{ marginBottom: 24 }}>
                 <div className="model-card">
-                  <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>Gemini AI — 70%</div>
+                  <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>Gemini AI - 70%</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65, color: '#B8B4A4' }}>
-                    Google Gemini Pro handles high-level reasoning, claim interpretation, and explanation generation. It produces human-readable analysis of why a claim may be credible or suspicious — not just a score, but the reasoning behind it.
+                    Google Gemini Pro handles high-level reasoning, claim interpretation, and explanation generation. It produces human-readable analysis of why a claim may be credible or suspicious - not just a score, but the reasoning behind it.
                   </p>
                 </div>
                 <div style={{ flex: 1, padding: '20px 22px', background: 'rgba(75,123,245,0.06)', border: '1px solid rgba(75,123,245,0.18)', borderRadius: 10 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 11, color: '#4B7BF5', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>DistilBERT — 30%</div>
+                  <div style={{ fontFamily: MONO, fontSize: 11, color: '#4B7BF5', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>DistilBERT - 30%</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65, color: '#B8B4A4' }}>
                     A fine-tuned DistilBERT model provides NLP-based veracity classification. Trained on approximately 9,500 data points, it adds a language-model signal specialized for misinformation patterns that complements Gemini&apos;s broader reasoning.
                   </p>
@@ -327,14 +327,14 @@ export default function DeepTruthCaseStudy() {
               <div style={{ padding: '18px 22px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10, marginBottom: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Why fusion matters</div>
                 <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: '#B8B4A4' }}>
-                  A single model produces overconfident outputs. By combining Gemini&apos;s reasoning with DistilBERT&apos;s classification, DeepTruth surfaces more calibrated credibility signals — and makes the system more honest about what it knows and does not know.
+                  A single model produces overconfident outputs. By combining Gemini&apos;s reasoning with DistilBERT&apos;s classification, DeepTruth surfaces more calibrated credibility signals - and makes the system more honest about what it knows and does not know.
                 </p>
               </div>
             </Section>
 
             {/* ARCHITECTURE */}
             <Section id="architecture">
-              <SectionLabel>05 — Architecture</SectionLabel>
+              <SectionLabel>05 - Architecture</SectionLabel>
               <h2 className="cs-h2">Full-stack from browser to model inference</h2>
               <p>
                 The system flows from user input through two interface layers, a REST API backend, AI inference, MongoDB storage, and back to a structured result.
@@ -343,8 +343,8 @@ export default function DeepTruthCaseStudy() {
                 User input → React app or Chrome extension → Django REST API → Gemini + DistilBERT → MongoDB → credibility result + reasoning + sources
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
-                <LayerRow n="01" title="Frontend — Web App" items={['React', 'Vite', 'HTML / CSS / JS', 'Claim input form', 'Credibility score display', 'Result explanation UI']} />
-                <LayerRow n="02" title="Frontend — Chrome Extension" items={['HTML', 'CSS', 'JavaScript', 'Chrome Extension API', 'Browser-integrated analysis']} />
+                <LayerRow n="01" title="Frontend - Web App" items={['React', 'Vite', 'HTML / CSS / JS', 'Claim input form', 'Credibility score display', 'Result explanation UI']} />
+                <LayerRow n="02" title="Frontend - Chrome Extension" items={['HTML', 'CSS', 'JavaScript', 'Chrome Extension API', 'Browser-integrated analysis']} />
                 <LayerRow n="03" title="Backend" items={['Django', 'Django REST Framework', 'Claim verification endpoint', 'Model orchestration', 'Source verification workflow']} />
                 <LayerRow n="04" title="AI / NLP" items={['Google Gemini Pro', 'Fine-tuned DistilBERT', '70/30 weighted fusion', 'Veracity classification', 'Credibility scoring']} />
                 <LayerRow n="05" title="Database" items={['MongoDB', 'Analyzed claim storage', 'False-news history retrieval', 'Flexible document schema']} />
@@ -353,7 +353,7 @@ export default function DeepTruthCaseStudy() {
 
             {/* STACK */}
             <Section id="stack">
-              <SectionLabel>06 — Technical Stack</SectionLabel>
+              <SectionLabel>06 - Technical Stack</SectionLabel>
               <h2 className="cs-h2">What DeepTruth runs on</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 <LayerRow n="FE"  title="Frontend" items={['React', 'Vite', 'HTML', 'CSS', 'JavaScript']} />
@@ -372,7 +372,7 @@ export default function DeepTruthCaseStudy() {
 
             {/* LESSONS */}
             <Section id="lessons">
-              <SectionLabel>07 — Lessons Learned</SectionLabel>
+              <SectionLabel>07 - Lessons Learned</SectionLabel>
               <h2 className="cs-h2">What a 24-hour build teaches you</h2>
               <p>
                 Building DeepTruth under hackathon constraints produced sharper design decisions than a longer timeline might have allowed. A few lessons that stuck:
@@ -381,7 +381,7 @@ export default function DeepTruthCaseStudy() {
                 {[
                   ['Credibility systems need explanations', 'A score without reasoning is just noise. Users need to understand why the model flagged something before they can decide what to do with that signal.'],
                   ['Multi-model architectures are more honest', 'Trusting a single model produces overconfident outputs. Fusing two systems forces the architecture to be explicit about uncertainty and weighting choices.'],
-                  ['Browser extensions are the right surface', 'Misinformation appears during browsing. A standalone fact-checker that requires a separate tab creates friction — an extension removes it.'],
+                  ['Browser extensions are the right surface', 'Misinformation appears during browsing. A standalone fact-checker that requires a separate tab creates friction - an extension removes it.'],
                   ['Backend integration is harder than the demo', 'Connecting DistilBERT inference, Gemini API calls, MongoDB writes, and Chrome extension communication simultaneously under time pressure revealed integration debt quickly.'],
                   ['Hackathon projects need a sharp product story', 'Working code is necessary but not sufficient. The ability to communicate the problem, the audience, and the design tradeoffs clearly was as important as the implementation.'],
                   ['AI should assist, not replace, judgment', 'Framing matters. A tool that claims to decide truth is both overreaching and less credible than one that claims to help users think more carefully.'],
@@ -396,13 +396,13 @@ export default function DeepTruthCaseStudy() {
                 <div style={{ padding: '16px 18px', background: `${ACCENT}0c`, border: `1px solid ${ACCENT}30`, borderRadius: 8 }}>
                   <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What broke</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
-                    The demo was the easy part. Getting DistilBERT inference, Gemini API calls, MongoDB writes, and the Chrome extension to talk to one another — all at once, on a 24-hour clock — is where the integration debt piled up fastest.
+                    The demo was the easy part. Getting DistilBERT inference, Gemini API calls, MongoDB writes, and the Chrome extension to talk to one another - all at once, on a 24-hour clock - is where the integration debt piled up fastest.
                   </p>
                 </div>
                 <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
                   <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
-                    The 70/30 fusion reasons from what the two models already know — neither one actually retrieves evidence. I&apos;d add a RAG step before the explanation so a verdict cites fetched sources instead of leaning on model priors.
+                    The 70/30 fusion reasons from what the two models already know - neither one actually retrieves evidence. I&apos;d add a RAG step before the explanation so a verdict cites fetched sources instead of leaning on model priors.
                   </p>
                 </div>
               </div>
@@ -421,7 +421,7 @@ export default function DeepTruthCaseStudy() {
 
             {/* FUTURE */}
             <Section id="future">
-              <SectionLabel>08 — Future Work</SectionLabel>
+              <SectionLabel>08 - Future Work</SectionLabel>
               <h2 className="cs-h2">Where DeepTruth goes next</h2>
               <p>
                 The hackathon prototype establishes a working pipeline. Future versions could transform it into a much more powerful misinformation-detection platform.

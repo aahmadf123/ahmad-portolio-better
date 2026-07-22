@@ -1,4 +1,4 @@
-// Serverless-honest rate limiting for the chat route — no database.
+// Serverless-honest rate limiting for the chat route - no database.
 // Layer 1: HMAC-signed cookie sliding window (survives cold starts, per-browser).
 // Layer 2: per-instance in-memory IP window (best-effort backstop).
 // Hard request caps in the route bound worst-case spend regardless.

@@ -1,4 +1,4 @@
-// One-shot asset optimizer — run `node scripts/optimize-images.mjs` and commit
+// One-shot asset optimizer - run `node scripts/optimize-images.mjs` and commit
 // the output in public/Images/optimized/ plus src/lib/image-manifest.json.
 // Not part of the build pipeline (no custom webpack/Turbopack hook).
 import sharp from 'sharp';
@@ -20,20 +20,20 @@ async function emit(name, pipeline) {
   report.push(`${name}: ${(info.size / 1024).toFixed(0)}KB ${info.width}x${info.height}`);
 }
 
-// 1. Headshot — 4.3MB PNG → ~tens of KB webp at two sizes.
+// 1. Headshot - 4.3MB PNG → ~tens of KB webp at two sizes.
 await emit('headshot-800.webp', sharp(path.join(IMAGES, 'my pic.png')).resize({ width: 800 }).webp({ quality: 82 }));
 await emit('headshot-480.webp', sharp(path.join(IMAGES, 'my pic.png')).resize({ width: 480 }).webp({ quality: 80 }));
 
-// 1b. Headshot lightbox target — near-native resolution for the hero's zoom
-// view (source is 1447px wide; withoutEnlargement caps it there — still
+// 1b. Headshot lightbox target - near-native resolution for the hero's zoom
+// view (source is 1447px wide; withoutEnlargement caps it there - still
 // ~40x smaller than the 4.5MB original PNG the lightbox used to open).
 await emit('headshot-1600.webp', sharp(path.join(IMAGES, 'my pic.png')).rotate().resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 78 }));
 
-// 2. Favicon — 1.3MB logo → crisp 512/192 PNGs.
+// 2. Favicon - 1.3MB logo → crisp 512/192 PNGs.
 await emit('favicon-512.png', sharp(path.join(IMAGES, 'portfolio_logo_new.png')).resize({ width: 512, height: 512, fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png({ compressionLevel: 9 }));
 await emit('favicon-192.png', sharp(path.join(IMAGES, 'portfolio_logo_new.png')).resize({ width: 192, height: 192, fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png({ compressionLevel: 9 }));
 
-// 3. OG card — 1200x630 brand card (dark bg, teal→gold keyline, name + tagline).
+// 3. OG card - 1200x630 brand card (dark bg, teal→gold keyline, name + tagline).
 const ogSvg = `
 <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -68,7 +68,7 @@ if (ogUpToDate) {
 }
 
 // ───────────────────────────────────────────────────────────────────────
-// 4. Responsive pipeline — every /Images/... original referenced by the
+// 4. Responsive pipeline - every /Images/... original referenced by the
 //    app gets {480,960,1600}w webp variants (never upscaled) plus a
 //    manifest entry consumed by <Pic> (src/components/ui/pic.tsx).
 //    Discovery: grep src/**/*.{ts,tsx,md,mdx} for `/Images/...` string
@@ -82,7 +82,7 @@ const TARGET_WIDTHS = [480, 960, 1600];
 const QUALITY = 78;
 
 // portfolio_logo_new.png is only ever read directly by this script (as the
-// favicon source) — it has no `/Images/...` string literal anywhere in
+// favicon source) - it has no `/Images/...` string literal anywhere in
 // src/, so it can't be grep-discovered. Seed it explicitly.
 const EXTRA_SEEDS = ['/Images/portfolio_logo_new.png'];
 
@@ -170,7 +170,7 @@ for (const originalPath of [...originals].sort()) {
   }
   seenSlugs.set(slug, originalPath);
 
-  // Fast header-only read for intrinsic size — correct for EXIF-rotated
+  // Fast header-only read for intrinsic size - correct for EXIF-rotated
   // sources too (sharp's metadata() reports raw, pre-rotation dimensions,
   // so a 90/270 orientation needs a manual swap for the manifest's w/h).
   const meta = await sharp(srcPath).metadata();

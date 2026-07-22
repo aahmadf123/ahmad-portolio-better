@@ -1,4 +1,4 @@
-// Professional affiliations — extracted verbatim from the original Skills section.
+// Professional affiliations - extracted verbatim from the original Skills section.
 
 export interface Affiliation {
   name: string;
@@ -28,7 +28,7 @@ export const affiliations: Affiliation[] = [
     name: 'AIChE / Chem-E Car',
     role: 'Team Member & Competitor',
     color: '#f0823c',
-    short: 'American Institute of Chemical Engineers — University of Toledo Chapter',
+    short: 'American Institute of Chemical Engineers - University of Toledo Chapter',
     desc: 'Competed on the UT AIChE Chem-E Car team. Contributed to Arduino-based automation integrating pressure sensors, load cells, and stopping algorithms. Won Most Innovative Car Design worldwide.',
     images: ['/Images/AIChE.jpg', '/Images/AIChE%20ChemECar_International.jpg'],
     imgFit: 'cover',
@@ -39,7 +39,7 @@ export const affiliations: Affiliation[] = [
     name: 'Pi Sigma Epsilon',
     role: 'Member',
     color: '#a78bfa',
-    short: 'National Co-Educational Professional Fraternity — Sales, Marketing & Management',
+    short: 'National Co-Educational Professional Fraternity - Sales, Marketing & Management',
     desc: 'Member of Pi Sigma Epsilon, the only national professional co-educational fraternity in sales, marketing, and management.',
     images: ['/Images/PSE_1.jpg', '/Images/PSE_2.jpg', '/Images/PSE_3.jpg'],
     imgFit: 'contain',

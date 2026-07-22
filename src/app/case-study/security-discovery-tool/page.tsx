@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -200,13 +200,13 @@ export default function SecurityDiscoveryToolCaseStudy() {
 
             {/* OVERVIEW */}
             <Section id="overview">
-              <SectionLabel>01 — Overview</SectionLabel>
+              <SectionLabel>01 - Overview</SectionLabel>
               <h2 className="cs-h2">Centralizing security data is a database problem</h2>
               <p>
                 Security Discovery Tool was completed as part of the Academic Industry Immersion Seminar (AIIS) during Summer 2023, connected to a Park Place Technologies industry case study. Working as part of the Database I team, the project focused on a database-first solution to a persistent operations problem: security data scattered across multiple disconnected systems.
               </p>
               <p>
-                The goal was to design a centralized PostgreSQL security database that could consolidate discovery data from enterprise sources — Active Directory, Cisco AMP, and Microsoft Defender — and make that data trustworthy enough to drive faster reporting, cleaner validation, and more confident incident response.
+                The goal was to design a centralized PostgreSQL security database that could consolidate discovery data from enterprise sources - Active Directory, Cisco AMP, and Microsoft Defender - and make that data trustworthy enough to drive faster reporting, cleaner validation, and more confident incident response.
               </p>
               <p>
                 Instead of treating the database as just a storage layer, the work framed it as a security capability: clean schemas, referential integrity, validation rules, source tracking, and recovery planning can directly improve how quickly and confidently a security team responds to threats.
@@ -215,7 +215,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
 
             {/* PROBLEM */}
             <Section id="problem">
-              <SectionLabel>02 — Problem</SectionLabel>
+              <SectionLabel>02 - Problem</SectionLabel>
               <h2 className="cs-h2">Fragmented security data slows everything down</h2>
               <p>
                 Security teams need accurate and timely data to understand their environment. But in practice, that data is rarely in one place. Identity records live in Active Directory. Endpoint protection logs sit in Cisco AMP. Threat detections come from Microsoft Defender. Device inventories are maintained in spreadsheets. Compliance documentation is in separate folders.
@@ -243,10 +243,10 @@ export default function SecurityDiscoveryToolCaseStudy() {
 
             {/* SOLUTION */}
             <Section id="solution">
-              <SectionLabel>03 — Solution</SectionLabel>
+              <SectionLabel>03 - Solution</SectionLabel>
               <h2 className="cs-h2">A validated, centralized security database</h2>
               <p>
-                The proposed solution was a centralized security discovery database. Instead of leaving security information scattered across tools, the system would collect and normalize records into a consistent relational schema — acting as a trusted layer for reporting, validation, analysis, and response workflows.
+                The proposed solution was a centralized security discovery database. Instead of leaving security information scattered across tools, the system would collect and normalize records into a consistent relational schema - acting as a trusted layer for reporting, validation, analysis, and response workflows.
               </p>
               <h3 className="cs-h3">Five-stage data pipeline</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
@@ -265,7 +265,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
                   ['Traceability', 'Every record should preserve source, timestamp, and change history to support audits and compliance workflows.'],
                   ['Maintainability', 'Documentation, naming conventions, and schema clarity ensure future engineers can extend the system without breaking it.'],
                   ['Recovery readiness', 'Disaster-recovery procedures and backup validation ensure the database can recover without data loss.'],
-                  ['Operational fit', 'Validation rules must balance strictness with flexibility — a rule that blocks useful data fails its purpose.'],
+                  ['Operational fit', 'Validation rules must balance strictness with flexibility - a rule that blocks useful data fails its purpose.'],
                 ].map(([title, body]) => (
                   <div key={title} className="principle-card">
                     <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
@@ -277,7 +277,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
 
             {/* ARCHITECTURE */}
             <Section id="architecture">
-              <SectionLabel>04 — Architecture</SectionLabel>
+              <SectionLabel>04 - Architecture</SectionLabel>
               <h2 className="cs-h2">Schema built for security operations</h2>
               <p>
                 The database schema was designed around the key entities a security team needs to query: assets, users, endpoint protection records, security findings, and audit logs. Every table was designed with source tracking and change history in mind.
@@ -295,20 +295,20 @@ export default function SecurityDiscoveryToolCaseStudy() {
                     <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>{name}</div>
                     {fields.map(f => (
                       <div key={f} className="entity-field" style={{ paddingBottom: 3 }}>
-                        <span className="entity-key">— </span>{f}
+                        <span className="entity-key">- </span>{f}
                       </div>
                     ))}
                   </div>
                 ))}
               </div>
               <p>
-                This relational structure supports stronger reporting than disconnected spreadsheets because records can be joined, validated, audited, and queried consistently. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>audit_logs</code> table in particular ensures every data change is traceable — who changed it, when, and from which source system.
+                This relational structure supports stronger reporting than disconnected spreadsheets because records can be joined, validated, audited, and queried consistently. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>audit_logs</code> table in particular ensures every data change is traceable - who changed it, when, and from which source system.
               </p>
             </Section>
 
             {/* STACK */}
             <Section id="stack">
-              <SectionLabel>05 — Technical Stack</SectionLabel>
+              <SectionLabel>05 - Technical Stack</SectionLabel>
               <h2 className="cs-h2">Database tools and security context</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 <DbLayer n="DB" title="Database & Query" items={['PostgreSQL', 'MySQL', 'SQLite', 'pgAdmin 4', 'SQL', 'DBMS concepts']} />
@@ -327,10 +327,10 @@ export default function SecurityDiscoveryToolCaseStudy() {
 
             {/* RESULTS */}
             <Section id="results">
-              <SectionLabel>06 — Results & Impact</SectionLabel>
+              <SectionLabel>06 - Results & Impact</SectionLabel>
               <h2 className="cs-h2">Database engineering as a security capability</h2>
               <p>
-                The project demonstrated that a well-designed database is not just a storage layer — it can directly improve security operations. The outcomes connected classroom database concepts to real cybersecurity workflows.
+                The project demonstrated that a well-designed database is not just a storage layer - it can directly improve security operations. The outcomes connected classroom database concepts to real cybersecurity workflows.
               </p>
               <div className="two-col-sdt" style={{ marginBottom: 24 }}>
                 {[
@@ -351,18 +351,18 @@ export default function SecurityDiscoveryToolCaseStudy() {
 
             {/* LESSONS */}
             <Section id="lessons">
-              <SectionLabel>07 — Lessons Learned</SectionLabel>
+              <SectionLabel>07 - Lessons Learned</SectionLabel>
               <h2 className="cs-h2">What this project actually taught</h2>
               <p>
                 This was one of my first experiences applying computer science skills to a real engineering business problem. A few lessons stuck:
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
-                  ['Database design is a security tool', 'A validated schema with referential integrity, source tracking, and audit logs is not just good engineering — it is a security control. Clean data enables better detection, faster response, and credible compliance.'],
+                  ['Database design is a security tool', 'A validated schema with referential integrity, source tracking, and audit logs is not just good engineering - it is a security control. Clean data enables better detection, faster response, and credible compliance.'],
                   ['Validation must balance strictness', 'Validation rules that block too much data fail their operational purpose. The right rule improves quality without stopping useful information from entering the system.'],
                   ['Documentation is part of the engineering', 'Security and compliance systems only stay useful if they are understandable. Maintainable schemas, clear naming conventions, and written procedures reduce the risk of the system becoming a black box.'],
                   ['Industry projects require more than implementation', 'AIIS-style projects demand communication, planning, stakeholder alignment, and trade-off analysis. The database schema was only one deliverable; the ability to explain its value mattered just as much.'],
-                  ['Data quality problems are usually not adversarial', 'Most inconsistencies in security data come from mismatched tooling conventions meeting at a shared boundary — not from external threats. Fixing the data layer fixes the downstream problem.'],
+                  ['Data quality problems are usually not adversarial', 'Most inconsistencies in security data come from mismatched tooling conventions meeting at a shared boundary - not from external threats. Fixing the data layer fixes the downstream problem.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
                     <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
@@ -374,13 +374,13 @@ export default function SecurityDiscoveryToolCaseStudy() {
                 <div style={{ padding: '16px 18px', background: `${ACCENT}0c`, border: `1px solid ${ACCENT}30`, borderRadius: 8 }}>
                   <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What broke</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
-                    The validation layer was the real friction, not the schema. Rules strict enough to kill duplicate and stale records also threatened to reject legitimate entries — and a rule that blocks useful data fails its purpose. Tuning that balance, run after run, was the part that actually took the time.
+                    The validation layer was the real friction, not the schema. Rules strict enough to kill duplicate and stale records also threatened to reject legitimate entries - and a rule that blocks useful data fails its purpose. Tuning that balance, run after run, was the part that actually took the time.
                   </p>
                 </div>
                 <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
                   <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
-                    Ingestion was manual — records were imported and normalized by hand. I&apos;d build automated connectors for Active Directory, Cisco AMP, and Defender from the start, so the central database stays continuously fresh instead of depending on someone remembering to pull the next export.
+                    Ingestion was manual - records were imported and normalized by hand. I&apos;d build automated connectors for Active Directory, Cisco AMP, and Defender from the start, so the central database stays continuously fresh instead of depending on someone remembering to pull the next export.
                   </p>
                 </div>
               </div>
@@ -388,7 +388,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
 
             {/* FUTURE */}
             <Section id="future">
-              <SectionLabel>08 — Future Work</SectionLabel>
+              <SectionLabel>08 - Future Work</SectionLabel>
               <h2 className="cs-h2">Where this goes next</h2>
               <p>
                 The core database design establishes a foundation that could be extended into a full security operations platform. A phased roadmap:
@@ -413,7 +413,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
                   Security teams often focus on tools, alerts, and dashboards. But behind every security workflow is data. If that data is fragmented, inconsistent, or poorly governed, even advanced tools become less effective.
                 </p>
                 <p style={{ fontFamily: SERIF, fontSize: 14, color: '#B8B4A4', margin: 0, lineHeight: 1.6 }}>
-                  The Security Discovery Tool project shows that database design is a cybersecurity capability — one that scales across every other layer of the stack.
+                  The Security Discovery Tool project shows that database design is a cybersecurity capability - one that scales across every other layer of the stack.
                 </p>
               </div>
 

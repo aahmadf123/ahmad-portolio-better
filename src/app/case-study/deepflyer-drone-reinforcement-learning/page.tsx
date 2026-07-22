@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -122,7 +122,7 @@ export default function DeepFlyerCaseStudy() {
         <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}22`, marginBottom: 36, background: '#06080E' }}>
           <Pic
             src="/Images/DeepFlyer_pics.png"
-            alt="DeepFlyer platform dashboard — drone, reward editor, hoop navigation course, and edge hardware overview"
+            alt="DeepFlyer platform dashboard - drone, reward editor, hoop navigation course, and edge hardware overview"
             onClick={() => setLb('/Images/DeepFlyer_pics.png')}
             style={{ width: '100%', height: 'auto', display: 'block', cursor: 'zoom-in' }}
             priority
@@ -134,7 +134,7 @@ export default function DeepFlyerCaseStudy() {
           <span style={{ color: ACCENT }}>3D DeepRacer</span> for Drone RL
         </h1>
         <p style={{ fontSize: 17, lineHeight: 1.75, color: '#B8B4A4', maxWidth: 680, marginBottom: 36 }}>
-          An educational drone reinforcement learning platform that teaches students RL through reward-function editing, PPO agent training, and autonomous drone simulation — no deep AI background required.
+          An educational drone reinforcement learning platform that teaches students RL through reward-function editing, PPO agent training, and autonomous drone simulation - no deep AI background required.
         </p>
 
         {/* Metrics */}
@@ -181,10 +181,10 @@ export default function DeepFlyerCaseStudy() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }} className="two-col-df">
             <div>
               <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', marginBottom: 16 }}>
-                DeepFlyer reimagines AWS DeepRacer for drone autonomy. Instead of racing an RC car around a flat 2D track, students train a drone in simulation to fly through hoops, avoid obstacles, and navigate a 3D course — all by modifying reward functions in a browser-based editor.
+                DeepFlyer reimagines AWS DeepRacer for drone autonomy. Instead of racing an RC car around a flat 2D track, students train a drone in simulation to fly through hoops, avoid obstacles, and navigate a 3D course - all by modifying reward functions in a browser-based editor.
               </p>
               <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', marginBottom: 16 }}>
-                The platform reframes reinforcement learning as something physical and visual. If the reward function is poorly shaped, the drone behaves poorly. If it&apos;s better designed, the drone becomes safer, smoother, and more efficient. Students can see that relationship directly — no lectures about abstract RL theory required.
+                The platform reframes reinforcement learning as something physical and visual. If the reward function is poorly shaped, the drone behaves poorly. If it&apos;s better designed, the drone becomes safer, smoother, and more efficient. Students can see that relationship directly - no lectures about abstract RL theory required.
               </p>
               <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4' }}>
                 The early prototype established the simulation stack, drone model, React reward editor, backend API, dynamic reward switching, and initial PPO training results. Future milestones target SLAM, event cameras, XAI overlays, and sim-to-real deployment.
@@ -192,11 +192,11 @@ export default function DeepFlyerCaseStudy() {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
-                { l: 'Platform', v: 'DeepFlyer — Educational Drone RL' },
+                { l: 'Platform', v: 'DeepFlyer - Educational Drone RL' },
                 { l: 'Inspired By', v: 'AWS DeepRacer (2D car → 3D drone)' },
                 { l: 'Lab', v: 'LION Lab, University of Toledo' },
                 { l: 'Team', v: 'Uma (simulation/CAD) · Jay (UI/integration) · Ahmad (RL/AI)' },
-                { l: 'Status', v: 'Prototype — Weeks 1–3 complete' },
+                { l: 'Status', v: 'Prototype - Weeks 1–3 complete' },
                 { l: 'Hardware Target', v: 'Holybro S500 · Pixhawk 6C · ZED Mini' },
               ].map(({ l, v }) => (
                 <div key={l} style={{ display: 'flex', gap: 12, padding: '10px 0', borderBottom: '1px solid rgba(242,237,216,0.06)' }}>
@@ -207,7 +207,7 @@ export default function DeepFlyerCaseStudy() {
               <div style={{ marginTop: 14, padding: '18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}20`, borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Core Thesis</div>
                 <p style={{ fontSize: 14, lineHeight: 1.7, color: '#F2EDD8', fontStyle: 'italic' }}>
-                  &ldquo;Reward functions are not just math. They encode behavior. The best way to teach that is to let students see a drone learn — and fail — in real time.&rdquo;
+                  &ldquo;Reward functions are not just math. They encode behavior. The best way to teach that is to let students see a drone learn - and fail - in real time.&rdquo;
                 </p>
               </div>
             </div>
@@ -221,7 +221,7 @@ export default function DeepFlyerCaseStudy() {
             Reinforcement learning is powerful, but it&apos;s difficult to teach.
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', maxWidth: 720, marginBottom: 28 }}>
-            The core concepts are abstract. Students tune parameters, watch plots, and read reward curves — but rarely develop the physical intuition for why reward design matters.
+            The core concepts are abstract. Students tune parameters, watch plots, and read reward curves - but rarely develop the physical intuition for why reward design matters.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 28 }} className="three-col-df">
             {[
@@ -278,14 +278,14 @@ export default function DeepFlyerCaseStudy() {
           {/* Course design */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="two-col-df">
             <div style={{ padding: '20px 22px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}22`, borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Course Type A — Hoop Navigation</div>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Course Type A - Hoop Navigation</div>
               <p style={{ fontSize: 13, lineHeight: 1.7, color: '#B8B4A4', marginBottom: 10 }}>A fixed 4–5 hoop circuit with multiple laps at ~0.8 m altitude. Visual targets provide immediate student feedback. Best for public demos and intuitive reward-behavior observation.</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                 {['5 Hoops', 'Multi-lap', '0.8m altitude', 'Visual targets', 'Demo-friendly'].map(t => <Tag key={t}>{t}</Tag>)}
               </div>
             </div>
             <div style={{ padding: '20px 22px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: '#B8B4A4', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Course Type B — Obstacle Course</div>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: '#B8B4A4', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Course Type B - Obstacle Course</div>
               <p style={{ fontSize: 13, lineHeight: 1.7, color: '#B8B4A4', marginBottom: 10 }}>A straight path from start to finish with static obstacles requiring lateral maneuvering. Fixed altitude. Easier to compare across reward functions. Best for controlled benchmarking.</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                 {['Static obstacles', 'Lateral maneuver', 'Fixed altitude', 'Benchmark-friendly', 'Used in Week 3'].map(t => <Tag key={t} color="var(--text3)">{t}</Tag>)}
@@ -308,7 +308,7 @@ export default function DeepFlyerCaseStudy() {
               { term: 'Hoop Passage Reward', effect: 'Higher values make the drone prioritize passing through hoops aggressively, potentially sacrificing smoothness.' },
               { term: 'Center Alignment Bonus', effect: 'Rewards cleaner hoop passage. Students observe the drone gradually centering its approach path over training.' },
               { term: 'Speed Efficiency Bonus', effect: 'Can produce faster flight but less precise hoop targeting. Classic exploration vs. exploitation tradeoff.' },
-              { term: 'Collision Penalty', effect: 'Increasing this makes the policy more conservative — students directly observe the agent "choosing" to avoid obstacles.' },
+              { term: 'Collision Penalty', effect: 'Increasing this makes the policy more conservative - students directly observe the agent "choosing" to avoid obstacles.' },
               { term: 'Smooth Flight Bonus', effect: 'Reduces jerk in motor commands. Students notice the drone trajectory becoming more continuous over episodes.' },
               { term: 'Boundary Violation Penalty', effect: 'Hard constraint on staying within the safety zone. Essential for real-hardware deployment with safety netting.' },
             ].map(({ term, effect }) => (
@@ -326,7 +326,7 @@ export default function DeepFlyerCaseStudy() {
               ))}
             </div>
             <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)', marginTop: 12 }}>
-              The observation space teaches students that RL agents don&apos;t learn from magic — they learn from state representations. Better observations consistently produce better policies.
+              The observation space teaches students that RL agents don&apos;t learn from magic - they learn from state representations. Better observations consistently produce better policies.
             </p>
           </div>
         </Section>
@@ -358,7 +358,7 @@ export default function DeepFlyerCaseStudy() {
             Weeks 1–3 validated the full learning loop.
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', maxWidth: 720, marginBottom: 28 }}>
-            Progress spanned simulation infrastructure, drone model, backend, frontend, RL training, and experiment tracking — all in three weeks.
+            Progress spanned simulation infrastructure, drone model, backend, frontend, RL training, and experiment tracking - all in three weeks.
           </p>
 
           {/* Week-by-week */}
@@ -370,7 +370,7 @@ export default function DeepFlyerCaseStudy() {
               },
               {
                 week: 'Week 2', color: ACCENT,
-                items: ['X500 URDF built with visual, collision, and inertial components', '40% mesh optimization achieved', 'Mass/inertia validated within 2%', 'React Dashboard + Reward Editor UI scaffolded', 'Figma user flows finalized', 'Reward API endpoints implemented — 10ms median / 20ms P95 latency', 'Dynamic reward switching integrated into Gym environment'],
+                items: ['X500 URDF built with visual, collision, and inertial components', '40% mesh optimization achieved', 'Mass/inertia validated within 2%', 'React Dashboard + Reward Editor UI scaffolded', 'Figma user flows finalized', 'Reward API endpoints implemented - 10ms median / 20ms P95 latency', 'Dynamic reward switching integrated into Gym environment'],
               },
               {
                 week: 'Week 3', color: '#2DD4C8',
@@ -430,13 +430,13 @@ export default function DeepFlyerCaseStudy() {
             <div style={{ padding: '18px 20px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 8 }}>
               <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What broke</div>
               <p style={{ fontSize: 13, lineHeight: 1.75, color: '#B8B4A4' }}>
-                The X500 URDF came in too mesh-heavy to simulate smoothly — I cut its complexity 40% (mass and inertia still validated within 2%) to hold a sub-1-second Gazebo start. Training had its own ceiling: PPO plateaued around 80% success, with convergence flattening near 9e5 of the 1M steps.
+                The X500 URDF came in too mesh-heavy to simulate smoothly - I cut its complexity 40% (mass and inertia still validated within 2%) to hold a sub-1-second Gazebo start. Training had its own ceiling: PPO plateaued around 80% success, with convergence flattening near 9e5 of the 1M steps.
               </p>
             </div>
             <div style={{ padding: '18px 20px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
               <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What I&apos;d do differently</div>
               <p style={{ fontSize: 13, lineHeight: 1.75, color: '#B8B4A4' }}>
-                Wire experiment tracking in on day one. MLflow only went in during Week 3, and it surfaced the ~9e5-step plateau immediately — had it been logging from the first PPO run, I&apos;d have seen that ceiling before spending a full 1M-step run to find it.
+                Wire experiment tracking in on day one. MLflow only went in during Week 3, and it surfaced the ~9e5-step plateau immediately - had it been logging from the first PPO run, I&apos;d have seen that ceiling before spending a full 1M-step run to find it.
               </p>
             </div>
           </div>
@@ -472,7 +472,7 @@ export default function DeepFlyerCaseStudy() {
               Making reinforcement learning physical.
             </h3>
             <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4', maxWidth: 520, margin: '0 auto 24px' }}>
-              Reward design, PPO training, ROS 2 simulation, and a future path to real drone hardware — all accessible through a browser.
+              Reward design, PPO training, ROS 2 simulation, and a future path to real drone hardware - all accessible through a browser.
             </p>
             <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
               ← Back to Portfolio

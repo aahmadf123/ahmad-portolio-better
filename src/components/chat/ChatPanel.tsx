@@ -19,7 +19,7 @@ const SUGGESTED = [
 const FALLBACK_FAQ: { q: string; a: string }[] = [
   {
     q: 'What is Toledo Football IQ?',
-    a: 'Ahmad\'s flagship build for University of Toledo Athletics: a 10-stage computer vision pipeline that turns practice film into evidence a coach can verify, correct, and teach from — 18+ structured metrics, 90%+ field-marking accuracy targets, and a coach-correction flywheel.',
+    a: 'Ahmad\'s flagship build for University of Toledo Athletics: a 10-stage computer vision pipeline that turns practice film into evidence a coach can verify, correct, and teach from - 18+ structured metrics, 90%+ field-marking accuracy targets, and a coach-correction flywheel.',
   },
   {
     q: 'What does Ahmad work with?',
@@ -27,7 +27,7 @@ const FALLBACK_FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Is Ahmad available?',
-    a: `He's based in Toledo, OH and open to AI research, ML engineering, data science, and sports analytics work — the fastest route is ${site.email}.`,
+    a: `He's based in Toledo, OH and open to AI research, ML engineering, data science, and sports analytics work - the fastest route is ${site.email}.`,
   },
 ];
 
@@ -79,7 +79,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   return (
     <m.div
       role="dialog"
-      aria-label="Ask Ahmad — AI assistant"
+      aria-label="Ask Ahmad - AI assistant"
       className="chat-panel"
       initial={reduced ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -123,7 +123,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             {messages.length === 0 && (
               <div>
                 <p style={{ fontFamily: SANS, fontSize: 13, lineHeight: 1.65, color: FG2, margin: '4px 0 14px' }}>
-                  Hi — I&apos;m the AI on Ahmad&apos;s site. I can walk you through his projects, research, stack, and availability. What would you like to know?
+                  Hi - I&apos;m the AI on Ahmad&apos;s site. I can walk you through his projects, research, stack, and availability. What would you like to know?
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
                   {SUGGESTED.map((s) => (
@@ -158,7 +158,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
 
             {limited && (
               <p style={{ fontFamily: MONO, fontSize: 10.5, color: 'var(--gold)', lineHeight: 1.6, background: 'rgba(245,158,11,0.07)', border: '1px solid rgba(245,158,11,0.25)', borderRadius: 8, padding: '9px 12px' }}>
-                Easy there — that&apos;s the rate limit. Give it a few minutes, or just email {site.email}.
+                Easy there - that&apos;s the rate limit. Give it a few minutes, or just email {site.email}.
               </p>
             )}
             {error && !limited && !unconfigured && (
@@ -228,7 +228,7 @@ function Fallback() {
   return (
     <div>
       <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(245,158,11,0.3)', background: 'rgba(245,158,11,0.06)', borderRadius: 6, padding: '6px 10px', display: 'inline-block' }}>
-        Assistant warming up — live answers soon
+        Assistant warming up - live answers soon
       </div>
       <p style={{ fontFamily: SANS, fontSize: 12.5, lineHeight: 1.65, color: FG2, margin: '12px 0 14px' }}>
         The live AI isn&apos;t wired up yet. Meanwhile, the greatest hits:

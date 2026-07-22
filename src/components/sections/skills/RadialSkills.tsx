@@ -5,7 +5,7 @@ import { MONO, SERIF, SkillChip, FG3 } from '@/components/shared/section-helpers
 import { skillGroups } from '@/lib/data/skills';
 
 /**
- * Mobile fallback for the constellation: a swipeable snap carousel — one
+ * Mobile fallback for the constellation: a swipeable snap carousel - one
  * radial cluster card per skill group, hub label centered, chips orbiting.
  */
 export function RadialSkills() {

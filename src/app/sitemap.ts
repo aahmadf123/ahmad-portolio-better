@@ -27,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // Case study routes — derived from the projects data module
+  // Case study routes - derived from the projects data module
   const caseStudyRoutes: MetadataRoute.Sitemap = caseStudySlugs.map((slug) => ({
     url: `${baseUrl}/case-study/${slug}`,
     lastModified: new Date(),
@@ -35,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  // Field note routes — derived from the registry, so publishing a note
+  // Field note routes - derived from the registry, so publishing a note
   // updates the sitemap automatically
   const fieldNoteRoutes: MetadataRoute.Sitemap = fieldNotes
     .filter((n) => n.published && n.date)

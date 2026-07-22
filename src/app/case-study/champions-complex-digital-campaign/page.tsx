@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -181,7 +181,7 @@ export default function ChampionsComplexCaseStudy() {
             Building the digital front door for Rocket Athletics&apos; next era.
           </p>
           <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--text3)', maxWidth: 640, lineHeight: 1.6, margin: '0 0 40px' }}>
-            A donor-focused web campaign strategy for the Champions Complex — a 74,000-square-foot transformation of the University of Toledo Health Education Building into a centralized student-athlete development hub.
+            A donor-focused web campaign strategy for the Champions Complex - a 74,000-square-foot transformation of the University of Toledo Health Education Building into a centralized student-athlete development hub.
           </p>
 
           <div className="metrics-grid-cc">
@@ -209,34 +209,34 @@ export default function ChampionsComplexCaseStudy() {
 
             {/* OVERVIEW */}
             <Section id="overview">
-              <SectionLabel>01 — Overview</SectionLabel>
+              <SectionLabel>01 - Overview</SectionLabel>
               <h2 className="cs-h2">A capital campaign needs more than a donate button.</h2>
               <p>
-                The Champions Complex Digital Campaign is a strategic webpage and digital fundraising blueprint created for University of Toledo Athletics. The project supports the Champions Complex initiative — a major renovation of the 74,000-square-foot Health Education Building into a centralized home for student-athlete development.
+                The Champions Complex Digital Campaign is a strategic webpage and digital fundraising blueprint created for University of Toledo Athletics. The project supports the Champions Complex initiative - a major renovation of the 74,000-square-foot Health Education Building into a centralized home for student-athlete development.
               </p>
               <p>
                 The proposed facility consolidates academics, nutrition, health, wellness, training, and team spaces under one roof, and returns baseball and softball programs from Scott Park to the main campus. The digital campaign was designed to match the ambition of the physical facility: immersive, polished, donor-focused, and aligned with the University of Toledo brand.
               </p>
               <p>
-                My work focused on creating the complete digital strategy for the campaign webpage — information architecture, visual sequencing, donor journey design, rendering integration, technical feasibility analysis, fundraising conversion, naming-rights strategy, and brand execution.
+                My work focused on creating the complete digital strategy for the campaign webpage - information architecture, visual sequencing, donor journey design, rendering integration, technical feasibility analysis, fundraising conversion, naming-rights strategy, and brand execution.
               </p>
             </Section>
 
             {/* PROBLEM */}
             <Section id="problem">
-              <SectionLabel>02 — Problem</SectionLabel>
+              <SectionLabel>02 - Problem</SectionLabel>
               <h2 className="cs-h2">A static page with renderings and a donate button does not move donors.</h2>
               <p>
-                A major athletics capital campaign requires more than an information page. The Champions Complex needed to answer questions that a basic webpage cannot: Why does this facility matter? How does it change student-athlete life? Why should donors trust this project? How does it affect recruiting and competitive excellence? And critically — how does the page convert interest into financial commitment?
+                A major athletics capital campaign requires more than an information page. The Champions Complex needed to answer questions that a basic webpage cannot: Why does this facility matter? How does it change student-athlete life? Why should donors trust this project? How does it affect recruiting and competitive excellence? And critically - how does the page convert interest into financial commitment?
               </p>
               <div className="two-col-cc" style={{ marginBottom: 24 }}>
                 {[
-                  ['No emotional hook', 'A list of facility amenities does not inspire. Donors give to vision, legacy, and impact — not square footage.'],
+                  ['No emotional hook', 'A list of facility amenities does not inspire. Donors give to vision, legacy, and impact - not square footage.'],
                   ['Rendering overload', 'Dumping all architectural renders into a gallery loses the narrative. Each image needs a purpose in the story.'],
                   ['Friction in giving', 'Even willing donors abandon when the giving path is unclear. Conversion requires frictionless flow from belief to action.'],
-                  ['Platform constraints', 'The page must live within the Sidearm Sports athletics ecosystem — not a blank-canvas build.'],
+                  ['Platform constraints', 'The page must live within the Sidearm Sports athletics ecosystem - not a blank-canvas build.'],
                   ['Two audiences at once', 'Major gift donors and grassroots supporters have different motivations. The page must serve both without alienating either.'],
-                  ['Brand consistency', 'UToledo brand standards govern color, type, and voice — any deviation undermines institutional credibility.'],
+                  ['Brand consistency', 'UToledo brand standards govern color, type, and voice - any deviation undermines institutional credibility.'],
                 ].map(([title, body]) => (
                   <div key={title} className="info-card">
                     <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
@@ -245,13 +245,13 @@ export default function ChampionsComplexCaseStudy() {
                 ))}
               </div>
               <p>
-                The challenge was to design a webpage that functions simultaneously as a storytelling platform, a facility showcase, and a donor-conversion engine — all within an existing athletics web ecosystem.
+                The challenge was to design a webpage that functions simultaneously as a storytelling platform, a facility showcase, and a donor-conversion engine - all within an existing athletics web ecosystem.
               </p>
             </Section>
 
             {/* DIGITAL STRATEGY */}
             <Section id="strategy">
-              <SectionLabel>03 — Digital Strategy</SectionLabel>
+              <SectionLabel>03 - Digital Strategy</SectionLabel>
               <h2 className="cs-h2">A conversion system, not an information page.</h2>
               <p>
                 The proposed solution is an immersive single-page campaign experience built on a deliberate six-stage sequence. Each stage serves a specific psychological function in the donor journey. The page does not ask for money until belief, trust, and legacy have been established.
@@ -261,7 +261,7 @@ export default function ChampionsComplexCaseStudy() {
                   { stage: '01 · Awe', label: 'Hero', desc: 'A cinematic exterior rendering or video loop establishes scale and emotional pull. Champions Complex logo, bold campaign headline, and a single CTA: Explore the Vision.' },
                   { stage: '02 · Understanding', label: 'Project Overview', desc: '74,000 sq ft renovation. Centralized student-athlete hub. Baseball and softball returning to main campus. Impact on 450+ Rocket student-athletes.' },
                   { stage: '03 · Trust', label: 'Campaign Momentum', desc: 'Fundraising progress bar, leadership gift recognition, donor confidence messaging, and testimonial grid. Shows that the campaign is real and moving.' },
-                  { stage: '04 · Exploration', label: 'Facility Storytelling', desc: 'Each space — Academic Center, Performance Dining, Central Hub, locker rooms, indoor turf, Champions Corridor — gets its own section with a dedicated rendering and student-athlete benefit.' },
+                  { stage: '04 · Exploration', label: 'Facility Storytelling', desc: 'Each space - Academic Center, Performance Dining, Central Hub, locker rooms, indoor turf, Champions Corridor - gets its own section with a dedicated rendering and student-athlete benefit.' },
                   { stage: '05 · Legacy', label: 'Naming-Rights', desc: 'Premium spaces for major gifts, sport-specific donor opportunities, corporate partnership options. Donors see how their gift becomes part of the facility permanently.' },
                   { stage: '06 · Action', label: 'Donation Pathway', desc: 'Clear giving CTA, Rocket Fund integration, mobile-friendly flow, recurring and pledge-friendly options. Placed after emotional and rational buy-in has been built.' },
                 ].map(({ stage, label, desc }) => (
@@ -275,27 +275,27 @@ export default function ChampionsComplexCaseStudy() {
                 ))}
               </div>
               <p>
-                A donor who arrives at the Action stage has already been guided through awe, context, social proof, exploration, and legacy imagination. The donate button is the logical next step — not an interruption.
+                A donor who arrives at the Action stage has already been guided through awe, context, social proof, exploration, and legacy imagination. The donate button is the logical next step - not an interruption.
               </p>
             </Section>
 
             {/* INFORMATION ARCHITECTURE */}
             <Section id="ia">
-              <SectionLabel>04 — Donor Journey Architecture</SectionLabel>
+              <SectionLabel>04 - Donor Journey Architecture</SectionLabel>
               <h2 className="cs-h2">Every section earns the one that follows it.</h2>
               <p>
-                The page&apos;s information architecture is organized around donor psychology, not facility logistics. Spaces are introduced in the order that maximizes belief — not alphabetically or by square footage.
+                The page&apos;s information architecture is organized around donor psychology, not facility logistics. Spaces are introduced in the order that maximizes belief - not alphabetically or by square footage.
               </p>
               <h3 className="cs-h3">Facility sections in narrative order</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 24 }}>
                 {[
-                  ['Exterior & Campus Context', 'Opens with the full vision — what the building becomes, how it fits the campus, and what it signals to recruits.'],
+                  ['Exterior & Campus Context', 'Opens with the full vision - what the building becomes, how it fits the campus, and what it signals to recruits.'],
                   ['Academic Center', 'Leads with student-athlete success. Academics first positions the facility as a development investment, not just an athletic perk.'],
-                  ['Central Hub', 'The shared heart of the facility. Emphasizes community and cross-sport connection — the building as a home, not a collection of rooms.'],
+                  ['Central Hub', 'The shared heart of the facility. Emphasizes community and cross-sport connection - the building as a home, not a collection of rooms.'],
                   ['Performance Dining Center', 'Nutrition as competitive advantage. Connects the physical space to performance outcomes on the field.'],
-                  ['Baseball & Softball Locker Rooms', 'The campus return story. Emotionally resonant for alumni and sport-specific donors — a promise kept.'],
+                  ['Baseball & Softball Locker Rooms', 'The campus return story. Emotionally resonant for alumni and sport-specific donors - a promise kept.'],
                   ['Indoor Training Turf', '11,000+ sq ft of year-round practice capacity. Recruiting and preparation argument made visually concrete.'],
-                  ['Champions Corridor', 'History, legacy, and donor recognition. Sets up the naming-rights section naturally — donors see where they fit in the story.'],
+                  ['Champions Corridor', 'History, legacy, and donor recognition. Sets up the naming-rights section naturally - donors see where they fit in the story.'],
                   ['Wellness & Support Spaces', 'Holistic student-athlete care. Closes the facility tour before the giving section with a values-aligned message.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.06)', borderRadius: 6 }}>
@@ -318,7 +318,7 @@ export default function ChampionsComplexCaseStudy() {
 
             {/* RENDERING STRATEGY */}
             <Section id="rendering">
-              <SectionLabel>05 — Rendering Strategy</SectionLabel>
+              <SectionLabel>05 - Rendering Strategy</SectionLabel>
               <h2 className="cs-h2">Renderings as narrative evidence, not decorative assets.</h2>
               <p>
                 The blueprint maps each of the ten architectural renderings directly into a specific section of the donor narrative, rather than placing them in a generic gallery. Each rendering earns its position by answering a donor question or advancing the story.
@@ -341,10 +341,10 @@ export default function ChampionsComplexCaseStudy() {
 
             {/* BRAND STRATEGY */}
             <Section id="brand">
-              <SectionLabel>06 — Brand Strategy</SectionLabel>
+              <SectionLabel>06 - Brand Strategy</SectionLabel>
               <h2 className="cs-h2">Brand consistency is institutional credibility.</h2>
               <p>
-                The webpage strictly follows University of Toledo brand standards. Every color, type choice, and copy tone is a signal to donors that this is a serious, credible institutional campaign — not a side project.
+                The webpage strictly follows University of Toledo brand standards. Every color, type choice, and copy tone is a signal to donors that this is a serious, credible institutional campaign - not a side project.
               </p>
 
               <h3 className="cs-h3">Color system</h3>
@@ -370,7 +370,7 @@ export default function ChampionsComplexCaseStudy() {
                 <div className="accent-card">
                   <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Typography</div>
                   <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
-                    {['Poppins — primary font family', 'Heavy weights for bold headlines', 'Light/regular for body text', 'Strong spacing for donor readability', 'Accessible contrast throughout'].map(i => (
+                    {['Poppins - primary font family', 'Heavy weights for bold headlines', 'Light/regular for body text', 'Strong spacing for donor readability', 'Accessible contrast throughout'].map(i => (
                       <li key={i} style={{ fontSize: 13, marginBottom: 5, lineHeight: 1.5 }}>{i}</li>
                     ))}
                   </ul>
@@ -388,10 +388,10 @@ export default function ChampionsComplexCaseStudy() {
 
             {/* TECHNICAL PLATFORM */}
             <Section id="platform">
-              <SectionLabel>07 — Technical Platform</SectionLabel>
-              <h2 className="cs-h2">Sidearm is not a limitation — it is the canvas.</h2>
+              <SectionLabel>07 - Technical Platform</SectionLabel>
+              <h2 className="cs-h2">Sidearm is not a limitation - it is the canvas.</h2>
               <p>
-                The campaign strategy is designed to deploy within the existing University of Toledo Athletics web ecosystem using Sidearm Sports capabilities. The core technical insight is that Sidearm Narrator — the platform&apos;s feature-page builder — can support immersive capital-campaign storytelling when given the right content architecture.
+                The campaign strategy is designed to deploy within the existing University of Toledo Athletics web ecosystem using Sidearm Sports capabilities. The core technical insight is that Sidearm Narrator - the platform&apos;s feature-page builder - can support immersive capital-campaign storytelling when given the right content architecture.
               </p>
 
               <h3 className="cs-h3">Sidearm Narrator capabilities used</h3>
@@ -427,15 +427,15 @@ export default function ChampionsComplexCaseStudy() {
 
             {/* LESSONS */}
             <Section id="lessons">
-              <SectionLabel>08 — Lessons Learned</SectionLabel>
+              <SectionLabel>08 - Lessons Learned</SectionLabel>
               <h2 className="cs-h2">What capital campaign strategy teaches you about digital storytelling.</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
-                  ['Capital campaign websites are conversion systems', 'A page that informs but does not convert has failed. Every design decision — section order, rendering placement, CTA timing — serves the donor journey first.'],
-                  ['Donor trust is built in sequence', 'Trust cannot be front-loaded. Donors need awe, then context, then social proof, then exploration, then legacy — before the ask arrives.'],
+                  ['Capital campaign websites are conversion systems', 'A page that informs but does not convert has failed. Every design decision - section order, rendering placement, CTA timing - serves the donor journey first.'],
+                  ['Donor trust is built in sequence', 'Trust cannot be front-loaded. Donors need awe, then context, then social proof, then exploration, then legacy - before the ask arrives.'],
                   ['Renderings are narrative evidence, not decoration', 'A render placed without context is wallpaper. The same render tied to a student-athlete benefit becomes proof. Placement determines meaning.'],
                   ['Platform constraints sharpen strategy', 'Working within Sidearm Sports was not a limitation. It forced clarity about what actually needs to be custom versus what the platform handles well.'],
-                  ['Two-audience design requires hierarchy, not compromise', 'Major gift donors and grassroots supporters do not need separate pages. They need a page where every section speaks to one of them — with the right elements surfaced for each.'],
+                  ['Two-audience design requires hierarchy, not compromise', 'Major gift donors and grassroots supporters do not need separate pages. They need a page where every section speaks to one of them - with the right elements surfaced for each.'],
                   ['The giving path deserves as much design attention as the hero', 'A donor who is emotionally ready to give and cannot find the path is a failed conversion. Friction kills momentum at exactly the wrong moment.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
@@ -448,14 +448,14 @@ export default function ChampionsComplexCaseStudy() {
               <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
                 <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
-                  This is a blueprint, not a shipped page — the six-stage donor sequence is a hypothesis about what converts, not a measured result. If I take it further, I&apos;d get it live with funnel analytics and A/B testing on CTA copy and placement, so the sequence is validated rather than asserted.
+                  This is a blueprint, not a shipped page - the six-stage donor sequence is a hypothesis about what converts, not a measured result. If I take it further, I&apos;d get it live with funnel analytics and A/B testing on CTA copy and placement, so the sequence is validated rather than asserted.
                 </p>
               </div>
             </Section>
 
             {/* FUTURE */}
             <Section id="future">
-              <SectionLabel>09 — Future Work</SectionLabel>
+              <SectionLabel>09 - Future Work</SectionLabel>
               <h2 className="cs-h2">The blueprint is ready. The build is next.</h2>
               <p>
                 The current work delivers the complete strategic and content architecture for the Champions Complex campaign page. The next phase is live deployment and optimization.
@@ -480,7 +480,7 @@ export default function ChampionsComplexCaseStudy() {
                   The physical facility builds champions. The digital campaign builds belief.
                 </p>
                 <p style={{ fontFamily: SERIF, fontSize: 14, color: '#B8B4A4', margin: 0, lineHeight: 1.6 }}>
-                  Toledo is investing in student-athletes. Toledo is building for competitive excellence. Donors can be part of that legacy — and the webpage&apos;s job is to make that obvious.
+                  Toledo is investing in student-athletes. Toledo is building for competitive excellence. Donors can be part of that legacy - and the webpage&apos;s job is to make that obvious.
                 </p>
               </div>
 

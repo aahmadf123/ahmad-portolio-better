@@ -90,7 +90,7 @@ export function SeasonSimulator() {
   const [result, setResult] = useState<SimResult | null>(null);
   const [runKey, setRunKey] = useState(0);
 
-  // Run only on the client, after mount — keeps SSR output deterministic.
+  // Run only on the client, after mount - keeps SSR output deterministic.
   useEffect(() => {
     setResult(simulate(trueQuality / 100, games));
   }, [trueQuality, games, runKey]);
@@ -115,7 +115,7 @@ export function SeasonSimulator() {
               color: 'var(--text3)', marginBottom: 6, display: 'flex', justifyContent: 'space-between',
             }}>
               <span>True team quality</span>
-              <span style={{ color: GOLD }}>{trueQuality}% — wins {trueQuality}% of games, forever</span>
+              <span style={{ color: GOLD }}>{trueQuality}% - wins {trueQuality}% of games, forever</span>
             </div>
             <input
               type="range" min={40} max={80} step={1} value={trueQuality}
@@ -357,7 +357,7 @@ export function EvidencePerSeason() {
           record lands anywhere from <strong style={{ color: '#F2EDD8' }}>{Math.round(sel.lo * 100)}%</strong> to{' '}
           <strong style={{ color: '#F2EDD8' }}>{Math.round(sel.hi * 100)}%</strong> (95% range).
           {sel.games <= 17
-            ? ' That interval spans everything from "fire the coach" to "conference title contender" — from the same underlying team.'
+            ? ' That interval spans everything from "fire the coach" to "conference title contender" - from the same underlying team.'
             : ' A longer season shrinks luck. The record starts to mean something on its own.'}
         </div>
       </div>
@@ -371,10 +371,10 @@ export function EvidencePerSeason() {
 }
 
 // ── 3. Roster Half-Life ─────────────────────────────────────────────────────
-// The sample doesn't just stay small — it dissolves. Step through seasons and
+// The sample doesn't just stay small - it dissolves. Step through seasons and
 // watch how much of Year 1's roster is still generating data.
 
-const ROSTER_SIZE = 66; // 6 rows × 11 — illustrative scholarship core
+const ROSTER_SIZE = 66; // 6 rows × 11 - illustrative scholarship core
 const YEAR_RETENTION = [1.0, 0.62, 0.35, 0.15]; // illustrative share of Year-1 roster still present
 
 export function RosterHalfLife() {
@@ -461,7 +461,7 @@ export function RosterHalfLife() {
       </div>
 
       <Caption>
-        Illustrative retention pattern for a college roster&apos;s core contributors. Pro teams churn too —
+        Illustrative retention pattern for a college roster&apos;s core contributors. Pro teams churn too -
         but only college guarantees that every single player exits within five years.
       </Caption>
     </div>
@@ -476,25 +476,25 @@ const PLAYBOOK = [
     n: '01', title: 'Change the unit of analysis',
     color: GREEN,
     summary: 'Stop modeling games. Model plays, possessions, and matchups.',
-    detail: 'Twelve games is a hopeless sample — but those twelve games contain roughly 800 offensive snaps, each with down, distance, personnel, formation, and outcome. Dropping one level of granularity turns n=12 into n=800. Two levels (player-play interactions) turns it into thousands. Most of the "small data problem" in sports is really a unit-of-analysis problem.',
+    detail: 'Twelve games is a hopeless sample - but those twelve games contain roughly 800 offensive snaps, each with down, distance, personnel, formation, and outcome. Dropping one level of granularity turns n=12 into n=800. Two levels (player-play interactions) turns it into thousands. Most of the "small data problem" in sports is really a unit-of-analysis problem.',
   },
   {
     n: '02', title: 'Borrow strength from elsewhere',
     color: BLUE,
     summary: 'Hierarchical models let your team learn from every team like it.',
-    detail: 'A partial-pooling model estimates your team as a blend of its own data and the behavior of comparable programs — same conference, similar scheme, similar talent profile. When your sample is thin, the estimate leans on the group; as evidence accumulates, it leans on you. This is decades-old statistics, and it routinely beats a deep model trained on your data alone.',
+    detail: 'A partial-pooling model estimates your team as a blend of its own data and the behavior of comparable programs - same conference, similar scheme, similar talent profile. When your sample is thin, the estimate leans on the group; as evidence accumulates, it leans on you. This is decades-old statistics, and it routinely beats a deep model trained on your data alone.',
   },
   {
     n: '03', title: 'Bring real priors to the table',
     color: GOLD,
     summary: 'Recruiting ratings, returning production, and history are data too.',
-    detail: 'A model that starts every season from zero throws away the best information available: who is on the roster. Recruiting composites, returning-production percentages, and coaching continuity are all measurable before a single game is played — and in college football they carry real predictive weight precisely because the in-season sample never gets big enough to override them.',
+    detail: 'A model that starts every season from zero throws away the best information available: who is on the roster. Recruiting composites, returning-production percentages, and coaching continuity are all measurable before a single game is played - and in college football they carry real predictive weight precisely because the in-season sample never gets big enough to override them.',
   },
   {
     n: '04', title: 'Report uncertainty or report nothing',
     color: PURPLE,
     summary: 'A point estimate from 12 games is a guess wearing a suit.',
-    detail: 'The honest output of a small-sample model is an interval, not a number. "This receiver\'s separation rate is 62% ± 15 points" changes decisions differently than "62%". Coaches handle uncertainty well — they live in it — but only if you surface it instead of burying it under false precision.',
+    detail: 'The honest output of a small-sample model is an interval, not a number. "This receiver\'s separation rate is 62% ± 15 points" changes decisions differently than "62%". Coaches handle uncertainty well - they live in it - but only if you surface it instead of burying it under false precision.',
   },
   {
     n: '05', title: 'Engineer context, not volume',
@@ -506,7 +506,7 @@ const PLAYBOOK = [
     n: '06', title: 'Treat corrections as a data pipeline',
     color: RED,
     summary: 'Every expert correction is training data nobody else has.',
-    detail: 'When a coach or analyst corrects a model\'s output — a mislabeled formation, a wrong route tag — that correction is domain-specific ground truth. Captured systematically, it becomes a private dataset that compounds. In small-data environments, the correction loop is often worth more than the original model.',
+    detail: 'When a coach or analyst corrects a model\'s output - a mislabeled formation, a wrong route tag - that correction is domain-specific ground truth. Captured systematically, it becomes a private dataset that compounds. In small-data environments, the correction loop is often worth more than the original model.',
   },
 ];
 
@@ -613,9 +613,9 @@ export function EvidenceCalculator() {
   const verdict = identical
     ? 'No amount of games can separate identical teams.'
     : gamesNeeded > COLLEGE_CAREER_GAMES
-      ? `That is ${careers.toFixed(1)} entire college careers. Wins alone will never settle it — you need richer data per game.`
+      ? `That is ${careers.toFixed(1)} entire college careers. Wins alone will never settle it - you need richer data per game.`
       : gamesNeeded > 36
-        ? 'Provable eventually — but only across multiple rosters, which means the "team" changed before the evidence arrived.'
+        ? 'Provable eventually - but only across multiple rosters, which means the "team" changed before the evidence arrived.'
         : 'Rare case: the gap is so large that even a short season usually reveals it.';
 
   const sliderRow = (label: string, value: number, setter: (n: number) => void, color: string) => (
@@ -669,7 +669,7 @@ export function EvidenceCalculator() {
               In college seasons
             </div>
             <div style={{ fontFamily: MONO, fontSize: 24, color: GREEN, lineHeight: 1 }}>
-              {identical ? '—' : seasons >= 100 ? '100+' : seasons.toFixed(1)}
+              {identical ? '-' : seasons >= 100 ? '100+' : seasons.toFixed(1)}
             </div>
           </div>
           <div style={{ padding: '12px 14px', borderRadius: 8, background: `${BLUE}08`, border: `1px solid ${BLUE}25` }}>
@@ -700,7 +700,7 @@ export function EvidenceCalculator() {
 
       <Caption>
         One-sided 95% confidence via normal approximation; a college career is counted as ~{COLLEGE_CAREER_GAMES} games
-        across five seasons. Equal schedules assumed — real college schedules make it harder, not easier.
+        across five seasons. Equal schedules assumed - real college schedules make it harder, not easier.
       </Caption>
     </div>
   );

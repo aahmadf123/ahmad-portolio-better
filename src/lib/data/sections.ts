@@ -1,4 +1,4 @@
-// Chapter registry — single source of truth for section order, numbering, accent
+// Chapter registry - single source of truth for section order, numbering, accent
 // colors, header links, and the ChapterNav dot rail.
 
 export interface SectionDef {

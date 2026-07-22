@@ -92,7 +92,7 @@ function computeHubs(): HubInfo[] {
   });
 }
 
-/** GLSL-style smoothstep — eases the intro-assembly edge/label fade-in. */
+/** GLSL-style smoothstep - eases the intro-assembly edge/label fade-in. */
 function smoothstep(a: number, b: number, x: number): number {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
   return t * t * (3 - 2 * t);
@@ -108,7 +108,7 @@ function hexA(hex: string, a: number): string {
 }
 
 /**
- * Interactive 3D skill constellation — the full skill inventory (currently 88)
+ * Interactive 3D skill constellation - the full skill inventory (currently 88)
  * as instanced nodes clustered by group, connected by co-occurrence edges. A 2D
  * label overlay tracks the rotating clusters every frame (hub names + the top-
  * weight stars); the legend isolates a cluster with a damped camera push-in.
@@ -126,7 +126,7 @@ export function ConstellationCanvas({
   const [tooltip, setTooltip] = useState<Tooltip | null>(null);
   const [zoomIdx, setZoomIdx] = useState(0);
 
-  // Dynamic inputs cross into the (stable) scene effect through refs only — the
+  // Dynamic inputs cross into the (stable) scene effect through refs only - the
   // scene is NEVER rebuilt on focus/zoom change.
   const focusRef = useRef<string | null>(focusGroup);
   const zoomRef = useRef<number>(ZOOM_STEPS[0]);
@@ -188,7 +188,7 @@ export function ConstellationCanvas({
       if (a && b) edgeList.push([a, b]);
     });
 
-    // edgesBase — all edges (the ambient web); edgesFocus — only the focused
+    // edgesBase - all edges (the ambient web); edgesFocus - only the focused
     // cluster's internal edges, brighter, rebuilt on focus.
     const basePos: number[] = [];
     for (const [a, b] of edgeList) basePos.push(a.x, a.y, a.z, b.x, b.y, b.z);
@@ -230,7 +230,7 @@ export function ConstellationCanvas({
     let prevT = 0;
 
     // ── Intro assembly (one-shot: stars stream out from their group hub) ─────
-    // Matrix-ownership contract: while q<1 the intro OWNS every instance matrix —
+    // Matrix-ownership contract: while q<1 the intro OWNS every instance matrix -
     // applyFocus() may recolor but must NOT rewrite matrices, and hover scale-up
     // is suppressed (tooltip still shows). At q>=1 we write the final seat
     // matrices once, then reconcile focus/zoom exactly once, and never touch
@@ -269,7 +269,7 @@ export function ConstellationCanvas({
       ctx.shadowBlur = 4;
       ctx.globalAlpha = introAlpha; // labels fade in as the assembly lands (1 when settled)
 
-      // Hub labels — projected through the SAME world matrix as the stars, so
+      // Hub labels - projected through the SAME world matrix as the stars, so
       // they ride the rotating clusters instead of drifting.
       for (const hub of hubs) {
         if (focus && hub.id !== focus) continue;
@@ -536,7 +536,7 @@ export function ConstellationCanvas({
         if (idx >= 0) setTooltip(makeTooltip(layout[idx], clientX, clientY));
         return;
       }
-      // While the intro owns matrices, only the tooltip/cursor track the pointer —
+      // While the intro owns matrices, only the tooltip/cursor track the pointer -
       // no scale-up, no edge highlight. hovered is still recorded so the finalize
       // can restore the enlarged state if the pointer is resting on a star.
       if (!introDone) {
@@ -593,7 +593,7 @@ export function ConstellationCanvas({
       raycaster.setFromCamera(pointer, host.camera);
       const hits = raycaster.intersectObject(mesh);
       const idx = hits.length > 0 ? hits[0].instanceId ?? -1 : -1;
-      // While focused, de-emphasised nodes are inert — no hover, no click.
+      // While focused, de-emphasised nodes are inert - no hover, no click.
       if (idx >= 0 && focusRef.current && layout[idx].group !== focusRef.current) return -1;
       return idx;
     };
@@ -647,7 +647,7 @@ export function ConstellationCanvas({
     };
   }, [onSelect]);
 
-  // Bridge dynamic props into the running scene — refs, so ZERO scene rebuilds.
+  // Bridge dynamic props into the running scene - refs, so ZERO scene rebuilds.
   useEffect(() => {
     focusRef.current = focusGroup;
     applyFocusRef.current?.();
@@ -677,7 +677,7 @@ export function ConstellationCanvas({
 
   return (
     <div ref={mountRef} style={{ position: 'relative', width: '100%', height: 'clamp(420px, 58vh, 620px)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--bd)', background: 'radial-gradient(ellipse 70% 60% at 50% 45%, rgba(45,212,191,0.04), transparent 75%)' }}>
-      {/* 2D label overlay — sits above the WebGL canvas, below the tooltip/card */}
+      {/* 2D label overlay - sits above the WebGL canvas, below the tooltip/card */}
       <canvas ref={labelRef} data-labels aria-hidden style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 2 }} />
 
       {/* zoom controls */}

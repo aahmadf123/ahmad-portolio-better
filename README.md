@@ -1,4 +1,4 @@
-# ahmadfx.xyz — cinematic portfolio
+# ahmadfx.xyz - cinematic portfolio
 
 Ahmad Firas's portfolio: a scroll-driven, cinematic personal journey built on
 Next.js 16 (App Router), TypeScript, Tailwind v4, framer-motion, GSAP, and
@@ -15,7 +15,7 @@ npm run lint
 
 ## Editing content
 
-All site content lives in typed data modules — no component surgery needed:
+All site content lives in typed data modules - no component surgery needed:
 
 | What | Where |
 | --- | --- |
@@ -69,13 +69,13 @@ Without a gateway token or direct provider key, the panel shows a "warming up" s
 
 Abuse controls (no database): signed-cookie sliding window (10 messages /
 10 min, 30 / day), a per-instance IP backstop, message count/length caps, and
-a 600-token output cap. These bound cost but are best-effort on serverless —
+a 600-token output cap. These bound cost but are best-effort on serverless -
 **set a spend limit in the provider console** as the final backstop.
 
 ## Fonts
 
 Display: Instrument Serif · Body: Figtree (stand-in for Satoshi) · Code:
-JetBrains Mono · Handwritten: Caveat — all via `next/font`. To switch the body
+JetBrains Mono · Handwritten: Caveat - all via `next/font`. To switch the body
 font to Satoshi: download the variable WOFF2 from
 [fontshare.com/fonts/satoshi](https://www.fontshare.com/fonts/satoshi), drop it
 in `src/app/fonts/`, and swap the `Figtree` loader in `src/app/layout.tsx` for

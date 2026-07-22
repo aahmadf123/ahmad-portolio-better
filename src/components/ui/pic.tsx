@@ -1,7 +1,7 @@
 // Dependency-free, server-safe responsive <img> wrapper. No hooks, no
-// 'use client' — usable from Server and Client Components alike. Reads
+// 'use client' - usable from Server and Client Components alike. Reads
 // sizing/variants from the build-time manifest (scripts/optimize-images.mjs)
-// keyed by ORIGINAL public path so components never slugify — script/
+// keyed by ORIGINAL public path so components never slugify - script/
 // component drift is impossible, and any not-yet-migrated path still
 // renders (graceful fallback to a plain <img>).
 import type { ImgHTMLAttributes } from 'react';
@@ -53,7 +53,7 @@ export function Pic({
   const entry = IMAGE_MANIFEST[decodeKey(src)];
 
   if (!entry) {
-    // Not (yet) covered by the manifest — render the original path directly
+    // Not (yet) covered by the manifest - render the original path directly
     // so the image still shows up; just without responsive variants.
     return (
       // eslint-disable-next-line @next/next/no-img-element
@@ -77,7 +77,7 @@ export function Pic({
 
   // Containers that already fix their own aspect ratio via absolute-fill
   // sizing (position:absolute + inset:0-style CSS) don't need the intrinsic
-  // width/height hint — the CSS fully determines the box either way, but an
+  // width/height hint - the CSS fully determines the box either way, but an
   // absolute-fill image is deliberately cropped to a foreign aspect ratio,
   // so the manifest's native w/h would be a misleading hint. Everything
   // else gets it for the CLS guard.

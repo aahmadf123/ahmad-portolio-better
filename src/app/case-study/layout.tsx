@@ -11,11 +11,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
   if (!project) {
     return {
-      title: `Case Study — ${site.name}`,
+      title: `Case Study - ${site.name}`,
     };
   }
 
-  const title = `${project.title} — Case Study · ${site.name}`;
+  const title = `${project.title} - Case Study · ${site.name}`;
   const description = project.story ?? project.headline;
   const url = `${site.url}/case-study/${project.slug}`;
 

@@ -1,4 +1,4 @@
-// Certifications — extracted verbatim from the original Skills section.
+// Certifications - extracted verbatim from the original Skills section.
 // NOTE: these are the only certifications that exist. There is no IBM certification;
 // the AI assistant's system prompt asserts this explicitly.
 
@@ -28,7 +28,7 @@ export const certs: Cert[] = [
     track: 'Cloud Infrastructure',
     title: 'Cloud Infrastructure Foundations Associate',
     description:
-      'Foundational knowledge of Oracle Cloud Infrastructure (OCI) core services — compute, storage, networking, identity and access management, security, pricing, and the OCI architecture model.',
+      'Foundational knowledge of Oracle Cloud Infrastructure (OCI) core services - compute, storage, networking, identity and access management, security, pricing, and the OCI architecture model.',
     skills: ['OCI', 'Cloud Computing', 'IAM', 'Networking', 'Cloud Security'],
     badgeImage: '/Images/Oracle_Foundation_Badge.jpg',
     verifyUrl:
@@ -56,7 +56,7 @@ export const certs: Cert[] = [
     track: 'Quantum Computing',
     title: 'Superposition',
     description:
-      "The superposition principle — where it comes from, why it's necessary, and what you can do with it. Covers superposition in waves, in the quantum world, in the abstract, and its role in quantum computing.",
+      "The superposition principle - where it comes from, why it's necessary, and what you can do with it. Covers superposition in waves, in the quantum world, in the abstract, and its role in quantum computing.",
     skills: ['Quantum Computing', 'Qubits', 'Superposition', 'Quantum Circuits'],
     badgeImage: '/Images/BlackOpal_SuperpositionBadge.png',
     verifyUrl: 'https://black.q-ctrl.com/badge/70fdb1da-8ba7-40ea-ad6b-2460f7542376',
@@ -65,7 +65,7 @@ export const certs: Cert[] = [
   },
 ];
 
-/** In-progress certifications — feed the LearningMarquee and Now section. */
+/** In-progress certifications - feed the LearningMarquee and Now section. */
 export const certPursuits: CertPursuit[] = [
   { title: 'OCI Certified Application Integration Professional', sub: 'Oracle · Exam 1Z0-1042-26' },
   { title: 'Microsoft Certified: AI Transformation Leader', sub: 'Exam prep underway' },
