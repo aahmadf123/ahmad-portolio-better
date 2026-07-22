@@ -1,6 +1,6 @@
-// About — beliefs and bio extracted verbatim; the three-lens structure is new
+// About - beliefs and bio extracted verbatim; the three-lens structure is new
 // (assembled from existing copy). Personal data points marked TODO await real
-// details from Ahmad — everything else is sourced from the site's own text.
+// details from Ahmad - everything else is sourced from the site's own text.
 
 export interface Belief {
   n: string;
@@ -44,13 +44,13 @@ export const about: AboutData = {
       n: '01',
       color: '#f59e0b',
       title: 'Interdisciplinary by instinct',
-      body: "The skill that transfers between fields isn't domain knowledge — it's knowing how to ask the right question when you don't have home-field advantage.",
+      body: "The skill that transfers between fields isn't domain knowledge - it's knowing how to ask the right question when you don't have home-field advantage.",
     },
     {
       n: '02',
       color: '#5b8af5',
       title: 'Human-in-the-loop by design',
-      body: "A system someone can't override isn't autonomous — it's unpredictable. The recovery mechanism is part of the design, not an afterthought.",
+      body: "A system someone can't override isn't autonomous - it's unpredictable. The recovery mechanism is part of the design, not an afterthought.",
     },
     {
       n: '03',
@@ -65,7 +65,7 @@ export const about: AboutData = {
       title: 'Engineer',
       kicker: 'Lens 01',
       lead: 'Systems that hold up when someone is counting on them.',
-      body: 'From a PostgreSQL security database with zero data loss across every disaster-recovery test, to Oracle Cloud enterprise applications at First Solar — the through-line is engineering for the moment things go wrong, not just the demo. Human-in-the-loop by design; recovery mechanisms as first-class features.',
+      body: 'From a PostgreSQL security database with zero data loss across every disaster-recovery test, to Oracle Cloud enterprise applications at First Solar - the through-line is engineering for the moment things go wrong, not just the demo. Human-in-the-loop by design; recovery mechanisms as first-class features.',
       beliefIds: ['02', '03'],
       dataPoint: { label: 'Track record', value: '0 data loss across all DR simulations' },
       artifacts: [{ label: 'Experience timeline', href: '#timeline' }],
@@ -75,7 +75,7 @@ export const about: AboutData = {
       title: 'Builder',
       kicker: 'Lens 02',
       lead: 'Ten projects, each a different operating condition.',
-      body: 'A drone that navigates unseen worlds, a city reporting tool in production downtown, an insurance model that watches itself drift, a chemical car that won worldwide. Not by design, but by instinct: going where the hardest problems are — and shipping.',
+      body: 'A drone that navigates unseen worlds, a city reporting tool in production downtown, an insurance model that watches itself drift, a chemical car that won worldwide. Not by design, but by instinct: going where the hardest problems are - and shipping.',
       beliefIds: ['01'],
       dataPoint: { label: 'In production', value: 'battingcleanup.appliedlabs.org · downtown Toledo' },
       artifacts: [
@@ -88,9 +88,9 @@ export const about: AboutData = {
       title: 'Thinker',
       kicker: 'Lens 03',
       lead: 'Writing down what the work keeps teaching.',
-      body: 'An ACM Computing Surveys taxonomy of how AI actually fails. Field notes on what "agentic" really means in production. Quantum computing certificates earned for curiosity, not the résumé. The questions compound faster than the answers — that is the point.',
+      body: 'An ACM Computing Surveys taxonomy of how AI actually fails. Field notes on what "agentic" really means in production. Quantum computing certificates earned for curiosity, not the résumé. The questions compound faster than the answers - that is the point.',
       beliefIds: ['01', '02'],
-      dataPoint: { label: 'Thinking in public', value: '46 field notes planned · 8 categories' },
+      dataPoint: { label: 'Thinking in public', value: 'Essays written when the work earns them' },
       artifacts: [
         { label: 'Field notes', href: '/field-notes' },
         { label: 'Research', href: '#research' },
@@ -99,6 +99,6 @@ export const about: AboutData = {
   ],
   signOff: {
     text: "Let's build something real.",
-    sub: '— Ahmad',
+    sub: '- Ahmad',
   },
 };

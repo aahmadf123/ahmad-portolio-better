@@ -4,7 +4,7 @@ import React from 'react';
 import type { StoryScene } from '@/lib/data/story';
 
 /**
- * Code-drawn cinematic scene art for each story chapter — stroke-based SVG,
+ * Code-drawn cinematic scene art for each story chapter - stroke-based SVG,
  * accent-tinted, with slow dash drift (killed globally under reduced motion).
  * Swap for photography later by replacing the scene per chapter in story.ts.
  */
@@ -174,7 +174,7 @@ export function ChapterScene({ scene, accent }: { scene: StoryScene; accent: str
             <rect x="486" y="184" width="50" height="32" rx="6" />
             <path className="scene-flow" d="M 366 176 C 420 168, 430 148, 466 142" strokeDasharray="4 8" />
           </g>
-          <text x="300" y="576" textAnchor="middle" fill={accent} fillOpacity="0.6" fontSize="13" letterSpacing="5" fontFamily="var(--font-code), monospace">VBCS · OIC · BIP — ENTERPRISE SCALE</text>
+          <text x="300" y="576" textAnchor="middle" fill={accent} fillOpacity="0.6" fontSize="13" letterSpacing="5" fontFamily="var(--font-code), monospace">VBCS · OIC · BIP - ENTERPRISE SCALE</text>
         </svg>
       );
 

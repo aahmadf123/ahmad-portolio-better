@@ -12,8 +12,7 @@ import { sectionById } from '@/lib/data/sections';
 /**
  * Field Notes as an editorial spread: the featured essay gets the full
  * magazine treatment (dateline, pull excerpt, hero image with the shared
- * view-transition morph); upcoming registry titles appear as an intentional
- * "in the darkroom" strip. All registry content preserved.
+ * view-transition morph). Only published essays are surfaced.
  */
 export function FieldNotesSection() {
   const def = sectionById('field-notes')!;
@@ -23,7 +22,6 @@ export function FieldNotesSection() {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   const featured = published[0];
   const rest = published.slice(1, 3);
-  const upNext = fieldNotes.filter(n => !n.published).slice(0, 4);
   const catColor = featured ? (CATEGORY_CONFIG[featured.category]?.color ?? def.color) : def.color;
 
   return (
@@ -35,10 +33,10 @@ export function FieldNotesSection() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
               <span style={{ display: 'inline-block', width: 22, height: 1.5, background: def.color, opacity: 0.6, flexShrink: 0 }} />
               <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: def.color }}>Field Notes</span>
-              <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.06em', textTransform: 'uppercase' }}>— the editorial desk</span>
+              <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.06em', textTransform: 'uppercase' }}>The editorial desk</span>
             </div>
             <p style={{ fontSize: 15, color: FG2, maxWidth: 500, lineHeight: 1.65, marginTop: 4, fontFamily: SANS }}>
-              Thinking in public — dispatches from the edge of AI, robotics, and real-world systems.
+              Thinking in public: dispatches from the edge of AI, robotics, and real-world systems.
             </p>
           </div>
         </div>
@@ -113,8 +111,9 @@ export function FieldNotesSection() {
         </m.div>
       )}
 
-      {/* Secondary published (when more essays ship) + darkroom strip */}
-      <div className="fn-lower" style={{ display: 'grid', gridTemplateColumns: rest.length > 0 ? 'repeat(2, 1fr)' : '1fr', gap: 14, marginTop: 14 }}>
+      {/* Secondary published essays */}
+      {rest.length > 0 && (
+        <div className="fn-lower" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14, marginTop: 14 }}>
         {rest.map((note) => {
           const c = CATEGORY_CONFIG[note.category]?.color ?? def.color;
           return (
@@ -125,29 +124,14 @@ export function FieldNotesSection() {
             </Link>
           );
         })}
-
-        <div style={{ border: '1px dashed var(--bd2)', borderRadius: 10, padding: '18px 20px', background: 'rgba(244,244,242,0.012)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-            <span className="pulse" style={{ width: 5, height: 5, borderRadius: '50%', background: def.color, display: 'inline-block' }} />
-            <span style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.14em', textTransform: 'uppercase' }}>In the darkroom — more essays in progress</span>
-          </div>
-          <div className="fn-upnext" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px 20px' }}>
-            {upNext.map((n) => (
-              <div key={n.slug} style={{ fontFamily: SANS, fontSize: 12.5, color: FG3, lineHeight: 1.5, display: 'flex', gap: 8 }}>
-                <span aria-hidden style={{ color: CATEGORY_CONFIG[n.category]?.color ?? FG3, opacity: 0.6, flexShrink: 0 }}>◦</span>
-                {n.title}
-              </div>
-            ))}
-          </div>
         </div>
-      </div>
+      )}
 
       <style>{`
         @media (max-width: 820px) {
           .fn-featured { grid-template-columns: 1fr !important; }
           .fn-featured > div:last-child { min-height: 200px !important; order: -1; }
           .fn-lower { grid-template-columns: 1fr !important; }
-          .fn-upnext { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </Section>

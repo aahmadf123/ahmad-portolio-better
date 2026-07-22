@@ -1,6 +1,7 @@
 import React from 'react';
 import { ViewTransition } from 'react';
 import Link from 'next/link';
+import { SmartBackLink } from '@/components/ui/smart-back-link';
 import type { Metadata } from 'next';
 import { getFieldNote, fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
 import { site } from '@/lib/data/site';
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!note) return {};
   const url = `${site.url}/field-notes/${note.slug}`;
   return {
-    title: `${note.title} — Field Notes`,
+    title: `${note.title} - Field Notes`,
     description: note.excerpt,
     keywords: note.tags,
     alternates: { canonical: url },
@@ -89,17 +90,17 @@ export default async function FieldNotePage({ params }: PageProps) {
         background: 'rgba(13,14,18,0.97)',
         backdropFilter: 'blur(20px)',
       }}>
-        <Link href="/field-notes" style={{
+        <SmartBackLink fallbackHref="/field-notes" backWhenPrev={['/', '/field-notes']} style={{
           display: 'flex', alignItems: 'center', gap: 8,
           color: '#B8B4A4', fontFamily: MONO, fontSize: 10,
           letterSpacing: '0.08em', textTransform: 'uppercase',
           textDecoration: 'none', transition: 'color 0.2s',
-        }} transitionTypes={['nav-back']}>
+        }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5" /><path d="M12 5l-7 7 7 7" />
           </svg>
-          Field Notes
-        </Link>
+          Back
+        </SmartBackLink>
 
         {catCfg && (
           <span style={{
@@ -173,7 +174,7 @@ export default async function FieldNotePage({ params }: PageProps) {
             }}>
               <Pic
                 src={note.heroImage}
-                alt={`${note.title} — hero visualization`}
+                alt={`${note.title} - hero visualization`}
                 style={{ width: '100%', height: 'auto', display: 'block' }}
                 priority
               />
@@ -227,7 +228,7 @@ export default async function FieldNotePage({ params }: PageProps) {
 
         {/* Navigation */}
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-          <Link href="/field-notes" style={{
+          <Link href="/field-notes" transitionTypes={['nav-forward']} style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '10px 18px',
             border: '1px solid rgba(242,237,216,0.12)',
@@ -237,7 +238,7 @@ export default async function FieldNotePage({ params }: PageProps) {
           }}>
             ← All Field Notes
           </Link>
-          <Link href="/" style={{
+          <Link href="/#field-notes" style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '10px 18px',
             border: '1px solid rgba(242,237,216,0.12)',

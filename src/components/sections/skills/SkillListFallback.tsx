@@ -32,7 +32,7 @@ function SkillGroupCard({ group }: { group: SkillGroup }) {
   );
 }
 
-/** The complete skill inventory (currently 88 chips) — the accessible/searchable ground truth. */
+/** The complete skill inventory (currently 88 chips) - the accessible/searchable ground truth. */
 export function SkillListFallback() {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }} className="three-col-skills">

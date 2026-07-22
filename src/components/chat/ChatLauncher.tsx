@@ -9,7 +9,7 @@ import { MONO } from '@/components/shared/section-helpers';
 const ChatPanel = dynamic(() => import('./ChatPanel').then((m) => ({ default: m.ChatPanel })), { ssr: false });
 
 /**
- * Floating "Ask Ahmad" bubble — bottom-right, above everything, zero chat JS
+ * Floating "Ask Ahmad" bubble - bottom-right, above everything, zero chat JS
  * in the initial bundle. Opens the streaming panel on click.
  */
 export function ChatLauncher() {
@@ -21,7 +21,7 @@ export function ChatLauncher() {
       {!open && (
         <button
           onClick={() => { setOpen(true); setLoaded(true); }}
-          aria-label="Open Ask Ahmad — AI assistant"
+          aria-label="Open Ask Ahmad - AI assistant"
           data-magnetic=""
           className="chat-launcher"
           style={{

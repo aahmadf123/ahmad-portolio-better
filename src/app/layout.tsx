@@ -7,6 +7,7 @@ import { PostHogProvider } from "@/components/PostHogProvider";
 import { MotionProvider } from "@/lib/motion/lazy";
 import { ChatLauncher } from "@/components/chat/ChatLauncher";
 import { ChapterNav } from "@/components/layout/ChapterNav";
+import { RouteTracker } from "@/components/ui/route-tracker";
 import { NowPlayingBar } from "@/components/layout/NowPlayingBar";
 import { FootballEasterEgg } from "@/components/effects/FootballEasterEgg";
 import { Analytics } from "@vercel/analytics/next";
@@ -21,7 +22,7 @@ const displayFont = Instrument_Serif({
   display: "swap",
 });
 
-// Body: Figtree stands in for Satoshi (Fontshare download is manual — to swap,
+// Body: Figtree stands in for Satoshi (Fontshare download is manual - to swap,
 // drop Satoshi-Variable.woff2 into src/app/fonts and switch this loader to
 // next/font/local; every component reads var(--font-body).
 const bodyFont = Figtree({
@@ -45,11 +46,11 @@ const handFont = Caveat({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ahmadfx.xyz"),
   title: {
-    default: "Ahmad Firas — Agentic AI Engineer",
+    default: "Ahmad Firas - Agentic AI Engineer",
     template: "%s · Ahmad Firas",
   },
   description:
-    "Ahmad Firas — Agentic AI Engineer, Sports Analytics, Researcher. Building agentic AI, autonomous UAV systems, sports analytics, and production-grade ML infrastructure.",
+    "Ahmad Firas - Agentic AI Engineer, Sports Analytics, Researcher. Building agentic AI, autonomous UAV systems, sports analytics, and production-grade ML infrastructure.",
   keywords: [
     "Agentic AI",
     "AI Research",
@@ -81,7 +82,7 @@ export const metadata: Metadata = {
     url: "https://ahmadfx.xyz/",
     siteName: "Ahmad Firas",
     locale: "en_US",
-    title: "Ahmad Firas — Agentic AI Engineer",
+    title: "Ahmad Firas - Agentic AI Engineer",
     description:
       "Building AI systems for uncertain environments: from UAV autonomy research to enterprise agentic workflows.",
     images: [
@@ -89,14 +90,14 @@ export const metadata: Metadata = {
         url: "/Images/optimized/og.png",
         width: 1200,
         height: 630,
-        alt: "Ahmad Firas — Agentic AI Engineer portfolio preview",
+        alt: "Ahmad Firas - Agentic AI Engineer portfolio preview",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     creator: "@ahmadfirasazfar",
-    title: "Ahmad Firas — Agentic AI Engineer",
+    title: "Ahmad Firas - Agentic AI Engineer",
     description:
       "Building AI systems for uncertain environments: from UAV autonomy research to enterprise agentic workflows.",
     images: ["/Images/optimized/og.png"],
@@ -142,7 +143,7 @@ const personJsonLd = {
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Ahmad Firas — Agentic AI Engineer",
+  name: "Ahmad Firas - Agentic AI Engineer",
   url: site.url,
   inLanguage: "en",
   author: { "@type": "Person", name: "Ahmad Firas" },
@@ -190,6 +191,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd).replace(/</g, "\\u003c") }}
         />
         <ChapterNav />
+        <RouteTracker />
         <NowPlayingBar />
         <FootballEasterEgg />
         <ChatLauncher />

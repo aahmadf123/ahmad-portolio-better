@@ -1,4 +1,4 @@
-// Press / Featured In — extracted verbatim from the original FeaturedIn section.
+// Press / Featured In - extracted verbatim from the original FeaturedIn section.
 
 export interface PressFeature {
   outlet: string;

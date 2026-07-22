@@ -1,4 +1,4 @@
-// Work experience — extracted verbatim from the original Experience section.
+// Work experience - extracted verbatim from the original Experience section.
 // startDate/endDate (ISO yyyy-mm) added for timeline ordering; content unchanged.
 
 export interface Job {
@@ -117,7 +117,7 @@ export const jobs: Job[] = [
     color: '#a78bfa',
     logo: '/Images/grange_insurance_logo.png',
     description:
-      'Led interdisciplinary team delivering a production-grade MLOps insurance risk model. Designed Airflow + MLflow pipeline with drift monitoring and HITL gates — automating the full ML lifecycle from data ingestion through deployment. Achieved R² = 0.982, outperforming the GLM baseline by 26%, while reducing manual actuarial review by 75%.',
+      'Led interdisciplinary team delivering a production-grade MLOps insurance risk model. Designed Airflow + MLflow pipeline with drift monitoring and HITL gates - automating the full ML lifecycle from data ingestion through deployment. Achieved R² = 0.982, outperforming the GLM baseline by 26%, while reducing manual actuarial review by 75%.',
     achievements: [
       'R² = 0.982 · 26% over GLM baseline',
       '75% reduction in manual review',
@@ -138,7 +138,7 @@ export const jobs: Job[] = [
     color: '#f0823c',
     logo: '/Images/park%20place_logo.png',
     description:
-      'Architected and implemented a data governance framework consolidating security data from Active Directory, Cisco AMP, and Microsoft Defender into a centralized PostgreSQL database. Implemented validation rules catching 95% of non-compliant entries during ingestion. Revamped disaster recovery protocol — achieving zero data loss across all quarterly DR simulations.',
+      'Architected and implemented a data governance framework consolidating security data from Active Directory, Cisco AMP, and Microsoft Defender into a centralized PostgreSQL database. Implemented validation rules catching 95% of non-compliant entries during ingestion. Revamped disaster recovery protocol - achieving zero data loss across all quarterly DR simulations.',
     achievements: [
       '15% faster incident response',
       '95% data integrity rate',

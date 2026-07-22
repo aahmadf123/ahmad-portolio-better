@@ -1,7 +1,7 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
@@ -152,10 +152,10 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
         padding: '0 clamp(20px, 5vw, 80px)',
         height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
       }}>
-        <Link href="/#projects" transitionTypes={['nav-back']} style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <SmartBackLink fallbackHref="/#projects" style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
           Portfolio
-        </Link>
+        </SmartBackLink>
         <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Toledo Athletics Onboarding Portal</span>
         <div style={{ width: 80 }} />
       </header>
@@ -207,10 +207,10 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
 
             {/* OVERVIEW */}
             <Section id="overview">
-              <SectionLabel>01 — Overview</SectionLabel>
+              <SectionLabel>01 - Overview</SectionLabel>
               <h2 className="cs-h2">Onboarding is a knowledge-management problem</h2>
               <p>
-                The Toledo Athletics Onboarding Portal is an internal web platform built for the University of Toledo Athletics Department. Its purpose is to help new employees quickly understand the department&apos;s structure, policies, tools, compliance expectations, and day-to-day operating environment — without relying on scattered documents, email chains, and informal conversations.
+                The Toledo Athletics Onboarding Portal is an internal web platform built for the University of Toledo Athletics Department. Its purpose is to help new employees quickly understand the department&apos;s structure, policies, tools, compliance expectations, and day-to-day operating environment - without relying on scattered documents, email chains, and informal conversations.
               </p>
               <p>
                 A Division I athletics department is not a normal workplace. New staff must navigate university HR, NCAA compliance, Title IX, NIL rules, student-athlete support systems, brand standards, facilities, ticketing, development, communications, IT systems, campus logistics, and athletics-specific workflows simultaneously.
@@ -222,19 +222,19 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
 
             {/* PROBLEM */}
             <Section id="problem">
-              <SectionLabel>02 — Problem</SectionLabel>
+              <SectionLabel>02 - Problem</SectionLabel>
               <h2 className="cs-h2">New staff face a steep learning curve in a high-compliance environment</h2>
               <p>
-                Incoming athletics staff need answers to questions that span a dozen different functional areas — often before anyone has had time to explain them. Without a centralized system, onboarding becomes inconsistent: new employees waste time searching for answers, supervisors repeat the same explanations, and outdated information can create operational or compliance risk.
+                Incoming athletics staff need answers to questions that span a dozen different functional areas - often before anyone has had time to explain them. Without a centralized system, onboarding becomes inconsistent: new employees waste time searching for answers, supervisors repeat the same explanations, and outdated information can create operational or compliance risk.
               </p>
               <div className="two-col-taop" style={{ marginBottom: 24 }}>
                 {[
                   ['Compliance exposure', 'NCAA, Title IX, NIL, FERPA, and HR rules require timely understanding. Incorrect or missing guidance creates institutional risk.'],
                   ['Scattered knowledge', 'Critical information lives across web pages, PDFs, emails, internal documents, and informal conversations with no single entry point.'],
-                  ['Supervisor repetition', 'Without a reference system, supervisors repeat the same explanations for every new hire — an operational tax that compounds across a large department.'],
+                  ['Supervisor repetition', 'Without a reference system, supervisors repeat the same explanations for every new hire - an operational tax that compounds across a large department.'],
                   ['Inconsistent onboarding', 'Different hiring managers provide different information, producing uneven readiness across staff in the same role.'],
-                  ['Outdated guidance', 'Static documents go stale as policies update, staff move roles, systems change, and leadership changes — but there is no mechanism to surface or fix them.'],
-                  ['No staff knowledge capture', 'Practical wisdom from experienced staff — the kind learned only by doing the job — has no home. When staff leave, it leaves with them.'],
+                  ['Outdated guidance', 'Static documents go stale as policies update, staff move roles, systems change, and leadership changes - but there is no mechanism to surface or fix them.'],
+                  ['No staff knowledge capture', 'Practical wisdom from experienced staff - the kind learned only by doing the job - has no home. When staff leave, it leaves with them.'],
                 ].map(([title, body]) => (
                   <div key={title} className="principle-card">
                     <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
@@ -243,13 +243,13 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
                 ))}
               </div>
               <p>
-                The onboarding portal addresses all of these by creating a single maintained source of truth — with a moderated workflow that allows staff knowledge to flow in without bypassing compliance-safe content control.
+                The onboarding portal addresses all of these by creating a single maintained source of truth - with a moderated workflow that allows staff knowledge to flow in without bypassing compliance-safe content control.
               </p>
             </Section>
 
             {/* SOLUTION */}
             <Section id="solution">
-              <SectionLabel>03 — Solution</SectionLabel>
+              <SectionLabel>03 - Solution</SectionLabel>
               <h2 className="cs-h2">A moderated knowledge platform, not an open wiki</h2>
               <p>
                 The portal is built around three distinct layers of content. The first is official centralized knowledge: long-form onboarding articles, policy resources, HR timelines, compliance references, university systems, and athletics-specific guidance. The second is structured operational reference data: org chart, key contacts, quick links, systems directory, branding tokens, and policy resources. The third is moderated employee knowledge captured through a controlled tips workflow.
@@ -265,7 +265,7 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
                   ['02', 'Submission is stored as pending and is not visible in the live portal.'],
                   ['03', 'A moderator or administrator reviews the content for accuracy and relevance.'],
                   ['04', 'The reviewer approves, rejects, or requests revisions. Only approved content becomes visible.'],
-                  ['05', 'Published content can receive feedback if it becomes outdated — routing it back into the review queue.'],
+                  ['05', 'Published content can receive feedback if it becomes outdated - routing it back into the review queue.'],
                 ].map(([step, body]) => (
                   <div key={step} className="flow-step">
                     <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.7, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{step}</div>
@@ -282,8 +282,8 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
 
             {/* ARCHITECTURE */}
             <Section id="architecture">
-              <SectionLabel>04 — Architecture</SectionLabel>
-              <h2 className="cs-h2">Serverless full-stack — lightweight but real</h2>
+              <SectionLabel>04 - Architecture</SectionLabel>
+              <h2 className="cs-h2">Serverless full-stack - lightweight but real</h2>
               <p>
                 A purely static site would not have been sufficient. The platform needed form submissions, moderation states, user roles, relational data, content updates, AI chat, database-backed directories, and future approval workflows. Cloudflare Workers and D1 provide the backend and database layer required for a real internal platform while staying lightweight and cost-effective.
               </p>
@@ -292,7 +292,7 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
                 <DbLayer n="FE" title="React Frontend" items={['Onboarding dashboard','Article browsing','Search & category nav','Staff tips interface','Org chart & contact views','Systems & policy directories','AI chat widget']} />
                 <DbLayer n="API" title="Cloudflare Workers + Hono" items={['TypeScript','Serverless edge execution','Articles API','Submissions API','Tips API','Contacts API','Links API','Systems API']} />
                 <DbLayer n="DB" title="Cloudflare D1 (SQLite)" items={['14 relational tables','Users','Categories','Articles','Submissions','Tips','TipFeedback','OrgChart','SiteContentIndex','AppConfig','BrandingTokens','QuickLinks','KeyContacts','SystemsDirectory','PolicyResources']} />
-                <DbLayer n="AI" title="Cloudflare Workers AI" items={['Site-wide onboarding Q&A','Content discovery','Navigation assistance','Native AI binding — no external API key']} />
+                <DbLayer n="AI" title="Cloudflare Workers AI" items={['Site-wide onboarding Q&A','Content discovery','Navigation assistance','Native AI binding - no external API key']} />
                 <DbLayer n="OPS" title="Deployment & Maintenance" items={['Wrangler deployment workflow','D1 schema execution','Seed files for content hydration','Staff / links / policies maintenance guide']} />
               </div>
 
@@ -304,10 +304,10 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
 
             {/* DATABASE */}
             <Section id="database">
-              <SectionLabel>05 — Database Design</SectionLabel>
+              <SectionLabel>05 - Database Design</SectionLabel>
               <h2 className="cs-h2">14 tables separating official content from unverified submissions</h2>
               <p>
-                The schema is designed to enforce a clear boundary between official content and staff-submitted knowledge. Content can evolve without rewriting the application — staff, policies, links, systems, and articles can all be updated through seed files.
+                The schema is designed to enforce a clear boundary between official content and staff-submitted knowledge. Content can evolve without rewriting the application - staff, policies, links, systems, and articles can all be updated through seed files.
               </p>
               <div className="three-col-taop" style={{ marginBottom: 24 }}>
                 {[
@@ -330,23 +330,23 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
                     <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>{name}</div>
                     {fields.map(f => (
                       <div key={f} className="entity-field" style={{ paddingBottom: 3 }}>
-                        <span className="entity-key">— </span>{f}
+                        <span className="entity-key">- </span>{f}
                       </div>
                     ))}
                   </div>
                 ))}
               </div>
               <p>
-                The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>SiteContentIndex</code> table powers AI and search retrieval across published content. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>Submissions</code> and <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>Tips</code> tables enforce the moderation boundary — unapproved content never surfaces in the live portal.
+                The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>SiteContentIndex</code> table powers AI and search retrieval across published content. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>Submissions</code> and <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>Tips</code> tables enforce the moderation boundary - unapproved content never surfaces in the live portal.
               </p>
             </Section>
 
             {/* AI CHAT */}
             <Section id="ai-chat">
-              <SectionLabel>06 — AI Chat Assistant</SectionLabel>
+              <SectionLabel>06 - AI Chat Assistant</SectionLabel>
               <h2 className="cs-h2">Navigation aid, not a policy authority</h2>
               <p>
-                The portal includes an AI chat assistant powered by Cloudflare Workers AI. It is designed to improve discoverability — helping users find information faster without replacing the need to verify compliance-sensitive decisions against official sources.
+                The portal includes an AI chat assistant powered by Cloudflare Workers AI. It is designed to improve discoverability - helping users find information faster without replacing the need to verify compliance-sensitive decisions against official sources.
               </p>
               <h3 className="cs-h3">Designed to answer questions like</h3>
               <div className="two-col-taop" style={{ marginBottom: 24 }}>
@@ -364,7 +364,7 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
                 ))}
               </div>
               <p>
-                Using a native Workers AI binding requires no external API key — the AI runs in the same Cloudflare edge environment as the rest of the stack, keeping the platform simple to deploy and operate. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>SiteContentIndex</code> table provides the retrieval layer that grounds the assistant in actual portal content rather than general model knowledge.
+                Using a native Workers AI binding requires no external API key - the AI runs in the same Cloudflare edge environment as the rest of the stack, keeping the platform simple to deploy and operate. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>SiteContentIndex</code> table provides the retrieval layer that grounds the assistant in actual portal content rather than general model knowledge.
               </p>
 
               <h3 className="cs-h3">Technical stack</h3>
@@ -375,16 +375,16 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
 
             {/* LESSONS */}
             <Section id="lessons">
-              <SectionLabel>07 — Lessons Learned</SectionLabel>
+              <SectionLabel>07 - Lessons Learned</SectionLabel>
               <h2 className="cs-h2">Internal tools require product thinking, not just code</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   ['Onboarding is a knowledge-management problem', 'The challenge was not writing a website. It was deciding what information belongs in the portal, how it should be structured, what can be staff-contributed versus what must be official, and how to keep it maintained when the department changes.'],
-                  ['Moderation is not optional when compliance is involved', 'Athletics onboarding covers NCAA rules, Title IX, FERPA, NIL, and HR policy — areas where incorrect guidance creates institutional risk. A moderation layer is not bureaucracy; it is a safety control.'],
-                  ['Serverless is appropriate for lightweight internal platforms', 'Cloudflare Workers and D1 provide the dynamic capabilities a real internal tool needs — form submissions, database queries, moderation states, AI chat — without the overhead of a managed server or a heavy framework.'],
-                  ['Relational databases make content maintainable', 'Hardcoding onboarding content into pages would make the site fragile. A relational schema means content — staff, policies, links, systems, articles — can be updated through seed files without changing application logic.'],
+                  ['Moderation is not optional when compliance is involved', 'Athletics onboarding covers NCAA rules, Title IX, FERPA, NIL, and HR policy - areas where incorrect guidance creates institutional risk. A moderation layer is not bureaucracy; it is a safety control.'],
+                  ['Serverless is appropriate for lightweight internal platforms', 'Cloudflare Workers and D1 provide the dynamic capabilities a real internal tool needs - form submissions, database queries, moderation states, AI chat - without the overhead of a managed server or a heavy framework.'],
+                  ['Relational databases make content maintainable', 'Hardcoding onboarding content into pages would make the site fragile. A relational schema means content - staff, policies, links, systems, articles - can be updated through seed files without changing application logic.'],
                   ['Maintenance workflows matter as much as the initial build', 'Onboarding content changes frequently. A portal that cannot be maintained becomes outdated and untrustworthy. The maintenance guide designed alongside the platform is as important as the code.'],
-                  ['AI chat is most useful when grounded in structured content', 'An AI assistant that answers from general model knowledge is unreliable for policy and compliance questions. Connecting the assistant to the SiteContentIndex — a structured index of published portal content — makes answers more trustworthy and correctable.'],
+                  ['AI chat is most useful when grounded in structured content', 'An AI assistant that answers from general model knowledge is unreliable for policy and compliance questions. Connecting the assistant to the SiteContentIndex - a structured index of published portal content - makes answers more trustworthy and correctable.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
                     <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
@@ -396,14 +396,14 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
               <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
                 <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
-                  The moderation pipeline assumes a trusted moderator, but the current build has no authenticated login or role-based access yet — the compliance boundary is designed, not enforced. Before staff actually rely on it, I&apos;d wire up UToledo SSO and role-based permissions so approving official content is gated by real identity, not convention.
+                  The moderation pipeline assumes a trusted moderator, but the current build has no authenticated login or role-based access yet - the compliance boundary is designed, not enforced. Before staff actually rely on it, I&apos;d wire up UToledo SSO and role-based permissions so approving official content is gated by real identity, not convention.
                 </p>
               </div>
             </Section>
 
             {/* FUTURE */}
             <Section id="future">
-              <SectionLabel>08 — Future Work</SectionLabel>
+              <SectionLabel>08 - Future Work</SectionLabel>
               <h2 className="cs-h2">A foundation for a full department operating system</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
@@ -425,12 +425,12 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
                   Great onboarding is infrastructure for institutional memory.
                 </p>
                 <p style={{ fontFamily: SERIF, fontSize: 14, color: '#B8B4A4', margin: 0, lineHeight: 1.6 }}>
-                  The Toledo Athletics Onboarding Portal demonstrates that internal software engineering — serverless architecture, relational schema design, moderated knowledge workflows, and AI integration — can directly reduce operational risk and help people do their jobs better from day one.
+                  The Toledo Athletics Onboarding Portal demonstrates that internal software engineering - serverless architecture, relational schema design, moderated knowledge workflows, and AI integration - can directly reduce operational risk and help people do their jobs better from day one.
                 </p>
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</Link>
+                <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
               </div>
             </Section>
 

@@ -1,7 +1,7 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
@@ -154,10 +154,10 @@ export default function BattingCleanupCaseStudy() {
         padding: '0 clamp(20px, 5vw, 80px)',
         height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
       }}>
-        <Link href="/#projects" transitionTypes={['nav-back']} style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <SmartBackLink fallbackHref="/#projects" style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
           Portfolio
-        </Link>
+        </SmartBackLink>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#4ade80', background: 'rgba(74,222,128,0.08)', border: '1px solid rgba(74,222,128,0.25)', borderRadius: 20 }}>
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#4ade80', display: 'inline-block' }} />
@@ -189,10 +189,10 @@ export default function BattingCleanupCaseStudy() {
           </p>
 
           <div className="metrics-grid-bc">
-            <Metric value="Live" label="Production — downtown Toledo" />
+            <Metric value="Live" label="Production - downtown Toledo" />
             <Metric value="10K+" label="Localized assets in simulator" />
             <Metric value="<10ms" label="ST_DWithin geofence query" />
-            <Metric value="GiST" label="Spatial index — no table scans" />
+            <Metric value="GiST" label="Spatial index - no table scans" />
             <Metric value="7-dev" label="Docker Compose team environment" />
             <Metric value="Edge" label="Cloudflare Workers + Hono API" />
           </div>
@@ -213,16 +213,16 @@ export default function BattingCleanupCaseStudy() {
 
             {/* OVERVIEW */}
             <Section id="overview">
-              <SectionLabel>01 — Overview</SectionLabel>
+              <SectionLabel>01 - Overview</SectionLabel>
               <h2 className="cs-h2">Not theoretical. Used by real people in a real city.</h2>
               <p>
-                Batting Cleanup is a live smart-city waste reporting application deployed in downtown Toledo. The system lets residents scan QR codes placed near public waste assets and instantly file a maintenance report — overflowing trash, nearby litter, anything that needs attention.
+                Batting Cleanup is a live smart-city waste reporting application deployed in downtown Toledo. The system lets residents scan QR codes placed near public waste assets and instantly file a maintenance report - overflowing trash, nearby litter, anything that needs attention.
               </p>
               <p>
                 The project is more than a reporting form. It connects public-facing QR codes, edge-hosted APIs, geospatial validation, city asset telemetry, and backend data integrity into one civic technology platform. Residents get a low-friction way to report problems. Maintainers get structured, location-aware data to prioritize response.
               </p>
               <p>
-                I contributed as a core backend engineer. My work transitioned the system from raw initialization scripts into a modern, type-safe Deno monorepo bridging Cloudflare Workers/Hono APIs with a PostGIS geospatial database — and built the spatial modeling, performance optimization, and validation infrastructure that makes the system reliable at city scale.
+                I contributed as a core backend engineer. My work transitioned the system from raw initialization scripts into a modern, type-safe Deno monorepo bridging Cloudflare Workers/Hono APIs with a PostGIS geospatial database - and built the spatial modeling, performance optimization, and validation infrastructure that makes the system reliable at city scale.
               </p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 4, marginBottom: 4 }}>
                 <a href="https://battingcleanup.appliedlabs.org/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 16px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Documentation ↗</a>
@@ -232,7 +232,7 @@ export default function BattingCleanupCaseStudy() {
 
             {/* PROBLEM */}
             <Section id="problem">
-              <SectionLabel>02 — Problem</SectionLabel>
+              <SectionLabel>02 - Problem</SectionLabel>
               <h2 className="cs-h2">Cities need better feedback loops for public infrastructure</h2>
               <p>
                 Traditional waste maintenance workflows create friction on both sides: residents don&apos;t know who to contact, and maintenance teams receive incomplete, unlocated, or duplicate reports. The gap between &ldquo;a trash can is overflowing&rdquo; and &ldquo;a maintenance crew knows about it&rdquo; can be days.
@@ -240,11 +240,11 @@ export default function BattingCleanupCaseStudy() {
               <div className="two-col-bc" style={{ marginBottom: 24 }}>
                 {[
                   ['No reporting path', 'Most residents have no simple way to report an overflowing trash can. Phone lines and 311 apps create friction that kills adoption.'],
-                  ['Unlocated reports', 'Even when reports come in, they often lack precise asset location — just a street address, or nothing.'],
+                  ['Unlocated reports', 'Even when reports come in, they often lack precise asset location - just a street address, or nothing.'],
                   ['GPS noise downtown', 'Urban canyons and indoor environments degrade GPS accuracy. A naive location check will reject valid reports.'],
                   ['Spoofing risk', 'A public-facing system with no location validation is easy to flood with fake or mislocated reports.'],
                   ['Duplicate submissions', 'Multiple users report the same asset without any deduplication, creating noise for maintenance teams.'],
-                  ['Local dev friction', 'A 7-person team doing manual database setup diverges quickly — inconsistent environments slow everyone down.'],
+                  ['Local dev friction', 'A 7-person team doing manual database setup diverges quickly - inconsistent environments slow everyone down.'],
                 ].map(([title, body]) => (
                   <div key={title} className="info-card">
                     <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
@@ -253,13 +253,13 @@ export default function BattingCleanupCaseStudy() {
                 ))}
               </div>
               <p>
-                Batting Cleanup solves the first-mile reporting problem by putting QR codes directly where the issue happens — no app install, no account, no friction. Scan, report, done.
+                Batting Cleanup solves the first-mile reporting problem by putting QR codes directly where the issue happens - no app install, no account, no friction. Scan, report, done.
               </p>
             </Section>
 
             {/* ARCHITECTURE */}
             <Section id="architecture">
-              <SectionLabel>03 — Architecture</SectionLabel>
+              <SectionLabel>03 - Architecture</SectionLabel>
               <h2 className="cs-h2">Edge API → validation → PostGIS → city ops</h2>
               <p>
                 The system flows from a physical QR code through an edge-hosted API, a type-safe service layer, and a geospatial database before surfacing structured data to city maintainers.
@@ -269,7 +269,7 @@ export default function BattingCleanupCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 24 }}>
                 {[
                   ['1', 'Resident spots overflowing trash or litter near a QR-coded asset'],
-                  ['2', 'Scans the QR code on their phone — no app install required'],
+                  ['2', 'Scans the QR code on their phone - no app install required'],
                   ['3', 'Public report form opens with the asset pre-identified'],
                   ['4', 'Resident selects issue type and optionally provides contact info'],
                   ['5', 'Backend validates report context: location, geofence, plausibility'],
@@ -296,7 +296,7 @@ export default function BattingCleanupCaseStudy() {
 
             {/* GEOSPATIAL */}
             <Section id="geospatial">
-              <SectionLabel>04 — Geospatial Database Design</SectionLabel>
+              <SectionLabel>04 - Geospatial Database Design</SectionLabel>
               <h2 className="cs-h2">Real-world location data is messier than static records</h2>
               <p>
                 The database had to handle real-world GPS data, not clean coordinates. Each entity was modeled to preserve enough location context to support both query performance and validation logic.
@@ -314,7 +314,7 @@ export default function BattingCleanupCaseStudy() {
                     <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>{name}</div>
                     {fields.map(f => (
                       <div key={f} className="entity-field" style={{ paddingBottom: 3 }}>
-                        <span style={{ color: ACCENT }}>— </span>{f}
+                        <span style={{ color: ACCENT }}>- </span>{f}
                       </div>
                     ))}
                   </div>
@@ -327,22 +327,22 @@ export default function BattingCleanupCaseStudy() {
 
             {/* PERFORMANCE */}
             <Section id="performance">
-              <SectionLabel>05 — Performance Optimization</SectionLabel>
+              <SectionLabel>05 - Performance Optimization</SectionLabel>
               <h2 className="cs-h2">B-Tree indexes don&apos;t work for proximity queries</h2>
               <p>
                 A major engineering focus was geospatial query performance. The backend needs to run proximity checks on every report submission: Is this report within the expected geofence? Which asset is nearest to this coordinate? How many reports are clustered near this location?
               </p>
               <p>
-                I benchmarked <code>ST_DWithin</code> geofence queries against 10,000+ localized assets. The initial run used standard B-Tree indexing — which is the PostgreSQL default but completely wrong for spatial distance lookups. B-Tree indexes sort by scalar value; they cannot efficiently prune the search space for a geometric &ldquo;within N meters&rdquo; query.
+                I benchmarked <code>ST_DWithin</code> geofence queries against 10,000+ localized assets. The initial run used standard B-Tree indexing - which is the PostgreSQL default but completely wrong for spatial distance lookups. B-Tree indexes sort by scalar value; they cannot efficiently prune the search space for a geometric &ldquo;within N meters&rdquo; query.
               </p>
 
               <div className="two-col-bc" style={{ marginBottom: 24 }}>
                 <div className="info-card">
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Before — B-Tree Index</div>
-                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: 'var(--text3)' }}>Full table scan on every geofence query. Latency grows linearly with asset count. Not viable at city scale — every report submission triggers an O(n) scan across all assets.</p>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Before - B-Tree Index</div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: 'var(--text3)' }}>Full table scan on every geofence query. Latency grows linearly with asset count. Not viable at city scale - every report submission triggers an O(n) scan across all assets.</p>
                 </div>
                 <div className="accent-card">
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>After — GiST Spatial Index</div>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>After - GiST Spatial Index</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>GiST (Generalized Search Tree) indexes are designed for spatial lookup patterns. They prune the search space geometrically. Result: sub-10 ms <code>ST_DWithin</code> benchmarks against 10,000+ assets in the simulator.</p>
                 </div>
               </div>
@@ -367,7 +367,7 @@ export default function BattingCleanupCaseStudy() {
 
             {/* INFRA */}
             <Section id="infra">
-              <SectionLabel>06 — Infrastructure as Code</SectionLabel>
+              <SectionLabel>06 - Infrastructure as Code</SectionLabel>
               <h2 className="cs-h2">Reproducible local environments for a 7-person team</h2>
               <p>
                 Manual database setup across a 7-person team creates drift fast. One developer has a different schema version, another has stale seed data, a third has a different PostGIS extension installed. These inconsistencies slow everyone down and hide bugs that only appear in certain environments.
@@ -403,19 +403,19 @@ export default function BattingCleanupCaseStudy() {
 
             {/* INTEGRITY */}
             <Section id="integrity">
-              <SectionLabel>07 — Data Integrity & Anti-Spoofing</SectionLabel>
+              <SectionLabel>07 - Data Integrity & Anti-Spoofing</SectionLabel>
               <h2 className="cs-h2">Public-facing systems attract imperfect data</h2>
               <p>
-                Because Batting Cleanup is publicly accessible, the backend must handle a wide range of real-world edge cases — not as errors to reject, but as signals to classify. The goal is not to block every imperfect report; it is to preserve enough verification context that the system can distinguish trusted, uncertain, and suspicious submissions.
+                Because Batting Cleanup is publicly accessible, the backend must handle a wide range of real-world edge cases - not as errors to reject, but as signals to classify. The goal is not to block every imperfect report; it is to preserve enough verification context that the system can distinguish trusted, uncertain, and suspicious submissions.
               </p>
 
               <h3 className="cs-h3">Real-world edge cases</h3>
               <div className="two-col-bc" style={{ marginBottom: 24 }}>
                 {[
                   ['GPS inaccuracy downtown', 'Urban canyons and tall buildings degrade mobile GPS accuracy. A report 30m from the asset may still be legitimate.'],
-                  ['Location permission denied', 'A user may scan a QR code but decline to share their location. The report is still valid — the QR code already identifies the asset.'],
+                  ['Location permission denied', 'A user may scan a QR code but decline to share their location. The report is still valid - the QR code already identifies the asset.'],
                   ['Indoor submissions', 'A user near a public trash can inside a lobby may have GPS coordinates that appear far from the street asset.'],
-                  ['Distant submissions', 'Users may attempt to file reports from far away — either mistakenly or maliciously.'],
+                  ['Distant submissions', 'Users may attempt to file reports from far away - either mistakenly or maliciously.'],
                   ['Duplicate reports', 'Multiple users may report the same asset in a short window without knowing others already did.'],
                   ['Spoofed coordinates', 'A bad actor may attempt to inject fake location data to flood or mislead the maintenance system.'],
                 ].map(([title, body]) => (
@@ -429,7 +429,7 @@ export default function BattingCleanupCaseStudy() {
               <h3 className="cs-h3">Validation mechanisms</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {[
-                  { flag: 'isIndoor', desc: 'Flags reports where device signals suggest an indoor environment — preserved as metadata rather than rejected.' },
+                  { flag: 'isIndoor', desc: 'Flags reports where device signals suggest an indoor environment - preserved as metadata rather than rejected.' },
                   { flag: 'Location verification log', desc: 'Stores reported coordinates, expected asset coordinates, computed distance, and GPS confidence alongside every report.' },
                   { flag: 'Geofence check', desc: 'ST_DWithin validates whether the submitted location is within the asset\'s configured radius.' },
                   { flag: 'Plausibility metadata', desc: 'Contextual signals (distance, confidence, indoor flag) are stored to support downstream filtering and trust scoring.' },
@@ -445,15 +445,15 @@ export default function BattingCleanupCaseStudy() {
 
             {/* LESSONS */}
             <Section id="lessons">
-              <SectionLabel>08 — Lessons Learned</SectionLabel>
+              <SectionLabel>08 - Lessons Learned</SectionLabel>
               <h2 className="cs-h2">What production civic software teaches you</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
-                  ['Geospatial data needs specialized indexes', 'B-Tree indexes are the PostgreSQL default but useless for distance queries. GiST is not an optimization — it is a correctness requirement for spatial workloads.'],
+                  ['Geospatial data needs specialized indexes', 'B-Tree indexes are the PostgreSQL default but useless for distance queries. GiST is not an optimization - it is a correctness requirement for spatial workloads.'],
                   ['Production civic software handles imperfect input', 'Real-world users scan QR codes in parking garages, deny location permissions, and submit from unpredictable environments. The system must tolerate all of it gracefully.'],
                   ['Dockerized environments save team time compounding', 'Local environment drift across 7 developers is slow, annoying, and hard to debug. A reproducible setup script pays for itself the first week.'],
                   ['Repository/service separation makes code scalable', 'Keeping persistence logic out of API handlers and business logic out of repositories made the codebase much easier to test, extend, and reason about.'],
-                  ['Edge APIs need careful database boundary design', 'Cloudflare Workers are powerful but stateless. The handoff between edge handler and database layer must be explicit — connection pooling, timeouts, and error propagation all matter.'],
+                  ['Edge APIs need careful database boundary design', 'Cloudflare Workers are powerful but stateless. The handoff between edge handler and database layer must be explicit - connection pooling, timeouts, and error propagation all matter.'],
                   ['Real city deployments surface edge cases no classroom project reveals', 'GPS noise, QR code durability, public network reliability, and user behavior at scale are not theoretical concerns. They show up immediately.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
@@ -466,13 +466,13 @@ export default function BattingCleanupCaseStudy() {
                 <div style={{ padding: '16px 18px', background: `${ACCENT}0c`, border: `1px solid ${ACCENT}30`, borderRadius: 8 }}>
                   <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What broke</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
-                    The first geofence benchmark ran on PostgreSQL&apos;s default B-Tree index and fell over — every report submission triggered a full table scan, latency growing linearly with asset count. Not viable at city scale. Moving to a GiST spatial index dropped <code>ST_DWithin</code> to sub-10 ms across 10,000+ assets.
+                    The first geofence benchmark ran on PostgreSQL&apos;s default B-Tree index and fell over - every report submission triggered a full table scan, latency growing linearly with asset count. Not viable at city scale. Moving to a GiST spatial index dropped <code>ST_DWithin</code> to sub-10 ms across 10,000+ assets.
                   </p>
                 </div>
                 <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
                   <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
-                    Duplicate reports are stored and flagged today, not merged — several people reporting one overflowing can still land as separate rows. I&apos;d fold deduplication and clustering into the write path, so maintainers see one asset with N reports instead of N rows of noise.
+                    Duplicate reports are stored and flagged today, not merged - several people reporting one overflowing can still land as separate rows. I&apos;d fold deduplication and clustering into the write path, so maintainers see one asset with N reports instead of N rows of noise.
                   </p>
                 </div>
               </div>
@@ -480,7 +480,7 @@ export default function BattingCleanupCaseStudy() {
 
             {/* FUTURE */}
             <Section id="future">
-              <SectionLabel>09 — Future Work</SectionLabel>
+              <SectionLabel>09 - Future Work</SectionLabel>
               <h2 className="cs-h2">The reporting layer is the foundation</h2>
               <p>
                 The current system solves the first-mile problem: getting structured, location-aware reports from residents into a reliable database. The next phase turns that data into operational intelligence for city maintainers.
@@ -510,7 +510,7 @@ export default function BattingCleanupCaseStudy() {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <Link href="/#projects" transitionTypes={['nav-back']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</Link>
+                <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
                 <a href="https://battingcleanup.appliedlabs.org/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Documentation ↗</a>
                 <a href="https://toledofreepress.com/batting-cleanup-aims-to-improve-toledo-maintenance-with-tech/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid rgba(242,237,216,0.12)', color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Toledo Free Press ↗</a>
               </div>

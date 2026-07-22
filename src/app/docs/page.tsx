@@ -12,7 +12,7 @@ const DOCS = [
   {
     id: 'resume',
     label: 'Resume',
-    description: 'One-page engineering summary — built for a 30-second skim, survives deep reading.',
+    description: 'One-page engineering summary, built for a 30-second skim and strong enough for deep reading.',
     file: '/docs/Ahmad_Resume_Developer_I_FirstSolar.pdf',
   },
   {
@@ -30,7 +30,7 @@ const DOCS = [
   {
     id: 'oci-foundations',
     label: 'Oracle OCI Cert',
-    description: 'Oracle Cloud Infrastructure Foundations Associate — official eCertificate. Verifiable via Oracle CertView.',
+    description: 'Oracle Cloud Infrastructure Foundations Associate - official eCertificate. Verifiable via Oracle CertView.',
     file: '/docs/Oracle_Foundation_eCertificate.pdf',
   },
 ] as const;
@@ -239,7 +239,7 @@ export default function DocsPage() {
                 minWidth: 0,
               }}
             >
-              {selected.file ? selected.file.split('/').pop() : '—'}
+              {selected.file ? selected.file.split('/').pop() : '-'}
             </span>
 
             <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
@@ -328,9 +328,9 @@ export default function DocsPage() {
                     display: 'block',
                     background: '#1a1b1e',
                   }}
-                  title={`${selected.label} — Ahmad Firas Azfar`}
+                  title={`${selected.label} - Ahmad Firas Azfar`}
                 />
-                {/* Mobile fallback — iframe PDFs don't render on iOS Safari */}
+                {/* Mobile fallback - iframe PDFs don't render on iOS Safari */}
                 <div
                   style={{
                     display: 'none',

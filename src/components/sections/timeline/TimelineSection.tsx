@@ -67,7 +67,7 @@ export function TimelineSection() {
 
   return (
     <Section id="timeline" style={{ background: 'rgba(17,19,26,0.85)' }}>
-      <SH n={def.n} label="Timeline" sub="Career and education as one continuous line — newest first, scroll into the origin story." color={def.color} />
+      <SH n={def.n} label="Timeline" sub="Career and education as one continuous line. Newest first, then back to the origin story." color={def.color} />
 
       <div ref={wrapRef} className="tl-wrap" style={{ position: 'relative', padding: '10px 0 30px' }}>
         {/* the line */}

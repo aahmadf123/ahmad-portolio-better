@@ -61,7 +61,7 @@ async function pickModel() {
 }
 
 export async function POST(req: Request) {
-  // Provider not configured yet — the panel shows its warm-up fallback.
+  // Provider not configured yet - the panel shows its warm-up fallback.
   const model = await pickModel();
   if (!model) {
     return Response.json({ error: 'not-configured' }, { status: 503 });
@@ -82,7 +82,7 @@ export async function POST(req: Request) {
     return Response.json({ error: 'bad-request' }, { status: 400 });
   }
 
-  // Honeypot field — real UI never sets it.
+  // Honeypot field - real UI never sets it.
   if (body.website) {
     return Response.json({ error: 'forbidden' }, { status: 403 });
   }

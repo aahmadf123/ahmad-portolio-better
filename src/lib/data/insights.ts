@@ -1,5 +1,5 @@
-// Technical insights — code-aesthetic perspective cards. Each takeaway is original
-// commentary on the mechanism actually shown in that card's snippet — distinct from,
+// Technical insights - code-aesthetic perspective cards. Each takeaway is original
+// commentary on the mechanism actually shown in that card's snippet - distinct from,
 // and narrower than, the matching project's "Key Insight" prose. Snippets are short
 // illustrative sketches of the described mechanism (labeled as such in the UI), not
 // production excerpts.
@@ -52,7 +52,7 @@ export const insights: Insight[] = [
     )
     promote  = deploy(evaluate.winner, after=approval)`,
     takeaway:
-      'SlackApprovalGate sits inside the DAG as a typed stage, not a side process — it takes drift.report and evaluate.shap_summary as inputs, and promote explicitly waits on it. The scheduler treats a human decision exactly like any other pipeline dependency.',
+      'SlackApprovalGate sits inside the DAG as a typed stage, not a side process - it takes drift.report and evaluate.shap_summary as inputs, and promote explicitly waits on it. The scheduler treats a human decision exactly like any other pipeline dependency.',
     source: { label: 'Homeowner Loss Prediction · Grange Insurance', href: '/case-study/homeowner-loss-prediction' },
     color: '#a78bfa',
   },
@@ -72,7 +72,7 @@ export const insights: Insight[] = [
     # the policy reasons over relationships, not pixels
     return g`,
     takeaway:
-      'Every edge from g.connect() carries risk and cost — not a bare topological link, but collision risk and traversal cost engineered in as domain knowledge before the policy ever trains. Typed nodes (obstacle, waypoint, free-space) do the same for perception: structure applied before learning starts.',
+      'Every edge from g.connect() carries risk and cost - not a bare topological link, but collision risk and traversal cost engineered in as domain knowledge before the policy ever trains. Typed nodes (obstacle, waypoint, free-space) do the same for perception: structure applied before learning starts.',
     source: { label: 'Graph-Based RL for UAV Autonomy', href: '/case-study/graph-based-rl-uav-autonomy' },
     color: '#f59e0b',
   },
@@ -111,7 +111,7 @@ export const insights: Insight[] = [
   exported_to_dataset boolean DEFAULT false
 );`,
     takeaway:
-      'old_value/new_value store the exact delta and corrected_by attributes it to the coach, not the model — this table is a provenance log, not a labels table. label_id and clip_id tie every correction back to the exact evidence it came from, and exported_to_dataset marks whether it has already been folded into training data.',
+      'old_value/new_value store the exact delta and corrected_by attributes it to the coach, not the model - this table is a provenance log, not a labels table. label_id and clip_id tie every correction back to the exact evidence it came from, and exported_to_dataset marks whether it has already been folded into training data.',
     source: { label: 'Toledo Football IQ', href: '/case-study/toledo-football-iq-computer-vision-analytics' },
     color: '#ef4444',
   },

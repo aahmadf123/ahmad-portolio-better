@@ -12,7 +12,7 @@ import { sectionById } from '@/lib/data/sections';
 /**
  * Quote theater: the real press feature anchors the stage; testimonials added
  * to lib/data/testimonials.ts float in as depth-staggered quote cards (no
- * placeholder fakes — the section ships honest). Clicking a card brings it
+ * placeholder fakes - the section ships honest). Clicking a card brings it
  * forward.
  */
 export function SignalsSection() {
@@ -24,7 +24,7 @@ export function SignalsSection() {
 
   return (
     <Section id="signals">
-      <SH n={def.n} label="Signals" sub="Press, recognition, and — as they arrive — words from the people behind the work." color={def.color} />
+      <SH n={def.n} label="Signals" sub="Press, recognition, and - as they arrive - words from the people behind the work." color={def.color} />
 
       <div className="signals-stage" style={{ display: 'grid', gridTemplateColumns: testimonials.length > 0 ? 'minmax(0, 58fr) minmax(0, 42fr)' : '1fr', gap: 'clamp(18px, 3vw, 36px)', alignItems: 'start' }}>
         {/* press anchor */}

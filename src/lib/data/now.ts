@@ -1,7 +1,7 @@
-// "Now" status — extracted verbatim from the original Now section.
+// "Now" status - extracted verbatim from the original Now section.
 // Ahmad: edit this file (and site.ts nowPlaying) to refresh the Now section,
 // the Now Playing bar, and the learning marquee in one pass.
-// The "Pursuing" card's items are sourced from certPursuits in certs.ts —
+// The "Pursuing" card's items are sourced from certPursuits in certs.ts -
 // edit that file to update in-progress certifications everywhere they appear.
 
 import { certPursuits } from './certs';

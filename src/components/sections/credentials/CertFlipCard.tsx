@@ -25,7 +25,7 @@ export function CertFlipCard({ cert }: { cert: Cert }) {
         role="button"
         tabIndex={0}
         aria-pressed={flipped}
-        aria-label={`${cert.issuer} ${cert.title} — flip for details`}
+        aria-label={`${cert.issuer} ${cert.title} - flip for details`}
         onClick={() => setFlipped((v) => !v)}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFlipped((v) => !v); } }}
         onFocus={() => setFlipped(true)}

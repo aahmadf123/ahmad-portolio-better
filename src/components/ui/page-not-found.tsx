@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 /**
- * On-brand 404 — dark, cinematic, self-contained (no external assets).
+ * On-brand 404 - dark, cinematic, self-contained (no external assets).
  * A faint football-play diagram drifts behind the numeral as a nod to the
  * flagship project; reduced motion is honored by the global kill-switch.
  */
@@ -83,7 +83,7 @@ export default function NotFoundPage() {
             margin: '20px auto 0',
           }}
         >
-          This route was fumbled — the page you&apos;re looking for doesn&apos;t exist or has moved.
+          This route was fumbled - the page you&apos;re looking for doesn&apos;t exist or has moved.
         </p>
         <div style={{ marginTop: 30, display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link

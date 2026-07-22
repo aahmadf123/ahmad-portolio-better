@@ -9,7 +9,7 @@ import type { Project } from '@/lib/data/projects';
 import { ProjectDetail } from './ProjectDetail';
 
 /**
- * Cinematic project modal — morphs out of the clicked poster (shared
+ * Cinematic project modal - morphs out of the clicked poster (shared
  * layoutId), scroll-locked, ESC/scrim close, focus-trapped.
  */
 export function ProjectDetailModal({ project, onClose }: { project: Project | null; onClose: () => void }) {
@@ -98,7 +98,7 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
 
             <div style={{ padding: 'clamp(20px, 3vw, 36px)' }}>
               <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: project.color, marginBottom: 10 }}>
-                {project.domain} · {project.idx} — {project.tag}
+                {project.domain} · {project.idx} - {project.tag}
               </div>
               <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(26px, 3vw, 40px)', lineHeight: 1.05, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.06em' }}>
                 {project.title}

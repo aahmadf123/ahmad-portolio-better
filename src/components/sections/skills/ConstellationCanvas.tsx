@@ -9,10 +9,11 @@ import { MONO } from '@/components/shared/section-helpers';
 // ── Tunables ──────────────────────────────────────────────────────────────────
 const ZOOM_STEPS = [1, 1.35, 1.8];
 const TOP_LABELS = 20;            // LOD: how many highest-weight names always show
-const LABEL_OFFSET = 14;          // flat px below a star (approximation, not radius-scaled)
 const LABEL_FILL = 'rgba(244,244,242,0.78)';
 const DIM = 0.78;                 // lerp toward --surface for de-emphasised clusters
 const DIM_SCALE = 0.8;
+const EDGE_OPACITY = 0.2;         // ambient web (normal blending - additive stacked
+const EDGE_OPACITY_DIM = 0.06;    // into bright tangles near dense hubs)
 
 interface LayoutNode extends SkillNode {
   x: number;
@@ -73,6 +74,30 @@ function computeLayout(): LayoutNode[] {
         });
       });
   });
+  // Post-layout separation: deterministic relaxation (no rand() calls - the
+  // seeded layout must stay identical across loads) nudges overlapping
+  // neighbours apart so star cores and their halos read as distinct points
+  // instead of piling up on the inner rings.
+  for (let iter = 0; iter < 24; iter++) {
+    let moved = false;
+    for (let i = 0; i < out.length; i++) {
+      for (let j = i + 1; j < out.length; j++) {
+        const a = out[i];
+        const b = out[j];
+        const minD = (a.radius + b.radius) * 2.2;
+        let dx = b.x - a.x;
+        let dy = b.y - a.y;
+        let d = Math.hypot(dx, dy);
+        if (d >= minD) continue;
+        if (d < 1e-4) { dx = 1; dy = 0; d = 1; } // coincident: pick a direction
+        const push = (minD - d) / 2 / d;
+        a.x -= dx * push; a.y -= dy * push;
+        b.x += dx * push; b.y += dy * push;
+        moved = true;
+      }
+    }
+    if (!moved) break;
+  }
   return out;
 }
 
@@ -92,7 +117,7 @@ function computeHubs(): HubInfo[] {
   });
 }
 
-/** GLSL-style smoothstep — eases the intro-assembly edge/label fade-in. */
+/** GLSL-style smoothstep - eases the intro-assembly edge/label fade-in. */
 function smoothstep(a: number, b: number, x: number): number {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
   return t * t * (3 - 2 * t);
@@ -108,7 +133,7 @@ function hexA(hex: string, a: number): string {
 }
 
 /**
- * Interactive 3D skill constellation — the full skill inventory (currently 88)
+ * Interactive 3D skill constellation - the full skill inventory (currently 88)
  * as instanced nodes clustered by group, connected by co-occurrence edges. A 2D
  * label overlay tracks the rotating clusters every frame (hub names + the top-
  * weight stars); the legend isolates a cluster with a damped camera push-in.
@@ -126,7 +151,7 @@ export function ConstellationCanvas({
   const [tooltip, setTooltip] = useState<Tooltip | null>(null);
   const [zoomIdx, setZoomIdx] = useState(0);
 
-  // Dynamic inputs cross into the (stable) scene effect through refs only — the
+  // Dynamic inputs cross into the (stable) scene effect through refs only - the
   // scene is NEVER rebuilt on focus/zoom change.
   const focusRef = useRef<string | null>(focusGroup);
   const zoomRef = useRef<number>(ZOOM_STEPS[0]);
@@ -188,7 +213,7 @@ export function ConstellationCanvas({
       if (a && b) edgeList.push([a, b]);
     });
 
-    // edgesBase — all edges (the ambient web); edgesFocus — only the focused
+    // edgesBase - all edges (the ambient web); edgesFocus - only the focused
     // cluster's internal edges, brighter, rebuilt on focus.
     const basePos: number[] = [];
     for (const [a, b] of edgeList) basePos.push(a.x, a.y, a.z, b.x, b.y, b.z);
@@ -196,7 +221,7 @@ export function ConstellationCanvas({
     baseGeo.setAttribute('position', new THREE.Float32BufferAttribute(basePos, 3));
     const edgesBase = new THREE.LineSegments(
       baseGeo,
-      new THREE.LineBasicMaterial({ color: 0x2dd4bf, transparent: true, opacity: 0.28, blending: THREE.AdditiveBlending })
+      new THREE.LineBasicMaterial({ color: 0x2dd4bf, transparent: true, opacity: EDGE_OPACITY, blending: THREE.NormalBlending })
     );
 
     const focusGeo = new THREE.BufferGeometry();
@@ -230,7 +255,7 @@ export function ConstellationCanvas({
     let prevT = 0;
 
     // ── Intro assembly (one-shot: stars stream out from their group hub) ─────
-    // Matrix-ownership contract: while q<1 the intro OWNS every instance matrix —
+    // Matrix-ownership contract: while q<1 the intro OWNS every instance matrix -
     // applyFocus() may recolor but must NOT rewrite matrices, and hover scale-up
     // is suppressed (tooltip still shows). At q>=1 we write the final seat
     // matrices once, then reconcile focus/zoom exactly once, and never touch
@@ -251,8 +276,14 @@ export function ConstellationCanvas({
     const LABEL_FONT = `10px ${monoFamily}`;
     const widthCache = new Map<string, number>();
 
-    interface LabelEntry { name: string; sx: number; sy: number; weight: number; color: string; focusMember: boolean; }
-    interface PlacedLabel { x0: number; x1: number; y: number; name: string; sx: number; weight: number; color: string; focusMember: boolean; }
+    interface LabelEntry { name: string; sx: number; sy: number; off: number; weight: number; color: string; focusMember: boolean; }
+    interface PlacedLabel { x0: number; x1: number; y: number; name: string; sx: number; weight: number; color: string; focusMember: boolean; pseudo?: boolean; }
+
+    // Persistent per-label placement state: the vertical offset a label
+    // settled at (so it keeps its home while it stays collision-free) and a
+    // smoothed alpha (so labels fade in/out over a few frames instead of
+    // popping as the projection shifts or the LOD set changes).
+    const labelState = new Map<string, { off: number; alpha: number }>();
 
     const drawLabels = (h: SceneHost) => {
       if (!ctx) return;
@@ -269,8 +300,11 @@ export function ConstellationCanvas({
       ctx.shadowBlur = 4;
       ctx.globalAlpha = introAlpha; // labels fade in as the assembly lands (1 when settled)
 
-      // Hub labels — projected through the SAME world matrix as the stars, so
-      // they ride the rotating clusters instead of drifting.
+      // Hub labels - projected through the SAME world matrix as the stars, so
+      // they ride the rotating clusters instead of drifting. Their boxes are
+      // also reserved (weight Infinity) so star labels yield to them instead
+      // of overprinting the cluster names.
+      const placed: PlacedLabel[] = [];
       for (const hub of hubs) {
         if (focus && hub.id !== focus) continue;
         projVec.set(hub.anchorX, hub.anchorY, 0).applyMatrix4(group.matrixWorld).project(h.camera);
@@ -280,8 +314,15 @@ export function ConstellationCanvas({
         // clamped into the frame so a top cluster's label pins to the edge above
         // it rather than clipping away entirely.
         const hy = Math.max(13, Math.min(hh - 8, ((1 - projVec.y) / 2) * hh));
+        const hubText = hub.label.toUpperCase();
         ctx.fillStyle = hexA(hub.color, 0.9);
-        ctx.fillText(hub.label.toUpperCase(), hx, hy);
+        ctx.fillText(hubText, hx, hy);
+        let hw = widthCache.get(hubText);
+        if (hw === undefined) {
+          hw = ctx.measureText(hubText).width;
+          widthCache.set(hubText, hw);
+        }
+        placed.push({ x0: hx - hw / 2, x1: hx + hw / 2, y: hy, name: hubText, sx: hx, weight: Infinity, color: hub.color, focusMember: false, pseudo: true });
       }
 
       // Which stars get a name this frame (LOD set).
@@ -293,10 +334,17 @@ export function ConstellationCanvas({
         const n = layout[idx];
         projVec.set(n.x, n.y, n.z).applyMatrix4(group.matrixWorld).project(h.camera);
         if (projVec.z > 1) return;
+        const sx = ((projVec.x + 1) / 2) * w;
+        const sy = ((1 - projVec.y) / 2) * hh;
+        // Radius-scaled offset: project the halo's lower rim so big stars
+        // don't overlap their own name (was a flat px constant).
+        projVec.set(n.x, n.y - n.radius * 2.4, n.z).applyMatrix4(group.matrixWorld).project(h.camera);
+        const syBelow = ((1 - projVec.y) / 2) * hh;
         entries.push({
           name: n.name,
-          sx: ((projVec.x + 1) / 2) * w,
-          sy: ((1 - projVec.y) / 2) * hh,
+          sx,
+          sy,
+          off: Math.max(10, syBelow - sy + 6),
           weight: n.weight,
           color: n.color,
           focusMember: !!focus && n.group === focus,
@@ -310,9 +358,11 @@ export function ConstellationCanvas({
       if (hovered >= 0) consider(hovered);
 
       // Collision: top-to-bottom greedy placement, up to two 12px nudges, then
-      // the lighter-weight label yields.
+      // the lighter-weight label yields. A label that found a home keeps its
+      // vertical slot while it stays collision-free (no frame-to-frame slot
+      // oscillation), and wins/losses ease an alpha instead of toggling
+      // visibility, so labels cross-fade rather than flicker.
       entries.sort((a, b) => a.sy - b.sy);
-      const placed: PlacedLabel[] = [];
       for (const e of entries) {
         let width = widthCache.get(e.name);
         if (width === undefined) {
@@ -321,7 +371,8 @@ export function ConstellationCanvas({
         }
         const x0 = e.sx - width / 2;
         const x1 = e.sx + width / 2;
-        let y = e.sy + LABEL_OFFSET;
+        const st = labelState.get(e.name);
+        let y = e.sy + Math.max(e.off, st?.off ?? e.off);
         const hitsAt = (yy: number) => placed.filter((p) => Math.abs(p.y - yy) < 12 && x0 < p.x1 && x1 > p.x0);
         let colls = hitsAt(y);
         let nudges = 0;
@@ -339,10 +390,29 @@ export function ConstellationCanvas({
         }
         placed.push({ x0, x1, y, name: e.name, sx: e.sx, weight: e.weight, color: e.color, focusMember: e.focusMember });
       }
-      for (const p of placed) {
-        ctx.fillStyle = p.focusMember ? p.color : LABEL_FILL;
-        ctx.fillText(p.name, p.sx, p.y);
+
+      // Smooth alphas: winners fade toward 1 (remembering their slot),
+      // losers fade toward 0 at their last known slot; names outside this
+      // frame's LOD set decay so they re-enter with a fade, not a pop.
+      const placedByName = new Map<string, PlacedLabel>();
+      for (const p of placed) if (!p.pseudo) placedByName.set(p.name, p);
+      const entryNames = new Set<string>();
+      for (const e of entries) {
+        entryNames.add(e.name);
+        let st = labelState.get(e.name);
+        if (!st) { st = { off: e.off, alpha: 0 }; labelState.set(e.name, st); }
+        const win = placedByName.get(e.name);
+        if (win) st.off = win.y - e.sy;
+        st.alpha += ((win ? 1 : 0) - st.alpha) * 0.18;
+        const a = st.alpha;
+        if (a < 0.02) continue;
+        ctx.globalAlpha = introAlpha * a;
+        ctx.fillStyle = e.focusMember ? e.color : LABEL_FILL;
+        ctx.fillText(e.name, e.sx, e.sy + st.off);
       }
+      labelState.forEach((st, name) => {
+        if (!entryNames.has(name)) st.alpha *= 0.8;
+      });
       ctx.shadowBlur = 0;
       ctx.globalAlpha = 1;
     };
@@ -392,11 +462,11 @@ export function ConstellationCanvas({
         edgesFocus.geometry.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
         edgesFocus.geometry.attributes.position.needsUpdate = true;
         focusMatMat.color.set(hubById.get(focus)?.color ?? '#2dd4bf');
-        baseMatMat.opacity = 0.08;
+        baseMatMat.opacity = EDGE_OPACITY_DIM;
       } else {
         edgesFocus.geometry.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(0), 3));
         edgesFocus.geometry.attributes.position.needsUpdate = true;
-        baseMatMat.opacity = 0.28;
+        baseMatMat.opacity = EDGE_OPACITY;
       }
 
       if (focus) {
@@ -446,7 +516,7 @@ export function ConstellationCanvas({
           halo.instanceMatrix.needsUpdate = true;
           introAlpha = smoothstep(0.6, 1, q);
           // edges fade in as the stars land (focus-aware base, overridden by applyFocus once done)
-          (edgesBase.material as THREE.LineBasicMaterial).opacity = (focusRef.current ? 0.08 : 0.28) * introAlpha;
+          (edgesBase.material as THREE.LineBasicMaterial).opacity = (focusRef.current ? EDGE_OPACITY_DIM : EDGE_OPACITY) * introAlpha;
 
           if (q >= 1) {
             introDone = true;
@@ -536,7 +606,7 @@ export function ConstellationCanvas({
         if (idx >= 0) setTooltip(makeTooltip(layout[idx], clientX, clientY));
         return;
       }
-      // While the intro owns matrices, only the tooltip/cursor track the pointer —
+      // While the intro owns matrices, only the tooltip/cursor track the pointer -
       // no scale-up, no edge highlight. hovered is still recorded so the finalize
       // can restore the enlarged state if the pointer is resting on a star.
       if (!introDone) {
@@ -593,7 +663,7 @@ export function ConstellationCanvas({
       raycaster.setFromCamera(pointer, host.camera);
       const hits = raycaster.intersectObject(mesh);
       const idx = hits.length > 0 ? hits[0].instanceId ?? -1 : -1;
-      // While focused, de-emphasised nodes are inert — no hover, no click.
+      // While focused, de-emphasised nodes are inert - no hover, no click.
       if (idx >= 0 && focusRef.current && layout[idx].group !== focusRef.current) return -1;
       return idx;
     };
@@ -647,7 +717,7 @@ export function ConstellationCanvas({
     };
   }, [onSelect]);
 
-  // Bridge dynamic props into the running scene — refs, so ZERO scene rebuilds.
+  // Bridge dynamic props into the running scene - refs, so ZERO scene rebuilds.
   useEffect(() => {
     focusRef.current = focusGroup;
     applyFocusRef.current?.();
@@ -677,7 +747,7 @@ export function ConstellationCanvas({
 
   return (
     <div ref={mountRef} style={{ position: 'relative', width: '100%', height: 'clamp(420px, 58vh, 620px)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--bd)', background: 'radial-gradient(ellipse 70% 60% at 50% 45%, rgba(45,212,191,0.04), transparent 75%)' }}>
-      {/* 2D label overlay — sits above the WebGL canvas, below the tooltip/card */}
+      {/* 2D label overlay - sits above the WebGL canvas, below the tooltip/card */}
       <canvas ref={labelRef} data-labels aria-hidden style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 2 }} />
 
       {/* zoom controls */}

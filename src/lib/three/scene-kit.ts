@@ -1,6 +1,6 @@
 // Shared three.js plumbing: renderer factory, fps-capped frame loop with
 // IntersectionObserver + visibilitychange pausing, and full disposal.
-// Every canvas in the app goes through this module — no hand-rolled loops.
+// Every canvas in the app goes through this module - no hand-rolled loops.
 import * as THREE from 'three';
 
 export interface SceneHost {
@@ -57,7 +57,7 @@ export function createSceneHost(opts: {
   renderer.domElement.style.height = '100%';
 
   const size = { width: 1, height: 1 };
-  // host is assigned below before applySize ever runs — guarded for safety.
+  // host is assigned below before applySize ever runs - guarded for safety.
   const applySize = () => {
     const w = mount.clientWidth || 1;
     const h = mount.clientHeight || 1;
@@ -157,7 +157,7 @@ function disposeMaterial(m: THREE.Material) {
   m.dispose();
 }
 
-/** Deterministic PRNG (mulberry32) — stable layouts across renders. */
+/** Deterministic PRNG (mulberry32) - stable layouts across renders. */
 export function seededRandom(seed: number): () => number {
   let a = seed >>> 0;
   return () => {

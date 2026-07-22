@@ -1,6 +1,6 @@
 ---
 name: Ahmad Firas Portfolio
-description: Cinematic, scroll-driven dark portfolio — a documentary-style journey for an agentic AI engineer. Tokens live in src/styles/theme.css; this doc mirrors them.
+description: Cinematic, scroll-driven dark portfolio - a documentary-style journey for an agentic AI engineer. Tokens live in src/styles/theme.css; this doc mirrors them.
 colors:
   # ── Structural palette ──
   background: "#0d0e12"
@@ -133,7 +133,7 @@ components:
 
 **Creative North Star: "The Mission Debrief"**
 
-This system is built for an engineer reviewing a candidate portfolio at 9pm on a 27-inch monitor in a dim office. Dark is the only correct answer. The visual language comes from someone who writes precise technical reports and also deploys them under real constraints — structured, numbered, evidence-first. Every surface element exists to carry signal: the ghost section numbers are audit trail markers, not decoration; the amber dot-grid is a measurement substrate, not texture. The typeface (Chakra Petch, exclusively) reads as engineered without being cold. The color system is a taxonomy, not a mood board.
+This system is built for an engineer reviewing a candidate portfolio at 9pm on a 27-inch monitor in a dim office. Dark is the only correct answer. The visual language comes from someone who writes precise technical reports and also deploys them under real constraints - structured, numbered, evidence-first. Every surface element exists to carry signal: the ghost section numbers are audit trail markers, not decoration; the amber dot-grid is a measurement substrate, not texture. The typeface (Chakra Petch, exclusively) reads as engineered without being cold. The color system is a taxonomy, not a mood board.
 
 What this system explicitly rejects: gradient mesh heroes, glassmorphism as default decoration, animated skills bars, SaaS stat dashboards (big number in a colored box), dark portfolio templates that look like everyone else's dark portfolio template, and any element that would survive unchanged if dropped into a competing portfolio. The interface must feel like it was made by the same person who wrote the research papers and shipped the production systems.
 
@@ -191,9 +191,9 @@ Added for newer projects. Not part of the original system; do not use for struct
 
 ## 3. Typography: The Single Voice
 
-**Display / Body / Label Font:** Chakra Petch (`var(--font-chakra)`) — loaded via `next/font/google`, weights 300-700, `font-style: normal` only. No italic anywhere; the font has no italic in the loaded set.
+**Display / Body / Label Font:** Chakra Petch (`var(--font-chakra)`) - loaded via `next/font/google`, weights 300-700, `font-style: normal` only. No italic anywhere; the font has no italic in the loaded set.
 
-A geometric-technical sans-serif with a slight sci-fi angle. Reads as engineered without being cold — unusual in technical sans choices. The single-typeface decision signals precision (no expressive/body pairing needed) and keeps the cognitive register consistent across UI labels, body prose, and display headings.
+A geometric-technical sans-serif with a slight sci-fi angle. Reads as engineered without being cold - unusual in technical sans choices. The single-typeface decision signals precision (no expressive/body pairing needed) and keeps the cognitive register consistent across UI labels, body prose, and display headings.
 
 ### Hierarchy
 
@@ -201,14 +201,14 @@ A geometric-technical sans-serif with a slight sci-fi angle. Reads as engineered
 - **Hero Name** (400, `clamp(56px, 10vw, 132px)`, lh 0.95, ls -0.025em): Above-the-fold name display. The only instance of sub-1.0 line-height in the system.
 - **Section Ghost** (400, `clamp(72px, 11vw, 160px)`, lh 1, ls -0.03em): Section numbering ghost in `SH` component.
 - **Title** (400, 20px, lh 1.25, ls -0.01em): Job titles, project card headings, card-level h2/h3. Weight contrast from body is achieved through size, not weight (both 400).
-- **Body** (400, 14-16px, lh 1.65-1.75): All prose — project descriptions, about paragraphs, case study body. Keep lines at 65-75ch maximum. 16px on section-level descriptions; 14-15px inside cards.
+- **Body** (400, 14-16px, lh 1.65-1.75): All prose - project descriptions, about paragraphs, case study body. Keep lines at 65-75ch maximum. 16px on section-level descriptions; 14-15px inside cards.
 - **Label** (400, 11px, lh 1.4, ls 0.1em, UPPERCASE): Section header tags, nav links, button text, skill tags. Always all-caps. The 0.1em tracking is mandatory.
 - **Label-SM** (400, 10px, lh 1.4, ls 0.12em, UPPERCASE): Metadata inside components, date strings, tag categories. Slightly tighter size, slightly wider tracking than Label.
 - **Metadata** (400, 12px, lh 1.5, ls 0.06em): Timestamps, locations, secondary identifiers. Not all-caps.
 
 ### Named Rules
 
-**The One Voice Rule.** Every typographic role uses Chakra Petch. No system serif, no fallback sans for body, no monospaced import. If a new surface needs a different feel, vary size, weight, case, and spacing — not the family.
+**The One Voice Rule.** Every typographic role uses Chakra Petch. No system serif, no fallback sans for body, no monospaced import. If a new surface needs a different feel, vary size, weight, case, and spacing - not the family.
 
 **The No-Italic Rule.** `font-style: italic` is never set. The font set does not include italic weights; using it would trigger browser synthesis (oblique), which breaks the precision signal.
 
@@ -231,7 +231,7 @@ This system is flat-by-default. No `box-shadow` values appear on cards, section 
 ## 5. Components
 
 ### Section Header (SH)
-The system's primary structural signal — every section opens with one.
+The system's primary structural signal - every section opens with one.
 
 - **Ghost number:** Absolutely positioned, `clamp(72px, 11vw, 160px)`, weight 400, `opacity: 0.05`, `color: accentColor`. Top -32px, left -8px. `user-select: none; pointer-events: none`.
 - **Accent line:** `22px × 1.5px`, `background: accentColor`, `opacity: 0.6`.
@@ -243,7 +243,7 @@ The system's primary structural signal — every section opens with one.
 ### ExpandableCard (project grid)
 - **Thumbnail at rest:** `borderTop: 2px solid accentColor`, remaining 3 sides `1px solid rgba(242,237,216,0.08)`. Image fills aspect ratio (16:7 for span-2, 4:3 for span-1).
 - **Thumbnail hover:** Border on 3 non-top sides shifts to `accentColor` at 26% opacity (`accentColor44`). Cursor: pointer.
-- **No expand affordance text on the thumbnail itself** — the section subtitle provides the instruction. Note: this is a discoverability gap flagged in critique (P2).
+- **No expand affordance text on the thumbnail itself** - the section subtitle provides the instruction. Note: this is a discoverability gap flagged in critique (P2).
 - **Expanded state:** Full-screen portal (via React `createPortal`, `z-index: 9999`). Framer Motion `AnimatePresence` handles enter/exit. Scrim: `rgba(0,0,0,0.75)` with `backdrop-filter: blur(10px)`. Card: `max-width: 800px`, centered, scrollable if content exceeds viewport.
 - **Close:** Escape key, click-outside, or an ×-style icon button. `overflow: hidden` on body while open.
 
@@ -289,7 +289,7 @@ The system's primary structural signal — every section opens with one.
 900 particles + 14 hub nodes in satellite clusters. Sapphire/teal/amber particle color scheme. Fixed full-screen, `z-index: 0`. GSAP ScrollTrigger drives scroll-based rotation. Mouse-following parallax. `opacity: 0.42` overlay prevents the scene from overpowering foreground text. Degrades gracefully if WebGL is unavailable. Do not replicate this effect with CSS alone (particle count requires canvas rendering).
 
 ### Scroll Progress Bar
-2px horizontal bar at the very top of the viewport. Amber (`#F0B429`). `transform: scaleX(progress)`, `transform-origin: left`. Implemented inline via a scroll event listener in `_document`. Not a component — a layout-level system element.
+2px horizontal bar at the very top of the viewport. Amber (`#F0B429`). `transform: scaleX(progress)`, `transform-origin: left`. Implemented inline via a scroll event listener in `_document`. Not a component - a layout-level system element.
 
 ### Ambient Body Texture
 `::before` pseudo-element on `body`. Dual radial-gradient dot pattern: amber at 4.5% and 2.2% opacity, 28px × 48px hex grid (offset at 14px/24px). Structural signal, not decoration. Do not increase opacity.
@@ -312,12 +312,12 @@ The system's primary structural signal — every section opens with one.
 - **Don't use `border-left` or `border-right` greater than 1px** as a colored accent stripe on cards or list items. Use full 4-sided borders with accent opacity, or background tints, or nothing.
 - **Don't use gradient text** (`background-clip: text` with a gradient `background`). The `.footer-text-glow` and `.footer-giant-bg-text` classes in `motion-footer.tsx` are legacy ghost/decorative elements at very low opacity. Do not propagate this pattern to content text or headings.
 - **Don't use glassmorphism** (`backdrop-filter: blur`) as a default card style. The two sanctioned uses are: (1) the sticky nav bar after 10px scroll, (2) the footer glass-pill contact buttons. Nowhere else.
-- **Don't add new colors without updating DESIGN.md.** The three extension accents (red, green, sky) were added without documentation — that is the failure mode this rule prevents.
+- **Don't add new colors without updating DESIGN.md.** The three extension accents (red, green, sky) were added without documentation - that is the failure mode this rule prevents.
 - **Don't use `#000` or `#fff`.** The darkest value is `#0B0D14`; the lightest is `#F2EDD8`.
 - **Don't use `font-style: italic`.** The loaded font set has no italic weights; browser synthesis produces oblique that breaks the precision signal.
 - **Don't add `box-shadow` to project cards or section containers.** Depth is tonal, not shadow-based. The flat system is intentional.
 - **Don't use the metric stat-grid pattern** (3-4 column grid of big number + small all-caps label in colored bordered boxes) as the primary content structure inside expanded project cards. This is the banned "hero-metric template." Integrate key numbers into prose or use a single prominent callout per project.
-- **Don't nest cards.** The expanded ExpandableCard portal is a full-screen surface, not a card inside a card. Inner content uses prose, tags, and dividers — not additional card containers.
+- **Don't nest cards.** The expanded ExpandableCard portal is a full-screen surface, not a card inside a card. Inner content uses prose, tags, and dividers - not additional card containers.
 - **Don't add nav items beyond 5** (About, Work, Research, Field Notes, Contact) without removing an existing one. Nine nav items is the documented cognitive-load violation from the design critique.
 
 ## Elevation Model
@@ -336,7 +336,7 @@ Seven sections on one scrolling page: Hero, About, Experience, Projects, Researc
 
 ### Field Notes Hub (`/field-notes`)
 - Sticky top bar showing "X of Y published" in mono label style
-- Large hero with editorial headline ("Essays from the frontier") at `clamp(52px,7.5vw,112px)` — same weight as the home hero name
+- Large hero with editorial headline ("Essays from the frontier") at `clamp(52px,7.5vw,112px)` - same weight as the home hero name
 - Two-column split below: Published grid (FieldNoteCard components) + Coming Soon by category
 - FieldNoteCard: small image, category chip, title, excerpt, read-time tag. No side borders. No identical grid of icon+text cards.
 - Category taxonomy: Agentic AI, Production Engineering, MLOps, Robotics, Research Methods
@@ -345,7 +345,7 @@ Seven sections on one scrolling page: Hero, About, Experience, Projects, Researc
 - MDX content rendered via `@mdx-js/react` with custom component map
 - Body text: 15px, line-height 1.75, max-width 65ch
 - Section headings: 20px weight 600, amber underline 2px on scroll-into-view
-- Custom diagram components: `AgentArchitectureLayers`, `MaturityLadder`, `AutonomyTradeoff`, `ProductionChecklist` — rendered inline within prose, not in separate sections
+- Custom diagram components: `AgentArchitectureLayers`, `MaturityLadder`, `AutonomyTradeoff`, `ProductionChecklist` - rendered inline within prose, not in separate sections
 - No sidebar. No floating table of contents. Linear reading experience.
 - Back-link to `/field-notes` at top in mono label style
 
@@ -354,7 +354,7 @@ Seven sections on one scrolling page: Hero, About, Experience, Projects, Researc
 - Sections: Overview, Problem, Architecture, Stack, Results, Insights, and project-specific additions (e.g., Human-in-Loop, Future)
 - Metric cards: small grid of key quantified outcomes, color-coded with the project's accent
 - Architecture layer breakdown: numbered layers, title, tech chips per layer
-- Full technical narrative — same voice and detail level as the project card expansion, but with full prose
+- Full technical narrative - same voice and detail level as the project card expansion, but with full prose
 - No hero image. Headline + accent + section nav is the above-the-fold.
 
 ## Notes on Exploratory Components

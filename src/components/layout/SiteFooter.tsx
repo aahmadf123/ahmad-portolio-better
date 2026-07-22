@@ -25,7 +25,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <nav aria-label="Footer — explore" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <nav aria-label="Footer - explore" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Explore</span>
             {[
               { label: 'The Story', href: '/#story' },
@@ -37,7 +37,7 @@ export function SiteFooter() {
             ))}
           </nav>
 
-          <nav aria-label="Footer — connect" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <nav aria-label="Footer - connect" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Connect</span>
             <a href={site.socials.github} target="_blank" rel="noopener" style={{ fontFamily: MONO, fontSize: 12, color: 'var(--text2)' }}>GitHub ↗</a>
             <a href={site.socials.linkedin} target="_blank" rel="noopener" style={{ fontFamily: MONO, fontSize: 12, color: 'var(--text2)' }}>LinkedIn ↗</a>

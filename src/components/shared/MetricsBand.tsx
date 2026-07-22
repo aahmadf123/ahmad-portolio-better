@@ -7,7 +7,7 @@ import { awards } from '@/lib/data/awards';
 import { certs } from '@/lib/data/certs';
 import { constellation } from '@/lib/data/skills';
 
-// Module-scope computed values — every figure here is a data module's own
+// Module-scope computed values - every figure here is a data module's own
 // .length, never a hand-typed number that can silently drift out of sync.
 const METRICS: { value: string; label: string }[] = [
   { value: String(jobs.length), label: 'Roles' },
@@ -18,7 +18,7 @@ const METRICS: { value: string; label: string }[] = [
 ];
 
 /**
- * Thin full-width metrics strip — a fast, honest "who is this" scan computed
+ * Thin full-width metrics strip - a fast, honest "who is this" scan computed
  * directly from the site's own data modules. Sits at the top of About, right
  * under the section header.
  */

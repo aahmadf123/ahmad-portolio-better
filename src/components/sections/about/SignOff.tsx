@@ -10,12 +10,12 @@ import { HAND, MONO } from '@/components/shared/section-helpers';
  * The write-on is a numeric MotionValue mapped to an `inset()` clip-path and
  * animated imperatively, NOT a declarative clip-path keyframe: the declarative
  * clip-path keyframe snapped here in practice (root cause not fully pinned
- * down — likely a missing/unparseable initial value rather than a LazyMotion
+ * down - likely a missing/unparseable initial value rather than a LazyMotion
  * limitation); the imperative MotionValue + animate() approach tweens reliably
  * and is kept. Animating the MotionValue updates the style every frame, so the
- * reveal genuinely tweens. It's kicked off from the wrapper's onViewportEnter —
+ * reveal genuinely tweens. It's kicked off from the wrapper's onViewportEnter -
  * the same viewport mechanism that drives the wrapper fade and underline draw
- * (once, amount 0.6) — which fires reliably here where a nested useInView did
+ * (once, amount 0.6) - which fires reliably here where a nested useInView did
  * not. Reduced motion short-circuits to the finished state, no animation. */
 export function SignOff({ text, sub }: { text: string; sub: string }) {
   const reduced = useReducedMotion();

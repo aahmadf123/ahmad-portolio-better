@@ -38,7 +38,7 @@ export function ContactSection() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <span style={{ display: 'inline-block', width: 22, height: 1.5, background: def.color, opacity: 0.6, flexShrink: 0 }} />
           <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: def.color }}>Contact</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.06em' }}>— Let&apos;s talk about building something real.</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.06em' }}>Let&apos;s talk about building something real.</span>
         </div>
         {/* Live status badge */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 14px', border: '1px solid rgba(34,197,94,0.22)', borderRadius: 4, background: 'rgba(34,197,94,0.05)', flexShrink: 0 }}>
@@ -56,7 +56,7 @@ export function ContactSection() {
               Open to roles in AI&nbsp;research, ML&nbsp;engineering, and data&nbsp;science.
             </h2>
             <p style={{ fontFamily: SANS, fontSize: 15, color: FG3, lineHeight: 1.8, marginBottom: 44, maxWidth: 440 }}>
-              Whether it&apos;s a full-time opportunity, research collaboration, or just a conversation about autonomous systems — I&apos;m listening.
+              Whether it&apos;s a full-time opportunity, research collaboration, or just a conversation about autonomous systems, I&apos;m listening.
             </p>
 
             {/* Email as terminal send-signal element */}

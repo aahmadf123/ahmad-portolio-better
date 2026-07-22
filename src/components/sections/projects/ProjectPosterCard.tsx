@@ -21,7 +21,7 @@ function decodeKey(src: string): string {
   }
 }
 
-/** Tiny local lookup — mirrors <Pic>'s manifest logic without pulling in the
+/** Tiny local lookup - mirrors <Pic>'s manifest logic without pulling in the
  * component itself (this image renders as `m.img` so it can carry the
  * hover `variants`/`transition` props; the dependency-free <Pic> is a plain
  * <img> and can't). Manifest miss falls back to the original path with no
@@ -56,7 +56,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
   const wide = p.span === 2;
 
   // GPU-only pointer tilt (rotateX/rotateY, capped ±4°). Spring-smoothed follow
-  // and reset. Disabled entirely under reduced motion — no handlers attached.
+  // and reset. Disabled entirely under reduced motion - no handlers attached.
   const reduced = useReducedMotion();
   const tiltX = useMotionValue(0);
   const tiltY = useMotionValue(0);
@@ -84,7 +84,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
       layoutId={`poster-${p.idx}`}
       onClick={() => {
         resetTilt?.();
-        // Jump (not set) the rendered spring outputs straight to 0 — set() on
+        // Jump (not set) the rendered spring outputs straight to 0 - set() on
         // tiltX/tiltY above only re-targets the spring, which would still be
         // mid-flight when the layoutId morph starts measuring. jump() snaps
         // rotateX/rotateY themselves so the morph begins from an exact 0° pose.
@@ -99,7 +99,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
       animate="rest"
       data-magnetic=""
       className="card-project"
-      aria-label={`${p.title} — open project details`}
+      aria-label={`${p.title} - open project details`}
       style={{
         position: 'relative',
         display: 'block',
@@ -114,14 +114,14 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
         textAlign: 'left',
         isolation: 'isolate',
         // Motion values stay at 0 under reduced motion (handlers aren't attached),
-        // so they're bound unconditionally — no `reduced`-dependent render output,
+        // so they're bound unconditionally - no `reduced`-dependent render output,
         // which keeps SSR/hydration output identical.
         rotateX,
         rotateY,
         transformPerspective: 800,
       }}
     >
-      {/* image — dimmed and desaturated at rest so bright screenshots stay moody */}
+      {/* image - dimmed and desaturated at rest so bright screenshots stay moody */}
       <m.img
         {...responsiveAttrs(p.image, wide)}
         alt=""
@@ -147,7 +147,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
       <m.div aria-hidden variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }} transition={{ duration: 0.3 }}
         style={{ position: 'absolute', inset: 0, zIndex: 2, borderRadius: 12, boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${p.color} 55%, transparent), 0 8px 40px -12px color-mix(in srgb, ${p.color} 30%, transparent)` }} />
 
-      {/* specular glass sheen — CSS-driven on .card-project:hover (globals.css) */}
+      {/* specular glass sheen - CSS-driven on .card-project:hover (globals.css) */}
       <span className="card-glass-sheen" aria-hidden />
 
       {/* content */}

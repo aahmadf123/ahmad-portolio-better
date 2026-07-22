@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Security Discovery Tool — Ahmad Firas",
+  title: "Security Discovery Tool - Ahmad Firas",
   description: "A centralized scanning orchestration tool mapping network vulnerabilities to targeted CVE definitions.",
 };
 

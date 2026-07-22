@@ -1,4 +1,4 @@
-// Awards & recognition — extracted verbatim from the original Skills section.
+// Awards & recognition - extracted verbatim from the original Skills section.
 
 export interface Award {
   title: string;

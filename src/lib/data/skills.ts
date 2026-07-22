@@ -1,4 +1,4 @@
-// Skills — the 7 groups extracted verbatim from the original Skills section, plus
+// Skills - the 7 groups extracted verbatim from the original Skills section, plus
 // a computed constellation graph: node weights = co-occurrence across project and
 // job stacks (never hand-authored), edges = same-project/job co-membership.
 
@@ -65,7 +65,7 @@ export interface SkillNode {
   group: string;
   /** Co-occurrence count across project/job stacks (min 1). */
   weight: number;
-  /** Which projects/jobs reference this skill — powers the detail card. */
+  /** Which projects/jobs reference this skill - powers the detail card. */
   usedIn: { kind: 'project' | 'job'; title: string; href: string }[];
 }
 

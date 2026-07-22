@@ -19,7 +19,7 @@ export const BG = 'var(--background)';
 // Kinetic: self-reveals on scroll-in via useReveal (transform/opacity only, no
 // layout shift). `.reveal`/`.in` transitions + the reduced-motion force-visible
 // rule live in globals.css; the inline transitionDelay staggers kicker → sub.
-// This module is 'use client', so SH is already a client component — safe to
+// This module is 'use client', so SH is already a client component - safe to
 // hook here and still renderable from server components.
 export function SH({ n, label, sub = '', color = 'var(--primary)' }: { n: string; label: string; sub?: string; color?: string }) {
   const { ref, visible } = useReveal();
