@@ -10,7 +10,7 @@ const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
 const ACCENT = '#22C55E';
 
-const PALETTE = ['#F0B429','#4B7BF5','#2DD4C8','#F07832','#A78BFA','#F472B6','#0EA5E9','#22C55E','#EF4444'];
+const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -20,7 +20,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 3, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
       {children}
     </span>
   );
@@ -52,7 +52,7 @@ function DbLayer({ n, title, items, color = ACCENT }: { n: string; title: string
         <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 3 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -91,15 +91,15 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
   }, []);
 
   return (
-    <div style={{ background: '#090B12', minHeight: '100vh', color: '#B8B4A4' }}>
+    <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
-        body { background: #090B12; }
-        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: #B8B4A4; }
+        body { background: var(--background); }
+        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: var(--text2); }
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
         .cs-body li::marker { color: ${ACCENT}; }
-        .cs-h2 { font-family: ${SERIF}; font-size: clamp(22px, 3vw, 30px); color: #F2EDD8; font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
+        .cs-h2 { font-family: ${SERIF}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
         .metrics-grid-taop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
         @media (max-width: 640px) { .metrics-grid-taop { grid-template-columns: repeat(2, 1fr); } }
@@ -108,13 +108,13 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
         .three-col-taop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-taop { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-taop { grid-template-columns: 1fr; } }
-        .entity-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-left: 2px solid ${ACCENT}90; border-radius: 8px; transition: all 0.2s ease; }
+        .entity-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .entity-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
         .entity-field { font-family: ${MONO}; font-size: 10px; color: var(--text3); padding: 2px 0; letter-spacing: 0.03em; }
         .entity-key { color: ${ACCENT}; }
-        .principle-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.07); border-left: 2px solid ${ACCENT}50; border-radius: 8px; transition: all 0.2s ease; }
+        .principle-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
         .principle-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.06); border-left: 2px solid ${ACCENT}30; border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
         .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
         .flow-step { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: ${ACCENT}06; border: 1px solid ${ACCENT}18; border-radius: 8px; }
@@ -169,10 +169,10 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
             <Tag>Serverless</Tag>
             <Tag>University of Toledo Athletics</Tag>
           </div>
-          <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(32px,5vw,56px)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, #F2EDD8 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+          <h1 style={{ fontFamily: SERIF, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, var(--foreground) 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
             Toledo Athletics Onboarding Portal
           </h1>
-          <p style={{ fontFamily: SERIF, fontSize: 'clamp(15px,2vw,18px)', color: '#B8B4A4', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
+          <p style={{ fontFamily: SERIF, fontSize: 16, color: 'var(--text2)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
             A serverless internal platform that centralizes onboarding knowledge, policies, contacts, org chart data, systems directories, and moderated staff tips for University of Toledo Athletics staff.
           </p>
 
@@ -186,7 +186,7 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
           </div>
 
           {/* Hero image */}
-          <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: '#06080E', marginBottom: 64 }}>
+          <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>
             <Pic
               src="/Images/Toledo_Athletics_Onboarding.png"
               alt="Toledo Athletics Onboarding Portal"
@@ -297,7 +297,7 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
               </div>
 
               <h3 className="cs-h3">System flow</h3>
-              <div style={{ padding: '16px 20px', background: 'rgba(34,197,94,0.04)', border: '1px solid rgba(34,197,94,0.15)', borderRadius: 8, fontFamily: MONO, fontSize: 12, color: '#B8B4A4', letterSpacing: '0.03em', lineHeight: 2 }}>
+              <div style={{ padding: '16px 20px', background: 'rgba(34,197,94,0.04)', border: '1px solid rgba(34,197,94,0.15)', borderRadius: 8, fontFamily: MONO, fontSize: 12, color: 'var(--text2)', letterSpacing: '0.03em', lineHeight: 2 }}>
                 React SPA → Cloudflare Worker API → Hono routes → Cloudflare D1 → AI / content response → user dashboard
               </div>
             </Section>
@@ -337,7 +337,7 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
                 ))}
               </div>
               <p>
-                The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>SiteContentIndex</code> table powers AI and search retrieval across published content. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>Submissions</code> and <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>Tips</code> tables enforce the moderation boundary - unapproved content never surfaces in the live portal.
+                The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>SiteContentIndex</code> table powers AI and search retrieval across published content. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>Submissions</code> and <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>Tips</code> tables enforce the moderation boundary - unapproved content never surfaces in the live portal.
               </p>
             </Section>
 
@@ -358,13 +358,13 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
                   'Which system handles compliance workflows?',
                   'Where can I find HR benefits information?',
                 ].map(q => (
-                  <div key={q} style={{ padding: '12px 16px', background: 'rgba(34,197,94,0.04)', border: '1px solid rgba(34,197,94,0.14)', borderRadius: 6, fontFamily: SERIF, fontSize: 13, color: '#B8B4A4', lineHeight: 1.5 }}>
+                  <div key={q} style={{ padding: '12px 16px', background: 'rgba(34,197,94,0.04)', border: '1px solid rgba(34,197,94,0.14)', borderRadius: 6, fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.5 }}>
                     &ldquo;{q}&rdquo;
                   </div>
                 ))}
               </div>
               <p>
-                Using a native Workers AI binding requires no external API key - the AI runs in the same Cloudflare edge environment as the rest of the stack, keeping the platform simple to deploy and operate. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>SiteContentIndex</code> table provides the retrieval layer that grounds the assistant in actual portal content rather than general model knowledge.
+                Using a native Workers AI binding requires no external API key - the AI runs in the same Cloudflare edge environment as the rest of the stack, keeping the platform simple to deploy and operate. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>SiteContentIndex</code> table provides the retrieval layer that grounds the assistant in actual portal content rather than general model knowledge.
               </p>
 
               <h3 className="cs-h3">Technical stack</h3>
@@ -393,8 +393,8 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
                 ))}
               </div>
               {/* PROMPT FOR AHMAD: what actually broke while building the onboarding portal? The page documents the moderation design as a success, not a failure. If a concrete setback surfaced (a data-model rewrite, a Workers AI limitation, a seed/migration issue), name it and a "What broke" block can go here. */}
-              <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+              <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
                 <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                   The moderation pipeline assumes a trusted moderator, but the current build has no authenticated login or role-based access yet - the compliance boundary is designed, not enforced. Before staff actually rely on it, I&apos;d wire up UToledo SSO and role-based permissions so approving official content is gated by real identity, not convention.
                 </p>
@@ -408,8 +408,8 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Near-Term', color: ACCENT, items: ['Authenticated UToledo SSO login', 'Role-based admin dashboard for content approval', 'Onboarding progress tracking for each new employee', 'Manager checklists for 30/60/90-day reviews'] },
-                  { phase: 'Mid-Term', color: '#F0B429', items: ['Semantic search across articles and policies', 'Analytics for most-viewed and unanswered questions', 'Automatic stale-content reminders', 'CSV import/export for staff and contacts', 'AI-generated summaries for long policy documents'] },
-                  { phase: 'Long-Term', color: '#A78BFA', items: ['Department-specific onboarding paths (coaches, operations, communications, compliance, ticketing, development)', 'Audit logs for all content updates', 'Mobile-first quick-start mode for first-day onboarding', 'Cross-role knowledge transfer workflows when staff change positions'] },
+                  { phase: 'Mid-Term', color: 'var(--gold)', items: ['Semantic search across articles and policies', 'Analytics for most-viewed and unanswered questions', 'Automatic stale-content reminders', 'CSV import/export for staff and contacts', 'AI-generated summaries for long policy documents'] },
+                  { phase: 'Long-Term', color: 'var(--purple)', items: ['Department-specific onboarding paths (coaches, operations, communications, compliance, ticketing, development)', 'Audit logs for all content updates', 'Mobile-first quick-start mode for first-day onboarding', 'Cross-role knowledge transfer workflows when staff change positions'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
                     <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
@@ -421,10 +421,10 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
               </div>
 
               <div style={{ padding: '24px 28px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10, marginTop: 32 }}>
-                <p style={{ fontFamily: SERIF, fontSize: 15, color: '#F2EDD8', margin: '0 0 8px', lineHeight: 1.5 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--foreground)', margin: '0 0 8px', lineHeight: 1.5 }}>
                   Great onboarding is infrastructure for institutional memory.
                 </p>
-                <p style={{ fontFamily: SERIF, fontSize: 14, color: '#B8B4A4', margin: 0, lineHeight: 1.6 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text2)', margin: 0, lineHeight: 1.6 }}>
                   The Toledo Athletics Onboarding Portal demonstrates that internal software engineering - serverless architecture, relational schema design, moderated knowledge workflows, and AI integration - can directly reduce operational risk and help people do their jobs better from day one.
                 </p>
               </div>
@@ -459,3 +459,6 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
     </div>
   );
 }
+
+
+

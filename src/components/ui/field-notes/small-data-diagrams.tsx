@@ -5,12 +5,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
 
-const GREEN = '#10B981';
-const GOLD  = '#F0B429';
-const BLUE  = '#4B7BF5';
-const RED   = '#EF4444';
-const ORANGE = '#F97316';
-const PURPLE = '#8B5CF6';
+const GREEN = 'var(--green)';
+const GOLD  = 'var(--gold)';
+const BLUE  = 'var(--blue)';
+const RED   = 'var(--red)';
+const ORANGE = 'var(--orange)';
+const PURPLE = 'var(--purple)';
 
 function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; color?: string }) {
   return (
@@ -144,8 +144,8 @@ export function SeasonSimulator() {
                       fontFamily: MONO, fontSize: 10, letterSpacing: '0.05em',
                       padding: '7px 10px', borderRadius: 6, cursor: 'pointer',
                       background: active ? `${GREEN}18` : 'rgba(242,237,216,0.03)',
-                      border: `1px solid ${active ? GREEN : 'rgba(242,237,216,0.12)'}`,
-                      color: active ? GREEN : '#B8B4A4',
+                      border: `1px solid ${active ? GREEN : 'rgba(244,244,242,0.12)'}`,
+                      color: active ? GREEN : 'var(--text2)',
                       transition: 'all 0.15s',
                     }}
                   >
@@ -185,8 +185,7 @@ export function SeasonSimulator() {
                       flex: 1, height: `${Math.max(h, count > 0 ? 2 : 0)}%`,
                       background: isTruth ? GOLD : below500 ? RED : GREEN,
                       opacity: isTruth ? 0.95 : 0.55,
-                      borderRadius: '2px 2px 0 0',
-                      transition: 'height 0.3s ease',
+                      borderRadius: '4px 4px 0 0',
                     }}
                   />
                 );
@@ -241,7 +240,7 @@ export function SeasonSimulator() {
                 <div style={{ fontFamily: MONO, fontSize: 20, color: stat.color, lineHeight: 1, marginBottom: 4 }}>
                   {stat.value}
                 </div>
-                <div style={{ fontFamily: SERIF, fontSize: 11, color: '#8A877A', lineHeight: 1.45 }}>
+                <div style={{ fontFamily: SERIF, fontSize: 11, color: 'var(--text3)', lineHeight: 1.45 }}>
                   {stat.sub}
                 </div>
               </div>
@@ -285,10 +284,10 @@ export function EvidencePerSeason() {
       <SectionLabel>Interactive · What One Season Can Prove</SectionLabel>
 
       <div style={{
-        border: '1px solid rgba(242,237,216,0.09)', borderRadius: 10,
+        border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10,
         background: 'rgba(242,237,216,0.02)', padding: '16px 18px',
       }}>
-        <div style={{ fontFamily: SERIF, fontSize: 13, color: '#A09C8E', lineHeight: 1.6, marginBottom: 14 }}>
+        <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
           Take a team whose true quality is 60%. After one full season, where could its
           <em> measured</em> win rate plausibly land? Click a league.
         </div>
@@ -306,12 +305,12 @@ export function EvidencePerSeason() {
                   display: 'flex', alignItems: 'center', gap: 12,
                   padding: '9px 12px', borderRadius: 8, cursor: 'pointer',
                   background: active ? `${r.color}0C` : 'transparent',
-                  border: `1px solid ${active ? r.color + '40' : 'rgba(242,237,216,0.07)'}`,
+                  border: `1px solid ${active ? r.color + '40' : 'rgba(244,244,242,0.07)'}`,
                   textAlign: 'left', width: '100%', transition: 'all 0.15s',
                 }}
               >
                 <div style={{ width: 118, flexShrink: 0 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: active ? r.color : '#B8B4A4', letterSpacing: '0.04em' }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: active ? r.color : 'var(--text2)', letterSpacing: '0.04em' }}>
                     {r.league}
                   </div>
                   <div style={{ fontFamily: MONO, fontSize: 8, color: 'var(--text3)', marginTop: 2 }}>
@@ -323,7 +322,7 @@ export function EvidencePerSeason() {
                 <div style={{ flex: 1, position: 'relative', height: 18 }}>
                   <div style={{
                     position: 'absolute', left: 0, right: 0, top: '50%',
-                    height: 1, background: 'rgba(242,237,216,0.08)',
+                    height: 1, background: 'rgba(244,244,242,0.08)',
                   }} />
                   {/* Truth tick at 60% */}
                   <div style={{
@@ -351,11 +350,11 @@ export function EvidencePerSeason() {
         <div style={{
           marginTop: 14, padding: '10px 14px', borderRadius: 8,
           background: `${sel.color}08`, border: `1px solid ${sel.color}25`,
-          fontFamily: SERIF, fontSize: 13, color: '#C8C4B4', lineHeight: 1.65,
+          fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65,
         }}>
           In <span style={{ color: sel.color }}>{sel.league}</span>, a true-60% team&apos;s single-season
-          record lands anywhere from <strong style={{ color: '#F2EDD8' }}>{Math.round(sel.lo * 100)}%</strong> to{' '}
-          <strong style={{ color: '#F2EDD8' }}>{Math.round(sel.hi * 100)}%</strong> (95% range).
+          record lands anywhere from <strong style={{ color: 'var(--foreground)' }}>{Math.round(sel.lo * 100)}%</strong> to{' '}
+          <strong style={{ color: 'var(--foreground)' }}>{Math.round(sel.hi * 100)}%</strong> (95% range).
           {sel.games <= 17
             ? ' That interval spans everything from "fire the coach" to "conference title contender" - from the same underlying team.'
             : ' A longer season shrinks luck. The record starts to mean something on its own.'}
@@ -396,7 +395,7 @@ export function RosterHalfLife() {
       <SectionLabel>Interactive · The Dissolving Sample</SectionLabel>
 
       <div style={{
-        border: '1px solid rgba(242,237,216,0.09)', borderRadius: 10,
+        border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10,
         background: 'rgba(242,237,216,0.02)', padding: '16px 18px',
       }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', marginBottom: 16 }}>
@@ -413,8 +412,8 @@ export function RosterHalfLife() {
                   fontFamily: MONO, fontSize: 10, letterSpacing: '0.05em',
                   padding: '6px 12px', borderRadius: 6, cursor: 'pointer',
                   background: active ? `${GREEN}18` : 'rgba(242,237,216,0.03)',
-                  border: `1px solid ${active ? GREEN : 'rgba(242,237,216,0.12)'}`,
-                  color: active ? GREEN : '#B8B4A4',
+                  border: `1px solid ${active ? GREEN : 'rgba(244,244,242,0.12)'}`,
+                  color: active ? GREEN : 'var(--text2)',
                   transition: 'all 0.15s',
                 }}
               >
@@ -437,7 +436,7 @@ export function RosterHalfLife() {
                 style={{
                   aspectRatio: '1', borderRadius: '50%',
                   background: present ? GREEN : 'rgba(242,237,216,0.05)',
-                  border: `1px solid ${present ? GREEN : 'rgba(242,237,216,0.1)'}`,
+                  border: `1px solid ${present ? GREEN : 'rgba(244,244,242,0.1)'}`,
                   opacity: present ? 0.85 : 0.35,
                   transition: 'all 0.35s ease',
                 }}
@@ -452,7 +451,7 @@ export function RosterHalfLife() {
         }}>
           ~{Math.round(YEAR_RETENTION[year] * 100)}% of the original roster still producing data
         </div>
-        <div style={{ textAlign: 'center', fontFamily: SERIF, fontSize: 12, color: '#8A877A', lineHeight: 1.6, maxWidth: 520, margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', fontFamily: SERIF, fontSize: 12, color: 'var(--text3)', lineHeight: 1.6, maxWidth: 520, margin: '0 auto' }}>
           {year === 0 && 'Season one: every snap adds to a coherent dataset about this roster.'}
           {year === 1 && 'Graduation, the transfer portal, and the NFL draft have already taken a third of the sample with them.'}
           {year === 2 && 'By year three, most of your "historical data" describes players who are no longer in the building.'}
@@ -546,7 +545,7 @@ export function SmallDataPlaybook() {
                   <span style={{ display: 'block', fontFamily: MONO, fontSize: 12, color: item.color, letterSpacing: '0.04em', marginBottom: 2 }}>
                     {item.title}
                   </span>
-                  <span style={{ display: 'block', fontFamily: SERIF, fontSize: 12, color: '#A09C8E', lineHeight: 1.5 }}>
+                  <span style={{ display: 'block', fontFamily: SERIF, fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>
                     {item.summary}
                   </span>
                 </span>
@@ -562,7 +561,7 @@ export function SmallDataPlaybook() {
               {isOpen && (
                 <div style={{
                   padding: '0 16px 15px 41px',
-                  fontFamily: SERIF, fontSize: 13, color: '#C8C4B4', lineHeight: 1.75,
+                  fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.75,
                 }}>
                   {item.detail}
                 </div>
@@ -644,7 +643,7 @@ export function EvidenceCalculator() {
         border: `1px solid ${GOLD}25`, borderRadius: 10,
         background: `${GOLD}04`, padding: '18px 18px 16px',
       }}>
-        <div style={{ fontFamily: SERIF, fontSize: 13, color: '#A09C8E', lineHeight: 1.6, marginBottom: 16 }}>
+        <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 16 }}>
           Two programs, fixed true quality, equal schedules. How many games until you can be 95% sure
           the better one shows it in the win column?
         </div>
@@ -679,7 +678,7 @@ export function EvidenceCalculator() {
             <div style={{ fontFamily: MONO, fontSize: 24, color: BLUE, lineHeight: 1 }}>
               {(pAfterSeason * 100).toFixed(0)}%
             </div>
-            <div style={{ fontFamily: SERIF, fontSize: 10, color: '#8A877A', marginTop: 4, lineHeight: 1.4 }}>
+            <div style={{ fontFamily: SERIF, fontSize: 10, color: 'var(--text3)', marginTop: 4, lineHeight: 1.4 }}>
               chance the better team even looks better
             </div>
           </div>
@@ -689,7 +688,7 @@ export function EvidenceCalculator() {
         <div style={{
           padding: '11px 14px', borderRadius: 8,
           background: `${verdictColor}09`, border: `1px solid ${verdictColor}30`,
-          fontFamily: SERIF, fontSize: 13, color: '#C8C4B4', lineHeight: 1.65,
+          fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65,
         }}>
           <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: verdictColor, marginRight: 10 }}>
             Verdict
@@ -700,8 +699,9 @@ export function EvidenceCalculator() {
 
       <Caption>
         One-sided 95% confidence via normal approximation; a college career is counted as ~{COLLEGE_CAREER_GAMES} games
-        across five seasons. Equal schedules assumed - real college schedules make it harder, not easier.
       </Caption>
     </div>
   );
 }
+
+

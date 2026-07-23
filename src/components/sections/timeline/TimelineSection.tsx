@@ -71,7 +71,7 @@ export function TimelineSection() {
 
       <div ref={wrapRef} className="tl-wrap" style={{ position: 'relative', padding: '10px 0 30px' }}>
         {/* the line */}
-        <div aria-hidden className="tl-line" style={{ position: 'absolute', top: 0, bottom: 0, left: '50%', width: 2, transform: 'translateX(-50%)', background: 'var(--bd)', borderRadius: 2, overflow: 'hidden' }}>
+        <div aria-hidden className="tl-line" style={{ position: 'absolute', top: 0, bottom: 0, left: '50%', width: 2, transform: 'translateX(-50%)', background: 'var(--bd)', borderRadius: 4, overflow: 'hidden' }}>
           <div data-tl-fill style={{ position: 'absolute', inset: 0, transformOrigin: 'top', transform: 'scaleY(0)', background: 'linear-gradient(to bottom, var(--primary), color-mix(in srgb, var(--primary) 55%, var(--gold)))', boxShadow: '0 0 12px rgba(45,212,191,0.5)' }} />
         </div>
 
@@ -94,3 +94,4 @@ export function TimelineSection() {
     </Section>
   );
 }
+

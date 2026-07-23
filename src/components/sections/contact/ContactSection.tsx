@@ -13,7 +13,7 @@ export function ContactSection() {
     { label: 'Email', value: site.email, href: `mailto:${site.email}`, color: '#f59e0b', Icon: Mail },
     { label: 'LinkedIn', value: '/in/ahmadfirasazfar', href: site.socials.linkedin, color: '#5b8af5', Icon: LinkedinIcon },
     { label: 'GitHub', value: '/aahmadf123', href: site.socials.github, color: '#2dd4bf', Icon: GithubIcon },
-    { label: 'Location', value: site.location, href: null, color: '#a78bfa', Icon: MapPin },
+    { label: 'Location', value: site.location, href: null, color: 'var(--purple)', Icon: MapPin },
     { label: 'Response', value: 'Within 24 hours', href: null, color: '#22c55e', Icon: Clock },
   ];
   return (
@@ -31,7 +31,7 @@ export function ContactSection() {
       `}</style>
 
       {/* Ghost watermark */}
-      <div aria-hidden style={{ position: 'absolute', top: -28, right: -4, fontFamily: SERIF, fontSize: 'clamp(110px,17vw,210px)', fontWeight: 400, color: def.color, opacity: 0.04, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em', zIndex: 0 }}>{def.n}</div>
+      <div aria-hidden style={{ position: 'absolute', top: -28, right: -4, fontFamily: SERIF, fontSize: 'clamp(72px,14vw,112px)', fontWeight: 400, color: def.color, opacity: 0.04, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em', zIndex: 0 }}>{def.n}</div>
 
       {/* Section header row */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginBottom: 56, position: 'relative', zIndex: 1 }}>
@@ -52,7 +52,7 @@ export function ContactSection() {
 
           {/* ── Left ── */}
           <div>
-            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(28px,4vw,52px)', fontWeight: 400, color: 'var(--foreground)', lineHeight: 1.12, marginBottom: 20, maxWidth: 560, paddingBottom: '0.05em' }}>
+            <h2 style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 400, color: 'var(--foreground)', lineHeight: 1.12, marginBottom: 20, maxWidth: 560, paddingBottom: '0.05em' }}>
               Open to roles in AI&nbsp;research, ML&nbsp;engineering, and data&nbsp;science.
             </h2>
             <p style={{ fontFamily: SANS, fontSize: 15, color: FG3, lineHeight: 1.8, marginBottom: 44, maxWidth: 440 }}>
@@ -78,7 +78,7 @@ export function ContactSection() {
               <span aria-hidden style={{ position: 'absolute', top: 0, left: 0, width: 20, height: 20, borderTop: '2px solid rgba(56,189,248,0.55)', borderLeft: '2px solid rgba(56,189,248,0.55)' }} />
               <span aria-hidden style={{ position: 'absolute', bottom: 0, right: 0, width: 20, height: 20, borderBottom: '2px solid rgba(56,189,248,0.55)', borderRight: '2px solid rgba(56,189,248,0.55)' }} />
               <span style={{ fontFamily: MONO, fontSize: 9, color: 'var(--sky)', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.1em', flexShrink: 0 }}>SEND →</span>
-              <span className="contact-email-text" style={{ fontFamily: MONO, fontSize: 'clamp(13px,1.5vw,17px)', color: 'var(--sky)', letterSpacing: '0.04em', transition: 'color 0.18s' }}>
+              <span className="contact-email-text" style={{ fontFamily: MONO, fontSize: 15, color: 'var(--sky)', letterSpacing: '0.04em', transition: 'color 0.18s' }}>
                 {site.email}
               </span>
               <span aria-hidden style={{ fontFamily: MONO, fontSize: 15, color: 'var(--sky)', opacity: 0.5, animation: 'contact-blink 1s step-end infinite' }}>▮</span>
@@ -144,3 +144,4 @@ export function ContactSection() {
     </Section>
   );
 }
+

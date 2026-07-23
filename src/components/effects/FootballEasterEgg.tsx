@@ -61,7 +61,7 @@ export function FootballEasterEgg() {
         <PlayDiagram loop={false} />
       </div>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontFamily: HAND, fontSize: 'clamp(28px, 4vw, 42px)', color: 'var(--gold)' }}>Blitz unlocked - Go Rockets!</div>
+        <div style={{ fontFamily: HAND, fontSize: 20, color: 'var(--gold)' }}>Blitz unlocked - Go Rockets!</div>
         <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginTop: 8 }}>
           You typed the magic word · click anywhere to resume
         </div>

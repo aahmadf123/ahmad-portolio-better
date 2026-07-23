@@ -51,18 +51,18 @@ export function StoryChapter({ chapter, index, pinned }: { chapter: Chapter; ind
           </div>
           <h3 className="story-line" style={{
             fontFamily: SERIF, fontWeight: 400,
-            fontSize: 'clamp(42px, 6.4vw, 92px)',
+            fontSize: 20,
             lineHeight: 0.98, letterSpacing: '-0.025em',
             color: 'var(--foreground)', margin: 0, paddingBottom: '0.06em',
           }}>
             {chapter.title}
           </h3>
-          <p className="story-line" style={{ fontFamily: SANS, fontSize: 'clamp(15px, 1.25vw, 17px)', lineHeight: 1.78, color: 'var(--text2)', maxWidth: 560, marginTop: 22 }}>
+          <p className="story-line" style={{ fontFamily: SANS, fontSize: 15, lineHeight: 1.78, color: 'var(--text2)', maxWidth: 560, marginTop: 22 }}>
             {chapter.body}
           </p>
           {chapter.stat && (
             <div className="story-line" style={{ marginTop: 26, display: 'inline-flex', alignItems: 'baseline', gap: 14, padding: '14px 20px', border: `1px solid color-mix(in srgb, ${chapter.accent} 25%, transparent)`, borderRadius: 8, background: `color-mix(in srgb, ${chapter.accent} 4%, transparent)` }}>
-              <span style={{ fontFamily: SERIF, fontSize: 'clamp(24px, 2.6vw, 38px)', color: chapter.milestone ? 'var(--gold)' : chapter.accent, lineHeight: 1 }}>{chapter.stat.value}</span>
+              <span style={{ fontFamily: SERIF, fontSize: 20, color: chapter.milestone ? 'var(--gold)' : chapter.accent, lineHeight: 1 }}>{chapter.stat.value}</span>
               <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text3)', maxWidth: 240 }}>{chapter.stat.label}</span>
             </div>
           )}

@@ -64,7 +64,7 @@ export function HeroSection() {
                 {site.heroSub}
               </p>
               <div style={{ marginTop: 28, display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-                <a href="#story" data-magnetic="" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', background: 'var(--primary)', color: '#06211e', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase' }}>Enter the Story ↓</a>
+                <a href="#story" data-magnetic="" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', background: 'var(--primary)', color: 'var(--background)', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase' }}>Enter the Story ↓</a>
                 <a href="#projects" data-magnetic="" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', border: '1px solid var(--bd2)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase' }}>View Work</a>
                 <a href={site.resumeUrl} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid var(--bd)', color: FG3, fontFamily: MONO, fontSize: 10, letterSpacing: '0.07em', borderRadius: 5, textTransform: 'uppercase' }}>Resume ↓</a>
                 <a href={site.degreeUrl} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', border: '1px solid rgba(45,212,191,0.35)', color: 'var(--primary)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.07em', borderRadius: 5, textTransform: 'uppercase' }}>Degree ↓</a>
@@ -93,7 +93,7 @@ export function HeroSection() {
           </div>
 
           {/* info cards */}
-          <div style={{ marginTop: 20, backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', borderRadius: 8, boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+          <div style={{ marginTop: 20, backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', borderRadius: 8, boxShadow: 'inset 0 1px 0 rgba(244,244,242,0.06)' }}>
             {heroFacts.map((f) => (
               <div key={f.label} style={{ padding: '10px 0', borderBottom: '1px solid var(--bd)' }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: f.color, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 2, opacity: 0.85 }}>{f.label}</div>
@@ -113,7 +113,7 @@ export function HeroSection() {
           #hero .hero-right img { max-height: 440px !important; min-height: 180px; width: 100% !important; object-fit: cover !important; }
         }
         @media (max-width: 600px) {
-          #hero .hero-left h1 { font-size: clamp(48px,13vw,80px) !important; }
+          #hero .hero-left h1 { font-size: clamp(56px,13vw,72px) !important; }
         }
       `}</style>
     </section>
@@ -159,3 +159,4 @@ function HeroPhoto() {
     </div>
   );
 }
+

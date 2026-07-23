@@ -52,7 +52,7 @@ export function NowPlayingBar() {
 
       <style>{`
         @media (max-width: 900px) { .np-bar { display: none !important; } }
-        .np-eq i { display: block; width: 3px; background: var(--primary); border-radius: 1px; height: 5px; }
+        .np-eq i { display: block; width: 3px; background: var(--primary); border-radius: 4px; height: 5px; }
         @media (prefers-reduced-motion: no-preference) {
           .np-eq i { animation: np-eq 1s ease-in-out infinite; }
           .np-eq i:nth-child(2) { animation-delay: 0.2s; }

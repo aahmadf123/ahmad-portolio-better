@@ -40,7 +40,7 @@ export default function FieldNotesPage() {
         </SmartBackLink>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: 2, background: 'var(--primary)', boxShadow: '0 0 8px rgba(45,212,191,0.6)' }} />
+          <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: 4, background: 'var(--primary)', boxShadow: '0 0 8px rgba(45,212,191,0.6)' }} />
           <span style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.08em' }}>
             Field Notes
           </span>
@@ -60,7 +60,7 @@ export default function FieldNotesPage() {
         {/* Background number */}
         <div aria-hidden style={{
           position: 'absolute', top: 0, right: -20,
-          fontFamily: SERIF, fontSize: 'clamp(180px,25vw,320px)',
+          fontFamily: SERIF, fontSize: 'clamp(72px,18vw,112px)',
           fontWeight: 400, color: 'var(--primary)', opacity: 0.03,
           lineHeight: 1, userSelect: 'none', pointerEvents: 'none',
           letterSpacing: '-0.05em', zIndex: 0,
@@ -78,7 +78,7 @@ export default function FieldNotesPage() {
 
           <h1 style={{
             fontFamily: SERIF, fontWeight: 400,
-            fontSize: 'clamp(40px,7vw,88px)', lineHeight: 1.0,
+            fontSize: 'var(--text-3xl)', lineHeight: 1.0,
             letterSpacing: '-0.03em', color: 'var(--foreground)',
             marginBottom: 24, paddingBottom: '0.04em',
           }}>
@@ -140,3 +140,4 @@ export default function FieldNotesPage() {
     </div>
   );
 }
+

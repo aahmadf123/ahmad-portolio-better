@@ -17,14 +17,14 @@ export interface CategoryConfig {
 }
 
 export const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
-  'AI & Machine Learning':              { label: 'AI & Machine Learning',            color: '#F0B429', icon: '🤖' },
-  'Sports Analytics':                   { label: 'Sports Analytics',                  color: '#10B981', icon: '🏈' },
-  'Future-Focused & Emerging Tech':     { label: 'Future-Focused & Emerging Tech',    color: '#4B7BF5', icon: '🔮' },
-  'Career, Research & Learnings':       { label: 'Career, Research & Learnings',      color: '#8B5CF6', icon: '🎓' },
-  'Broader Tech & Society':             { label: 'Broader Tech & Society',            color: '#EF4444', icon: '🌍' },
-  'Philosophy of AI & Intelligent Systems': { label: 'Philosophy of AI',             color: '#EC4899', icon: '🧠' },
-  'Building Things in Public':          { label: 'Building Things in Public',         color: '#F97316', icon: '🏗️' },
-  'Tech Career & The Student-to-Engineer Path': { label: 'Tech Career & Student-to-Engineer', color: '#06B6D4', icon: '🌐' },
+  'AI & Machine Learning':              { label: 'AI & Machine Learning',            color: 'var(--gold)', icon: '🤖' },
+  'Sports Analytics':                   { label: 'Sports Analytics',                  color: 'var(--green)', icon: '🏈' },
+  'Future-Focused & Emerging Tech':     { label: 'Future-Focused & Emerging Tech',    color: 'var(--blue)', icon: '🔮' },
+  'Career, Research & Learnings':       { label: 'Career, Research & Learnings',      color: 'var(--purple)', icon: '🎓' },
+  'Broader Tech & Society':             { label: 'Broader Tech & Society',            color: 'var(--red)', icon: '🌍' },
+  'Philosophy of AI & Intelligent Systems': { label: 'Philosophy of AI',             color: 'var(--pink)', icon: '🧠' },
+  'Building Things in Public':          { label: 'Building Things in Public',         color: 'var(--orange)', icon: '🏗️' },
+  'Tech Career & The Student-to-Engineer Path': { label: 'Tech Career & Student-to-Engineer', color: 'var(--sky)', icon: '🌐' },
 };
 
 // Only published essays live here. New notes are added when they are written -
@@ -80,3 +80,4 @@ export function getNotesByCategory(): Record<string, FieldNote[]> {
     return acc;
   }, {} as Record<string, FieldNote[]>);
 }
+

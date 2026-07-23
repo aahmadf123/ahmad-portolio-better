@@ -19,7 +19,7 @@ function formatDate(dateStr: string) {
 export function FieldNoteCard({ note }: { note: FieldNote }) {
   const [hovered, setHovered] = React.useState(false);
   const catCfg = CATEGORY_CONFIG[note.category];
-  const accentColor = catCfg?.color ?? '#F0B429';
+  const accentColor = catCfg?.color ?? 'var(--gold)';
 
   return (
     <Link href={`/field-notes/${note.slug}`} style={{ textDecoration: 'none', display: 'block' }} transitionTypes={['nav-forward']}>
@@ -29,8 +29,8 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
         style={{
           height: '100%',
           background: hovered ? 'rgba(242,237,216,0.04)' : 'rgba(242,237,216,0.025)',
-          border: `1px solid ${hovered ? accentColor + '44' : 'rgba(242,237,216,0.08)'}`,
-          borderRadius: 12,
+          border: `1px solid ${hovered ? accentColor + '44' : 'rgba(244,244,242,0.08)'}`,
+          borderRadius: 10,
           overflow: 'hidden',
           transition: 'border-color 0.2s, background 0.2s',
           cursor: 'pointer',
@@ -41,8 +41,8 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
           <ViewTransition name={`fn-img-${note.slug}`} share="morph">
             <div style={{
               width: '100%', height: 220, overflow: 'hidden',
-              background: '#06080E',
-              borderBottom: '1px solid rgba(242,237,216,0.06)',
+              background: 'var(--background)',
+              borderBottom: '1px solid rgba(244,244,242,0.06)',
             }}>
               <Pic
                 src={note.heroImage}
@@ -61,7 +61,7 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
                 fontFamily: MONO, fontSize: 9, padding: '3px 8px',
                 background: `${catCfg.color}14`,
                 border: `1px solid ${catCfg.color}30`,
-                borderRadius: 3, color: catCfg.color,
+                borderRadius: 4, color: catCfg.color,
                 letterSpacing: '0.06em', textTransform: 'uppercase',
               }}>
                 {catCfg.label}
@@ -79,7 +79,7 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
           <h2 style={{
             fontFamily: SERIF, fontWeight: 400,
             fontSize: 20, lineHeight: 1.25,
-            letterSpacing: '-0.01em', color: '#F2EDD8',
+            letterSpacing: '-0.01em', color: 'var(--foreground)',
             marginBottom: 10,
           }}>
             {note.title}
@@ -88,7 +88,7 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
           {/* Excerpt */}
           <p style={{
             fontFamily: SERIF, fontSize: 14, lineHeight: 1.7,
-            color: '#8A877A', marginBottom: 16,
+            color: 'var(--text3)', marginBottom: 16,
           }}>
             {note.excerpt}
           </p>
@@ -100,8 +100,8 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
                 <span key={tag} style={{
                   fontFamily: MONO, fontSize: 9, padding: '2px 7px',
                   background: 'rgba(242,237,216,0.04)',
-                  border: '1px solid rgba(242,237,216,0.1)',
-                  borderRadius: 3, color: 'var(--text3)',
+                  border: '1px solid rgba(244,244,242,0.1)',
+                  borderRadius: 4, color: 'var(--text3)',
                   letterSpacing: '0.04em',
                 }}>
                   {tag}
@@ -120,3 +120,5 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
     </Link>
   );
 }
+
+

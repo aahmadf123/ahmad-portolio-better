@@ -6,9 +6,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = '#F0B429';
+const ACCENT = 'var(--gold)';
 
-const PALETTE = ['#F0B429','#4B7BF5','#2DD4C8','#F07832','#A78BFA','#F472B6','#0EA5E9','#22C55E','#EF4444'];
+const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -18,7 +18,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 3, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
       {children}
     </span>
   );
@@ -50,7 +50,7 @@ function ArchLayer({ n, title, items }: { n: string; title: string; items: strin
         <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 3 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -97,7 +97,7 @@ export default function UAVCaseStudy() {
   }, []);
 
   return (
-    <div style={{ background: '#0B0D14', color: '#F2EDD8', minHeight: '100vh', fontFamily: SERIF }}>
+    <div style={{ background: '#0B0D14', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
 
       {/* ── Sticky header ── */}
       <header style={{
@@ -109,7 +109,7 @@ export default function UAVCaseStudy() {
         padding: '0 clamp(20px,4vw,52px)',
         transition: 'background 0.3s, border-color 0.3s',
       }}>
-        <SmartBackLink fallbackHref="/#projects" style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none' }}>
+        <SmartBackLink fallbackHref="/#projects" style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none' }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="M12 5l-7 7 7 7" /></svg>
           Back to Portfolio
         </SmartBackLink>
@@ -121,15 +121,15 @@ export default function UAVCaseStudy() {
       {/* ── Hero ── */}
       <div style={{ padding: 'clamp(48px,7vw,96px) clamp(20px,4vw,52px) 0', maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
-          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 3, color: ACCENT, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Autonomy Research</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(242,237,216,0.1)', borderRadius: 3, color: '#B8B4A4', letterSpacing: '0.05em', textTransform: 'uppercase' }}>USRCAP Summer 2025</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(242,237,216,0.1)', borderRadius: 3, color: '#B8B4A4', letterSpacing: '0.05em', textTransform: 'uppercase' }}>LION Lab · University of Toledo</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Autonomy Research</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>USRCAP Summer 2025</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>LION Lab · University of Toledo</span>
         </div>
-        <h1 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(32px,5vw,60px)', lineHeight: 1.05, letterSpacing: '-0.025em', color: '#F2EDD8', marginBottom: 18, paddingBottom: '0.06em' }}>
+        <h1 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-3xl)', lineHeight: 1.05, letterSpacing: '-0.025em', color: 'var(--foreground)', marginBottom: 18, paddingBottom: '0.06em' }}>
           AeroSynapse:<br />
           <span style={{ color: ACCENT }}>Graph-Based RL</span> for UAV Autonomy
         </h1>
-        <p style={{ fontSize: 17, lineHeight: 1.75, color: '#B8B4A4', maxWidth: 680, marginBottom: 36 }}>
+        <p style={{ fontSize: 17, lineHeight: 1.75, color: 'var(--text2)', maxWidth: 680, marginBottom: 36 }}>
           An edge-first UAV autonomy framework combining graph-based reinforcement learning, meta-learning, PINN-based sensor fusion, and human-in-the-loop control for navigation in GPS-denied, map-free environments.
         </p>
 
@@ -144,14 +144,14 @@ export default function UAVCaseStudy() {
         </div>
 
         {/* CTA buttons */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, paddingBottom: 'clamp(48px,6vw,72px)', borderBottom: '1px solid rgba(242,237,216,0.07)' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, paddingBottom: 'clamp(48px,6vw,72px)', borderBottom: '1px solid rgba(244,244,242,0.07)' }}>
           <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Research Report ↓</a>
-          <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</SmartBackLink>
+          <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</SmartBackLink>
         </div>
       </div>
 
       {/* ── Section nav ── */}
-      <div style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(11,13,20,0.96)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(242,237,216,0.06)', overflowX: 'auto' }}>
+      <div style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(11,13,20,0.96)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto' }}>
         <div style={{ display: 'flex', gap: 0, padding: '0 clamp(20px,4vw,52px)', maxWidth: 1100, margin: '0 auto' }}>
           {SECTION_IDS.map((id, i) => (
             <button
@@ -177,13 +177,13 @@ export default function UAVCaseStudy() {
           <SectionLabel>Overview</SectionLabel>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }} className="two-col-uav">
             <div>
-              <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', marginBottom: 16 }}>
+              <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', marginBottom: 16 }}>
                 AeroSynapse investigates a hard autonomy problem: how can a UAV operate in a new environment without GPS, pre-mapping, or cloud inference? The project treats UAV autonomy as a layered system rather than a single model - perception, graph construction, control, learning, safety, and human supervision are separated into coordinated modules.
               </p>
-              <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', marginBottom: 16 }}>
+              <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', marginBottom: 16 }}>
                 The core idea is to represent the UAV&apos;s local environment as a dynamic graph. Obstacles, targets, waypoints, free-space regions, and semantic objects become nodes; spatial and risk relationships become edges. A graph-based RL policy then reasons over this structure to make navigation decisions.
               </p>
-              <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4' }}>
+              <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)' }}>
                 The system prioritizes onboard edge compute over cloud dependency, reducing latency and preserving autonomy in degraded or denied communication environments.
               </p>
             </div>
@@ -196,14 +196,14 @@ export default function UAVCaseStudy() {
                 { l: 'Role', v: 'AI & Autonomy Architecture Lead' },
                 { l: 'Hardware', v: 'Jetson Orin NX · Cube Orange+ · OAK-D Pro' },
               ].map(({ l, v }) => (
-                <div key={l} style={{ display: 'flex', gap: 12, padding: '10px 0', borderBottom: '1px solid rgba(242,237,216,0.06)' }}>
+                <div key={l} style={{ display: 'flex', gap: 12, padding: '10px 0', borderBottom: '1px solid rgba(244,244,242,0.06)' }}>
                   <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.08em', flexShrink: 0, minWidth: 90 }}>{l}</span>
-                  <span style={{ fontSize: 13, color: '#B8B4A4' }}>{v}</span>
+                  <span style={{ fontSize: 13, color: 'var(--text2)' }}>{v}</span>
                 </div>
               ))}
               <div style={{ marginTop: 14, padding: '18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}20`, borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Research Question</div>
-                <p style={{ fontSize: 14, lineHeight: 1.7, color: '#F2EDD8', fontStyle: 'italic' }}>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--foreground)', fontStyle: 'italic' }}>
                   &ldquo;Can a UAV enter an unfamiliar environment and make useful navigation decisions without being pre-trained on that exact space?&rdquo;
                 </p>
               </div>
@@ -214,10 +214,10 @@ export default function UAVCaseStudy() {
         {/* ─ Problem ─ */}
         <Section id="problem">
           <SectionLabel>Problem</SectionLabel>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(22px,3vw,32px)', fontWeight: 400, color: '#F2EDD8', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
             Most autonomous UAV systems are fragile outside controlled environments.
           </h2>
-          <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', maxWidth: 720, marginBottom: 32 }}>
+          <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', maxWidth: 720, marginBottom: 32 }}>
             They depend on GPS, pre-built maps, stable internet, or carefully controlled conditions. In disaster response, indoor inspection, warehouse automation, and GPS-denied defense environments, these assumptions break down.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 32 }} className="three-col-uav">
@@ -229,15 +229,15 @@ export default function UAVCaseStudy() {
               { t: 'Sim-to-Reality Gap', d: 'Deep RL policies can achieve near-perfect simulation scores while failing entirely when facing real-world sensor noise and dynamics.' },
               { t: 'No Safe Failure Mode', d: 'When constraints are violated, most autonomy stacks have no principled fallback - leading to unpredictable or catastrophic failure.' },
             ].map(({ t, d }) => (
-              <div key={t} style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.07)', borderLeft: `2px solid ${ACCENT}50`, borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: '#F2EDD8', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
+              <div key={t} style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.07)', borderLeft: `2px solid ${ACCENT}50`, borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{d}</p>
               </div>
             ))}
           </div>
           <div style={{ padding: '20px 24px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10 }}>
             <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Design Principle</div>
-            <p style={{ fontSize: 15, lineHeight: 1.75, color: '#F2EDD8' }}>
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: 'var(--foreground)' }}>
               Autonomy should not collapse when the environment is unknown. AeroSynapse was designed around this exact failure case.
             </p>
           </div>
@@ -246,10 +246,10 @@ export default function UAVCaseStudy() {
         {/* ─ Architecture ─ */}
         <Section id="architecture">
           <SectionLabel>Architecture</SectionLabel>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(22px,3vw,32px)', fontWeight: 400, color: '#F2EDD8', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
             A layered autonomy stack - each module coordinates, none is monolithic.
           </h2>
-          <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', maxWidth: 720, marginBottom: 28 }}>
+          <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', maxWidth: 720, marginBottom: 28 }}>
             Rather than one large model, AeroSynapse decomposes autonomy into coordinated layers: sensing, state estimation, graph representation, decision-making, adaptation, safety, and human interaction.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 32 }} className="arch-grid-uav">
@@ -262,9 +262,9 @@ export default function UAVCaseStudy() {
             <ArchLayer n="07" title="Human-in-the-Loop Interface" items={['Direct Control Mode', 'Supervised Autonomy', 'Natural-Language Commands', 'Intervention & Recovery']} />
             <ArchLayer n="08" title="Edge Deployment" items={['Jetson Orin NX (onboard)', 'ArduPilot / Cube Orange+', 'ROS 2 Modular Coordination', 'Local Inference (no cloud)']} />
           </div>
-          <div style={{ padding: '16px 22px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
-            <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4' }}>
-              <span style={{ color: '#F2EDD8', fontFamily: MONO, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Validation method:</span> Hardware-in-the-loop simulation with edge deployment assumptions centered on Jetson Orin NX-class compute. Progressive testing protocol with domain randomization for sim-to-reality transfer evaluation.
+          <div style={{ padding: '16px 22px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
+            <p style={{ fontSize: 14, lineHeight: 1.75, color: 'var(--text2)' }}>
+              <span style={{ color: 'var(--foreground)', fontFamily: MONO, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Validation method:</span> Hardware-in-the-loop simulation with edge deployment assumptions centered on Jetson Orin NX-class compute. Progressive testing protocol with domain randomization for sim-to-reality transfer evaluation.
             </p>
           </div>
         </Section>
@@ -281,21 +281,21 @@ export default function UAVCaseStudy() {
               },
               {
                 label: 'Perception & AI',
-                color: '#4B7BF5',
+                color: 'var(--blue)',
                 tags: ['Stereo / Depth Vision', 'LiDAR Obstacle Detection', 'Vision-Language Models', 'SAM-Style Segmentation', 'Local Language-Action Model', 'Voice Command Pipeline', 'SHAP / LIME Explainability'],
               },
               {
                 label: 'Robotics & Hardware',
-                color: '#2DD4C8',
+                color: 'var(--primary)',
                 tags: ['ROS 2', 'ArduPilot', 'MAVLink / MAVROS', 'Jetson Orin NX', 'CubePilot Cube Orange+', 'OAK-D Pro FF', 'SLAMTEC C1 LiDAR', 'AirSim (simulation)'],
               },
               {
                 label: 'Research Methods',
-                color: '#A78BFA',
+                color: 'var(--purple)',
                 tags: ['Domain Randomization', 'Sim-to-Reality Transfer', 'Zero-Shot Evaluation', 'Few-Shot Evaluation', 'Hardware-in-the-Loop Testing', 'Safety & Failure-Mode Analysis', 'Progressive Testing Protocol'],
               },
             ].map(({ label, color, tags }) => (
-              <div key={label} style={{ padding: '22px 20px', background: 'rgba(242,237,216,0.025)', borderTop: `2px solid ${color}`, borderRight: '1px solid rgba(242,237,216,0.08)', borderBottom: '1px solid rgba(242,237,216,0.08)', borderLeft: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
+              <div key={label} style={{ padding: '22px 20px', background: 'rgba(242,237,216,0.025)', borderTop: `2px solid ${color}`, borderRight: '1px solid rgba(244,244,242,0.08)', borderBottom: '1px solid rgba(244,244,242,0.08)', borderLeft: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>{label}</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                   {tags.map(t => <Tag key={t} color={color}>{t}</Tag>)}
@@ -308,10 +308,10 @@ export default function UAVCaseStudy() {
         {/* ─ Results ─ */}
         <Section id="results">
           <SectionLabel>Key Results</SectionLabel>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(22px,3vw,32px)', fontWeight: 400, color: '#F2EDD8', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
             Validation outcomes from hardware-in-the-loop testing.
           </h2>
-          <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', maxWidth: 720, marginBottom: 28 }}>
+          <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', maxWidth: 720, marginBottom: 28 }}>
             Results support the core research direction: graph-structured learning and meta-learning produce UAV autonomy that is more adaptable than systems trained for one fixed environment.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 28 }} className="three-col-uav">
@@ -325,20 +325,20 @@ export default function UAVCaseStudy() {
             ].map(({ v, l }) => (
               <div key={l} style={{ padding: '16px 18px', background: `linear-gradient(180deg, ${ACCENT}0d, ${ACCENT}04)`, border: `1px solid ${ACCENT}35`, boxShadow: `0 4px 20px ${ACCENT}05`, borderRadius: 8 }}>
                 <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em', marginBottom: 8 }}>{v}</div>
-                <p style={{ fontSize: 12, lineHeight: 1.6, color: '#B8B4A4' }}>{l}</p>
+                <p style={{ fontSize: 12, lineHeight: 1.6, color: 'var(--text2)' }}>{l}</p>
               </div>
             ))}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }} className="two-col-uav">
-            <div style={{ padding: '16px 20px', background: 'rgba(45,212,200,0.06)', border: '1px solid rgba(45,212,200,0.2)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: '#2DD4C8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Safety</div>
-              <div style={{ fontFamily: SERIF, fontSize: 24, color: '#2DD4C8', marginBottom: 6, paddingBottom: '0.05em' }}>100%</div>
-              <p style={{ fontSize: 12, lineHeight: 1.6, color: '#B8B4A4' }}>Collision-free testing across all evaluated safety scenarios in the reported validation.</p>
+            <div style={{ padding: '16px 20px', background: 'color-mix(in srgb, var(--primary) 6%, transparent)', border: '1px solid color-mix(in srgb, var(--primary) 20%, transparent)', borderRadius: 8 }}>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Safety</div>
+              <div style={{ fontFamily: SERIF, fontSize: 24, color: 'var(--primary)', marginBottom: 6, paddingBottom: '0.05em' }}>100%</div>
+              <p style={{ fontSize: 12, lineHeight: 1.6, color: 'var(--text2)' }}>Collision-free testing across all evaluated safety scenarios in the reported validation.</p>
             </div>
             <div style={{ padding: '16px 20px', background: 'rgba(167,139,250,0.06)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: '#A78BFA', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Infrastructure Cost</div>
-              <div style={{ fontFamily: SERIF, fontSize: 24, color: '#A78BFA', marginBottom: 6, paddingBottom: '0.05em' }}>95% ↓</div>
-              <p style={{ fontSize: 12, lineHeight: 1.6, color: '#B8B4A4' }}>Estimated operational cost reduction by replacing cloud-dependent inference with edge-first architecture.</p>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--purple)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Infrastructure Cost</div>
+              <div style={{ fontFamily: SERIF, fontSize: 24, color: 'var(--purple)', marginBottom: 6, paddingBottom: '0.05em' }}>95% ↓</div>
+              <p style={{ fontSize: 12, lineHeight: 1.6, color: 'var(--text2)' }}>Estimated operational cost reduction by replacing cloud-dependent inference with edge-first architecture.</p>
             </div>
           </div>
         </Section>
@@ -346,9 +346,9 @@ export default function UAVCaseStudy() {
         {/* ─ Insights ─ */}
         <Section id="insights">
           <SectionLabel>Key Insights</SectionLabel>
-          <div style={{ padding: '28px 32px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}20`, borderRadius: 12, marginBottom: 28 }}>
+          <div style={{ padding: '28px 32px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}20`, borderRadius: 10, marginBottom: 28 }}>
             <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Why Graph-Based RL</div>
-            <p style={{ fontSize: 16, lineHeight: 1.8, color: '#F2EDD8' }}>
+            <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--foreground)' }}>
               Navigation is a relational problem. A flat perception model sees objects - a graph sees relationships between obstacles, goals, risk, and motion constraints. UAV navigation is naturally relational: which gap is safest? which path preserves battery? which region should be avoided? Graphs make these relationships explicit. By using graph-based RL, AeroSynapse gives the UAV a stronger representation for decisions in cluttered and unfamiliar environments.
             </p>
           </div>
@@ -361,8 +361,8 @@ export default function UAVCaseStudy() {
               { t: 'Human Oversight Is a Control Layer, Not a Weakness', d: 'Full autonomy is not always the right answer. The human-in-the-loop modes exist because some decisions require human judgment, and a system that removes that option is more dangerous, not more capable.' },
               { t: 'Credible Research Requires Measurable Claims', d: 'The most important discipline in this project was separating what the architecture is designed to achieve from what has actually been validated. Strong framing with honest limitations is what makes research credible.' },
             ].map(({ t, d }) => (
-              <div key={t} style={{ padding: '18px 20px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: '#F2EDD8', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
+              <div key={t} style={{ padding: '18px 20px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{d}</p>
               </div>
             ))}
@@ -372,30 +372,30 @@ export default function UAVCaseStudy() {
         {/* ─ Human-in-the-Loop ─ */}
         <Section id="human-loop">
           <SectionLabel>Human-in-the-Loop Design</SectionLabel>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(22px,3vw,32px)', fontWeight: 400, color: '#F2EDD8', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
             The goal is not to remove the human - it&apos;s to put the human at the right level of control.
           </h2>
-          <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', maxWidth: 720, marginBottom: 28 }}>
+          <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', maxWidth: 720, marginBottom: 28 }}>
             AeroSynapse uses a tiered human-in-the-loop model. Each mode reflects a different operating condition and trust level in the autonomous system.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12, marginBottom: 28 }} className="two-col-uav">
             {[
-              { mode: 'Direct Control', color: '#F07832', d: 'The human operator controls the UAV manually. The autonomy stack is passive. Used during high-risk phases or when the environment is completely novel.' },
+              { mode: 'Direct Control', color: 'var(--orange)', d: 'The human operator controls the UAV manually. The autonomy stack is passive. Used during high-risk phases or when the environment is completely novel.' },
               { mode: 'Supervised Autonomy', color: ACCENT, d: 'The UAV proposes or executes navigation actions while the human monitors. The operator can intervene at any point without taking full manual control.' },
-              { mode: 'Intervention Mode', color: '#4B7BF5', d: 'The system detects uncertainty, safety constraint proximity, or mission ambiguity and requests human input before continuing autonomous operation.' },
-              { mode: 'Natural-Language Command Mode', color: '#A78BFA', d: 'The operator gives high-level mission instructions. The voice-to-action pipeline translates these into safe flight objectives within the current graph representation.' },
+              { mode: 'Intervention Mode', color: 'var(--blue)', d: 'The system detects uncertainty, safety constraint proximity, or mission ambiguity and requests human input before continuing autonomous operation.' },
+              { mode: 'Natural-Language Command Mode', color: 'var(--purple)', d: 'The operator gives high-level mission instructions. The voice-to-action pipeline translates these into safe flight objectives within the current graph representation.' },
             ].map(({ mode, color, d }) => (
               <div key={mode} style={{ padding: '18px 20px', background: `${color}06`, border: `1px solid ${color}22`, borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>{mode}</div>
-                <p style={{ fontSize: 13, lineHeight: 1.7, color: '#B8B4A4' }}>{d}</p>
+                <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text2)' }}>{d}</p>
               </div>
             ))}
           </div>
-          <div style={{ padding: '20px 24px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: '#B8B4A4', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Safety Mechanisms</div>
+          <div style={{ padding: '20px 24px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
+            <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Safety Mechanisms</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {['Runtime State Monitoring', 'Collision-Distance Constraints', 'Altitude Limits', 'Battery Safety Bounds', 'Emergency Fallback', 'Human Override', 'Baseline Controller Takeover', 'Decision Logging'].map(m => (
-                <span key={m} style={{ fontFamily: MONO, fontSize: 10, padding: '4px 9px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(242,237,216,0.1)', borderRadius: 4, color: '#B8B4A4' }}>{m}</span>
+                <span key={m} style={{ fontFamily: MONO, fontSize: 10, padding: '4px 9px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)' }}>{m}</span>
               ))}
             </div>
           </div>
@@ -404,19 +404,19 @@ export default function UAVCaseStudy() {
         {/* ─ Lessons ─ */}
         <Section id="lessons">
           <SectionLabel>Lessons</SectionLabel>
-          <p style={{ fontSize: 15, lineHeight: 1.85, color: '#B8B4A4', maxWidth: 720, marginBottom: 28 }}>
+          <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', maxWidth: 720, marginBottom: 28 }}>
             The most useful discipline on this project was separating what the architecture is designed to do from what has actually been validated. The graph representation, PINN-based estimation, and safety layer are coherent as a system - but a research framework earns trust by being honest about its own edges.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }} className="two-col-uav">
             <div style={{ padding: '20px 22px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}22`, borderRadius: 8 }}>
               <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What broke</div>
-              <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4' }}>
+              <p style={{ fontSize: 14, lineHeight: 1.75, color: 'var(--text2)' }}>
                 The distance between designed and validated is real. Most numbers here come from simulation and hardware-in-the-loop, not real flight, and a 13% sim-to-reality transfer gap already shows up in the reported validation. A deep RL policy can score near-perfect in simulation and still fail once it meets real sensor noise and dynamics - which is exactly why the safety layer and the deliberately measurable claims exist.
               </p>
             </div>
-            <div style={{ padding: '20px 22px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What I&apos;d do differently</div>
-              <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4' }}>
+            <div style={{ padding: '20px 22px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What I&apos;d do differently</div>
+              <p style={{ fontSize: 14, lineHeight: 1.75, color: 'var(--text2)' }}>
                 Benchmark earlier. The graph-representation advantage is argued more than it is measured - a small GNN policy trained against PPO/SAC baselines on the same randomized suite would turn that claim into a number. I&apos;d also ground the metrics in real flight logs sooner, so the sim-to-reality gap becomes an empirical result instead of an estimate.
               </p>
             </div>
@@ -426,7 +426,7 @@ export default function UAVCaseStudy() {
         {/* ─ Future Work ─ */}
         <Section id="future">
           <SectionLabel>Future Work</SectionLabel>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(22px,3vw,32px)', fontWeight: 400, color: '#F2EDD8', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
             Turning the research architecture into a stronger experimental platform.
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 40 }} className="three-col-uav">
@@ -438,28 +438,28 @@ export default function UAVCaseStudy() {
               { n: '05', t: 'Safety-Gated ArduPilot Integration', d: 'Integrate safety-gated autonomy with ArduPilot flight modes so the constraint layer can trigger failsafe behaviors through the standard flight controller interface.' },
               { n: '06', t: 'Multi-Agent Extension', d: 'Extend the single-UAV graph-based RL framework to cooperative multi-agent UAV navigation for search, coverage, and formation tasks.' },
             ].map(({ n, t, d }) => (
-              <div key={n} style={{ padding: '18px 20px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 8 }}>
+              <div key={n} style={{ padding: '18px 20px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.6, marginBottom: 8 }}>{n}</div>
-                <div style={{ fontFamily: MONO, fontSize: 12, color: '#F2EDD8', marginBottom: 8 }}>{t}</div>
+                <div style={{ fontFamily: MONO, fontSize: 12, color: 'var(--foreground)', marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 12, lineHeight: 1.65, color: 'var(--text3)' }}>{d}</p>
               </div>
             ))}
           </div>
 
           {/* Footer CTA */}
-          <div style={{ padding: '36px 40px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(242,237,216,0.07)', borderRadius: 12, textAlign: 'center' }}>
+          <div style={{ padding: '36px 40px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(244,244,242,0.07)', borderRadius: 10, textAlign: 'center' }}>
             <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 12 }}>AeroSynapse</div>
-            <h3 style={{ fontFamily: SERIF, fontSize: 'clamp(20px,3vw,30px)', fontWeight: 400, color: '#F2EDD8', marginBottom: 14, lineHeight: 1.2, paddingBottom: '0.06em' }}>
+            <h3 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 14, lineHeight: 1.2, paddingBottom: '0.06em' }}>
               Edge AI for the environments that matter most.
             </h3>
-            <p style={{ fontSize: 14, lineHeight: 1.75, color: '#B8B4A4', maxWidth: 540, margin: '0 auto 24px' }}>
+            <p style={{ fontSize: 14, lineHeight: 1.75, color: 'var(--text2)', maxWidth: 540, margin: '0 auto 24px' }}>
               Graph learning, meta-learning, safety assurance, and human-AI teaming - composed into a practical autonomy stack for GPS-denied, map-free UAV navigation.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
               <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
                 Download Research Report ↓
               </a>
-              <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(242,237,216,0.16)', color: '#B8B4A4', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
+              <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
                 ← Back to Portfolio
               </SmartBackLink>
             </div>
@@ -480,3 +480,5 @@ export default function UAVCaseStudy() {
     </div>
   );
 }
+
+

@@ -41,7 +41,7 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
       style={{
         gridColumn: wide ? 'span 2' : undefined,
         border: `1px solid color-mix(in srgb, ${insight.color} 24%, transparent)`,
-        borderRadius: 12,
+        borderRadius: 10,
         background: 'var(--surface)',
         overflow: 'hidden',
         minWidth: 0,
@@ -54,7 +54,7 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
         <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(245,158,11,0.5)' }} />
         <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(34,197,94,0.5)' }} />
         <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.05em', marginLeft: 8, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{insight.file}</span>
-        <span style={{ fontFamily: MONO, fontSize: 8, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginLeft: 'auto', border: '1px solid var(--bd2)', borderRadius: 3, padding: '2px 6px', flexShrink: 0 }}>illustrative</span>
+        <span style={{ fontFamily: MONO, fontSize: 8, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginLeft: 'auto', border: '1px solid var(--bd2)', borderRadius: 4, padding: '2px 6px', flexShrink: 0 }}>illustrative</span>
       </div>
 
       {/* code */}
@@ -98,3 +98,4 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
     </m.article>
   );
 }
+

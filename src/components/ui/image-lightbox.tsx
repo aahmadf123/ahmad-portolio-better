@@ -28,7 +28,7 @@ export function Lightbox({ src, alt = '', onClose }: LightboxProps) {
       onClick={onClose}
       style={{
         position: 'fixed', inset: 0, zIndex: 99999,
-        background: 'rgba(0,0,0,0.92)',
+        background: 'rgba(13,14,18,0.92)',
         backdropFilter: 'blur(16px)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         cursor: 'zoom-out',
@@ -55,17 +55,17 @@ export function Lightbox({ src, alt = '', onClose }: LightboxProps) {
         aria-label="Close lightbox"
         style={{
           position: 'absolute', top: 20, right: 24,
-          background: 'rgba(242,237,216,0.08)',
-          border: '1px solid rgba(242,237,216,0.18)',
+          background: 'rgba(244,244,242,0.08)',
+          border: '1px solid rgba(244,244,242,0.18)',
           borderRadius: '50%', width: 40, height: 40,
-          color: '#F2EDD8', fontSize: 18, cursor: 'pointer',
+          color: 'var(--foreground)', fontSize: 18, cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           lineHeight: 1, transition: 'background 0.15s',
         }}
-        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(242,237,216,0.18)'; }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(242,237,216,0.08)'; }}
+        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(244,244,242,0.18)'; }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(244,244,242,0.08)'; }}
       >✕</button>
-      <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', fontFamily: "var(--font-chakra), 'Chakra Petch', monospace", fontSize: 10, color: 'rgba(242,237,216,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', userSelect: 'none' }}>
+      <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', fontFamily: "var(--font-chakra), 'Chakra Petch', monospace", fontSize: 10, color: 'rgba(244,244,242,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', userSelect: 'none' }}>
         Click anywhere or press Esc to close
       </div>
       <style>{`
@@ -76,3 +76,4 @@ export function Lightbox({ src, alt = '', onClose }: LightboxProps) {
     document.body
   );
 }
+

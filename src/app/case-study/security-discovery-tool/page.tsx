@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = '#2DD4C8';
+const ACCENT = 'var(--primary)';
 
-const PALETTE = ['#F0B429','#4B7BF5','#2DD4C8','#F07832','#A78BFA','#F472B6','#0EA5E9','#22C55E','#EF4444'];
+const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -20,7 +20,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 3, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
       {children}
     </span>
   );
@@ -52,7 +52,7 @@ function DbLayer({ n, title, items, color = ACCENT }: { n: string; title: string
         <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 3 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -91,15 +91,15 @@ export default function SecurityDiscoveryToolCaseStudy() {
   }, []);
 
   return (
-    <div style={{ background: '#090B12', minHeight: '100vh', color: '#B8B4A4' }}>
+    <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
-        body { background: #090B12; }
-        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: #B8B4A4; }
+        body { background: var(--background); }
+        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: var(--text2); }
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
         .cs-body li::marker { color: ${ACCENT}; }
-        .cs-h2 { font-family: ${SERIF}; font-size: clamp(22px, 3vw, 30px); color: #F2EDD8; font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
+        .cs-h2 { font-family: ${SERIF}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
         .metrics-grid-sdt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
         @media (max-width: 640px) { .metrics-grid-sdt { grid-template-columns: repeat(2, 1fr); } }
@@ -108,13 +108,13 @@ export default function SecurityDiscoveryToolCaseStudy() {
         .three-col-sdt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-sdt { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-sdt { grid-template-columns: 1fr; } }
-        .entity-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-left: 2px solid ${ACCENT}90; border-radius: 8px; transition: all 0.2s ease; }
+        .entity-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .entity-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
         .entity-field { font-family: ${MONO}; font-size: 10px; color: var(--text3); padding: '2px 0'; letter-spacing: 0.03em; }
         .entity-key { color: ${ACCENT}; }
-        .principle-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.07); border-left: 2px solid ${ACCENT}50; border-radius: 8px; transition: all 0.2s ease; }
+        .principle-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
         .principle-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.06); border-left: 2px solid ${ACCENT}30; border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
         .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
         .cs-grid-container {
@@ -168,10 +168,10 @@ export default function SecurityDiscoveryToolCaseStudy() {
             <Tag>AIIS Summer 2023</Tag>
             <Tag>Park Place Technologies</Tag>
           </div>
-          <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(32px,5vw,56px)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, #F2EDD8 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+          <h1 style={{ fontFamily: SERIF, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, var(--foreground) 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
             Security Discovery Tool
           </h1>
-          <p style={{ fontFamily: SERIF, fontSize: 'clamp(15px,2vw,18px)', color: '#B8B4A4', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
+          <p style={{ fontFamily: SERIF, fontSize: 16, color: 'var(--text2)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
             A database-centered cybersecurity project that centralized security discovery data across enterprise sources to improve visibility, data integrity, reporting quality, and incident-response readiness.
           </p>
 
@@ -185,7 +185,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
           </div>
 
           {/* Hero image */}
-          <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: '#06080E', marginBottom: 64 }}>
+          <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>
             <Pic src="/Images/sdt_tool.png" alt="Security Discovery Tool" onClick={() => setLb('/Images/sdt_tool.png')} style={{ width: '100%', display: 'block', objectFit: 'cover', cursor: 'zoom-in' }} priority />
           </div>
         </div>
@@ -302,7 +302,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
                 ))}
               </div>
               <p>
-                This relational structure supports stronger reporting than disconnected spreadsheets because records can be joined, validated, audited, and queried consistently. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>audit_logs</code> table in particular ensures every data change is traceable - who changed it, when, and from which source system.
+                This relational structure supports stronger reporting than disconnected spreadsheets because records can be joined, validated, audited, and queried consistently. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>audit_logs</code> table in particular ensures every data change is traceable - who changed it, when, and from which source system.
               </p>
             </Section>
 
@@ -377,8 +377,8 @@ export default function SecurityDiscoveryToolCaseStudy() {
                     The validation layer was the real friction, not the schema. Rules strict enough to kill duplicate and stale records also threatened to reject legitimate entries - and a rule that blocks useful data fails its purpose. Tuning that balance, run after run, was the part that actually took the time.
                   </p>
                 </div>
-                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     Ingestion was manual - records were imported and normalized by hand. I&apos;d build automated connectors for Active Directory, Cisco AMP, and Defender from the start, so the central database stays continuously fresh instead of depending on someone remembering to pull the next export.
                   </p>
@@ -396,8 +396,8 @@ export default function SecurityDiscoveryToolCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Near-Term', color: ACCENT, items: ['Live dashboard for security posture and asset health', 'Automated ingestion connectors for Active Directory, Defender, and endpoint tools', 'Role-based access control for analysts, admins, and auditors'] },
-                  { phase: 'Mid-Term', color: '#F0B429', items: ['Alert prioritization and severity scoring engine', 'Historical trend analysis for endpoint risk', 'Data-quality scoring for missing, stale, or conflicting records', 'Automated compliance report generation'] },
-                  { phase: 'Long-Term', color: '#A78BFA', items: ['Anomaly detection for unusual asset or account behavior', 'Audit-ready change history for all critical records', 'Backup verification and DR-status dashboards', 'Cross-tenant federation for multi-org environments'] },
+                  { phase: 'Mid-Term', color: 'var(--gold)', items: ['Alert prioritization and severity scoring engine', 'Historical trend analysis for endpoint risk', 'Data-quality scoring for missing, stale, or conflicting records', 'Automated compliance report generation'] },
+                  { phase: 'Long-Term', color: 'var(--purple)', items: ['Anomaly detection for unusual asset or account behavior', 'Audit-ready change history for all critical records', 'Backup verification and DR-status dashboards', 'Cross-tenant federation for multi-org environments'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
                     <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
@@ -409,10 +409,10 @@ export default function SecurityDiscoveryToolCaseStudy() {
               </div>
 
               <div style={{ padding: '24px 28px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10, marginTop: 32 }}>
-                <p style={{ fontFamily: SERIF, fontSize: 15, color: '#F2EDD8', margin: '0 0 8px', lineHeight: 1.5 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--foreground)', margin: '0 0 8px', lineHeight: 1.5 }}>
                   Security teams often focus on tools, alerts, and dashboards. But behind every security workflow is data. If that data is fragmented, inconsistent, or poorly governed, even advanced tools become less effective.
                 </p>
-                <p style={{ fontFamily: SERIF, fontSize: 14, color: '#B8B4A4', margin: 0, lineHeight: 1.6 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text2)', margin: 0, lineHeight: 1.6 }}>
                   The Security Discovery Tool project shows that database design is a cybersecurity capability - one that scales across every other layer of the stack.
                 </p>
               </div>
@@ -447,3 +447,6 @@ export default function SecurityDiscoveryToolCaseStudy() {
     </div>
   );
 }
+
+
+

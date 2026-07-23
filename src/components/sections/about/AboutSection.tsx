@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion';
-import { Section, SH, Tag, MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
+import { Section, SH, Tag, MONO, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { MetricsBand } from '@/components/shared/MetricsBand';
 import { HoverPeek } from '@/components/ui/link-preview';
 import { about, type Lens } from '@/lib/data/about';
@@ -11,6 +11,73 @@ import { education } from '@/lib/data/education';
 import { site } from '@/lib/data/site';
 import { sectionById } from '@/lib/data/sections';
 import { SignOff } from './SignOff';
+
+const actionBaseStyle: React.CSSProperties = {
+  fontFamily: MONO,
+  fontSize: 10,
+  padding: '8px 14px',
+  borderRadius: 5,
+  letterSpacing: '0.06em',
+  textTransform: 'uppercase',
+  display: 'inline-flex',
+  alignItems: 'center',
+  minHeight: 34,
+};
+
+const secondaryActionStyle: React.CSSProperties = {
+  ...actionBaseStyle,
+  border: '1px solid var(--bd2)',
+  color: FG2,
+  background: 'transparent',
+};
+
+const primaryActionStyle: React.CSSProperties = {
+  ...actionBaseStyle,
+  border: '1px solid color-mix(in srgb, var(--primary) 55%, transparent)',
+  color: 'var(--foreground)',
+  background: 'color-mix(in srgb, var(--primary) 16%, transparent)',
+};
+
+const railButtonBaseStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 10,
+  background: 'none',
+  border: '1px solid transparent',
+  cursor: 'pointer',
+  fontFamily: MONO,
+  fontSize: 10,
+  letterSpacing: '0.1em',
+  textTransform: 'uppercase',
+  padding: '8px 10px',
+  borderRadius: 6,
+  width: '100%',
+  textAlign: 'left',
+  transition: 'color 0.2s, border-color 0.2s, background 0.2s',
+};
+
+const lensPanelStyle: React.CSSProperties = {
+  border: '1px solid var(--bd)',
+  borderRadius: 10,
+  padding: 'clamp(22px, 3vw, 34px)',
+  background: 'rgba(244,244,242,0.02)',
+  position: 'relative',
+  overflow: 'hidden',
+};
+
+const beliefCardStyle: React.CSSProperties = {
+  padding: '14px 16px',
+  border: '1px solid var(--bd)',
+  borderRadius: 6,
+};
+
+const educationCardStyle: React.CSSProperties = {
+  marginTop: 18,
+  padding: '18px 20px',
+  background: 'rgba(244,244,242,0.025)',
+  borderRadius: 8,
+  border: '1px solid var(--bd)',
+};
 
 /**
  * Immersive About journey: intro manifesto, then three lenses
@@ -30,17 +97,22 @@ export function AboutSection() {
       <MetricsBand />
 
       {/* manifesto intro */}
-      <div style={{ maxWidth: 780, marginBottom: 'clamp(36px, 5vw, 64px)' }}>
-        <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(26px, 3.2vw, 44px)', lineHeight: 1.2, letterSpacing: '-0.02em', color: 'var(--foreground)', paddingBottom: '0.08em' }}>
+      <div id="about-intro" style={{ maxWidth: 780, marginBottom: 'clamp(36px, 5vw, 64px)' }}>
+        <h2 style={{ fontFamily: SANS, fontWeight: 500, fontSize: 'var(--text-2xl)', lineHeight: 1.2, letterSpacing: '-0.02em', color: 'var(--foreground)' }}>
           {about.headline}
         </h2>
         <p style={{ fontFamily: SANS, fontSize: 16, lineHeight: 1.78, color: FG2, marginTop: 18, maxWidth: 640 }}>{about.bio}</p>
+        <div style={{ marginTop: 16, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+          <a href="#projects" style={primaryActionStyle}>View Projects ↓</a>
+          <Link href="/field-notes" transitionTypes={['nav-forward']} style={secondaryActionStyle}>Read Field Notes ↗</Link>
+          <a href="#timeline" style={secondaryActionStyle}>Open Timeline ↓</a>
+        </div>
         <div style={{ marginTop: 22, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <HoverPeek url={site.socials.linkedin}>
-            <a href={site.socials.linkedin} target="_blank" rel="noopener" style={{ fontFamily: MONO, fontSize: 11, padding: '10px 20px', border: '1px solid var(--bd2)', color: FG2, borderRadius: 5, textTransform: 'uppercase', letterSpacing: '0.06em' }}>LinkedIn ↗</a>
+            <a href={site.socials.linkedin} target="_blank" rel="noopener" style={secondaryActionStyle}>LinkedIn ↗</a>
           </HoverPeek>
           <HoverPeek url={site.socials.github}>
-            <a href={site.socials.github} target="_blank" rel="noopener" style={{ fontFamily: MONO, fontSize: 11, padding: '10px 20px', border: '1px solid var(--bd2)', color: FG2, borderRadius: 5, textTransform: 'uppercase', letterSpacing: '0.06em' }}>GitHub ↗</a>
+            <a href={site.socials.github} target="_blank" rel="noopener" style={secondaryActionStyle}>GitHub ↗</a>
           </HoverPeek>
         </div>
       </div>
@@ -50,7 +122,7 @@ export function AboutSection() {
         {/* sticky rail */}
         <div className="about-rail" style={{ position: 'sticky', top: 110 }}>
           <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: FG3, marginBottom: 14 }}>Three lenses</div>
-          <div style={{ position: 'relative', minHeight: 96 }}>
+          <div style={{ position: 'relative', minHeight: 96, marginBottom: 8 }}>
             <AnimatePresence mode="wait">
               <m.div
                 key={activeLens.id}
@@ -60,7 +132,7 @@ export function AboutSection() {
                 transition={{ duration: 0.25 }}
               >
                 <span style={{ fontFamily: MONO, fontSize: 11, color: def.color, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{activeLens.kicker}</span>
-                <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(40px, 4.5vw, 68px)', lineHeight: 1, color: 'var(--foreground)', letterSpacing: '-0.02em' }}>
+                <div style={{ fontFamily: SANS, fontWeight: 600, fontSize: 'var(--text-3xl)', lineHeight: 1.05, color: 'var(--foreground)', letterSpacing: '-0.02em' }}>
                   {activeLens.title}
                 </div>
               </m.div>
@@ -71,16 +143,20 @@ export function AboutSection() {
               <button
                 key={l.id}
                 onClick={() => document.getElementById(`lens-${l.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+                aria-current={active === l.id ? 'true' : undefined}
+                aria-pressed={active === l.id}
                 style={{
-                  display: 'flex', alignItems: 'center', gap: 10, background: 'none', border: 'none', cursor: 'pointer',
-                  fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
-                  color: active === l.id ? def.color : FG3, padding: 0, transition: 'color 0.2s',
+                  ...railButtonBaseStyle,
+                  color: active === l.id ? def.color : FG3,
+                  borderColor: active === l.id ? `color-mix(in srgb, ${def.color} 35%, transparent)` : 'transparent',
+                  background: active === l.id ? `color-mix(in srgb, ${def.color} 10%, transparent)` : 'transparent',
                 }}
               >
-                <span style={{ width: active === l.id ? 22 : 12, height: 1.5, background: active === l.id ? def.color : 'var(--bd2)', transition: 'all 0.25s' }} />
+                <span aria-hidden style={{ width: active === l.id ? 24 : 12, height: active === l.id ? 2 : 1.5, background: active === l.id ? def.color : 'var(--bd2)', transition: 'all 0.25s' }} />
                 {l.title}
               </button>
             ))}
+            <a href="#about-intro" style={{ ...secondaryActionStyle, justifyContent: 'center' }}>Back To Intro ↑</a>
           </div>
         </div>
 
@@ -122,19 +198,12 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      style={{
-        border: '1px solid var(--bd)',
-        borderRadius: 12,
-        padding: 'clamp(22px, 3vw, 34px)',
-        background: 'rgba(244,244,242,0.02)',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      style={lensPanelStyle}
     >
       <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: `radial-gradient(ellipse 60% 50% at 85% 0%, color-mix(in srgb, ${accent} 6%, transparent), transparent 70%)` }} />
       <div style={{ position: 'relative' }}>
         <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: accent, marginBottom: 10 }}>{lens.kicker} · {lens.title}</div>
-        <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(21px, 2.2vw, 30px)', lineHeight: 1.2, letterSpacing: '-0.015em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.05em' }}>
+        <h3 style={{ fontFamily: SANS, fontWeight: 500, fontSize: 'var(--text-xl)', lineHeight: 1.25, letterSpacing: '-0.01em', color: 'var(--foreground)', margin: 0 }}>
           {lens.lead}
         </h3>
         <p style={{ fontFamily: SANS, fontSize: 15, lineHeight: 1.78, color: FG2, marginTop: 14 }}>{lens.body}</p>
@@ -149,7 +218,7 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
         {beliefs.length > 0 && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: 8, marginTop: 18 }}>
             {beliefs.map((b) => (
-              <div key={b.n} style={{ padding: '14px 16px', border: '1px solid var(--bd)', background: `color-mix(in srgb, ${b.color} 4%, transparent)`, borderRadius: 6 }}>
+              <div key={b.n} style={{ ...beliefCardStyle, background: `color-mix(in srgb, ${b.color} 4%, transparent)` }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
                   <span style={{ fontFamily: MONO, fontSize: 9, color: b.color, opacity: 0.7 }}>{b.n}</span>
                   <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--foreground)' }}>{b.title}</span>
@@ -162,30 +231,34 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
 
         {/* education card lives in the Engineer lens */}
         {lens.id === 'engineer' && (
-          <div style={{ marginTop: 18, padding: '18px 20px', background: 'rgba(244,244,242,0.025)', borderRadius: 8, border: '1px solid var(--bd)' }}>
+          <div style={educationCardStyle}>
             <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--purple)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>Education</div>
-            <div style={{ fontSize: 19, fontWeight: 400, color: 'var(--foreground)', fontFamily: SERIF, paddingBottom: '0.05em' }}>{education.school}</div>
+            <div style={{ fontFamily: SANS, fontSize: 'var(--text-lg)', fontWeight: 500, color: 'var(--foreground)' }}>{education.school}</div>
             <div style={{ fontSize: 13, color: FG2, marginTop: 2 }}>{education.degree}</div>
             <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--gold)', marginTop: 6 }}>{education.period} · {education.status} · GPA {education.gpa}</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 10 }}>
-              {education.coursework.map((c) => <Tag key={c}>{c}</Tag>)}
-            </div>
+            <details style={{ marginTop: 10 }}>
+              <summary style={{ ...secondaryActionStyle, display: 'inline-flex', cursor: 'pointer' }}>Coursework</summary>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 10 }}>
+                {education.coursework.map((c) => <Tag key={c}>{c}</Tag>)}
+              </div>
+            </details>
           </div>
         )}
 
         {/* artifacts */}
+        <div style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 18 }}>Recommended Next Step</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 18 }}>
-          {lens.artifacts.map((a) =>
+          {lens.artifacts.map((a, idx) =>
             a.external ? (
-              <a key={a.href} href={a.href} target="_blank" rel="noopener" style={{ fontFamily: MONO, fontSize: 10, padding: '7px 14px', border: '1px solid var(--bd2)', borderRadius: 5, color: FG2, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+              <a key={a.href} href={a.href} target="_blank" rel="noopener" style={idx === 0 ? primaryActionStyle : secondaryActionStyle}>
                 {a.label} ↗
               </a>
             ) : a.href.startsWith('#') ? (
-              <a key={a.href} href={a.href} style={{ fontFamily: MONO, fontSize: 10, padding: '7px 14px', border: '1px solid var(--bd2)', borderRadius: 5, color: FG2, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+              <a key={a.href} href={a.href} style={idx === 0 ? primaryActionStyle : secondaryActionStyle}>
                 {a.label} ↓
               </a>
             ) : (
-              <Link key={a.href} href={a.href} transitionTypes={['nav-forward']} style={{ fontFamily: MONO, fontSize: 10, padding: '7px 14px', border: '1px solid var(--bd2)', borderRadius: 5, color: FG2, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+              <Link key={a.href} href={a.href} transitionTypes={['nav-forward']} style={idx === 0 ? primaryActionStyle : secondaryActionStyle}>
                 {a.label} ↗
               </Link>
             )
@@ -195,3 +268,4 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
     </m.article>
   );
 }
+

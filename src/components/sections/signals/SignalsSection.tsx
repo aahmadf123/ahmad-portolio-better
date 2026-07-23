@@ -37,7 +37,7 @@ export function SignalsSection() {
             style={{
               background: 'rgba(244,244,242,0.025)',
               border: '1px solid var(--bd)',
-              borderRadius: 12,
+              borderRadius: 10,
               overflow: 'hidden',
               boxShadow: '0 24px 60px -30px rgba(0,0,0,0.6)',
             }}
@@ -48,7 +48,7 @@ export function SignalsSection() {
               </div>
               <div style={{ padding: '26px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--orange)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 12, opacity: 0.9 }}>Featured In</div>
-                <h3 style={{ fontFamily: SERIF, fontSize: 'clamp(19px, 1.8vw, 24px)', fontWeight: 400, color: 'var(--foreground)', lineHeight: 1.3 }}>
+                <h3 style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 400, color: 'var(--foreground)', lineHeight: 1.3 }}>
                   “{feature.headline}”
                 </h3>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--primary)', marginTop: 10, letterSpacing: '0.04em' }}>{feature.outlet} · {feature.date}</div>
@@ -129,3 +129,4 @@ function QuoteCard({ t, i, front, onFront }: { t: Testimonial; i: number; front:
     </m.blockquote>
   );
 }
+

@@ -1,9 +1,9 @@
-// Dependency-free, server-safe responsive <img> wrapper. No hooks, no
+// Dependency-free, server-safe responsive image wrapper. No hooks, no
 // 'use client' - usable from Server and Client Components alike. Reads
 // sizing/variants from the build-time manifest (scripts/optimize-images.mjs)
 // keyed by ORIGINAL public path so components never slugify - script/
 // component drift is impossible, and any not-yet-migrated path still
-// renders (graceful fallback to a plain <img>).
+// renders (graceful fallback to a plain image element).
 import type { ImgHTMLAttributes } from 'react';
 import manifest from '@/lib/image-manifest.json';
 
@@ -103,3 +103,4 @@ export function Pic({
     />
   );
 }
+

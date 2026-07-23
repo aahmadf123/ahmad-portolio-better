@@ -96,7 +96,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         flexDirection: 'column',
         background: 'rgba(15,17,23,0.98)',
         border: '1px solid rgba(45,212,191,0.3)',
-        borderRadius: 14,
+        borderRadius: 10,
         boxShadow: '0 30px 80px -20px rgba(0,0,0,0.8), 0 0 40px -20px rgba(45,212,191,0.3)',
         overflow: 'hidden',
         backdropFilter: 'blur(16px)',
@@ -104,7 +104,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
     >
       {/* header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', borderBottom: '1px solid var(--bd)', background: 'rgba(45,212,191,0.05)' }}>
-        <span aria-hidden style={{ width: 32, height: 32, borderRadius: 9, background: 'linear-gradient(135deg, var(--primary), #0f766e)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: SERIF, fontSize: 15, color: '#06211e', fontWeight: 600 }}>AF</span>
+        <span aria-hidden style={{ width: 32, height: 32, borderRadius: 9, background: 'linear-gradient(135deg, var(--primary), var(--primary-foreground))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: SERIF, fontSize: 15, color: 'var(--background)', fontWeight: 600 }}>AF</span>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 600, color: 'var(--foreground)' }}>Ask Ahmad</div>
           <div style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
@@ -139,7 +139,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
               <div key={m.id} style={{ alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', maxWidth: '86%' }}>
                 <div style={{
                   fontFamily: SANS, fontSize: 13.5, lineHeight: 1.62, whiteSpace: 'pre-wrap',
-                  color: m.role === 'user' ? '#06211e' : 'var(--foreground)',
+                  color: m.role === 'user' ? 'var(--background)' : 'var(--foreground)',
                   background: m.role === 'user' ? 'var(--primary)' : 'rgba(244,244,242,0.05)',
                   border: m.role === 'user' ? 'none' : '1px solid var(--bd)',
                   borderRadius: m.role === 'user' ? '12px 12px 3px 12px' : '12px 12px 12px 3px',
@@ -189,14 +189,14 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             type="submit"
             disabled={busy || !input.trim()}
             aria-label="Send"
-            style={{ background: busy || !input.trim() ? 'rgba(45,212,191,0.25)' : 'var(--primary)', color: '#06211e', border: 'none', borderRadius: 8, width: 42, cursor: busy ? 'wait' : 'pointer', fontSize: 15, fontWeight: 700 }}
+            style={{ background: busy || !input.trim() ? 'rgba(45,212,191,0.25)' : 'var(--primary)', color: 'var(--background)', border: 'none', borderRadius: 8, width: 42, cursor: busy ? 'wait' : 'pointer', fontSize: 15, fontWeight: 700 }}
           >↑</button>
         </form>
       )}
 
       <style>{`
-        .chat-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); display: inline-block; animation: chat-bounce 1s ease-in-out infinite; }
-        @keyframes chat-bounce { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+        .chat-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); display: inline-block; animation: chat-pulse 1s ease-out infinite; }
+        @keyframes chat-pulse { 0%, 100% { opacity: 0.35; transform: scale(0.92); } 50% { opacity: 1; transform: scale(1); } }
         @media (max-width: 420px) {
           .chat-panel {
             right: 12px !important;
@@ -204,7 +204,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             width: auto !important;
             bottom: calc(12px + env(safe-area-inset-bottom)) !important;
             height: min(520px, calc(100svh - 100px)) !important;
-            border-radius: 12px !important;
+            border-radius: 10px !important;
           }
         }
       `}</style>
@@ -241,9 +241,12 @@ function Fallback() {
           </div>
         ))}
       </div>
-      <a href={`mailto:${site.email}`} style={{ display: 'inline-flex', marginTop: 14, fontFamily: MONO, fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#06211e', background: 'var(--primary)', borderRadius: 6, padding: '9px 16px', fontWeight: 700 }}>
+      <a href={`mailto:${site.email}`} style={{ display: 'inline-flex', marginTop: 14, fontFamily: MONO, fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--background)', background: 'var(--primary)', borderRadius: 6, padding: '9px 16px', fontWeight: 700 }}>
         Email Ahmad instead ↗
       </a>
     </div>
   );
 }
+
+
+

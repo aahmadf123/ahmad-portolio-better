@@ -6,7 +6,7 @@ import { m, AnimatePresence } from 'framer-motion';
 
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
-const ACCENT = '#2DD4C8';
+const ACCENT = 'var(--primary)';
 
 const DOCS = [
   {
@@ -90,7 +90,7 @@ export default function DocsPage() {
               top: -20,
               left: -4,
               fontFamily: SERIF,
-              fontSize: 'clamp(72px, 11vw, 120px)',
+              fontSize: 'clamp(72px, 11vw, 112px)',
               fontWeight: 400,
               color: 'rgba(45,212,200,0.04)',
               lineHeight: 1,
@@ -128,7 +128,7 @@ export default function DocsPage() {
           <h1
             style={{
               fontFamily: SERIF,
-              fontSize: 'clamp(28px, 4vw, 42px)',
+              fontSize: 'var(--text-2xl)',
               fontWeight: 400,
               letterSpacing: '-0.01em',
               color: 'var(--foreground)',
@@ -166,9 +166,9 @@ export default function DocsPage() {
                   letterSpacing: '0.1em',
                   textTransform: 'uppercase',
                   padding: '9px 20px',
-                  border: `1px solid ${isActive ? 'rgba(45,212,200,0.5)' : 'rgba(242,237,216,0.1)'}`,
+                  border: `1px solid ${isActive ? 'color-mix(in srgb, var(--primary) 50%, transparent)' : 'rgba(244,244,242,0.1)'}`,
                   borderRadius: 4,
-                  background: isActive ? 'rgba(45,212,200,0.08)' : 'rgba(242,237,216,0.02)',
+                  background: isActive ? 'color-mix(in srgb, var(--primary) 8%, transparent)' : 'rgba(242,237,216,0.02)',
                   color: isActive ? ACCENT : 'var(--text2)',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
@@ -207,7 +207,7 @@ export default function DocsPage() {
         {/* PDF viewer container */}
         <div
           style={{
-            border: '1px solid rgba(242,237,216,0.08)',
+            border: '1px solid rgba(244,244,242,0.08)',
             borderRadius: 8,
             overflow: 'hidden',
             background: 'rgba(242,237,216,0.015)',
@@ -221,7 +221,7 @@ export default function DocsPage() {
               alignItems: 'center',
               justifyContent: 'space-between',
               padding: '10px 18px',
-              borderBottom: '1px solid rgba(242,237,216,0.06)',
+              borderBottom: '1px solid rgba(244,244,242,0.06)',
               background: 'rgba(242,237,216,0.025)',
               gap: 12,
               flexWrap: 'wrap',
@@ -256,16 +256,16 @@ export default function DocsPage() {
                       textTransform: 'uppercase',
                       color: 'var(--text2)',
                       padding: '5px 13px',
-                      border: '1px solid rgba(242,237,216,0.12)',
-                      borderRadius: 3,
+                      border: '1px solid rgba(244,244,242,0.12)',
+                      borderRadius: 4,
                       background: 'transparent',
                       textDecoration: 'none',
                       transition: 'all 0.2s ease',
                       whiteSpace: 'nowrap',
                     }}
                     onMouseEnter={e => {
-                      e.currentTarget.style.background = 'rgba(242,237,216,0.06)';
-                      e.currentTarget.style.color = '#F2EDD8';
+                      e.currentTarget.style.background = 'rgba(244,244,242,0.06)';
+                      e.currentTarget.style.color = 'var(--foreground)';
                     }}
                     onMouseLeave={e => {
                       e.currentTarget.style.background = 'transparent';
@@ -282,11 +282,11 @@ export default function DocsPage() {
                       fontSize: 9,
                       letterSpacing: '0.1em',
                       textTransform: 'uppercase',
-                      color: '#F2EDD8',
+                      color: 'var(--foreground)',
                       padding: '5px 14px',
-                      border: '1px solid rgba(45,212,200,0.4)',
-                      borderRadius: 3,
-                      background: 'rgba(45,212,200,0.08)',
+                      border: '1px solid color-mix(in srgb, var(--primary) 40%, transparent)',
+                      borderRadius: 4,
+                      background: 'color-mix(in srgb, var(--primary) 8%, transparent)',
                       textDecoration: 'none',
                       transition: 'all 0.2s ease',
                       whiteSpace: 'nowrap',
@@ -297,9 +297,9 @@ export default function DocsPage() {
                       e.currentTarget.style.color = ACCENT;
                     }}
                     onMouseLeave={e => {
-                      e.currentTarget.style.background = 'rgba(45,212,200,0.08)';
-                      e.currentTarget.style.borderColor = 'rgba(45,212,200,0.4)';
-                      e.currentTarget.style.color = '#F2EDD8';
+                      e.currentTarget.style.background = 'color-mix(in srgb, var(--primary) 8%, transparent)';
+                      e.currentTarget.style.borderColor = 'color-mix(in srgb, var(--primary) 40%, transparent)';
+                      e.currentTarget.style.color = 'var(--foreground)';
                     }}
                   >
                     Download ↓
@@ -326,7 +326,7 @@ export default function DocsPage() {
                     height: 'clamp(520px, 82vh, 920px)',
                     border: 'none',
                     display: 'block',
-                    background: '#1a1b1e',
+                    background: 'var(--surface-2)',
                   }}
                   title={`${selected.label} - Ahmad Firas Azfar`}
                 />
@@ -335,7 +335,7 @@ export default function DocsPage() {
                   style={{
                     display: 'none',
                     padding: '24px 20px',
-                    borderTop: '1px solid rgba(242,237,216,0.06)',
+                    borderTop: '1px solid rgba(244,244,242,0.06)',
                     textAlign: 'center',
                   }}
                   className="pdf-mobile-fallback"
@@ -362,7 +362,7 @@ export default function DocsPage() {
                       textTransform: 'uppercase',
                       color: ACCENT,
                       textDecoration: 'none',
-                      border: `1px solid rgba(45,212,200,0.35)`,
+                      border: `1px solid color-mix(in srgb, var(--primary) 35%, transparent)`,
                       borderRadius: 4,
                       padding: '8px 16px',
                     }}
@@ -378,3 +378,5 @@ export default function DocsPage() {
     </div>
   );
 }
+
+

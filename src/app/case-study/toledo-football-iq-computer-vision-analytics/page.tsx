@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = '#EF4444';
+const ACCENT = 'var(--red)';
 
-const PALETTE = ['#F0B429','#4B7BF5','#2DD4C8','#F07832','#A78BFA','#F472B6','#0EA5E9','#22C55E','#EF4444'];
+const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -20,7 +20,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 3, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
       {children}
     </span>
   );
@@ -52,7 +52,7 @@ function DbLayer({ n, title, items, color = ACCENT }: { n: string; title: string
         <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 3 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -91,15 +91,15 @@ export default function ToledoFootballIQCaseStudy() {
   }, []);
 
   return (
-    <div style={{ background: '#090B12', minHeight: '100vh', color: '#B8B4A4' }}>
+    <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
-        body { background: #090B12; }
-        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: #B8B4A4; }
+        body { background: var(--background); }
+        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: var(--text2); }
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
         .cs-body li::marker { color: ${ACCENT}; }
-        .cs-h2 { font-family: ${SERIF}; font-size: clamp(22px, 3vw, 30px); color: #F2EDD8; font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
+        .cs-h2 { font-family: ${SERIF}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
         .metrics-grid-fiq { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
         @media (max-width: 640px) { .metrics-grid-fiq { grid-template-columns: repeat(2, 1fr); } }
@@ -108,13 +108,13 @@ export default function ToledoFootballIQCaseStudy() {
         .three-col-fiq { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-fiq { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-fiq { grid-template-columns: 1fr; } }
-        .entity-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-left: 2px solid ${ACCENT}90; border-radius: 8px; transition: all 0.2s ease; }
+        .entity-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .entity-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
         .entity-field { font-family: ${MONO}; font-size: 10px; color: var(--text3); padding: 2px 0; letter-spacing: 0.03em; }
         .entity-key { color: ${ACCENT}; }
-        .principle-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.07); border-left: 2px solid ${ACCENT}50; border-radius: 8px; transition: all 0.2s ease; }
+        .principle-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
         .principle-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.06); border-left: 2px solid ${ACCENT}30; border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
         .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
         .pipeline-step { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: ${ACCENT}06; border: 1px solid ${ACCENT}18; border-radius: 8px; }
@@ -169,10 +169,10 @@ export default function ToledoFootballIQCaseStudy() {
             <Tag>Active Build</Tag>
             <Tag>University of Toledo Athletics</Tag>
           </div>
-          <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(32px,5vw,56px)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, #F2EDD8 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+          <h1 style={{ fontFamily: SERIF, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, var(--foreground) 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
             Toledo Football IQ
           </h1>
-          <p style={{ fontFamily: SERIF, fontSize: 'clamp(15px,2vw,18px)', color: '#B8B4A4', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
+          <p style={{ fontFamily: SERIF, fontSize: 16, color: 'var(--text2)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
             A drone-based computer vision platform for Toledo Football that converts overhead practice footage into clip-linked player tracking, football labels, self-scout insights, and coach-correctable analytics.
           </p>
 
@@ -186,7 +186,7 @@ export default function ToledoFootballIQCaseStudy() {
           </div>
 
           {/* Hero image */}
-          <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: '#06080E', marginBottom: 64 }}>
+          <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>
             <Pic
               src="/Images/Football_IQ_Analytics.png"
               alt="Toledo Football IQ Analytics Platform"
@@ -219,7 +219,7 @@ export default function ToledoFootballIQCaseStudy() {
                 The system is built as a coach-in-the-loop football intelligence platform. It starts with reliable practice-film infrastructure - video ingestion, play segmentation, field calibration, player tracking, clip-linked metrics, coach correction - and grows toward formation and motion analysis, route and coverage analytics, self-scout, pose-lite biomechanics, player development profiles, similar-rep search, zero-shot concept discovery, and same-session feedback.
               </p>
               <div style={{ padding: '18px 22px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 8, marginTop: 8 }}>
-                <p style={{ fontFamily: SERIF, fontSize: 15, color: '#F2EDD8', margin: 0, lineHeight: 1.5 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--foreground)', margin: 0, lineHeight: 1.5 }}>
                   Product north star: a Toledo-owned CV platform that converts drone and practice film into verified football intelligence - faster coaching feedback, better self-scout, better opponent prep, objective player development, and health-aware workload context.
                 </p>
               </div>
@@ -339,7 +339,7 @@ export default function ToledoFootballIQCaseStudy() {
                 ))}
               </div>
               <p>
-                The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>coach_corrections</code> table is the flywheel engine - every correction to any output type is recorded, timestamped, and exported to <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>training_datasets</code> for model retraining. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 3 }}>metrics.suppressed</code> flag prevents analytics from surfacing when calibration confidence is below threshold.
+                The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>coach_corrections</code> table is the flywheel engine - every correction to any output type is recorded, timestamped, and exported to <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>training_datasets</code> for model retraining. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>metrics.suppressed</code> flag prevents analytics from surfacing when calibration confidence is below threshold.
               </p>
             </Section>
 
@@ -383,12 +383,12 @@ export default function ToledoFootballIQCaseStudy() {
                     exit: '90%+ of clips have visible field markings. Coaches approve MVP direction.',
                   },
                   {
-                    phase: 'Phase 1', label: 'Foundation MVP', color: '#F0B429',
+                    phase: 'Phase 1', label: 'Foundation MVP', color: 'var(--gold)',
                     items: ['Video ingestion and job tracking', 'Play segmentation with manual boundary correction', 'Field calibration and analytics-safe scoring', 'Player detection and tracking', 'Clip-linked metrics', 'Coach correction UI', 'Model and data versioning', 'Role-based access'],
                     exit: '90% of plays have acceptable boundaries. 85% of clips yield useful tracking. Metric → evidence clip in ≤2 clicks.',
                   },
                   {
-                    phase: 'Phase 2', label: 'Coach-Trusted Football Layer', color: '#A78BFA',
+                    phase: 'Phase 2', label: 'Coach-Trusted Football Layer', color: 'var(--purple)',
                     items: ['Formation and motion recognition', 'Route classification', 'Coverage shell and leverage', 'Offensive-line spacing and blocking metrics', 'QB decision metrics', 'Practice tempo and effort metrics', 'Self-scout exposure dashboard', 'Correction analytics'],
                     exit: 'Weekly coaching workflow integration. Analysts running correction exports.',
                   },
@@ -398,7 +398,7 @@ export default function ToledoFootballIQCaseStudy() {
                     exit: 'Toledo owns a private football intelligence layer no vendor can replicate.',
                   },
                   {
-                    phase: 'Phase 4', label: 'Frontier R&D', color: '#6366F1',
+                    phase: 'Phase 4', label: 'Frontier R&D', color: 'var(--purple)',
                     items: ['xSep, xYards, xPressure, xCompletion models', 'Defensive intent modeling', 'Counterfactual simulation', 'Opponent concept matching', 'Advanced health fusion'],
                     exit: 'Only begins after tracking, labels, corrections, and adoption are reliable.',
                   },
@@ -406,12 +406,12 @@ export default function ToledoFootballIQCaseStudy() {
                   <div key={phase} className="roadmap-row" style={{ flexDirection: 'column', gap: 10 }}>
                     <div style={{ display: 'flex', gap: 12, alignItems: 'baseline' }}>
                       <span style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0 }}>{phase}</span>
-                      <span style={{ fontFamily: MONO, fontSize: 11, color: '#F2EDD8', letterSpacing: '0.04em' }}>{label}</span>
+                      <span style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em' }}>{label}</span>
                     </div>
                     <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
                       {items.map(item => <li key={item} style={{ fontSize: 13, marginBottom: 4, lineHeight: 1.5 }}>{item}</li>)}
                     </ul>
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', borderTop: '1px solid rgba(242,237,216,0.06)', paddingTop: 8 }}>
+                    <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', borderTop: '1px solid rgba(244,244,242,0.06)', paddingTop: 8 }}>
                       Exit criteria: {exit}
                     </div>
                   </div>
@@ -443,16 +443,16 @@ export default function ToledoFootballIQCaseStudy() {
               {/* PROMPT FOR AHMAD: what would you do differently on Toledo Football IQ? It is too early for an honest retrospective - the build is pre-MVP and the design principles above already capture the intended ordering. Fill this in once Phase 0/1 surfaces a real "I should have done X sooner." */}
 
               <div style={{ padding: '24px 28px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10, marginTop: 32 }}>
-                <p style={{ fontFamily: SERIF, fontSize: 15, color: '#F2EDD8', margin: '0 0 8px', lineHeight: 1.5 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--foreground)', margin: '0 0 8px', lineHeight: 1.5 }}>
                   In football analytics, trust is the product.
                 </p>
-                <p style={{ fontFamily: SERIF, fontSize: 14, color: '#B8B4A4', margin: 0, lineHeight: 1.6 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text2)', margin: 0, lineHeight: 1.6 }}>
                   Toledo Football IQ demonstrates that computer vision in sports is not a model problem - it is a product problem. The best moat is private, corrected, domain-specific data. Every coach correction is a training example. Every trusted output extends what the system can do next.
                 </p>
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#fff', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
+                <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--foreground)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
               </div>
             </Section>
 
@@ -481,3 +481,6 @@ export default function ToledoFootballIQCaseStudy() {
     </div>
   );
 }
+
+
+

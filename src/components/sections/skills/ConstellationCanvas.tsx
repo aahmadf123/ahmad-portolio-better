@@ -746,7 +746,7 @@ export function ConstellationCanvas({
   };
 
   return (
-    <div ref={mountRef} style={{ position: 'relative', width: '100%', height: 'clamp(420px, 58vh, 620px)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--bd)', background: 'radial-gradient(ellipse 70% 60% at 50% 45%, rgba(45,212,191,0.04), transparent 75%)' }}>
+    <div ref={mountRef} style={{ position: 'relative', width: '100%', height: 'clamp(420px, 58vh, 620px)', borderRadius: 10, overflow: 'hidden', border: '1px solid var(--bd)', background: 'radial-gradient(ellipse 70% 60% at 50% 45%, rgba(45,212,191,0.04), transparent 75%)' }}>
       {/* 2D label overlay - sits above the WebGL canvas, below the tooltip/card */}
       <canvas ref={labelRef} data-labels aria-hidden style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 2 }} />
 
@@ -782,3 +782,4 @@ export function ConstellationCanvas({
     </div>
   );
 }
+

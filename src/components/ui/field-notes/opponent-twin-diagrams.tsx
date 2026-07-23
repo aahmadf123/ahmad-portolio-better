@@ -5,12 +5,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
 
-const GREEN = '#10B981';
-const GOLD  = '#F0B429';
-const BLUE  = '#4B7BF5';
-const RED   = '#EF4444';
-const ORANGE = '#F97316';
-const PURPLE = '#8B5CF6';
+const GREEN = 'var(--green)';
+const GOLD  = 'var(--gold)';
+const BLUE  = 'var(--blue)';
+const RED   = 'var(--red)';
+const ORANGE = 'var(--orange)';
+const PURPLE = 'var(--purple)';
 
 function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; color?: string }) {
   return (
@@ -110,7 +110,7 @@ export function TwinAnatomy() {
                   <span style={{ display: 'block', fontFamily: MONO, fontSize: 12, color: item.color, letterSpacing: '0.04em', marginBottom: 2 }}>
                     {item.title}
                   </span>
-                  <span style={{ display: 'block', fontFamily: SERIF, fontSize: 12, color: '#A09C8E', lineHeight: 1.5 }}>
+                  <span style={{ display: 'block', fontFamily: SERIF, fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>
                     {item.summary}
                   </span>
                 </span>
@@ -126,7 +126,7 @@ export function TwinAnatomy() {
               {isOpen && (
                 <div style={{
                   padding: '0 16px 15px 41px',
-                  fontFamily: SERIF, fontSize: 13, color: '#C8C4B4', lineHeight: 1.75,
+                  fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.75,
                 }}>
                   {item.detail}
                 </div>
@@ -199,7 +199,7 @@ export function FilmBudget() {
               <div key={r.key} style={{
                 display: 'flex', alignItems: 'center', gap: 12,
                 padding: '9px 12px', borderRadius: 8,
-                border: '1px solid rgba(242,237,216,0.07)',
+                border: '1px solid rgba(244,244,242,0.07)',
               }}>
                 <div style={{ width: 128, flexShrink: 0 }}>
                   <div style={{ fontFamily: MONO, fontSize: 10, color: r.color, letterSpacing: '0.04em' }}>
@@ -214,7 +214,7 @@ export function FilmBudget() {
                 <div style={{ flex: 1, position: 'relative', height: 18 }}>
                   <div style={{
                     position: 'absolute', left: 0, right: 0, top: '50%',
-                    height: 1, background: 'rgba(242,237,216,0.08)',
+                    height: 1, background: 'rgba(244,244,242,0.08)',
                   }} />
                   <div style={{
                     position: 'absolute', left: `${r.trueRun * 100}%`, top: 1, bottom: 1,
@@ -244,7 +244,7 @@ export function FilmBudget() {
         <div style={{
           marginTop: 14, padding: '10px 14px', borderRadius: 8,
           background: `${GOLD}08`, border: `1px solid ${GOLD}25`,
-          fontFamily: SERIF, fontSize: 13, color: '#C8C4B4', lineHeight: 1.65,
+          fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65,
         }}>
           The band is the 95% range for their <em>measured</em> run rate around a fixed true tendency
           (gold tick). First-and-ten firms up in a month. Fourth down - the situation your game may
@@ -329,7 +329,7 @@ export function GamePlanSimulator() {
         border: `1px solid ${GOLD}25`, borderRadius: 10,
         background: `${GOLD}04`, padding: '18px 18px 16px',
       }}>
-        <div style={{ fontFamily: SERIF, fontSize: 13, color: '#A09C8E', lineHeight: 1.6, marginBottom: 14 }}>
+        <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
           Two even teams. Your staff makes {LEVERAGE_CALLS} twin-informed calls per game - each worth{' '}
           +{PTS_RIGHT} points when the twin read the opponent right, {PTS_WRONG} when it read them wrong,
           because preparing precisely for the wrong look costs more than it gains.
@@ -378,8 +378,7 @@ export function GamePlanSimulator() {
                       flex: 1, height: `${Math.max(h, count > 0 ? 2 : 0)}%`,
                       background: losing ? RED : GREEN,
                       opacity: 0.55,
-                      borderRadius: '2px 2px 0 0',
-                      transition: 'height 0.3s ease',
+                      borderRadius: '4px 4px 0 0',
                     }}
                   />
                 );
@@ -431,7 +430,7 @@ export function GamePlanSimulator() {
                 <div style={{ fontFamily: MONO, fontSize: 20, color: stat.color, lineHeight: 1, marginBottom: 4 }}>
                   {stat.value}
                 </div>
-                <div style={{ fontFamily: SERIF, fontSize: 11, color: '#8A877A', lineHeight: 1.45 }}>
+                <div style={{ fontFamily: SERIF, fontSize: 11, color: 'var(--text3)', lineHeight: 1.45 }}>
                   {stat.sub}
                 </div>
               </div>
@@ -442,7 +441,7 @@ export function GamePlanSimulator() {
         <div style={{
           padding: '11px 14px', borderRadius: 8,
           background: `${verdictColor}09`, border: `1px solid ${verdictColor}30`,
-          fontFamily: SERIF, fontSize: 13, color: '#C8C4B4', lineHeight: 1.65,
+          fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65,
         }}>
           <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: verdictColor, marginRight: 10 }}>
             Verdict
@@ -508,10 +507,10 @@ export function AdaptationDecay() {
       <SectionLabel color={BLUE}>Interactive · The Tell Has a Half-Life</SectionLabel>
 
       <div style={{
-        border: '1px solid rgba(242,237,216,0.09)', borderRadius: 10,
+        border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10,
         background: 'rgba(242,237,216,0.02)', padding: '16px 18px',
       }}>
-        <div style={{ fontFamily: SERIF, fontSize: 13, color: '#A09C8E', lineHeight: 1.6, marginBottom: 14 }}>
+        <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
           Your twin finds a real tell worth {EDGE_0} points a game. But every snap you spend
           exploiting it goes on film - and their self-scout is watching too. Choose how to spend it.
         </div>
@@ -527,8 +526,8 @@ export function AdaptationDecay() {
                   fontFamily: MONO, fontSize: 10, letterSpacing: '0.05em',
                   padding: '7px 12px', borderRadius: 6, cursor: 'pointer',
                   background: active ? `${s.color}18` : 'rgba(242,237,216,0.03)',
-                  border: `1px solid ${active ? s.color : 'rgba(242,237,216,0.12)'}`,
-                  color: active ? s.color : '#B8B4A4',
+                  border: `1px solid ${active ? s.color : 'rgba(244,244,242,0.12)'}`,
+                  color: active ? s.color : 'var(--text2)',
                   transition: 'all 0.15s',
                 }}
               >
@@ -550,8 +549,7 @@ export function AdaptationDecay() {
                 <div style={{
                   width: '100%', height: `${Math.max(h, 2)}%`,
                   background: sel.color, opacity: 0.55,
-                  borderRadius: '3px 3px 0 0',
-                  transition: 'height 0.35s ease',
+                  borderRadius: '4px 4px 0 0',
                 }} />
               </div>
             );
@@ -580,7 +578,7 @@ export function AdaptationDecay() {
               <div style={{ fontFamily: MONO, fontSize: 20, color: s.color, lineHeight: 1, marginBottom: 4 }}>
                 {s.total.toFixed(1)} pts
               </div>
-              <div style={{ fontFamily: SERIF, fontSize: 11, color: '#8A877A', lineHeight: 1.45 }}>
+              <div style={{ fontFamily: SERIF, fontSize: 11, color: 'var(--text3)', lineHeight: 1.45 }}>
                 total value over {WEEKS} weeks · wk 1: {s.weekly[0].toFixed(1)}, wk {WEEKS}: {s.weekly[WEEKS - 1].toFixed(1)}
               </div>
             </div>
@@ -590,7 +588,7 @@ export function AdaptationDecay() {
         <div style={{
           padding: '11px 14px', borderRadius: 8,
           background: `${BLUE}09`, border: `1px solid ${BLUE}30`,
-          fontFamily: SERIF, fontSize: 13, color: '#C8C4B4', lineHeight: 1.65,
+          fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65,
         }}>
           <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: BLUE, marginRight: 10 }}>
             The exception
@@ -609,3 +607,5 @@ export function AdaptationDecay() {
     </div>
   );
 }
+
+

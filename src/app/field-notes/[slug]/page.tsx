@@ -92,7 +92,7 @@ export default async function FieldNotePage({ params }: PageProps) {
       }}>
         <SmartBackLink fallbackHref="/field-notes" backWhenPrev={['/', '/field-notes']} style={{
           display: 'flex', alignItems: 'center', gap: 8,
-          color: '#B8B4A4', fontFamily: MONO, fontSize: 10,
+          color: 'var(--text2)', fontFamily: MONO, fontSize: 10,
           letterSpacing: '0.08em', textTransform: 'uppercase',
           textDecoration: 'none', transition: 'color 0.2s',
         }}>
@@ -125,7 +125,7 @@ export default async function FieldNotePage({ params }: PageProps) {
           <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
             {formatDate(note.date)}
           </span>
-          <span style={{ fontFamily: MONO, fontSize: 10, color: '#4A4843' }}>·</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)' }}>·</span>
           <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
             {note.readingTime} min read
           </span>
@@ -134,8 +134,8 @@ export default async function FieldNotePage({ params }: PageProps) {
         {/* Title */}
         <h1 style={{
           fontFamily: SERIF, fontWeight: 400,
-          fontSize: 'clamp(28px,5vw,52px)', lineHeight: 1.08,
-          letterSpacing: '-0.025em', color: '#F2EDD8',
+          fontSize: 'var(--text-2xl)', lineHeight: 1.08,
+          letterSpacing: '-0.025em', color: 'var(--foreground)',
           marginBottom: 20, paddingBottom: '0.04em',
         }}>
           {note.title}
@@ -143,7 +143,7 @@ export default async function FieldNotePage({ params }: PageProps) {
 
         {/* Excerpt */}
         <p style={{
-          fontSize: 18, lineHeight: 1.75, color: '#8A877A',
+          fontSize: 18, lineHeight: 1.75, color: 'var(--text2)',
           maxWidth: 680, marginBottom: 28, fontFamily: SERIF,
         }}>
           {note.excerpt}
@@ -155,8 +155,8 @@ export default async function FieldNotePage({ params }: PageProps) {
             <span key={tag} style={{
               fontFamily: MONO, fontSize: 9, padding: '3px 8px',
               background: 'rgba(242,237,216,0.04)',
-              border: '1px solid rgba(242,237,216,0.1)',
-              borderRadius: 3, color: 'var(--text3)',
+              border: '1px solid rgba(244,244,242,0.1)',
+              borderRadius: 4, color: 'var(--text3)',
               letterSpacing: '0.04em',
             }}>
               {tag}
@@ -168,9 +168,9 @@ export default async function FieldNotePage({ params }: PageProps) {
         {note.heroImage && (
           <ViewTransition name={`fn-img-${note.slug}`} share="morph">
             <div style={{
-              width: '100%', borderRadius: 12, overflow: 'hidden',
-              border: '1px solid rgba(242,237,216,0.08)',
-              marginBottom: 48, background: '#06080E',
+              width: '100%', borderRadius: 10, overflow: 'hidden',
+              border: '1px solid rgba(244,244,242,0.08)',
+              marginBottom: 48, background: 'var(--background)',
             }}>
               <Pic
                 src={note.heroImage}
@@ -211,15 +211,15 @@ export default async function FieldNotePage({ params }: PageProps) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{
             width: 40, height: 40, borderRadius: '50%',
-            background: catCfg ? `${catCfg.color}1c` : 'rgba(240,180,41,0.1)',
-            border: `1px solid ${catCfg ? catCfg.color + '40' : 'rgba(240,180,41,0.25)'}`,
+            background: catCfg ? `${catCfg.color}1c` : 'color-mix(in srgb, var(--gold) 10%, transparent)',
+            border: `1px solid ${catCfg ? catCfg.color + '40' : 'color-mix(in srgb, var(--gold) 25%, transparent)'}`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             flexShrink: 0,
           }}>
-            <span style={{ fontFamily: MONO, fontSize: 11, color: catCfg?.color ?? '#F0B429' }}>AF</span>
+            <span style={{ fontFamily: MONO, fontSize: 11, color: catCfg?.color ?? 'var(--gold)' }}>AF</span>
           </div>
           <div>
-            <div style={{ fontFamily: SERIF, fontSize: 14, color: '#F2EDD8', marginBottom: 2 }}>Ahmad Firas</div>
+            <div style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--foreground)', marginBottom: 2 }}>Ahmad Firas</div>
             <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.04em' }}>
               AI Researcher · University of Toledo
             </div>
@@ -231,8 +231,8 @@ export default async function FieldNotePage({ params }: PageProps) {
           <Link href="/field-notes" transitionTypes={['nav-forward']} style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '10px 18px',
-            border: '1px solid rgba(242,237,216,0.12)',
-            color: '#B8B4A4', fontFamily: MONO, fontSize: 10,
+            border: '1px solid rgba(244,244,242,0.12)',
+            color: 'var(--text2)', fontFamily: MONO, fontSize: 10,
             letterSpacing: '0.08em', borderRadius: 5,
             textTransform: 'uppercase', textDecoration: 'none',
           }}>
@@ -241,8 +241,8 @@ export default async function FieldNotePage({ params }: PageProps) {
           <Link href="/#field-notes" style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '10px 18px',
-            border: '1px solid rgba(242,237,216,0.12)',
-            color: '#B8B4A4', fontFamily: MONO, fontSize: 10,
+            border: '1px solid rgba(244,244,242,0.12)',
+            color: 'var(--text2)', fontFamily: MONO, fontSize: 10,
             letterSpacing: '0.08em', borderRadius: 5,
             textTransform: 'uppercase', textDecoration: 'none',
           }}>
@@ -253,3 +253,4 @@ export default async function FieldNotePage({ params }: PageProps) {
     </div>
   );
 }
+

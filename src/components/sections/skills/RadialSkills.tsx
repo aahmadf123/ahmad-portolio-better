@@ -29,7 +29,7 @@ export function RadialSkills() {
               scrollSnapAlign: 'center',
               border: `1px solid ${group.color}30`,
               background: `radial-gradient(ellipse 80% 70% at 50% 40%, ${group.color}0d, transparent 75%)`,
-              borderRadius: 14,
+              borderRadius: 10,
               padding: '22px 18px 18px',
               textAlign: 'center',
             }}
@@ -50,3 +50,4 @@ export function RadialSkills() {
     </div>
   );
 }
+

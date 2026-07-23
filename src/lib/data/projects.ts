@@ -135,7 +135,7 @@ export const projects: Project[] = [
     idx: '03',
     slug: 'homeowner-loss-prediction',
     domain: 'MLOps',
-    color: '#a78bfa',
+    color: 'var(--purple)',
     title: 'Homeowner Loss Prediction',
     tag: 'Grange Insurance × UToledo · Senior Design',
     headline: 'R² = 0.982 · 26% over GLM baseline · 75% reduction in manual review',
@@ -267,7 +267,7 @@ export const projects: Project[] = [
     idx: '07',
     slug: 'batting-cleanup-smart-city-waste-reporting',
     domain: 'Civic Tech',
-    color: '#f472b6',
+    color: 'var(--pink)',
     title: 'Batting Cleanup',
     tag: 'City of Toledo · Applied Labs · In Production',
     headline: 'In production: <10ms geospatial queries across 10,000+ city assets',
@@ -372,7 +372,7 @@ export const projects: Project[] = [
     idx: '10',
     slug: 'toledo-football-iq-computer-vision-analytics',
     domain: 'Sports Analytics',
-    color: '#ef4444',
+    color: 'var(--red)',
     title: 'Toledo Football IQ',
     tag: 'University of Toledo Athletics · Football · Active Build',
     headline: '10-stage CV pipeline · 90%+ field-marking accuracy · 18+ structured metrics',
@@ -419,3 +419,4 @@ export const flagshipProject = projects.find((p) => p.flagship)!;
 
 /** Case-study route slugs - feeds sitemap.ts so it can never drift again. */
 export const caseStudySlugs = projects.flatMap((p) => (p.slug ? [p.slug] : []));
+
