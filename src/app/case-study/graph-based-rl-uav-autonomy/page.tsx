@@ -6,9 +6,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = 'var(--gold)';
+const ACCENT = '#f59e0b';
 
-const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
+const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -281,17 +281,17 @@ export default function UAVCaseStudy() {
               },
               {
                 label: 'Perception & AI',
-                color: 'var(--blue)',
+                color: '#5b8af5',
                 tags: ['Stereo / Depth Vision', 'LiDAR Obstacle Detection', 'Vision-Language Models', 'SAM-Style Segmentation', 'Local Language-Action Model', 'Voice Command Pipeline', 'SHAP / LIME Explainability'],
               },
               {
                 label: 'Robotics & Hardware',
-                color: 'var(--primary)',
+                color: '#2dd4bf',
                 tags: ['ROS 2', 'ArduPilot', 'MAVLink / MAVROS', 'Jetson Orin NX', 'CubePilot Cube Orange+', 'OAK-D Pro FF', 'SLAMTEC C1 LiDAR', 'AirSim (simulation)'],
               },
               {
                 label: 'Research Methods',
-                color: 'var(--purple)',
+                color: '#a78bfa',
                 tags: ['Domain Randomization', 'Sim-to-Reality Transfer', 'Zero-Shot Evaluation', 'Few-Shot Evaluation', 'Hardware-in-the-Loop Testing', 'Safety & Failure-Mode Analysis', 'Progressive Testing Protocol'],
               },
             ].map(({ label, color, tags }) => (
@@ -331,13 +331,13 @@ export default function UAVCaseStudy() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }} className="two-col-uav">
             <div style={{ padding: '16px 20px', background: 'color-mix(in srgb, var(--primary) 6%, transparent)', border: '1px solid color-mix(in srgb, var(--primary) 20%, transparent)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Safety</div>
-              <div style={{ fontFamily: SERIF, fontSize: 24, color: 'var(--primary)', marginBottom: 6, paddingBottom: '0.05em' }}>100%</div>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: '#2dd4bf', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Safety</div>
+              <div style={{ fontFamily: SERIF, fontSize: 24, color: '#2dd4bf', marginBottom: 6, paddingBottom: '0.05em' }}>100%</div>
               <p style={{ fontSize: 12, lineHeight: 1.6, color: 'var(--text2)' }}>Collision-free testing across all evaluated safety scenarios in the reported validation.</p>
             </div>
             <div style={{ padding: '16px 20px', background: 'rgba(167,139,250,0.06)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--purple)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Infrastructure Cost</div>
-              <div style={{ fontFamily: SERIF, fontSize: 24, color: 'var(--purple)', marginBottom: 6, paddingBottom: '0.05em' }}>95% ↓</div>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: '#a78bfa', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Infrastructure Cost</div>
+              <div style={{ fontFamily: SERIF, fontSize: 24, color: '#a78bfa', marginBottom: 6, paddingBottom: '0.05em' }}>95% ↓</div>
               <p style={{ fontSize: 12, lineHeight: 1.6, color: 'var(--text2)' }}>Estimated operational cost reduction by replacing cloud-dependent inference with edge-first architecture.</p>
             </div>
           </div>
@@ -380,10 +380,10 @@ export default function UAVCaseStudy() {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12, marginBottom: 28 }} className="two-col-uav">
             {[
-              { mode: 'Direct Control', color: 'var(--orange)', d: 'The human operator controls the UAV manually. The autonomy stack is passive. Used during high-risk phases or when the environment is completely novel.' },
+              { mode: 'Direct Control', color: '#f0823c', d: 'The human operator controls the UAV manually. The autonomy stack is passive. Used during high-risk phases or when the environment is completely novel.' },
               { mode: 'Supervised Autonomy', color: ACCENT, d: 'The UAV proposes or executes navigation actions while the human monitors. The operator can intervene at any point without taking full manual control.' },
-              { mode: 'Intervention Mode', color: 'var(--blue)', d: 'The system detects uncertainty, safety constraint proximity, or mission ambiguity and requests human input before continuing autonomous operation.' },
-              { mode: 'Natural-Language Command Mode', color: 'var(--purple)', d: 'The operator gives high-level mission instructions. The voice-to-action pipeline translates these into safe flight objectives within the current graph representation.' },
+              { mode: 'Intervention Mode', color: '#5b8af5', d: 'The system detects uncertainty, safety constraint proximity, or mission ambiguity and requests human input before continuing autonomous operation.' },
+              { mode: 'Natural-Language Command Mode', color: '#a78bfa', d: 'The operator gives high-level mission instructions. The voice-to-action pipeline translates these into safe flight objectives within the current graph representation.' },
             ].map(({ mode, color, d }) => (
               <div key={mode} style={{ padding: '18px 20px', background: `${color}06`, border: `1px solid ${color}22`, borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>{mode}</div>

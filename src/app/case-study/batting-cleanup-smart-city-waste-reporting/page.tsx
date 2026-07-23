@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = 'var(--pink)';
+const ACCENT = '#f472b6';
 
-const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
+const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -159,8 +159,8 @@ export default function BattingCleanupCaseStudy() {
           Portfolio
         </SmartBackLink>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--green)', background: 'color-mix(in srgb, var(--green) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 25%, transparent)', borderRadius: 10 }}>
-            <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--green)', display: 'inline-block' }} />
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#22c55e', background: 'color-mix(in srgb, var(--green) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 25%, transparent)', borderRadius: 10 }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
             Live
           </span>
           <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Batting Cleanup</span>
@@ -488,8 +488,8 @@ export default function BattingCleanupCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Operations', color: ACCENT, items: ['Live operations dashboard for city maintainers', 'SLA tracking for report resolution time', 'Route optimization for cleanup crews', 'Automated escalation rules for high-frequency assets'] },
-                  { phase: 'Intelligence', color: 'var(--gold)', items: ['Report deduplication and clustering', 'Heatmaps for recurring waste hotspots', 'Anomaly detection for spam or suspicious report patterns', 'Analytics for seasonality, event impact, and foot traffic correlation'] },
-                  { phase: 'Public', color: 'var(--blue)', items: ['Public transparency metrics dashboard', 'Richer QR-code asset metadata and status pages', 'Notification system for users who filed reports', 'Expanded coverage beyond downtown Toledo'] },
+                  { phase: 'Intelligence', color: '#f59e0b', items: ['Report deduplication and clustering', 'Heatmaps for recurring waste hotspots', 'Anomaly detection for spam or suspicious report patterns', 'Analytics for seasonality, event impact, and foot traffic correlation'] },
+                  { phase: 'Public', color: '#5b8af5', items: ['Public transparency metrics dashboard', 'Richer QR-code asset metadata and status pages', 'Notification system for users who filed reports', 'Expanded coverage beyond downtown Toledo'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
                     <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>

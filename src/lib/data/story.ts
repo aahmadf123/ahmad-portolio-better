@@ -63,7 +63,7 @@ export const storyChapters: StoryChapter[] = [
     title: 'Football IQ.',
     body: 'Toledo Athletics: from DOMO roster-efficiency dashboards to a 10-stage computer vision pipeline that turns practice film, including overhead drone footage, into evidence a coach can verify, correct, and teach from - targeting 90%+ field-marking accuracy. Every corrected label becomes Toledo-specific training data. Trust is the product.',
     scene: 'field',
-    accent: 'var(--red)',
+    accent: '#ef4444',
     milestone: true,
     stat: { value: '10-stage', label: 'CV pipeline · 18+ structured metrics' },
   },

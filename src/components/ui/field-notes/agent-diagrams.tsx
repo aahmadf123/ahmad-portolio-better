@@ -10,31 +10,31 @@ const LAYERS = [
     n: '01', name: 'Model',
     desc: 'Interprets the goal, reasons over context, generates plans and outputs',
     failure: 'Misunderstands intent or produces low-quality decisions',
-    color: 'var(--gold)',
+    color: '#f59e0b',
   },
   {
     n: '02', name: 'Orchestrator',
     desc: 'Manages state, routing, retries, handoffs, and loop limits',
     failure: 'Agent gets stuck, loses context, or becomes impossible to debug',
-    color: 'var(--blue)',
+    color: '#5b8af5',
   },
   {
     n: '03', name: 'Tools',
     desc: 'Give the agent access to data and actions outside the model itself',
     failure: 'Agent cannot verify facts or take useful action beyond text generation',
-    color: 'var(--green)',
+    color: '#22c55e',
   },
   {
     n: '04', name: 'Guardrails',
     desc: 'Constrain inputs, outputs, tool permissions, and escalation rules',
     failure: 'Agent takes unsafe actions or leaks sensitive information',
-    color: 'var(--red)',
+    color: '#ef4444',
   },
   {
     n: '05', name: 'Evaluation & Tracing',
     desc: 'Measures quality, safety, cost, latency, and task success over time',
     failure: 'Team cannot tell whether the agent is improving or failing differently',
-    color: 'var(--purple)',
+    color: '#a78bfa',
   },
 ];
 
@@ -43,10 +43,10 @@ export function AgentArchitectureLayers() {
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
         fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: 'var(--gold)', opacity: 0.7,
+        textTransform: 'uppercase', color: '#f59e0b', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
-        <span style={{ display: 'inline-block', width: 18, height: 1, background: 'var(--gold)', opacity: 0.5 }} />
+        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#f59e0b', opacity: 0.5 }} />
         Five-Layer Production Architecture
       </div>
 
@@ -148,25 +148,25 @@ const STAGES = [
     n: 2, name: 'Workflow',
     trigger: 'Steps are known and repeatable',
     question: 'Can code define the path more reliably than the model can?',
-    color: 'var(--blue)',
+    color: '#5b8af5',
   },
   {
     n: 3, name: 'Single Agent + Tools',
     trigger: 'Task varies, domain is bounded',
     question: 'Can one agent safely choose tools and recover from errors?',
-    color: 'var(--green)',
+    color: '#22c55e',
   },
   {
     n: 4, name: 'Agent + Human Approvals',
     trigger: 'Agent prepares actions, consequences matter',
     question: 'Where should autonomy pause for review?',
-    color: 'var(--gold)',
+    color: '#f59e0b',
   },
   {
     n: 5, name: 'Multi-Agent System',
     trigger: 'Task genuinely spans roles, domains, or security boundaries',
     question: 'Does specialization outperform the added coordination cost?',
-    color: 'var(--red)',
+    color: '#ef4444',
   },
 ];
 
@@ -175,10 +175,10 @@ export function MaturityLadder() {
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
         fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: 'var(--gold)', opacity: 0.7,
+        textTransform: 'uppercase', color: '#f59e0b', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
-        <span style={{ display: 'inline-block', width: 18, height: 1, background: 'var(--gold)', opacity: 0.5 }} />
+        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#f59e0b', opacity: 0.5 }} />
         Agentic Maturity Progression
       </div>
 
@@ -257,21 +257,21 @@ export function MaturityLadder() {
 
 export function AutonomyTradeoff() {
   const bands = [
-    { label: 'Text Only', sub: 'Can be wrong', color: 'var(--blue)', width: '20%' },
-    { label: 'Tool Read', sub: 'Can be wrong\nabout facts', color: 'var(--green)', width: '20%' },
-    { label: 'Tool Write', sub: 'Can be wrong\nand take action', color: 'var(--gold)', width: '20%' },
-    { label: 'Persistent\nActions', sub: 'Errors may\nnot be reversible', color: 'var(--orange)', width: '20%' },
-    { label: 'External\nImpact', sub: 'Errors reach\nreal systems', color: 'var(--red)', width: '20%' },
+    { label: 'Text Only', sub: 'Can be wrong', color: '#5b8af5', width: '20%' },
+    { label: 'Tool Read', sub: 'Can be wrong\nabout facts', color: '#22c55e', width: '20%' },
+    { label: 'Tool Write', sub: 'Can be wrong\nand take action', color: '#f59e0b', width: '20%' },
+    { label: 'Persistent\nActions', sub: 'Errors may\nnot be reversible', color: '#f0823c', width: '20%' },
+    { label: 'External\nImpact', sub: 'Errors reach\nreal systems', color: '#ef4444', width: '20%' },
   ];
 
   return (
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
         fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: 'var(--gold)', opacity: 0.7,
+        textTransform: 'uppercase', color: '#f59e0b', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
-        <span style={{ display: 'inline-block', width: 18, height: 1, background: 'var(--gold)', opacity: 0.5 }} />
+        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#f59e0b', opacity: 0.5 }} />
         Tool Use Risk Spectrum
       </div>
 
@@ -333,16 +333,16 @@ export function AutonomyTradeoff() {
 // ── 4. Production Checklist ─────────────────────────────────────────────────
 
 const CHECKLIST_ITEMS = [
-  { label: 'Bounded job',        desc: 'Clear domain, not a vague mandate to "do work"',                           color: 'var(--gold)' },
-  { label: 'Explicit tools',     desc: 'Every external action is named, typed, permissioned, and logged',           color: 'var(--gold)' },
-  { label: 'Loop limits',        desc: 'Cannot retry forever or spend indefinitely',                                color: 'var(--blue)' },
-  { label: 'State management',   desc: 'Defined what persists, expires, and must never be stored',                  color: 'var(--blue)' },
-  { label: 'Human-in-the-loop',  desc: 'System knows which actions require human approval',                         color: 'var(--green)' },
-  { label: 'Injection posture',  desc: 'External content treated as untrusted input, not instructions',             color: 'var(--green)' },
-  { label: 'Traceability',       desc: 'Team can replay decisions, tool calls, and outputs after any incident',     color: 'var(--purple)' },
-  { label: 'Eval datasets',      desc: 'Examples of success, failure, edge cases, and policy-sensitive tasks',      color: 'var(--purple)' },
-  { label: 'Cost & latency',     desc: 'Agent measured as a product system, not a demo',                           color: 'var(--red)' },
-  { label: 'Rollback plan',      desc: 'Team knows exactly what to do when the agent takes a bad action',           color: 'var(--red)' },
+  { label: 'Bounded job',        desc: 'Clear domain, not a vague mandate to "do work"',                           color: '#f59e0b' },
+  { label: 'Explicit tools',     desc: 'Every external action is named, typed, permissioned, and logged',           color: '#f59e0b' },
+  { label: 'Loop limits',        desc: 'Cannot retry forever or spend indefinitely',                                color: '#5b8af5' },
+  { label: 'State management',   desc: 'Defined what persists, expires, and must never be stored',                  color: '#5b8af5' },
+  { label: 'Human-in-the-loop',  desc: 'System knows which actions require human approval',                         color: '#22c55e' },
+  { label: 'Injection posture',  desc: 'External content treated as untrusted input, not instructions',             color: '#22c55e' },
+  { label: 'Traceability',       desc: 'Team can replay decisions, tool calls, and outputs after any incident',     color: '#a78bfa' },
+  { label: 'Eval datasets',      desc: 'Examples of success, failure, edge cases, and policy-sensitive tasks',      color: '#a78bfa' },
+  { label: 'Cost & latency',     desc: 'Agent measured as a product system, not a demo',                           color: '#ef4444' },
+  { label: 'Rollback plan',      desc: 'Team knows exactly what to do when the agent takes a bad action',           color: '#ef4444' },
 ];
 
 export function ProductionChecklist() {
@@ -350,10 +350,10 @@ export function ProductionChecklist() {
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
         fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: 'var(--gold)', opacity: 0.7,
+        textTransform: 'uppercase', color: '#f59e0b', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
-        <span style={{ display: 'inline-block', width: 18, height: 1, background: 'var(--gold)', opacity: 0.5 }} />
+        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#f59e0b', opacity: 0.5 }} />
         Production Readiness Checklist
       </div>
 

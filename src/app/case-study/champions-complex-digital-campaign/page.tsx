@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = 'var(--sky)';
+const ACCENT = '#38bdf8';
 
-const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
+const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -463,8 +463,8 @@ export default function ChampionsComplexCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Build', color: ACCENT, items: ['Live Sidearm/Narrator page deployment', 'Full rendering sequence integration', 'Campaign progress tracking module', 'Naming-rights inquiry forms'] },
-                  { phase: 'Content', color: 'var(--gold)', items: ['Coach and student-athlete testimonials', 'Video content for hero section', 'Interactive facility map hotspots', 'Digital donor wall in Champions Corridor'] },
-                  { phase: 'Optimize', color: 'var(--purple)', items: ['Mobile donation flow optimization', 'A/B testing on CTA copy and placement', 'Analytics tracking for donor funnel behavior', 'Post-launch performance reporting'] },
+                  { phase: 'Content', color: '#f59e0b', items: ['Coach and student-athlete testimonials', 'Video content for hero section', 'Interactive facility map hotspots', 'Digital donor wall in Champions Corridor'] },
+                  { phase: 'Optimize', color: '#a78bfa', items: ['Mobile donation flow optimization', 'A/B testing on CTA copy and placement', 'Analytics tracking for donor funnel behavior', 'Post-launch performance reporting'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
                     <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 70, paddingTop: 2 }}>{phase}</div>

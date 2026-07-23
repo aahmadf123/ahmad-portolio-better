@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = 'var(--red)';
+const ACCENT = '#ef4444';
 
-const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
+const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -383,12 +383,12 @@ export default function ToledoFootballIQCaseStudy() {
                     exit: '90%+ of clips have visible field markings. Coaches approve MVP direction.',
                   },
                   {
-                    phase: 'Phase 1', label: 'Foundation MVP', color: 'var(--gold)',
+                    phase: 'Phase 1', label: 'Foundation MVP', color: '#f59e0b',
                     items: ['Video ingestion and job tracking', 'Play segmentation with manual boundary correction', 'Field calibration and analytics-safe scoring', 'Player detection and tracking', 'Clip-linked metrics', 'Coach correction UI', 'Model and data versioning', 'Role-based access'],
                     exit: '90% of plays have acceptable boundaries. 85% of clips yield useful tracking. Metric → evidence clip in ≤2 clicks.',
                   },
                   {
-                    phase: 'Phase 2', label: 'Coach-Trusted Football Layer', color: 'var(--purple)',
+                    phase: 'Phase 2', label: 'Coach-Trusted Football Layer', color: '#a78bfa',
                     items: ['Formation and motion recognition', 'Route classification', 'Coverage shell and leverage', 'Offensive-line spacing and blocking metrics', 'QB decision metrics', 'Practice tempo and effort metrics', 'Self-scout exposure dashboard', 'Correction analytics'],
                     exit: 'Weekly coaching workflow integration. Analysts running correction exports.',
                   },
@@ -398,7 +398,7 @@ export default function ToledoFootballIQCaseStudy() {
                     exit: 'Toledo owns a private football intelligence layer no vendor can replicate.',
                   },
                   {
-                    phase: 'Phase 4', label: 'Frontier R&D', color: 'var(--purple)',
+                    phase: 'Phase 4', label: 'Frontier R&D', color: '#a78bfa',
                     items: ['xSep, xYards, xPressure, xCompletion models', 'Defensive intent modeling', 'Counterfactual simulation', 'Opponent concept matching', 'Advanced health fusion'],
                     exit: 'Only begins after tracking, labels, corrections, and adoption are reliable.',
                   },

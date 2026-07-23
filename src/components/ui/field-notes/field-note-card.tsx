@@ -19,7 +19,7 @@ function formatDate(dateStr: string) {
 export function FieldNoteCard({ note }: { note: FieldNote }) {
   const [hovered, setHovered] = React.useState(false);
   const catCfg = CATEGORY_CONFIG[note.category];
-  const accentColor = catCfg?.color ?? 'var(--gold)';
+  const accentColor = catCfg?.color ?? '#f59e0b';
 
   return (
     <Link href={`/field-notes/${note.slug}`} style={{ textDecoration: 'none', display: 'block' }} transitionTypes={['nav-forward']}>

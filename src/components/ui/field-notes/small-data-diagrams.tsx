@@ -5,12 +5,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
 
-const GREEN = 'var(--green)';
-const GOLD  = 'var(--gold)';
-const BLUE  = 'var(--blue)';
-const RED   = 'var(--red)';
-const ORANGE = 'var(--orange)';
-const PURPLE = 'var(--purple)';
+const GREEN = '#22c55e';
+const GOLD  = '#f59e0b';
+const BLUE  = '#5b8af5';
+const RED   = '#ef4444';
+const ORANGE = '#f0823c';
+const PURPLE = '#a78bfa';
 
 function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; color?: string }) {
   return (

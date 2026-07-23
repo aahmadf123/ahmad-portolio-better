@@ -54,7 +54,7 @@ export const insights: Insight[] = [
     takeaway:
       'SlackApprovalGate sits inside the DAG as a typed stage, not a side process - it takes drift.report and evaluate.shap_summary as inputs, and promote explicitly waits on it. The scheduler treats a human decision exactly like any other pipeline dependency.',
     source: { label: 'Homeowner Loss Prediction · Grange Insurance', href: '/case-study/homeowner-loss-prediction' },
-    color: 'var(--purple)',
+    color: '#a78bfa',
   },
   {
     id: 'graph-navigation',
@@ -113,7 +113,7 @@ export const insights: Insight[] = [
     takeaway:
       'old_value/new_value store the exact delta and corrected_by attributes it to the coach, not the model - this table is a provenance log, not a labels table. label_id and clip_id tie every correction back to the exact evidence it came from, and exported_to_dataset marks whether it has already been folded into training data.',
     source: { label: 'Toledo Football IQ', href: '/case-study/toledo-football-iq-computer-vision-analytics' },
-    color: 'var(--red)',
+    color: '#ef4444',
   },
 ];
 

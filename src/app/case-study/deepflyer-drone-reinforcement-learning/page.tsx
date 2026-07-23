@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = 'var(--blue)';
+const ACCENT = '#5b8af5';
 
-const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
+const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -268,11 +268,11 @@ export default function DeepFlyerCaseStudy() {
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 32 }}>
             <StackRow n="01" title="Student UI" items={['React 18 Reward Editor', 'Mission Selector', 'Training Dashboard', 'Reward Preset Library', 'Future: Leaderboard / Telemetry']} />
-            <StackRow n="02" title="Backend API" items={['Node.js + Express', 'MongoDB', 'JWT Authentication', 'Reward Preset Endpoints', 'Session & Log Storage', '10ms median / 20ms P95 latency']} color="var(--primary)" />
+            <StackRow n="02" title="Backend API" items={['Node.js + Express', 'MongoDB', 'JWT Authentication', 'Reward Preset Endpoints', 'Session & Log Storage', '10ms median / 20ms P95 latency']} color="#2dd4bf" />
             <StackRow n="03" title="RL Training Layer" items={['OpenAI Gym Environment', 'Stable-Baselines3', 'PPO Algorithm', 'YAML Reward-Interface Schema', 'Dynamic Reward Switching', 'MLflow Experiment Logging']} />
-            <StackRow n="04" title="Simulation Layer" items={['ROS 2 Humble', 'Gazebo Fortress', 'X500 URDF (visual + collision + inertial)', 'Gazebo Contact Sensors', 'Future: SLAM / Event-Camera Plugins']} color="var(--purple)" />
-            <StackRow n="05" title="Drone Control (Future)" items={['ROS 2 Bridge', 'MAVROS', 'Pixhawk 6C Flight Controller', 'Safety Boundaries', 'Emergency Stop Protocol']} color="var(--orange)" />
-            <StackRow n="06" title="Physical Hardware (Planned)" items={['Holybro S500 Frame', 'Pixhawk 6C', 'Raspberry Pi 4B Companion', 'ZED Mini Stereo Camera', 'Safety Netting + Propeller Guards', 'Instructor Kill Switch']} color="var(--gold)" />
+            <StackRow n="04" title="Simulation Layer" items={['ROS 2 Humble', 'Gazebo Fortress', 'X500 URDF (visual + collision + inertial)', 'Gazebo Contact Sensors', 'Future: SLAM / Event-Camera Plugins']} color="#a78bfa" />
+            <StackRow n="05" title="Drone Control (Future)" items={['ROS 2 Bridge', 'MAVROS', 'Pixhawk 6C Flight Controller', 'Safety Boundaries', 'Emergency Stop Protocol']} color="#f0823c" />
+            <StackRow n="06" title="Physical Hardware (Planned)" items={['Holybro S500 Frame', 'Pixhawk 6C', 'Raspberry Pi 4B Companion', 'ZED Mini Stereo Camera', 'Safety Netting + Propeller Guards', 'Instructor Kill Switch']} color="#f59e0b" />
           </div>
 
           {/* Course design */}
@@ -337,9 +337,9 @@ export default function DeepFlyerCaseStudy() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }} className="two-col-df">
             {[
               { label: 'Frontend', color: ACCENT, tags: ['React 18', 'Node.js v18', 'ESLint', 'Prettier', 'Figma (user flows)'] },
-              { label: 'Backend', color: 'var(--primary)', tags: ['Node.js', 'Express', 'MongoDB', 'JWT Auth', 'Reward API Endpoints', 'Session / Log Storage'] },
-              { label: 'RL & Experiment Tracking', color: 'var(--purple)', tags: ['OpenAI Gym', 'Stable-Baselines3', 'PPO', 'YAML Reward Schema', 'MLflow', 'Dynamic Reward Switching'] },
-              { label: 'Simulation & Robotics', color: 'var(--gold)', tags: ['ROS 2 Humble', 'Gazebo Fortress', 'X500 URDF', 'Gazebo Contact Sensors', 'MAVROS (planned)', 'Future: SLAM / Event-Camera'] },
+              { label: 'Backend', color: '#2dd4bf', tags: ['Node.js', 'Express', 'MongoDB', 'JWT Auth', 'Reward API Endpoints', 'Session / Log Storage'] },
+              { label: 'RL & Experiment Tracking', color: '#a78bfa', tags: ['OpenAI Gym', 'Stable-Baselines3', 'PPO', 'YAML Reward Schema', 'MLflow', 'Dynamic Reward Switching'] },
+              { label: 'Simulation & Robotics', color: '#f59e0b', tags: ['ROS 2 Humble', 'Gazebo Fortress', 'X500 URDF', 'Gazebo Contact Sensors', 'MAVROS (planned)', 'Future: SLAM / Event-Camera'] },
             ].map(({ label, color, tags }) => (
               <div key={label} style={{ padding: '22px 20px', background: 'rgba(242,237,216,0.025)', borderTop: `2px solid ${color}`, borderRight: '1px solid rgba(244,244,242,0.08)', borderBottom: '1px solid rgba(244,244,242,0.08)', borderLeft: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>{label}</div>
@@ -373,7 +373,7 @@ export default function DeepFlyerCaseStudy() {
                 items: ['X500 URDF built with visual, collision, and inertial components', '40% mesh optimization achieved', 'Mass/inertia validated within 2%', 'React Dashboard + Reward Editor UI scaffolded', 'Figma user flows finalized', 'Reward API endpoints implemented - 10ms median / 20ms P95 latency', 'Dynamic reward switching integrated into Gym environment'],
               },
               {
-                week: 'Week 3', color: 'var(--primary)',
+                week: 'Week 3', color: '#2dd4bf',
                 items: ['Gazebo contact sensors integrated', 'Collision false positives reduced below 5%', 'Node.js + Express + MongoDB + JWT backend complete', 'PPO agent trained for 1M steps', '80% success rate within 100 steps on Distance-to-Goal preset', 'MLflow experiment logging integrated', 'Convergence plateau identified at ~9e5 steps for further tuning'],
               },
             ].map(({ week, color, items }) => (
@@ -451,8 +451,8 @@ export default function DeepFlyerCaseStudy() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 40 }} className="three-col-df">
             {[
               { phase: 'Near-Term', color: ACCENT, items: ['Motor & camera plugin integration', 'Mission Selector UI MVP', 'Path-Efficiency reward preset', 'SLAM plugin integration', 'SLAM map widget', 'Energy-Efficiency preset'] },
-              { phase: 'Mid-Term', color: 'var(--purple)', items: ['Event-camera simulation', 'Collision-Avoidance preset', 'Live telemetry view', 'Downloadable logs', 'Model upload (.pt / .onnx)', 'Live model swapping'] },
-              { phase: 'Long-Term', color: 'var(--primary)', items: ['XAI logging + attention overlays', 'SHAP explainability', 'Altitude-stability maps', 'Dynamic leaderboard', 'Composite reward presets', 'Final sim-to-real validation'] },
+              { phase: 'Mid-Term', color: '#a78bfa', items: ['Event-camera simulation', 'Collision-Avoidance preset', 'Live telemetry view', 'Downloadable logs', 'Model upload (.pt / .onnx)', 'Live model swapping'] },
+              { phase: 'Long-Term', color: '#2dd4bf', items: ['XAI logging + attention overlays', 'SHAP explainability', 'Altitude-stability maps', 'Dynamic leaderboard', 'Composite reward presets', 'Final sim-to-real validation'] },
             ].map(({ phase, color, items }) => (
               <div key={phase} style={{ padding: '18px 20px', background: `${color}06`, border: `1px solid ${color}22`, borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>{phase}</div>

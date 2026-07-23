@@ -17,14 +17,14 @@ export interface CategoryConfig {
 }
 
 export const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
-  'AI & Machine Learning':              { label: 'AI & Machine Learning',            color: 'var(--gold)', icon: '🤖' },
-  'Sports Analytics':                   { label: 'Sports Analytics',                  color: 'var(--green)', icon: '🏈' },
-  'Future-Focused & Emerging Tech':     { label: 'Future-Focused & Emerging Tech',    color: 'var(--blue)', icon: '🔮' },
-  'Career, Research & Learnings':       { label: 'Career, Research & Learnings',      color: 'var(--purple)', icon: '🎓' },
-  'Broader Tech & Society':             { label: 'Broader Tech & Society',            color: 'var(--red)', icon: '🌍' },
-  'Philosophy of AI & Intelligent Systems': { label: 'Philosophy of AI',             color: 'var(--pink)', icon: '🧠' },
-  'Building Things in Public':          { label: 'Building Things in Public',         color: 'var(--orange)', icon: '🏗️' },
-  'Tech Career & The Student-to-Engineer Path': { label: 'Tech Career & Student-to-Engineer', color: 'var(--sky)', icon: '🌐' },
+  'AI & Machine Learning':              { label: 'AI & Machine Learning',            color: '#f59e0b', icon: '🤖' },
+  'Sports Analytics':                   { label: 'Sports Analytics',                  color: '#22c55e', icon: '🏈' },
+  'Future-Focused & Emerging Tech':     { label: 'Future-Focused & Emerging Tech',    color: '#5b8af5', icon: '🔮' },
+  'Career, Research & Learnings':       { label: 'Career, Research & Learnings',      color: '#a78bfa', icon: '🎓' },
+  'Broader Tech & Society':             { label: 'Broader Tech & Society',            color: '#ef4444', icon: '🌍' },
+  'Philosophy of AI & Intelligent Systems': { label: 'Philosophy of AI',             color: '#f472b6', icon: '🧠' },
+  'Building Things in Public':          { label: 'Building Things in Public',         color: '#f0823c', icon: '🏗️' },
+  'Tech Career & The Student-to-Engineer Path': { label: 'Tech Career & Student-to-Engineer', color: '#38bdf8', icon: '🌐' },
 };
 
 // Only published essays live here. New notes are added when they are written -

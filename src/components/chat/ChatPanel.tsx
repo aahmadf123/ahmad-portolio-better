@@ -104,7 +104,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
     >
       {/* header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', borderBottom: '1px solid var(--bd)', background: 'rgba(45,212,191,0.05)' }}>
-        <span aria-hidden style={{ width: 32, height: 32, borderRadius: 9, background: 'linear-gradient(135deg, var(--primary), var(--primary-foreground))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: SERIF, fontSize: 15, color: 'var(--background)', fontWeight: 600 }}>AF</span>
+        <span aria-hidden style={{ width: 32, height: 32, borderRadius: 9, background: 'linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 45%, var(--background)))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: SERIF, fontSize: 15, color: 'var(--background)', fontWeight: 600 }}>AF</span>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 600, color: 'var(--foreground)' }}>Ask Ahmad</div>
           <div style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase' }}>

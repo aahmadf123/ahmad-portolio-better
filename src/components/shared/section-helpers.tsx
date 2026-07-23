@@ -52,7 +52,7 @@ export function useReveal() {
 }
 
 // ── Deterministic accent picker for uncolored tags ──
-const PALETTE = ['#f59e0b', '#5b8af5', '#2dd4bf', '#f0823c', 'var(--purple)', 'var(--pink)', '#38bdf8', '#22c55e', 'var(--red)'];
+const PALETTE = ['#f59e0b', '#5b8af5', '#2dd4bf', '#f0823c', '#a78bfa', '#f472b6', '#38bdf8', '#22c55e', '#ef4444'];
 export function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -61,7 +61,7 @@ export function pickColor(text: string) {
 
 export function Tag({ color, children }: { color?: string; children: React.ReactNode }) {
   const skillColor = typeof children === 'string' ? resolveSkillColor(children) : undefined;
-  const c = color ?? skillColor ?? (typeof children === 'string' ? pickColor(children) : 'var(--blue)');
+  const c = color ?? skillColor ?? (typeof children === 'string' ? pickColor(children) : '#5b8af5');
   return <span style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}33`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>{children}</span>;
 }
 
