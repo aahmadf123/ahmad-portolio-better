@@ -17,7 +17,7 @@ export function SiteFooter() {
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: 'clamp(28px, 4vw, 56px) clamp(20px, 4vw, 52px)' }}>
         <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: 'clamp(28px, 5vw, 72px)', alignItems: 'start' }}>
           <div>
-            <div style={{ fontFamily: HAND, fontSize: 'clamp(28px, 3vw, 40px)', color: 'var(--primary)', lineHeight: 1.2 }}>
+            <div style={{ fontFamily: HAND, fontSize: 20, color: 'var(--primary)', lineHeight: 1.2 }}>
               Let&apos;s build something real.
             </div>
             <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14 }}>

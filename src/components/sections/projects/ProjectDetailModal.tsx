@@ -75,12 +75,12 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
               overflowY: 'auto',
               background: 'var(--surface)',
               border: `1px solid color-mix(in srgb, ${project.color} 30%, transparent)`,
-              borderRadius: 14,
+              borderRadius: 10,
               position: 'relative',
             }}
           >
             {/* header image */}
-            <div style={{ position: 'relative', aspectRatio: '16/6', overflow: 'hidden', borderRadius: '14px 14px 0 0', background: 'var(--background)' }}>
+            <div style={{ position: 'relative', aspectRatio: '16/6', overflow: 'hidden', borderRadius: '10px 10px 0 0', background: 'var(--background)' }}>
               <Pic src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', opacity: 0.9 }} />
               <div aria-hidden style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, var(--surface) 4%, transparent 55%), linear-gradient(135deg, color-mix(in srgb, ${project.color} 12%, transparent), transparent 50%)` }} />
               <button
@@ -100,7 +100,7 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
               <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: project.color, marginBottom: 10 }}>
                 {project.domain} · {project.idx} - {project.tag}
               </div>
-              <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(26px, 3vw, 40px)', lineHeight: 1.05, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.06em' }}>
+              <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 20, lineHeight: 1.05, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.06em' }}>
                 {project.title}
               </h3>
               <div style={{ fontFamily: MONO, fontSize: 11, color: project.color, letterSpacing: '0.04em', marginTop: 10 }}>{project.headline}</div>
@@ -116,3 +116,4 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
     document.body
   );
 }
+

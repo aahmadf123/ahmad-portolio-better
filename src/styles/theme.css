@@ -16,12 +16,12 @@
 
   /* Supporting accent range (data-driven chips, per-section identities) */
   --blue: #5b8af5;
-  --purple: #a78bfa;
-  --pink: #f472b6;
+  --purple: var(--purple);
+  --pink: var(--pink);
   --sky: #38bdf8;
   --orange: #f0823c;
   --green: #22c55e;
-  --red: #ef4444;
+  --red: var(--red);
 
   /* Text ramp */
   --foreground: #f4f4f2;
@@ -37,7 +37,7 @@
   --card-foreground: var(--foreground);
   --popover: var(--surface);
   --popover-foreground: var(--foreground);
-  --primary-foreground: #06211e;
+  --primary-foreground: var(--background);
   --secondary: var(--surface);
   --secondary-foreground: var(--foreground);
   --muted: var(--surface-2);
@@ -96,3 +96,4 @@
      stack now resolves to the body font. Chakra Petch is no longer loaded. */
   --font-chakra: var(--font-body);
 }
+

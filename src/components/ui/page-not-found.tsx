@@ -65,7 +65,7 @@ export default function NotFoundPage() {
           style={{
             fontFamily: 'var(--font-display), Georgia, serif',
             fontWeight: 400,
-            fontSize: 'clamp(96px, 22vw, 220px)',
+            fontSize: 20,
             lineHeight: 0.9,
             letterSpacing: '-0.03em',
             margin: 0,
@@ -95,7 +95,7 @@ export default function NotFoundPage() {
               gap: 8,
               padding: '12px 26px',
               background: 'var(--primary)',
-              color: '#06211e',
+              color: 'var(--background)',
               fontFamily: 'var(--font-code), monospace',
               fontSize: 11,
               fontWeight: 700,
@@ -135,3 +135,4 @@ export default function NotFoundPage() {
     </main>
   );
 }
+

@@ -52,7 +52,7 @@ export function useReveal() {
 }
 
 // ── Deterministic accent picker for uncolored tags ──
-const PALETTE = ['#f59e0b', '#5b8af5', '#2dd4bf', '#f0823c', '#a78bfa', '#f472b6', '#38bdf8', '#22c55e', '#ef4444'];
+const PALETTE = ['#f59e0b', '#5b8af5', '#2dd4bf', '#f0823c', 'var(--purple)', 'var(--pink)', '#38bdf8', '#22c55e', 'var(--red)'];
 export function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -105,3 +105,4 @@ export function LinkedinIcon({ size = 24, color = 'currentColor', strokeWidth = 
     </svg>
   );
 }
+

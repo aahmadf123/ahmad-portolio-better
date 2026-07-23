@@ -39,7 +39,7 @@ export const nowCards: NowCard[] = [
     category: 'Building',
     status: 'Active',
     statusColor: '#2dd4bf',
-    color: '#a78bfa',
+    color: 'var(--purple)',
     items: [
       { title: 'Student Athlete Health Insurance Site', sub: 'Toledo Athletics' },
       { title: 'Athletics Onboarding Website', sub: 'Toledo Athletics' },
@@ -55,3 +55,4 @@ export const nowCards: NowCard[] = [
     items: certPursuits,
   },
 ];
+

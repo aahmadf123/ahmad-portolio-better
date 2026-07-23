@@ -87,7 +87,7 @@ export function CredentialsSection() {
                 style={{ background: openAffil === i ? `${a.color}10` : `${a.color}07`, border: `1px solid ${openAffil === i ? a.color + '55' : a.color + '25'}`, borderRadius: 10, cursor: 'pointer', transition: 'all 0.25s', overflow: 'hidden' }}>
                 <div style={{ padding: '20px 22px', display: 'flex', alignItems: 'flex-start', gap: 12 }}>
                   <div style={{ width: 44, height: 44, borderRadius: 8, background: `${a.color}15`, border: `1px solid ${a.color}33`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <div style={{ width: 10, height: 10, borderRadius: 2, background: a.color }} />
+                    <div style={{ width: 10, height: 10, borderRadius: 4, background: a.color }} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontFamily: SANS, fontSize: 14, fontWeight: 600, color: 'var(--foreground)', lineHeight: 1.3 }}>{a.name}</div>
@@ -117,3 +117,4 @@ export function CredentialsSection() {
     </Section>
   );
 }
+

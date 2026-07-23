@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = '#F07832';
+const ACCENT = 'var(--orange)';
 
-const PALETTE = ['#F0B429','#4B7BF5','#2DD4C8','#F07832','#A78BFA','#F472B6','#0EA5E9','#22C55E','#EF4444'];
+const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -20,7 +20,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 3, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
       {children}
     </span>
   );
@@ -52,7 +52,7 @@ function LayerRow({ n, title, items, color = ACCENT }: { n: string; title: strin
         <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 3 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -91,15 +91,15 @@ export default function CamelCarCaseStudy() {
   }, []);
 
   return (
-    <div style={{ background: '#090B12', minHeight: '100vh', color: '#B8B4A4' }}>
+    <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
-        body { background: #090B12; }
-        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: #B8B4A4; }
+        body { background: var(--background); }
+        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: var(--text2); }
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
         .cs-body li::marker { color: ${ACCENT}; }
-        .cs-h2 { font-family: ${SERIF}; font-size: clamp(22px, 3vw, 30px); color: #F2EDD8; font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
+        .cs-h2 { font-family: ${SERIF}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
         .metrics-grid-cc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
         @media (max-width: 640px) { .metrics-grid-cc { grid-template-columns: repeat(2, 1fr); } }
@@ -108,17 +108,17 @@ export default function CamelCarCaseStudy() {
         .three-col-cc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-cc { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-cc { grid-template-columns: 1fr; } }
-        .info-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.07); border-left: 2px solid ${ACCENT}50; border-radius: 8px; transition: all 0.2s ease; }
+        .info-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
         .info-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
-        .accent-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-left: 2px solid ${ACCENT}90; border-radius: 8px; transition: all 0.2s ease; }
+        .accent-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .accent-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
         .award-banner { padding: 20px 24px; background: ${ACCENT}10; border: 1px solid ${ACCENT}35; border-radius: 10px; margin-bottom: 32px; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.06); border-left: 2px solid ${ACCENT}30; border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
         .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
-        .reaction-box { padding: 14px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.08); border-radius: 8px; font-family: ${MONO}; font-size: 12px; color: #B8B4A4; line-height: 1.7; }
+        .reaction-box { padding: 14px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.08); border-radius: 8px; font-family: ${MONO}; font-size: 12px; color: var(--text2); line-height: 1.7; }
         .reaction-box .eq { color: ${ACCENT}; }
-        code { font-family: ${MONO}; font-size: 11px; background: ${ACCENT}12; border: 1px solid ${ACCENT}25; padding: 2px 5px; border-radius: 4px; color: #F2EDD8; }
+        code { font-family: ${MONO}; font-size: 11px; background: ${ACCENT}12; border: 1px solid ${ACCENT}25; padding: 2px 5px; border-radius: 4px; color: var(--foreground); }
         .cs-grid-container {
           display: grid;
           grid-template-columns: 1fr 200px;
@@ -170,10 +170,10 @@ export default function CamelCarCaseStudy() {
             <Tag>AIChE 2025</Tag>
             <Tag>University of Toledo</Tag>
           </div>
-          <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(32px,5vw,56px)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, #F2EDD8 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+          <h1 style={{ fontFamily: SERIF, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, var(--foreground) 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
             Camel Car
           </h1>
-          <p style={{ fontFamily: SERIF, fontSize: 'clamp(15px,2vw,18px)', color: '#B8B4A4', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>
+          <p style={{ fontFamily: SERIF, fontSize: 16, color: 'var(--text2)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>
             Chemical propulsion. Pressure-triggered stop. No second chances.
           </p>
           <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--text3)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
@@ -190,7 +190,7 @@ export default function CamelCarCaseStudy() {
           </div>
 
           {/* Hero image */}
-          <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: '#06080E', marginBottom: 64 }}>
+          <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>
             <Pic src="/Images/AIChE%20ChemECar_International.jpg" alt="Camel Car at AIChE 2025" onClick={() => setLb('/Images/AIChE%20ChemECar_International.jpg')} style={{ width: '100%', display: 'block', objectFit: 'cover', cursor: 'zoom-in' }} priority />
           </div>
         </div>
@@ -234,7 +234,7 @@ export default function CamelCarCaseStudy() {
                     <div key={place} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '12px 16px', background: 'rgba(9,11,18,0.6)', border: `1px solid ${ACCENT}20`, borderRadius: 8 }}>
                       <div style={{ fontFamily: SERIF, fontSize: 26, color: ACCENT, lineHeight: 1, flexShrink: 0, minWidth: 52 }}>{place}</div>
                       <div>
-                        <div style={{ fontFamily: MONO, fontSize: 11, color: '#F2EDD8', letterSpacing: '0.04em', marginBottom: 4 }}>{label}</div>
+                        <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 4 }}>{label}</div>
                         <div style={{ fontFamily: SERIF, fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{note}</div>
                       </div>
                     </div>
@@ -325,7 +325,7 @@ export default function CamelCarCaseStudy() {
                   ['6', 'Gas flow to air motor is cut'],
                   ['7', 'Car coasts to stop - coast distance factored into calibration'],
                 ].map(([n, step]) => (
-                  <div key={n} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.06)', borderRadius: 6 }}>
+                  <div key={n} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.06)', borderRadius: 6 }}>
                     <span style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.7, flexShrink: 0, minWidth: 16 }}>{n}</span>
                     <span style={{ fontSize: 13, lineHeight: 1.5 }}>{step}</span>
                   </div>
@@ -333,8 +333,8 @@ export default function CamelCarCaseStudy() {
               </div>
 
               <h3 className="cs-h3">Core logic</h3>
-              <div style={{ padding: '16px 20px', background: 'rgba(240,120,50,0.06)', border: '1px solid rgba(240,120,50,0.18)', borderRadius: 8, marginBottom: 20 }}>
-                <pre style={{ margin: 0, fontFamily: MONO, fontSize: 12, color: '#B8B4A4', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>{`read pressure_sensor;
+              <div style={{ padding: '16px 20px', background: 'color-mix(in srgb, var(--orange) 6%, transparent)', border: '1px solid color-mix(in srgb, var(--orange) 18%, transparent)', borderRadius: 8, marginBottom: 20 }}>
+                <pre style={{ margin: 0, fontFamily: MONO, fontSize: 12, color: 'var(--text2)', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>{`read pressure_sensor;
 
 if (pressure >= target_pressure_threshold) {
     close_solenoid_valve();
@@ -365,7 +365,7 @@ if (pressure >= target_pressure_threshold) {
                 </div>
               </div>
 
-              <div style={{ padding: '16px 20px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.07)', borderRadius: 8, marginBottom: 8 }}>
+              <div style={{ padding: '16px 20px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.07)', borderRadius: 8, marginBottom: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>Calibration workflow</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {[
@@ -375,7 +375,7 @@ if (pressure >= target_pressure_threshold) {
                     'Build KI volume → stop distance lookup table',
                     'On competition day: convert target distance to KI volume and load the run',
                   ].map((step, i) => (
-                    <div key={i} style={{ display: 'flex', gap: 10, fontSize: 13, color: '#B8B4A4', lineHeight: 1.5 }}>
+                    <div key={i} style={{ display: 'flex', gap: 10, fontSize: 13, color: 'var(--text2)', lineHeight: 1.5 }}>
                       <span style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.7, flexShrink: 0 }}>{i + 1}.</span>
                       <span>{step}</span>
                     </div>
@@ -437,8 +437,8 @@ if (pressure >= target_pressure_threshold) {
                     The competition controller read raw pressure and fired at ~5 psi - no filtering, no hysteresis, no logging. Between chemical run-to-run variability, sensor noise, solenoid actuation delay, and post-cutoff coast, that bare threshold never mapped cleanly to a stop distance on its own. The calibration table existed precisely because the controller couldn&apos;t be trusted alone.
                   </p>
                 </div>
-                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     Log every run and trigger on the pressure slope, not just the level. We tuned against a stopwatch with no on-car recording; writing pressure to an SD card each run - plus a low-pass filter and hysteresis - would let the calibration come from real traces instead of timed guesses.
                   </p>
@@ -456,8 +456,8 @@ if (pressure >= target_pressure_threshold) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Sensing', color: ACCENT, items: ['Add pressure data logging to every run (SD card or serial)', 'Apply low-pass filter or moving average to reduce sensor noise', 'Add a second pressure sensor for redundancy', 'Add temperature sensing to correct for reaction-rate variation'] },
-                  { phase: 'Control', color: '#F0B429', items: ['Add hysteresis to prevent false re-triggering near threshold', 'Model and compensate for actuator delay', 'Add a maximum-run-time safety cutoff independent of pressure', 'Build a predictive stopping algorithm that uses pressure slope, not just level'] },
-                  { phase: 'Calibration', color: '#4B7BF5', items: ['Build a calibration dashboard: KI volume → time-to-threshold → stop distance', 'Add wheel encoder data to measure actual travel distance per run', 'Add IMU to detect acceleration and vibration patterns', 'Add environmental correction for temperature and humidity'] },
+                  { phase: 'Control', color: 'var(--gold)', items: ['Add hysteresis to prevent false re-triggering near threshold', 'Model and compensate for actuator delay', 'Add a maximum-run-time safety cutoff independent of pressure', 'Build a predictive stopping algorithm that uses pressure slope, not just level'] },
+                  { phase: 'Calibration', color: 'var(--blue)', items: ['Build a calibration dashboard: KI volume → time-to-threshold → stop distance', 'Add wheel encoder data to measure actual travel distance per run', 'Add IMU to detect acceleration and vibration patterns', 'Add environmental correction for temperature and humidity'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
                     <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
@@ -469,10 +469,10 @@ if (pressure >= target_pressure_threshold) {
               </div>
 
               <div style={{ padding: '24px 28px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10, marginTop: 32 }}>
-                <p style={{ fontFamily: SERIF, fontSize: 15, color: '#F2EDD8', margin: '0 0 8px', lineHeight: 1.5 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--foreground)', margin: '0 0 8px', lineHeight: 1.5 }}>
                   The chemistry creates the signal. The control system is what turns that signal into a repeatable vehicle action.
                 </p>
-                <p style={{ fontFamily: SERIF, fontSize: 14, color: '#B8B4A4', margin: 0, lineHeight: 1.6 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text2)', margin: 0, lineHeight: 1.6 }}>
                   Camel Car shows that embedded control, calibration, and safety engineering are not just software problems - they are the bridge between chemical energy and competition-grade performance.
                 </p>
               </div>
@@ -507,3 +507,6 @@ if (pressure >= target_pressure_threshold) {
     </div>
   );
 }
+
+
+

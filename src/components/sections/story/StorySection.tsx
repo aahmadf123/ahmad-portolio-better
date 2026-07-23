@@ -119,7 +119,7 @@ export function StorySection() {
           {/* progress rail (pinned only) */}
           {pinned && (
             <div aria-hidden style={{ position: 'absolute', right: 'clamp(12px, 2vw, 28px)', top: '50%', transform: 'translateY(-50%)', zIndex: 30, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-              <div style={{ position: 'relative', width: 2, height: 180, background: 'var(--bd2)', borderRadius: 2, overflow: 'hidden' }}>
+              <div style={{ position: 'relative', width: 2, height: 180, background: 'var(--bd2)', borderRadius: 4, overflow: 'hidden' }}>
                 <div data-story-railfill style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${def.color}, var(--gold))`, transformOrigin: 'top', transform: 'scaleY(0)' }} />
               </div>
               <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', color: 'var(--text3)', writingMode: 'vertical-rl' }}>{String(CH).padStart(2, '0')} CH</span>
@@ -143,3 +143,4 @@ export function StorySection() {
     </section>
   );
 }
+

@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = '#F472B6';
+const ACCENT = 'var(--pink)';
 
-const PALETTE = ['#F0B429','#4B7BF5','#2DD4C8','#F07832','#A78BFA','#F472B6','#0EA5E9','#22C55E','#EF4444'];
+const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -20,7 +20,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 3, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
       {children}
     </span>
   );
@@ -52,7 +52,7 @@ function LayerRow({ n, title, items, color = ACCENT }: { n: string; title: strin
         <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 3 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -91,15 +91,15 @@ export default function BattingCleanupCaseStudy() {
   }, []);
 
   return (
-    <div style={{ background: '#090B12', minHeight: '100vh', color: '#B8B4A4' }}>
+    <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
-        body { background: #090B12; }
-        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: #B8B4A4; }
+        body { background: var(--background); }
+        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: var(--text2); }
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
         .cs-body li::marker { color: ${ACCENT}; }
-        .cs-h2 { font-family: ${SERIF}; font-size: clamp(22px, 3vw, 30px); color: #F2EDD8; font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
+        .cs-h2 { font-family: ${SERIF}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
         .metrics-grid-bc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
         @media (max-width: 640px) { .metrics-grid-bc { grid-template-columns: repeat(2, 1fr); } }
@@ -108,18 +108,18 @@ export default function BattingCleanupCaseStudy() {
         .three-col-bc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-bc { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-bc { grid-template-columns: 1fr; } }
-        .info-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.07); border-left: 2px solid ${ACCENT}50; border-radius: 8px; transition: all 0.2s ease; }
+        .info-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
         .info-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
-        .accent-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-left: 2px solid ${ACCENT}90; border-radius: 8px; transition: all 0.2s ease; }
+        .accent-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .accent-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
-        .live-badge { display: inline-flex; align-items: center; gap: 6px; padding: '4px 10px'; font-family: ${MONO}; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #4ade80; background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); border-radius: 20px; }
-        .entity-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-left: 2px solid ${ACCENT}90; border-radius: 8px; transition: all 0.2s ease; }
+        .live-badge { display: inline-flex; align-items: center; gap: 6px; padding: '4px 10px'; font-family: ${MONO}; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); background: color-mix(in srgb, var(--green) 10%, transparent); border: 1px solid color-mix(in srgb, var(--green) 30%, transparent); border-radius: 10px; }
+        .entity-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .entity-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
         .entity-field { font-family: ${MONO}; font-size: 10px; color: var(--text3); padding: 2px 0; letter-spacing: 0.03em; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.06); border-left: 2px solid ${ACCENT}30; border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
         .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
-        code { font-family: ${MONO}; font-size: 11px; background: ${ACCENT}12; border: 1px solid ${ACCENT}25; padding: 2px 5px; border-radius: 4px; color: #F2EDD8; }
+        code { font-family: ${MONO}; font-size: 11px; background: ${ACCENT}12; border: 1px solid ${ACCENT}25; padding: 2px 5px; border-radius: 4px; color: var(--foreground); }
         .cs-grid-container {
           display: grid;
           grid-template-columns: 1fr 200px;
@@ -159,8 +159,8 @@ export default function BattingCleanupCaseStudy() {
           Portfolio
         </SmartBackLink>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#4ade80', background: 'rgba(74,222,128,0.08)', border: '1px solid rgba(74,222,128,0.25)', borderRadius: 20 }}>
-            <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#4ade80', display: 'inline-block' }} />
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--green)', background: 'color-mix(in srgb, var(--green) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 25%, transparent)', borderRadius: 10 }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--green)', display: 'inline-block' }} />
             Live
           </span>
           <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Batting Cleanup</span>
@@ -178,10 +178,10 @@ export default function BattingCleanupCaseStudy() {
             <Tag>City of Toledo</Tag>
             <Tag>Applied Labs</Tag>
           </div>
-          <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(32px,5vw,56px)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, #F2EDD8 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+          <h1 style={{ fontFamily: SERIF, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, var(--foreground) 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
             Batting Cleanup
           </h1>
-          <p style={{ fontFamily: SERIF, fontSize: 'clamp(15px,2vw,18px)', color: '#B8B4A4', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>
+          <p style={{ fontFamily: SERIF, fontSize: 16, color: 'var(--text2)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>
             QR-code waste reporting for a smarter Toledo.
           </p>
           <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--text3)', maxWidth: 640, lineHeight: 1.6, margin: '0 0 40px' }}>
@@ -198,7 +198,7 @@ export default function BattingCleanupCaseStudy() {
           </div>
 
           {/* Hero image */}
-          <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: '#06080E', marginBottom: 64 }}>
+          <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>
             <Pic src="/Images/Batting_Cleanup.jpg" alt="Batting Cleanup" onClick={() => setLb('/Images/Batting_Cleanup.jpg')} style={{ width: '100%', display: 'block', objectFit: 'cover', cursor: 'zoom-in' }} priority />
           </div>
         </div>
@@ -276,7 +276,7 @@ export default function BattingCleanupCaseStudy() {
                   ['6', 'Report stored with verification metadata in PostGIS database'],
                   ['7', 'Maintainers query structured, location-aware report data'],
                 ].map(([n, step]) => (
-                  <div key={n} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.06)', borderRadius: 6 }}>
+                  <div key={n} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.06)', borderRadius: 6 }}>
                     <span style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.7, flexShrink: 0, minWidth: 16 }}>{n}</span>
                     <span style={{ fontSize: 13, lineHeight: 1.5 }}>{step}</span>
                   </div>
@@ -356,7 +356,7 @@ export default function BattingCleanupCaseStudy() {
                     'Which assets exist within a given bounding area?',
                     'How many reports are clustered within N meters of a location?',
                   ].map(q => (
-                    <div key={q} style={{ display: 'flex', gap: 10, fontSize: 13, color: '#B8B4A4', lineHeight: 1.5 }}>
+                    <div key={q} style={{ display: 'flex', gap: 10, fontSize: 13, color: 'var(--text2)', lineHeight: 1.5 }}>
                       <span style={{ color: ACCENT, flexShrink: 0 }}>→</span>
                       <span>{q}</span>
                     </div>
@@ -435,9 +435,9 @@ export default function BattingCleanupCaseStudy() {
                   { flag: 'Plausibility metadata', desc: 'Contextual signals (distance, confidence, indoor flag) are stored to support downstream filtering and trust scoring.' },
                   { flag: 'Audit trail', desc: 'Structured record of report context allows maintainers and analysts to review submission quality over time.' },
                 ].map(({ flag, desc }) => (
-                  <div key={flag} style={{ display: 'flex', gap: 14, padding: '12px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.07)', borderRadius: 6 }}>
+                  <div key={flag} style={{ display: 'flex', gap: 14, padding: '12px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.07)', borderRadius: 6 }}>
                     <code style={{ flexShrink: 0, alignSelf: 'flex-start', marginTop: 1 }}>{flag}</code>
-                    <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: '#B8B4A4' }}>{desc}</p>
+                    <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: 'var(--text2)' }}>{desc}</p>
                   </div>
                 ))}
               </div>
@@ -469,8 +469,8 @@ export default function BattingCleanupCaseStudy() {
                     The first geofence benchmark ran on PostgreSQL&apos;s default B-Tree index and fell over - every report submission triggered a full table scan, latency growing linearly with asset count. Not viable at city scale. Moving to a GiST spatial index dropped <code>ST_DWithin</code> to sub-10 ms across 10,000+ assets.
                   </p>
                 </div>
-                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     Duplicate reports are stored and flagged today, not merged - several people reporting one overflowing can still land as separate rows. I&apos;d fold deduplication and clustering into the write path, so maintainers see one asset with N reports instead of N rows of noise.
                   </p>
@@ -488,8 +488,8 @@ export default function BattingCleanupCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Operations', color: ACCENT, items: ['Live operations dashboard for city maintainers', 'SLA tracking for report resolution time', 'Route optimization for cleanup crews', 'Automated escalation rules for high-frequency assets'] },
-                  { phase: 'Intelligence', color: '#F0B429', items: ['Report deduplication and clustering', 'Heatmaps for recurring waste hotspots', 'Anomaly detection for spam or suspicious report patterns', 'Analytics for seasonality, event impact, and foot traffic correlation'] },
-                  { phase: 'Public', color: '#4B7BF5', items: ['Public transparency metrics dashboard', 'Richer QR-code asset metadata and status pages', 'Notification system for users who filed reports', 'Expanded coverage beyond downtown Toledo'] },
+                  { phase: 'Intelligence', color: 'var(--gold)', items: ['Report deduplication and clustering', 'Heatmaps for recurring waste hotspots', 'Anomaly detection for spam or suspicious report patterns', 'Analytics for seasonality, event impact, and foot traffic correlation'] },
+                  { phase: 'Public', color: 'var(--blue)', items: ['Public transparency metrics dashboard', 'Richer QR-code asset metadata and status pages', 'Notification system for users who filed reports', 'Expanded coverage beyond downtown Toledo'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
                     <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
@@ -501,10 +501,10 @@ export default function BattingCleanupCaseStudy() {
               </div>
 
               <div style={{ padding: '24px 28px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10, marginTop: 32 }}>
-                <p style={{ fontFamily: SERIF, fontSize: 15, color: '#F2EDD8', margin: '0 0 8px', lineHeight: 1.5 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--foreground)', margin: '0 0 8px', lineHeight: 1.5 }}>
                   The hard part was not making a form. The hard part was making location-aware public reporting reliable enough for real city use.
                 </p>
-                <p style={{ fontFamily: SERIF, fontSize: 14, color: '#B8B4A4', margin: 0, lineHeight: 1.6 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text2)', margin: 0, lineHeight: 1.6 }}>
                   Cleaner cities need better feedback loops. Batting Cleanup is the first one.
                 </p>
               </div>
@@ -512,7 +512,7 @@ export default function BattingCleanupCaseStudy() {
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
                 <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
                 <a href="https://battingcleanup.appliedlabs.org/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Documentation ↗</a>
-                <a href="https://toledofreepress.com/batting-cleanup-aims-to-improve-toledo-maintenance-with-tech/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid rgba(242,237,216,0.12)', color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Toledo Free Press ↗</a>
+                <a href="https://toledofreepress.com/batting-cleanup-aims-to-improve-toledo-maintenance-with-tech/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid rgba(244,244,242,0.12)', color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Toledo Free Press ↗</a>
               </div>
             </Section>
 
@@ -541,3 +541,6 @@ export default function BattingCleanupCaseStudy() {
     </div>
   );
 }
+
+
+

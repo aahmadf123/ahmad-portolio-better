@@ -41,7 +41,7 @@ export function SignOff({ text, sub }: { text: string; sub: string }) {
         style={{ display: 'inline-block' }}
       >
         <m.div
-          style={{ clipPath, fontFamily: HAND, fontSize: 'clamp(34px, 4.5vw, 54px)', color: 'var(--primary)', lineHeight: 1.15 }}
+          style={{ clipPath, fontFamily: HAND, fontSize: 20, color: 'var(--primary)', lineHeight: 1.15 }}
         >
           {text}
         </m.div>

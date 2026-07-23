@@ -41,7 +41,7 @@ export function MetricsBand() {
     >
       {METRICS.map((metric) => (
         <div key={metric.label}>
-          <div style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(22px, 3vw, 32px)', lineHeight: 1, color: 'var(--foreground)' }}>
+          <div style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 20, lineHeight: 1, color: 'var(--foreground)' }}>
             {metric.value}
           </div>
           <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: FG3, marginTop: 7 }}>

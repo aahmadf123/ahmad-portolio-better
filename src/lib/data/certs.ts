@@ -47,7 +47,7 @@ export const certs: Cert[] = [
     skills: ['Quantum Computing', 'Fundamentals', 'Quantum Hardware'],
     badgeImage: '/Images/BlackOpal_IntroductionBadge.png',
     verifyUrl: 'https://black.q-ctrl.com/badge/df0a24e3-c81f-4696-b879-860c7b777fb3',
-    color: '#a78bfa',
+    color: 'var(--purple)',
     earned: '2026',
   },
   {
@@ -60,7 +60,7 @@ export const certs: Cert[] = [
     skills: ['Quantum Computing', 'Qubits', 'Superposition', 'Quantum Circuits'],
     badgeImage: '/Images/BlackOpal_SuperpositionBadge.png',
     verifyUrl: 'https://black.q-ctrl.com/badge/70fdb1da-8ba7-40ea-ad6b-2460f7542376',
-    color: '#a78bfa',
+    color: 'var(--purple)',
     earned: '2026',
   },
 ];
@@ -70,3 +70,4 @@ export const certPursuits: CertPursuit[] = [
   { title: 'OCI Certified Application Integration Professional', sub: 'Oracle · Exam 1Z0-1042-26' },
   { title: 'Microsoft Certified: AI Transformation Leader', sub: 'Exam prep underway' },
 ];
+

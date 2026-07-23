@@ -42,7 +42,7 @@ export const research: ResearchMeta = {
     { metric: '37', label: 'AI failures analyzed', color: '#5b8af5' },
     { metric: '127', label: 'Sources reviewed', color: '#2dd4bf' },
     { metric: '4', label: 'Pillars in taxonomy', color: '#f59e0b' },
-    { metric: '2025', label: 'ACM CSUR submission', color: '#a78bfa' },
+    { metric: '2025', label: 'ACM CSUR submission', color: 'var(--purple)' },
   ],
   pillars: [
     {
@@ -66,9 +66,10 @@ export const research: ResearchMeta = {
     {
       n: '04',
       label: 'Multi-Agent Instability',
-      color: '#a78bfa',
+      color: 'var(--purple)',
       desc: 'Emergent failure modes from agent interactions producing unsafe equilibria that are absent in single-agent testing.',
     },
   ],
   storyLine: 'Thirty-seven real AI failures, distilled into the four ways autonomous systems actually break.',
 };
+

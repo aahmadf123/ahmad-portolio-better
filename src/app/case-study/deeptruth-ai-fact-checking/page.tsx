@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = '#F0B429';
+const ACCENT = 'var(--gold)';
 
-const PALETTE = ['#F0B429','#4B7BF5','#2DD4C8','#F07832','#A78BFA','#F472B6','#0EA5E9','#22C55E','#EF4444'];
+const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -20,7 +20,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 3, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
       {children}
     </span>
   );
@@ -52,7 +52,7 @@ function LayerRow({ n, title, items, color = ACCENT }: { n: string; title: strin
         <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 3 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -91,15 +91,15 @@ export default function DeepTruthCaseStudy() {
   }, []);
 
   return (
-    <div style={{ background: '#090B12', minHeight: '100vh', color: '#B8B4A4' }}>
+    <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
-        body { background: #090B12; }
-        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: #B8B4A4; }
+        body { background: var(--background); }
+        .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: var(--text2); }
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
         .cs-body li::marker { color: ${ACCENT}; }
-        .cs-h2 { font-family: ${SERIF}; font-size: clamp(22px, 3vw, 30px); color: #F2EDD8; font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
+        .cs-h2 { font-family: ${SERIF}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
         .metrics-grid-dt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
         @media (max-width: 640px) { .metrics-grid-dt { grid-template-columns: repeat(2, 1fr); } }
@@ -108,17 +108,17 @@ export default function DeepTruthCaseStudy() {
         .three-col-dt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-dt { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-dt { grid-template-columns: 1fr; } }
-        .info-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.07); border-left: 2px solid ${ACCENT}50; border-radius: 8px; transition: all 0.2s ease; }
+        .info-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
         .info-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
-        .accent-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-left: 2px solid ${ACCENT}90; border-radius: 8px; transition: all 0.2s ease; }
+        .accent-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .accent-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
         .model-card { flex: 1; padding: 20px 22px; background: ${ACCENT}06; border: 1px solid ${ACCENT}22; border-radius: 10px; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(242,237,216,0.06); border-left: 2px solid ${ACCENT}30; border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
         .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
         .weight-bar { display: flex; border-radius: 6px; overflow: hidden; height: 32px; margin-bottom: 12px; }
         .weight-bar .gemini { display: flex; align-items: center; justify-content: center; width: 70%; background: ${ACCENT}22; border: 1px solid ${ACCENT}40; font-family: ${MONO}; font-size: 10px; color: ${ACCENT}; letter-spacing: 0.06em; }
-        .weight-bar .distil { display: flex; align-items: center; justify-content: center; width: 30%; background: rgba(75,123,245,0.15); border: 1px solid rgba(75,123,245,0.3); border-left: none; font-family: ${MONO}; font-size: 10px; color: #4B7BF5; letter-spacing: 0.06em; }
+        .weight-bar .distil { display: flex; align-items: center; justify-content: center; width: 30%; background: color-mix(in srgb, var(--blue) 15%, transparent); border: 1px solid color-mix(in srgb, var(--blue) 30%, transparent); border-left: none; font-family: ${MONO}; font-size: 10px; color: var(--blue); letter-spacing: 0.06em; }
         .cs-grid-container {
           display: grid;
           grid-template-columns: 1fr 200px;
@@ -171,10 +171,10 @@ export default function DeepTruthCaseStudy() {
             <Tag>RocketHacks 2025</Tag>
             <Tag>Best Use of MongoDB Atlas</Tag>
           </div>
-          <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(32px,5vw,56px)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, #F2EDD8 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+          <h1 style={{ fontFamily: SERIF, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, var(--foreground) 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
             DeepTruth
           </h1>
-          <p style={{ fontFamily: SERIF, fontSize: 'clamp(15px,2vw,18px)', color: '#B8B4A4', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>
+          <p style={{ fontFamily: SERIF, fontSize: 16, color: 'var(--text2)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>
             AI-powered fact-checking for a noisy internet.
           </p>
           <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--text3)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
@@ -191,7 +191,7 @@ export default function DeepTruthCaseStudy() {
           </div>
 
           {/* Hero image */}
-          <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: '#06080E', marginBottom: 64 }}>
+          <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>
             <Pic src="/Images/DeepTruth_Group.png" alt="DeepTruth team and demo" onClick={() => setLb('/Images/DeepTruth_Group.png')} style={{ width: '100%', display: 'block', objectFit: 'cover', cursor: 'zoom-in' }} priority />
           </div>
         </div>
@@ -281,10 +281,10 @@ export default function DeepTruthCaseStudy() {
                   { method: 'POST', path: '/api/verify-claim/', desc: 'Analyze an article title or claim - returns credibility, veracity, reasoning, and source links.' },
                   { method: 'GET',  path: '/api/false-news/',   desc: 'Retrieve previously analyzed or flagged claims stored in MongoDB.' },
                 ].map(({ method, path, desc }) => (
-                  <div key={path} style={{ padding: '12px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.08)', borderRadius: 6, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                    <span style={{ fontFamily: MONO, fontSize: 10, color: method === 'POST' ? ACCENT : '#4B7BF5', background: method === 'POST' ? `${ACCENT}14` : 'rgba(75,123,245,0.12)', padding: '2px 8px', borderRadius: 3, flexShrink: 0, marginTop: 1 }}>{method}</span>
+                  <div key={path} style={{ padding: '12px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 6, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                    <span style={{ fontFamily: MONO, fontSize: 10, color: method === 'POST' ? ACCENT : 'var(--blue)', background: method === 'POST' ? `${ACCENT}14` : 'color-mix(in srgb, var(--blue) 12%, transparent)', padding: '2px 8px', borderRadius: 4, flexShrink: 0, marginTop: 1 }}>{method}</span>
                     <div>
-                      <code style={{ fontFamily: MONO, fontSize: 12, color: '#F2EDD8' }}>{path}</code>
+                      <code style={{ fontFamily: MONO, fontSize: 12, color: 'var(--foreground)' }}>{path}</code>
                       <p style={{ margin: '4px 0 0', fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{desc}</p>
                     </div>
                   </div>
@@ -312,13 +312,13 @@ export default function DeepTruthCaseStudy() {
               <div className="two-col-dt" style={{ marginBottom: 24 }}>
                 <div className="model-card">
                   <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>Gemini AI - 70%</div>
-                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65, color: '#B8B4A4' }}>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65, color: 'var(--text2)' }}>
                     Google Gemini Pro handles high-level reasoning, claim interpretation, and explanation generation. It produces human-readable analysis of why a claim may be credible or suspicious - not just a score, but the reasoning behind it.
                   </p>
                 </div>
-                <div style={{ flex: 1, padding: '20px 22px', background: 'rgba(75,123,245,0.06)', border: '1px solid rgba(75,123,245,0.18)', borderRadius: 10 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 11, color: '#4B7BF5', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>DistilBERT - 30%</div>
-                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65, color: '#B8B4A4' }}>
+                <div style={{ flex: 1, padding: '20px 22px', background: 'color-mix(in srgb, var(--blue) 6%, transparent)', border: '1px solid color-mix(in srgb, var(--blue) 18%, transparent)', borderRadius: 10 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--blue)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>DistilBERT - 30%</div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65, color: 'var(--text2)' }}>
                     A fine-tuned DistilBERT model provides NLP-based veracity classification. Trained on approximately 9,500 data points, it adds a language-model signal specialized for misinformation patterns that complements Gemini&apos;s broader reasoning.
                   </p>
                 </div>
@@ -326,7 +326,7 @@ export default function DeepTruthCaseStudy() {
 
               <div style={{ padding: '18px 22px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10, marginBottom: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Why fusion matters</div>
-                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: '#B8B4A4' }}>
+                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: 'var(--text2)' }}>
                   A single model produces overconfident outputs. By combining Gemini&apos;s reasoning with DistilBERT&apos;s classification, DeepTruth surfaces more calibrated credibility signals - and makes the system more honest about what it knows and does not know.
                 </p>
               </div>
@@ -399,8 +399,8 @@ export default function DeepTruthCaseStudy() {
                     The demo was the easy part. Getting DistilBERT inference, Gemini API calls, MongoDB writes, and the Chrome extension to talk to one another - all at once, on a 24-hour clock - is where the integration debt piled up fastest.
                   </p>
                 </div>
-                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(242,237,216,0.09)', borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: '#F2EDD8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     The 70/30 fusion reasons from what the two models already know - neither one actually retrieves evidence. I&apos;d add a RAG step before the explanation so a verdict cites fetched sources instead of leaning on model priors.
                   </p>
@@ -408,9 +408,9 @@ export default function DeepTruthCaseStudy() {
               </div>
 
               {/* Responsible framing callout */}
-              <div style={{ padding: '20px 24px', background: 'rgba(242,237,216,0.03)', border: '1px solid rgba(242,237,216,0.1)', borderRadius: 10 }}>
+              <div style={{ padding: '20px 24px', background: 'rgba(242,237,216,0.03)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 10 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>Responsible framing</div>
-                <p style={{ margin: '0 0 8px', fontSize: 14, color: '#B8B4A4', lineHeight: 1.6 }}>
+                <p style={{ margin: '0 0 8px', fontSize: 14, color: 'var(--text2)', lineHeight: 1.6 }}>
                   DeepTruth should be read as an AI-assisted credibility platform, not an absolute truth detector.
                 </p>
                 <p style={{ margin: 0, fontSize: 14, color: ACCENT, fontFamily: MONO, letterSpacing: '0.03em', lineHeight: 1.6 }}>
@@ -429,8 +429,8 @@ export default function DeepTruthCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Near-Term', color: ACCENT, items: ['RAG pipeline for evidence retrieval from trusted sources before generating explanation', 'Source credibility database with reliability history, bias indicators, and correction patterns', 'Explainability dashboard showing which tokens influenced the verdict'] },
-                  { phase: 'Mid-Term', color: '#4B7BF5', items: ['Deepfake detection for images, video, and audio', 'Reinforcement learning feedback loop using user ratings to improve scoring', 'Claim clustering to detect repeated misinformation narratives across articles'] },
-                  { phase: 'Long-Term', color: '#A78BFA', items: ['Browser-level non-intrusive warnings for highly suspicious headlines', 'Multi-language support for international misinformation detection', 'Model improvement pipeline using MongoDB-stored claim history as training feedback'] },
+                  { phase: 'Mid-Term', color: 'var(--blue)', items: ['Deepfake detection for images, video, and audio', 'Reinforcement learning feedback loop using user ratings to improve scoring', 'Claim clustering to detect repeated misinformation narratives across articles'] },
+                  { phase: 'Long-Term', color: 'var(--purple)', items: ['Browser-level non-intrusive warnings for highly suspicious headlines', 'Multi-language support for international misinformation detection', 'Model improvement pipeline using MongoDB-stored claim history as training feedback'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
                     <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
@@ -442,10 +442,10 @@ export default function DeepTruthCaseStudy() {
               </div>
 
               <div style={{ padding: '24px 28px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10, marginTop: 32 }}>
-                <p style={{ fontFamily: SERIF, fontSize: 15, color: '#F2EDD8', margin: '0 0 8px', lineHeight: 1.5 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--foreground)', margin: '0 0 8px', lineHeight: 1.5 }}>
                   The goal is not to replace human judgment. The goal is to give people faster credibility signals, clearer reasoning, and independent sources so they can think critically.
                 </p>
-                <p style={{ fontFamily: SERIF, fontSize: 14, color: '#B8B4A4', margin: 0, lineHeight: 1.6 }}>
+                <p style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text2)', margin: 0, lineHeight: 1.6 }}>
                   In a world full of noise, DeepTruth helps users slow down before they believe or share.
                 </p>
               </div>
@@ -453,7 +453,7 @@ export default function DeepTruthCaseStudy() {
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
                 <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
                 <a href="https://github.com/TheChozenWon/DeepTruth.git" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>GitHub ↗</a>
-                <a href="https://youtu.be/whTYKriT5JU?si=M-0yUWXURhPrvy--" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid rgba(242,237,216,0.12)', color: '#B8B4A4', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Watch Demo ↗</a>
+                <a href="https://youtu.be/whTYKriT5JU?si=M-0yUWXURhPrvy--" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid rgba(244,244,242,0.12)', color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Watch Demo ↗</a>
               </div>
             </Section>
 
@@ -482,3 +482,6 @@ export default function DeepTruthCaseStudy() {
     </div>
   );
 }
+
+
+

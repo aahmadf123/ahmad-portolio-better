@@ -105,7 +105,7 @@ function JobCard({ job }: { job: Job }) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {job.active && <span className="pulse" style={{ width: 6, height: 6, borderRadius: '50%', background: job.color, display: 'inline-block' }} />}
-          <span style={{ fontFamily: MONO, fontSize: 9, color: job.color, letterSpacing: '0.1em', textTransform: 'uppercase', background: `color-mix(in srgb, ${job.color} 9%, transparent)`, padding: '2px 8px', borderRadius: 3 }}>{job.type}</span>
+          <span style={{ fontFamily: MONO, fontSize: 9, color: job.color, letterSpacing: '0.1em', textTransform: 'uppercase', background: `color-mix(in srgb, ${job.color} 9%, transparent)`, padding: '2px 8px', borderRadius: 4 }}>{job.type}</span>
           {job.milestone && <span style={{ color: 'var(--gold)', fontSize: 12 }} aria-label="milestone">✦</span>}
         </div>
         <span style={{ fontFamily: MONO, fontSize: 10, color: job.color, letterSpacing: '0.05em' }}>{job.period}</span>
@@ -116,7 +116,7 @@ function JobCard({ job }: { job: Job }) {
       {!open && (
         <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 5, alignItems: 'center' }}>
           {job.achievements.slice(0, 2).map((a, i) => { const c = pickColor(a); return (
-            <span key={i} style={{ fontFamily: MONO, fontSize: 9, padding: '3px 8px', background: `${c}12`, border: `1px solid ${c}30`, borderRadius: 3, color: c, letterSpacing: '0.02em' }}>{a}</span>
+            <span key={i} style={{ fontFamily: MONO, fontSize: 9, padding: '3px 8px', background: `${c}12`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.02em' }}>{a}</span>
           ); })}
           <span style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase' }}>+ details</span>
         </div>
@@ -172,3 +172,4 @@ function EducationCard() {
     </div>
   );
 }
+

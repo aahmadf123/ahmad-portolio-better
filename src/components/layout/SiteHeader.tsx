@@ -82,14 +82,16 @@ export function SiteHeader() {
           content: '';
           position: absolute;
           bottom: 4px;
-          left: 50%;
-          width: 0;
+          left: 14px;
+          width: calc(100% - 28px);
           height: 1px;
           background: var(--primary);
-          transition: width 0.25s cubic-bezier(0.4,0,0.2,1), left 0.25s cubic-bezier(0.4,0,0.2,1);
+          transform: scaleX(0);
+          transform-origin: center;
+          transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
         }
         .nav-link:hover { color: var(--foreground); }
-        .nav-link:hover::after { width: calc(100% - 28px); left: 14px; }
+        .nav-link:hover::after { transform: scaleX(1); }
         .nav-link.active { color: var(--primary); }
         .nav-link.active::after {
           width: 4px;
@@ -175,7 +177,7 @@ export function SiteHeader() {
                 display: 'inline-block',
                 width: 7,
                 height: 7,
-                borderRadius: 2,
+                borderRadius: 4,
                 background: 'var(--primary)',
                 flexShrink: 0,
                 boxShadow: '0 0 10px rgba(45,212,191,0.6)',
@@ -277,3 +279,5 @@ export function SiteHeader() {
     </>
   );
 }
+
+

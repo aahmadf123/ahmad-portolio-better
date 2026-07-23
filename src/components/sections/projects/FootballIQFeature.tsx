@@ -59,7 +59,7 @@ export function FootballIQFeature() {
         position: 'relative',
         border: '1px solid rgba(239,68,68,0.28)',
         background: 'linear-gradient(135deg, rgba(239,68,68,0.06), rgba(13,14,18,0.4) 45%, rgba(45,212,191,0.04))',
-        borderRadius: 14,
+        borderRadius: 10,
         overflow: 'hidden',
         marginBottom: 28,
       }}
@@ -76,7 +76,7 @@ export function FootballIQFeature() {
           <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--red)', marginBottom: 12 }}>
             Flagship · {p.tag}
           </div>
-          <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(30px, 3.6vw, 52px)', lineHeight: 1.02, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.06em' }}>
+          <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 20, lineHeight: 1.02, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.06em' }}>
             {p.title}
           </h3>
           <p style={{ fontFamily: SANS, fontSize: 15, lineHeight: 1.75, color: 'var(--text2)', maxWidth: 520, marginTop: 16 }}>
@@ -86,7 +86,7 @@ export function FootballIQFeature() {
           <div style={{ display: 'flex', gap: 'clamp(16px, 2.5vw, 36px)', marginTop: 26, flexWrap: 'wrap' }}>
             {stats.map((s) => (
               <div key={s.label}>
-                <div style={{ fontFamily: SERIF, fontSize: 'clamp(30px, 3vw, 44px)', lineHeight: 1, color: 'var(--gold)' }}>
+                <div style={{ fontFamily: SERIF, fontSize: 20, lineHeight: 1, color: 'var(--gold)' }}>
                   <span data-count={s.value} data-suffix={s.suffix}>{`${s.value}${s.suffix}`}</span>
                 </div>
                 <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', marginTop: 6 }}>{s.label}</div>
@@ -119,3 +119,4 @@ export function FootballIQFeature() {
     </div>
   );
 }
+

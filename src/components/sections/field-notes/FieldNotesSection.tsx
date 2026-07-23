@@ -71,7 +71,7 @@ export function FieldNotesSection() {
               gridTemplateColumns: 'minmax(0, 56fr) minmax(0, 44fr)',
               gap: 0,
               border: `1px solid color-mix(in srgb, ${catColor} 25%, transparent)`,
-              borderRadius: 14,
+              borderRadius: 10,
               overflow: 'hidden',
               background: `linear-gradient(135deg, color-mix(in srgb, ${catColor} 6%, transparent), var(--surface) 55%)`,
               textDecoration: 'none',
@@ -79,14 +79,14 @@ export function FieldNotesSection() {
           >
             <div style={{ padding: 'clamp(24px, 3.5vw, 44px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: catColor, border: `1px solid color-mix(in srgb, ${catColor} 40%, transparent)`, borderRadius: 3, padding: '3px 8px' }}>
+                <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: catColor, border: `1px solid color-mix(in srgb, ${catColor} 40%, transparent)`, borderRadius: 4, padding: '3px 8px' }}>
                   Featured · {featured.category}
                 </span>
                 <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.06em' }}>
                   {new Date(featured.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} · {featured.readingTime} min read
                 </span>
               </div>
-              <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'clamp(24px, 2.6vw, 38px)', lineHeight: 1.12, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: '16px 0 0', paddingBottom: '0.05em' }}>
+              <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 20, lineHeight: 1.12, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: '16px 0 0', paddingBottom: '0.05em' }}>
                 {featured.title}
               </h3>
               <p style={{ fontFamily: SANS, fontSize: 14.5, lineHeight: 1.75, color: FG2, marginTop: 14, maxWidth: 560 }}>
@@ -94,7 +94,7 @@ export function FieldNotesSection() {
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 16 }}>
                 {featured.tags.map((t) => (
-                  <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '3px 8px', background: 'rgba(244,244,242,0.03)', border: '1px solid var(--bd)', borderRadius: 3, color: FG3, letterSpacing: '0.04em', textTransform: 'uppercase' }}>{t}</span>
+                  <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '3px 8px', background: 'rgba(244,244,242,0.03)', border: '1px solid var(--bd)', borderRadius: 4, color: FG3, letterSpacing: '0.04em', textTransform: 'uppercase' }}>{t}</span>
                 ))}
               </div>
               <span style={{ fontFamily: MONO, fontSize: 10, color: catColor, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 20 }}>Read the essay →</span>
@@ -137,3 +137,4 @@ export function FieldNotesSection() {
     </Section>
   );
 }
+

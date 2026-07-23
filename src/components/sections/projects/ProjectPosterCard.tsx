@@ -23,8 +23,8 @@ function decodeKey(src: string): string {
 
 /** Tiny local lookup - mirrors <Pic>'s manifest logic without pulling in the
  * component itself (this image renders as `m.img` so it can carry the
- * hover `variants`/`transition` props; the dependency-free <Pic> is a plain
- * <img> and can't). Manifest miss falls back to the original path with no
+ * hover `variants`/`transition` props; the dependency-free Pic is a plain
+ * image element and can't). Manifest miss falls back to the original path with no
  * srcSet/sizes, same graceful degradation as <Pic>. */
 function responsiveAttrs(src: string, wide: boolean) {
   const entry = IMAGE_MANIFEST[decodeKey(src)];
@@ -105,7 +105,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
         display: 'block',
         width: '100%',
         aspectRatio: wide ? '16/8.2' : '3/3.7',
-        borderRadius: 12,
+        borderRadius: 10,
         overflow: 'hidden',
         border: `1px solid color-mix(in srgb, ${p.color} 22%, transparent)`,
         background: 'var(--surface)',
@@ -145,7 +145,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
       />
       {/* edge light on hover */}
       <m.div aria-hidden variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }} transition={{ duration: 0.3 }}
-        style={{ position: 'absolute', inset: 0, zIndex: 2, borderRadius: 12, boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${p.color} 55%, transparent), 0 8px 40px -12px color-mix(in srgb, ${p.color} 30%, transparent)` }} />
+        style={{ position: 'absolute', inset: 0, zIndex: 2, borderRadius: 10, boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${p.color} 55%, transparent), 0 8px 40px -12px color-mix(in srgb, ${p.color} 30%, transparent)` }} />
 
       {/* specular glass sheen - CSS-driven on .card-project:hover (globals.css) */}
       <span className="card-glass-sheen" aria-hidden />
@@ -153,10 +153,10 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
       {/* content */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 3, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '16px 18px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: p.color, background: 'rgba(10,11,15,0.55)', padding: '3px 8px', borderRadius: 3, backdropFilter: 'blur(4px)' }}>
+          <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: p.color, background: 'rgba(10,11,15,0.55)', padding: '3px 8px', borderRadius: 4, backdropFilter: 'blur(4px)' }}>
             {p.domain} · {p.idx}
           </span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: STATUS_COLOR[p.status], background: 'rgba(10,11,15,0.55)', padding: '3px 8px', borderRadius: 3, backdropFilter: 'blur(4px)' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: STATUS_COLOR[p.status], background: 'rgba(10,11,15,0.55)', padding: '3px 8px', borderRadius: 4, backdropFilter: 'blur(4px)' }}>
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: STATUS_COLOR[p.status], display: 'inline-block' }} />
             {projectStatusLabel[p.status]}
           </span>
@@ -174,7 +174,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
             <div style={{ fontFamily: MONO, fontSize: 10, color: p.color, letterSpacing: '0.05em', marginTop: 8 }}>{p.headline}</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 10 }}>
               {p.stacks.slice(0, wide ? 6 : 4).map((t) => (
-                <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '2px 7px', background: 'rgba(10,11,15,0.6)', border: '1px solid var(--bd2)', borderRadius: 3, color: 'var(--text2)', letterSpacing: '0.03em' }}>{t}</span>
+                <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '2px 7px', background: 'rgba(10,11,15,0.6)', border: '1px solid var(--bd2)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.03em' }}>{t}</span>
               ))}
             </div>
           </m.div>
@@ -183,3 +183,4 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
     </m.button>
   );
 }
+

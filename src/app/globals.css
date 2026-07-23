@@ -34,7 +34,7 @@
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-code);
-  font-size: 13px;
+  font-size: 12px;
   text-decoration: none;
   outline: 2px solid var(--primary);
 }
@@ -62,24 +62,22 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Faint dotted grid - atmospheric texture, teal-tinted */
+/* Global atmosphere wash - avoids tiled grid signatures while keeping depth */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background-image:
-    radial-gradient(circle, rgba(45, 212, 191, 0.035) 1px, transparent 1px),
-    radial-gradient(circle, rgba(45, 212, 191, 0.016) 1px, transparent 1px);
-  background-size: 28px 48px, 28px 48px;
-  background-position: 0 0, 14px 24px;
+  background:
+    radial-gradient(ellipse 60% 45% at 22% 28%, rgba(45, 212, 191, 0.055), transparent 72%),
+    radial-gradient(ellipse 56% 42% at 78% 74%, rgba(45, 212, 191, 0.03), transparent 76%);
 }
 
-::selection { background: rgba(45, 212, 191, 0.24); color: #fff; }
+::selection { background: rgba(45, 212, 191, 0.24); color: var(--foreground); }
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--background); }
-::-webkit-scrollbar-thumb { background: rgba(45, 212, 191, 0.3); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: rgba(45, 212, 191, 0.3); border-radius: 4px; }
 @media (max-width: 768px) { ::-webkit-scrollbar { width: 0; } }
 
 a { text-decoration: none; color: inherit; }
@@ -306,7 +304,7 @@ a, button { min-height: 44px; min-width: 44px; }
 
 /* Small phones (< 360px) */
 @media (max-width: 360px) {
-  html { font-size: 14px; }
+  html { font-size: 15px; }
 }
 
 /* Mobile/tablet safe insets for fixed chrome */
@@ -323,7 +321,7 @@ a, button { min-height: 44px; min-width: 44px; }
 }
 
 @media (max-width: 480px) {
-  html { font-size: 14px; }
+  html { font-size: 15px; }
   .section { padding: 0 4vw; }
   body { line-height: 1.6; }
 }
@@ -343,3 +341,4 @@ a, button { min-height: 44px; min-width: 44px; }
   .pulse,
   .reveal { animation: none !important; }
 }
+

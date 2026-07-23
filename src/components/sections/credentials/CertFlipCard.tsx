@@ -45,12 +45,12 @@ export function CertFlipCard({ cert }: { cert: Cert }) {
         {/* front */}
         <div className="cfc-face" style={{
           position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
-          border: `1px solid ${cert.color}38`, borderRadius: 12,
+          border: `1px solid ${cert.color}38`, borderRadius: 10,
           background: `linear-gradient(160deg, ${cert.color}10, var(--surface) 60%)`,
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           gap: 14, padding: 22, textAlign: 'center',
         }}>
-          <Pic src={cert.badgeImage} alt="" sizes="108px" style={{ width: 108, height: 108, objectFit: 'contain', borderRadius: 12, background: `${cert.color}14`, border: `1px solid ${cert.color}33`, padding: 8 }} />
+          <Pic src={cert.badgeImage} alt="" sizes="108px" style={{ width: 108, height: 108, objectFit: 'contain', borderRadius: 10, background: `${cert.color}14`, border: `1px solid ${cert.color}33`, padding: 8 }} />
           <div>
             <div style={{ fontFamily: MONO, fontSize: 10, color: cert.color, letterSpacing: '0.12em', textTransform: 'uppercase' }}>{cert.issuer} · {cert.track}</div>
             <div style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.25, marginTop: 6 }}>{cert.title}</div>
@@ -62,7 +62,7 @@ export function CertFlipCard({ cert }: { cert: Cert }) {
         <div className="cfc-face cfc-back" style={{
           position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
           transform: 'rotateY(180deg)',
-          border: `1px solid ${cert.color}55`, borderRadius: 12,
+          border: `1px solid ${cert.color}55`, borderRadius: 10,
           background: 'var(--surface)',
           display: 'flex', flexDirection: 'column', justifyContent: 'center',
           gap: 12, padding: '22px 24px',
@@ -88,3 +88,4 @@ export function CertFlipCard({ cert }: { cert: Cert }) {
     </div>
   );
 }
+
