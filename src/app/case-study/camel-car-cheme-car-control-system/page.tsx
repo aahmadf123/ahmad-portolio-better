@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = 'var(--orange)';
+const ACCENT = '#f0823c';
 
-const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
+const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -456,8 +456,8 @@ if (pressure >= target_pressure_threshold) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Sensing', color: ACCENT, items: ['Add pressure data logging to every run (SD card or serial)', 'Apply low-pass filter or moving average to reduce sensor noise', 'Add a second pressure sensor for redundancy', 'Add temperature sensing to correct for reaction-rate variation'] },
-                  { phase: 'Control', color: 'var(--gold)', items: ['Add hysteresis to prevent false re-triggering near threshold', 'Model and compensate for actuator delay', 'Add a maximum-run-time safety cutoff independent of pressure', 'Build a predictive stopping algorithm that uses pressure slope, not just level'] },
-                  { phase: 'Calibration', color: 'var(--blue)', items: ['Build a calibration dashboard: KI volume → time-to-threshold → stop distance', 'Add wheel encoder data to measure actual travel distance per run', 'Add IMU to detect acceleration and vibration patterns', 'Add environmental correction for temperature and humidity'] },
+                  { phase: 'Control', color: '#f59e0b', items: ['Add hysteresis to prevent false re-triggering near threshold', 'Model and compensate for actuator delay', 'Add a maximum-run-time safety cutoff independent of pressure', 'Build a predictive stopping algorithm that uses pressure slope, not just level'] },
+                  { phase: 'Calibration', color: '#5b8af5', items: ['Build a calibration dashboard: KI volume → time-to-threshold → stop distance', 'Add wheel encoder data to measure actual travel distance per run', 'Add IMU to detect acceleration and vibration patterns', 'Add environmental correction for temperature and humidity'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
                     <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>

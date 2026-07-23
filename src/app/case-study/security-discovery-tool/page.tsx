@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = 'var(--primary)';
+const ACCENT = '#2dd4bf';
 
-const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
+const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -396,8 +396,8 @@ export default function SecurityDiscoveryToolCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Near-Term', color: ACCENT, items: ['Live dashboard for security posture and asset health', 'Automated ingestion connectors for Active Directory, Defender, and endpoint tools', 'Role-based access control for analysts, admins, and auditors'] },
-                  { phase: 'Mid-Term', color: 'var(--gold)', items: ['Alert prioritization and severity scoring engine', 'Historical trend analysis for endpoint risk', 'Data-quality scoring for missing, stale, or conflicting records', 'Automated compliance report generation'] },
-                  { phase: 'Long-Term', color: 'var(--purple)', items: ['Anomaly detection for unusual asset or account behavior', 'Audit-ready change history for all critical records', 'Backup verification and DR-status dashboards', 'Cross-tenant federation for multi-org environments'] },
+                  { phase: 'Mid-Term', color: '#f59e0b', items: ['Alert prioritization and severity scoring engine', 'Historical trend analysis for endpoint risk', 'Data-quality scoring for missing, stale, or conflicting records', 'Automated compliance report generation'] },
+                  { phase: 'Long-Term', color: '#a78bfa', items: ['Anomaly detection for unusual asset or account behavior', 'Audit-ready change history for all critical records', 'Backup verification and DR-status dashboards', 'Cross-tenant federation for multi-org environments'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
                     <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>

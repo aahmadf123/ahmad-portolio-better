@@ -13,7 +13,7 @@ export function ContactSection() {
     { label: 'Email', value: site.email, href: `mailto:${site.email}`, color: '#f59e0b', Icon: Mail },
     { label: 'LinkedIn', value: '/in/ahmadfirasazfar', href: site.socials.linkedin, color: '#5b8af5', Icon: LinkedinIcon },
     { label: 'GitHub', value: '/aahmadf123', href: site.socials.github, color: '#2dd4bf', Icon: GithubIcon },
-    { label: 'Location', value: site.location, href: null, color: 'var(--purple)', Icon: MapPin },
+    { label: 'Location', value: site.location, href: null, color: '#a78bfa', Icon: MapPin },
     { label: 'Response', value: 'Within 24 hours', href: null, color: '#22c55e', Icon: Clock },
   ];
   return (
@@ -77,11 +77,11 @@ export function ContactSection() {
             >
               <span aria-hidden style={{ position: 'absolute', top: 0, left: 0, width: 20, height: 20, borderTop: '2px solid rgba(56,189,248,0.55)', borderLeft: '2px solid rgba(56,189,248,0.55)' }} />
               <span aria-hidden style={{ position: 'absolute', bottom: 0, right: 0, width: 20, height: 20, borderBottom: '2px solid rgba(56,189,248,0.55)', borderRight: '2px solid rgba(56,189,248,0.55)' }} />
-              <span style={{ fontFamily: MONO, fontSize: 9, color: 'var(--sky)', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.1em', flexShrink: 0 }}>SEND →</span>
-              <span className="contact-email-text" style={{ fontFamily: MONO, fontSize: 15, color: 'var(--sky)', letterSpacing: '0.04em', transition: 'color 0.18s' }}>
+              <span style={{ fontFamily: MONO, fontSize: 9, color: '#38bdf8', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.1em', flexShrink: 0 }}>SEND →</span>
+              <span className="contact-email-text" style={{ fontFamily: MONO, fontSize: 15, color: '#38bdf8', letterSpacing: '0.04em', transition: 'color 0.18s' }}>
                 {site.email}
               </span>
-              <span aria-hidden style={{ fontFamily: MONO, fontSize: 15, color: 'var(--sky)', opacity: 0.5, animation: 'contact-blink 1s step-end infinite' }}>▮</span>
+              <span aria-hidden style={{ fontFamily: MONO, fontSize: 15, color: '#38bdf8', opacity: 0.5, animation: 'contact-blink 1s step-end infinite' }}>▮</span>
             </a>
 
             <div>

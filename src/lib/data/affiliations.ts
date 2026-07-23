@@ -38,7 +38,7 @@ export const affiliations: Affiliation[] = [
   {
     name: 'Pi Sigma Epsilon',
     role: 'Member',
-    color: 'var(--purple)',
+    color: '#a78bfa',
     short: 'National Co-Educational Professional Fraternity - Sales, Marketing & Management',
     desc: 'Member of Pi Sigma Epsilon, the only national professional co-educational fraternity in sales, marketing, and management.',
     images: ['/Images/PSE_1.jpg', '/Images/PSE_2.jpg', '/Images/PSE_3.jpg'],

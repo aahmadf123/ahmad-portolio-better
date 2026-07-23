@@ -8,9 +8,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
 const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
-const ACCENT = 'var(--gold)';
+const ACCENT = '#f59e0b';
 
-const PALETTE = ['var(--gold)','var(--blue)','var(--primary)','var(--orange)','var(--purple)','var(--pink)','var(--sky)','#22C55E','var(--red)'];
+const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -282,7 +282,7 @@ export default function DeepTruthCaseStudy() {
                   { method: 'GET',  path: '/api/false-news/',   desc: 'Retrieve previously analyzed or flagged claims stored in MongoDB.' },
                 ].map(({ method, path, desc }) => (
                   <div key={path} style={{ padding: '12px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 6, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                    <span style={{ fontFamily: MONO, fontSize: 10, color: method === 'POST' ? ACCENT : 'var(--blue)', background: method === 'POST' ? `${ACCENT}14` : 'color-mix(in srgb, var(--blue) 12%, transparent)', padding: '2px 8px', borderRadius: 4, flexShrink: 0, marginTop: 1 }}>{method}</span>
+                    <span style={{ fontFamily: MONO, fontSize: 10, color: method === 'POST' ? ACCENT : '#5b8af5', background: method === 'POST' ? `${ACCENT}14` : 'color-mix(in srgb, var(--blue) 12%, transparent)', padding: '2px 8px', borderRadius: 4, flexShrink: 0, marginTop: 1 }}>{method}</span>
                     <div>
                       <code style={{ fontFamily: MONO, fontSize: 12, color: 'var(--foreground)' }}>{path}</code>
                       <p style={{ margin: '4px 0 0', fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{desc}</p>
@@ -317,7 +317,7 @@ export default function DeepTruthCaseStudy() {
                   </p>
                 </div>
                 <div style={{ flex: 1, padding: '20px 22px', background: 'color-mix(in srgb, var(--blue) 6%, transparent)', border: '1px solid color-mix(in srgb, var(--blue) 18%, transparent)', borderRadius: 10 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--blue)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>DistilBERT - 30%</div>
+                  <div style={{ fontFamily: MONO, fontSize: 11, color: '#5b8af5', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>DistilBERT - 30%</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65, color: 'var(--text2)' }}>
                     A fine-tuned DistilBERT model provides NLP-based veracity classification. Trained on approximately 9,500 data points, it adds a language-model signal specialized for misinformation patterns that complements Gemini&apos;s broader reasoning.
                   </p>
@@ -429,8 +429,8 @@ export default function DeepTruthCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Near-Term', color: ACCENT, items: ['RAG pipeline for evidence retrieval from trusted sources before generating explanation', 'Source credibility database with reliability history, bias indicators, and correction patterns', 'Explainability dashboard showing which tokens influenced the verdict'] },
-                  { phase: 'Mid-Term', color: 'var(--blue)', items: ['Deepfake detection for images, video, and audio', 'Reinforcement learning feedback loop using user ratings to improve scoring', 'Claim clustering to detect repeated misinformation narratives across articles'] },
-                  { phase: 'Long-Term', color: 'var(--purple)', items: ['Browser-level non-intrusive warnings for highly suspicious headlines', 'Multi-language support for international misinformation detection', 'Model improvement pipeline using MongoDB-stored claim history as training feedback'] },
+                  { phase: 'Mid-Term', color: '#5b8af5', items: ['Deepfake detection for images, video, and audio', 'Reinforcement learning feedback loop using user ratings to improve scoring', 'Claim clustering to detect repeated misinformation narratives across articles'] },
+                  { phase: 'Long-Term', color: '#a78bfa', items: ['Browser-level non-intrusive warnings for highly suspicious headlines', 'Multi-language support for international misinformation detection', 'Model improvement pipeline using MongoDB-stored claim history as training feedback'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
                     <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>

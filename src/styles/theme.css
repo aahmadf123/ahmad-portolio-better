@@ -16,12 +16,12 @@
 
   /* Supporting accent range (data-driven chips, per-section identities) */
   --blue: #5b8af5;
-  --purple: var(--purple);
-  --pink: var(--pink);
+  --purple: #a78bfa;
+  --pink: #f472b6;
   --sky: #38bdf8;
   --orange: #f0823c;
   --green: #22c55e;
-  --red: var(--red);
+  --red: #ef4444;
 
   /* Text ramp */
   --foreground: #f4f4f2;

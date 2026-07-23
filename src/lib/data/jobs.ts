@@ -114,7 +114,7 @@ export const jobs: Job[] = [
     period: 'Aug 2024 – May 2025',
     location: 'Toledo, OH',
     type: 'Industry Project',
-    color: 'var(--purple)',
+    color: '#a78bfa',
     logo: '/Images/grange_insurance_logo.png',
     description:
       'Led interdisciplinary team delivering a production-grade MLOps insurance risk model. Designed Airflow + MLflow pipeline with drift monitoring and HITL gates - automating the full ML lifecycle from data ingestion through deployment. Achieved R² = 0.982, outperforming the GLM baseline by 26%, while reducing manual actuarial review by 75%.',

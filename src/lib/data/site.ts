@@ -68,7 +68,7 @@ export const site: SiteConfig = {
 export const heroFacts = [
   { label: 'Now', value: 'Developer I', sub: 'First Solar · Jun 2026', color: '#f59e0b' },
   { label: 'Research', value: 'LION Lab · CPHS Lab', sub: 'University of Toledo', color: '#5b8af5' },
-  { label: 'Degree', value: 'B.S. CS & Engineering', sub: 'GPA 3.23 · 2026', color: 'var(--purple)' },
+  { label: 'Degree', value: 'B.S. CS & Engineering', sub: 'GPA 3.23 · 2026', color: '#a78bfa' },
   { label: 'Focus', value: 'Agentic AI · UAV · MLOps', sub: null, color: '#2dd4bf' },
 ] as const;
 
