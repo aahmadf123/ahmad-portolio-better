@@ -65,7 +65,7 @@ export default function NotFoundPage() {
           style={{
             fontFamily: 'var(--font-display), Georgia, serif',
             fontWeight: 400,
-            fontSize: 20,
+            fontSize: 'var(--fs-display-404)',
             lineHeight: 0.9,
             letterSpacing: '-0.03em',
             margin: 0,

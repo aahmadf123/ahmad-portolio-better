@@ -100,7 +100,7 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
               <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: project.color, marginBottom: 10 }}>
                 {project.domain} · {project.idx} - {project.tag}
               </div>
-              <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 20, lineHeight: 1.05, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.06em' }}>
+              <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--fs-section-head)', lineHeight: 1.05, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.06em' }}>
                 {project.title}
               </h3>
               <div style={{ fontFamily: MONO, fontSize: 11, color: project.color, letterSpacing: '0.04em', marginTop: 10 }}>{project.headline}</div>

@@ -8,8 +8,17 @@ import { ChapterScene } from './ChapterScene';
 /**
  * One story panel. In pinned mode panels are absolutely stacked and revealed
  * by clip-path wipes; in stacked mode they flow normally with .reveal.
+ *
+ * Overdrive additions:
+ * - Large ambient chapter number HUD (bottom-right, documentary position marker)
+ * - Per-chapter accent atmosphere now tracked at a higher parallax depth
  */
-export function StoryChapter({ chapter, index, pinned }: { chapter: Chapter; index: number; pinned: boolean }) {
+export function StoryChapter({ chapter, index, pinned, total }: {
+  chapter: Chapter;
+  index: number;
+  pinned: boolean;
+  total: number;
+}) {
   return (
     <article
       className="story-panel"
@@ -32,6 +41,36 @@ export function StoryChapter({ chapter, index, pinned }: { chapter: Chapter; ind
         background: `radial-gradient(ellipse 55% 60% at 72% 45%, color-mix(in srgb, ${chapter.accent} 7%, transparent), transparent 72%)`,
       }} />
 
+      {/* overdrive: ambient chapter position HUD - bottom-right documentary marker */}
+      <div aria-hidden style={{
+        position: 'absolute',
+        right: pinned ? 'clamp(44px, 5vw, 72px)' : 'clamp(14px, 2.5vw, 36px)',
+        bottom: pinned ? 'clamp(24px, 3.5vw, 44px)' : 'clamp(20px, 3vw, 36px)',
+        zIndex: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        gap: 3,
+        userSelect: 'none',
+        pointerEvents: 'none',
+      }}>
+        <span style={{
+          fontFamily: MONO, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase',
+          color: chapter.accent, opacity: 0.28, lineHeight: 1,
+        }}>Chapter</span>
+        <span style={{
+          fontFamily: SERIF,
+          fontSize: 'var(--fs-chapter-hud)',
+          fontWeight: 400, letterSpacing: '-0.04em',
+          color: chapter.accent, opacity: 0.08,
+          lineHeight: 1,
+        }}>{String(index + 1).padStart(2, '0')}</span>
+        <span style={{
+          fontFamily: MONO, fontSize: 8, letterSpacing: '0.16em', textTransform: 'uppercase',
+          color: chapter.accent, opacity: 0.2, lineHeight: 1,
+        }}>of {String(total).padStart(2, '0')}</span>
+      </div>
+
       <div className="story-grid" style={{
         maxWidth: 1280, margin: '0 auto', width: '100%',
         display: 'grid', gridTemplateColumns: 'minmax(0, 46fr) minmax(0, 54fr)',
@@ -51,7 +90,7 @@ export function StoryChapter({ chapter, index, pinned }: { chapter: Chapter; ind
           </div>
           <h3 className="story-line" style={{
             fontFamily: SERIF, fontWeight: 400,
-            fontSize: 20,
+            fontSize: 'var(--fs-chapter-title)',
             lineHeight: 0.98, letterSpacing: '-0.025em',
             color: 'var(--foreground)', margin: 0, paddingBottom: '0.06em',
           }}>
@@ -62,7 +101,7 @@ export function StoryChapter({ chapter, index, pinned }: { chapter: Chapter; ind
           </p>
           {chapter.stat && (
             <div className="story-line" style={{ marginTop: 26, display: 'inline-flex', alignItems: 'baseline', gap: 14, padding: '14px 20px', border: `1px solid color-mix(in srgb, ${chapter.accent} 25%, transparent)`, borderRadius: 8, background: `color-mix(in srgb, ${chapter.accent} 4%, transparent)` }}>
-              <span style={{ fontFamily: SERIF, fontSize: 20, color: chapter.milestone ? 'var(--gold)' : chapter.accent, lineHeight: 1 }}>{chapter.stat.value}</span>
+              <span style={{ fontFamily: SERIF, fontSize: 'var(--fs-stat-xl)', color: chapter.milestone ? 'var(--gold)' : chapter.accent, lineHeight: 1 }}>{chapter.stat.value}</span>
               <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text3)', maxWidth: 240 }}>{chapter.stat.label}</span>
             </div>
           )}

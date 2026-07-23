@@ -192,6 +192,43 @@ a { text-decoration: none; color: inherit; }
 }
 .card-project:hover .card-glass-sheen { opacity: 1; }
 
+/* ── Project card glint sweep (overdrive) ─────────────────────── */
+@keyframes card-glint-sweep {
+  0%   { transform: translateX(-110%) skewX(-18deg); opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { transform: translateX(210%) skewX(-18deg); opacity: 0; }
+}
+.card-glint {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.card-glint::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0;
+  width: 28%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 30%,
+    rgba(255, 255, 255, 0.14) 50%,
+    rgba(255, 255, 255, 0.06) 70%,
+    transparent 100%
+  );
+  transform: translateX(-110%) skewX(-18deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card-project:hover .card-glint::after {
+    animation: card-glint-sweep 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.06s forwards;
+  }
+}
+
 /* ── View Transitions ─────────────────────────────────────────── */
 @supports (view-transition-name: none) {
   /* Suppress root crossfade - React ViewTransition handles page transitions */

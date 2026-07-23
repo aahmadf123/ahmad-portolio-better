@@ -69,8 +69,8 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
         const r = e.currentTarget.getBoundingClientRect();
         const nx = (e.clientX - r.left) / r.width - 0.5; // -0.5..0.5
         const ny = (e.clientY - r.top) / r.height - 0.5;
-        tiltY.set(Math.max(-4, Math.min(4, nx * 8)));
-        tiltX.set(Math.max(-4, Math.min(4, -ny * 8)));
+        tiltY.set(Math.max(-7, Math.min(7, nx * 14)));
+        tiltX.set(Math.max(-7, Math.min(7, -ny * 14)));
       };
   const resetTilt = reduced
     ? undefined
@@ -121,6 +121,8 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
         transformPerspective: 800,
       }}
     >
+      {/* glint sweep - CSS-only diagonal highlight on hover */}
+      <span className="card-glint" aria-hidden />
       {/* image - dimmed and desaturated at rest so bright screenshots stay moody */}
       <m.img
         {...responsiveAttrs(p.image, wide)}
