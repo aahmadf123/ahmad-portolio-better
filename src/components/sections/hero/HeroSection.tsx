@@ -7,9 +7,64 @@ import { site, heroFacts } from '@/lib/data/site';
 import { TypedTagline } from './TypedTagline';
 
 /**
- * Static hero: server-rendered h1 as the LCP element, typed tagline, soft
- * atmosphere glow. Reduced motion renders the tagline instantly.
+ * Overdrive hero: scan-line reveal plays once on mount (CSS, reduced-motion
+ * safe), then self-removes. Static hero content is server-rendered as the LCP
+ * element — the scan runs above it as an overlay, never hides it.
  */
+
+/** Single-pass scan overlay - plays once, then removes itself. */
+function HeroScanOverlay() {
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    setActive(true);
+  }, []);
+
+  if (!active) return null;
+
+  return (
+    <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 10, pointerEvents: 'none', overflow: 'hidden' }}>
+      {/* dark wash above the scan beam - recedes as beam descends */}
+      <div
+        className="hero-scan-wash"
+        style={{ position: 'absolute', left: 0, right: 0, top: 0 }}
+      />
+      {/* the beam itself - fires onAnimationEnd to unmount the whole overlay */}
+      <div
+        className="hero-scan-beam"
+        onAnimationEnd={() => setActive(false)}
+        style={{ position: 'absolute', left: 0, right: 0, top: -4 }}
+      />
+      <style>{`
+        .hero-scan-beam {
+          height: 4px;
+          background: linear-gradient(90deg,
+            transparent 0%, rgba(45,212,191,0.08) 6%,
+            rgba(45,212,191,0.75) 50%,
+            rgba(45,212,191,0.08) 94%, transparent 100%
+          );
+          box-shadow: 0 0 22px 5px rgba(45,212,191,0.28), 0 0 6px 2px rgba(45,212,191,0.55);
+          animation: hero-scan-beam 1.5s cubic-bezier(0.4,0,0.8,1) 0.25s forwards;
+        }
+        .hero-scan-wash {
+          background: linear-gradient(to bottom, rgba(13,14,18,0.55) 0%, rgba(13,14,18,0.3) 80%, transparent 100%);
+          animation: hero-scan-wash 1.5s cubic-bezier(0.4,0,0.8,1) 0.25s forwards;
+        }
+        @keyframes hero-scan-beam {
+          from { transform: translateY(0); opacity: 1; }
+          90%  { opacity: 0.6; }
+          to   { transform: translateY(110svh); opacity: 0; }
+        }
+        @keyframes hero-scan-wash {
+          from { height: 100%; opacity: 1; }
+          to   { height: 0%;   opacity: 0; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 export function HeroSection() {
   const [instantTagline, setInstantTagline] = useState(false);
   const [taglineActive, setTaglineActive] = useState(false);
@@ -34,6 +89,9 @@ export function HeroSection() {
         position: 'absolute', inset: 0, pointerEvents: 'none',
         background: 'radial-gradient(ellipse 60% 45% at 30% 42%, rgba(45,212,191,0.07), transparent 70%)',
       }} />
+
+      {/* overdrive: classified-dossier scan reveal - plays once on mount */}
+      <HeroScanOverlay />
 
       <div style={{ flex: 1, display: 'flex', flexWrap: 'wrap', position: 'relative', zIndex: 1 }}>
 

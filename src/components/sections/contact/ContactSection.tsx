@@ -52,7 +52,7 @@ export function ContactSection() {
 
           {/* ── Left ── */}
           <div>
-            <h2 style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 400, color: 'var(--foreground)', lineHeight: 1.12, marginBottom: 20, maxWidth: 560, paddingBottom: '0.05em' }}>
+            <h2 style={{ fontFamily: SERIF, fontSize: 'var(--fs-section-head)', fontWeight: 400, color: 'var(--foreground)', lineHeight: 1.12, marginBottom: 20, maxWidth: 560, paddingBottom: '0.05em' }}>
               Open to roles in AI&nbsp;research, ML&nbsp;engineering, and data&nbsp;science.
             </h2>
             <p style={{ fontFamily: SANS, fontSize: 15, color: FG3, lineHeight: 1.8, marginBottom: 44, maxWidth: 440 }}>

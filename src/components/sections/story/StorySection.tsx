@@ -113,14 +113,26 @@ export function StorySection() {
           overflow: pinned ? 'hidden' : 'visible',
         }}>
           {storyChapters.map((c, i) => (
-            <StoryChapter key={c.id} chapter={c} index={i} pinned={pinned} />
+            <StoryChapter key={c.id} chapter={c} index={i} pinned={pinned} total={CH} />
           ))}
 
           {/* progress rail (pinned only) */}
           {pinned && (
             <div aria-hidden style={{ position: 'absolute', right: 'clamp(12px, 2vw, 28px)', top: '50%', transform: 'translateY(-50%)', zIndex: 30, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-              <div style={{ position: 'relative', width: 2, height: 180, background: 'var(--bd2)', borderRadius: 4, overflow: 'hidden' }}>
-                <div data-story-railfill style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${def.color}, var(--gold))`, transformOrigin: 'top', transform: 'scaleY(0)' }} />
+              <div style={{ position: 'relative', width: 2, height: 180, background: 'var(--bd2)', borderRadius: 4 }}>
+                {/* chapter tick marks - small notches at each chapter transition */}
+                {Array.from({ length: CH - 1 }, (_, i) => (
+                  <div key={i} style={{
+                    position: 'absolute', left: -3, right: -3,
+                    top: `${((i + 1) / CH) * 100}%`,
+                    height: 1.5,
+                    background: 'var(--background)',
+                    opacity: 0.7,
+                    zIndex: 2,
+                  }} />
+                ))}
+                {/* fill bar - GSAP will scaleY this */}
+                <div data-story-railfill style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${def.color}, var(--gold))`, transformOrigin: 'top', transform: 'scaleY(0)', borderRadius: 4 }} />
               </div>
               <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', color: 'var(--text3)', writingMode: 'vertical-rl' }}>{String(CH).padStart(2, '0')} CH</span>
             </div>

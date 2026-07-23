@@ -9,7 +9,7 @@ export function useMDXComponents(): MDXComponents {
     h1: ({ children }) => (
       <h1 style={{
         fontFamily: SERIF, fontWeight: 400,
-        fontSize: 20, lineHeight: 1.1,
+        fontSize: 'var(--fs-article-h1)', lineHeight: 1.1,
         letterSpacing: '-0.025em', color: 'var(--foreground)',
         marginTop: '2.5rem', marginBottom: '1rem', paddingBottom: '0.05em',
       }}>
@@ -20,7 +20,7 @@ export function useMDXComponents(): MDXComponents {
     h2: ({ children }) => (
       <h2 style={{
         fontFamily: SERIF, fontWeight: 400,
-        fontSize: 20, lineHeight: 1.2,
+        fontSize: 'var(--fs-article-h2)', lineHeight: 1.2,
         letterSpacing: '-0.015em', color: 'var(--gold)',
         marginTop: '3rem', marginBottom: '0.75rem',
         paddingTop: '0.25rem',
