@@ -2,7 +2,8 @@
 
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, m, useInView } from 'framer-motion';
+import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { Section, SH, Tag, MONO, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { MetricsBand } from '@/components/shared/MetricsBand';
 import { HoverPeek } from '@/components/ui/link-preview';

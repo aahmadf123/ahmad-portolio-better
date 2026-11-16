@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { m, useReducedMotion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { MONO, SERIF, SANS, Tag, pickColor, FG2, FG3 } from '@/components/shared/section-helpers';
 import type { Job } from '@/lib/data/jobs';
 import type { Award } from '@/lib/data/awards';

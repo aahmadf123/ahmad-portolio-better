@@ -3,7 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { ViewTransition } from 'react';
-import { m, useReducedMotion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { Section, MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { Pic } from '@/components/ui/pic';
 import { fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { MONO, SANS, SkillChip, FG3 } from '@/components/shared/section-helpers';
 import { Pic } from '@/components/ui/pic';
 import type { Cert } from '@/lib/data/certs';

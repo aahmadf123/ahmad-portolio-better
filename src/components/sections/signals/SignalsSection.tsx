@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { m, useReducedMotion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { Section, SH, MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { useLightboxOpen } from '@/components/layout/LightboxProvider';
 import { Pic } from '@/components/ui/pic';

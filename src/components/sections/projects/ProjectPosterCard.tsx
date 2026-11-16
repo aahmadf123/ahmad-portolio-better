@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { m, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
+import { m, useMotionValue, useSpring } from 'framer-motion';
+import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { MONO, SERIF, SANS } from '@/components/shared/section-helpers';
 import manifest from '@/lib/image-manifest.json';
 import { projectStatusLabel, type Project } from '@/lib/data/projects';

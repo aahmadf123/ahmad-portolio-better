@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { m, useReducedMotion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { m, useMotionValue, useTransform, animate } from 'framer-motion';
+import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { HAND, MONO } from '@/components/shared/section-helpers';
 
 /** Handwritten close: the Caveat script writes itself on (a left→right clip-path

@@ -4,6 +4,7 @@ import { OpeningScene } from '@/components/journey/OpeningScene';
 import { WorldChapter } from '@/components/journey/WorldChapter';
 import { ClosingScene } from '@/components/journey/ClosingScene';
 import { HashLanding } from '@/components/journey/HashLanding';
+import { JourneyCanvasLoader } from '@/components/journey/JourneyCanvasLoader';
 import { ProjectModalProvider } from '@/components/sections/projects/ProjectModalProvider';
 import { worlds } from '@/lib/data/worlds';
 import { SkillsSection } from '@/components/sections/skills/SkillsSection';
@@ -22,6 +23,7 @@ export default function Home() {
       <ProjectModalProvider>
       <SiteHeader />
       <HashLanding />
+      <JourneyCanvasLoader />
       <main id="main" tabIndex={-1} style={{ position: 'relative', zIndex: 20, background: 'transparent' }}>
         <OpeningScene />
         {worlds.map((w, i) => (

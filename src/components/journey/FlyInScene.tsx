@@ -4,6 +4,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import { journeyPhoto, type PhotoId } from '@/lib/data/worlds';
 import { useJourneyTier, type JourneyTier } from '@/lib/journey/tier';
 import { JourneyPhoto } from './JourneyPhoto';
+import { publishScene } from '@/lib/journey/store';
 
 /**
  * The signature move: a sticky, full-screen real photo that the camera flies into as
@@ -65,6 +66,9 @@ const origin = (id: PhotoId) => {
 };
 const zoomCap = (id: PhotoId, z: number) => (journeyPhoto(id).panorama ? Math.min(z, 1.6) : z);
 
+/** `depthable` photos are handed to the depth canvas once it has their textures; panoramas stay CSS. */
+const photoClass = (id: PhotoId) => (journeyPhoto(id).panorama ? 'flyin-photo' : 'flyin-photo depthable');
+
 const layer: React.CSSProperties = { position: 'absolute', inset: 0, willChange: 'transform, opacity' };
 
 export function FlyInScene({
@@ -114,13 +118,29 @@ export function FlyInScene({
     if (still) return;
     const fromZoom = from ? zoomCap(from, maxZoom) : 1;
     const toStart = from ? zoomCap(to, 1.3) : 1;
+    const full = tier === 'full';
     const paint = (p: number) => {
+      const fromScale = span(p, 0, 0.55, 1, fromZoom);
+      const toScale = from ? span(p, 0.45, 0.75, toStart, 1) : 1;
+      const mix = from ? span(p, 0.45, 0.65, 0, 1) : 1;
       if (from) {
-        setLayer(fromRef.current, span(p, 0.45, 0.6, 1, 0), `scale(${span(p, 0, 0.55, 1, fromZoom)})`);
-        setLayer(toRef.current, span(p, 0.45, 0.65, 0, 1), `scale(${span(p, 0.45, 0.75, toStart, 1)})`);
+        setLayer(fromRef.current, span(p, 0.45, 0.6, 1, 0), `scale(${fromScale})`);
+        setLayer(toRef.current, mix, `scale(${toScale})`);
         setLayer(copyRef.current, span(p, 0.6, 0.8, 0, 1), `translateY(${span(p, 0.6, 0.8, 40, 0)}px)`);
       }
+      if (full) publish(fromScale, toScale, mix);
       subs.current.forEach((fn) => fn(p));
+    };
+    // Full tier: tell the depth canvas what this scene shows and how much of the
+    // screen its stage covers (the canvas draws whichever scene owns the screen).
+    let last = { fromScale: 1, toScale: 1, mix: from ? 0 : 1 };
+    const publish = (fromScale: number, toScale: number, mix: number) => {
+      last = { fromScale, toScale, mix };
+      const stage = root.current?.firstElementChild as HTMLElement | undefined;
+      if (!stage) return;
+      const r = stage.getBoundingClientRect();
+      const h = Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0));
+      publishScene(id, { from, to, fromScale, toScale, mix, area: h * r.width });
     };
     let frame = 0;
     let painted = false;
@@ -134,7 +154,11 @@ export function FlyInScene({
       const lead = joinPrevious ? window.innerHeight : 0;
       const range = r.height - window.innerHeight - lead;
       const p = range > 0 ? Math.min(1, Math.max(0, (-r.top - lead) / range)) : 0;
-      if (painted && p === progress.current) return;
+      if (painted && p === progress.current) {
+        // Same progress but the stage may have moved on screen (entering/leaving).
+        if (full) publish(last.fromScale, last.toScale, last.mix);
+        return;
+      }
       painted = true;
       progress.current = p;
       paint(p);
@@ -147,8 +171,9 @@ export function FlyInScene({
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
       if (frame) cancelAnimationFrame(frame);
+      publishScene(id, null);
     };
-  }, [still, from, to, maxZoom, joinPrevious]);
+  }, [still, from, to, maxZoom, joinPrevious, tier, id]);
 
   const state = useMemo(() => ({ tier, still, subscribe }), [tier, still, subscribe]);
 
@@ -169,11 +194,11 @@ export function FlyInScene({
     <SceneContext.Provider value={state}>
       <div ref={root} data-scene={id} aria-labelledby={labelledBy} style={{ position: 'relative', height: `${(length + (joinPrevious ? 1 : 0)) * 100}svh`, marginTop: joinPrevious ? '-100svh' : undefined }}>
         <div style={{ position: 'sticky', top: 0, height: '100svh', overflow: 'hidden' }}>
-          <div ref={toRef} className="flyin-photo" style={{ ...layer, transformOrigin: origin(to), opacity: from ? 0 : 1 }}>
+          <div ref={toRef} className={photoClass(to)} data-photo={to} style={{ ...layer, transformOrigin: origin(to), opacity: from ? 0 : 1 }}>
             <JourneyPhoto id={to} priority={priority} />
           </div>
           {from && (
-            <div ref={fromRef} className="flyin-photo" style={{ ...layer, transformOrigin: origin(from) }}>
+            <div ref={fromRef} className={photoClass(from)} data-photo={from} style={{ ...layer, transformOrigin: origin(from) }}>
               <JourneyPhoto id={from} />
             </div>
           )}

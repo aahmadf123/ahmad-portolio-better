@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { m, useReducedMotion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { Section, SH, MONO, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import type { Insight } from '@/lib/data/insights';
 import type { SectionDef } from '@/lib/data/sections';

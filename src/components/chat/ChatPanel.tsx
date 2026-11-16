@@ -3,7 +3,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
-import { m, useReducedMotion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { site } from '@/lib/data/site';
 

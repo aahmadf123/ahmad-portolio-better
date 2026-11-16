@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
+import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { Section, SH, MONO } from '@/components/shared/section-helpers';
 import { projects, projectCategories, type Project, type ProjectCategory } from '@/lib/data/projects';
 import { sectionById } from '@/lib/data/sections';
