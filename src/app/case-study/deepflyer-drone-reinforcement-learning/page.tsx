@@ -2,12 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
+import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
-const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
-const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
+const SERIF  = "var(--font-body), system-ui, sans-serif";
+const DISPLAY = "var(--font-display), Georgia, serif";
+const MONO   = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#5b8af5';
 
 const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
@@ -82,39 +84,22 @@ const SECTION_LABELS = ['Overview', 'Problem', 'Platform', 'Reward Design', 'Sta
 
 export default function DeepFlyerCaseStudy() {
   const active = useActiveSection(SECTION_IDS);
-  const [scrolled, setScrolled] = useState(false);
   const [lb, setLb] = useState<string | null>(null);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   return (
-    <div style={{ background: '#0B0D14', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
+    <div style={{ background: 'var(--background)', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
 
       {/* ── Sticky header ── */}
-      <header style={{
-        position: 'sticky', top: 0, zIndex: 100, height: 56,
-        borderBottom: scrolled ? `1px solid ${ACCENT}35` : '1px solid transparent',
-        background: scrolled ? 'rgba(11,13,20,0.95)' : 'transparent',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 clamp(20px,4vw,52px)',
-        transition: 'background 0.3s, border-color 0.3s',
-      }}>
-        <SmartBackLink fallbackHref="/#projects" style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none' }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="M12 5l-7 7 7 7" /></svg>
-          Back to Portfolio
-        </SmartBackLink>
+      <SubpageHeader backHref="/#projects" backLabel="Projects" accent={ACCENT}>
         <span style={{ fontFamily: MONO, fontSize: 10, padding: '6px 14px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Prototype · Research Platform</span>
-      </header>
+      </SubpageHeader>
 
       {/* ── Hero ── */}
       <div style={{ padding: 'clamp(48px,7vw,96px) clamp(20px,4vw,52px) 0', maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
           <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Educational AI / Robotics</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>LION Lab · University of Toledo</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Team: Uma · Jay · Ahmad</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>LION Lab · University of Toledo</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Team: Uma · Jay · Ahmad</span>
         </div>
 
         {/* Hero image */}
@@ -128,7 +113,7 @@ export default function DeepFlyerCaseStudy() {
           />
         </div>
 
-        <h1 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-3xl)', lineHeight: 1.05, letterSpacing: '-0.025em', color: 'var(--foreground)', marginBottom: 18, paddingBottom: '0.06em' }}>
+        <h1 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-3xl)', lineHeight: 1.05, letterSpacing: '-0.025em', color: 'var(--foreground)', marginBottom: 18, paddingBottom: '0.06em' }}>
           DeepFlyer:<br />
           <span style={{ color: ACCENT }}>3D DeepRacer</span> for Drone RL
         </h1>
@@ -153,7 +138,7 @@ export default function DeepFlyerCaseStudy() {
       </div>
 
       {/* ── Section nav ── */}
-      <div style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(11,13,20,0.96)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto' }}>
+      <div style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(13,14,18,0.96)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto' }}>
         <div style={{ display: 'flex', gap: 0, padding: '0 clamp(20px,4vw,52px)', maxWidth: 1100, margin: '0 auto' }}>
           {SECTION_IDS.map((id, i) => (
             <button
@@ -216,7 +201,7 @@ export default function DeepFlyerCaseStudy() {
         {/* ─ Problem ─ */}
         <Section id="problem">
           <SectionLabel>Problem</SectionLabel>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
+          <h2 style={{ fontFamily: DISPLAY, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
             Reinforcement learning is powerful, but it&apos;s difficult to teach.
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', maxWidth: 720, marginBottom: 28 }}>
@@ -231,7 +216,7 @@ export default function DeepFlyerCaseStudy() {
               { t: 'Safety Constraints', d: 'Safety boundaries and emergency stops are afterthoughts in most RL coursework. In real robotics, they are foundational design decisions.' },
               { t: 'AWS DeepRacer Ceiling', d: 'DeepRacer is excellent for 2D car navigation but limited in scope. Drone autonomy requires 3D reasoning, altitude control, and richer state representations.' },
             ].map(({ t, d }) => (
-              <div key={t} style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.07)', borderLeft: `2px solid ${ACCENT}50`, borderRadius: 8 }}>
+              <div key={t} style={{ padding: '16px 18px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.07)', borderLeft: `2px solid ${ACCENT}50`, borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{d}</p>
               </div>
@@ -240,7 +225,7 @@ export default function DeepFlyerCaseStudy() {
 
           {/* DeepRacer vs DeepFlyer comparison */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="two-col-df">
-            <div style={{ padding: '20px 22px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
+            <div style={{ padding: '20px 22px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
               <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>AWS DeepRacer</div>
               {['2D track navigation', 'RC car (ground vehicle)', 'Fixed action space', '2D obstacle avoidance', 'Cloud training only', 'Pre-built course only'].map(p => (
                 <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, fontSize: 13, color: 'var(--text3)' }}>
@@ -262,7 +247,7 @@ export default function DeepFlyerCaseStudy() {
         {/* ─ Platform ─ */}
         <Section id="platform">
           <SectionLabel>Platform Architecture</SectionLabel>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
+          <h2 style={{ fontFamily: DISPLAY, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
             A full-stack learning loop from browser to simulation to hardware.
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 32 }}>
@@ -283,7 +268,7 @@ export default function DeepFlyerCaseStudy() {
                 {['5 Hoops', 'Multi-lap', '0.8m altitude', 'Visual targets', 'Demo-friendly'].map(t => <Tag key={t}>{t}</Tag>)}
               </div>
             </div>
-            <div style={{ padding: '20px 22px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
+            <div style={{ padding: '20px 22px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
               <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Course Type B - Obstacle Course</div>
               <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text2)', marginBottom: 10 }}>A straight path from start to finish with static obstacles requiring lateral maneuvering. Fixed altitude. Easier to compare across reward functions. Best for controlled benchmarking.</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
@@ -296,7 +281,7 @@ export default function DeepFlyerCaseStudy() {
         {/* ─ Reward Design ─ */}
         <Section id="reward-design">
           <SectionLabel>Reward Design</SectionLabel>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
+          <h2 style={{ fontFamily: DISPLAY, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
             The reward function is the educational core of DeepFlyer.
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', maxWidth: 720, marginBottom: 28 }}>
@@ -321,7 +306,7 @@ export default function DeepFlyerCaseStudy() {
             <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>12-Dimensional Observation Space</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {['Direction to target hoop', 'Relative altitude error', 'Forward velocity', 'Lateral velocity', 'Distance to target', 'Velocity alignment', 'Hoop alignment (camera)', 'Vision hoop distance', 'Hoop visibility', 'Course progress', 'Lap progress', 'Safety zone proximity'].map(obs => (
-                <span key={obs} style={{ fontFamily: MONO, fontSize: 10, padding: '4px 9px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)' }}>{obs}</span>
+                <span key={obs} style={{ fontFamily: MONO, fontSize: 10, padding: '4px 9px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)' }}>{obs}</span>
               ))}
             </div>
             <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)', marginTop: 12 }}>
@@ -340,7 +325,7 @@ export default function DeepFlyerCaseStudy() {
               { label: 'RL & Experiment Tracking', color: '#a78bfa', tags: ['OpenAI Gym', 'Stable-Baselines3', 'PPO', 'YAML Reward Schema', 'MLflow', 'Dynamic Reward Switching'] },
               { label: 'Simulation & Robotics', color: '#f59e0b', tags: ['ROS 2 Humble', 'Gazebo Fortress', 'X500 URDF', 'Gazebo Contact Sensors', 'MAVROS (planned)', 'Future: SLAM / Event-Camera'] },
             ].map(({ label, color, tags }) => (
-              <div key={label} style={{ padding: '22px 20px', background: 'rgba(242,237,216,0.025)', borderTop: `2px solid ${color}`, borderRight: '1px solid rgba(244,244,242,0.08)', borderBottom: '1px solid rgba(244,244,242,0.08)', borderLeft: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
+              <div key={label} style={{ padding: '22px 20px', background: 'rgba(244,244,242,0.025)', borderTop: `2px solid ${color}`, borderRight: '1px solid rgba(244,244,242,0.08)', borderBottom: '1px solid rgba(244,244,242,0.08)', borderLeft: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>{label}</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                   {tags.map(t => <Tag key={t} color={color}>{t}</Tag>)}
@@ -353,7 +338,7 @@ export default function DeepFlyerCaseStudy() {
         {/* ─ Results ─ */}
         <Section id="results">
           <SectionLabel>Prototype Results</SectionLabel>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
+          <h2 style={{ fontFamily: DISPLAY, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
             Weeks 1–3 validated the full learning loop.
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text2)', maxWidth: 720, marginBottom: 28 }}>
@@ -376,7 +361,7 @@ export default function DeepFlyerCaseStudy() {
                 items: ['Gazebo contact sensors integrated', 'Collision false positives reduced below 5%', 'Node.js + Express + MongoDB + JWT backend complete', 'PPO agent trained for 1M steps', '80% success rate within 100 steps on Distance-to-Goal preset', 'MLflow experiment logging integrated', 'Convergence plateau identified at ~9e5 steps for further tuning'],
               },
             ].map(({ week, color, items }) => (
-              <div key={week} style={{ padding: '18px 20px', background: 'rgba(242,237,216,0.025)', border: `1px solid ${color}55`, borderRadius: 8 }}>
+              <div key={week} style={{ padding: '18px 20px', background: 'rgba(244,244,242,0.025)', border: `1px solid ${color}55`, borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 11, color, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>{week}</div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 4 }}>
                   {items.map(item => (
@@ -419,7 +404,7 @@ export default function DeepFlyerCaseStudy() {
               { t: 'Log Everything From Day One', d: 'MLflow was integrated in Week 3 and it immediately revealed the convergence plateau at 9e5 steps. Without experiment tracking, that insight would have required re-running experiments.' },
               { t: 'Separate High-Level RL From Low-Level Flight Control', d: 'Students should reason about rewards and actions, not attitude stabilization and PID tuning. The flight controller abstraction boundary is a pedagogical design decision as much as a technical one.' },
             ].map(({ t, d }) => (
-              <div key={t} style={{ padding: '18px 20px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
+              <div key={t} style={{ padding: '18px 20px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{d}</p>
               </div>
@@ -432,7 +417,7 @@ export default function DeepFlyerCaseStudy() {
                 The X500 URDF came in too mesh-heavy to simulate smoothly - I cut its complexity 40% (mass and inertia still validated within 2%) to hold a sub-1-second Gazebo start. Training had its own ceiling: PPO plateaued around 80% success, with convergence flattening near 9e5 of the 1M steps.
               </p>
             </div>
-            <div style={{ padding: '18px 20px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
+            <div style={{ padding: '18px 20px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
               <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What I&apos;d do differently</div>
               <p style={{ fontSize: 13, lineHeight: 1.75, color: 'var(--text2)' }}>
                 Wire experiment tracking in on day one. MLflow only went in during Week 3, and it surfaced the ~9e5-step plateau immediately - had it been logging from the first PPO run, I&apos;d have seen that ceiling before spending a full 1M-step run to find it.
@@ -444,7 +429,7 @@ export default function DeepFlyerCaseStudy() {
         {/* ─ Future ─ */}
         <Section id="future">
           <SectionLabel>Roadmap</SectionLabel>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
+          <h2 style={{ fontFamily: DISPLAY, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 16, lineHeight: 1.2, paddingBottom: '0.06em' }}>
             From prototype to production-ready educational platform.
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 40 }} className="three-col-df">
@@ -465,7 +450,7 @@ export default function DeepFlyerCaseStudy() {
           </div>
 
           {/* Footer CTA */}
-          <div style={{ padding: '36px 40px', background: 'rgba(242,237,216,0.025)', border: '1px solid rgba(244,244,242,0.07)', borderRadius: 10, textAlign: 'center' }}>
+          <div style={{ padding: '36px 40px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.07)', borderRadius: 10, textAlign: 'center' }}>
             <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 12 }}>DeepFlyer</div>
             <h3 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 14, lineHeight: 1.2, paddingBottom: '0.06em' }}>
               Making reinforcement learning physical.

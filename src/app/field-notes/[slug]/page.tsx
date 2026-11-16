@@ -1,7 +1,7 @@
 import React from 'react';
 import { ViewTransition } from 'react';
 import Link from 'next/link';
-import { SmartBackLink } from '@/components/ui/smart-back-link';
+import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import type { Metadata } from 'next';
 import { getFieldNote, fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
 import { site } from '@/lib/data/site';
@@ -81,26 +81,7 @@ export default async function FieldNotePage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd).replace(/</g, '\\u003c') }}
       />
 
-      {/* ── Sticky Header ── */}
-      <header style={{
-        position: 'sticky', top: 0, zIndex: 100, height: 52,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 clamp(20px,4vw,52px)',
-        borderBottom: '1px solid rgba(242,237,216,0.07)',
-        background: 'rgba(13,14,18,0.97)',
-      }}>
-        <SmartBackLink fallbackHref="/field-notes" backWhenPrev={['/', '/field-notes']} style={{
-          display: 'flex', alignItems: 'center', gap: 8,
-          color: 'var(--text2)', fontFamily: MONO, fontSize: 10,
-          letterSpacing: '0.08em', textTransform: 'uppercase',
-          textDecoration: 'none', transition: 'color 0.2s',
-        }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5" /><path d="M12 5l-7 7 7 7" />
-          </svg>
-          Back
-        </SmartBackLink>
-
+      <SubpageHeader backHref="/field-notes" backLabel="All notes" backWhenPrev={['/', '/field-notes']}>
         {catCfg && (
           <span style={{
             fontFamily: MONO, fontSize: 10, padding: '5px 12px',
@@ -112,7 +93,7 @@ export default async function FieldNotePage({ params }: PageProps) {
             {catCfg.label}
           </span>
         )}
-      </header>
+      </SubpageHeader>
 
       {/* ── Article Hero ── */}
       <div style={{
@@ -153,7 +134,7 @@ export default async function FieldNotePage({ params }: PageProps) {
           {note.tags.map(tag => (
             <span key={tag} style={{
               fontFamily: MONO, fontSize: 10, padding: '3px 8px',
-              background: 'rgba(242,237,216,0.04)',
+              background: 'rgba(244,244,242,0.04)',
               border: '1px solid rgba(244,244,242,0.1)',
               borderRadius: 4, color: 'var(--text3)',
               letterSpacing: '0.04em',
@@ -186,7 +167,7 @@ export default async function FieldNotePage({ params }: PageProps) {
       <div style={{
         maxWidth: 840, margin: '0 auto',
         padding: '0 clamp(20px,4vw,52px)',
-        borderBottom: '1px solid rgba(242,237,216,0.06)',
+        borderBottom: '1px solid rgba(244,244,242,0.06)',
         marginBottom: 0,
       }} />
 
@@ -201,7 +182,7 @@ export default async function FieldNotePage({ params }: PageProps) {
 
       {/* ── Footer ── */}
       <footer style={{
-        borderTop: '1px solid rgba(242,237,216,0.06)',
+        borderTop: '1px solid rgba(244,244,242,0.06)',
         padding: 'clamp(40px,6vw,64px) clamp(20px,4vw,52px)',
         maxWidth: 840, margin: '0 auto',
         display: 'flex', flexDirection: 'column', gap: 24,

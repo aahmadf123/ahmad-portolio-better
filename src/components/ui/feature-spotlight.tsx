@@ -30,7 +30,7 @@ const AnimatedFeatureSpotlight = React.forwardRef<HTMLElement, AnimatedFeatureSp
               {preheaderIcon}
               <span>{preheaderText}</span>
             </div>
-            <h2 id="feature-spotlight-heading" className="text-4xl lg:text-5xl tracking-tight text-foreground animate-in fade-in slide-in-from-top-4 duration-700 delay-150" style={{ fontFamily: "var(--font-chakra), 'Chakra Petch', sans-serif", fontWeight: 400, lineHeight: 1.05, paddingBottom: '0.08em' }}>
+            <h2 id="feature-spotlight-heading" className="text-4xl lg:text-5xl tracking-tight text-foreground animate-in fade-in slide-in-from-top-4 duration-700 delay-150" style={{ fontFamily: "var(--font-body), system-ui, sans-serif", fontWeight: 400, lineHeight: 1.05, paddingBottom: '0.08em' }}>
               {heading}
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed animate-in fade-in slide-in-from-top-4 duration-700 delay-300">

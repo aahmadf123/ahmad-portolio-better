@@ -1,7 +1,7 @@
 import React from 'react';
 
-const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
-const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
+const MONO  = "var(--font-code), ui-monospace, monospace";
+const SERIF = "var(--font-body), system-ui, sans-serif";
 
 // ── 1. The Five-Layer Architecture ──────────────────────────────────────────
 

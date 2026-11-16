@@ -7,8 +7,8 @@ import { Pic } from '@/components/ui/pic';
 import type { FieldNote } from '@/lib/field-notes';
 import { CATEGORY_CONFIG } from '@/lib/field-notes';
 
-const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
-const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
+const SERIF = "var(--font-body), system-ui, sans-serif";
+const MONO  = "var(--font-code), ui-monospace, monospace";
 
 function formatDate(dateStr: string) {
   if (!dateStr) return null;
@@ -28,7 +28,7 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
         onMouseLeave={() => setHovered(false)}
         style={{
           height: '100%',
-          background: hovered ? 'rgba(242,237,216,0.04)' : 'rgba(242,237,216,0.025)',
+          background: hovered ? 'rgba(244,244,242,0.04)' : 'rgba(244,244,242,0.025)',
           border: `1px solid ${hovered ? accentColor + '44' : 'rgba(244,244,242,0.08)'}`,
           borderRadius: 10,
           overflow: 'hidden',
@@ -99,7 +99,7 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
               {note.tags.slice(0, 3).map(tag => (
                 <span key={tag} style={{
                   fontFamily: MONO, fontSize: 10, padding: '2px 7px',
-                  background: 'rgba(242,237,216,0.04)',
+                  background: 'rgba(244,244,242,0.04)',
                   border: '1px solid rgba(244,244,242,0.1)',
                   borderRadius: 4, color: 'var(--text3)',
                   letterSpacing: '0.04em',

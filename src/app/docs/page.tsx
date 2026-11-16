@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { m, AnimatePresence } from 'framer-motion';
 
-const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
-const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
+const MONO  = "var(--font-code), ui-monospace, monospace";
+const SERIF = "var(--font-body), system-ui, sans-serif";
+const DISPLAY = "var(--font-display), Georgia, serif";
 const ACCENT = 'var(--primary)';
 
 const DOCS = [
@@ -33,6 +34,26 @@ const DOCS = [
     description: 'Oracle Cloud Infrastructure Foundations Associate - official eCertificate. Verifiable via Oracle CertView.',
     file: '/docs/Oracle_Foundation_eCertificate.pdf',
   },
+  // The three reports below were only reachable from the Research section and
+  // two case studies; the docs hub now lists every public document.
+  {
+    id: 'research-paper',
+    label: 'Research Paper',
+    description: 'Research manuscript: a taxonomy of AI failure in autonomous systems.',
+    file: '/docs/Manuscript.pdf',
+  },
+  {
+    id: 'uav-report',
+    label: 'UAV RL Report',
+    description: 'Final report for the graph-based reinforcement learning project on multi-UAV autonomy.',
+    file: '/docs/USRCAP_Final_Report.pdf',
+  },
+  {
+    id: 'senior-design',
+    label: 'Senior Design Report',
+    description: 'EECS 4020 final report: the homeowner loss prediction MLOps system, built with Grange Insurance.',
+    file: '/docs/EECS4020_FinalReport_G3.pdf',
+  },
 ] as const;
 
 type DocItem = (typeof DOCS)[number];
@@ -46,12 +67,13 @@ export default function DocsPage() {
         minHeight: '100vh',
         background: 'var(--background)',
         color: 'var(--foreground)',
-        fontFamily: MONO,
+        fontFamily: SERIF, // body font; mono only for labels/buttons
         backgroundImage: 'radial-gradient(circle, rgba(45,212,200,0.04) 1px, transparent 1px)',
         backgroundSize: '28px 48px',
         backgroundPosition: '14px 24px',
       }}
     >
+      <SubpageHeader backHref="/" backLabel="Portfolio" />
       <div
         style={{
           maxWidth: 1280,
@@ -59,28 +81,6 @@ export default function DocsPage() {
           padding: 'clamp(48px, 6vw, 80px) clamp(20px, 4vw, 52px)',
         }}
       >
-        {/* Back navigation */}
-        <Link
-          href="/"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-            fontFamily: MONO,
-            fontSize: 10,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color: 'var(--text2)',
-            textDecoration: 'none',
-            marginBottom: 56,
-            transition: 'color 0.2s ease',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--text2)')}
-        >
-          <span style={{ fontSize: 13 }}>←</span>&nbsp;Portfolio
-        </Link>
-
         {/* Section header */}
         <div style={{ marginBottom: 40, position: 'relative' }}>
           <div
@@ -127,7 +127,7 @@ export default function DocsPage() {
 
           <h1
             style={{
-              fontFamily: SERIF,
+              fontFamily: DISPLAY,
               fontSize: 'var(--text-2xl)',
               fontWeight: 400,
               letterSpacing: '-0.01em',
@@ -140,7 +140,7 @@ export default function DocsPage() {
           </h1>
           <p
             style={{
-              fontFamily: MONO,
+              fontFamily: SERIF,
               fontSize: 13,
               color: 'var(--text2)',
               marginTop: 10,
@@ -168,7 +168,7 @@ export default function DocsPage() {
                   padding: '9px 20px',
                   border: `1px solid ${isActive ? 'color-mix(in srgb, var(--primary) 50%, transparent)' : 'rgba(244,244,242,0.1)'}`,
                   borderRadius: 4,
-                  background: isActive ? 'color-mix(in srgb, var(--primary) 8%, transparent)' : 'rgba(242,237,216,0.02)',
+                  background: isActive ? 'color-mix(in srgb, var(--primary) 8%, transparent)' : 'rgba(244,244,242,0.02)',
                   color: isActive ? ACCENT : 'var(--text2)',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
@@ -192,7 +192,7 @@ export default function DocsPage() {
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.18 }}
             style={{
-              fontFamily: MONO,
+              fontFamily: SERIF,
               fontSize: 12,
               color: 'var(--text2)',
               letterSpacing: '0.03em',
@@ -210,7 +210,7 @@ export default function DocsPage() {
             border: '1px solid rgba(244,244,242,0.08)',
             borderRadius: 8,
             overflow: 'hidden',
-            background: 'rgba(242,237,216,0.015)',
+            background: 'rgba(244,244,242,0.015)',
             boxShadow: '0 4px 48px rgba(0,0,0,0.5)',
           }}
         >
@@ -222,7 +222,7 @@ export default function DocsPage() {
               justifyContent: 'space-between',
               padding: '10px 18px',
               borderBottom: '1px solid rgba(244,244,242,0.06)',
-              background: 'rgba(242,237,216,0.025)',
+              background: 'rgba(244,244,242,0.025)',
               gap: 12,
               flexWrap: 'wrap',
             }}
@@ -342,7 +342,7 @@ export default function DocsPage() {
                 >
                   <p
                     style={{
-                      fontFamily: MONO,
+                      fontFamily: SERIF,
                       fontSize: 11,
                       color: 'var(--text2)',
                       letterSpacing: '0.05em',
