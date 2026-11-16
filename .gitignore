@@ -43,3 +43,5 @@ next-env.d.ts
 # local tool caches and separate research repos
 /.codex/
 /Battle of I75/
+
+.superpowers/
