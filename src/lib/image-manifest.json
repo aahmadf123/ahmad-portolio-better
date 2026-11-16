@@ -219,6 +219,16 @@
     "w": 2268,
     "h": 1283
   },
+  "/Images/field-notes/battle-of-i75-coin-toss/series-rollercoaster.png": {
+    "base": "/Images/optimized/series-rollercoaster",
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "w": 1600,
+    "h": 900
+  },
   "/Images/field-notes/opponent-digital-twins/opponent-twin-mirror.png": {
     "base": "/Images/optimized/opponent-twin-mirror",
     "widths": [

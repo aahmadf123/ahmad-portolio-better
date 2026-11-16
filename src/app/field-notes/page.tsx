@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
-import { fieldNotes } from '@/lib/field-notes';
+import { getPublishedNotes } from '@/lib/field-notes';
 import { FieldNoteCard } from '@/components/ui/field-notes/field-note-card';
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ const SERIF = 'var(--font-display), Georgia, serif';
 const MONO  = 'var(--font-code), monospace';
 
 export default function FieldNotesPage() {
-  const published = fieldNotes.filter(n => n.published);
+  const published = getPublishedNotes();
 
   return (
     <div style={{ background: 'var(--background)', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
