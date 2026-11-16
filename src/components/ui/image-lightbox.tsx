@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { largestVariant } from '@/components/ui/pic';
 
 interface LightboxProps {
   src: string;
@@ -37,7 +38,7 @@ export function Lightbox({ src, alt = '', onClose }: LightboxProps) {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={src}
+        src={largestVariant(src)}
         alt={alt}
         onClick={e => e.stopPropagation()}
         style={{

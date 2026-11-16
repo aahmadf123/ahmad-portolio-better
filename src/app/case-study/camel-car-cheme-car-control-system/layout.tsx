@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import { caseStudyMetadata } from "@/lib/case-study-metadata";
 
-export const metadata: Metadata = {
-  title: "Chemical Car Control System - Ahmad Firas",
-  description: "An autonomous embedded controller using custom state machine architecture and sensor feedback.",
-};
+export const metadata = caseStudyMetadata(
+  "camel-car-cheme-car-control-system",
+  "Chemical Car Control System",
+  "An autonomous embedded controller using custom state machine architecture and sensor feedback.",
+);
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return children;

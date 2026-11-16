@@ -32,8 +32,7 @@ export function NowPlayingBar() {
         padding: '10px 12px 10px 14px',
         borderRadius: 10,
         border: '1px solid var(--bd2)',
-        background: 'rgba(15,17,23,0.9)',
-        backdropFilter: 'blur(10px)',
+        background: 'rgba(15,17,23,0.96)',
         boxShadow: '0 12px 30px -14px rgba(0,0,0,0.7)',
       }}
     >
@@ -52,13 +51,14 @@ export function NowPlayingBar() {
 
       <style>{`
         @media (max-width: 900px) { .np-bar { display: none !important; } }
-        .np-eq i { display: block; width: 3px; background: var(--primary); border-radius: 4px; height: 5px; }
+        .np-eq i { display: block; width: 3px; background: var(--primary); border-radius: 4px; height: 12px; transform: scaleY(0.42); transform-origin: bottom; }
         @media (prefers-reduced-motion: no-preference) {
           .np-eq i { animation: np-eq 1s ease-in-out infinite; }
           .np-eq i:nth-child(2) { animation-delay: 0.2s; }
           .np-eq i:nth-child(3) { animation-delay: 0.4s; }
         }
-        @keyframes np-eq { 0%, 100% { height: 5px; } 50% { height: 12px; } }
+        /* transform, not height: runs on the compositor, no layout per frame */
+        @keyframes np-eq { 0%, 100% { transform: scaleY(0.42); } 50% { transform: scaleY(1); } }
       `}</style>
     </div>
   );

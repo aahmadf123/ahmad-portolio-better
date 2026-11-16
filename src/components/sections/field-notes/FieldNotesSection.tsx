@@ -83,7 +83,7 @@ export function FieldNotesSection() {
                   Featured · {featured.category}
                 </span>
                 <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.06em' }}>
-                  {new Date(featured.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} · {featured.readingTime} min read
+                  {new Date(featured.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })} · {featured.readingTime} min read
                 </span>
               </div>
               <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--fs-fn-featured)', lineHeight: 1.12, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: '16px 0 0', paddingBottom: '0.05em' }}>

@@ -25,8 +25,6 @@ export function NowSection() {
         {nowCards.map((card) => (
           <div key={card.category} style={{
             background: 'color-mix(in oklch, var(--foreground) 2%, transparent)',
-            backdropFilter: 'blur(12px) saturate(1.2)',
-            WebkitBackdropFilter: 'blur(12px) saturate(1.2)',
             boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.12)',
             border: `1px solid ${card.color}44`,
             borderRadius: 10,

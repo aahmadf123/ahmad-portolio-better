@@ -28,7 +28,6 @@ export function SkillDetailCard({ node, onClose }: { node: SkillNode | null; onC
             border: `1px solid ${group.color}55`,
             borderRadius: 10,
             padding: '16px 18px',
-            backdropFilter: 'blur(10px)',
             zIndex: 5,
           }}
         >

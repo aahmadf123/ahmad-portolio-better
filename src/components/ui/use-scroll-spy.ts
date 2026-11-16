@@ -16,6 +16,10 @@ import { usePathname } from 'next/navigation';
  * activation line 40% down the viewport; at the very bottom of the page the
  * final section wins even if it is too short to reach the line.
  *
+ * Section offsets are measured once and re-measured only when the page
+ * resizes (ResizeObserver on <body>: images, lazy sections, fonts), so a
+ * scroll frame does no layout reads at all.
+ *
  * Pass a module-level constant array of ids - the effect re-runs when the
  * joined id list changes.
  */
@@ -29,35 +33,46 @@ export function useScrollSpy(ids: readonly string[]) {
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);
     const found = els.length;
+    if (!found) {
+      setState((prev) => (prev.active === '' && prev.found === 0 ? prev : { active: '', found: 0 }));
+      return;
+    }
+
+    let tops: number[] = [];
+    let docHeight = 0;
+    const measure = () => {
+      const y = window.scrollY;
+      tops = els.map((el) => el.getBoundingClientRect().top + y);
+      docHeight = document.documentElement.scrollHeight;
+    };
 
     const compute = () => {
       const scrollY = window.scrollY;
       const line = scrollY + window.innerHeight * 0.4;
       let active = '';
-      for (const el of els) {
-        const top = el.getBoundingClientRect().top + scrollY;
-        if (top <= line) active = el.id;
-      }
+      for (let i = 0; i < found; i++) if (tops[i] <= line) active = els[i].id;
       // Bottom clamp: a short final section still lights up when the page
       // can't scroll far enough to push it past the activation line.
-      if (found && scrollY + window.innerHeight >= document.body.scrollHeight - 2) {
-        active = els[found - 1].id;
-      }
+      if (scrollY + window.innerHeight >= docHeight - 2) active = els[found - 1].id;
       setState((prev) =>
         prev.active === active && prev.found === found ? prev : { active, found }
       );
     };
 
+    measure();
     compute();
 
     let raf = 0;
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(() => { raf = 0; compute(); });
     };
+    const ro = new ResizeObserver(() => { measure(); compute(); });
+    ro.observe(document.body);
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
     return () => {
       if (raf) cancelAnimationFrame(raf);
+      ro.disconnect();
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };

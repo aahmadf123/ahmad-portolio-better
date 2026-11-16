@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { preload } from 'react-dom';
 import { MONO, SERIF, SANS, FG3 } from '@/components/shared/section-helpers';
 import { useLightboxOpen } from '@/components/layout/LightboxProvider';
 import { site, heroFacts } from '@/lib/data/site';
@@ -28,7 +29,7 @@ function HeroScanOverlay() {
       {/* dark wash above the scan beam - recedes as beam descends */}
       <div
         className="hero-scan-wash"
-        style={{ position: 'absolute', left: 0, right: 0, top: 0 }}
+        style={{ position: 'absolute', inset: 0, transformOrigin: 'top' }}
       />
       {/* the beam itself - fires onAnimationEnd to unmount the whole overlay */}
       <div
@@ -56,9 +57,10 @@ function HeroScanOverlay() {
           90%  { opacity: 0.6; }
           to   { transform: translateY(110svh); opacity: 0; }
         }
+        /* scaleY, not height: compositor-only during the LCP window */
         @keyframes hero-scan-wash {
-          from { height: 100%; opacity: 1; }
-          to   { height: 0%;   opacity: 0; }
+          from { transform: scaleY(1); opacity: 1; }
+          to   { transform: scaleY(0); opacity: 0; }
         }
       `}</style>
     </div>
@@ -151,7 +153,7 @@ export function HeroSection() {
           </div>
 
           {/* info cards */}
-          <div style={{ marginTop: 20, backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', borderRadius: 8, boxShadow: 'inset 0 1px 0 rgba(244,244,242,0.06)' }}>
+          <div style={{ marginTop: 20, borderRadius: 8, boxShadow: 'inset 0 1px 0 rgba(244,244,242,0.06)' }}>
             {heroFacts.map((f) => (
               <div key={f.label} style={{ padding: '10px 0', borderBottom: '1px solid var(--bd)' }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: f.color, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 2, opacity: 0.85 }}>{f.label}</div>
@@ -178,13 +180,27 @@ export function HeroSection() {
   );
 }
 
+const HEADSHOT_SRCSET = '/Images/optimized/headshot-480.webp 480w, /Images/optimized/headshot-800.webp 800w';
+const HEADSHOT_SIZES = '(max-width: 960px) 92vw, 40vw';
+
 function HeroPhoto() {
   const openLb = useLightboxOpen();
+  // The headshot is the LCP element on phones; hoist its request into <head>
+  // so the browser doesn't discover it ~300 KB into the HTML.
+  preload('/Images/optimized/headshot-800.webp', {
+    as: 'image', imageSrcSet: HEADSHOT_SRCSET, imageSizes: HEADSHOT_SIZES, fetchPriority: 'high',
+  });
   return (
     <div style={{ position: 'relative' }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/Images/optimized/headshot-800.webp"
+        srcSet={HEADSHOT_SRCSET}
+        sizes={HEADSHOT_SIZES}
+        width={800}
+        height={1376}
+        fetchPriority="high"
+        decoding="async"
         alt="Ahmad Firas"
         title="Click to enlarge"
         onClick={() => openLb('/Images/optimized/headshot-1600.webp', 'Ahmad Firas')}

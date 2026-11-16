@@ -148,8 +148,7 @@ export default function BattingCleanupCaseStudy() {
       <header style={{
         position: 'sticky', top: 0, zIndex: 100,
         background: scrolled ? 'rgba(9,11,18,0.95)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? `1px solid ${ACCENT}35` : '1px solid transparent',
+          borderBottom: scrolled ? `1px solid ${ACCENT}35` : '1px solid transparent',
         transition: 'background 0.3s, border-color 0.3s',
         padding: '0 clamp(20px, 5vw, 80px)',
         height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
