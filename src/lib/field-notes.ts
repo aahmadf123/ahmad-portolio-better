@@ -71,7 +71,7 @@ export const fieldNotes: FieldNote[] = [
     tags: ['Sports Analytics', 'Football', 'Toledo', 'Statistics', 'College Football Data'],
     category: 'Sports Analytics',
     heroImage: '/Images/field-notes/battle-of-i75-coin-toss/series-rollercoaster.png',
-    readingTime: 8,
+    readingTime: 9,
     published: true,
   },
 ];

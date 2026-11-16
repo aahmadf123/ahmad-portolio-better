@@ -1,4 +1,4 @@
-import { RivalryAtAGlance, SeriesExplorer, StreakShuffle, CoinTossLedger, TwentySevenCoins, MiddleEightVsGame } from '@/components/ui/field-notes/battle-of-i75-diagrams'
+import { AnswersUpFront, Question, SeriesExplorer, StreakShuffle, CoinTossLedger, OpeningDrives, TwentySevenCoins, MiddleEightVsGame } from '@/components/ui/field-notes/battle-of-i75-diagrams'
 
 export const metadata = {
   title: "The coin toss won't decide the Battle of I-75",
@@ -6,90 +6,81 @@ export const metadata = {
   excerpt: 'Toledo and Bowling Green are 43-43-4 after 90 games. I pulled every public coin toss in the rivalry and 8,310 FBS games to test whether deferring actually helps. It does, for about eight minutes.',
   tags: ['Sports Analytics', 'Football', 'Toledo', 'Statistics', 'College Football Data'],
   category: 'Sports Analytics',
-  readingTime: 8,
+  readingTime: 9,
 }
 
-Toledo and Bowling Green have played 90 times since 1919. The series is **43-43-4**. After 107 years, it's dead even. Friday night at the Glass Bowl, somebody takes the lead.
+Toledo and Bowling Green have played 90 times since 1919. The series is **43-43-4**. Friday night at the Glass Bowl, somebody takes the lead.
 
-Before kickoff, a captain will call a coin in the air. Almost every winner says the same two words: *"We'll defer."* They want the ball to start the 2nd half. The theory is the **Middle Eight**: score late in the 2nd quarter, get the ball right back after halftime, score again. Two possessions in a row, and the other team never touches the ball in between.
+Before kickoff, a captain calls the coin. Almost every winner says the same two words: *"We'll defer."* The idea is the **Middle Eight**: score late in the 2nd quarter, get the ball right back after halftime, and score again before the other team touches it.
 
-So I tested it. Does winning the toss and deferring actually help you win?
+So I tested it. I pulled every coin toss on record in this rivalry, rebuilt the opening drive of every game since 1998, and checked everything against 8,310 FBS games. Here are the answers up front:
 
-<RivalryAtAGlance />
+<AnswersUpFront />
 
-**Short version:**
+<Question n={1} id="streaks" q="Is this rivalry streakier than chance?" a="Mostly no. One streak is real." />
 
-- The coin toss doesn't decide games. Across 8,310 FBS games, the team that receives the 2nd-half kickoff wins 50.3% of the time.
-- Deferring *does* win the Middle Eight, by just under a point a game.
-- That point never shows up on the final scoreboard.
-- In this rivalry the 2nd-half receiver is 16-11. That looks meaningful. With 27 games, it isn't.
-
-## 1. 107 years, dead even
-
-The tie hides a long Bowling Green era. BG led the series by as many as 11 games after 1994. Toledo needed 31 years to dig out.
+The tie hides a long Bowling Green era. BG led the series by as many as 11 games after 1994, and Toledo needed 31 years to dig out.
 
 <SeriesExplorer />
 
-Rivalries get told as stories about streaks, so I checked whether this one is actually streakier than chance. I took the 86 decided games and shuffled their order 20,000 times. Try it yourself:
+Rivalries get told as stories about streaks. To check whether this one really is streaky, I shuffled the order of the 86 decided games 20,000 times. Try a few shuffles yourself:
 
 <StreakShuffle />
 
-- **Overall, it isn't streaky.** The real series has 40 runs of consecutive wins. Random orderings average 44. About 1 in 4 shuffles is at least as streaky.
-- **One stretch is real.** Bowling Green's 12 straight wins (1955 to 1966) show up in only 0.8% of shuffles. That run covers Doyt Perry's entire tenure as BG's head coach.
+- **The series as a whole isn't streaky.** It has 40 runs of consecutive wins. Random orderings average 44, and about 1 in 4 is at least as streaky.
+- **BG's 12 straight (1955 to 1966) is real.** Only 0.8% of shuffles produce a run that long. It covers Doyt Perry's entire tenure as BG's head coach.
 - **Toledo's 9 straight (2010 to 2018) isn't unusual.** About 1 in 10 shuffles has a run that long.
 
-Home field has helped, but less than you'd think. Home teams are 48-38 in decided games (55.8%). Over 86 games, that isn't statistically different from a coin flip (p = 0.33).
+Home field helps less than you'd think. Home teams are 48-38 in decided games (55.8%), which over 86 games isn't statistically different from a coin flip (p = 0.33).
 
-## 2. Every coin toss on the record
+<Question n={2} id="toss" q="What do captains choose, and does it work?" a="They defer 22 of 26 times. Toss winners are 13-13." />
 
-Official box scores record the toss for 26 of the 28 games since 1998. I pulled each line word for word. Every one is in the repo with its source link, and every one is below.
+Official box scores record the toss for 26 of the 28 games since 1998. Every line below is copied word for word, typos included, with a link to its source.
 
 <CoinTossLedger />
 
-- The toss winner deferred **22 of 26** times.
-- Four times the winner took the ball: Bowling Green in 2004, 2007 and 2015, and Toledo in 2009.
-- Toss winners are **13-13**. A literal coin flip.
-- Toledo is 7-3 when it deferred and 7-5 when Bowling Green deferred. No meaningful difference (p = 0.68).
+- **Four times the winner took the ball:** Bowling Green in 2004, 2007 and 2015, and Toledo in 2009.
+- **Who defers doesn't matter either.** Toledo is 7-3 when it deferred and 7-5 when Bowling Green deferred (p = 0.68).
+- **Two games can't be coded.** The 1998 line says BG deferred and *"Miami will receive."* Miami wasn't playing, and the kickoffs show the opposite of what the line says. The 2000 box score has no play-by-play.
 
-Two games can't be coded. The 1998 line says *"BG wins toss and defers; Miami will receive."* Miami wasn't playing. And Toledo kicked off to start the game while Bowling Green kicked off to start the 2nd half, which can't happen if BG deferred. The line is a copy-paste template error. The 2000 box score has no play-by-play at all.
+<Question n={3} id="opening" q="Does the team that gets the ball first play it safe, or make a statement?" a="Neither. Opening drives look the same no matter who deferred." />
 
-## 3. Twenty-seven games can't answer the question
+Deferring hands the other team the opening possession. One theory says that team plays it safe. Another says it comes out swinging to send a message. I rebuilt the first drive of all 27 games since 1998 from the official play-by-play to find out.
 
-The 2nd-half receiver is 16-11 in this rivalry (59.3%). It's tempting to stop there and call it an edge. Before you do, see how often a completely worthless edge produces the same record:
+<OpeningDrives />
+
+- **Nobody plays it safe.** When Toledo deferred, Bowling Green scored on the opening drive 5 of 10 times. When Bowling Green deferred, Toledo scored 5 of 12 times. Same rate (p = 1.0).
+- **Nobody makes a statement either.** 17 of 27 opening snaps were runs, a normal scripted start. The two biggest first snaps were BG's 56-yard run in 2019 and Toledo's 39-yard pass in 2025.
+- **Taking the ball didn't pay.** The four teams that won the toss and took the ball scored once. Bowling Green threw an interception on its very first snap in 2015.
+
+What does show up is a fast start. Teams that scored on the opening drive won 7 of 11 games. Teams that didn't won 4 of 16. That's suggestive (p = 0.06), not proof, and it probably reflects which team was better that night more than anything about the coin.
+
+<Question n={4} id="sample" q="Doesn't 16-11 for the 2nd-half receiver mean something?" a="No. A fair coin gets there 44% of the time." />
+
+The team that receives the 2nd-half kickoff, usually the one that deferred, is 16-11 in this rivalry (59.3%). Before you call that an edge, see how often a worthless one produces the same record:
 
 <TwentySevenCoins />
 
-The 95% interval on 16-11 runs from 41% to 76%. With 27 games, we could only reliably detect an effect of about 27 percentage points. No coin toss is worth that much. Flip it around: to detect an edge the size the league data actually shows, you'd need roughly **78,400** rivalry games. At one game a year, check back around the year 80,000.
+The 95% interval on 16-11 runs from 41% to 76%. With 27 games, only an effect of about 27 percentage points would reliably show up, and no coin toss is worth that. To detect an edge the size the league data actually shows, you'd need roughly **78,400** rivalry games. At one game a year, check back around the year 80,000.
 
-So I went to a sample that *can* answer it: every regular-season FBS vs. FBS game from 2014 to 2025 in the CollegeFootballData.com database.
+So I went to a sample that *can* answer it: every regular-season FBS vs. FBS game from 2014 to 2025 in the CollegeFootballData.com database. A coin decides who gets the 2nd-half kickoff, so this is close to a natural experiment. The receivers look like a random half of all teams: their average closing spread is -0.22 points, and they're at home 49.2% of the time.
 
-This is close to a natural experiment. A coin decides who gets the 2nd-half kickoff, so the receivers should look like a random half of all teams. They do. Their average closing spread is -0.22 points, and they're at home 49.2% of the time.
-
-## 4. Deferring wins the Middle Eight, not the game
+<Question n={5} id="middle-eight" q="So does deferring help at all?" a="For about eight minutes. Then it's gone." />
 
 <MiddleEightVsGame />
 
-- **Middle Eight:** the 2nd-half receiver outscores its opponent by **+0.93 points** in the last 4:00 of the 2nd quarter plus the first 4:00 of the 3rd (95% CI +0.75 to +1.11, 5,545 games).
-- **Final result:** after adjusting for the closing spread, receiving the 2nd half changes win probability by **-0.15 percentage points** (95% CI -1.45 to +1.16). Against the spread it's -0.17 points.
+- **It wins the Middle Eight.** The 2nd-half receiver outscores its opponent by **+0.93 points** in the last 4:00 of the 2nd quarter plus the first 4:00 of the 3rd (95% CI +0.75 to +1.11, 5,545 games).
+- **It doesn't win the game.** Adjusted for the closing spread, receiving the 2nd half changes win probability by **-0.15 percentage points** (95% CI -1.45 to +1.16). Against the spread it's -0.17 points.
+- **It holds every season.** The 2nd-half receiver's win rate runs from 46.9% to 53.7% with no trend. Dropping 2020 gives 50.2%.
 
-Why doesn't the Middle Eight edge carry through? My best guess: receiving the 2nd half means kicking off in the 1st, so the other team gets the game's first possession. Over 60 minutes, the possessions even out. I haven't tested that directly yet.
-
-The result holds up. By season, the 2nd-half receiver's win rate runs from 46.9% to 53.7% with no trend. Dropping 2020 gives 50.2%.
-
-## What to watch Friday
-
-None of this says the toss is irrelevant. Wind matters at the Glass Bowl, and the box scores show it: 35 mph in 2011, 22 mph in 2013, 19 mph in 2014. A team picking an end into a strong wind is making a real choice.
-
-But if you hear *"they won the toss, that's an edge,"* you can ignore it. Watch the last four minutes before halftime instead. That's where deferring pays off, and it's worth about one point.
+Why doesn't the edge carry through? My best guess: receiving the 2nd half means kicking off in the 1st, so the other team gets the game's first possession. Over 60 minutes, the possessions even out. I haven't tested that directly yet.
 
 > Deferring buys you about one point, for about eight minutes. Then the game takes it back.
 
 ## Data and method
 
-Everything here is reproducible. The [repo](https://github.com/aahmadf123/battle-of-I75) has the code, the coin-toss table with source links, and a full methodology, including every place the official records disagree with each other (there are eight).
+Everything here is reproducible. The [repo](https://github.com/aahmadf123/battle-of-I75) has the code, the coin-toss and opening-drive tables with source links, and a full methodology, including every place the official records disagree with each other (there are eight).
 
 - **Series results:** Toledo and BGSU athletics series pages, reconciled with CollegeFootballData.com by majority vote.
-- **Coin tosses and weather:** official box scores from utrockets.com and bgsufalcons.com.
+- **Coin tosses, opening drives and weather:** official box scores and play-by-play from utrockets.com and bgsufalcons.com.
 - **League data:** CollegeFootballData.com games, closing lines and drives.
-
-*I work with UT Athletics on sports analytics. This piece uses only public data and reflects my own views, not the university's.*
