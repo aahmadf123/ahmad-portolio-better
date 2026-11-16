@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { SmartBackLink } from '@/components/ui/smart-back-link';
+import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { getPublishedNotes } from '@/lib/field-notes';
 import { FieldNoteCard } from '@/components/ui/field-notes/field-note-card';
 
@@ -31,37 +31,7 @@ export default function FieldNotesPage() {
   return (
     <div style={{ background: 'var(--background)', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
 
-      {/* ── Nav ── */}
-      <nav style={{
-        position: 'sticky', top: 0, zIndex: 50, height: 56,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 clamp(20px,4vw,52px)',
-        borderBottom: '1px solid var(--bd)',
-        background: 'rgba(13,14,18,0.97)',
-      }}>
-        <SmartBackLink fallbackHref="/#field-notes" style={{
-          display: 'flex', alignItems: 'center', gap: 8,
-          color: 'var(--text2)', fontFamily: MONO, fontSize: 10,
-          letterSpacing: '0.08em', textTransform: 'uppercase',
-          textDecoration: 'none', transition: 'color 0.2s',
-        }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5" /><path d="M12 5l-7 7 7 7" />
-          </svg>
-          Ahmad.dev
-        </SmartBackLink>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: 4, background: 'var(--primary)', boxShadow: '0 0 8px rgba(45,212,191,0.6)' }} />
-          <span style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.08em' }}>
-            Field Notes
-          </span>
-        </div>
-
-        <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
-          Essays
-        </div>
-      </nav>
+      <SubpageHeader backHref="/#field-notes" backLabel="Portfolio" />
 
       {/* ── Hero ── */}
       <div style={{
@@ -131,24 +101,6 @@ export default function FieldNotesPage() {
         </div>
       )}
 
-      {/* ── Footer ── */}
-      <footer style={{
-        borderTop: '1px solid var(--bd)',
-        padding: '32px clamp(20px,4vw,52px)',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        flexWrap: 'wrap', gap: 12,
-      }}>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
-          Field Notes · Ahmad Firas
-        </span>
-        <SmartBackLink fallbackHref="/#field-notes" style={{
-          fontFamily: MONO, fontSize: 10, color: 'var(--text2)',
-          textDecoration: 'none', letterSpacing: '0.08em',
-          textTransform: 'uppercase',
-        }}>
-          ← Portfolio
-        </SmartBackLink>
-      </footer>
     </div>
   );
 }

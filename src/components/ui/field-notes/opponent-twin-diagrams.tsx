@@ -2,8 +2,8 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 
-const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
-const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
+const MONO  = "var(--font-code), ui-monospace, monospace";
+const SERIF = "var(--font-body), system-ui, sans-serif";
 
 const GREEN = '#22c55e';
 const GOLD  = '#f59e0b';
@@ -508,7 +508,7 @@ export function AdaptationDecay() {
 
       <div style={{
         border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10,
-        background: 'rgba(242,237,216,0.02)', padding: '16px 18px',
+        background: 'rgba(244,244,242,0.02)', padding: '16px 18px',
       }}>
         <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
           Your twin finds a real tell worth {EDGE_0} points a game. But every snap you spend
@@ -525,7 +525,7 @@ export function AdaptationDecay() {
                 style={{
                   fontFamily: MONO, fontSize: 10, letterSpacing: '0.05em',
                   padding: '7px 12px', borderRadius: 6, cursor: 'pointer',
-                  background: active ? `${s.color}18` : 'rgba(242,237,216,0.03)',
+                  background: active ? `${s.color}18` : 'rgba(244,244,242,0.03)',
                   border: `1px solid ${active ? s.color : 'rgba(244,244,242,0.12)'}`,
                   color: active ? s.color : 'var(--text2)',
                   transition: 'all 0.15s',
