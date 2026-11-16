@@ -45,3 +45,8 @@ next-env.d.ts
 /Battle of I75/
 
 .superpowers/
+
+# playwright
+/test-results/
+/playwright-report/
+/scripts/.cache/

@@ -399,7 +399,7 @@ export function GamePlanSimulator() {
         </div>
 
         {result && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 8, marginBottom: 12 }}>
+          <div data-content-volatile="" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 8, marginBottom: 12 }}>
             {[
               {
                 label: 'Win probability',

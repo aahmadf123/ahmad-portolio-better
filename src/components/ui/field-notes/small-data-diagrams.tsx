@@ -209,7 +209,7 @@ export function SeasonSimulator() {
 
         {/* Readouts */}
         {result && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 8 }}>
+          <div data-content-volatile="" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 8 }}>
             {[
               {
                 label: 'Looked mediocre',
