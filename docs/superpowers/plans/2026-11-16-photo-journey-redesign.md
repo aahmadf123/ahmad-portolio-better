@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace the homepage's look and flow with a scroll journey through real photographs, one per side of Ahmad: chemical engineering, data science, sports analytics, research, AI engineering. The journey uses a "fly-in" camera push between photos, and every piece of information on the current site is kept.
+**Goal:** Replace the homepage's look and flow with a scroll journey through real photographs, one per side of Ahmad: the AIChE Chem-E Car team, data science, sports analytics, research, AI engineering. The journey uses a "fly-in" camera push between photos, and every piece of information on the current site is kept.
 
 **Architecture:**
 - **World registry.** A typed registry (`src/lib/data/worlds.ts`) groups existing content into five worlds by *referencing* the current data files. Story text, projects and insights are never copied or reworded.
@@ -117,7 +117,7 @@
 
 **Interfaces:**
 - Produces `scripts/journey-photos.json`: an array of `{ id: PhotoId; source: string; page: string; photographer: string; licence: 'Unsplash' | 'Pexels'; focal: { x: number; y: number }; alt: string }`.
-  - `PhotoId = 'opening' | 'chemical-engineering' | 'data-science' | 'sports-analytics' | 'research' | 'ai-engineering'`.
+  - `PhotoId = 'opening' | 'chem-e-car' | 'data-science' | 'sports-analytics' | 'research' | 'ai-engineering'`.
   - `focal` is in 0–1 image coordinates, pointing at the thing the camera flies into.
 
 - [ ] **Step 1:** For each of the 6 slots, find 3 candidates that follow spec §7. `curl -s -o /dev/null -w "%{http_code}"` each `images.unsplash.com/photo-…?w=400` URL and keep only 200s. Read the photographer from the photo page's `og:title`.
@@ -148,7 +148,7 @@
 - Consumes `journey-manifest.json`, `storyChapters`, `projects`, `insights`, `fieldNotes`.
 - Produces:
 ```ts
-export type WorldId = 'chemical-engineering' | 'data-science' | 'sports-analytics' | 'research' | 'ai-engineering';
+export type WorldId = 'chem-e-car' | 'data-science' | 'sports-analytics' | 'research' | 'ai-engineering';
 export type PhotoId = WorldId | 'opening';
 export interface World {
   id: WorldId; n: string; label: string; years: string; accent: string; // hex
@@ -169,7 +169,7 @@ Exact values, in journey order:
 
 | id | n | label | years | accent | title | paragraphs | stat | projectSlugs |
 |---|---|---|---|---|---|---|---|---|
-| chemical-engineering | 01 | Chemical Engineering | 2023–2024 | `#f0823c` | `Chemistry, wired.` | [`sentences(engineering-foundation.body)[1]`] | `{ value: 'Worldwide', label: 'Most Innovative Car Design · AIChE Chem-E Car' }` | camel-car-cheme-car-control-system |
+| chem-e-car | 01 | Chem-E Car (AIChE) | 2023–2024 | `#f0823c` | `Chemistry, wired.` | [`sentences(engineering-foundation.body)[1]`] | `{ value: 'Worldwide', label: 'Most Innovative Car Design · AIChE Chem-E Car' }` | camel-car-cheme-car-control-system |
 | data-science | 02 | Data Science | 2023–2024 | `#a78bfa` | engineering-foundation `.title` | [`sentences(..)[0]`, `sentences(..)[2]`] | engineering-foundation `.stat` | homeowner-loss-prediction |
 | sports-analytics | 03 | Sports Analytics | Now | `#22c55e` | `The game, measured.` | [football-iq `.body`] | football-iq `.stat` | toledo-football-iq-computer-vision-analytics, toledo-athletics-onboarding-portal, champions-complex-digital-campaign |
 | research | 04 | Research | 2025 | `#5b8af5` | research-pivot `.title` | [research-pivot `.body`] | research-pivot `.stat` | graph-based-rl-uav-autonomy, deepflyer-drone-reinforcement-learning |
@@ -218,7 +218,7 @@ Exact values, in journey order:
   - Copy sits in a `max-width: 1280px` column with `clamp(20px, 4vw, 52px)` side padding. Copy never overlaps the focal point: it goes on the side of the frame away from `focal.x`.
 - `OpeningScene()`: `<section id="hero">` → `FlyInScene({ id: 'opening', to: 'opening', length: 1.6 })`, which shows:
   - TypedTagline, an h1 with Ahmad in teal and Firas, `site.heroSub`, `heroFacts`, and the CTAs.
-  - The CTAs are "Start the journey ↓" (`#chemical-engineering`), "View Work" (`#chemical-engineering`), Resume and Degree, with the existing hrefs and styles.
+  - The CTAs are "Start the journey ↓" (`#chem-e-car`), "View Work" (`#chem-e-car`), Resume and Degree, with the existing hrefs and styles.
   - Then `opening.kicker`, `opening.title`, `opening.body` and `opening.stat` as the first scrolled copy block.
   - `JourneyPhoto` with `priority`.
 
@@ -239,8 +239,8 @@ Exact values, in journey order:
 - Create: `src/components/sections/projects/ProjectModalProvider.tsx`, `src/components/sections/research/ResearchPaper.tsx`, `src/lib/insights-highlight.ts`, `src/components/journey/WorldChapter.tsx`, `src/components/journey/ClosingScene.tsx`, `tests/journey/worlds.spec.ts`
 - Modify:
   - `src/app/page.tsx`: replace `StorySection`, `ProjectsSection`, `ResearchSection` and `InsightsSection` with `worlds.map(WorldChapter)` and `ClosingScene`. Wrap the page in `ProjectModalProvider`.
-  - `src/lib/data/sections.ts`, append-only for data. The registry order becomes hero, the five world ids, `next-chapter`, field-notes, about, skills, timeline, credentials, signals, now, contact. Each world entry takes its `n`, `label` and `accent` from `worlds`. `nav: true` goes on `chemical-engineering`, `field-notes`, `about` and `contact`.
-  - `src/components/layout/SiteHeader.tsx`: add optional `navLabel` on `SectionDef`; the header shows `navLabel ?? label`, with `navLabel: 'Journey'` on chemical-engineering.
+  - `src/lib/data/sections.ts`, append-only for data. The registry order becomes hero, the five world ids, `next-chapter`, field-notes, about, skills, timeline, credentials, signals, now, contact. Each world entry takes its `n`, `label` and `accent` from `worlds`. `nav: true` goes on `chem-e-car`, `field-notes`, `about` and `contact`.
+  - `src/components/layout/SiteHeader.tsx`: add optional `navLabel` on `SectionDef`; the header shows `navLabel ?? label`, with `navLabel: 'Journey'` on chem-e-car.
   - `src/components/sections/insights/InsightsSection.tsx`: use `insights-highlight.ts` (the file is removed in Task 10).
 
 **Interfaces:**
@@ -279,7 +279,7 @@ Exact values, in journey order:
   - `src/components/shared/section-helpers.tsx`: `SH` gains `variant?: 'chapter' | 'sub'`. `sub` renders no ghost numeral and an `h3` label, with a 32 px gap.
   - `SkillsSection.tsx`, `TimelineSection.tsx`, `CredentialsSection.tsx` and `SignalsSection.tsx`: pass `variant="sub"`.
   - `src/app/page.tsx`: order after the closing scene becomes FieldNotes, About, Skills, Timeline, Credentials, Signals, Now, Contact.
-  - `AboutSection.tsx`: its internal `#projects` link becomes `#chemical-engineering`.
+  - `AboutSection.tsx`: its internal `#projects` link becomes `#chem-e-car`.
 - Test: `tests/journey/about.spec.ts`
 
 **Interfaces:** Section ids stay `about`, `skills`, `timeline`, `credentials` and `signals`.
@@ -352,7 +352,7 @@ vec2 par(vec2 uv, float d){ return uv + uPointer * (d - 0.5) * 0.015; }
 - Field notes: `photoForFieldNote(note)`. The field-notes index and docs use `'opening'`.
 
 - [ ] **Step 1:** Write `inside.spec.ts`:
-  - `case study opens on its world photo`: on `/case-study/camel-car-cheme-car-control-system`, the backdrop img `currentSrc` contains `chemical-engineering`.
+  - `case study opens on its world photo`: on `/case-study/camel-car-cheme-car-control-system`, the backdrop img `currentSrc` contains `chem-e-car`.
   - `field note photo by category`: `/field-notes/battle-of-i75-coin-toss` uses `sports-analytics`, and `/field-notes/agentic-ai-in-production` uses `ai-engineering`.
   - `back from case study restores world`: go to `/`, scroll to `#research`, click the DeepFlyer card's case-study link from the modal, then click SubpageHeader back. Expected: `#research` is in the viewport and its title is visible (opacity 1).
   - `reading text has contrast`: the axe color-contrast rule passes on the case study and field note hero areas.

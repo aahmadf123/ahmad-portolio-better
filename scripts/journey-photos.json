@@ -1,0 +1,62 @@
+[
+  {
+    "id": "opening",
+    "source": "https://images.unsplash.com/photo-1770929685497-a8edfaf831c1?w=2560&q=90&fm=jpg",
+    "page": "https://unsplash.com/photos/city-skyline-across-a-river-at-dusk-iRfYb-gh0a0",
+    "photographer": "Sean Dogjani",
+    "licence": "Unsplash License",
+    "licenceUrl": "https://unsplash.com/license",
+    "focal": { "x": 0.62, "y": 0.44 },
+    "alt": "A city skyline across a wide river at dusk"
+  },
+  {
+    "id": "chem-e-car",
+    "source": "https://images.unsplash.com/photo-1766297247072-93fd815afef3?w=2560&q=90&fm=jpg",
+    "page": "https://unsplash.com/photos/laboratory-shelves-filled-with-glassware-and-equipment-v41sgDGz4ik",
+    "photographer": "Chidera Faustina Okeke",
+    "licence": "Unsplash License",
+    "licenceUrl": "https://unsplash.com/license",
+    "focal": { "x": 0.5, "y": 0.47 },
+    "alt": "Laboratory shelves lined with glassware"
+  },
+  {
+    "id": "data-science",
+    "source": "https://images.unsplash.com/photo-1542382257-80dedb725088?w=2560&q=90&fm=jpg",
+    "page": "https://unsplash.com/photos/lighted-city-at-night-aerial-photo-OKOOGO578eo",
+    "photographer": "Nastya Dulhiier",
+    "licence": "Unsplash License",
+    "licenceUrl": "https://unsplash.com/license",
+    "focal": { "x": 0.55, "y": 0.38 },
+    "alt": "A city's lights at night seen from a plane, like a map of data points"
+  },
+  {
+    "id": "sports-analytics",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/2/27/The_Glass_Bowl.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:The_Glass_Bowl.jpg",
+    "photographer": "Anthony John Garcia",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "focal": { "x": 0.4, "y": 0.62 },
+    "alt": "The Glass Bowl at sunset during a Toledo Rockets game, ROCKETS end zone and packed stands"
+  },
+  {
+    "id": "research",
+    "source": "https://images.unsplash.com/photo-1753781467329-416d05e7e477?w=2560&q=90&fm=jpg",
+    "page": "https://unsplash.com/photos/drones-are-flying-in-a-cloudy-blue-sky-FQa5xUZlAUo",
+    "photographer": "Valentin Zickner",
+    "licence": "Unsplash License",
+    "licenceUrl": "https://unsplash.com/license",
+    "focal": { "x": 0.55, "y": 0.62 },
+    "alt": "Two drones flying in a pale sky"
+  },
+  {
+    "id": "ai-engineering",
+    "source": "https://images.unsplash.com/photo-1784652852605-6945598f2af3?w=2560&q=90&fm=jpg",
+    "page": "https://unsplash.com/photos/modern-data-center-with-rows-of-white-server-cabinets-fImCPTZ026U",
+    "photographer": "Tony Marinescu",
+    "licence": "Unsplash License",
+    "licenceUrl": "https://unsplash.com/license",
+    "focal": { "x": 0.55, "y": 0.6 },
+    "alt": "Rows of white server cabinets in a data centre"
+  }
+]
