@@ -162,10 +162,10 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
       {/* content */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 3, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '16px 18px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: p.color, background: 'rgba(10,11,15,0.78)', padding: '3px 8px', borderRadius: 4 }}>
+          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: p.color, background: 'rgba(10,11,15,0.78)', padding: '3px 8px', borderRadius: 4 }}>
             {p.domain} · {p.idx}
           </span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: STATUS_COLOR[p.status], background: 'rgba(10,11,15,0.78)', padding: '3px 8px', borderRadius: 4 }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: STATUS_COLOR[p.status], background: 'rgba(10,11,15,0.78)', padding: '3px 8px', borderRadius: 4 }}>
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: STATUS_COLOR[p.status], display: 'inline-block' }} />
             {projectStatusLabel[p.status]}
           </span>
@@ -188,7 +188,7 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
             <div style={{ fontFamily: MONO, fontSize: 10, color: p.color, letterSpacing: '0.05em', marginTop: 8 }}>{p.headline}</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 10 }}>
               {p.stacks.slice(0, canHover ? (wide ? 6 : 4) : 3).map((t) => (
-                <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '2px 7px', background: 'rgba(10,11,15,0.6)', border: '1px solid var(--bd2)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.03em' }}>{t}</span>
+                <span key={t} style={{ fontFamily: MONO, fontSize: 10, padding: '2px 7px', background: 'rgba(10,11,15,0.6)', border: '1px solid var(--bd2)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.03em' }}>{t}</span>
               ))}
             </div>
           </Reveal>

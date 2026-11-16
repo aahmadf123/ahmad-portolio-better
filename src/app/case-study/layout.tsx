@@ -1,3 +1,3 @@
 export default function CaseStudyLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <main id="main" tabIndex={-1}>{children}</main>;
 }

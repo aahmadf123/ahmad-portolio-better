@@ -9,7 +9,7 @@ import Link from 'next/link';
  */
 export default function NotFoundPage() {
   return (
-    <main
+    <main id="main" tabIndex={-1}
       style={{
         minHeight: '100svh',
         display: 'flex',

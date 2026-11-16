@@ -12,11 +12,11 @@ const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
 
 // Team colors stay hex: they get alpha-concatenated below (`${UT}22`).
-const UT    = '#5b8af5'; // Toledo blue
+const UT    = '#6b96f7'; // Toledo blue (lifted for 4.5:1 on dark panels)
 const BG    = '#f0823c'; // Bowling Green orange
 const GOLD  = '#f59e0b';
 const GREEN = '#22c55e';
-const MUTED = '#8a8a86';
+const MUTED = '#9a9a96';
 
 type Team = 'UT' | 'BG';
 const teamColor = (t: Team | null | undefined) => (t === 'UT' ? UT : t === 'BG' ? BG : MUTED);
@@ -28,7 +28,7 @@ function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; 
   return (
     <div style={{
       fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em',
-      textTransform: 'uppercase', color, opacity: 0.8,
+      textTransform: 'uppercase', color,
       marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
     }}>
       <span style={{ display: 'inline-block', width: 18, height: 1, background: color, opacity: 0.5 }} />
@@ -89,7 +89,7 @@ function Stat({ label, value, sub, color }: { label: string; value: string; sub:
       padding: '12px 14px', borderRadius: 8,
       background: `${color}0a`, border: `1px solid ${color}26`,
     }}>
-      <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color, opacity: 0.85, marginBottom: 6 }}>
+      <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color, marginBottom: 6 }}>
         {label}
       </div>
       <div style={{ fontFamily: MONO, fontSize: 20, color, lineHeight: 1, marginBottom: 6, fontVariantNumeric: 'tabular-nums' }}>

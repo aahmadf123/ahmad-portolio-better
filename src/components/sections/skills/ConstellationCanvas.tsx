@@ -777,7 +777,7 @@ export function ConstellationCanvas({
       {tooltip && (
         <div role="status" style={{ position: 'absolute', left: tooltip.x, top: tooltip.y, pointerEvents: 'none', background: 'rgba(13,14,18,0.92)', border: `1px solid ${tooltip.color}55`, borderRadius: 6, padding: '7px 11px', backdropFilter: 'blur(6px)', zIndex: 3 }}>
           <div style={{ fontFamily: MONO, fontSize: 12, color: 'var(--foreground)', letterSpacing: '0.02em' }}>{tooltip.name}</div>
-          <div style={{ fontFamily: MONO, fontSize: 9, color: tooltip.color, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>{tooltip.group} · click for context</div>
+          <div style={{ fontFamily: MONO, fontSize: 10, color: tooltip.color, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>{tooltip.group} · click for context</div>
         </div>
       )}
 

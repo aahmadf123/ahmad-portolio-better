@@ -58,7 +58,7 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
             {catCfg && (
               <span style={{
-                fontFamily: MONO, fontSize: 9, padding: '3px 8px',
+                fontFamily: MONO, fontSize: 10, padding: '3px 8px',
                 background: `${catCfg.color}14`,
                 border: `1px solid ${catCfg.color}30`,
                 borderRadius: 4, color: catCfg.color,
@@ -67,10 +67,10 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
                 {catCfg.label}
               </span>
             )}
-            <span style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', letterSpacing: '0.06em' }}>
+            <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>
               {formatDate(note.date)}
             </span>
-            <span style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', letterSpacing: '0.06em', marginLeft: 'auto' }}>
+            <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em', marginLeft: 'auto' }}>
               {note.readingTime} min read
             </span>
           </div>
@@ -98,7 +98,7 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
               {note.tags.slice(0, 3).map(tag => (
                 <span key={tag} style={{
-                  fontFamily: MONO, fontSize: 9, padding: '2px 7px',
+                  fontFamily: MONO, fontSize: 10, padding: '2px 7px',
                   background: 'rgba(242,237,216,0.04)',
                   border: '1px solid rgba(244,244,242,0.1)',
                   borderRadius: 4, color: 'var(--text3)',

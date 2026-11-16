@@ -59,7 +59,7 @@ export function SignOff({ text, sub }: { text: string; sub: string }) {
           />
         </svg>
         <div style={{ fontFamily: HAND, fontSize: 24, color: 'var(--text2)', marginTop: 10 }}>{sub}</div>
-        <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: 8 }}>
+        <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: 8 }}>
           Toledo, OH · est. chapter one
         </div>
       </m.div>

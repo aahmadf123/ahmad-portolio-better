@@ -109,16 +109,16 @@ export const HoverPeek = ({
                 style={{ x: enableMouseFollow ? followX : 0, pointerEvents: 'auto' }}
               >
                 <a href={url} target="_blank" rel="noopener noreferrer"
-                  className={cn("relative block overflow-hidden rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 shadow-lg hover:shadow-xl transition-shadow p-0.5")}
+                  className={cn("relative block overflow-hidden rounded-lg bg-neutral-900 border border-neutral-700 shadow-lg hover:shadow-xl transition-shadow p-0.5")}
                   onMouseEnter={handleLensMouseEnter} onMouseLeave={handleLensMouseLeave} onMouseMove={handleLensMouseMove}
                 >
                   {imageLoadFailed ? (
-                    <div className="flex items-center justify-center bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-xs font-sans" style={{ width: peekWidth, height: peekHeight }}>
+                    <div className="flex items-center justify-center bg-neutral-800 text-neutral-400 text-xs font-sans" style={{ width: peekWidth, height: peekHeight }}>
                       Preview unavailable
                     </div>
                   ) : (
                     <img src={finalImageSrc} width={peekWidth} height={peekHeight}
-                      className="block rounded-[5px] pointer-events-none bg-neutral-50 dark:bg-neutral-800 align-top"
+                      className="block rounded-[5px] pointer-events-none bg-neutral-800 align-top"
                       alt={`Link preview for ${url}`} onError={() => setImageLoadFailed(true)} loading="lazy"
                     />
                   )}
@@ -132,7 +132,7 @@ export const HoverPeek = ({
                         }}
                       >
                         <div className="absolute inset-0" style={{ transform: `scale(${lensZoomFactor})`, transformOrigin: `${lensMousePosition.x}px ${lensMousePosition.y}px` }}>
-                          <img src={finalImageSrc} width={peekWidth} height={peekHeight} className="block rounded-[5px] bg-neutral-50 dark:bg-neutral-800 align-top" alt="" aria-hidden="true" />
+                          <img src={finalImageSrc} width={peekWidth} height={peekHeight} className="block rounded-[5px] bg-neutral-800 align-top" alt="" aria-hidden="true" />
                         </div>
                       </m.div>
                     )}

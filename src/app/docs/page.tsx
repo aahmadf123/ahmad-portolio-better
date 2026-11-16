@@ -251,7 +251,7 @@ export default function DocsPage() {
                     rel="noopener noreferrer"
                     style={{
                       fontFamily: MONO,
-                      fontSize: 9,
+                      fontSize: 10,
                       letterSpacing: '0.1em',
                       textTransform: 'uppercase',
                       color: 'var(--text2)',
@@ -279,7 +279,7 @@ export default function DocsPage() {
                     download
                     style={{
                       fontFamily: MONO,
-                      fontSize: 9,
+                      fontSize: 10,
                       letterSpacing: '0.1em',
                       textTransform: 'uppercase',
                       color: 'var(--foreground)',

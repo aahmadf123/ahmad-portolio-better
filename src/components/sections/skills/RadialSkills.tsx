@@ -34,7 +34,7 @@ export function RadialSkills() {
               textAlign: 'center',
             }}
           >
-            <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: group.color }}>Cluster</div>
+            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: group.color }}>Cluster</div>
             <div style={{ fontFamily: SERIF, fontSize: 24, color: 'var(--foreground)', margin: '4px 0 14px' }}>{group.label}</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, justifyContent: 'center' }}>
               {group.skills.map((s) => (
@@ -44,7 +44,7 @@ export function RadialSkills() {
           </div>
         ))}
       </div>
-      <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: FG3, textAlign: 'center', marginTop: 6 }}>
+      <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: FG3, textAlign: 'center', marginTop: 6 }}>
         Swipe through the clusters →
       </div>
     </div>

@@ -105,7 +105,7 @@ function JobCard({ job }: { job: Job }) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {job.active && <span className="pulse" style={{ width: 6, height: 6, borderRadius: '50%', background: job.color, display: 'inline-block' }} />}
-          <span style={{ fontFamily: MONO, fontSize: 9, color: job.color, letterSpacing: '0.1em', textTransform: 'uppercase', background: `color-mix(in srgb, ${job.color} 9%, transparent)`, padding: '2px 8px', borderRadius: 4 }}>{job.type}</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: job.color, letterSpacing: '0.1em', textTransform: 'uppercase', background: `color-mix(in srgb, ${job.color} 9%, transparent)`, padding: '2px 8px', borderRadius: 4 }}>{job.type}</span>
           {job.milestone && <span style={{ color: 'var(--gold)', fontSize: 12 }} aria-label="milestone">✦</span>}
         </div>
         <span style={{ fontFamily: MONO, fontSize: 10, color: job.color, letterSpacing: '0.05em' }}>{job.period}</span>
@@ -116,20 +116,20 @@ function JobCard({ job }: { job: Job }) {
       {!open && (
         <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 5, alignItems: 'center' }}>
           {job.achievements.slice(0, 2).map((a, i) => { const c = pickColor(a); return (
-            <span key={i} style={{ fontFamily: MONO, fontSize: 9, padding: '3px 8px', background: `${c}12`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.02em' }}>{a}</span>
+            <span key={i} style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}12`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.02em' }}>{a}</span>
           ); })}
-          <span style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase' }}>+ details</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase' }}>+ details</span>
         </div>
       )}
 
       {open && (
         <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid color-mix(in srgb, ${job.color} 13%, transparent)` }} onClick={(e) => e.stopPropagation()}>
           <p style={{ fontSize: 14, lineHeight: 1.75, color: FG2 }}>{job.description}</p>
-          <div style={{ fontFamily: MONO, fontSize: 9, color: job.color, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '14px 0 8px', opacity: 0.8 }}>Key Achievements</div>
+          <div style={{ fontFamily: MONO, fontSize: 10, color: job.color, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '14px 0 8px', opacity: 0.8 }}>Key Achievements</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 6 }}>
             {job.achievements.map((a, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 7, padding: '8px 12px', background: `color-mix(in srgb, ${job.color} 4%, transparent)`, borderRadius: 5, border: `1px solid color-mix(in srgb, ${job.color} 13%, transparent)` }}>
-                <span style={{ color: job.color, fontSize: 9, marginTop: 3, flexShrink: 0 }}>▸</span>
+                <span style={{ color: job.color, fontSize: 10, marginTop: 3, flexShrink: 0 }}>▸</span>
                 <span style={{ fontSize: 12.5, color: 'var(--text2)', lineHeight: 1.45 }}>{a}</span>
               </div>
             ))}
@@ -147,7 +147,7 @@ function AwardCard({ award }: { award: Award }) {
   return (
     <div style={{ border: '1px solid rgba(245,158,11,0.3)', background: 'rgba(245,158,11,0.05)', borderRadius: 10, padding: '14px 18px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
-        <span style={{ fontFamily: MONO, fontSize: 9, color: 'var(--gold)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>✦ Milestone</span>
+        <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--gold)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>✦ Milestone</span>
         <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--gold)' }}>{award.date}</span>
       </div>
       <div style={{ fontFamily: SERIF, fontSize: 17, color: 'var(--foreground)', marginTop: 6, lineHeight: 1.3 }}>{award.title}</div>
@@ -160,7 +160,7 @@ function EducationCard() {
   return (
     <div style={{ border: '1px solid rgba(167,139,250,0.3)', background: 'rgba(167,139,250,0.05)', borderRadius: 10, padding: '16px 20px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
-        <span style={{ fontFamily: MONO, fontSize: 9, color: 'var(--purple)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Education · where it begins</span>
+        <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--purple)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Education · where it begins</span>
         <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--purple)' }}>{education.period}</span>
       </div>
       <div style={{ fontFamily: SERIF, fontSize: 19, color: 'var(--foreground)', marginTop: 8, paddingBottom: '0.05em' }}>{education.school}</div>

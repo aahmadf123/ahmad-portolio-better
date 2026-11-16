@@ -154,11 +154,6 @@ const websiteJsonLd = {
   url: site.url,
   inLanguage: "en",
   author: { "@type": "Person", name: "Ahmad Firas" },
-  potentialAction: {
-    "@type": "SearchAction",
-    target: `${site.url}/field-notes?q={search_term_string}`,
-    "query-input": "required name=search_term_string",
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -171,7 +166,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body suppressHydrationWarning>
         <PostHogProvider>
         <MotionProvider>
-        <a href="#hero" className="skip-link">
+        <a href="#main" className="skip-link">
           Skip to main content
         </a>
         <MagneticCursor />

@@ -34,14 +34,14 @@ export function ProjectsSection() {
       <FootballIQFeature />
 
       {/* filter chips */}
-      <div role="tablist" aria-label="Filter projects by category" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, margin: '4px 0 22px' }}>
+      <div role="group" aria-label="Filter projects by category" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, margin: '4px 0 22px' }}>
         {projectCategories.map((c) => {
           const active = category === c.id;
           return (
             <button
               key={c.id}
-              role="tab"
-              aria-selected={active}
+              type="button"
+              aria-pressed={active}
               onClick={() => setCategory(c.id)}
               style={{
                 fontFamily: MONO, fontSize: 10, letterSpacing: '0.09em', textTransform: 'uppercase',

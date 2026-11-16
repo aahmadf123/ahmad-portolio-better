@@ -54,7 +54,7 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
         <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(245,158,11,0.5)' }} />
         <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(34,197,94,0.5)' }} />
         <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.05em', marginLeft: 8, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{insight.file}</span>
-        <span style={{ fontFamily: MONO, fontSize: 8, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginLeft: 'auto', border: '1px solid var(--bd2)', borderRadius: 4, padding: '2px 6px', flexShrink: 0 }}>illustrative</span>
+        <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginLeft: 'auto', border: '1px solid var(--bd2)', borderRadius: 4, padding: '2px 6px', flexShrink: 0 }}>illustrative</span>
       </div>
 
       {/* code */}
@@ -63,6 +63,9 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
         whileInView="shown"
         viewport={{ once: true, amount: 0.25 }}
         transition={{ staggerChildren: reduced ? 0 : 0.07 }}
+        tabIndex={0}
+        role="region"
+        aria-label={`Code: ${insight.file}`}
         style={{ padding: '16px 18px', overflowX: 'auto', fontFamily: MONO, fontSize: 12.5, lineHeight: 1.75 }}
       >
         {lines.map((line, li) => (
@@ -87,7 +90,7 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
 
       {/* takeaway */}
       <div style={{ padding: '16px 18px 18px', borderTop: '1px solid var(--bd)' }}>
-        <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: insight.color, marginBottom: 7 }}>{insight.title}</div>
+        <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: insight.color, marginBottom: 7 }}>{insight.title}</div>
         <p style={{ fontFamily: SANS, fontSize: 13.5, lineHeight: 1.7, color: FG2, margin: 0 }}>{insight.takeaway}</p>
         <Link href={insight.source.href} transitionTypes={['nav-forward']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 12, fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.07em', textTransform: 'uppercase' }}>
           From: {insight.source.label} ↗

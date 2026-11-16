@@ -56,7 +56,7 @@ export function StoryChapter({ chapter, index, pinned, total }: {
         pointerEvents: 'none',
       }}>
         <span style={{
-          fontFamily: MONO, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase',
+          fontFamily: MONO, fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase',
           color: chapter.accent, opacity: 0.28, lineHeight: 1,
         }}>Chapter</span>
         <span style={{
@@ -67,7 +67,7 @@ export function StoryChapter({ chapter, index, pinned, total }: {
           lineHeight: 1,
         }}>{String(index + 1).padStart(2, '0')}</span>
         <span style={{
-          fontFamily: MONO, fontSize: 8, letterSpacing: '0.16em', textTransform: 'uppercase',
+          fontFamily: MONO, fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase',
           color: chapter.accent, opacity: 0.2, lineHeight: 1,
         }}>of {String(total).padStart(2, '0')}</span>
       </div>
