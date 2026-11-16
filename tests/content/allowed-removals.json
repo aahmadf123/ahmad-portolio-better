@@ -1,1 +1,4 @@
-[]
+[
+  { "text": "Enter the Story ↓", "reason": "Hero button label; the button is now \"Start the journey ↓\" (same place, same job)." },
+  { "text": "Scroll to explore", "reason": "Decorative scroll hint under the old hero; the photo journey itself invites the scroll." }
+]

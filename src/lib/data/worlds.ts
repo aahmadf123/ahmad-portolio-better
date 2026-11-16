@@ -4,7 +4,7 @@
 // no-information-loss tests keep holding. The only new copy is two world titles
 // and the Chem-E Car stat, marked below.
 
-import manifest from '@/lib/journey-manifest.json';
+import manifestJson from '@/lib/journey-manifest.json';
 import { storyChapters, sentences, type StoryChapter } from './story';
 import { caseStudySlugs } from './projects';
 import type { Insight } from './insights';
@@ -12,7 +12,23 @@ import type { FieldNote } from '@/lib/field-notes';
 
 export type WorldId = 'chem-e-car' | 'data-science' | 'sports-analytics' | 'research' | 'ai-engineering';
 export type PhotoId = WorldId | 'opening';
-export type ManifestEntry = (typeof manifest)[PhotoId];
+/** One photo in src/lib/journey-manifest.json (written by scripts/journey-photos.mjs). */
+export interface ManifestEntry {
+  width: number;
+  height: number;
+  /** Widths actually emitted, ascending (the Glass Bowl tops out at 1366). */
+  widths: number[];
+  webp: Record<string, string>;
+  avif: Record<string, string>;
+  /** Wider than 2.2:1, so it's shown whole over the blurred `fill` instead of cropped. */
+  panorama: boolean;
+  fill?: string;
+  depth: string;
+  focal: { x: number; y: number };
+  alt: string;
+  credit: { photographer: string; page: string; licence: string; licenceUrl: string };
+}
+const manifest = manifestJson as Record<PhotoId, ManifestEntry>;
 
 export interface World {
   id: WorldId;

@@ -10,6 +10,7 @@ import { about, type Lens } from '@/lib/data/about';
 import { education } from '@/lib/data/education';
 import { site } from '@/lib/data/site';
 import { sectionById } from '@/lib/data/sections';
+import { Headshot } from './Headshot';
 import { SignOff } from './SignOff';
 
 const actionBaseStyle: React.CSSProperties = {
@@ -96,8 +97,9 @@ export function AboutSection() {
 
       <MetricsBand />
 
-      {/* manifesto intro */}
-      <div id="about-intro" style={{ maxWidth: 780, marginBottom: 'clamp(36px, 5vw, 64px)' }}>
+      {/* manifesto intro, with the headshot (moved here from the hero for the photo journey) */}
+      <div className="about-intro-row" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(220px, 320px)', gap: 'clamp(24px, 4vw, 64px)', alignItems: 'start', marginBottom: 'clamp(36px, 5vw, 64px)' }}>
+      <div id="about-intro" style={{ maxWidth: 780 }}>
         <h2 style={{ fontFamily: SANS, fontWeight: 500, fontSize: 'var(--text-2xl)', lineHeight: 1.2, letterSpacing: '-0.02em', color: 'var(--foreground)' }}>
           {about.headline}
         </h2>
@@ -115,6 +117,8 @@ export function AboutSection() {
             <a href={site.socials.github} target="_blank" rel="noopener" style={secondaryActionStyle}>GitHub ↗</a>
           </HoverPeek>
         </div>
+      </div>
+      <Headshot />
       </div>
 
       {/* lenses */}
@@ -173,6 +177,7 @@ export function AboutSection() {
       <style>{`
         @media (max-width: 860px) {
           .about-grid { grid-template-columns: 1fr !important; }
+          .about-intro-row { grid-template-columns: 1fr !important; }
           .about-rail { position: relative !important; top: 0 !important; }
         }
       `}</style>

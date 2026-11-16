@@ -1,6 +1,6 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { LightboxProvider } from '@/components/layout/LightboxProvider';
-import { HeroSection } from '@/components/sections/hero/HeroSection';
+import { OpeningScene } from '@/components/journey/OpeningScene';
 import { StorySection } from '@/components/sections/story/StorySection';
 import { SkillsSection } from '@/components/sections/skills/SkillsSection';
 import { TimelineSection } from '@/components/sections/timeline/TimelineSection';
@@ -20,7 +20,7 @@ export default function Home() {
     <LightboxProvider>
       <SiteHeader />
       <main id="main" tabIndex={-1} style={{ position: 'relative', zIndex: 20, background: 'transparent' }}>
-        <HeroSection />
+        <OpeningScene />
         <StorySection />
         <AboutSection />
         <SkillsSection />
