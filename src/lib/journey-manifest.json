@@ -1,0 +1,210 @@
+{
+  "opening": {
+    "width": 2560,
+    "height": 1707,
+    "widths": [
+      640,
+      1280,
+      1920,
+      2560
+    ],
+    "webp": {
+      "640": "/Images/journey/opening-640.webp",
+      "1280": "/Images/journey/opening-1280.webp",
+      "1920": "/Images/journey/opening-1920.webp",
+      "2560": "/Images/journey/opening-2560.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/opening-640.avif",
+      "1280": "/Images/journey/opening-1280.avif",
+      "1920": "/Images/journey/opening-1920.avif",
+      "2560": "/Images/journey/opening-2560.avif"
+    },
+    "panorama": false,
+    "depth": "/Images/journey/opening-depth.webp",
+    "focal": {
+      "x": 0.62,
+      "y": 0.44
+    },
+    "alt": "A city skyline across a wide river at dusk",
+    "credit": {
+      "photographer": "Sean Dogjani",
+      "page": "https://unsplash.com/photos/city-skyline-across-a-river-at-dusk-iRfYb-gh0a0",
+      "licence": "Unsplash License",
+      "licenceUrl": "https://unsplash.com/license"
+    }
+  },
+  "chem-e-car": {
+    "width": 2560,
+    "height": 3840,
+    "widths": [
+      640,
+      1280,
+      1920,
+      2560
+    ],
+    "webp": {
+      "640": "/Images/journey/chem-e-car-640.webp",
+      "1280": "/Images/journey/chem-e-car-1280.webp",
+      "1920": "/Images/journey/chem-e-car-1920.webp",
+      "2560": "/Images/journey/chem-e-car-2560.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/chem-e-car-640.avif",
+      "1280": "/Images/journey/chem-e-car-1280.avif",
+      "1920": "/Images/journey/chem-e-car-1920.avif",
+      "2560": "/Images/journey/chem-e-car-2560.avif"
+    },
+    "panorama": false,
+    "depth": "/Images/journey/chem-e-car-depth.webp",
+    "focal": {
+      "x": 0.5,
+      "y": 0.47
+    },
+    "alt": "Laboratory shelves lined with glassware",
+    "credit": {
+      "photographer": "Chidera Faustina Okeke",
+      "page": "https://unsplash.com/photos/laboratory-shelves-filled-with-glassware-and-equipment-v41sgDGz4ik",
+      "licence": "Unsplash License",
+      "licenceUrl": "https://unsplash.com/license"
+    }
+  },
+  "data-science": {
+    "width": 2560,
+    "height": 1600,
+    "widths": [
+      640,
+      1280,
+      1920,
+      2560
+    ],
+    "webp": {
+      "640": "/Images/journey/data-science-640.webp",
+      "1280": "/Images/journey/data-science-1280.webp",
+      "1920": "/Images/journey/data-science-1920.webp",
+      "2560": "/Images/journey/data-science-2560.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/data-science-640.avif",
+      "1280": "/Images/journey/data-science-1280.avif",
+      "1920": "/Images/journey/data-science-1920.avif",
+      "2560": "/Images/journey/data-science-2560.avif"
+    },
+    "panorama": false,
+    "depth": "/Images/journey/data-science-depth.webp",
+    "focal": {
+      "x": 0.55,
+      "y": 0.38
+    },
+    "alt": "A city's lights at night seen from a plane, like a map of data points",
+    "credit": {
+      "photographer": "Nastya Dulhiier",
+      "page": "https://unsplash.com/photos/lighted-city-at-night-aerial-photo-OKOOGO578eo",
+      "licence": "Unsplash License",
+      "licenceUrl": "https://unsplash.com/license"
+    }
+  },
+  "sports-analytics": {
+    "width": 1366,
+    "height": 458,
+    "widths": [
+      640,
+      1280,
+      1366
+    ],
+    "webp": {
+      "640": "/Images/journey/sports-analytics-640.webp",
+      "1280": "/Images/journey/sports-analytics-1280.webp",
+      "1366": "/Images/journey/sports-analytics-1366.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/sports-analytics-640.avif",
+      "1280": "/Images/journey/sports-analytics-1280.avif",
+      "1366": "/Images/journey/sports-analytics-1366.avif"
+    },
+    "fill": "/Images/journey/sports-analytics-fill.webp",
+    "panorama": true,
+    "depth": "/Images/journey/sports-analytics-depth.webp",
+    "focal": {
+      "x": 0.4,
+      "y": 0.62
+    },
+    "alt": "The Glass Bowl at sunset during a Toledo Rockets game, ROCKETS end zone and packed stands",
+    "credit": {
+      "photographer": "Anthony John Garcia",
+      "page": "https://commons.wikimedia.org/wiki/File:The_Glass_Bowl.jpg",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+    }
+  },
+  "research": {
+    "width": 2560,
+    "height": 1706,
+    "widths": [
+      640,
+      1280,
+      1920,
+      2560
+    ],
+    "webp": {
+      "640": "/Images/journey/research-640.webp",
+      "1280": "/Images/journey/research-1280.webp",
+      "1920": "/Images/journey/research-1920.webp",
+      "2560": "/Images/journey/research-2560.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/research-640.avif",
+      "1280": "/Images/journey/research-1280.avif",
+      "1920": "/Images/journey/research-1920.avif",
+      "2560": "/Images/journey/research-2560.avif"
+    },
+    "panorama": false,
+    "depth": "/Images/journey/research-depth.webp",
+    "focal": {
+      "x": 0.55,
+      "y": 0.62
+    },
+    "alt": "Two drones flying in a pale sky",
+    "credit": {
+      "photographer": "Valentin Zickner",
+      "page": "https://unsplash.com/photos/drones-are-flying-in-a-cloudy-blue-sky-FQa5xUZlAUo",
+      "licence": "Unsplash License",
+      "licenceUrl": "https://unsplash.com/license"
+    }
+  },
+  "ai-engineering": {
+    "width": 2560,
+    "height": 3200,
+    "widths": [
+      640,
+      1280,
+      1920,
+      2560
+    ],
+    "webp": {
+      "640": "/Images/journey/ai-engineering-640.webp",
+      "1280": "/Images/journey/ai-engineering-1280.webp",
+      "1920": "/Images/journey/ai-engineering-1920.webp",
+      "2560": "/Images/journey/ai-engineering-2560.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/ai-engineering-640.avif",
+      "1280": "/Images/journey/ai-engineering-1280.avif",
+      "1920": "/Images/journey/ai-engineering-1920.avif",
+      "2560": "/Images/journey/ai-engineering-2560.avif"
+    },
+    "panorama": false,
+    "depth": "/Images/journey/ai-engineering-depth.webp",
+    "focal": {
+      "x": 0.55,
+      "y": 0.6
+    },
+    "alt": "Rows of white server cabinets in a data centre",
+    "credit": {
+      "photographer": "Tony Marinescu",
+      "page": "https://unsplash.com/photos/modern-data-center-with-rows-of-white-server-cabinets-fImCPTZ026U",
+      "licence": "Unsplash License",
+      "licenceUrl": "https://unsplash.com/license"
+    }
+  }
+}
