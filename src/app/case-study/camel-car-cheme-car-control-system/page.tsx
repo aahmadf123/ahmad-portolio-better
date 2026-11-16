@@ -39,7 +39,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ padding: '16px 18px', background: `linear-gradient(180deg, ${ACCENT}0d, ${ACCENT}04)`, border: `1px solid ${ACCENT}35`, boxShadow: `0 4px 20px ${ACCENT}05`, borderRadius: 8 }}>
       <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
   );
 }
@@ -223,7 +223,7 @@ export default function CamelCarCaseStudy() {
               <h2 className="cs-h2">Boston, 2025 - competing worldwide</h2>
 
               <div className="award-banner">
-                <div style={{ fontFamily: MONO, fontSize: 9, color: ACCENT, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>2025 AIChE Annual Student Conference · Boston, MA</div>
+                <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>2025 AIChE Annual Student Conference · Boston, MA</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   {[
                     { place: '#1', label: 'Most Innovative Car Design', note: 'Awarded for the novel pressure-based control architecture and dual-reaction vehicle concept' },
@@ -485,7 +485,7 @@ if (pressure >= target_pressure_threshold) {
 
           {/* ── Sticky section nav ── */}
           <nav className="cs-sidebar-nav">
-            <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
+            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
                 <button

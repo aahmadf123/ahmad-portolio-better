@@ -179,7 +179,7 @@ export function FilmBudget() {
         background: `${BLUE}05`, padding: '16px 18px',
       }}>
         <div style={{
-          fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase',
+          fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
           color: 'var(--text3)', marginBottom: 6, display: 'flex', justifyContent: 'space-between',
         }}>
           <span>Games of opponent film charted</span>
@@ -205,7 +205,7 @@ export function FilmBudget() {
                   <div style={{ fontFamily: MONO, fontSize: 10, color: r.color, letterSpacing: '0.04em' }}>
                     {r.label}
                   </div>
-                  <div style={{ fontFamily: MONO, fontSize: 8, color: 'var(--text3)', marginTop: 2 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>
                     n = {r.n} snaps
                   </div>
                 </div>
@@ -338,7 +338,7 @@ export function GamePlanSimulator() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, alignItems: 'flex-end', marginBottom: 16 }}>
           <div style={{ flex: '1 1 220px', minWidth: 200 }}>
             <div style={{
-              fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase',
+              fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
               color: 'var(--text3)', marginBottom: 6, display: 'flex', justifyContent: 'space-between',
             }}>
               <span>Twin fidelity</span>
@@ -392,7 +392,7 @@ export function GamePlanSimulator() {
         </div>
         <div style={{
           display: 'flex', justifyContent: 'space-between',
-          fontFamily: MONO, fontSize: 8, color: 'var(--text3)',
+          fontFamily: MONO, fontSize: 10, color: 'var(--text3)',
           letterSpacing: '0.08em', marginBottom: 14,
         }}>
           <span>−35</span><span>lose</span><span>0</span><span>win</span><span>+35 margin</span>
@@ -424,7 +424,7 @@ export function GamePlanSimulator() {
                 padding: '10px 12px', borderRadius: 8,
                 background: `${stat.color}08`, border: `1px solid ${stat.color}22`,
               }}>
-                <div style={{ fontFamily: MONO, fontSize: 8, letterSpacing: '0.1em', textTransform: 'uppercase', color: stat.color, opacity: 0.75, marginBottom: 4 }}>
+                <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: stat.color, opacity: 0.75, marginBottom: 4 }}>
                   {stat.label}
                 </div>
                 <div style={{ fontFamily: MONO, fontSize: 20, color: stat.color, lineHeight: 1, marginBottom: 4 }}>
@@ -443,7 +443,7 @@ export function GamePlanSimulator() {
           background: `${verdictColor}09`, border: `1px solid ${verdictColor}30`,
           fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65,
         }}>
-          <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: verdictColor, marginRight: 10 }}>
+          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: verdictColor, marginRight: 10 }}>
             Verdict
           </span>
           {verdict}
@@ -543,7 +543,7 @@ export function AdaptationDecay() {
             const h = (v / maxWeekly) * 100;
             return (
               <div key={w} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, height: '100%', justifyContent: 'flex-end' }}>
-                <div style={{ fontFamily: MONO, fontSize: 9, color: sel.color }}>
+                <div style={{ fontFamily: MONO, fontSize: 10, color: sel.color }}>
                   {v.toFixed(1)}
                 </div>
                 <div style={{
@@ -557,7 +557,7 @@ export function AdaptationDecay() {
         </div>
         <div style={{
           display: 'flex', gap: 10, padding: '0 4px',
-          fontFamily: MONO, fontSize: 8, color: 'var(--text3)',
+          fontFamily: MONO, fontSize: 10, color: 'var(--text3)',
           letterSpacing: '0.08em', marginBottom: 16,
         }}>
           {Array.from({ length: WEEKS }, (_, w) => (
@@ -572,7 +572,7 @@ export function AdaptationDecay() {
               padding: '10px 12px', borderRadius: 8,
               background: `${s.color}08`, border: `1px solid ${s.color}${s.key === strategyKey ? '45' : '22'}`,
             }}>
-              <div style={{ fontFamily: MONO, fontSize: 8, letterSpacing: '0.1em', textTransform: 'uppercase', color: s.color, opacity: 0.75, marginBottom: 4 }}>
+              <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: s.color, opacity: 0.75, marginBottom: 4 }}>
                 {s.label}
               </div>
               <div style={{ fontFamily: MONO, fontSize: 20, color: s.color, lineHeight: 1, marginBottom: 4 }}>
@@ -590,7 +590,7 @@ export function AdaptationDecay() {
           background: `${BLUE}09`, border: `1px solid ${BLUE}30`,
           fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65,
         }}>
-          <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: BLUE, marginRight: 10 }}>
+          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: BLUE, marginRight: 10 }}>
             The exception
           </span>
           If only one game matters - a rivalry, a conference title - hammering the tell is correct:

@@ -30,7 +30,7 @@ export function SH({ n, label, sub = '', color = 'var(--primary)' }: { n: string
       <div style={{ position: 'relative', zIndex: 1 }}>
         <div className={revealCls} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: sub ? 10 : 0, transitionDelay: '0ms' }}>
           <span style={{ display: 'inline-block', width: 22, height: 1.5, background: color, opacity: 0.6, flexShrink: 0 }} />
-          <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color }}>{label}</span>
+          <h2 style={{ fontFamily: MONO, fontSize: 11, fontWeight: 400, lineHeight: 'inherit', letterSpacing: '0.1em', textTransform: 'uppercase', color, margin: 0 }}>{label}</h2>
         </div>
         {sub && <p className={revealCls} style={{ fontSize: 15, color: FG2, maxWidth: 460, lineHeight: 1.65, marginTop: 4, fontFamily: SANS, transitionDelay: '60ms' }}>{sub}</p>}
       </div>

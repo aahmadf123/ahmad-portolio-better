@@ -48,7 +48,7 @@ export function ContactSection() {
         {/* Live status badge */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 14px', border: '1px solid rgba(34,197,94,0.22)', borderRadius: 4, background: 'rgba(34,197,94,0.05)', flexShrink: 0 }}>
           <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', display: 'inline-block', animation: 'contact-pulse 2.4s ease-in-out infinite' }} />
-          <span style={{ fontFamily: MONO, fontSize: 9, color: '#22c55e', letterSpacing: '0.12em', textTransform: 'uppercase' }}>{site.availability.label}</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, color: '#22c55e', letterSpacing: '0.12em', textTransform: 'uppercase' }}>{site.availability.label}</span>
         </div>
       </div>
 
@@ -82,7 +82,7 @@ export function ContactSection() {
             >
               <span aria-hidden style={{ position: 'absolute', top: 0, left: 0, width: 20, height: 20, borderTop: '2px solid rgba(56,189,248,0.55)', borderLeft: '2px solid rgba(56,189,248,0.55)' }} />
               <span aria-hidden style={{ position: 'absolute', bottom: 0, right: 0, width: 20, height: 20, borderBottom: '2px solid rgba(56,189,248,0.55)', borderRight: '2px solid rgba(56,189,248,0.55)' }} />
-              <span style={{ fontFamily: MONO, fontSize: 9, color: '#38bdf8', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.1em', flexShrink: 0 }}>SEND →</span>
+              <span style={{ fontFamily: MONO, fontSize: 10, color: '#38bdf8', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.1em', flexShrink: 0 }}>SEND →</span>
               <span className="contact-email-text" style={{ fontFamily: MONO, fontSize: 15, color: '#38bdf8', letterSpacing: '0.04em', transition: 'color 0.18s' }}>
                 {site.email}
               </span>
@@ -108,9 +108,9 @@ export function ContactSection() {
 
             {/* Interest tags */}
             <div style={{ marginTop: 52, paddingTop: 24, borderTop: '1px solid var(--bd)', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-              <span style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 4 }}>Open to</span>
+              <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 4 }}>Open to</span>
               {site.availability.interests.map(t => (
-                <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '3px 8px', border: '1px solid var(--bd)', borderRadius: 3, color: FG3, letterSpacing: '0.04em', textTransform: 'uppercase', wordBreak: 'break-word' }}>{t}</span>
+                <span key={t} style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', border: '1px solid var(--bd)', borderRadius: 3, color: FG3, letterSpacing: '0.04em', textTransform: 'uppercase', wordBreak: 'break-word' }}>{t}</span>
               ))}
             </div>
           </div>
@@ -133,7 +133,7 @@ export function ContactSection() {
                   <c.Icon size={16} color={c.color} strokeWidth={1.5} />
                 </div>
                 <div style={{ minWidth: 0 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 5 }}>{c.label}</div>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 5 }}>{c.label}</div>
                   {c.href ? (
                     <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel={c.href.startsWith('http') ? 'noopener' : undefined} style={{ fontFamily: MONO, fontSize: 13, color: c.color, textDecoration: 'none', wordBreak: 'break-all', letterSpacing: '0.02em' }}>{c.value}</a>
                   ) : (

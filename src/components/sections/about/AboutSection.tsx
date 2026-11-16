@@ -210,7 +210,7 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
 
         {/* data point */}
         <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: 10, marginTop: 18, padding: '10px 16px', border: `1px solid color-mix(in srgb, ${accent} 24%, transparent)`, borderRadius: 6, background: `color-mix(in srgb, ${accent} 4%, transparent)` }}>
-          <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: FG3 }}>{lens.dataPoint.label}</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: FG3 }}>{lens.dataPoint.label}</span>
           <span style={{ fontFamily: MONO, fontSize: 12, color: accent, letterSpacing: '0.02em' }}>{lens.dataPoint.value}</span>
         </div>
 
@@ -220,7 +220,7 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
             {beliefs.map((b) => (
               <div key={b.n} style={{ ...beliefCardStyle, background: `color-mix(in srgb, ${b.color} 4%, transparent)` }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                  <span style={{ fontFamily: MONO, fontSize: 9, color: b.color, opacity: 0.7 }}>{b.n}</span>
+                  <span style={{ fontFamily: MONO, fontSize: 10, color: b.color, opacity: 0.7 }}>{b.n}</span>
                   <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--foreground)' }}>{b.title}</span>
                 </div>
                 <p style={{ fontSize: 12.5, lineHeight: 1.65, color: FG2 }}>{b.body}</p>

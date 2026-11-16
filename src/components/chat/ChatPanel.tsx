@@ -122,7 +122,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         <span aria-hidden style={{ width: 32, height: 32, borderRadius: 9, background: 'linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 45%, var(--background)))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: SERIF, fontSize: 15, color: 'var(--background)', fontWeight: 600 }}>AF</span>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 600, color: 'var(--foreground)' }}>Ask Ahmad</div>
-          <div style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          <div style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             AI · answers from his portfolio
           </div>
         </div>
@@ -243,7 +243,7 @@ function Rich({ text }: { text: string }) {
 function Fallback() {
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(245,158,11,0.3)', background: 'rgba(245,158,11,0.06)', borderRadius: 6, padding: '6px 10px', display: 'inline-block' }}>
+      <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(245,158,11,0.3)', background: 'rgba(245,158,11,0.06)', borderRadius: 6, padding: '6px 10px', display: 'inline-block' }}>
         Assistant warming up - live answers soon
       </div>
       <p style={{ fontFamily: SANS, fontSize: 12.5, lineHeight: 1.65, color: FG2, margin: '12px 0 14px' }}>

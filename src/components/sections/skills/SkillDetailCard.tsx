@@ -36,7 +36,7 @@ export function SkillDetailCard({ node, onClose }: { node: SkillNode | null; onC
             aria-label="Close skill details"
             style={{ position: 'absolute', top: 8, right: 10, background: 'none', border: 'none', color: FG3, cursor: 'pointer', fontSize: 14 }}
           >✕</button>
-          <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: group.color }}>{group.label}</div>
+          <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: group.color }}>{group.label}</div>
           <div style={{ fontFamily: SERIF, fontSize: 24, color: 'var(--foreground)', margin: '4px 0 2px', paddingBottom: '0.05em' }}>{node.name}</div>
           <div style={{ fontFamily: MONO, fontSize: 11, color: FG2, letterSpacing: '0.02em', lineHeight: 1.5, marginTop: 1 }}>
             {node.usedIn.length > 1

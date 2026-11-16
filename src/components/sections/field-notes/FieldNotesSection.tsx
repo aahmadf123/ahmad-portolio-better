@@ -79,7 +79,7 @@ export function FieldNotesSection() {
           >
             <div style={{ padding: 'clamp(24px, 3.5vw, 44px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: catColor, border: `1px solid color-mix(in srgb, ${catColor} 40%, transparent)`, borderRadius: 4, padding: '3px 8px' }}>
+                <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: catColor, border: `1px solid color-mix(in srgb, ${catColor} 40%, transparent)`, borderRadius: 4, padding: '3px 8px' }}>
                   Featured · {featured.category}
                 </span>
                 <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.06em' }}>
@@ -94,7 +94,7 @@ export function FieldNotesSection() {
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 16 }}>
                 {featured.tags.map((t) => (
-                  <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '3px 8px', background: 'rgba(244,244,242,0.03)', border: '1px solid var(--bd)', borderRadius: 4, color: FG3, letterSpacing: '0.04em', textTransform: 'uppercase' }}>{t}</span>
+                  <span key={t} style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: 'rgba(244,244,242,0.03)', border: '1px solid var(--bd)', borderRadius: 4, color: FG3, letterSpacing: '0.04em', textTransform: 'uppercase' }}>{t}</span>
                 ))}
               </div>
               <span style={{ fontFamily: MONO, fontSize: 10, color: catColor, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 20 }}>Read the essay →</span>
@@ -118,7 +118,7 @@ export function FieldNotesSection() {
           const c = CATEGORY_CONFIG[note.category]?.color ?? def.color;
           return (
             <Link key={note.slug} href={`/field-notes/${note.slug}`} transitionTypes={['nav-forward']} style={{ border: '1px solid var(--bd)', borderRadius: 10, padding: '18px 20px', background: 'rgba(244,244,242,0.02)', textDecoration: 'none' }}>
-              <span style={{ fontFamily: MONO, fontSize: 9, color: c, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{note.category}</span>
+              <span style={{ fontFamily: MONO, fontSize: 10, color: c, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{note.category}</span>
               <div style={{ fontFamily: SERIF, fontSize: 19, color: 'var(--foreground)', marginTop: 6, lineHeight: 1.3 }}>{note.title}</div>
               <div style={{ fontFamily: MONO, fontSize: 10, color: FG3, marginTop: 8 }}>{note.readingTime} min read</div>
             </Link>

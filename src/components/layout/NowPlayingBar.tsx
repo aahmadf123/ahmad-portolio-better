@@ -23,7 +23,8 @@ export function NowPlayingBar() {
   const np = site.nowPlaying;
 
   return (
-    <div
+    <aside
+      aria-label="Now building"
       className="np-bar"
       style={{
         position: 'fixed',
@@ -44,7 +45,7 @@ export function NowPlayingBar() {
         <i /><i /><i />
       </span>
       <a href={np.href} style={{ textDecoration: 'none', minWidth: 0 }}>
-        <span style={{ display: 'block', fontFamily: MONO, fontSize: 8.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--primary)' }}>{np.label}</span>
+        <span style={{ display: 'block', fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--primary)' }}>{np.label}</span>
         <span style={{ display: 'block', fontFamily: MONO, fontSize: 11, color: 'var(--text2)', letterSpacing: '0.02em', marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 260 }}>{np.detail}</span>
       </a>
       <button
@@ -64,6 +65,6 @@ export function NowPlayingBar() {
         /* transform, not height: runs on the compositor, no layout per frame */
         @keyframes np-eq { 0%, 100% { transform: scaleY(0.42); } 50% { transform: scaleY(1); } }
       `}</style>
-    </div>
+    </aside>
   );
 }

@@ -137,7 +137,7 @@ export function HeroSection() {
           {/* bottom scroll hint */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, opacity: 0.45, animation: 'bob 2.2s ease-in-out 2s infinite' }}>
             <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, var(--primary), transparent)' }} />
-            <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', color: FG3, textTransform: 'uppercase' }}>Scroll to explore</span>
+            <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', color: FG3, textTransform: 'uppercase' }}>Scroll to explore</span>
           </div>
         </div>
 
@@ -193,7 +193,13 @@ function HeroPhoto() {
     as: 'image', imageSrcSet: HEADSHOT_SRCSET, imageSizes: HEADSHOT_SIZES, fetchPriority: 'high',
   });
   return (
-    <div style={{ position: 'relative' }}>
+    // A real button (keyboard + screen reader) instead of a clickable <img>.
+    <button
+      type="button"
+      onClick={() => openLb('/Images/optimized/headshot-1600.webp', 'Ahmad Firas')}
+      aria-label="Enlarge photo of Ahmad Firas"
+      style={{ position: 'relative', display: 'block', width: '100%', padding: 0, margin: 0, border: 'none', background: 'none', cursor: 'zoom-in' }}
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/Images/optimized/headshot-800.webp"
@@ -204,8 +210,6 @@ function HeroPhoto() {
         fetchPriority="high"
         decoding="async"
         alt="Ahmad Firas"
-        title="Click to enlarge"
-        onClick={() => openLb('/Images/optimized/headshot-1600.webp', 'Ahmad Firas')}
         style={{
           display: 'block',
           width: '100%',
@@ -230,9 +234,9 @@ function HeroPhoto() {
           <polyline points="15 3 21 3 21 9" /><polyline points="9 21 3 21 3 15" />
           <line x1="21" y1="3" x2="14" y2="10" /><line x1="3" y1="21" x2="10" y2="14" />
         </svg>
-        <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', color: 'var(--text2)', textTransform: 'uppercase' }}>Enlarge</span>
+        <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text2)', textTransform: 'uppercase' }}>Enlarge</span>
       </div>
-    </div>
+    </button>
   );
 }
 

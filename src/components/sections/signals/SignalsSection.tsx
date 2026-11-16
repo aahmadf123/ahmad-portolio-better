@@ -118,7 +118,7 @@ function QuoteCard({ t, i, front, onFront }: { t: Testimonial; i: number; front:
       <p style={{ fontFamily: SANS, fontSize: 14, lineHeight: 1.7, color: 'var(--foreground)' }}>{t.quote}</p>
       <footer style={{ marginTop: 12 }}>
         <div style={{ fontFamily: MONO, fontSize: 11, color: FG2 }}>{t.name}</div>
-        <div style={{ fontFamily: MONO, fontSize: 9, color: FG3, letterSpacing: '0.06em', textTransform: 'uppercase', marginTop: 2 }}>{t.role} · {t.org}</div>
+        <div style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.06em', textTransform: 'uppercase', marginTop: 2 }}>{t.role} · {t.org}</div>
       </footer>
       <style>{`
         @media (prefers-reduced-motion: no-preference) {

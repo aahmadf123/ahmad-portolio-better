@@ -74,7 +74,7 @@ export function CertFlipCard({ cert }: { cert: Cert }) {
           <Pic src={cert.badgeImage} alt="" sizes="108px" style={{ width: 108, height: 108, objectFit: 'contain', borderRadius: 10, background: `${cert.color}14`, border: `1px solid ${cert.color}33`, padding: 8 }} />
           <div>
             <div style={{ fontFamily: MONO, fontSize: 10, color: cert.color, letterSpacing: '0.12em', textTransform: 'uppercase' }}>{cert.issuer} · {cert.track}</div>
-            <h4 style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.25, margin: '6px 0 0' }}>{cert.title}</h4>
+            <h3 style={{ fontFamily: SANS, fontSize: 18, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.25, margin: '6px 0 0' }}>{cert.title}</h3>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <span style={{ fontFamily: MONO, fontSize: 11, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Earned {cert.earned} ·</span>

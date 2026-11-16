@@ -4,9 +4,22 @@ import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { getPublishedNotes } from '@/lib/field-notes';
 import { FieldNoteCard } from '@/components/ui/field-notes/field-note-card';
 
+const FN_DESCRIPTION = 'Technical essays on AI engineering, systems thinking, sports analytics, and the path from research to production.';
+
+// Short title (root template appends " · Ahmad Firas"), plus its own canonical
+// and social card - it used to inherit the homepage's canonical "/".
 export const metadata: Metadata = {
-  title: 'Field Notes - Ahmad Firas',
-  description: 'Technical essays on AI engineering, systems thinking, sports analytics, and the path from research to production.',
+  title: 'Field Notes',
+  description: FN_DESCRIPTION,
+  alternates: { canonical: 'https://ahmadfx.xyz/field-notes' },
+  openGraph: {
+    type: 'website',
+    url: 'https://ahmadfx.xyz/field-notes',
+    title: 'Field Notes · Ahmad Firas',
+    description: FN_DESCRIPTION,
+    images: [{ url: '/Images/optimized/og.png', width: 1200, height: 630 }],
+  },
+  twitter: { card: 'summary_large_image', title: 'Field Notes · Ahmad Firas', description: FN_DESCRIPTION, images: ['/Images/optimized/og.png'] },
 };
 
 const SERIF = 'var(--font-display), Georgia, serif';

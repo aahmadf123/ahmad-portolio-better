@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <LightboxProvider>
       <SiteHeader />
-      <main style={{ position: 'relative', zIndex: 20, background: 'transparent' }}>
+      <main id="main" tabIndex={-1} style={{ position: 'relative', zIndex: 20, background: 'transparent' }}>
         <HeroSection />
         <StorySection />
         <AboutSection />
