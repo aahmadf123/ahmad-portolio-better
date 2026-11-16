@@ -2,8 +2,8 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 
-const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
-const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
+const MONO  = "var(--font-code), ui-monospace, monospace";
+const SERIF = "var(--font-body), system-ui, sans-serif";
 
 const GREEN = '#22c55e';
 const GOLD  = '#f59e0b';
@@ -143,7 +143,7 @@ export function SeasonSimulator() {
                     style={{
                       fontFamily: MONO, fontSize: 10, letterSpacing: '0.05em',
                       padding: '7px 10px', borderRadius: 6, cursor: 'pointer',
-                      background: active ? `${GREEN}18` : 'rgba(242,237,216,0.03)',
+                      background: active ? `${GREEN}18` : 'rgba(244,244,242,0.03)',
                       border: `1px solid ${active ? GREEN : 'rgba(244,244,242,0.12)'}`,
                       color: active ? GREEN : 'var(--text2)',
                       transition: 'all 0.15s',
@@ -285,7 +285,7 @@ export function EvidencePerSeason() {
 
       <div style={{
         border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10,
-        background: 'rgba(242,237,216,0.02)', padding: '16px 18px',
+        background: 'rgba(244,244,242,0.02)', padding: '16px 18px',
       }}>
         <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
           Take a team whose true quality is 60%. After one full season, where could its
@@ -396,7 +396,7 @@ export function RosterHalfLife() {
 
       <div style={{
         border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10,
-        background: 'rgba(242,237,216,0.02)', padding: '16px 18px',
+        background: 'rgba(244,244,242,0.02)', padding: '16px 18px',
       }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', marginBottom: 16 }}>
           <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', marginRight: 6 }}>
@@ -411,7 +411,7 @@ export function RosterHalfLife() {
                 style={{
                   fontFamily: MONO, fontSize: 10, letterSpacing: '0.05em',
                   padding: '6px 12px', borderRadius: 6, cursor: 'pointer',
-                  background: active ? `${GREEN}18` : 'rgba(242,237,216,0.03)',
+                  background: active ? `${GREEN}18` : 'rgba(244,244,242,0.03)',
                   border: `1px solid ${active ? GREEN : 'rgba(244,244,242,0.12)'}`,
                   color: active ? GREEN : 'var(--text2)',
                   transition: 'all 0.15s',
@@ -435,7 +435,7 @@ export function RosterHalfLife() {
                 key={i}
                 style={{
                   aspectRatio: '1', borderRadius: '50%',
-                  background: present ? GREEN : 'rgba(242,237,216,0.05)',
+                  background: present ? GREEN : 'rgba(244,244,242,0.05)',
                   border: `1px solid ${present ? GREEN : 'rgba(244,244,242,0.1)'}`,
                   opacity: present ? 0.85 : 0.35,
                   transition: 'all 0.35s ease',

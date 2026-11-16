@@ -1,14 +1,15 @@
 import type { MDXComponents } from 'mdx/types';
 import React from 'react';
 
-const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
-const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
+const SERIF = "var(--font-body), system-ui, sans-serif";
+const MONO  = "var(--font-code), ui-monospace, monospace";
+const DISPLAY = "var(--font-display), Georgia, serif";
 
 export function useMDXComponents(): MDXComponents {
   return {
     h1: ({ children }) => (
       <h1 style={{
-        fontFamily: SERIF, fontWeight: 400,
+        fontFamily: DISPLAY, fontWeight: 400,
         fontSize: 'var(--fs-article-h1)', lineHeight: 1.1,
         letterSpacing: '-0.025em', color: 'var(--foreground)',
         marginTop: '2.5rem', marginBottom: '1rem', paddingBottom: '0.05em',
@@ -19,12 +20,12 @@ export function useMDXComponents(): MDXComponents {
 
     h2: ({ children }) => (
       <h2 style={{
-        fontFamily: SERIF, fontWeight: 400,
+        fontFamily: DISPLAY, fontWeight: 400,
         fontSize: 'var(--fs-article-h2)', lineHeight: 1.2,
         letterSpacing: '-0.015em', color: 'var(--gold)',
         marginTop: '3rem', marginBottom: '0.75rem',
         paddingTop: '0.25rem',
-        borderTop: '1px solid rgba(240,180,41,0.15)',
+        borderTop: '1px solid rgba(245,158,11,0.15)',
       }}>
         {children}
       </h2>
@@ -32,7 +33,7 @@ export function useMDXComponents(): MDXComponents {
 
     h3: ({ children }) => (
       <h3 style={{
-        fontFamily: SERIF, fontWeight: 400,
+        fontFamily: DISPLAY, fontWeight: 400,
         fontSize: 20, lineHeight: 1.3,
         letterSpacing: '-0.01em', color: 'var(--foreground)',
         marginTop: '2rem', marginBottom: '0.5rem',
@@ -100,7 +101,7 @@ export function useMDXComponents(): MDXComponents {
         margin: '2rem 0',
         padding: '1.25rem 1.5rem',
         border: '1px solid color-mix(in srgb, var(--gold) 35%, transparent)',
-        background: 'rgba(240,180,41,0.04)',
+        background: 'rgba(245,158,11,0.04)',
         borderRadius: 8,
       }}>
         <div style={{
@@ -144,7 +145,7 @@ export function useMDXComponents(): MDXComponents {
         rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
         style={{
           color: 'var(--gold)', textDecoration: 'none',
-          borderBottom: '1px solid rgba(240,180,41,0.4)',
+          borderBottom: '1px solid rgba(245,158,11,0.4)',
           transition: 'border-color 0.2s, color 0.2s',
         }}
       >
@@ -180,7 +181,7 @@ export function useMDXComponents(): MDXComponents {
     ),
 
     thead: ({ children }) => (
-      <thead style={{ borderBottom: '1px solid rgba(240,180,41,0.3)' }}>
+      <thead style={{ borderBottom: '1px solid rgba(245,158,11,0.3)' }}>
         {children}
       </thead>
     ),

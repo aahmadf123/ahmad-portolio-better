@@ -80,7 +80,7 @@ export function Lightbox({ src, alt = '', onClose }: LightboxProps) {
         onMouseEnter={e => { e.currentTarget.style.background = 'rgba(244,244,242,0.18)'; }}
         onMouseLeave={e => { e.currentTarget.style.background = 'rgba(244,244,242,0.08)'; }}
       >✕</button>
-      <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', fontFamily: "var(--font-chakra), 'Chakra Petch', monospace", fontSize: 10, color: 'rgba(244,244,242,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', userSelect: 'none' }}>
+      <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', fontFamily: "var(--font-code), ui-monospace, monospace", fontSize: 10, color: 'rgba(244,244,242,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', userSelect: 'none' }}>
         Click anywhere or press Esc to close
       </div>
       <style>{`

@@ -2,12 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
+import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
-const SERIF  = "var(--font-chakra), 'Chakra Petch', sans-serif";
-const MONO   = "var(--font-chakra), 'Chakra Petch', monospace";
+const SERIF  = "var(--font-body), system-ui, sans-serif";
+const DISPLAY = "var(--font-display), Georgia, serif";
+const MONO   = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#f0823c';
 
 const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
@@ -82,13 +84,7 @@ const SECTION_LABELS = ['Overview', 'Results', 'Problem', 'System', 'Control', '
 
 export default function CamelCarCaseStudy() {
   const active = useActiveSection(SECTION_IDS);
-  const [scrolled, setScrolled] = useState(false);
   const [lb, setLb] = useState<string | null>(null);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   return (
     <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
@@ -99,7 +95,7 @@ export default function CamelCarCaseStudy() {
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
         .cs-body li::marker { color: ${ACCENT}; }
-        .cs-h2 { font-family: ${SERIF}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
+        .cs-h2 { font-family: ${DISPLAY}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
         .metrics-grid-cc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
         @media (max-width: 640px) { .metrics-grid-cc { grid-template-columns: repeat(2, 1fr); } }
@@ -108,15 +104,15 @@ export default function CamelCarCaseStudy() {
         .three-col-cc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-cc { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-cc { grid-template-columns: 1fr; } }
-        .info-card { padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
+        .info-card { padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
         .info-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
         .accent-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .accent-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
         .award-banner { padding: 20px 24px; background: ${ACCENT}10; border: 1px solid ${ACCENT}35; border-radius: 10px; margin-bottom: 32px; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
         .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
-        .reaction-box { padding: 14px 18px; background: rgba(242,237,216,0.02); border: 1px solid rgba(244,244,242,0.08); border-radius: 8px; font-family: ${MONO}; font-size: 12px; color: var(--text2); line-height: 1.7; }
+        .reaction-box { padding: 14px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.08); border-radius: 8px; font-family: ${MONO}; font-size: 12px; color: var(--text2); line-height: 1.7; }
         .reaction-box .eq { color: ${ACCENT}; }
         code { font-family: ${MONO}; font-size: 11px; background: ${ACCENT}12; border: 1px solid ${ACCENT}25; padding: 2px 5px; border-radius: 4px; color: var(--foreground); }
         .cs-grid-container {
@@ -144,21 +140,9 @@ export default function CamelCarCaseStudy() {
       `}</style>
 
       {/* ── Sticky header ── */}
-      <header style={{
-        position: 'sticky', top: 0, zIndex: 100,
-        background: scrolled ? 'rgba(9,11,18,0.95)' : 'transparent',
-          borderBottom: scrolled ? `1px solid ${ACCENT}35` : '1px solid transparent',
-        transition: 'background 0.3s, border-color 0.3s',
-        padding: '0 clamp(20px, 5vw, 80px)',
-        height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
-      }}>
-        <SmartBackLink fallbackHref="/#projects" style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-          Portfolio
-        </SmartBackLink>
+      <SubpageHeader backHref="/#projects" backLabel="Projects" accent={ACCENT}>
         <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Camel Car</span>
-        <div style={{ width: 80 }} />
-      </header>
+      </SubpageHeader>
 
       {/* ── Hero ── */}
       <div style={{ padding: 'clamp(48px,8vh,96px) clamp(20px,5vw,80px) 0' }}>
@@ -169,7 +153,7 @@ export default function CamelCarCaseStudy() {
             <Tag>AIChE 2025</Tag>
             <Tag>University of Toledo</Tag>
           </div>
-          <h1 style={{ fontFamily: SERIF, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, var(--foreground) 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+          <h1 style={{ fontFamily: DISPLAY, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, var(--foreground) 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
             Camel Car
           </h1>
           <p style={{ fontFamily: SERIF, fontSize: 16, color: 'var(--text2)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>
@@ -230,7 +214,7 @@ export default function CamelCarCaseStudy() {
                     { place: '3rd', label: 'Poster & Presentation', note: 'Recognized for technical communication and visual documentation of the system' },
                     { place: '24th', label: 'Overall Performance', note: 'Ranked 24th among teams from universities worldwide' },
                   ].map(({ place, label, note }) => (
-                    <div key={place} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '12px 16px', background: 'rgba(9,11,18,0.6)', border: `1px solid ${ACCENT}20`, borderRadius: 8 }}>
+                    <div key={place} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '12px 16px', background: 'rgba(13,14,18,0.6)', border: `1px solid ${ACCENT}20`, borderRadius: 8 }}>
                       <div style={{ fontFamily: SERIF, fontSize: 26, color: ACCENT, lineHeight: 1, flexShrink: 0, minWidth: 52 }}>{place}</div>
                       <div>
                         <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 4 }}>{label}</div>
@@ -324,7 +308,7 @@ export default function CamelCarCaseStudy() {
                   ['6', 'Gas flow to air motor is cut'],
                   ['7', 'Car coasts to stop - coast distance factored into calibration'],
                 ].map(([n, step]) => (
-                  <div key={n} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.06)', borderRadius: 6 }}>
+                  <div key={n} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.06)', borderRadius: 6 }}>
                     <span style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.7, flexShrink: 0, minWidth: 16 }}>{n}</span>
                     <span style={{ fontSize: 13, lineHeight: 1.5 }}>{step}</span>
                   </div>
@@ -364,7 +348,7 @@ if (pressure >= target_pressure_threshold) {
                 </div>
               </div>
 
-              <div style={{ padding: '16px 20px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.07)', borderRadius: 8, marginBottom: 8 }}>
+              <div style={{ padding: '16px 20px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.07)', borderRadius: 8, marginBottom: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>Calibration workflow</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {[
@@ -436,7 +420,7 @@ if (pressure >= target_pressure_threshold) {
                     The competition controller read raw pressure and fired at ~5 psi - no filtering, no hysteresis, no logging. Between chemical run-to-run variability, sensor noise, solenoid actuation delay, and post-cutoff coast, that bare threshold never mapped cleanly to a stop distance on its own. The calibration table existed precisely because the controller couldn&apos;t be trusted alone.
                   </p>
                 </div>
-                <div style={{ padding: '16px 18px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 8 }}>
+                <div style={{ padding: '16px 18px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 8 }}>
                   <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     Log every run and trigger on the pressure slope, not just the level. We tuned against a stopwatch with no on-car recording; writing pressure to an SD card each run - plus a low-pass filter and hysteresis - would let the calibration come from real traces instead of timed guesses.
@@ -477,7 +461,7 @@ if (pressure >= target_pressure_threshold) {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
+                <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
               </div>
             </Section>
 

@@ -8,8 +8,8 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
-const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
+const MONO  = "var(--font-code), ui-monospace, monospace";
+const SERIF = "var(--font-body), system-ui, sans-serif";
 
 // Team colors stay hex: they get alpha-concatenated below (`${UT}22`).
 const UT    = '#6b96f7'; // Toledo blue (lifted for 4.5:1 on dark panels)
@@ -42,7 +42,7 @@ function Panel({ children, accent }: { children: React.ReactNode; accent?: strin
     <div style={{
       border: `1px solid ${accent ? accent + '28' : 'rgba(244,244,242,0.09)'}`,
       borderRadius: 10,
-      background: accent ? `${accent}06` : 'rgba(242,237,216,0.02)',
+      background: accent ? `${accent}06` : 'rgba(244,244,242,0.02)',
       padding: 'clamp(14px,3vw,20px)',
     }}>
       {children}
@@ -72,7 +72,7 @@ function Chip({
       style={{
         fontFamily: MONO, fontSize: 11, letterSpacing: '0.04em',
         padding: '7px 11px', borderRadius: 6, cursor: 'pointer',
-        background: active ? `${color}1c` : 'rgba(242,237,216,0.03)',
+        background: active ? `${color}1c` : 'rgba(244,244,242,0.03)',
         border: `1px solid ${active ? color : 'rgba(244,244,242,0.12)'}`,
         color: active ? color : 'var(--text2)',
         transition: 'all 0.15s',
@@ -159,7 +159,7 @@ export function AnswersUpFront() {
   return (
     <nav aria-label="The short version" style={{
       margin: '2rem 0 2.5rem', borderRadius: 10, overflow: 'hidden',
-      border: '1px solid rgba(244,244,242,0.1)', background: 'rgba(242,237,216,0.02)',
+      border: '1px solid rgba(244,244,242,0.1)', background: 'rgba(244,244,242,0.02)',
     }}>
       <div style={{
         padding: '12px 16px', fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em',
@@ -402,7 +402,7 @@ export function SeriesExplorer() {
         <div style={{
           minHeight: 48, fontFamily: SERIF, fontSize: 15, lineHeight: 1.6, color: 'var(--text2)',
           padding: '12px 14px', borderRadius: 8,
-          background: m ? `${m.color}0a` : 'rgba(242,237,216,0.02)',
+          background: m ? `${m.color}0a` : 'rgba(244,244,242,0.02)',
           border: `1px solid ${m ? m.color + '28' : 'rgba(244,244,242,0.07)'}`,
         }}>
           {m ? m.text : 'Drag across the chart, or use the slider, to step through every game. Pick a moment above for the story behind it.'}
@@ -631,7 +631,7 @@ export function CoinTossLedger() {
                 aria-label={`${x.y}: ${x.tw ? `${teamName(x.tw)} won the toss and ${x.dec === 'defer' ? 'deferred' : 'took the ball'}` : 'toss not codable'}. ${teamName(x.w)} won ${Math.max(x.ut, x.bg)}-${Math.min(x.ut, x.bg)}.`}
                 style={{
                   textAlign: 'left', cursor: 'pointer', padding: '8px 9px', borderRadius: 7,
-                  background: active ? `${L.color}14` : 'rgba(242,237,216,0.02)',
+                  background: active ? `${L.color}14` : 'rgba(244,244,242,0.02)',
                   border: `1px solid ${active ? L.color : isHit && lens !== 'all' ? L.color + '66' : 'rgba(244,244,242,0.09)'}`,
                   opacity: dim ? 0.28 : 1, transition: 'opacity 0.2s, border-color 0.2s',
                 }}
@@ -668,7 +668,7 @@ export function CoinTossLedger() {
         {/* Detail */}
         <div style={{
           marginTop: 14, padding: '12px 14px', borderRadius: 8,
-          border: '1px solid rgba(244,244,242,0.09)', background: 'rgba(242,237,216,0.025)',
+          border: '1px solid rgba(244,244,242,0.09)', background: 'rgba(244,244,242,0.025)',
         }}>
           <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.06em', marginBottom: 8 }}>
             {t.y} · AT {t.host === 'UT' ? 'TOLEDO' : 'BOWLING GREEN'} · WIND {t.wind.toUpperCase()} ·{' '}
@@ -1039,7 +1039,7 @@ export function OpeningDrives() {
         {/* Detail */}
         <div style={{
           marginTop: 14, padding: '14px 16px', borderRadius: 8,
-          border: '1px solid rgba(244,244,242,0.09)', background: 'rgba(242,237,216,0.025)',
+          border: '1px solid rgba(244,244,242,0.09)', background: 'rgba(244,244,242,0.025)',
         }}>
           <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.06em', marginBottom: 8 }}>
             {d[0]} · {teamName(d[1]).toUpperCase()} BALL · FINAL{' '}

@@ -2,13 +2,15 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
+import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
-const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
-const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
-const SANS  = "var(--font-chakra), 'Chakra Petch', sans-serif";
+const SERIF = "var(--font-body), system-ui, sans-serif";
+const DISPLAY = "var(--font-display), Georgia, serif";
+const MONO  = "var(--font-code), ui-monospace, monospace";
+const SANS  = "var(--font-body), system-ui, sans-serif";
 const ACCENT = '#a78bfa';
 
 const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
@@ -64,7 +66,7 @@ function PipelineStep({ n, title, sub, color = ACCENT, isLast = false }: { n: st
 
 function Section({ id, children, alt = false }: { id: string; children: React.ReactNode; alt?: boolean }) {
   return (
-    <section id={id} style={{ padding: 'clamp(48px,6vw,80px) clamp(20px,4vw,52px)', background: alt ? 'rgba(15,17,25,0.92)' : 'rgba(11,13,20,0.9)', position: 'relative', overflowX: 'clip' }}>
+    <section id={id} style={{ padding: 'clamp(48px,6vw,80px) clamp(20px,4vw,52px)', background: alt ? 'rgba(15,17,25,0.92)' : 'rgba(13,14,18,0.9)', position: 'relative', overflowX: 'clip' }}>
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         {children}
       </div>
@@ -101,37 +103,17 @@ const NAV_SECTIONS = [
 
 export default function HomeownerLossCaseStudy() {
   const active = useActiveSection(NAV_SECTIONS.map(s => s.id));
-  const [scrolled, setScrolled] = useState(false);
   const [lb, setLb] = useState<string | null>(null);
 
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
-  }, []);
 
   return (
-    <div style={{ background: '#0B0D14', minHeight: '100vh', color: 'var(--text2)' }}>
+    <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
         li::marker { color: ${ACCENT}; }
       `}</style>
 
       {/* ── Sticky top bar ── */}
-      <header style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        background: scrolled ? 'rgba(11,13,20,0.95)' : 'transparent',
-          borderBottom: scrolled ? `1px solid ${ACCENT}35` : '1px solid transparent',
-        transition: 'all 0.3s ease',
-        padding: '0 clamp(20px,4vw,52px)',
-        height: 56,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
-      }}>
-        <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text2)', textDecoration: 'none', transition: 'color 0.2s' }}
-          onMouseEnter={e => { e.currentTarget.style.color = ACCENT; }}
-          onMouseLeave={e => { e.currentTarget.style.color = 'var(--text2)'; }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
-          Back to Portfolio
-        </SmartBackLink>
+      <SubpageHeader backHref="/#projects" backLabel="Projects" accent={ACCENT}>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
           <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(167,139,250,0.3)', borderRadius: 4, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.background = `${ACCENT}14`; }}
@@ -139,24 +121,24 @@ export default function HomeownerLossCaseStudy() {
             Report ↓
           </a>
           <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(242,237,216,0.25)'; e.currentTarget.style.color = 'var(--foreground)'; }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(244,244,242,0.25)'; e.currentTarget.style.color = 'var(--foreground)'; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(244,244,242,0.1)'; e.currentTarget.style.color = 'var(--text2)'; }}>
             GitHub ↗
           </a>
         </div>
-      </header>
+      </SubpageHeader>
 
       {/* ── Hero ── */}
-      <section style={{ paddingTop: 'calc(56px + clamp(48px,7vw,96px))', paddingBottom: 'clamp(48px,6vw,80px)', paddingLeft: 'clamp(20px,4vw,52px)', paddingRight: 'clamp(20px,4vw,52px)', borderBottom: '1px solid rgba(167,139,250,0.1)', background: 'linear-gradient(180deg, rgba(167,139,250,0.04) 0%, transparent 100%)' }}>
+      <section style={{ paddingTop: 'clamp(48px,7vw,96px)', paddingBottom: 'clamp(48px,6vw,80px)', paddingLeft: 'clamp(20px,4vw,52px)', paddingRight: 'clamp(20px,4vw,52px)', borderBottom: '1px solid rgba(167,139,250,0.1)', background: 'linear-gradient(180deg, rgba(167,139,250,0.04) 0%, transparent 100%)' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
             <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: `${ACCENT}14`, border: `1px solid ${ACCENT}33`, borderRadius: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>MLOps</span>
             <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', borderRadius: 10, color: '#f59e0b', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Insurance AI</span>
             <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'color-mix(in srgb, var(--blue) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--blue) 25%, transparent)', borderRadius: 10, color: '#5b8af5', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Risk Modeling</span>
-            <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(242,237,216,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Senior Design · 2024–2025</span>
+            <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Senior Design · 2024–2025</span>
           </div>
 
-          <h1 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-3xl)', lineHeight: 1.05, letterSpacing: '-0.025em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.08em', marginBottom: 16 }}>
+          <h1 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-3xl)', lineHeight: 1.05, letterSpacing: '-0.025em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.08em', marginBottom: 16 }}>
             Homeowner Loss<br /><span style={{ color: ACCENT }}>History Prediction</span>
           </h1>
           <p style={{ fontSize: 16, lineHeight: 1.75, color: 'var(--text2)', maxWidth: 640, marginBottom: 32 }}>
@@ -173,7 +155,7 @@ export default function HomeownerLossCaseStudy() {
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-            <a href="#cs-architecture" onClick={e => { e.preventDefault(); document.getElementById('cs-architecture')?.scrollIntoView({ behavior: 'smooth' }); }} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none', cursor: 'pointer' }}>
+            <a href="#cs-architecture" onClick={e => { e.preventDefault(); document.getElementById('cs-architecture')?.scrollIntoView({ behavior: 'smooth' }); }} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none', cursor: 'pointer' }}>
               View Architecture ↓
             </a>
             <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}44`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
@@ -187,7 +169,7 @@ export default function HomeownerLossCaseStudy() {
       </section>
 
       {/* ── Section nav ── */}
-      <nav style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(11,13,20,0.97)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto', scrollbarWidth: 'none' }}>
+      <nav style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(13,14,18,0.97)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 clamp(20px,4vw,52px)', display: 'flex', gap: 0 }}>
           {NAV_SECTIONS.map(s => (
             <button key={s.id}
@@ -208,7 +190,7 @@ export default function HomeownerLossCaseStudy() {
       {/* ── 1. OVERVIEW ── */}
       <Section id="cs-overview">
         <SectionLabel label="Overview" />
-        <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
+        <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
           From notebook workflow to governed, continuously operating AI platform
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, marginBottom: 16 }}>
@@ -221,7 +203,7 @@ export default function HomeownerLossCaseStudy() {
           The key contribution was not just improving model accuracy. The bigger engineering contribution was building a <strong style={{ color: 'var(--foreground)' }}>governed ML operating system</strong> around the model: every dataset, schema, model run, drift event, metric, and manual decision can be tracked, reviewed, and reproduced.
         </p>
 
-        <div style={{ marginTop: 28, overflow: 'hidden', borderRadius: 10, border: '1px solid rgba(167,139,250,0.15)', background: '#0B0D14' }}>
+        <div style={{ marginTop: 28, overflow: 'hidden', borderRadius: 10, border: '1px solid rgba(167,139,250,0.15)', background: 'var(--background)' }}>
           <Pic src="/Images/SeniorDesign_Pipeline.jpeg" alt="MLOps pipeline architecture" onClick={() => setLb('/Images/SeniorDesign_Pipeline.jpeg')} style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 400, cursor: 'zoom-in' }} />
         </div>
       </Section>
@@ -229,7 +211,7 @@ export default function HomeownerLossCaseStudy() {
       {/* ── 2. PROBLEM ── */}
       <Section id="cs-problem" alt>
         <SectionLabel label="The Problem" />
-        <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
+        <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
           Risk patterns shift faster than manual modeling can adapt
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, marginBottom: 20 }}>
@@ -255,7 +237,7 @@ export default function HomeownerLossCaseStudy() {
       {/* ── 3. ARCHITECTURE ── */}
       <Section id="cs-architecture">
         <SectionLabel label="System Architecture" />
-        <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 8, paddingBottom: '0.05em' }}>
+        <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 8, paddingBottom: '0.05em' }}>
           Modular MLOps pipeline - end-to-end
         </h2>
         <p style={{ fontSize: 14, lineHeight: 1.75, marginBottom: 28 }}>
@@ -292,7 +274,7 @@ export default function HomeownerLossCaseStudy() {
       {/* ── 4. STACK ── */}
       <Section id="cs-stack" alt>
         <SectionLabel label="Technical Stack" />
-        <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 24, paddingBottom: '0.05em' }}>
+        <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 24, paddingBottom: '0.05em' }}>
           Purpose-selected tools for each layer
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 10 }}>
@@ -320,7 +302,7 @@ export default function HomeownerLossCaseStudy() {
       {/* ── 5. MODEL DESIGN ── */}
       <Section id="cs-model">
         <SectionLabel label="Model Design" />
-        <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
+        <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
           Why XGBoost - and what it took to govern it
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, marginBottom: 20 }}>
@@ -354,7 +336,7 @@ export default function HomeownerLossCaseStudy() {
                 { name: 'CatBoost', why: 'Good, but SHAP integration less mature' },
                 { name: 'Deep Learning / MLP', why: 'Too opaque for actuarial review' },
               ].map(item => (
-                <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8, fontSize: 13, padding: '6px 0', borderBottom: '1px solid rgba(242,237,216,0.05)' }}>
+                <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8, fontSize: 13, padding: '6px 0', borderBottom: '1px solid rgba(244,244,242,0.05)' }}>
                   <span style={{ color: 'var(--text3)' }}>{item.name}</span>
                   <span style={{ color: 'var(--text3)', fontSize: 11, textAlign: 'right' }}>{item.why}</span>
                 </div>
@@ -372,7 +354,7 @@ export default function HomeownerLossCaseStudy() {
       {/* ── 6. RESULTS ── */}
       <Section id="cs-results" alt>
         <SectionLabel label="Results & Impact" />
-        <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 24, paddingBottom: '0.05em' }}>
+        <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 24, paddingBottom: '0.05em' }}>
           Strong predictive performance and meaningful automation gains
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10, marginBottom: 28 }}>
@@ -427,7 +409,7 @@ export default function HomeownerLossCaseStudy() {
       {/* ── 7. INSIGHTS ── */}
       <Section id="cs-insights">
         <SectionLabel label="Key Insights & Lessons" />
-        <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 8, paddingBottom: '0.05em' }}>
+        <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 8, paddingBottom: '0.05em' }}>
           The real value: automation with governance
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, marginBottom: 28, maxWidth: 680 }}>
@@ -461,7 +443,7 @@ export default function HomeownerLossCaseStudy() {
       {/* ── 8. LESSONS ── */}
       <Section id="cs-lessons" alt>
         <SectionLabel label="Lessons" />
-        <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
+        <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
           What broke, and what I&apos;d do differently
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, marginBottom: 24, maxWidth: 680 }}>
@@ -474,7 +456,7 @@ export default function HomeownerLossCaseStudy() {
               Schema changes broke training silently. A shifted column type or a missing field could pass straight through preprocessing and corrupt a model run with no visible error - the pipeline only looked wrong once the predictions came out wrong. That is the whole reason a Pandera validation layer and schema snapshots now sit in front of training.
             </p>
           </div>
-          <div style={{ padding: '20px 22px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10 }}>
+          <div style={{ padding: '20px 22px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10 }}>
             <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>What I&apos;d do differently</div>
             <p style={{ fontSize: 14, lineHeight: 1.75, margin: 0 }}>
               One XGBoost model carries every peril, and ingestion runs in batch. I&apos;d split it into separate model tracks for water, wind/hail, fire, and property loss so each can be tuned and monitored on its own drift, and move toward event-driven scoring rather than waiting for the next batch cycle.
@@ -486,7 +468,7 @@ export default function HomeownerLossCaseStudy() {
       {/* ── 9. FUTURE WORK ── */}
       <Section id="cs-future">
         <SectionLabel label="Future Work" />
-        <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
+        <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 20, paddingBottom: '0.05em' }}>
           Where the platform goes next
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
@@ -508,17 +490,17 @@ export default function HomeownerLossCaseStudy() {
       </Section>
 
       {/* ── Footer CTA ── */}
-      <section style={{ padding: 'clamp(48px,6vw,80px) clamp(20px,4vw,52px)', borderTop: '1px solid rgba(167,139,250,0.12)', background: 'rgba(11,13,20,0.95)' }}>
+      <section style={{ padding: 'clamp(48px,6vw,80px) clamp(20px,4vw,52px)', borderTop: '1px solid rgba(167,139,250,0.12)', background: 'rgba(13,14,18,0.95)' }}>
         <div style={{ maxWidth: 860, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 20 }}>
           <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT }}>Grange Insurance × University of Toledo · 2024–2025</div>
-          <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-2xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.2, paddingBottom: '0.05em', margin: 0 }}>
+          <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-2xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.2, paddingBottom: '0.05em', margin: 0 }}>
             Read the full technical report
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.75, color: 'var(--text2)', maxWidth: 520, margin: 0 }}>
             The final report covers methodology, feature engineering details, model evaluation, pipeline architecture diagrams, and governance framework in full.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
-            <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', background: ACCENT, color: '#0B0D14', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Download Final Report ↓</a>
+            <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Download Final Report ↓</a>
             <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: `1px solid ${ACCENT}44`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View on GitHub ↗</a>
             <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: '1px solid rgba(244,244,242,0.12)', color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Portfolio</SmartBackLink>
           </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SiteFooter } from '@/components/layout/SiteFooter';
 
 // Title is the short name; the root template appends " · Ahmad Firas".
 export const metadata: Metadata = {
@@ -15,5 +16,10 @@ export const metadata: Metadata = {
 };
 
 export default function DocsLayout({ children }: { children: React.ReactNode }) {
-  return <main id="main" tabIndex={-1}>{children}</main>;
+  return (
+    <>
+      <main id="main" tabIndex={-1}>{children}</main>
+      <SiteFooter />
+    </>
+  );
 }
