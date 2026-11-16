@@ -79,3 +79,11 @@ export const storyChapters: StoryChapter[] = [
   },
 ];
 
+
+/**
+ * Split a chapter body into sentences, so the photo journey (worlds.ts) can place
+ * each sentence in the world it belongs to without retyping any of it.
+ */
+export function sentences(body: string): string[] {
+  return body.split(/(?<=[.!?])\s+(?=[A-Z0-9$"'])/);
+}
