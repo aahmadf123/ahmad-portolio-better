@@ -751,7 +751,7 @@ export function TwentySevenCoins() {
             }} />
           ))}
         </div>
-        <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', marginBottom: 14, minHeight: 15 }}>
+        <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text2)', marginBottom: 14, minHeight: 15 }}>
           {lastWins !== null
             ? <>Last rivalry: 2nd-half receiver went <span style={{ color: 'var(--foreground)' }}>{lastWins}-{N_RIVAL - lastWins}</span>{(lastWins >= OBS || lastWins <= N_RIVAL - OBS) && <span style={{ color: GOLD }}> · at least as lopsided as the real thing</span>}</>
             : 'One dot per game. Blue = 2nd-half receiver won.'}
