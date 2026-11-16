@@ -1016,7 +1016,7 @@ export function OpeningDrives() {
                 style={{
                   display: 'grid', gridTemplateColumns: '44px 34px 1fr 40px 62px', gap: 8, alignItems: 'center',
                   padding: '6px 8px', borderRadius: 6, cursor: 'pointer', textAlign: 'left',
-                  background: active ? 'rgba(242,237,216,0.07)' : 'transparent',
+                  background: active ? 'color-mix(in srgb, var(--foreground) 7%, transparent)' : 'transparent',
                   border: `1px solid ${active ? 'rgba(244,244,242,0.22)' : 'transparent'}`,
                 }}
               >
