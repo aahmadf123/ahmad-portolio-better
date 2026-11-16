@@ -2,7 +2,7 @@
 
 **Site:** ahmadfx.xyz (Next.js 16 App Router, this repo)
 **Date:** 2026-11-16
-**Status:** draft for Ahmad's approval
+**Status:** awaiting Ahmad's approval
 
 ## 1. Intent
 
@@ -19,6 +19,7 @@ Today the site is well built but reads as a polished dark portfolio. This redesi
 - **Five worlds, equally weighted:** AI engineering, data science, chemical engineering, research, sports analytics. **Football and sports must not dominate.** It's one fifth of the journey, and nothing about the opening or ending should read as "the sports guy".
 - **Homepage structure:** opening photo with his name → five world chapters, each holding that world's projects → field notes, about, contact.
 - **Inside pages** (case studies, field notes, docs) open with a real photo from their world and the same fly-in. The reading part below stays calm and readable.
+- **Headshot goes in About**, not the opening scene.
 - **Must keep:** the Football IQ play diagram and the skills constellation.
 - **No information loss.** "I have a lot of info about my life there." Every fact, number, date, project, job, award, cert, affiliation, testimonial, press item, insight and link on the current site must exist somewhere in the new one.
 - **Whole site may look different.** Not limited to small polish.
@@ -91,7 +92,7 @@ Every current homepage section and data file, and where it goes. **The builder m
 
 | Today | New home |
 |---|---|
-| Hero (`site.ts`: name, tagline segments, hero intro, `heroFacts`, resume and degree links, headshot) | Opening scene; headshot moves to About |
+| Hero (`site.ts`: name, tagline segments, hero intro, `heroFacts`, resume and degree links, headshot) | Opening scene; **headshot moves to About** (Ahmad confirmed; a cut-out portrait over a stock photo would read as fake) |
 | Story (`story.ts`, 6 chapters, each with body and stat) | Bodies split across the opening (Toledo), the five worlds and the close ("The next chapter" → just before Now/Contact). Every sentence and stat is kept. |
 | About (`about.ts` lenses, `education.ts`, sign-off) | About |
 | Capabilities (`skills.ts`, constellation, legend, detail card, list fallback) | About → Capabilities, **constellation kept** |
@@ -107,7 +108,7 @@ Every current homepage section and data file, and where it goes. **The builder m
 | Contact | Contact |
 | Easter egg, chat, chapter rail | Kept; the chapter rail lists the new chapters |
 
-**Project → world mapping (proposed, Ahmad to check):**
+**Project → world mapping (confirmed by Ahmad):**
 - **AI engineering:** DeepTruth, Security Discovery Tool, Batting Cleanup; First Solar (Developer I, Microsoft Solution Developer) from the story.
 - **Data science:** Homeowner Loss Prediction (Grange, senior design); Park Place data governance (Database Engineer co-op).
 - **Chemical engineering:** Camel Car (ChemE car control system); AIChE awards (Most Innovative Car Design, poster and presentation, regional).
