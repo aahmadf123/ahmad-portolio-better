@@ -175,7 +175,9 @@ a { text-decoration: none; color: inherit; }
 
 /* ── Custom cursor (pointer devices only) ─────────────────────── */
 @media (pointer: fine) {
-  *, *::before, *::after { cursor: none !important; }
+  html.has-custom-cursor *, html.has-custom-cursor *::before, html.has-custom-cursor *::after { cursor: none !important; }
+  /* keep the text caret affordance where people type */
+  html.has-custom-cursor input, html.has-custom-cursor textarea, html.has-custom-cursor [contenteditable="true"] { cursor: text !important; }
 }
 
 /* ── Card glass specular sheen ────────────────────────────────── */
@@ -349,6 +351,17 @@ a { text-decoration: none; color: inherit; }
     animation-duration: 0s !important;
     animation-delay: 0s !important;
   }
+}
+
+/* Chat input: 13px with a mouse; 16px on touch so iOS Safari doesn't zoom the
+   page when the field gets focus. */
+.chat-input { font-size: 13px; }
+@media (pointer: coarse) { .chat-input { font-size: 16px; } }
+
+/* "Ask Ahmad" bubble steps aside over the footer on phones (ChatLauncher). */
+.chat-launcher { transition: opacity 0.2s ease, transform 0.2s ease; }
+@media (max-width: 640px) {
+  .chat-launcher.at-footer { opacity: 0; transform: translateY(12px); pointer-events: none; }
 }
 
 /* Global responsive helpers */

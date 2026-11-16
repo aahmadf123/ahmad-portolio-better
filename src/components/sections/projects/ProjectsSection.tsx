@@ -8,6 +8,7 @@ import { sectionById } from '@/lib/data/sections';
 import { ProjectPosterCard } from './ProjectPosterCard';
 import { ProjectDetailModal } from './ProjectDetailModal';
 import { FootballIQFeature } from './FootballIQFeature';
+import { useCanHover } from '@/components/ui/use-can-hover';
 
 /**
  * Dynamic showcase gallery: the Football-IQ flagship panel on top (always
@@ -16,6 +17,7 @@ import { FootballIQFeature } from './FootballIQFeature';
  */
 export function ProjectsSection() {
   const def = sectionById('projects')!;
+  const canHover = useCanHover();
   const reduced = useReducedMotion();
   const [category, setCategory] = useState<ProjectCategory | 'all'>('all');
   const [openProject, setOpenProject] = useState<Project | null>(null);
@@ -27,7 +29,7 @@ export function ProjectsSection() {
 
   return (
     <Section id="projects">
-      <SH n={def.n} label="Bodies of Work" sub="Each project a different operating condition. Hover a poster for the story; click for the full picture." color={def.color} />
+      <SH n={def.n} label="Bodies of Work" sub={canHover ? "Each project a different operating condition. Hover a poster for the story; click for the full picture." : "Each project a different operating condition. Tap a poster for the full story."} color={def.color} />
 
       <FootballIQFeature />
 

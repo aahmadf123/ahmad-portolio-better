@@ -332,8 +332,12 @@ export function MagneticCursor() {
     running = true;
     raf = requestAnimationFrame(tick);
     armIdleTimer();
+    // Only now hide the native cursor (globals.css keys off this class), so a
+    // failed or not-yet-hydrated canvas cursor never leaves the page cursorless.
+    document.documentElement.classList.add('has-custom-cursor');
 
     return () => {
+      document.documentElement.classList.remove('has-custom-cursor');
       if (running) cancelAnimationFrame(raf);
       if (idleTimer) clearTimeout(idleTimer);
       if (resizeRebuildTimer) clearTimeout(resizeRebuildTimer);

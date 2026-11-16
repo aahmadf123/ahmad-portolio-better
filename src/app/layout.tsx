@@ -120,6 +120,9 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: "#0d0e12",
   colorScheme: "dark",
+  // Lets the existing env(safe-area-inset-*) rules (chat, now-playing bar)
+  // take effect on notched phones; body pads the sides in landscape.
+  viewportFit: "cover",
 };
 
 const personJsonLd = {
