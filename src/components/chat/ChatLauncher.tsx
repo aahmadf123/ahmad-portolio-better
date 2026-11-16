@@ -39,7 +39,6 @@ export function ChatLauncher() {
             color: 'var(--primary)',
             cursor: 'pointer',
             boxShadow: '0 12px 34px -12px rgba(0,0,0,0.7), 0 0 24px -10px rgba(45,212,191,0.5)',
-            backdropFilter: 'blur(10px)',
           }}
         >
           <span aria-hidden style={{ position: 'relative', width: 9, height: 9 }}>

@@ -42,6 +42,13 @@ export function PlayDiagram({ loop = true }: { loop?: boolean }) {
         );
       });
       tl.to({}, { duration: 0.8 });
+
+      // The looping play only runs while the diagram is on screen.
+      if (loop && typeof IntersectionObserver !== 'undefined') {
+        const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) tl.play(); else tl.pause(); });
+        io.observe(svg);
+        return () => io.disconnect();
+      }
     }, svg);
 
     return () => ctx.revert();

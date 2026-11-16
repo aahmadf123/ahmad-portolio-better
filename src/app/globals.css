@@ -167,6 +167,12 @@ a { text-decoration: none; color: inherit; }
   * { transition: none !important; animation: none !important; }
 }
 
+/* Off-screen sections (OffscreenAnimationPauser) and Story chapters that are
+   wiped out of view (data-story-idle) don't run their ambient loops. */
+[data-offscreen], [data-offscreen] *, [data-story-idle] * {
+  animation-play-state: paused !important;
+}
+
 /* ── Custom cursor (pointer devices only) ─────────────────────── */
 @media (pointer: fine) {
   *, *::before, *::after { cursor: none !important; }
@@ -296,6 +302,20 @@ a { text-decoration: none; color: inherit; }
     0%   { clip-path: inset(7% 0 7% 0); filter: blur(2px); }
     55%  { clip-path: inset(7% 0 7% 0); filter: blur(1px); }
     100% { clip-path: inset(0 0 0 0); filter: blur(0); }
+  }
+
+  /* Phones/tablets: same letterbox slide, no full-page blur (filter on a
+     full-viewport snapshot is the expensive part on mobile GPUs). */
+  @media (max-width: 1023px), (pointer: coarse) {
+    @keyframes vt-letterbox-out {
+      0%   { clip-path: inset(0 0 0 0); }
+      100% { clip-path: inset(7% 0 7% 0); }
+    }
+    @keyframes vt-letterbox-in {
+      0%   { clip-path: inset(7% 0 7% 0); }
+      55%  { clip-path: inset(7% 0 7% 0); }
+      100% { clip-path: inset(0 0 0 0); }
+    }
   }
 
   /* Shared element morph (field note hero image) */

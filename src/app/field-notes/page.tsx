@@ -24,8 +24,7 @@ export default function FieldNotesPage() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 clamp(20px,4vw,52px)',
         borderBottom: '1px solid var(--bd)',
-        background: 'rgba(13,14,18,0.96)',
-        backdropFilter: 'blur(20px)',
+        background: 'rgba(13,14,18,0.97)',
       }}>
         <SmartBackLink fallbackHref="/#field-notes" style={{
           display: 'flex', alignItems: 'center', gap: 8,

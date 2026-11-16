@@ -21,9 +21,11 @@ export function StorySection() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [pinned, setPinned] = useState(false);
 
-  // Decide variant on mount (desktop + fine pointer + motion OK).
+  // Decide variant on mount: pin only on real desktops (wide AND tall enough,
+  // mouse/trackpad, motion OK). Tablets, landscape phones and short laptop
+  // windows get the stacked layout, where a 100svh stage can't clip copy.
   useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px) and (prefers-reduced-motion: no-preference)');
+    const mq = window.matchMedia('(min-width: 1024px) and (min-height: 680px) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
     setPinned(mq.matches);
     const onChange = (e: MediaQueryListEvent) => setPinned(e.matches);
     mq.addEventListener('change', onChange);
@@ -49,8 +51,24 @@ export function StorySection() {
         }
       });
 
+      // Only the chapter on screen (and the one it is wiping over) runs its
+      // ambient SVG loops; the rest are fully clipped, so pause them.
+      let shown = -1;
+      const markIdle = () => {
+        const t = tl.time();
+        let top = 0;
+        for (let i = 1; i < CH; i++) if (t >= HOLD + (i - 1) * (D + HOLD)) top = i;
+        if (top === shown) return;
+        shown = top;
+        panels.forEach((p, i) => {
+          if (i === top || i === top - 1) p.removeAttribute('data-story-idle');
+          else p.setAttribute('data-story-idle', '');
+        });
+      };
+
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
+        onUpdate: markIdle,
         scrollTrigger: {
           trigger: wrap,
           start: 'top top',
@@ -87,10 +105,14 @@ export function StorySection() {
       }
       // settle hold at the end
       tl.to({}, { duration: HOLD });
+      markIdle();
     }, wrap);
 
     refreshOnFontsReady();
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      wrap.querySelectorAll('[data-story-idle]').forEach((p) => p.removeAttribute('data-story-idle'));
+    };
   }, [pinned]);
 
   return (
@@ -109,7 +131,7 @@ export function StorySection() {
         <div style={{
           position: pinned ? 'sticky' : 'relative',
           top: 0,
-          height: pinned ? '100vh' : 'auto',
+          height: pinned ? '100svh' : 'auto',
           overflow: pinned ? 'hidden' : 'visible',
         }}>
           {storyChapters.map((c, i) => (

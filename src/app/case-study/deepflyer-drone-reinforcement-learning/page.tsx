@@ -98,8 +98,7 @@ export default function DeepFlyerCaseStudy() {
         position: 'sticky', top: 0, zIndex: 100, height: 56,
         borderBottom: scrolled ? `1px solid ${ACCENT}35` : '1px solid transparent',
         background: scrolled ? 'rgba(11,13,20,0.95)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 clamp(20px,4vw,52px)',
         transition: 'background 0.3s, border-color 0.3s',
       }}>
@@ -154,7 +153,7 @@ export default function DeepFlyerCaseStudy() {
       </div>
 
       {/* ── Section nav ── */}
-      <div style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(11,13,20,0.96)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto' }}>
+      <div style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(11,13,20,0.96)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto' }}>
         <div style={{ display: 'flex', gap: 0, padding: '0 clamp(20px,4vw,52px)', maxWidth: 1100, margin: '0 auto' }}>
           {SECTION_IDS.map((id, i) => (
             <button

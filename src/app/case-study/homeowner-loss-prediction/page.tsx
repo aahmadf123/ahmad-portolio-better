@@ -120,8 +120,7 @@ export default function HomeownerLossCaseStudy() {
       <header style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         background: scrolled ? 'rgba(11,13,20,0.95)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? `1px solid ${ACCENT}35` : '1px solid transparent',
+          borderBottom: scrolled ? `1px solid ${ACCENT}35` : '1px solid transparent',
         transition: 'all 0.3s ease',
         padding: '0 clamp(20px,4vw,52px)',
         height: 56,
@@ -188,7 +187,7 @@ export default function HomeownerLossCaseStudy() {
       </section>
 
       {/* ── Section nav ── */}
-      <nav style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(11,13,20,0.97)', backdropFilter: 'blur(8px)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto', scrollbarWidth: 'none' }}>
+      <nav style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(11,13,20,0.97)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 clamp(20px,4vw,52px)', display: 'flex', gap: 0 }}>
           {NAV_SECTIONS.map(s => (
             <button key={s.id}

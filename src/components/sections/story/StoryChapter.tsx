@@ -23,6 +23,7 @@ export function StoryChapter({ chapter, index, pinned, total }: {
     <article
       className="story-panel"
       data-story-panel={index}
+      data-pause-offscreen=""
       style={{
         position: pinned ? 'absolute' : 'relative',
         inset: pinned ? 0 : undefined,

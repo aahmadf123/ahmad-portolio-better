@@ -50,7 +50,7 @@ export const dynamicParams = false;
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr);
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 }
 
 export default async function FieldNotePage({ params }: PageProps) {
@@ -88,7 +88,6 @@ export default async function FieldNotePage({ params }: PageProps) {
         padding: '0 clamp(20px,4vw,52px)',
         borderBottom: '1px solid rgba(242,237,216,0.07)',
         background: 'rgba(13,14,18,0.97)',
-        backdropFilter: 'blur(20px)',
       }}>
         <SmartBackLink fallbackHref="/field-notes" backWhenPrev={['/', '/field-notes']} style={{
           display: 'flex', alignItems: 'center', gap: 8,

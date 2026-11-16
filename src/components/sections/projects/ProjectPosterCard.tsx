@@ -130,11 +130,13 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
         loading="lazy"
         decoding="async"
         variants={{
-          rest: { scale: 1, opacity: 0.34, filter: 'brightness(0.62) saturate(0.7)' },
-          hover: { scale: 1.05, opacity: 0.85, filter: 'brightness(0.95) saturate(1)' },
+          // opacity over the dark card does the dim/brighten; no animated
+          // `filter` (it repaints the full image every frame of the hover)
+          rest: { scale: 1, opacity: 0.3 },
+          hover: { scale: 1.05, opacity: 0.85 },
         }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', zIndex: 0 }}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', zIndex: 0, filter: 'saturate(0.8)' }}
       />
       {/* scrim */}
       <m.div
@@ -155,10 +157,10 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
       {/* content */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 3, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '16px 18px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: p.color, background: 'rgba(10,11,15,0.55)', padding: '3px 8px', borderRadius: 4, backdropFilter: 'blur(4px)' }}>
+          <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: p.color, background: 'rgba(10,11,15,0.78)', padding: '3px 8px', borderRadius: 4 }}>
             {p.domain} · {p.idx}
           </span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: STATUS_COLOR[p.status], background: 'rgba(10,11,15,0.55)', padding: '3px 8px', borderRadius: 4, backdropFilter: 'blur(4px)' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: STATUS_COLOR[p.status], background: 'rgba(10,11,15,0.78)', padding: '3px 8px', borderRadius: 4 }}>
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: STATUS_COLOR[p.status], display: 'inline-block' }} />
             {projectStatusLabel[p.status]}
           </span>

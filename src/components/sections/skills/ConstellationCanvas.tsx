@@ -296,8 +296,12 @@ export function ConstellationCanvas({
       ctx.font = LABEL_FONT;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.shadowColor = 'rgba(0,0,0,0.9)';
-      ctx.shadowBlur = 4;
+      // Legibility halo as a 3px dark outline (strokeText) instead of
+      // shadowBlur: a Gaussian blur per glyph run, ~27 labels x 60fps, was the
+      // most expensive part of the label pass.
+      ctx.lineWidth = 3;
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = 'rgba(0,0,0,0.85)';
       ctx.globalAlpha = introAlpha; // labels fade in as the assembly lands (1 when settled)
 
       // Hub labels - projected through the SAME world matrix as the stars, so
@@ -316,6 +320,7 @@ export function ConstellationCanvas({
         const hy = Math.max(13, Math.min(hh - 8, ((1 - projVec.y) / 2) * hh));
         const hubText = hub.label.toUpperCase();
         ctx.fillStyle = hexA(hub.color, 0.9);
+        ctx.strokeText(hubText, hx, hy);
         ctx.fillText(hubText, hx, hy);
         let hw = widthCache.get(hubText);
         if (hw === undefined) {
@@ -408,6 +413,7 @@ export function ConstellationCanvas({
         if (a < 0.02) continue;
         ctx.globalAlpha = introAlpha * a;
         ctx.fillStyle = e.focusMember ? e.color : LABEL_FILL;
+        ctx.strokeText(e.name, e.sx, e.sy + st.off);
         ctx.fillText(e.name, e.sx, e.sy + st.off);
       }
       labelState.forEach((st, name) => {
@@ -739,10 +745,9 @@ export function ConstellationCanvas({
     lineHeight: 1,
     borderRadius: 6,
     border: '1px solid var(--bd2)',
-    background: 'rgba(13,14,18,0.7)',
+    background: 'rgba(13,14,18,0.9)',
     color: 'var(--text2)',
     cursor: 'pointer',
-    backdropFilter: 'blur(4px)',
   };
 
   return (

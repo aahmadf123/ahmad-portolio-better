@@ -55,21 +55,37 @@ export function RouteTracker() {
     }
   }, [pathname]);
 
-  // Continuously remember this page's scroll offset (throttled to rAF).
+  // Remember this page's scroll offset once scrolling settles (trailing
+  // 150ms debounce) instead of a synchronous sessionStorage write every frame.
+  // Deliberately NOT saved in the effect cleanup: by the time cleanup runs on
+  // a route change the router may already have reset scrollY, which would
+  // overwrite the real offset with 0 and break SmartBackLink's restore.
   useEffect(() => {
-    let raf = 0;
+    let timer = 0;
     const save = () => {
-      raf = 0;
+      timer = 0;
       try {
         sessionStorage.setItem(`nav:scroll:${pathname}`, String(Math.round(window.scrollY)));
       } catch { /* ignore */ }
     };
-    const onScroll = () => { if (!raf) raf = requestAnimationFrame(save); };
+    const onScroll = () => {
+      if (timer) window.clearTimeout(timer);
+      timer = window.setTimeout(save, 150);
+    };
+    // A click or key press always precedes an in-app navigation, so flushing
+    // here captures the exact offset even if the debounce hasn't fired yet.
+    const flush = () => { if (timer) window.clearTimeout(timer); save(); };
     save();
     window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('pointerdown', flush, { capture: true, passive: true });
+    document.addEventListener('keydown', flush, { capture: true, passive: true });
+    window.addEventListener('pagehide', flush);
     return () => {
-      if (raf) cancelAnimationFrame(raf);
+      if (timer) window.clearTimeout(timer);
       window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('pointerdown', flush, { capture: true });
+      document.removeEventListener('keydown', flush, { capture: true });
+      window.removeEventListener('pagehide', flush);
     };
   }, [pathname]);
 

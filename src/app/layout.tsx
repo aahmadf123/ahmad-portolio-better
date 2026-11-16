@@ -9,6 +9,7 @@ import { ChatLauncher } from "@/components/chat/ChatLauncher";
 import { ChapterNav } from "@/components/layout/ChapterNav";
 import { RouteTracker } from "@/components/ui/route-tracker";
 import { NowPlayingBar } from "@/components/layout/NowPlayingBar";
+import { OffscreenAnimationPauser } from "@/components/effects/OffscreenAnimationPauser";
 import { FootballEasterEgg } from "@/components/effects/FootballEasterEgg";
 import { Analytics } from "@vercel/analytics/next";
 import { site } from "@/lib/data/site";
@@ -37,10 +38,13 @@ const codeFont = JetBrains_Mono({
   display: "swap",
 });
 
+// Handwriting: only the sign-off (far down the homepage) and the easter egg use
+// it, so don't preload it on every route.
 const handFont = Caveat({
   subsets: ["latin"],
   variable: "--font-hand",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -179,7 +183,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: `(function(){window.addEventListener('scroll',function(){var p=window.scrollY/Math.max(1,document.body.scrollHeight-window.innerHeight);var b=document.getElementById('scroll-bar');if(b)b.style.transform='scaleX('+p+')';},{passive:true});})();`,
+            // Scroll progress bar: at most one update per frame (rAF), no layout reads in the scroll event itself.
+            __html: `(function(){var f=0;function u(){f=0;var d=document.documentElement;var p=window.scrollY/Math.max(1,d.scrollHeight-window.innerHeight);var b=document.getElementById('scroll-bar');if(b)b.style.transform='scaleX('+p+')';}window.addEventListener('scroll',function(){if(!f)f=requestAnimationFrame(u);},{passive:true});})();`,
           }}
         />
         <script
@@ -192,6 +197,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <ChapterNav />
         <RouteTracker />
+        <OffscreenAnimationPauser />
         <NowPlayingBar />
         <FootballEasterEgg />
         <ChatLauncher />

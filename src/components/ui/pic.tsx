@@ -39,6 +39,17 @@ type Props = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'alt' | 'width' |
   height?: number;
 };
 
+/**
+ * Largest optimized variant of a public image (the 1600w webp from the
+ * manifest), or the original path if it isn't in the manifest. Used where a
+ * full-size view is wanted (the lightbox) without shipping 1-2.6 MB originals.
+ */
+export function largestVariant(src: string): string {
+  const entry = IMAGE_MANIFEST[decodeKey(src)];
+  if (!entry) return src;
+  return `${entry.base}-${entry.widths[entry.widths.length - 1]}.webp`;
+}
+
 export function Pic({
   src,
   alt,

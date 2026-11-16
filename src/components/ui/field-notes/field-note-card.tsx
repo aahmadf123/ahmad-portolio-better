@@ -13,7 +13,7 @@ const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 function formatDate(dateStr: string) {
   if (!dateStr) return null;
   const d = new Date(dateStr);
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 }
 
 export function FieldNoteCard({ note }: { note: FieldNote }) {

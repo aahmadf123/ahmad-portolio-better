@@ -154,8 +154,8 @@ export function SiteHeader() {
         style={{
           viewTransitionName: 'site-header',
           background: scrolled || open ? 'rgba(13,14,18,0.94)' : 'transparent',
-          backdropFilter: scrolled || open ? 'blur(24px) saturate(1.4)' : 'none',
-          WebkitBackdropFilter: scrolled || open ? 'blur(24px) saturate(1.4)' : 'none',
+          backdropFilter: scrolled || open ? 'blur(12px)' : 'none',
+          WebkitBackdropFilter: scrolled || open ? 'blur(12px)' : 'none',
         } as React.CSSProperties}
       >
         <nav
