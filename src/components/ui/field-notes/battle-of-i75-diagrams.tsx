@@ -6,7 +6,7 @@
 // data/manual/coin_toss.csv and data/processed/results.json.
 // Randomness only runs in event handlers, so SSR output stays deterministic.
 
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 const MONO  = "var(--font-chakra), 'Chakra Petch', monospace";
 const SERIF = "var(--font-chakra), 'Chakra Petch', sans-serif";
@@ -27,7 +27,7 @@ const teamName = (t: Team) => (t === 'UT' ? 'Toledo' : 'Bowling Green');
 function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; color?: string }) {
   return (
     <div style={{
-      fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
+      fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em',
       textTransform: 'uppercase', color, opacity: 0.8,
       marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
     }}>
@@ -53,7 +53,7 @@ function Panel({ children, accent }: { children: React.ReactNode; accent?: strin
 function Caption({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
-      marginTop: 12, fontFamily: MONO, fontSize: 10,
+      marginTop: 12, fontFamily: MONO, fontSize: 11,
       color: 'var(--text3)', letterSpacing: '0.05em', textAlign: 'center', lineHeight: 1.6,
     }}>
       {children}
@@ -70,7 +70,7 @@ function Chip({
       onClick={onClick}
       aria-pressed={active}
       style={{
-        fontFamily: MONO, fontSize: 10, letterSpacing: '0.04em',
+        fontFamily: MONO, fontSize: 11, letterSpacing: '0.04em',
         padding: '7px 11px', borderRadius: 6, cursor: 'pointer',
         background: active ? `${color}1c` : 'rgba(242,237,216,0.03)',
         border: `1px solid ${active ? color : 'rgba(244,244,242,0.12)'}`,
@@ -89,13 +89,13 @@ function Stat({ label, value, sub, color }: { label: string; value: string; sub:
       padding: '12px 14px', borderRadius: 8,
       background: `${color}0a`, border: `1px solid ${color}26`,
     }}>
-      <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color, opacity: 0.85, marginBottom: 6 }}>
+      <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color, opacity: 0.85, marginBottom: 6 }}>
         {label}
       </div>
       <div style={{ fontFamily: MONO, fontSize: 20, color, lineHeight: 1, marginBottom: 6, fontVariantNumeric: 'tabular-nums' }}>
         {value}
       </div>
-      <div style={{ fontFamily: SERIF, fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>
+      <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.5 }}>
         {sub}
       </div>
     </div>
@@ -140,40 +140,107 @@ const GAMES: GameState[] = (() => {
   });
 })();
 
-// ── 0. At a glance ──────────────────────────────────────────────────────────
+// ── 0. Answers up front + question headers ──────────────────────────────────
 
-export function RivalryAtAGlance() {
+const ANSWERS = [
+  { id: 'streaks', big: '43-43-4', q: 'Is this rivalry streakier than chance?',
+    a: 'Mostly no. Bowling Green’s 12 straight wins from 1955 to 1966 are the one streak chance can’t explain.' },
+  { id: 'toss', big: '13-13', q: 'Does winning the coin toss help?',
+    a: 'Toss winners are 13-13 since 1998, even though they defer 22 of 26 times.' },
+  { id: 'opening', big: '5 of 10', q: 'Does the team that gets the ball first play it safe?',
+    a: 'No. BG scores on 5 of 10 opening drives after Toledo defers. Toledo scores on 5 of 12 after BG defers.' },
+  { id: 'sample', big: '44%', q: 'Doesn’t 16-11 for the 2nd-half receiver mean something?',
+    a: 'A fair coin produces a record that lopsided 44% of the time.' },
+  { id: 'middle-eight', big: '+0.93', q: 'So does deferring help at all?',
+    a: 'It wins the 8 minutes around halftime by about a point. It doesn’t win games.' },
+];
+
+export function AnswersUpFront() {
   return (
-    <div style={{ margin: '2rem 0 2.5rem' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 8 }}>
-        <Stat label="The series" value="43-43-4" color={GOLD}
-          sub="90 games since 1919. Friday breaks the tie." />
-        <Stat label="Coin toss effect" value="50.3%" color={MUTED}
-          sub="How often the 2nd-half receiver wins. 8,310 FBS games." />
-        <Stat label="Middle Eight edge" value="+0.93" color={UT}
-          sub="Points per game for deferring, in 8 minutes around halftime." />
-        <Stat label="In this rivalry" value="16-11" color={BG}
-          sub="2nd-half receiver's record. Looks real. It isn't, yet." />
+    <nav aria-label="The short version" style={{
+      margin: '2rem 0 2.5rem', borderRadius: 10, overflow: 'hidden',
+      border: '1px solid rgba(244,244,242,0.1)', background: 'rgba(242,237,216,0.02)',
+    }}>
+      <div style={{
+        padding: '12px 16px', fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em',
+        textTransform: 'uppercase', color: GOLD, borderBottom: '1px solid rgba(244,244,242,0.08)',
+      }}>
+        The short version · 5 questions
+      </div>
+      {ANSWERS.map((x, i) => (
+        <a key={x.id} href={`#${x.id}`} style={{
+          display: 'grid', gridTemplateColumns: 'minmax(68px, 92px) 1fr', gap: 14, alignItems: 'baseline',
+          padding: '14px 16px', textDecoration: 'none', color: 'inherit', borderBottom: 'none',
+          borderTop: i ? '1px solid rgba(244,244,242,0.07)' : 'none',
+        }}>
+          <span style={{ fontFamily: MONO, fontSize: 20, color: 'var(--foreground)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
+            {x.big}
+          </span>
+          <span>
+            <span style={{ display: 'block', fontFamily: MONO, fontSize: 11, color: GOLD, letterSpacing: '0.04em', marginBottom: 4 }}>
+              {String(i + 1).padStart(2, '0')} · {x.q} ↓
+            </span>
+            <span style={{ display: 'block', fontFamily: SERIF, fontSize: 15, lineHeight: 1.55, color: 'var(--text2)' }}>
+              {x.a}
+            </span>
+          </span>
+        </a>
+      ))}
+    </nav>
+  );
+}
+
+export function Question({ n, id, q, a }: { n: number; id: string; q: string; a: string }) {
+  return (
+    <div id={id} style={{ scrollMarginTop: 120, marginTop: '4rem', paddingTop: '1.75rem', borderTop: '1px solid rgba(244,244,242,0.1)' }}>
+      <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: GOLD, marginBottom: 10 }}>
+        Question {n} of 5
+      </div>
+      <h2 style={{
+        fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--fs-article-h2)', lineHeight: 1.2,
+        letterSpacing: '-0.015em', color: 'var(--foreground)', margin: '0 0 16px',
+      }}>
+        {q}
+      </h2>
+      <div style={{
+        margin: '0 0 1.75rem', padding: '12px 16px', borderRadius: 6,
+        border: `1px solid ${GOLD}40`, background: `${GOLD}0d`,
+        fontFamily: SERIF, fontSize: 17, lineHeight: 1.55, color: 'var(--foreground)',
+      }}>
+        <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: GOLD, marginRight: 10 }}>
+          Answer
+        </span>
+        {a}
       </div>
     </div>
   );
 }
 
 // ── 1. Series explorer ──────────────────────────────────────────────────────
+// The SVG is drawn at its real pixel width (ResizeObserver), so labels stay
+// readable on phones instead of shrinking with a fixed viewBox.
 
-const SX = { W: 800, H: 290, l: 34, r: 14, t: 18, b: 30, y0: 1917.5, y1: 2026.5, lMax: 5, lMin: -12 };
-const xOf = (year: number) => SX.l + ((year - SX.y0) / (SX.y1 - SX.y0)) * (SX.W - SX.l - SX.r);
-const yOf = (lead: number) => SX.t + ((SX.lMax - lead) / (SX.lMax - SX.lMin)) * (SX.H - SX.t - SX.b);
+function geom(width: number) {
+  const W = Math.max(300, Math.round(width));
+  const H = W < 520 ? 230 : 290;
+  const l = 30, r = 10, t = 16, b = 26;
+  const y0 = 1917.5, y1 = 2026.5, lMax = 5, lMin = -12;
+  return {
+    W, H, l, r, t, b, y0, y1,
+    x: (year: number) => l + ((year - y0) / (y1 - y0)) * (W - l - r),
+    y: (lead: number) => t + ((lMax - lead) / (lMax - lMin)) * (H - t - b),
+  };
+}
 
 const MOMENTS = [
   { id: 'bg12',  label: 'BG wins 12 straight', from: 1955, to: 1966, color: BG,
-    text: 'Bowling Green wins every game from 1955 to 1966. Random orderings of this series produce a run that long only 0.8% of the time. It lines up with Doyt Perry’s tenure as BG head coach.' },
+    text: 'Bowling Green wins every game from 1955 to 1966. Random orderings of this series produce a run that long only 0.8% of the time. It covers Doyt Perry’s entire tenure as BG head coach.' },
   { id: 'low',   label: 'Rock bottom, 1994', from: 1994, to: 1994, color: BG,
     text: 'After 1994, Bowling Green leads the series by 11 games. It takes Toledo 31 years to climb all the way back.' },
   { id: 'ut9',   label: 'Toledo wins 9 straight', from: 2010, to: 2018, color: UT,
-    text: 'Toledo wins every meeting from 2010 to 2018. Feels historic. About 1 in 10 random orderings has a run at least this long.' },
+    text: 'Toledo wins every meeting from 2010 to 2018. It feels historic, but about 1 in 10 random orderings has a run at least this long.' },
   { id: 'now',   label: 'Dead even', from: 2025, to: 2025, color: GOLD,
-    text: 'Bowling Green wins in 2025 and the series is level at 43-43-4. 1,930 points for Toledo, 1,907 for Bowling Green.' },
+    text: 'Bowling Green wins in 2025 and the series is level at 43-43-4. Total points: Toledo 1,930, Bowling Green 1,907.' },
 ] as const;
 
 const ERAS = [
@@ -190,19 +257,32 @@ function leadText(lead: number) {
 export function SeriesExplorer() {
   const [idx, setIdx] = useState(GAMES.length - 1);
   const [moment, setMoment] = useState<string | null>('now');
+  const [width, setWidth] = useState(760);
+  const boxRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(entries => setWidth(entries[0].contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const G = useMemo(() => geom(width), [width]);
+  const narrow = G.W < 520;
+
   const linePath = useMemo(() => {
-    let d = `M${xOf(1918.5).toFixed(1)},${yOf(0).toFixed(1)}`;
+    let d = `M${G.x(1918.5).toFixed(1)},${G.y(0).toFixed(1)}`;
     let prev = 0;
     for (const g of GAMES) {
-      d += ` H${xOf(g.year).toFixed(1)}`;
-      if (g.lead !== prev) d += ` V${yOf(g.lead).toFixed(1)}`;
+      d += ` H${G.x(g.year).toFixed(1)}`;
+      if (g.lead !== prev) d += ` V${G.y(g.lead).toFixed(1)}`;
       prev = g.lead;
     }
-    return d + ` H${xOf(2026).toFixed(1)}`;
-  }, []);
-  const areaPath = `${linePath} V${yOf(0).toFixed(1)} H${xOf(1918.5).toFixed(1)} Z`;
+    return d + ` H${G.x(2026).toFixed(1)}`;
+  }, [G]);
+  const areaPath = `${linePath} V${G.y(0).toFixed(1)} H${G.x(1918.5).toFixed(1)} Z`;
 
   const g = GAMES[idx];
   const m = MOMENTS.find(mm => mm.id === moment) ?? null;
@@ -211,8 +291,8 @@ export function SeriesExplorer() {
     const svg = svgRef.current;
     if (!svg) return;
     const rect = svg.getBoundingClientRect();
-    const sx = ((clientX - rect.left) / rect.width) * SX.W;
-    const year = SX.y0 + ((sx - SX.l) / (SX.W - SX.l - SX.r)) * (SX.y1 - SX.y0);
+    const sx = ((clientX - rect.left) / rect.width) * G.W;
+    const year = G.y0 + ((sx - G.l) / (G.W - G.l - G.r)) * (G.y1 - G.y0);
     let best = 0, bestD = Infinity;
     GAMES.forEach((gg, i) => {
       const d = Math.abs(gg.year - year);
@@ -230,6 +310,7 @@ export function SeriesExplorer() {
 
   const utWon = g.res === 'W', tie = g.res === 'T';
   const resultColor = tie ? MUTED : utWon ? UT : BG;
+  const LABEL = { fontSize: 11, fill: 'var(--text3)', fontFamily: MONO } as const;
 
   return (
     <div style={{ margin: '2.5rem 0' }}>
@@ -240,81 +321,77 @@ export function SeriesExplorer() {
           <div style={{ fontFamily: MONO, fontSize: 30, color: 'var(--foreground)', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>
             {g.year}
           </div>
-          <div style={{ fontFamily: MONO, fontSize: 12, color: 'var(--text2)' }}>
+          <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text2)' }}>
             <span style={{ color: UT }}>Toledo {g.ut}</span>
             <span style={{ color: 'var(--text3)' }}>{'  ·  '}</span>
             <span style={{ color: BG }}>Bowling Green {g.bg}</span>
             <span style={{ color: 'var(--text3)' }}>{`  ·  at ${g.host === 'T' ? 'Toledo' : 'Bowling Green'}`}</span>
           </div>
-          <div style={{ fontFamily: MONO, fontSize: 11, color: resultColor, marginLeft: 'auto' }}>
+          <div style={{ fontFamily: MONO, fontSize: 12, color: resultColor, marginLeft: narrow ? 0 : 'auto' }}>
             {tie ? 'Tie' : `${utWon ? 'Toledo' : 'BG'} wins`} → {leadText(g.lead)} ({g.w}-{g.l}-{g.t})
           </div>
         </div>
 
         {/* Chart */}
-        <svg
-          ref={svgRef}
-          viewBox={`0 0 ${SX.W} ${SX.H}`}
-          role="img"
-          aria-label="Toledo wins minus Bowling Green wins after each game, 1919 to 2025. Toledo led early, Bowling Green led by as many as 11 games after 1994, and the series is now even."
-          style={{ width: '100%', height: 'auto', display: 'block', touchAction: 'pan-y', cursor: 'crosshair' }}
-          onPointerMove={e => pick(e.clientX)}
-          onPointerDown={e => pick(e.clientX)}
-        >
-          <defs>
-            <clipPath id="i75-above"><rect x="0" y="0" width={SX.W} height={yOf(0)} /></clipPath>
-            <clipPath id="i75-below"><rect x="0" y={yOf(0)} width={SX.W} height={SX.H} /></clipPath>
-          </defs>
+        <div ref={boxRef}>
+          <svg
+            ref={svgRef}
+            width="100%"
+            height={G.H}
+            viewBox={`0 0 ${G.W} ${G.H}`}
+            role="img"
+            aria-label="Toledo wins minus Bowling Green wins after each game, 1919 to 2025. Toledo led early, Bowling Green led by as many as 11 games after 1994, and the series is now even."
+            style={{ display: 'block', touchAction: 'pan-y', cursor: 'crosshair' }}
+            onPointerMove={e => pick(e.clientX)}
+            onPointerDown={e => pick(e.clientX)}
+          >
+            <defs>
+              <clipPath id="i75-above"><rect x="0" y="0" width={G.W} height={G.y(0)} /></clipPath>
+              <clipPath id="i75-below"><rect x="0" y={G.y(0)} width={G.W} height={G.H} /></clipPath>
+            </defs>
 
-          {/* gridlines */}
-          {[4, 0, -4, -8, -12].map(v => (
-            <g key={v}>
-              <line x1={SX.l} x2={SX.W - SX.r} y1={yOf(v)} y2={yOf(v)}
-                stroke="rgba(244,244,242,0.07)" strokeDasharray={v === 0 ? undefined : '2 4'} />
-              <text x={SX.l - 6} y={yOf(v) + 3} textAnchor="end" fontSize="9" fill="var(--text3)" fontFamily={MONO}>
-                {v > 0 ? `+${v}` : v}
-              </text>
-            </g>
-          ))}
-          {[1920, 1940, 1960, 1980, 2000, 2020].map(y => (
-            <text key={y} x={xOf(y)} y={SX.H - 10} textAnchor="middle" fontSize="9" fill="var(--text3)" fontFamily={MONO}>{y}</text>
-          ))}
+            {[4, 0, -4, -8, -12].map(v => (
+              <g key={v}>
+                <line x1={G.l} x2={G.W - G.r} y1={G.y(v)} y2={G.y(v)}
+                  stroke="rgba(244,244,242,0.08)" strokeDasharray={v === 0 ? undefined : '2 4'} />
+                <text x={G.l - 6} y={G.y(v) + 4} textAnchor="end" {...LABEL}>{v > 0 ? `+${v}` : v}</text>
+              </g>
+            ))}
+            {(narrow ? [1920, 1960, 2000] : [1920, 1940, 1960, 1980, 2000, 2020]).map(y => (
+              <text key={y} x={G.x(y)} y={G.H - 6} textAnchor="middle" {...LABEL}>{y}</text>
+            ))}
 
-          {/* WWII-era gap */}
-          <rect x={xOf(1935.5)} y={SX.t} width={xOf(1947.5) - xOf(1935.5)} height={SX.H - SX.t - SX.b} fill="rgba(244,244,242,0.035)" />
-          <text x={(xOf(1935.5) + xOf(1947.5)) / 2} y={SX.t + 12} textAnchor="middle" fontSize="8" fill="var(--text3)" fontFamily={MONO}>no games</text>
-          <text x={(xOf(1935.5) + xOf(1947.5)) / 2} y={SX.t + 22} textAnchor="middle" fontSize="8" fill="var(--text3)" fontFamily={MONO}>1936–47</text>
+            {/* WWII-era gap */}
+            <rect x={G.x(1935.5)} y={G.t} width={G.x(1947.5) - G.x(1935.5)} height={G.H - G.t - G.b} fill="rgba(244,244,242,0.04)" />
+            {!narrow && (
+              <text x={(G.x(1935.5) + G.x(1947.5)) / 2} y={G.t + 14} textAnchor="middle" {...LABEL}>no games</text>
+            )}
 
-          {/* highlighted moment */}
-          {m && (
-            <rect x={xOf(m.from - 0.5)} y={SX.t} width={xOf(m.to + 0.5) - xOf(m.from - 0.5)}
-              height={SX.H - SX.t - SX.b} fill={`${m.color}18`} stroke={`${m.color}55`} />
-          )}
+            {m && (
+              <rect x={G.x(m.from - 0.5)} y={G.t} width={G.x(m.to + 0.5) - G.x(m.from - 0.5)}
+                height={G.H - G.t - G.b} fill={`${m.color}18`} stroke={`${m.color}55`} />
+            )}
 
-          {/* lead areas */}
-          <path d={areaPath} fill={`${UT}38`} clipPath="url(#i75-above)" />
-          <path d={areaPath} fill={`${BG}30`} clipPath="url(#i75-below)" />
-          <path d={linePath} fill="none" stroke="var(--foreground)" strokeOpacity={0.85} strokeWidth={1.4} />
+            <path d={areaPath} fill={`${UT}38`} clipPath="url(#i75-above)" />
+            <path d={areaPath} fill={`${BG}30`} clipPath="url(#i75-below)" />
+            <path d={linePath} fill="none" stroke="var(--foreground)" strokeOpacity={0.85} strokeWidth={1.5} />
 
-          {/* side labels */}
-          <text x={SX.W - SX.r - 4} y={yOf(3.6)} textAnchor="end" fontSize="9" fill={UT} fontFamily={MONO}>TOLEDO AHEAD ↑</text>
-          <text x={SX.W - SX.r - 4} y={yOf(-11.2)} textAnchor="end" fontSize="9" fill={BG} fontFamily={MONO}>BOWLING GREEN AHEAD ↓</text>
+            <text x={G.W - G.r - 2} y={G.y(3.5)} textAnchor="end" fontSize={11} fill={UT} fontFamily={MONO}>TOLEDO AHEAD ↑</text>
+            <text x={G.W - G.r - 2} y={G.y(-11.2)} textAnchor="end" fontSize={11} fill={BG} fontFamily={MONO}>BG AHEAD ↓</text>
 
-          {/* cursor */}
-          <line x1={xOf(g.year)} x2={xOf(g.year)} y1={SX.t} y2={SX.H - SX.b} stroke={resultColor} strokeOpacity={0.6} />
-          <circle cx={xOf(g.year)} cy={yOf(g.lead)} r={5} fill={resultColor} stroke="var(--background)" strokeWidth={2} />
-        </svg>
+            <line x1={G.x(g.year)} x2={G.x(g.year)} y1={G.t} y2={G.H - G.b} stroke={resultColor} strokeOpacity={0.6} />
+            <circle cx={G.x(g.year)} cy={G.y(g.lead)} r={5.5} fill={resultColor} stroke="var(--background)" strokeWidth={2} />
+          </svg>
+        </div>
 
-        {/* Keyboard / touch scrubber */}
         <input
           type="range" min={0} max={GAMES.length - 1} value={idx}
           onChange={e => { setIdx(Number(e.target.value)); setMoment(null); }}
           aria-label="Scrub through all 90 games"
           aria-valuetext={`${g.year}: ${leadText(g.lead)}`}
-          style={{ width: '100%', accentColor: GOLD, cursor: 'pointer', margin: '6px 0 12px' }}
+          style={{ width: '100%', accentColor: GOLD, cursor: 'pointer', margin: '8px 0 14px' }}
         />
 
-        {/* Moments */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
           {MOMENTS.map(mm => (
             <Chip key={mm.id} active={moment === mm.id} color={mm.color} onClick={() => chooseMoment(mm.id)}>
@@ -323,22 +400,21 @@ export function SeriesExplorer() {
           ))}
         </div>
         <div style={{
-          minHeight: 46, fontFamily: SERIF, fontSize: 13, lineHeight: 1.65, color: 'var(--text2)',
-          padding: '10px 14px', borderRadius: 8,
+          minHeight: 48, fontFamily: SERIF, fontSize: 15, lineHeight: 1.6, color: 'var(--text2)',
+          padding: '12px 14px', borderRadius: 8,
           background: m ? `${m.color}0a` : 'rgba(242,237,216,0.02)',
           border: `1px solid ${m ? m.color + '28' : 'rgba(244,244,242,0.07)'}`,
         }}>
           {m ? m.text : 'Drag across the chart, or use the slider, to step through every game. Pick a moment above for the story behind it.'}
         </div>
 
-        {/* Eras */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 6, marginTop: 12 }}>
           {ERAS.map(e => (
-            <div key={e.label} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(244,244,242,0.07)' }}>
-              <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            <div key={e.label} style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid rgba(244,244,242,0.07)' }}>
+              <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                 {e.label} · {e.from}–{e.to}
               </div>
-              <div style={{ fontFamily: MONO, fontSize: 14, color: 'var(--foreground)', marginTop: 3 }}>
+              <div style={{ fontFamily: MONO, fontSize: 15, color: 'var(--foreground)', marginTop: 4 }}>
                 Toledo {e.rec}
               </div>
             </div>
@@ -379,7 +455,7 @@ const REAL = runStats(DECIDED);
 function Strip({ seq, label }: { seq: boolean[] | null; label: string }) {
   return (
     <div style={{ marginBottom: 10 }}>
-      <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 5 }}>
+      <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 5 }}>
         {label}
       </div>
       <div style={{ display: 'flex', gap: 1, height: 22 }} aria-hidden>
@@ -387,7 +463,7 @@ function Strip({ seq, label }: { seq: boolean[] | null; label: string }) {
           ? seq.map((ut, i) => (
               <div key={i} style={{ flex: 1, minWidth: 1, background: ut ? UT : BG, opacity: 0.85, borderRadius: 1 }} />
             ))
-          : <div style={{ flex: 1, border: '1px dashed rgba(244,244,242,0.15)', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: MONO, fontSize: 9, color: 'var(--text3)' }}>
+          : <div style={{ flex: 1, border: '1px dashed rgba(244,244,242,0.15)', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: MONO, fontSize: 11, color: 'var(--text3)' }}>
               press shuffle
             </div>}
       </div>
@@ -419,7 +495,7 @@ export function StreakShuffle() {
     <div style={{ margin: '2.5rem 0' }}>
       <SectionLabel color={GOLD}>Interactive · Shuffle the rivalry</SectionLabel>
       <Panel>
-        <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
+        <div style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
           Same 86 decided games, same 43 wins each. Shuffle the order and see how often pure chance
           produces streaks like the real ones. <span style={{ color: UT }}>Blue</span> is a Toledo win,{' '}
           <span style={{ color: BG }}>orange</span> is Bowling Green.
@@ -537,10 +613,10 @@ export function CoinTossLedger() {
               {hits}<span style={{ fontSize: 14, color: 'var(--text3)' }}> of {eligible.length}</span>
             </div>
           )}
-          <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.55, flex: '1 1 260px' }}>{L.blurb}</div>
+          <div style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text2)', lineHeight: 1.55, flex: '1 1 260px' }}>{L.blurb}</div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(86px, 1fr))', gap: 6 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(92px, 1fr))', gap: 6 }}>
           {TOSSES.map(x => {
             const isEligible = L.eligible(x);
             const isHit = isEligible && L.hit(x);
@@ -561,19 +637,19 @@ export function CoinTossLedger() {
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-                  <span style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)' }}>{x.y}</span>
+                  <span style={{ fontFamily: MONO, fontSize: 12, color: 'var(--foreground)' }}>{x.y}</span>
                   {x.tw
                     ? <span title={x.dec === 'defer' ? 'deferred' : 'took the ball'} style={{
                         width: 10, height: 10, borderRadius: '50%',
                         background: x.dec === 'defer' ? teamColor(x.tw) : 'transparent',
                         border: `2px solid ${teamColor(x.tw)}`, boxSizing: 'border-box',
                       }} />
-                    : <span style={{ fontFamily: MONO, fontSize: 10, color: MUTED }}>?</span>}
+                    : <span style={{ fontFamily: MONO, fontSize: 11, color: MUTED }}>?</span>}
                 </div>
-                <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', lineHeight: 1.6 }}>
+                <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', lineHeight: 1.6 }}>
                   2H: <span style={{ color: teamColor(x.r2) }}>{x.r2 ?? '?'}</span>
                 </div>
-                <div style={{ fontFamily: MONO, fontSize: 9, color: teamColor(x.w), lineHeight: 1.6 }}>
+                <div style={{ fontFamily: MONO, fontSize: 11, color: teamColor(x.w), lineHeight: 1.6 }}>
                   {x.w} {Math.max(x.ut, x.bg)}-{Math.min(x.ut, x.bg)}
                 </div>
               </button>
@@ -582,7 +658,7 @@ export function CoinTossLedger() {
         </div>
 
         {/* Legend */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', marginTop: 10, fontFamily: MONO, fontSize: 9, color: 'var(--text3)' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', marginTop: 10, fontFamily: MONO, fontSize: 11, color: 'var(--text3)' }}>
           <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: UT, marginRight: 5 }} />Toledo won toss, deferred</span>
           <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: BG, marginRight: 5 }} />BG won toss, deferred</span>
           <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', border: `2px solid ${MUTED}`, boxSizing: 'border-box', marginRight: 5 }} />took the ball</span>
@@ -594,7 +670,7 @@ export function CoinTossLedger() {
           marginTop: 14, padding: '12px 14px', borderRadius: 8,
           border: '1px solid rgba(244,244,242,0.09)', background: 'rgba(242,237,216,0.025)',
         }}>
-          <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em', marginBottom: 8 }}>
+          <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.06em', marginBottom: 8 }}>
             {t.y} · AT {t.host === 'UT' ? 'TOLEDO' : 'BOWLING GREEN'} · WIND {t.wind.toUpperCase()} ·{' '}
             <span style={{ color: UT }}>UT {t.ut}</span>, <span style={{ color: BG }}>BG {t.bg}</span>
           </div>
@@ -604,12 +680,12 @@ export function CoinTossLedger() {
               </div>
             : <div style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text3)' }}>No toss line in the box score.</div>}
           {t.note && (
-            <div style={{ fontFamily: SERIF, fontSize: 13, color: GOLD, lineHeight: 1.6, marginTop: 8 }}>
+            <div style={{ fontFamily: SERIF, fontSize: 14, color: GOLD, lineHeight: 1.6, marginTop: 8 }}>
               {t.note}
             </div>
           )}
           <a href={t.src} target="_blank" rel="noopener noreferrer" style={{
-            display: 'inline-block', marginTop: 10, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em',
+            display: 'inline-block', marginTop: 10, fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em',
             color: 'var(--text2)', textDecoration: 'underline', textUnderlineOffset: 3,
             textDecorationColor: 'rgba(244,244,242,0.3)', padding: 0,
           }}>
@@ -654,7 +730,7 @@ export function TwentySevenCoins() {
     <div style={{ margin: '2.5rem 0' }}>
       <SectionLabel color={BG}>Interactive · Replay the rivalry with a fair coin</SectionLabel>
       <Panel accent={BG}>
-        <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
+        <div style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
           Assume the 2nd-half kickoff is worth <b style={{ color: 'var(--text2)' }}>nothing</b>. Every game is a 50/50 coin.
           Play 27 of them and count how often the 2nd-half receiver wins. How often does a worthless edge look like 16-11?
         </div>
@@ -675,7 +751,7 @@ export function TwentySevenCoins() {
             }} />
           ))}
         </div>
-        <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', marginBottom: 14, minHeight: 15 }}>
+        <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', marginBottom: 14, minHeight: 15 }}>
           {lastWins !== null
             ? <>Last rivalry: 2nd-half receiver went <span style={{ color: 'var(--foreground)' }}>{lastWins}-{N_RIVAL - lastWins}</span>{(lastWins >= OBS || lastWins <= N_RIVAL - OBS) && <span style={{ color: GOLD }}> · at least as lopsided as the real thing</span>}</>
             : 'One dot per game. Blue = 2nd-half receiver won.'}
@@ -695,7 +771,7 @@ export function TwentySevenCoins() {
             );
           })}
         </div>
-        <div style={{ position: 'relative', height: 14, fontFamily: MONO, fontSize: 9, color: 'var(--text3)', marginTop: 4 }}>
+        <div style={{ position: 'relative', height: 14, fontFamily: MONO, fontSize: 11, color: 'var(--text3)', marginTop: 4 }}>
           {[{ k: 0, t: '0' }, { k: 11, t: '11' }, { k: 13.5, t: 'even' }, { k: OBS, t: '16', c: GOLD }, { k: 27, t: '27 wins' }].map(({ k, t, c }) => (
             <span key={t} style={{
               position: 'absolute', left: `${((k + 0.5) / (N_RIVAL + 1)) * 100}%`,
@@ -735,10 +811,10 @@ function ForestRow({
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
         <div>
           <div style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--foreground)' }}>{label}</div>
-          <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', marginTop: 2 }}>{sub}</div>
+          <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>{sub}</div>
         </div>
-        <div style={{ fontFamily: MONO, fontSize: 13, color, textAlign: 'right' }}>
-          {fmt(est)} <span style={{ color: 'var(--text3)', fontSize: 10 }}>[{fmt(lo)}, {fmt(hi)}]</span>
+        <div style={{ fontFamily: MONO, fontSize: 14, color, textAlign: 'right' }}>
+          {fmt(est)} <span style={{ color: 'var(--text3)', fontSize: 11 }}>[{fmt(lo)}, {fmt(hi)}]</span>
         </div>
       </div>
       <div style={{ position: 'relative', height: 18 }}>
@@ -773,7 +849,7 @@ export function MiddleEightVsGame() {
               est={-0.17} lo={-0.51} hi={0.15} color={MUTED} min={-1} max={1.5} fmt={fmtPts} />
             <ForestRow label="Win probability, spread-adjusted" sub="percentage points · 8,310 games"
               est={-0.15} lo={-1.45} hi={1.16} color={MUTED} min={-2} max={2} fmt={fmtPP} />
-            <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65, marginTop: 12 }}>
+            <div style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text2)', lineHeight: 1.65, marginTop: 12 }}>
               The blue interval sits clearly right of zero: deferring wins the eight minutes around halftime.
               The gray intervals straddle zero: by the final whistle, the edge is gone.
             </div>
@@ -783,7 +859,7 @@ export function MiddleEightVsGame() {
             <div style={{ position: 'relative', height: 150, margin: '18px 0 6px' }}>
               {[46, 50, 54].map(v => (
                 <div key={v} style={{ position: 'absolute', left: 30, right: 0, bottom: `${((v - 45) / 10) * 100}%`, borderTop: `1px ${v === 50 ? 'solid' : 'dashed'} rgba(244,244,242,${v === 50 ? 0.3 : 0.08})` }}>
-                  <span style={{ position: 'absolute', left: -30, top: -6, fontFamily: MONO, fontSize: 8, color: 'var(--text3)' }}>{v}%</span>
+                  <span style={{ position: 'absolute', left: -30, top: -6, fontFamily: MONO, fontSize: 10, color: 'var(--text3)' }}>{v}%</span>
                 </div>
               ))}
               <div style={{ position: 'absolute', left: 30, right: 0, top: 0, bottom: 0, display: 'flex' }}>
@@ -805,12 +881,12 @@ export function MiddleEightVsGame() {
             </div>
             <div style={{ display: 'flex', marginLeft: 30 }}>
               {BY_SEASON.map(([yr]) => (
-                <div key={yr} style={{ flex: 1, textAlign: 'center', fontFamily: MONO, fontSize: 8, color: 'var(--text3)' }}>
+                <div key={yr} style={{ flex: 1, textAlign: 'center', fontFamily: MONO, fontSize: 10, color: 'var(--text3)' }}>
                   {`'${String(yr).slice(2)}`}
                 </div>
               ))}
             </div>
-            <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65, marginTop: 12 }}>
+            <div style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text2)', lineHeight: 1.65, marginTop: 12 }}>
               2nd-half receiver win rate by season: 46.9% to 53.7%, bouncing around 50 with no trend.
               Drop the strange 2020 season and it’s 50.2%.
             </div>
@@ -819,6 +895,184 @@ export function MiddleEightVsGame() {
       </Panel>
       <Caption>
         Regular-season FBS vs. FBS games, 2014–2025, CollegeFootballData.com. Bars are 95% confidence intervals.
+      </Caption>
+    </div>
+  );
+}
+
+// ── 6. Opening drives ───────────────────────────────────────────────────────
+// First offensive drive of every rivalry game since 1998, rebuilt from the
+// official box-score play-by-play (src/opening_drives.py in the research repo).
+
+type Why = 'UT deferred' | 'BG deferred' | 'chose the ball' | 'toss not codable';
+// [season, offense, why, first snap, first-snap yards, snaps, passes, yards, result, game winner, first play]
+type DriveRow = [number, Team, Why, 'run' | 'pass', number, number, number, number, string, Team, string];
+const DRIVES: DriveRow[] = [
+  [1998, 'BG', 'toss not codable', 'run', 11, 4, 1, 19, 'Punt', 'UT', 'Billy Price rush for 11 yards to the BG46, 1ST DOWN BG.'],
+  [1999, 'BG', 'UT deferred', 'run', 2, 13, 5, 70, 'FG', 'BG', 'LEWIS, Godfrey rush up middle for 2 yards to the BG22.'],
+  [2001, 'UT', 'BG deferred', 'pass', -4, 3, 2, -7, 'Punt', 'BG', 'JONES, Brian sacked for loss of 4 yards to the TOLEDO17.'],
+  [2002, 'UT', 'BG deferred', 'run', 2, 15, 6, 80, 'TD', 'UT', 'DAWSON, Trinity rush for 2 yards to the UT22.'],
+  [2003, 'UT', 'BG deferred', 'run', 7, 14, 1, 62, 'FG miss', 'BG', 'DAWSON, Trinity rush for 7 yards to the UT26.'],
+  [2004, 'BG', 'chose the ball', 'pass', 0, 6, 4, 69, 'TD', 'UT', 'JACOBS, Omar pass incomplete to MAGNER, Cole.'],
+  [2005, 'BG', 'UT deferred', 'run', 7, 15, 4, 89, 'TD', 'UT', 'POPE, P.J. rush for 7 yards to the BGSU18.'],
+  [2006, 'UT', 'BG deferred', 'run', 4, 3, 1, 3, 'Punt', 'UT', 'PARMELE, Jalen rush for 4 yards to the UT39.'],
+  [2007, 'BG', 'chose the ball', 'run', -3, 14, 4, 61, 'Fumble', 'BG', 'TURNER, Anthony rush for loss of 3 yards to the BGSU30.'],
+  [2008, 'BG', 'UT deferred', 'pass', 12, 5, 4, 50, 'TD', 'BG', 'SHEEHAN, Tyler pass complete to KELLEY, Jermiah for 12 yards to the TOLEDO38, 1ST DOWN BGSU.'],
+  [2009, 'UT', 'chose the ball', 'run', 4, 3, 1, 3, 'Punt', 'BG', 'COLLINS, D. rush for 4 yards to the TOLEDO36.'],
+  [2010, 'UT', 'BG deferred', 'run', 1, 8, 2, 85, 'TD', 'UT', 'THOMAS, Adonis rush for 1 yard to the TOLEDO21.'],
+  [2011, 'UT', 'BG deferred', 'pass', 9, 9, 5, 35, 'FG miss', 'UT', 'DANTIN, Austin pass complete to PAGE, Eric for 9 yards to the TOLEDO31.'],
+  [2012, 'BG', 'UT deferred', 'pass', 2, 3, 2, 6, 'Punt', 'UT', 'SCHILZ, Matt pass complete to GALLON, Chris for 2 yards to the BGSU41.'],
+  [2013, 'BG', 'UT deferred', 'run', 1, 13, 4, 52, 'Downs', 'UT', 'GREENE, Travis rush for 1 yard to the BGSU26.'],
+  [2014, 'UT', 'BG deferred', 'run', 4, 12, 6, 38, 'Downs', 'UT', 'HUNT, Kareem rush for 4 yards to the TOLEDO30.'],
+  [2015, 'BG', 'chose the ball', 'pass', 0, 1, 1, 0, 'INT', 'UT', 'JOHNSON, Matt pass intercepted by NORRILS, C. at the BGSU27.'],
+  [2016, 'BG', 'UT deferred', 'run', 4, 3, 1, 9, 'Punt', 'UT', 'COPPET, Fred rush for 4 yards to the BGSU33.'],
+  [2017, 'BG', 'UT deferred', 'run', 4, 9, 5, 75, 'TD', 'UT', 'CLEVELAND, Josh rush for 4 yards to the BGSU30.'],
+  [2018, 'UT', 'BG deferred', 'pass', 16, 8, 3, 48, 'FG', 'UT', 'PETERS, Eli pass complete to THOMPSON, Cody for 16 yards to the TOLEDO46, 1ST DOWN TOLEDO.'],
+  [2019, 'BG', 'UT deferred', 'run', 56, 4, 2, 61, 'FG', 'BG', 'LOY, Grant rush for 56 yards to the TOLEDO20, 1ST DOWN BGSU, out-of-bounds.'],
+  [2020, 'BG', 'UT deferred', 'pass', 0, 3, 3, 7, 'Punt', 'UT', 'MCDONALD, Matt pass incomplete to MORRIS, Quintin.'],
+  [2021, 'BG', 'UT deferred', 'run', -1, 3, 1, 8, 'Punt', 'UT', 'Johnson, Jamal rush for 1 yard loss to the BGS24.'],
+  [2022, 'UT', 'BG deferred', 'run', 0, 3, 2, 4, 'Punt', 'BG', 'Kelly, Micah rush right for 0 yards to the TOLEDO15.'],
+  [2023, 'UT', 'BG deferred', 'run', 8, 6, 2, 75, 'TD', 'UT', 'Boone, Peny rush middle for 8 yards gain to the Toledo33.'],
+  [2024, 'UT', 'BG deferred', 'pass', -8, 3, 2, -6, 'Punt', 'BG', 'Gleason, Tucker sacked for loss of 8 yards to the TOLEDO17.'],
+  [2025, 'UT', 'BG deferred', 'pass', 39, 6, 3, 80, 'TD', 'BG', 'Gleason, Tucker pass complete deep middle to Vandeross III, Junior for 39 yards to the BGSU36, 1ST DOWN.'],
+];
+
+const RED = '#ef4444';
+const resultColor = (r: string) =>
+  r === 'TD' ? GREEN : r === 'FG' ? GOLD : r === 'INT' || r === 'Fumble' ? RED : MUTED;
+const scored = (r: string) => r === 'TD' || r === 'FG';
+
+type DFilter = 'all' | 'utDef' | 'bgDef' | 'chose';
+const DFILTERS: { id: DFilter; label: string; test: (d: DriveRow) => boolean }[] = [
+  { id: 'all',   label: 'All 27 games',              test: () => true },
+  { id: 'utDef', label: 'Toledo deferred → BG ball', test: d => d[2] === 'UT deferred' },
+  { id: 'bgDef', label: 'BG deferred → Toledo ball', test: d => d[2] === 'BG deferred' },
+  { id: 'chose', label: 'Won the toss, took the ball', test: d => d[2] === 'chose the ball' },
+];
+
+function whyText(d: DriveRow) {
+  switch (d[2]) {
+    case 'UT deferred': return 'Toledo won the toss and deferred';
+    case 'BG deferred': return 'Bowling Green won the toss and deferred';
+    case 'chose the ball': return `${teamName(d[1])} won the toss and took the ball`;
+    default: return 'the toss line is a template error, but the kickoffs show who received';
+  }
+}
+
+export function OpeningDrives() {
+  const [filter, setFilter] = useState<DFilter>('all');
+  const [sel, setSel] = useState(2019);
+  const F = DFILTERS.find(x => x.id === filter)!;
+  const list = DRIVES.filter(F.test);
+  const nScored = list.filter(d => scored(d[8])).length;
+  const nTD = list.filter(d => d[8] === 'TD').length;
+  const nRun = list.filter(d => d[3] === 'run').length;
+
+  const d = DRIVES.find(x => x[0] === sel)!;
+  const t = TOSSES.find(x => x.y === sel)!;
+  const MIN = -10, MAX = 90;
+  const pos = (v: number) => ((Math.max(MIN, Math.min(MAX, v)) - MIN) / (MAX - MIN)) * 100;
+
+  return (
+    <div style={{ margin: '2.5rem 0' }}>
+      <SectionLabel color={GOLD}>Interactive · Every opening drive, 1998–2025</SectionLabel>
+      <Panel>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 14 }}>
+          {DFILTERS.map(x => (
+            <Chip key={x.id} active={filter === x.id} color={GOLD} onClick={() => setFilter(x.id)}>{x.label}</Chip>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '4px 14px', marginBottom: 16 }}>
+          <div style={{ fontFamily: MONO, fontSize: 30, color: GREEN, lineHeight: 1 }}>
+            {nScored}<span style={{ fontSize: 15, color: 'var(--text3)' }}> of {list.length} scored</span>
+          </div>
+          <div style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text2)', lineHeight: 1.55 }}>
+            {nTD} touchdown{nTD === 1 ? '' : 's'} · first snap was a run {nRun} of {list.length} times
+          </div>
+        </div>
+
+        {/* Column labels */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '44px 34px 1fr 40px 62px', gap: 8,
+          fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase',
+          padding: '0 8px 6px',
+        }}>
+          <span>Year</span><span>Ball</span><span>Yards gained</span><span style={{ textAlign: 'right' }}>Yds</span><span style={{ textAlign: 'right' }}>Result</span>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {list.map(r => {
+            const active = r[0] === sel;
+            const c = teamColor(r[1]);
+            const left = pos(Math.min(0, r[7])), right = pos(Math.max(0, r[7]));
+            return (
+              <button
+                key={r[0]}
+                type="button"
+                onClick={() => setSel(r[0])}
+                aria-pressed={active}
+                aria-label={`${r[0]}: ${teamName(r[1])} opening drive, ${r[5]} snaps, ${r[7]} yards, ${r[8]}`}
+                style={{
+                  display: 'grid', gridTemplateColumns: '44px 34px 1fr 40px 62px', gap: 8, alignItems: 'center',
+                  padding: '6px 8px', borderRadius: 6, cursor: 'pointer', textAlign: 'left',
+                  background: active ? 'rgba(242,237,216,0.07)' : 'transparent',
+                  border: `1px solid ${active ? 'rgba(244,244,242,0.22)' : 'transparent'}`,
+                }}
+              >
+                <span style={{ fontFamily: MONO, fontSize: 12, color: 'var(--foreground)' }}>{r[0]}</span>
+                <span style={{ fontFamily: MONO, fontSize: 12, color: c }}>{r[1]}</span>
+                <span style={{ position: 'relative', height: 12 }}>
+                  <span style={{ position: 'absolute', left: `${pos(0)}%`, top: -2, bottom: -2, width: 1, background: 'rgba(244,244,242,0.25)' }} />
+                  <span style={{
+                    position: 'absolute', left: `${left}%`, width: `${Math.max(right - left, 0.8)}%`, top: 1, bottom: 1,
+                    borderRadius: 4, background: c, opacity: scored(r[8]) ? 0.9 : 0.4,
+                  }} />
+                </span>
+                <span style={{ fontFamily: MONO, fontSize: 12, color: 'var(--text2)', textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{r[7]}</span>
+                <span style={{ fontFamily: MONO, fontSize: 11, color: resultColor(r[8]), textAlign: 'right' }}>{r[8]}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Detail */}
+        <div style={{
+          marginTop: 14, padding: '14px 16px', borderRadius: 8,
+          border: '1px solid rgba(244,244,242,0.09)', background: 'rgba(242,237,216,0.025)',
+        }}>
+          <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.06em', marginBottom: 8 }}>
+            {d[0]} · {teamName(d[1]).toUpperCase()} BALL · FINAL{' '}
+            <span style={{ color: UT }}>UT {t.ut}</span>, <span style={{ color: BG }}>BG {t.bg}</span>
+          </div>
+          <div style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--text2)', lineHeight: 1.6, marginBottom: 8 }}>
+            {teamName(d[1])} got the ball first because {whyText(d)}.
+          </div>
+          <div style={{ fontFamily: SERIF, fontSize: 15, fontStyle: 'italic', color: 'var(--foreground)', lineHeight: 1.6 }}>
+            First snap: “{d[10]}”
+          </div>
+          <div style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--text2)', lineHeight: 1.6, marginTop: 8 }}>
+            Drive: {d[5]} snap{d[5] === 1 ? '' : 's'} ({d[6]} pass{d[6] === 1 ? '' : 'es'}), {d[7]} yards →{' '}
+            <span style={{ color: resultColor(d[8]) }}>{d[8]}</span>. {teamName(d[9])} won the game.
+          </div>
+          <a href={t.src} target="_blank" rel="noopener noreferrer" style={{
+            display: 'inline-block', marginTop: 10, fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em',
+            color: 'var(--text2)', textDecoration: 'underline', textUnderlineOffset: 3,
+            textDecorationColor: 'rgba(244,244,242,0.3)', padding: 0,
+          }}>
+            Official box score ↗
+          </a>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 8, marginTop: 14 }}>
+          <Stat label="Scored on the opening drive" value="won 7 of 11" color={GREEN}
+            sub="A fast start lines up with winning, but 27 games can’t prove it (p = 0.06)." />
+          <Stat label="Didn’t score" value="won 4 of 16" color={MUTED}
+            sub="Likely says more about which team was better that night than about the toss." />
+        </div>
+      </Panel>
+      <Caption>
+        Rebuilt from official box-score play-by-play. Yards count runs and passes only, not penalties. Sacks count as passes. 2000 has no play-by-play.
       </Caption>
     </div>
   );
