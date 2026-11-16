@@ -23,7 +23,7 @@ export function CredentialsSection() {
   const def = sectionById('credentials')!;
   return (
     <Section id="credentials" style={{ background: 'rgba(15,17,23,0.86)' }}>
-      <SH n={def.n} label="Credentials" sub="Certifications, awards, and the communities behind the work." color={def.color} />
+      <SH n={def.n} label="Credentials" sub="Certifications, awards, and the communities behind the work." color={def.color} variant="sub" />
       <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}>
         {/* Certifications - 3D flip badges */}
         <div>

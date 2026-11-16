@@ -105,7 +105,7 @@ export function AboutSection() {
         </h2>
         <p style={{ fontFamily: SANS, fontSize: 16, lineHeight: 1.78, color: FG2, marginTop: 18, maxWidth: 640 }}>{about.bio}</p>
         <div style={{ marginTop: 16, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          <a href="#projects" style={primaryActionStyle}>View Projects ↓</a>
+          <a href="#chem-e-car" style={primaryActionStyle}>View Projects ↓</a>
           <Link href="/field-notes" transitionTypes={['nav-forward']} style={secondaryActionStyle}>Read Field Notes ↗</Link>
           <a href="#timeline" style={secondaryActionStyle}>Open Timeline ↓</a>
         </div>

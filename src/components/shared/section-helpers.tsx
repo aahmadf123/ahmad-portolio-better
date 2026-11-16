@@ -21,16 +21,19 @@ export const BG = 'var(--background)';
 // rule live in globals.css; the inline transitionDelay staggers kicker → sub.
 // This module is 'use client', so SH is already a client component - safe to
 // hook here and still renderable from server components.
-export function SH({ n, label, sub = '', color = 'var(--primary)' }: { n: string; label: string; sub?: string; color?: string }) {
+// `variant="sub"`: a part of a larger chapter (Capabilities, Timeline, Credentials and
+// Signals inside About): no ghost numeral, an h3 label, a tighter gap below.
+export function SH({ n, label, sub = '', color = 'var(--primary)', variant = 'chapter' }: { n: string; label: string; sub?: string; color?: string; variant?: 'chapter' | 'sub' }) {
   const { ref, visible } = useReveal();
   const revealCls = 'reveal' + (visible ? ' in' : '');
+  const Label = variant === 'sub' ? 'h3' : 'h2';
   return (
-    <div ref={ref} style={{ position: 'relative', marginBottom: 52, paddingTop: 8 }}>
-      <div aria-hidden className="ghost-num" style={{ position: 'absolute', top: -32, left: -8, fontFamily: SERIF, fontSize: 'clamp(72px,11vw,160px)', fontWeight: 400, color, opacity: 0.05, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em', zIndex: 0 }}>{n}</div>
+    <div ref={ref} style={{ position: 'relative', marginBottom: variant === 'sub' ? 32 : 52, paddingTop: 8 }}>
+      {variant === 'chapter' && <div aria-hidden className="ghost-num" style={{ position: 'absolute', top: -32, left: -8, fontFamily: SERIF, fontSize: 'clamp(72px,11vw,160px)', fontWeight: 400, color, opacity: 0.05, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em', zIndex: 0 }}>{n}</div>}
       <div style={{ position: 'relative', zIndex: 1 }}>
         <div className={revealCls} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: sub ? 10 : 0, transitionDelay: '0ms' }}>
           <span style={{ display: 'inline-block', width: 22, height: 1.5, background: color, opacity: 0.6, flexShrink: 0 }} />
-          <h2 style={{ fontFamily: MONO, fontSize: 11, fontWeight: 400, lineHeight: 'inherit', letterSpacing: '0.1em', textTransform: 'uppercase', color, margin: 0 }}>{label}</h2>
+          <Label style={{ fontFamily: MONO, fontSize: 11, fontWeight: 400, lineHeight: 'inherit', letterSpacing: '0.1em', textTransform: 'uppercase', color, margin: 0 }}>{label}</Label>
         </div>
         {sub && <p className={revealCls} style={{ fontSize: 15, color: FG2, maxWidth: 460, lineHeight: 1.65, marginTop: 4, fontFamily: SANS, transitionDelay: '60ms' }}>{sub}</p>}
       </div>

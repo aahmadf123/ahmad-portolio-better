@@ -28,11 +28,11 @@ export default function Home() {
           <WorldChapter key={w.id} world={w} prev={i === 0 ? 'opening' : worlds[i - 1].photo} />
         ))}
         <ClosingScene />
+        <FieldNotesSection />
         <AboutSection />
         <SkillsSection />
         <TimelineSection />
         <CredentialsSection />
-        <FieldNotesSection />
         <SignalsSection />
         <NowSection />
         <ContactSection />

@@ -59,9 +59,8 @@ test('reduced motion is still', async ({ page }, info) => {
   test.skip(info.project.name !== 'reduced', 'reduced project only');
   await page.goto('/');
   await expect(page.getByTestId('opening-story')).toBeVisible();
-  const transforms = await page.locator('#hero .flyin-photo').evaluateAll((els) => els.map((e) => getComputedStyle(e).transform));
-  expect(transforms.length).toBeGreaterThan(0);
-  for (const t of transforms) expect(t).toBe('none');
+  // Polled: right after hydration the still layout replaces the server-rendered one.
+  await expect.poll(() => page.locator('#hero .flyin-photo').evaluateAll((els) => els.map((e) => getComputedStyle(e).transform))).toEqual(['none']);
 });
 
 for (const vp of [{ width: 390, height: 844 }, { width: 360, height: 740 }, { width: 1280, height: 720 }, { width: 1440, height: 900 }]) {
