@@ -208,7 +208,7 @@ export function SiteHeader() {
           </div>
 
           {/* RIGHT - Docs CTA + mobile toggle */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifySelf: 'end' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifySelf: 'end', gridColumn: 3 }}>
             <a href="/docs" className="resume-btn hidden md:inline-flex">
               Docs
             </a>
@@ -216,6 +216,9 @@ export function SiteHeader() {
               size="icon"
               variant="ghost"
               onClick={() => setOpen(!open)}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
               className="md:hidden"
               style={{ color: 'var(--text2)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 6, width: 38, height: 38 }}
             >
@@ -226,6 +229,7 @@ export function SiteHeader() {
 
         {/* Mobile menu */}
         <div
+          id="mobile-menu"
           className={open ? 'mobile-menu-visible' : ''}
           style={{
             display: open ? 'block' : 'none',

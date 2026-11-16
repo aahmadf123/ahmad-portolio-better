@@ -42,6 +42,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   const [limited, setLimited] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const { messages, sendMessage, status, error } = useChat({
     transport: new DefaultChatTransport({ api: '/api/chat' }),
@@ -54,8 +55,10 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
 
   const busy = status === 'submitted' || status === 'streaming';
 
+  // Autofocus only with a mouse/trackpad: on phones it would pop the keyboard
+  // over the panel before the visitor has read the suggestions.
   useEffect(() => {
-    inputRef.current?.focus();
+    if (window.matchMedia('(pointer: fine)').matches) inputRef.current?.focus();
   }, []);
 
   useEffect(() => {
@@ -63,7 +66,17 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   }, [messages, busy, reduced]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { onClose(); return; }
+      // Keep Tab inside the open dialog.
+      if (e.key !== 'Tab' || !panelRef.current) return;
+      const els = panelRef.current.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])');
+      if (!els.length) return;
+      const first = els[0], last = els[els.length - 1];
+      if (!panelRef.current.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
@@ -78,7 +91,9 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
 
   return (
     <m.div
+      ref={panelRef}
       role="dialog"
+      aria-modal="true"
       aria-label="Ask Ahmad - AI assistant"
       className="chat-panel"
       initial={reduced ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.98 }}
@@ -177,13 +192,14 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
           style={{ display: 'flex', gap: 8, padding: '12px 14px', borderTop: '1px solid var(--bd)' }}
         >
           <input
+            className="chat-input"
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             maxLength={500}
             placeholder="Ask about projects, research, availability…"
             aria-label="Message"
-            style={{ flex: 1, background: 'rgba(244,244,242,0.04)', border: '1px solid var(--bd2)', borderRadius: 8, padding: '10px 13px', fontFamily: SANS, fontSize: 13, color: 'var(--foreground)', outline: 'none' }}
+            style={{ flex: 1, background: 'rgba(244,244,242,0.04)', border: '1px solid var(--bd2)', borderRadius: 8, padding: '10px 13px', fontFamily: SANS, color: 'var(--foreground)' }}
           />
           <button
             type="submit"

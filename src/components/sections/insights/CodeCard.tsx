@@ -19,7 +19,7 @@ export function InsightsGrid({ def, cards }: { def: SectionDef; cards: { insight
         ))}
       </div>
       <style>{`
-        @media (max-width: 860px) { .insights-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 860px) { .insights-grid { grid-template-columns: minmax(0, 1fr) !important; } .insights-grid > * { grid-column: auto !important; } }
       `}</style>
     </Section>
   );

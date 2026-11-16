@@ -25,8 +25,13 @@ export function ContactSection() {
         .contact-email-wrap:hover { border-color: rgba(56,189,248,0.65); background: rgba(56,189,248,0.10); }
         .contact-channel-row:hover { background: rgba(244,244,242,0.03); }
         .contact-resume-link:hover { color: var(--text2); border-bottom-color: var(--bd2); }
-        @media (max-width: 767px) {
-          .contact-layout-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+        /* single column before the 400px rail squeezes the left column (was 767px) */
+        @media (max-width: 900px) {
+          .contact-layout-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 32px !important; }
+        }
+        @media (max-width: 420px) {
+          .contact-email-wrap { padding: 16px 18px !important; gap: 12px !important; max-width: 100%; }
+          .contact-email-text { font-size: 13px !important; overflow-wrap: anywhere; }
         }
       `}</style>
 
@@ -48,7 +53,7 @@ export function ContactSection() {
       </div>
 
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <div className="contact-layout-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: 52, alignItems: 'start' }}>
+        <div className="contact-layout-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 400px', gap: 52, alignItems: 'start' }}>
 
           {/* ── Left ── */}
           <div>

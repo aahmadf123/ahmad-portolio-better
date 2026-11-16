@@ -5,6 +5,7 @@ import { m, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 import { MONO, SERIF, SANS } from '@/components/shared/section-helpers';
 import manifest from '@/lib/image-manifest.json';
 import { projectStatusLabel, type Project } from '@/lib/data/projects';
+import { useCanHover } from '@/components/ui/use-can-hover';
 
 interface ManifestEntry {
   base: string;
@@ -58,6 +59,10 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
   // GPU-only pointer tilt (rotateX/rotateY, capped ±4°). Spring-smoothed follow
   // and reset. Disabled entirely under reduced motion - no handlers attached.
   const reduced = useReducedMotion();
+  const canHover = useCanHover();
+  // Touch: a plain div (remounted via key), so the SSR'd hover-hidden
+  // opacity:0 from the motion variant can't linger after hydration.
+  const Reveal = (canHover ? m.div : 'div') as typeof m.div;
   const tiltX = useMotionValue(0);
   const tiltY = useMotionValue(0);
   const rotateX = useSpring(tiltX, { stiffness: 220, damping: 26, mass: 0.5 });
@@ -170,18 +175,23 @@ export function ProjectPosterCard({ project, onOpen }: { project: Project; onOpe
           <h4 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: wide ? 'clamp(24px, 2.2vw, 34px)' : 'clamp(20px, 1.8vw, 26px)', lineHeight: 1.08, letterSpacing: '-0.015em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.05em' }}>
             {p.title}
           </h4>
-          <m.div
-            variants={{ rest: { opacity: 0, y: 12 }, hover: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          {/* Touch screens can't hover: show the one-line headline and a few
+              stack chips up front; the tap opens the full story in the modal. */}
+          <Reveal
+            key={canHover ? 'hover' : 'touch'}
+            {...(canHover ? {
+              variants: { rest: { opacity: 0, y: 12 }, hover: { opacity: 1, y: 0 } },
+              transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+            } : {})}
           >
-            <p style={{ fontFamily: SANS, fontSize: 13, lineHeight: 1.6, color: 'var(--text2)', margin: '8px 0 0', maxWidth: 460 }}>{p.story}</p>
+            {canHover && <p style={{ fontFamily: SANS, fontSize: 13, lineHeight: 1.6, color: 'var(--text2)', margin: '8px 0 0', maxWidth: 460 }}>{p.story}</p>}
             <div style={{ fontFamily: MONO, fontSize: 10, color: p.color, letterSpacing: '0.05em', marginTop: 8 }}>{p.headline}</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 10 }}>
-              {p.stacks.slice(0, wide ? 6 : 4).map((t) => (
+              {p.stacks.slice(0, canHover ? (wide ? 6 : 4) : 3).map((t) => (
                 <span key={t} style={{ fontFamily: MONO, fontSize: 9, padding: '2px 7px', background: 'rgba(10,11,15,0.6)', border: '1px solid var(--bd2)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.03em' }}>{t}</span>
               ))}
             </div>
-          </m.div>
+          </Reveal>
         </div>
       </div>
     </m.button>
