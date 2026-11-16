@@ -6,6 +6,7 @@ import { site, heroFacts } from '@/lib/data/site';
 import { opening } from '@/lib/data/worlds';
 import { TypedTagline } from '@/components/sections/hero/TypedTagline';
 import { FlyInScene, SceneCopy, setLayer, span, useScene, useSceneFrame } from './FlyInScene';
+import { StageArt } from './StageArt';
 
 /**
  * The first screen: Ahmad's name over a real photo that belongs to no single world.
@@ -85,7 +86,7 @@ function OpeningCopy() {
   );
 
   const story = (
-    <SceneCopy photo="opening">
+    <SceneCopy photo="opening" aside={<StageArt id="opening" scene={opening.scene} accent="#2dd4bf" />}>
       <div data-testid="opening-story" className="opening-story">
         <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--primary)' }}>Prologue · {opening.kicker}</div>
         <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--text-3xl)', lineHeight: 1, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: '12px 0 18px' }}>{opening.title}</h2>

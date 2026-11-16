@@ -7,6 +7,7 @@ import { ResearchPaper } from '@/components/sections/research/ResearchPaper';
 import { FlyInScene, SceneCopy } from './FlyInScene';
 import { ChapterCopy } from './ChapterCopy';
 import { WorldWork } from './WorldWork';
+import { StageArt } from './StageArt';
 
 const hidden: React.CSSProperties = { position: 'absolute', top: 0, left: 0, width: 1, height: 1 };
 
@@ -28,7 +29,7 @@ export async function WorldChapter({ world, prev }: { world: World; prev: PhotoI
           /#projects and /#insights land on its work (anchors inside WorldWork). */}
       {first && <span id="story" data-anchor-for={world.id} aria-hidden style={hidden} />}
       <FlyInScene id={world.id} from={prev} to={world.photo} length={world.length} joinPrevious={first}>
-        <SceneCopy photo={world.photo}>
+        <SceneCopy photo={world.photo} aside={<StageArt id={world.id} scene={world.scene} accent={world.accent} gallery={world.gallery} />}>
           <ChapterCopy
             mark={`${world.n} · ${world.label} · ${world.years}`}
             title={world.title}

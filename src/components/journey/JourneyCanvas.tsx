@@ -3,6 +3,10 @@
 import { useEffect, useRef } from 'react';
 import { journeyPhoto, worlds, type PhotoId } from '@/lib/data/worlds';
 import { activeScene, subscribeScenes, type SceneFrame } from '@/lib/journey/store';
+import { textureWidth } from '@/lib/journey/texture';
+
+/** Render at up to 2x device pixels: 1.5 left retina screens visibly soft. */
+const DPR_CAP = 2;
 
 /**
  * Desktop depth renderer: one fixed WebGL2 canvas behind the page that draws the scene
@@ -130,12 +134,14 @@ export default function JourneyCanvas() {
       return t;
     };
 
-    // Load every non-panorama photo (1920w or the largest smaller width) + its depth map.
+    // Load every non-panorama photo + its depth map, at a width that stays sharp on this
+    // screen at the 1.3x settle zoom (up to 3840 on retina, within the GPU's limit).
     const queue = PHOTOS.filter((id) => !journeyPhoto(id).panorama);
+    const maxTexture = gl.getParameter(gl.MAX_TEXTURE_SIZE) as number;
     (async () => {
       for (const id of queue) {
         const p = journeyPhoto(id);
-        const w = [...p.widths].filter((x) => x <= 1920).pop() ?? p.widths[0];
+        const w = textureWidth(p.widths, innerWidth, Math.min(DPR_CAP, devicePixelRatio || 1), maxTexture);
         try {
           const [im, dm] = await Promise.all([loadImage(p.webp[String(w)]), loadImage(p.depth)]);
           if (dead) return;
@@ -161,7 +167,7 @@ export default function JourneyCanvas() {
     window.addEventListener('pointermove', onMove, { passive: true });
 
     const resize = () => {
-      const dpr = Math.min(1.5, devicePixelRatio || 1);
+      const dpr = Math.min(DPR_CAP, devicePixelRatio || 1);
       canvas.width = Math.round(innerWidth * dpr);
       canvas.height = Math.round(innerHeight * dpr);
       gl.viewport(0, 0, canvas.width, canvas.height);

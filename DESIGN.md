@@ -148,7 +148,8 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 
 - **Real photographs of real places only.** Free licences (Unsplash License, or Wikimedia Commons CC BY / BY-SA / public domain), self-hosted in `public/Images/journey/`, every one credited (photographer and licence link) in the footer. Sports imagery is American college football, never soccer; the sports world uses the Glass Bowl.
 - **One set.** `scripts/journey-photos.mjs` grades every photo with the same tone curve and writes AVIF/WebP at up to four widths plus `src/lib/journey-manifest.json`; `scripts/depth-maps.mjs` adds a depth map (Depth Anything V2, near = white). Each photo has a focal point the camera flies into; copy sits on the opposite side over a photographic side shade, never over the focal point.
-- **Panoramas** (wider than 2.2:1, e.g. the Glass Bowl) are shown whole over a blurred copy of themselves, with the push capped at 1.6× so their resolution never shows.
+- **Panoramas** (wider than 2.2:1, e.g. the Glass Bowl) are shown whole over a blurred copy of themselves, never wider than their real pixel size and never zoomed.
+- **Resolution:** stock photos ship up to 3840px; the depth canvas picks the texture that covers the screen at the 1.3× settle zoom (`textureWidth`). Ahmad's own photos (the Chem-E Car world) ship at their real size and are not credited in the footer.
 - **Inside pages** open on their world's photo (`PhotoBackdrop`), which fades as the reader scrolls into the text.
 
 ## 2. Colour
@@ -192,7 +193,7 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 
 ## 5. Components
 
-- **World chapter (`WorldChapter`):** a `FlyInScene` (mark `NN · World · years`, display-serif title, that world's story sentences, one stat), then the calm work area on `--background`: the world's projects as poster cards (one shared project modal), its extras (Football IQ + play diagram, the research paper) and the insights traced to its projects.
+- **World chapter (`WorldChapter`):** a `FlyInScene` (mark `NN · World · years`, display-serif title, that world's story sentences, one stat), with `StageArt` filling the side opposite the words (the world's animated drawing from the old Story section, with Ahmad's own photos laid over it like prints; hidden under 900px), then the calm work area on `--background`: every project in the world as an equal-size `ProjectTile` with its picture at full brightness (one shared project modal), its extras (Football IQ + play diagram, the research paper) and the insights traced to its projects.
 - **Section header (`SH`):** ghost numeral, 22px accent line, mono `h2` label in the section colour, optional 15px subtitle, 52px gap below. Sections after the journey open with one; parts of About (Capabilities, Timeline, Credentials, Signals) use `variant="sub"`: no numeral, an `h3`, 32px gap.
 - **Site header:** 62px, transparent until scrolled. Four nav items (Journey, Notes, About, Contact) plus Docs; the chapter rail reaches every chapter and its links are only as wide as their dots.
 - **Subpage header (`SubpageHeader`):** every non-home page. 56px, same colours and logo, a smart back link (history-back when you came from inside the site), and a page-specific slot on the right that hides on phones.

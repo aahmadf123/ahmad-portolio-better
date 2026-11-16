@@ -15,7 +15,7 @@ import { sceneScrollTop, seenOpacity } from '@/lib/journey/anchors';
  *   from photo: scale 1 → maxZoom about its focal point over p 0..0.55, fades out 0.45..0.6
  *   to photo:   fades in 0.45..0.65, settles from 1.3× to 1× over 0.45..0.75
  *   copy:       fades and rises in over 0.6..0.8 (immediately visible when there is no `from`)
- * Panoramas (the Glass Bowl) cap the zoom at 1.6× so their low resolution never shows.
+ * Panoramas (the Glass Bowl, 1366px) never zoom: they are never drawn larger than their real size.
  * In the `still` tier (reduced motion) none of this runs: the `to` photo sits behind
  * the copy at full size and the page just scrolls.
  *
@@ -65,7 +65,7 @@ const origin = (id: PhotoId) => {
   const f = journeyPhoto(id).focal;
   return `${f.x * 100}% ${f.y * 100}%`;
 };
-const zoomCap = (id: PhotoId, z: number) => (journeyPhoto(id).panorama ? Math.min(z, 1.6) : z);
+const zoomCap = (id: PhotoId, z: number) => (journeyPhoto(id).panorama ? 1 : z);
 
 /** `depthable` photos are handed to the depth canvas once it has their textures; panoramas stay CSS. */
 const photoClass = (id: PhotoId) => (journeyPhoto(id).panorama ? 'flyin-photo' : 'flyin-photo depthable');
@@ -234,14 +234,24 @@ export function FlyInScene({
 /**
  * A block of copy over a photo, placed on the side of the frame away from the photo's
  * focal point, over a photographic shade that darkens that side of the frame (on phones,
- * where the copy spans the width, the shade runs down the middle instead).
+ * where the copy spans the width, the shade runs down the middle instead). An `aside`
+ * (StageArt) fills the other side so the frame is never words plus empty photo.
  */
-export function SceneCopy({ photo, children, style, maxWidth = 620 }: { photo: PhotoId; children: React.ReactNode; style?: React.CSSProperties; maxWidth?: number }) {
+export function SceneCopy({ photo, children, aside, style, maxWidth = 620 }: { photo: PhotoId; children: React.ReactNode; aside?: React.ReactNode; style?: React.CSSProperties; maxWidth?: number }) {
   const right = journeyPhoto(photo).focal.x < 0.45;
   return (
     <div className={`scene-shade ${right ? 'from-right' : 'from-left'}`} style={{ flex: 1, display: 'flex', width: '100%' }}>
-      <div style={{ flex: 1, display: 'flex', width: '100%', maxWidth: 1280, margin: '0 auto', padding: '0 clamp(20px, 4vw, 52px)', justifyContent: right ? 'flex-end' : 'flex-start', alignItems: 'center', ...style }}>
-        <div className="scene-copy" style={{ position: 'relative', maxWidth, padding: 'clamp(12px, 3vw, 36px) 0' }}>{children}</div>
+      <div
+        className="scene-row"
+        style={{
+          flex: 1, display: 'flex', width: '100%', maxWidth: aside ? 1360 : 1280, margin: '0 auto', padding: '0 clamp(20px, 4vw, 52px)',
+          flexDirection: right ? 'row-reverse' : 'row',
+          justifyContent: aside ? 'space-between' : right ? 'flex-end' : 'flex-start',
+          alignItems: 'center', gap: 'clamp(28px, 4vw, 64px)', ...style,
+        }}
+      >
+        <div className="scene-copy" style={{ position: 'relative', maxWidth, flex: aside ? '0 1 560px' : undefined, padding: 'clamp(12px, 3vw, 36px) 0' }}>{children}</div>
+        {aside && <div className="scene-aside">{aside}</div>}
       </div>
     </div>
   );

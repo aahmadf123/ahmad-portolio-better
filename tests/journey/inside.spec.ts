@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import manifest from '../../src/lib/journey-manifest.json';
+import type { ManifestEntry } from '../../src/lib/data/worlds';
 import { worlds, worldForProject } from '../../src/lib/data/worlds';
 import { caseStudySlugs } from '../../src/lib/data/projects';
 
@@ -65,7 +66,8 @@ test('reading text over the photo has contrast', async ({ page }, info) => {
 test('the footer credits every photo', async ({ page }) => {
   await page.goto('/');
   const footer = page.locator('footer');
-  for (const p of Object.values(manifest)) {
+  for (const p of Object.values(manifest as Record<string, ManifestEntry>)) {
+    if (!p.credit) continue; // Ahmad's own photos
     await expect(footer.getByRole('link', { name: p.credit.photographer })).toHaveAttribute('href', p.credit.page);
   }
 });

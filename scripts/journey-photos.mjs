@@ -1,4 +1,4 @@
-// Journey photos: download Ahmad's picks (scripts/journey-photos.json), apply one shared
+// Journey photos: download Ahmad's picks (or read his own photos from public/) (scripts/journey-photos.json), apply one shared
 // grade so six photos from different photographers read as one set, and emit responsive
 // AVIF + WebP plus src/lib/journey-manifest.json. Run: npm run journey:photos
 // Depth maps are a separate step (scripts/depth-maps.mjs) that fills manifest[id].depth.
@@ -11,7 +11,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CACHE = path.join(ROOT, 'scripts', '.cache');
 const OUT = path.join(ROOT, 'public', 'Images', 'journey');
 const MANIFEST = path.join(ROOT, 'src', 'lib', 'journey-manifest.json');
-const WIDTHS = [640, 1280, 1920, 2560];
+const WIDTHS = [640, 1280, 1920, 2560, 3840];
 /** Wider than this and the photo is shown as a panorama over a blurred copy of itself. */
 const PANORAMA_ASPECT = 2.2;
 
@@ -28,13 +28,16 @@ const grade = (img) => img.modulate({ saturation: 0.88, brightness: 0.94 }).line
 const manifest = {};
 for (const p of picks) {
   const raw = path.join(CACHE, `${p.id}.jpg`);
-  if (!(await exists(raw))) {
+  if (p.own) {
+    // Ahmad's own photo, already in public/: always re-read it (no download, no stale cache).
+    await writeFile(raw, await readFile(path.join(ROOT, 'public', decodeURIComponent(p.source))));
+  } else if (!(await exists(raw))) {
     const res = await fetch(p.source, { headers: { 'User-Agent': 'portfolio-build/1.0' } });
     if (!res.ok) throw new Error(`${p.id}: download failed ${res.status}`);
     await writeFile(raw, Buffer.from(await res.arrayBuffer()));
   }
   const meta = await sharp(raw).metadata();
-  const widths = [...new Set([...WIDTHS.filter((w) => w < meta.width), Math.min(meta.width, 2560)])].sort((a, b) => a - b);
+  const widths = [...new Set([...WIDTHS.filter((w) => w < meta.width), Math.min(meta.width, 3840)])].sort((a, b) => a - b);
   const webp = {};
   const avif = {};
   for (const w of widths) {
@@ -62,7 +65,8 @@ for (const p of picks) {
     depth: previous[p.id]?.depth ?? '',
     focal: p.focal,
     alt: p.alt,
-    credit: { photographer: p.photographer, page: p.page, licence: p.licence, licenceUrl: p.licenceUrl },
+    // Stock photos are credited in the footer; Ahmad's own are not.
+    ...(p.own ? { own: true, source: p.source } : { credit: { photographer: p.photographer, page: p.page, licence: p.licence, licenceUrl: p.licenceUrl } }),
   };
   console.log(`${p.id}: ${meta.width}x${meta.height} → ${widths.join(', ')}${panorama ? ' (panorama)' : ''}`);
 }

@@ -2,7 +2,8 @@ import React from 'react';
 import { site } from '@/lib/data/site';
 import { journeyPhoto, worlds, type PhotoId } from '@/lib/data/worlds';
 
-const PHOTOS: PhotoId[] = ['opening', ...worlds.map((w) => w.photo)];
+// Stock photos only: Ahmad's own photos (the Chem-E Car) need no credit.
+const CREDITED = (['opening', ...worlds.map((w) => w.photo)] as PhotoId[]).filter((id) => journeyPhoto(id).credit);
 
 const MONO = 'var(--font-code), monospace';
 const HAND = 'var(--font-hand), cursive';
@@ -57,12 +58,12 @@ export function SiteFooter() {
         {/* The journey's photographs are other people's work: credit every one. */}
         <p style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', lineHeight: 1.7, marginTop: 14, letterSpacing: '0.02em' }}>
           Photos:{' '}
-          {PHOTOS.map((id, i) => {
-            const c = journeyPhoto(id).credit;
+          {CREDITED.map((id, i) => {
+            const c = journeyPhoto(id).credit!;
             return (
               <React.Fragment key={id}>
                 <a href={c.page} target="_blank" rel="noopener" style={{ color: 'var(--text2)' }}>{c.photographer}</a>
-                {' '}(<a href={c.licenceUrl} target="_blank" rel="noopener" style={{ color: 'var(--text3)' }}>{c.licence}</a>){i < PHOTOS.length - 1 ? ' · ' : ''}
+                {' '}(<a href={c.licenceUrl} target="_blank" rel="noopener" style={{ color: 'var(--text3)' }}>{c.licence}</a>){i < CREDITED.length - 1 ? ' · ' : ''}
               </React.Fragment>
             );
           })}

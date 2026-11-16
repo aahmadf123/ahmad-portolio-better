@@ -7,8 +7,9 @@ const srcSet = (sizes: Record<string, string>) =>
 
 /**
  * A full-bleed journey photo: AVIF/WebP srcsets from the manifest, cropped around
- * the photo's focal point. Panoramas (the Glass Bowl) are shown whole, full width,
- * over a blurred copy of themselves instead of being cropped and blown up.
+ * the photo's focal point. Panoramas (the Glass Bowl) are shown whole, never wider than
+ * their real pixel size, over a blurred copy of themselves instead of being blown up.
+ * Non-priority photos ask for 130vw: they arrive at a 1.3x zoom and settle to 1x.
  */
 export function JourneyPhoto({ id, priority = false }: { id: PhotoId; priority?: boolean }) {
   const p = journeyPhoto(id);
@@ -19,22 +20,26 @@ export function JourneyPhoto({ id, priority = false }: { id: PhotoId; priority?:
     preload(avif, { as: 'image', type: 'image/avif', imageSrcSet: srcSet(p.avif), imageSizes: '100vw', fetchPriority: 'high' });
   }
   const position = `${p.focal.x * 100}% ${p.focal.y * 100}%`;
+  const sizes = priority ? '100vw' : '130vw';
   const img = (
     <picture>
-      <source type="image/avif" srcSet={srcSet(p.avif)} sizes="100vw" />
+      <source type="image/avif" srcSet={srcSet(p.avif)} sizes={sizes} />
       <img
         src={fallback}
         srcSet={srcSet(p.webp)}
-        sizes="100vw"
+        sizes={sizes}
         alt={p.alt}
         width={p.width}
         height={p.height}
         fetchPriority={priority ? 'high' : undefined}
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
-        style={{
+        style={p.panorama ? {
+          position: 'absolute', inset: 0, margin: 'auto', width: `min(100%, ${p.width}px)`, height: '100%',
+          objectFit: 'contain', objectPosition: position,
+        } : {
           position: 'absolute', inset: 0, width: '100%', height: '100%',
-          objectFit: p.panorama ? 'contain' : 'cover', objectPosition: position,
+          objectFit: 'cover', objectPosition: position,
         }}
       />
     </picture>

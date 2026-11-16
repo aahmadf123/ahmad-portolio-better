@@ -1,94 +1,93 @@
 {
   "opening": {
-    "width": 2560,
-    "height": 1440,
+    "width": 5120,
+    "height": 2880,
     "widths": [
       640,
       1280,
       1920,
-      2560
+      2560,
+      3840
     ],
     "webp": {
       "640": "/Images/journey/opening-640.webp",
       "1280": "/Images/journey/opening-1280.webp",
       "1920": "/Images/journey/opening-1920.webp",
-      "2560": "/Images/journey/opening-2560.webp"
+      "2560": "/Images/journey/opening-2560.webp",
+      "3840": "/Images/journey/opening-3840.webp"
     },
     "avif": {
       "640": "/Images/journey/opening-640.avif",
       "1280": "/Images/journey/opening-1280.avif",
       "1920": "/Images/journey/opening-1920.avif",
-      "2560": "/Images/journey/opening-2560.avif"
+      "2560": "/Images/journey/opening-2560.avif",
+      "3840": "/Images/journey/opening-3840.avif"
     },
     "panorama": false,
     "depth": "/Images/journey/opening-depth.webp",
     "focal": {
-      "x": 0.57,
-      "y": 0.37
+      "x": 0.56,
+      "y": 0.45
     },
-    "alt": "Downtown Toledo, Ohio at dusk from the air, with Fifth Third Field lit below",
+    "alt": "Downtown Toledo, Ohio at dusk from the air, the Maumee River curving past the skyline",
     "credit": {
       "photographer": "Leo Escala",
-      "page": "https://unsplash.com/photos/aerial-view-of-a-baseball-stadium-at-dusk-8tjUqoLKyWw",
+      "page": "https://unsplash.com/photos/a-view-of-a-city-with-a-river-running-through-it-lmqBIlLUKpU",
       "licence": "Unsplash License",
       "licenceUrl": "https://unsplash.com/license"
     }
   },
   "chem-e-car": {
-    "width": 2560,
-    "height": 3840,
+    "width": 1904,
+    "height": 1428,
     "widths": [
       640,
       1280,
-      1920,
-      2560
+      1904
     ],
     "webp": {
       "640": "/Images/journey/chem-e-car-640.webp",
       "1280": "/Images/journey/chem-e-car-1280.webp",
-      "1920": "/Images/journey/chem-e-car-1920.webp",
-      "2560": "/Images/journey/chem-e-car-2560.webp"
+      "1904": "/Images/journey/chem-e-car-1904.webp"
     },
     "avif": {
       "640": "/Images/journey/chem-e-car-640.avif",
       "1280": "/Images/journey/chem-e-car-1280.avif",
-      "1920": "/Images/journey/chem-e-car-1920.avif",
-      "2560": "/Images/journey/chem-e-car-2560.avif"
+      "1904": "/Images/journey/chem-e-car-1904.avif"
     },
     "panorama": false,
     "depth": "/Images/journey/chem-e-car-depth.webp",
     "focal": {
-      "x": 0.5,
-      "y": 0.47
+      "x": 0.47,
+      "y": 0.7
     },
-    "alt": "Laboratory shelves lined with glassware",
-    "credit": {
-      "photographer": "Chidera Faustina Okeke",
-      "page": "https://unsplash.com/photos/laboratory-shelves-filled-with-glassware-and-equipment-v41sgDGz4ik",
-      "licence": "Unsplash License",
-      "licenceUrl": "https://unsplash.com/license"
-    }
+    "alt": "The UT AIChE Chem-E Car team pointing to their car at the regional competition",
+    "own": true,
+    "source": "/Images/AIChE_Regional_Pics.jpg"
   },
   "data-science": {
-    "width": 2560,
-    "height": 1600,
+    "width": 5120,
+    "height": 3200,
     "widths": [
       640,
       1280,
       1920,
-      2560
+      2560,
+      3840
     ],
     "webp": {
       "640": "/Images/journey/data-science-640.webp",
       "1280": "/Images/journey/data-science-1280.webp",
       "1920": "/Images/journey/data-science-1920.webp",
-      "2560": "/Images/journey/data-science-2560.webp"
+      "2560": "/Images/journey/data-science-2560.webp",
+      "3840": "/Images/journey/data-science-3840.webp"
     },
     "avif": {
       "640": "/Images/journey/data-science-640.avif",
       "1280": "/Images/journey/data-science-1280.avif",
       "1920": "/Images/journey/data-science-1920.avif",
-      "2560": "/Images/journey/data-science-2560.avif"
+      "2560": "/Images/journey/data-science-2560.avif",
+      "3840": "/Images/journey/data-science-3840.avif"
     },
     "panorama": false,
     "depth": "/Images/journey/data-science-depth.webp",
@@ -138,25 +137,28 @@
     }
   },
   "research": {
-    "width": 2560,
-    "height": 1706,
+    "width": 5120,
+    "height": 3413,
     "widths": [
       640,
       1280,
       1920,
-      2560
+      2560,
+      3840
     ],
     "webp": {
       "640": "/Images/journey/research-640.webp",
       "1280": "/Images/journey/research-1280.webp",
       "1920": "/Images/journey/research-1920.webp",
-      "2560": "/Images/journey/research-2560.webp"
+      "2560": "/Images/journey/research-2560.webp",
+      "3840": "/Images/journey/research-3840.webp"
     },
     "avif": {
       "640": "/Images/journey/research-640.avif",
       "1280": "/Images/journey/research-1280.avif",
       "1920": "/Images/journey/research-1920.avif",
-      "2560": "/Images/journey/research-2560.avif"
+      "2560": "/Images/journey/research-2560.avif",
+      "3840": "/Images/journey/research-3840.avif"
     },
     "panorama": false,
     "depth": "/Images/journey/research-depth.webp",
@@ -173,25 +175,28 @@
     }
   },
   "ai-engineering": {
-    "width": 2560,
-    "height": 3200,
+    "width": 5120,
+    "height": 6400,
     "widths": [
       640,
       1280,
       1920,
-      2560
+      2560,
+      3840
     ],
     "webp": {
       "640": "/Images/journey/ai-engineering-640.webp",
       "1280": "/Images/journey/ai-engineering-1280.webp",
       "1920": "/Images/journey/ai-engineering-1920.webp",
-      "2560": "/Images/journey/ai-engineering-2560.webp"
+      "2560": "/Images/journey/ai-engineering-2560.webp",
+      "3840": "/Images/journey/ai-engineering-3840.webp"
     },
     "avif": {
       "640": "/Images/journey/ai-engineering-640.avif",
       "1280": "/Images/journey/ai-engineering-1280.avif",
       "1920": "/Images/journey/ai-engineering-1920.avif",
-      "2560": "/Images/journey/ai-engineering-2560.avif"
+      "2560": "/Images/journey/ai-engineering-2560.avif",
+      "3840": "/Images/journey/ai-engineering-3840.avif"
     },
     "panorama": false,
     "depth": "/Images/journey/ai-engineering-depth.webp",

@@ -4,7 +4,7 @@ import React from 'react';
 import { MONO } from '@/components/shared/section-helpers';
 import { projects, flagshipProject } from '@/lib/data/projects';
 import type { World } from '@/lib/data/worlds';
-import { ProjectPosterCard } from '@/components/sections/projects/ProjectPosterCard';
+import { ProjectTile } from '@/components/sections/projects/ProjectTile';
 import { useProjectModal } from '@/components/sections/projects/ProjectModalProvider';
 import dynamic from 'next/dynamic';
 
@@ -13,16 +13,14 @@ import dynamic from 'next/dynamic';
 const FootballIQFeature = dynamic(() => import('@/components/sections/projects/FootballIQFeature').then((m) => ({ default: m.FootballIQFeature })));
 
 /**
- * The calm part of a world, after its photo: the projects that belong to it (poster
- * cards that open the shared project modal), then anything special to this world
- * (Football IQ and its play diagram, the research paper, technical insights).
+ * The calm part of a world, after its photo: every project that belongs to it as an
+ * equal-size tile (opens the shared project modal), then anything special to this world
+ * (Football IQ's deep dive with its play diagram, the research paper, technical insights).
  */
 export function WorldWork({ world, anchors = [], children }: { world: World; anchors?: string[]; children?: React.ReactNode }) {
   const { open } = useProjectModal();
-  const list = world.projectSlugs
-    .map((slug) => projects.find((p) => p.slug === slug)!)
-    .filter((p) => p !== flagshipProject);
-  const hasFlagship = world.projectSlugs.includes(flagshipProject.slug!);
+  const list = world.projectSlugs.map((slug) => projects.find((p) => p.slug === slug)!);
+  const hasFlagship = list.includes(flagshipProject);
 
   return (
     // No content-visibility here on purpose: skipped worlds change size mid-scroll, which
@@ -54,16 +52,10 @@ export function WorldWork({ world, anchors = [], children }: { world: World; anc
             {world.n} · {world.label} · the work
           </h3>
         </div>
-        {hasFlagship && <FootballIQFeature />}
-        {list.length > 0 && (
-          <div className="world-posters" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: 14, marginTop: hasFlagship ? 22 : 0 }}>
-            {list.map((p) => (
-              <div key={p.idx} style={{ minWidth: 0 }}>
-                <ProjectPosterCard project={p} onOpen={open} />
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="project-tiles">
+          {list.map((p) => <ProjectTile key={p.idx} project={p} onOpen={open} />)}
+        </div>
+        {hasFlagship && <div style={{ marginTop: 'clamp(40px, 5vw, 64px)' }}><FootballIQFeature /></div>}
         {children && <div style={{ marginTop: 'clamp(40px, 5vw, 64px)', display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 4vw, 48px)' }}>{children}</div>}
       </div>
     </div>

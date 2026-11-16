@@ -1,33 +1,30 @@
 [
   {
     "id": "opening",
-    "source": "https://images.unsplash.com/photo-1756832430925-d1c85f282736?w=2560&q=90&fm=jpg",
-    "page": "https://unsplash.com/photos/aerial-view-of-a-baseball-stadium-at-dusk-8tjUqoLKyWw",
+    "source": "https://images.unsplash.com/photo-1731624672971-a27d8cb07076?q=90&fm=jpg&w=5120",
+    "page": "https://unsplash.com/photos/a-view-of-a-city-with-a-river-running-through-it-lmqBIlLUKpU",
     "photographer": "Leo Escala",
     "licence": "Unsplash License",
     "licenceUrl": "https://unsplash.com/license",
     "focal": {
-      "x": 0.57,
-      "y": 0.37
+      "x": 0.56,
+      "y": 0.45
     },
-    "alt": "Downtown Toledo, Ohio at dusk from the air, with Fifth Third Field lit below"
+    "alt": "Downtown Toledo, Ohio at dusk from the air, the Maumee River curving past the skyline"
   },
   {
     "id": "chem-e-car",
-    "source": "https://images.unsplash.com/photo-1766297247072-93fd815afef3?w=2560&q=90&fm=jpg",
-    "page": "https://unsplash.com/photos/laboratory-shelves-filled-with-glassware-and-equipment-v41sgDGz4ik",
-    "photographer": "Chidera Faustina Okeke",
-    "licence": "Unsplash License",
-    "licenceUrl": "https://unsplash.com/license",
+    "source": "/Images/AIChE_Regional_Pics.jpg",
+    "own": true,
     "focal": {
-      "x": 0.5,
-      "y": 0.47
+      "x": 0.47,
+      "y": 0.7
     },
-    "alt": "Laboratory shelves lined with glassware"
+    "alt": "The UT AIChE Chem-E Car team pointing to their car at the regional competition"
   },
   {
     "id": "data-science",
-    "source": "https://images.unsplash.com/photo-1542382257-80dedb725088?w=2560&q=90&fm=jpg",
+    "source": "https://images.unsplash.com/photo-1542382257-80dedb725088?q=90&fm=jpg&w=5120",
     "page": "https://unsplash.com/photos/lighted-city-at-night-aerial-photo-OKOOGO578eo",
     "photographer": "Nastya Dulhiier",
     "licence": "Unsplash License",
@@ -53,7 +50,7 @@
   },
   {
     "id": "research",
-    "source": "https://images.unsplash.com/photo-1753781467329-416d05e7e477?w=2560&q=90&fm=jpg",
+    "source": "https://images.unsplash.com/photo-1753781467329-416d05e7e477?q=90&fm=jpg&w=5120",
     "page": "https://unsplash.com/photos/drones-are-flying-in-a-cloudy-blue-sky-FQa5xUZlAUo",
     "photographer": "Valentin Zickner",
     "licence": "Unsplash License",
@@ -66,7 +63,7 @@
   },
   {
     "id": "ai-engineering",
-    "source": "https://images.unsplash.com/photo-1784652852605-6945598f2af3?w=2560&q=90&fm=jpg",
+    "source": "https://images.unsplash.com/photo-1784652852605-6945598f2af3?q=90&fm=jpg&w=5120",
     "page": "https://unsplash.com/photos/modern-data-center-with-rows-of-white-server-cabinets-fImCPTZ026U",
     "photographer": "Tony Marinescu",
     "licence": "Unsplash License",

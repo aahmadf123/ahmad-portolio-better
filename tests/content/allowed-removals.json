@@ -9,6 +9,6 @@
   { "text": "Chapter 05 · Now", "preservedAs": "03 · Sports Analytics · Now", "reason": "Old Story kicker; \"Now\" heads the Sports Analytics world." },
   { "text": "AI & MLOps", "reason": "Project filter chip; projects are now grouped by world instead of filtered by category." },
   { "text": "Web & Civic", "reason": "Project filter chip; projects are now grouped by world instead of filtered by category." },
-  { "text": "Each project a different operating condition. Hover a poster for the story; click for the full picture.", "reason": "Intro line of the old Work section; each world now introduces its own work, and the posters still show the story on hover and open on click." },
+  { "text": "Each project a different operating condition. Hover a poster for the story; click for the full picture.", "reason": "Intro line of the old Work section; each world now introduces its own work, and every project tile shows its story and opens on click." },
   { "text": "Not tutorials, but perspective. The mechanisms behind the work are sketched in code and traced back to the project that taught them.", "reason": "Intro line of the old Insights section; each insight card now sits inside the world of the project it came from and still links to it." }
 ]

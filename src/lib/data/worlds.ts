@@ -5,7 +5,7 @@
 // and the Chem-E Car stat, marked below.
 
 import manifestJson from '@/lib/journey-manifest.json';
-import { storyChapters, sentences, type StoryChapter } from './story';
+import { storyChapters, sentences, type StoryChapter, type StoryScene } from './story';
 import { caseStudySlugs } from './projects';
 import type { Insight } from './insights';
 import type { FieldNote } from '@/lib/field-notes';
@@ -26,9 +26,17 @@ export interface ManifestEntry {
   depth: string;
   focal: { x: number; y: number };
   alt: string;
-  credit: { photographer: string; page: string; licence: string; licenceUrl: string };
+  /** Stock photos only: Ahmad's own photos carry `own` and their public path instead. */
+  credit?: { photographer: string; page: string; licence: string; licenceUrl: string };
+  own?: boolean;
+  source?: string;
 }
 const manifest = manifestJson as Record<PhotoId, ManifestEntry>;
+
+/** The drawing beside a world's words: the old Story scenes, plus one for the Chem-E Car. */
+export type StageSceneId = StoryScene | 'chem';
+/** One of Ahmad's own photos (an original public path, as in the other data files). */
+export interface StagePhoto { src: string; alt: string }
 
 export interface World {
   id: WorldId;
@@ -44,6 +52,9 @@ export interface World {
   photo: PhotoId;
   /** Scroll length of the fly-in, in viewport heights. Chem-E Car is the short one. */
   length: number;
+  /** Fills the side of the stage opposite the words: a drawing behind Ahmad's own photos. */
+  scene: StageSceneId;
+  gallery: StagePhoto[];
 }
 
 const ch = (id: string): StoryChapter => {
@@ -61,6 +72,11 @@ export const worlds: World[] = [
     stat: { value: 'Worldwide', label: 'Most Innovative Car Design · AIChE Chem-E Car' }, // new copy
     projectSlugs: ['camel-car-cheme-car-control-system'],
     photo: 'chem-e-car', length: 1.8,
+    scene: 'chem',
+    gallery: [
+      { src: '/Images/AIChE ChemECar_International.jpg', alt: 'The UT AIChE Chem-E Car team at the international competition' },
+      { src: '/Images/AIChE.jpg', alt: 'The UT AIChE team at the 2025 AIChE Annual Meeting in Boston' },
+    ],
   },
   {
     id: 'data-science', n: '02', label: 'Data Science', years: '2023–2024', accent: '#a78bfa',
@@ -69,6 +85,10 @@ export const worlds: World[] = [
     stat: ch('engineering-foundation').stat!,
     projectSlugs: ['homeowner-loss-prediction'],
     photo: 'data-science', length: 2.5,
+    scene: 'systems',
+    gallery: [
+      { src: '/Images/SeniorDesign_Pipeline.jpeg', alt: 'The Homeowner Loss Prediction pipeline' },
+    ],
   },
   {
     id: 'sports-analytics', n: '03', label: 'Sports Analytics', years: 'Now', accent: '#22c55e',
@@ -77,6 +97,12 @@ export const worlds: World[] = [
     stat: ch('football-iq').stat!,
     projectSlugs: ['toledo-football-iq-computer-vision-analytics', 'toledo-athletics-onboarding-portal', 'champions-complex-digital-campaign'],
     photo: 'sports-analytics', length: 2.5,
+    scene: 'field',
+    gallery: [
+      { src: '/Images/athletics_group_pics.png', alt: 'UToledo Athletics feature' },
+      { src: '/Images/Sport Analytics Intern Image 2026.jpg', alt: 'Ahmad as a Toledo Athletics sports analytics intern' },
+      { src: '/Images/Football_IQ_Analytics.png', alt: 'Toledo Football IQ analytics' },
+    ],
   },
   {
     id: 'research', n: '04', label: 'Research', years: '2025', accent: '#5b8af5',
@@ -85,6 +111,12 @@ export const worlds: World[] = [
     stat: ch('research-pivot').stat!,
     projectSlugs: ['graph-based-rl-uav-autonomy', 'deepflyer-drone-reinforcement-learning'],
     photo: 'research', length: 2.5,
+    scene: 'neural',
+    gallery: [
+      { src: '/Images/DeepFlyer_pics.png', alt: 'DeepFlyer drone research' },
+      { src: '/Images/graph_RL.png', alt: 'Graph-Based RL for UAV Autonomy research poster' },
+      { src: '/Images/4-Pillars.png', alt: '4-Pillars AI Failure Taxonomy' },
+    ],
   },
   {
     id: 'ai-engineering', n: '05', label: 'AI Engineering', years: '2026', accent: '#38bdf8',
@@ -93,17 +125,23 @@ export const worlds: World[] = [
     stat: ch('first-solar').stat!,
     projectSlugs: ['deeptruth-ai-fact-checking', 'security-discovery-tool', 'batting-cleanup-smart-city-waste-reporting'],
     photo: 'ai-engineering', length: 2.5,
+    scene: 'solar',
+    gallery: [
+      { src: '/Images/DeepTruth_Group.png', alt: 'The DeepTruth team' },
+      { src: '/Images/Batting_Cleanup.jpg', alt: 'Batting Cleanup' },
+      { src: '/Images/sdt_tool.png', alt: 'Security Discovery Tool' },
+    ],
   },
 ];
 
-const scene = (id: string, kicker: string) => {
+const scene = (id: string, kicker: string, stage: StageSceneId) => {
   const c = ch(id);
-  return { photo: 'opening' as const, kicker, title: c.title, body: c.body, stat: c.stat! };
+  return { photo: 'opening' as const, kicker, title: c.title, body: c.body, stat: c.stat!, scene: stage };
 };
 /** "Toledo, Ohio." Where the story starts, over the opening photo. */
-export const opening = scene('toledo-origins', '2021');
+export const opening = scene('toledo-origins', '2021', 'map');
 /** "The next chapter." Closes the journey, flying back to the opening photo. */
-export const closing = scene('whats-next', ch('whats-next').kicker);
+export const closing = scene('whats-next', ch('whats-next').kicker, 'horizon');
 
 export function worldForProject(slug: string): WorldId {
   const w = worlds.find((x) => x.projectSlugs.includes(slug));
