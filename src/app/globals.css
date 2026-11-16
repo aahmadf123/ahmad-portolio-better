@@ -376,15 +376,15 @@ a, button { min-height: 44px; min-width: 44px; }
 .scene-aside { flex: 0 1 min(44vw, 600px); display: flex; justify-content: center; min-width: 0; }
 .stage-art { position: relative; width: min(100%, 76svh); aspect-ratio: 1; }
 .stage-art-scene {
-  position: absolute; inset: 0; border-radius: 20px; overflow: hidden;
+  position: absolute; inset: 0; border-radius: 10px; overflow: hidden;
   background: radial-gradient(ellipse at 50% 45%, rgba(13,14,18,0.62), rgba(13,14,18,0.86));
   border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
-  box-shadow: 0 30px 80px -30px rgba(0,0,0,0.8);
+  box-shadow: 0 30px 80px -30px color-mix(in srgb, var(--background) 85%, transparent);
 }
 .stage-print {
   position: absolute; aspect-ratio: 4/3; border-radius: 8px; overflow: hidden; z-index: 1;
   background: #0d0e12; border: 1px solid rgba(244,244,242,0.18);
-  box-shadow: 0 22px 50px -16px rgba(0,0,0,0.85);
+  box-shadow: 0 22px 50px -16px color-mix(in srgb, var(--background) 90%, transparent);
   transition: rotate .4s cubic-bezier(.16,1,.3,1), scale .4s cubic-bezier(.16,1,.3,1);
 }
 .stage-print img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -415,7 +415,7 @@ a, button { min-height: 44px; min-width: 44px; }
 .project-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 360px)); justify-content: center; gap: 20px; }
 .project-tile {
   display: flex; flex-direction: column; width: 100%; padding: 0; text-align: left; cursor: pointer;
-  border-radius: 12px; overflow: hidden; background: var(--surface);
+  border-radius: 10px; overflow: hidden; background: var(--surface);
   border: 1px solid color-mix(in srgb, var(--tile) 26%, transparent);
   transition: translate .35s cubic-bezier(.16,1,.3,1), border-color .35s, box-shadow .35s;
 }
@@ -426,12 +426,12 @@ a, button { min-height: 44px; min-width: 44px; }
 .project-tile-chips { position: absolute; inset: 10px 10px auto; display: flex; justify-content: space-between; gap: 8px; }
 .project-tile-chips > span { font-family: var(--font-code), monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; background: rgba(10,11,15,0.82); padding: 3px 8px; border-radius: 4px; }
 .project-tile-body { display: flex; flex-direction: column; gap: 8px; padding: 16px 18px 18px; }
-.project-tile-title { font-size: 23px; line-height: 1.1; letter-spacing: -0.015em; color: var(--foreground); height: 2.2em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.project-tile-title { font-size: 20px; line-height: 1.1; letter-spacing: -0.015em; color: var(--foreground); height: 2.2em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .project-tile-headline { font-size: 11px; letter-spacing: .04em; line-height: 1.4; height: 1.4em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.project-tile-story { font-size: 13.5px; line-height: 1.55; color: var(--text2); height: 4.65em; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.project-tile-story { font-size: 15px; line-height: 1.55; color: var(--text2); height: 4.65em; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .project-tile-stack { display: flex; flex-wrap: wrap; gap: 4px; height: 21px; overflow: hidden; }
 .project-tile-stack > span { font-size: 10px; padding: 2px 7px; border: 1px solid var(--bd2); border-radius: 4px; color: var(--text2); white-space: nowrap; }
-.project-tile-more { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; margin-top: 4px; }
+.project-tile-more { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; margin-top: 4px; }
 /* Narrow screens: the words take the width; the photos are in the project tiles below. */
 @media (max-width: 900px) { .scene-aside { display: none; } }
 /* Chapter copy (ChapterCopy) tightens on phones and short screens. */
