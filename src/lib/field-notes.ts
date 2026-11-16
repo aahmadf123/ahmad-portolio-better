@@ -63,14 +63,28 @@ export const fieldNotes: FieldNote[] = [
     readingTime: 12,
     published: true,
   },
+  {
+    slug: 'battle-of-i75-coin-toss',
+    title: "The coin toss won't decide the Battle of I-75",
+    date: '2026-11-18',
+    excerpt: 'Toledo and Bowling Green are 43-43-4 after 90 games. I pulled every public coin toss in the rivalry and 8,310 FBS games to test whether deferring actually helps. It does, for about eight minutes.',
+    tags: ['Sports Analytics', 'Football', 'Toledo', 'Statistics', 'College Football Data'],
+    category: 'Sports Analytics',
+    heroImage: '/Images/field-notes/battle-of-i75-coin-toss/series-rollercoaster.png',
+    readingTime: 8,
+    published: true,
+  },
 ];
 
 export function getFieldNote(slug: string): FieldNote | undefined {
   return fieldNotes.find(n => n.slug === slug);
 }
 
+/** Published notes, newest first. */
 export function getPublishedNotes(): FieldNote[] {
-  return fieldNotes.filter(n => n.published);
+  return fieldNotes
+    .filter(n => n.published)
+    .sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export function getNotesByCategory(): Record<string, FieldNote[]> {
