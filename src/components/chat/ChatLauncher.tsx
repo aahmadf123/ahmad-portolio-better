@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { AnimatePresence } from 'framer-motion';
 import { MONO } from '@/components/shared/section-helpers';
@@ -15,6 +16,18 @@ const ChatPanel = dynamic(() => import('./ChatPanel').then((m) => ({ default: m.
 export function ChatLauncher() {
   const [open, setOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [atFooter, setAtFooter] = useState(false);
+  const pathname = usePathname();
+
+  // On phones the bubble sat on top of the footer links; step aside while the
+  // footer is on screen (CSS below only applies the hide at <=640px).
+  useEffect(() => {
+    const footer = document.querySelector('footer');
+    if (!footer || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(([e]) => setAtFooter(e.isIntersecting));
+    io.observe(footer);
+    return () => { io.disconnect(); setAtFooter(false); };
+  }, [pathname]);
 
   return (
     <>
@@ -23,7 +36,7 @@ export function ChatLauncher() {
           onClick={() => { setOpen(true); setLoaded(true); }}
           aria-label="Open Ask Ahmad - AI assistant"
           data-magnetic=""
-          className="chat-launcher"
+          className={atFooter ? 'chat-launcher at-footer' : 'chat-launcher'}
           style={{
             position: 'fixed',
             bottom: 'calc(22px + env(safe-area-inset-bottom))',

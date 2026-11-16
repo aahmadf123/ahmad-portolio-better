@@ -95,7 +95,9 @@ export function HeroSection() {
       {/* overdrive: classified-dossier scan reveal - plays once on mount */}
       <HeroScanOverlay />
 
-      <div style={{ flex: 1, display: 'flex', flexWrap: 'wrap', position: 'relative', zIndex: 1 }}>
+      {/* capped at 1280 like the header and every other section, so wide and
+          ultrawide screens get a composed hero instead of edge-to-edge spread */}
+      <div style={{ flex: 1, display: 'flex', flexWrap: 'wrap', position: 'relative', zIndex: 1, width: '100%', maxWidth: 1280, margin: '0 auto' }}>
 
         {/* LEFT - 58% */}
         <div className="hero-left" style={{

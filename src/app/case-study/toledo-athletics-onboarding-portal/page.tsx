@@ -101,8 +101,9 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
         .cs-body li::marker { color: ${ACCENT}; }
         .cs-h2 { font-family: ${SERIF}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
-        .metrics-grid-taop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
-        @media (max-width: 640px) { .metrics-grid-taop { grid-template-columns: repeat(2, 1fr); } }
+        .metrics-grid-taop { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 36px; }
+        .metrics-grid-taop > * { min-width: 0; overflow-wrap: anywhere; }
+        @media (max-width: 640px) { .metrics-grid-taop { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
         .two-col-taop { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 700px) { .two-col-taop { grid-template-columns: 1fr; } }
         .three-col-taop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }

@@ -1,21 +1,25 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { site } from '@/lib/data/site';
 import { MONO } from '@/components/shared/section-helpers';
 
 /**
- * Persistent "Now Playing" status pill (bottom-left, desktop): Ahmad's current
- * focus from site.ts, with equalizer micro-bars. Dismiss persists per session.
+ * "Now Playing" status pill (bottom-left, desktop, homepage only): Ahmad's
+ * current focus from site.ts, with equalizer micro-bars. Dismiss persists per
+ * session. Not shown on case studies / notes / docs, where it sat on top of
+ * page content (hero buttons, CTAs).
  */
 export function NowPlayingBar() {
+  const pathname = usePathname();
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
     setHidden(sessionStorage.getItem('npDismissed') === '1');
   }, []);
 
-  if (hidden) return null;
+  if (hidden || pathname !== '/') return null;
   const np = site.nowPlaying;
 
   return (
