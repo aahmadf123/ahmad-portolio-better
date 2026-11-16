@@ -111,6 +111,11 @@ export function worldForProject(slug: string): WorldId {
   return w.id;
 }
 
+/** The World a case study belongs to (for back links and labels). */
+export function worldOf(slug: string): World {
+  return worlds.find((w) => w.id === worldForProject(slug))!;
+}
+
 export function worldForInsight(i: Insight): WorldId {
   return worldForProject(i.source.href.split('/').pop()!);
 }

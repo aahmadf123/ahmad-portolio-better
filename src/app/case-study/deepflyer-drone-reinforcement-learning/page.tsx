@@ -6,6 +6,10 @@ import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
+import { worldOf } from '@/lib/data/worlds';
+
+/** The photo-journey world this case study belongs to (back link + label). */
+const WORLD = worldOf('deepflyer-drone-reinforcement-learning');
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
@@ -49,7 +53,7 @@ function Metric({ value, label }: { value: string; label: string }) {
 function StackRow({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${color}06`, border: `1px solid ${color}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.6, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
         <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
@@ -87,10 +91,10 @@ export default function DeepFlyerCaseStudy() {
   const [lb, setLb] = useState<string | null>(null);
 
   return (
-    <div style={{ background: 'var(--background)', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
+    <div style={{ background: 'transparent', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
 
       {/* ── Sticky header ── */}
-      <SubpageHeader backHref="/#projects" backLabel="Projects" accent={ACCENT}>
+      <SubpageHeader backHref={`/#${WORLD.id}`} backLabel={WORLD.label} accent={ACCENT}>
         <span style={{ fontFamily: MONO, fontSize: 10, padding: '6px 14px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Prototype · Research Platform</span>
       </SubpageHeader>
 

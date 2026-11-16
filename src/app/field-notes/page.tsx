@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
+import { PhotoBackdrop } from '@/components/journey/PhotoBackdrop';
 import { getPublishedNotes } from '@/lib/field-notes';
 import { FieldNoteCard } from '@/components/ui/field-notes/field-note-card';
 
@@ -29,7 +30,8 @@ export default function FieldNotesPage() {
   const published = getPublishedNotes();
 
   return (
-    <div style={{ background: 'var(--background)', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
+    <div style={{ background: 'transparent', position: 'relative', isolation: 'isolate', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
+      <PhotoBackdrop id="opening" />
 
       <SubpageHeader backHref="/#field-notes" backLabel="Portfolio" />
 

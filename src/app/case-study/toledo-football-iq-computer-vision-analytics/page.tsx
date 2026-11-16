@@ -6,6 +6,10 @@ import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
+import { worldOf } from '@/lib/data/worlds';
+
+/** The photo-journey world this case study belongs to (back link + label). */
+const WORLD = worldOf('toledo-football-iq-computer-vision-analytics');
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
@@ -87,7 +91,7 @@ export default function ToledoFootballIQCaseStudy() {
   const [lb, setLb] = useState<string | null>(null);
 
   return (
-    <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
+    <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
         body { background: var(--background); }
         .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: var(--text2); }
@@ -139,7 +143,7 @@ export default function ToledoFootballIQCaseStudy() {
       `}</style>
 
       {/* ── Sticky header ── */}
-      <SubpageHeader backHref="/#projects" backLabel="Projects" accent={ACCENT}>
+      <SubpageHeader backHref={`/#${WORLD.id}`} backLabel={WORLD.label} accent={ACCENT}>
         <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Toledo Football IQ</span>
       </SubpageHeader>
 

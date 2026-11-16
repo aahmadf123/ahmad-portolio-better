@@ -646,7 +646,7 @@ export function CoinTossLedger() {
                       }} />
                     : <span style={{ fontFamily: MONO, fontSize: 11, color: MUTED }}>?</span>}
                 </div>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', lineHeight: 1.6 }}>
+                <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text2)', lineHeight: 1.6 }}>
                   2H: <span style={{ color: teamColor(x.r2) }}>{x.r2 ?? '?'}</span>
                 </div>
                 <div style={{ fontFamily: MONO, fontSize: 11, color: teamColor(x.w), lineHeight: 1.6 }}>

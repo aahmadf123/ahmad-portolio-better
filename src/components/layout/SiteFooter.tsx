@@ -1,4 +1,8 @@
+import React from 'react';
 import { site } from '@/lib/data/site';
+import { journeyPhoto, worlds, type PhotoId } from '@/lib/data/worlds';
+
+const PHOTOS: PhotoId[] = ['opening', ...worlds.map((w) => w.photo)];
 
 const MONO = 'var(--font-code), monospace';
 const HAND = 'var(--font-hand), cursive';
@@ -49,6 +53,20 @@ export function SiteFooter() {
           <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>© {year} {site.name}. All rights reserved.</span>
           <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Next.js · TypeScript · GSAP · three.js</span>
         </div>
+
+        {/* The journey's photographs are other people's work: credit every one. */}
+        <p style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', lineHeight: 1.7, marginTop: 14, letterSpacing: '0.02em' }}>
+          Photos:{' '}
+          {PHOTOS.map((id, i) => {
+            const c = journeyPhoto(id).credit;
+            return (
+              <React.Fragment key={id}>
+                <a href={c.page} target="_blank" rel="noopener" style={{ color: 'var(--text2)' }}>{c.photographer}</a>
+                {' '}(<a href={c.licenceUrl} target="_blank" rel="noopener" style={{ color: 'var(--text3)' }}>{c.licence}</a>){i < PHOTOS.length - 1 ? ' · ' : ''}
+              </React.Fragment>
+            );
+          })}
+        </p>
       </div>
 
       <style>{`

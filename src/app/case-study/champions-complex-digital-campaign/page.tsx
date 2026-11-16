@@ -6,6 +6,10 @@ import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
+import { worldOf } from '@/lib/data/worlds';
+
+/** The photo-journey world this case study belongs to (back link + label). */
+const WORLD = worldOf('champions-complex-digital-campaign');
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
@@ -49,7 +53,7 @@ function Metric({ value, label }: { value: string; label: string }) {
 function LayerRow({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${color}06`, border: `1px solid ${color}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.6, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
         <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
@@ -87,7 +91,7 @@ export default function ChampionsComplexCaseStudy() {
   const [lb, setLb] = useState<string | null>(null);
 
   return (
-    <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
+    <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
         body { background: var(--background); }
         .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: var(--text2); }
@@ -137,7 +141,7 @@ export default function ChampionsComplexCaseStudy() {
       `}</style>
 
       {/* ── Sticky header ── */}
-      <SubpageHeader backHref="/#projects" backLabel="Projects" accent={ACCENT}>
+      <SubpageHeader backHref={`/#${WORLD.id}`} backLabel={WORLD.label} accent={ACCENT}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT, background: `${ACCENT}10`, border: `1px solid ${ACCENT}30`, borderRadius: 10 }}>
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: ACCENT, display: 'inline-block' }} />

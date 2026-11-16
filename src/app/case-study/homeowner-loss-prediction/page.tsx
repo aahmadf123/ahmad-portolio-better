@@ -6,6 +6,10 @@ import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
+import { worldOf } from '@/lib/data/worlds';
+
+/** The photo-journey world this case study belongs to (back link + label). */
+const WORLD = worldOf('homeowner-loss-prediction');
 
 const SERIF = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
@@ -107,13 +111,13 @@ export default function HomeownerLossCaseStudy() {
 
 
   return (
-    <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
+    <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
         li::marker { color: ${ACCENT}; }
       `}</style>
 
       {/* ── Sticky top bar ── */}
-      <SubpageHeader backHref="/#projects" backLabel="Projects" accent={ACCENT}>
+      <SubpageHeader backHref={`/#${WORLD.id}`} backLabel={WORLD.label} accent={ACCENT}>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
           <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(167,139,250,0.3)', borderRadius: 4, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.background = `${ACCENT}14`; }}
