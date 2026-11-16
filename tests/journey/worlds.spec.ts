@@ -104,6 +104,7 @@ test('keyboard focus inside a world is visible', async ({ page }, info) => {
     all[first - 1].focus();
   });
   await page.keyboard.press('Tab');
+  await page.waitForTimeout(300); // the world brings a just-rendered focus target into view
   const state = await page.evaluate((fn) => {
     const el = document.activeElement as HTMLElement;
     const seen = new Function(`return (${fn})`)()(el) as number;

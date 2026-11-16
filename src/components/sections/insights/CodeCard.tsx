@@ -4,27 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import { m } from 'framer-motion';
 import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
-import { Section, SH, MONO, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
+import { MONO, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import type { Insight } from '@/lib/data/insights';
-import type { SectionDef } from '@/lib/data/sections';
 
 export type TokenLine = { content: string; color: string }[];
-
-export function InsightsGrid({ def, cards }: { def: SectionDef; cards: { insight: Insight; lines: TokenLine[] }[] }) {
-  return (
-    <Section id="insights" style={{ background: 'rgba(15,17,23,0.9)' }}>
-      <SH n={def.n} label="Technical Insights" sub="Not tutorials, but perspective. The mechanisms behind the work are sketched in code and traced back to the project that taught them." color={def.color} />
-      <div className="insights-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
-        {cards.map(({ insight, lines }, i) => (
-          <CodeCard key={insight.id} insight={insight} lines={lines} wide={i === 0} />
-        ))}
-      </div>
-      <style>{`
-        @media (max-width: 860px) { .insights-grid { grid-template-columns: minmax(0, 1fr) !important; } .insights-grid > * { grid-column: auto !important; } }
-      `}</style>
-    </Section>
-  );
-}
 
 /**
  * Terminal-chrome insight card. When scrolled into view the pre-tokenized

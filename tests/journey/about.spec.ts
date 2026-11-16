@@ -27,11 +27,9 @@ test('capabilities, timeline, credentials and signals are parts of About', async
 test('constellation survives', async ({ page }, info) => {
   test.skip(info.project.name !== 'desktop', 'canvas on desktop; phones get the list');
   await page.goto('/');
-  const canvas = page.locator('#skills canvas').first();
-  await expect(async () => {
-    await canvas.scrollIntoViewIfNeeded({ timeout: 2000 });
-    await expect(canvas).toBeVisible({ timeout: 2000 });
-  }).toPass();
+  // The constellation (three.js) loads only when Capabilities comes near: scroll there first.
+  await page.locator('#skills').scrollIntoViewIfNeeded();
+  await expect(page.locator('#skills canvas').first()).toBeVisible({ timeout: 10000 });
 });
 
 test('every job, award, cert and testimonial is on the page', async ({ page }) => {

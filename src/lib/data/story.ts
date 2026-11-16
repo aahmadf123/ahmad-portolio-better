@@ -1,6 +1,6 @@
 // The Story - six scroll-driven chapters. Copy is compressed from the site's own
 // About/Experience/press text; every number and fact is real. Scenes are
-// code-drawn (see story/ChapterScene.tsx) - swap in photography later if desired.
+// rendered by the photo journey (worlds.ts places each sentence in its world).
 
 import { nowUpdated } from './now';
 import { site } from './site';

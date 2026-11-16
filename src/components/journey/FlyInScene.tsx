@@ -69,7 +69,7 @@ const zoomCap = (id: PhotoId, z: number) => (journeyPhoto(id).panorama ? Math.mi
 /** `depthable` photos are handed to the depth canvas once it has their textures; panoramas stay CSS. */
 const photoClass = (id: PhotoId) => (journeyPhoto(id).panorama ? 'flyin-photo' : 'flyin-photo depthable');
 
-const layer: React.CSSProperties = { position: 'absolute', inset: 0, willChange: 'transform, opacity' };
+const layer: React.CSSProperties = { position: 'absolute', inset: 0 };
 
 export function FlyInScene({
   id,
@@ -225,14 +225,6 @@ export function SceneCopy({ photo, children, style, maxWidth = 620 }: { photo: P
       <div style={{ flex: 1, display: 'flex', width: '100%', maxWidth: 1280, margin: '0 auto', padding: '0 clamp(20px, 4vw, 52px)', justifyContent: right ? 'flex-end' : 'flex-start', alignItems: 'center', ...style }}>
         <div className="scene-copy" style={{ position: 'relative', maxWidth, padding: 'clamp(12px, 3vw, 36px) 0' }}>{children}</div>
       </div>
-      <style>{`
-        .scene-shade.from-left { background: linear-gradient(to right, rgba(13,14,18,0.86) 0%, rgba(13,14,18,0.72) 38%, rgba(13,14,18,0.25) 62%, rgba(13,14,18,0) 78%); }
-        .scene-shade.from-right { background: linear-gradient(to left, rgba(13,14,18,0.86) 0%, rgba(13,14,18,0.72) 38%, rgba(13,14,18,0.25) 62%, rgba(13,14,18,0) 78%); }
-        @media (max-width: 760px) {
-          .scene-shade.from-left, .scene-shade.from-right { background: linear-gradient(to bottom, rgba(13,14,18,0.3) 0%, rgba(13,14,18,0.8) 22%, rgba(13,14,18,0.8) 82%, rgba(13,14,18,0.35) 100%); }
-        }
-        .scene-copy { text-shadow: 0 1px 12px rgba(13,14,18,0.75); }
-      `}</style>
     </div>
   );
 }

@@ -6,7 +6,11 @@ import { projects, flagshipProject } from '@/lib/data/projects';
 import type { World } from '@/lib/data/worlds';
 import { ProjectPosterCard } from '@/components/sections/projects/ProjectPosterCard';
 import { useProjectModal } from '@/components/sections/projects/ProjectModalProvider';
-import { FootballIQFeature } from '@/components/sections/projects/FootballIQFeature';
+import dynamic from 'next/dynamic';
+
+// Split out (still server-rendered): GSAP and the play diagram (~140KB) stay off the
+// critical path of the opening photo.
+const FootballIQFeature = dynamic(() => import('@/components/sections/projects/FootballIQFeature').then((m) => ({ default: m.FootballIQFeature })));
 
 /**
  * The calm part of a world, after its photo: the projects that belong to it (poster
@@ -21,6 +25,8 @@ export function WorldWork({ world, children }: { world: World; children?: React.
   const hasFlagship = world.projectSlugs.includes(flagshipProject.slug!);
 
   return (
+    // No content-visibility here on purpose: skipped worlds change size mid-scroll, which
+    // made header links and keyboard focus land in the wrong place.
     <div style={{ background: 'var(--background)', padding: 'clamp(48px, 6vw, 88px) clamp(20px, 4vw, 52px)', position: 'relative', zIndex: 1 }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>

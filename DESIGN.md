@@ -133,16 +133,23 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 
 ## 1. Overview
 
-**Creative north star: "The Mission Debrief."** Built for an engineer reviewing a candidate at 9pm on a big monitor, and for a recruiter opening a link on a phone. Dark is the only theme. The language is structured, numbered and evidence-first: every section is a numbered chapter, every case study is a numbered case file, and decoration has to carry signal.
+**Creative north star: "A journey through real places."** Built so a recruiter, an engineer or someone clicking through from a post thinks *this is unlike any portfolio I've seen, and I want to know this person*. What they should leave with is range. The homepage is a scroll journey through real photographs, one per side of Ahmad, in equal measure: the Chem-E Car team, data science, sports analytics (college football, Toledo), research, AI engineering. Dark is the only theme. Everything stays evidence-first: chapters are numbered, case studies are numbered case files, and decoration has to carry signal.
 
 **What makes it this site and not a template:**
-- The chapter registry (`src/lib/data/sections.ts`) drives ghost numerals, header colours and the left chapter rail together.
-- The pinned Story: six chapters wiped in by scroll, each with a code-drawn SVG scene.
-- The one-time "classified dossier" scan-line reveal on the hero.
+- The fly-in: each world is a full-screen real photo; scrolling pushes the camera toward a point in it and out the other side into the next world (`src/components/journey/FlyInScene.tsx`).
+- Real depth on desktop: a depth map per photo drives parallax on a single WebGL2 canvas (`JourneyCanvas`), with the CSS photo as the fallback everywhere.
+- The world registry (`src/lib/data/worlds.ts`) groups the existing content by world *by reference*, and the chapter registry (`sections.ts`) drives header colours and the left chapter rail.
 - The Football IQ play diagram, the skills constellation, the kinetic timeline.
 - Letterbox "film-strip" page transitions; the handwritten sign-off.
 
-**What it rejects:** gradient text, glassmorphism as decoration, boxed "big number" stat dashboards, gradient-mesh glows on every surface, macOS window dots, anything that would survive unchanged in someone else's dark portfolio.
+**What it rejects:** anything that looks fake (CGI depth, AI-generated images, illustrations standing in for places), one world dominating (football is one fifth of the story and never the opener), gradient text, glassmorphism as decoration, boxed "big number" stat dashboards, gradient-mesh glows, macOS window dots, anything that would survive unchanged in someone else's dark portfolio.
+
+## 1b. Photos
+
+- **Real photographs of real places only.** Free licences (Unsplash License, or Wikimedia Commons CC BY / BY-SA / public domain), self-hosted in `public/Images/journey/`, every one credited (photographer and licence link) in the footer. Sports imagery is American college football, never soccer; the sports world uses the Glass Bowl.
+- **One set.** `scripts/journey-photos.mjs` grades every photo with the same tone curve and writes AVIF/WebP at up to four widths plus `src/lib/journey-manifest.json`; `scripts/depth-maps.mjs` adds a depth map (Depth Anything V2, near = white). Each photo has a focal point the camera flies into; copy sits on the opposite side over a photographic side shade, never over the focal point.
+- **Panoramas** (wider than 2.2:1, e.g. the Glass Bowl) are shown whole over a blurred copy of themselves, with the push capped at 1.6× so their resolution never shows.
+- **Inside pages** open on their world's photo (`PhotoBackdrop`), which fades as the reader scrolls into the text.
 
 ## 2. Colour
 
@@ -185,8 +192,9 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 
 ## 5. Components
 
-- **Section header (`SH`):** ghost numeral, 22px accent line, mono `h2` label in the section colour, optional 15px subtitle, 52px gap below. Every homepage section opens with one.
-- **Site header:** 62px, transparent until scrolled. At most five nav items (Story, About, Work, Notes, Contact) plus Docs; the chapter rail reaches every section.
+- **World chapter (`WorldChapter`):** a `FlyInScene` (mark `NN · World · years`, display-serif title, that world's story sentences, one stat), then the calm work area on `--background`: the world's projects as poster cards (one shared project modal), its extras (Football IQ + play diagram, the research paper) and the insights traced to its projects.
+- **Section header (`SH`):** ghost numeral, 22px accent line, mono `h2` label in the section colour, optional 15px subtitle, 52px gap below. Sections after the journey open with one; parts of About (Capabilities, Timeline, Credentials, Signals) use `variant="sub"`: no numeral, an `h3`, 32px gap.
+- **Site header:** 62px, transparent until scrolled. Four nav items (Journey, Notes, About, Contact) plus Docs; the chapter rail reaches every chapter and its links are only as wide as their dots.
 - **Subpage header (`SubpageHeader`):** every non-home page. 56px, same colours and logo, a smart back link (history-back when you came from inside the site), and a page-specific slot on the right that hides on phones.
 - **Site footer:** on every page, including case studies, field notes and docs.
 - **Case study frame:** `SubpageHeader`; hero (tags, display-serif title, lede); **debrief stats** (accent rule on top, display-serif number, mono label, no boxes); sticky section nav (sidebar on desktop, tab bar on smaller screens); then the prev/next **case-file pager** ("Case file 03 of 10").
@@ -197,15 +205,17 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 ## 6. Motion
 
 - **Compositor-only loops.** Ambient loops animate `transform` and `opacity` only, not `height`, `box-shadow` or `filter`.
-- **Off-screen means paused.** `OffscreenAnimationPauser` pauses CSS animations in sections out of view; the Story pauses chapters that are wiped away; the play diagram pauses off-screen.
-- **Pin only where it works.** The Story pins only on desktops (at least 1024 wide, 680 tall, fine pointer). Phones, tablets and short windows get the stacked layout.
-- **Reduced motion** is honoured everywhere: a global CSS kill-switch plus `MotionConfig reducedMotion="user"` for Framer Motion.
+- **Off-screen means paused.** `OffscreenAnimationPauser` pauses CSS animations in sections out of view; the play diagram pauses off-screen; the depth canvas draws only when a scene or the pointer changes, and nothing when no scene is on screen.
+- **Three journey tiers** (`useJourneyTier`): *full* (fine pointer, ≥1024px, WebGL2) adds the depth canvas; *lite* (phones, tablets, no WebGL2) runs the same fly-in with CSS layers only; *still* (reduced motion) shows each photo still behind its copy and the page simply scrolls. Content is identical in all three.
+- **Scenes are driven directly.** One rAF-throttled scroll handler per scene writes `transform`/`opacity` to its layers (not framer's `useScroll`, whose target ranges don't fit sticky scenes); hidden layers drop pointer events so they never swallow clicks.
+- **Reduced motion** is honoured everywhere: a global CSS kill-switch, `MotionConfig reducedMotion="user"` for Framer Motion, and `@/lib/motion/use-reduced-motion` (hydration-safe) instead of framer's hook in render.
 - **Hover needs a touch equivalent.** Anything revealed on hover must be visible or one tap away on touch (`useCanHover`).
 
 ## 7. Do's and don'ts
 
 **Do**
-- Open every homepage section with `SH` and every subpage with `SubpageHeader`.
+- Open every post-journey homepage section with `SH` and every subpage with `SubpageHeader`.
+- Move content, never drop it: `tests/content/` holds a snapshot of every string and the rendered text of every route, and `allowed-removals.json` lists (with reasons) the only labels that may disappear.
 - Give each project one accent and use it consistently.
 - Keep readable text at 10px or larger and at least 4.5:1.
 - Check new layouts at 320, 768, 1280 and 2560 px with no horizontal overflow (use `minmax(min(Npx,100%),1fr)` for card grids).

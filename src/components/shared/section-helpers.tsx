@@ -65,16 +65,22 @@ export function pickColor(text: string) {
 export function Tag({ color, children }: { color?: string; children: React.ReactNode }) {
   const skillColor = typeof children === 'string' ? resolveSkillColor(children) : undefined;
   const c = color ?? skillColor ?? (typeof children === 'string' ? pickColor(children) : '#5b8af5');
-  return <span style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}33`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>{children}</span>;
+  return <span style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}33`, borderRadius: 4, color: readable(c), letterSpacing: '0.03em' }}>{children}</span>;
 }
+
+/**
+ * Chip text: the accent mixed 30% toward the foreground. Red, blue and purple accents
+ * on a tint of themselves fall just under 4.5:1 at 11px; this keeps the hue and passes.
+ */
+export const readable = (c: string) => `color-mix(in srgb, ${c} 70%, #f4f4f2)`;
 
 export function SkillChip({ color, children }: { color?: string; children: React.ReactNode }) {
   const c = color ?? (typeof children === 'string' ? pickColor(children) : '#5b8af5');
   return (
     <span
-      style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}35`, borderRadius: 4, color: `${c}dd`, letterSpacing: '0.02em', cursor: 'default', transition: 'background 0.18s, color 0.18s' }}
+      style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}35`, borderRadius: 4, color: readable(c), letterSpacing: '0.02em', cursor: 'default', transition: 'background 0.18s, color 0.18s' }}
       onMouseEnter={e => { e.currentTarget.style.background = `${c}2a`; e.currentTarget.style.color = 'var(--foreground)'; }}
-      onMouseLeave={e => { e.currentTarget.style.background = `${c}14`; e.currentTarget.style.color = `${c}dd`; }}
+      onMouseLeave={e => { e.currentTarget.style.background = `${c}14`; e.currentTarget.style.color = readable(c); }}
     >{children}</span>
   );
 }

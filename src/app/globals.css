@@ -167,9 +167,8 @@ a { text-decoration: none; color: inherit; }
   * { transition: none !important; animation: none !important; }
 }
 
-/* Off-screen sections (OffscreenAnimationPauser) and Story chapters that are
-   wiped out of view (data-story-idle) don't run their ambient loops. */
-[data-offscreen], [data-offscreen] *, [data-story-idle] * {
+/* Off-screen sections (OffscreenAnimationPauser) do not run their ambient loops. */
+[data-offscreen], [data-offscreen] * {
   animation-play-state: paused !important;
 }
 
@@ -421,3 +420,21 @@ a, button { min-height: 44px; min-width: 44px; }
   .reveal { animation: none !important; }
 }
 
+
+/* ── Photo journey (components/journey) ─────────────────────── */
+/* Copy over a photo sits on a photographic side shade (SceneCopy). */
+.scene-shade.from-left { background: linear-gradient(to right, rgba(13,14,18,0.86) 0%, rgba(13,14,18,0.72) 38%, rgba(13,14,18,0.25) 62%, rgba(13,14,18,0) 78%); }
+.scene-shade.from-right { background: linear-gradient(to left, rgba(13,14,18,0.86) 0%, rgba(13,14,18,0.72) 38%, rgba(13,14,18,0.25) 62%, rgba(13,14,18,0) 78%); }
+@media (max-width: 760px) {
+  .scene-shade.from-left, .scene-shade.from-right { background: linear-gradient(to bottom, rgba(13,14,18,0.3) 0%, rgba(13,14,18,0.8) 22%, rgba(13,14,18,0.8) 82%, rgba(13,14,18,0.35) 100%); }
+}
+.scene-copy { text-shadow: 0 1px 12px rgba(13,14,18,0.75); }
+/* Chapter copy (ChapterCopy) tightens on phones and short screens. */
+@media (max-width: 600px) {
+  .chapter-copy p { font-size: 15px !important; line-height: 1.5 !important; }
+}
+@media (max-height: 760px) {
+  .chapter-copy p { font-size: 15px !important; line-height: 1.5 !important; }
+  .chapter-copy h2 { margin: 8px 0 10px !important; }
+}
+      

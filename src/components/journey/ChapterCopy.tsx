@@ -28,15 +28,6 @@ export function ChapterCopy({
         <div style={{ fontFamily: SERIF, fontSize: 34, lineHeight: 1, color: 'var(--foreground)' }}>{stat.value}</div>
         <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text2)', marginTop: 6 }}>{stat.label}</div>
       </div>
-      <style>{`
-        @media (max-width: 600px) {
-          .chapter-copy p { font-size: 15px !important; line-height: 1.5 !important; }
-        }
-        @media (max-height: 760px) {
-          .chapter-copy p { font-size: 15px !important; line-height: 1.5 !important; }
-          .chapter-copy h2 { margin: 8px 0 10px !important; }
-        }
-      `}</style>
     </div>
   );
 }
