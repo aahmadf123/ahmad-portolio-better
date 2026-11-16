@@ -1,16 +1,17 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { LightboxProvider } from '@/components/layout/LightboxProvider';
 import { OpeningScene } from '@/components/journey/OpeningScene';
-import { StorySection } from '@/components/sections/story/StorySection';
+import { WorldChapter } from '@/components/journey/WorldChapter';
+import { ClosingScene } from '@/components/journey/ClosingScene';
+import { HashLanding } from '@/components/journey/HashLanding';
+import { ProjectModalProvider } from '@/components/sections/projects/ProjectModalProvider';
+import { worlds } from '@/lib/data/worlds';
 import { SkillsSection } from '@/components/sections/skills/SkillsSection';
 import { TimelineSection } from '@/components/sections/timeline/TimelineSection';
-import { ProjectsSection } from '@/components/sections/projects/ProjectsSection';
-import { ResearchSection } from '@/components/sections/research/ResearchSection';
 import { AboutSection } from '@/components/sections/about/AboutSection';
 import { CredentialsSection } from '@/components/sections/credentials/CredentialsSection';
 import { FieldNotesSection } from '@/components/sections/field-notes/FieldNotesSection';
 import { SignalsSection } from '@/components/sections/signals/SignalsSection';
-import { InsightsSection } from '@/components/sections/insights/InsightsSection';
 import { NowSection } from '@/components/sections/now/NowSection';
 import { ContactSection } from '@/components/sections/contact/ContactSection';
 import { SiteFooter } from '@/components/layout/SiteFooter';
@@ -18,23 +19,26 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 export default function Home() {
   return (
     <LightboxProvider>
+      <ProjectModalProvider>
       <SiteHeader />
+      <HashLanding />
       <main id="main" tabIndex={-1} style={{ position: 'relative', zIndex: 20, background: 'transparent' }}>
         <OpeningScene />
-        <StorySection />
+        {worlds.map((w, i) => (
+          <WorldChapter key={w.id} world={w} prev={i === 0 ? 'opening' : worlds[i - 1].photo} />
+        ))}
+        <ClosingScene />
         <AboutSection />
         <SkillsSection />
         <TimelineSection />
-        <ProjectsSection />
-        <ResearchSection />
         <CredentialsSection />
         <FieldNotesSection />
         <SignalsSection />
-        <InsightsSection />
         <NowSection />
         <ContactSection />
       </main>
       <SiteFooter />
+      </ProjectModalProvider>
     </LightboxProvider>
   );
 }

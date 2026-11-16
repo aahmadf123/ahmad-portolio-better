@@ -14,7 +14,9 @@ import { FlyInScene, SceneCopy, setLayer, span, useScene, useSceneFrame } from '
  */
 export function OpeningScene() {
   return (
-    <section id="hero" tabIndex={-1} aria-labelledby="hero-name" style={{ position: 'relative', zIndex: 20 }}>
+    // Stacked above the first world (z 21 vs 20): that world's stage waits underneath,
+    // already showing this same photo, and is revealed as the opening scrolls away.
+    <section id="hero" tabIndex={-1} aria-labelledby="hero-name" style={{ position: 'relative', zIndex: 21 }}>
       <FlyInScene id="opening" to="opening" length={1.8} priority labelledBy="hero-name">
         <OpeningCopy />
       </FlyInScene>
@@ -32,7 +34,9 @@ function OpeningCopy() {
   const storyRef = useRef<HTMLDivElement>(null);
   useSceneFrame((p) => {
     setLayer(nameRef.current, span(p, 0.3, 0.45, 1, 0), `translateY(${span(p, 0.3, 0.45, 0, -40)}px)`);
-    setLayer(storyRef.current, span(p, 0.45, 0.6, 0, 1), `translateY(${span(p, 0.45, 0.6, 40, 0)}px)`);
+    // In at 0.45-0.6, out at 0.88-1 so the handover to the first world is photo-only.
+    const story = p < 0.7 ? span(p, 0.45, 0.6, 0, 1) : span(p, 0.88, 1, 1, 0);
+    setLayer(storyRef.current, story, `translateY(${p < 0.7 ? span(p, 0.45, 0.6, 40, 0) : span(p, 0.88, 1, 0, -30)}px)`);
   });
 
   const name = (

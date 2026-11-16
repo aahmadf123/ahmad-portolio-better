@@ -14,6 +14,7 @@ const MONO = 'var(--font-code), monospace';
 const SERIF = 'var(--font-display), Georgia, serif';
 
 const NAV_LABELS: Record<string, string> = {
+  'chem-e-car': 'Journey',
   story: 'Story',
   skills: 'Skills',
   timeline: 'Timeline',

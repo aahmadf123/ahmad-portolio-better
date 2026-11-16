@@ -76,12 +76,17 @@ for (const vp of [{ width: 390, height: 844 }, { width: 360, height: 740 }, { wi
     expect(bottoms.length).toBeGreaterThan(0);
     for (const b of bottoms) expect(b).toBeLessThanOrEqual(vp.height);
     // ...and not hidden under floating chrome (the Now Building bar, the chat pill).
-    const covered = await page.locator('#hero dl > div').evaluateAll((els) => els.filter((e) => {
+    // Polled, so a transient re-render right after hydration can't fail it; a real
+    // overlap persists and still fails.
+    await expect.poll(() => page.locator('#hero dl > div').evaluateAll((els) => els.filter((e) => {
       const r = e.getBoundingClientRect();
       const hit = document.elementFromPoint(r.left + 8, r.top + r.height / 2);
       return !hit || !e.contains(hit);
-    }).map((e) => e.textContent));
-    expect(covered).toEqual([]);
+    }).map((e) => {
+      const r = e.getBoundingClientRect();
+      const hit = document.elementFromPoint(r.left + 8, r.top + r.height / 2);
+      return `${e.textContent} ← covered by ${hit?.tagName}.${hit?.className} in ${hit?.parentElement?.tagName}.${hit?.parentElement?.className}`;
+    })), { timeout: 4000 }).toEqual([]);
     const storyBottom = await page.evaluate(() => {
       const s = document.querySelector('[data-scene="opening"]') as HTMLElement;
       window.scrollTo({ top: s.offsetTop + (s.offsetHeight - innerHeight) * 0.9, behavior: 'instant' });

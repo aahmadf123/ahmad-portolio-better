@@ -116,4 +116,4 @@ export async function collectRenderedUnits(page: Page, route: string): Promise<s
   return toUnits(await loadAndCollectText(page, route));
 }
 
-export interface AllowedRemoval { text: string; reason: string; preservedAs?: string }
+export interface AllowedRemoval { text: string; reason: string; preservedAs?: string; kind?: 'ui-label' }

@@ -74,6 +74,7 @@ export function FlyInScene({
   length = 2.5,
   maxZoom = 3.2,
   priority = false,
+  joinPrevious = false,
   labelledBy,
   children,
 }: {
@@ -84,6 +85,13 @@ export function FlyInScene({
   length?: number;
   maxZoom?: number;
   priority?: boolean;
+  /**
+   * Start one screen early, tucked under the previous scene (which must stack above,
+   * e.g. a higher z-index), so this stage is already pinned when the previous one lets
+   * go. With the previous scene's photo as `from`, the handover is seamless instead of
+   * two copies of the photo sliding past a seam.
+   */
+  joinPrevious?: boolean;
   labelledBy?: string;
   children: React.ReactNode;
 }) {
@@ -121,8 +129,11 @@ export function FlyInScene({
       const el = root.current;
       if (!el) return;
       const r = el.getBoundingClientRect();
-      const range = r.height - window.innerHeight;
-      const p = range > 0 ? Math.min(1, Math.max(0, -r.top / range)) : 0;
+      // A joined scene spends its first screen pinned underneath while the previous
+      // scene slides away; its own progress starts after that.
+      const lead = joinPrevious ? window.innerHeight : 0;
+      const range = r.height - window.innerHeight - lead;
+      const p = range > 0 ? Math.min(1, Math.max(0, (-r.top - lead) / range)) : 0;
       if (painted && p === progress.current) return;
       painted = true;
       progress.current = p;
@@ -137,7 +148,7 @@ export function FlyInScene({
       window.removeEventListener('resize', schedule);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [still, from, to, maxZoom]);
+  }, [still, from, to, maxZoom, joinPrevious]);
 
   const state = useMemo(() => ({ tier, still, subscribe }), [tier, still, subscribe]);
 
@@ -156,7 +167,7 @@ export function FlyInScene({
   // new photo and copy are hidden; without one, the `to` photo and copy show at once.
   return (
     <SceneContext.Provider value={state}>
-      <div ref={root} data-scene={id} aria-labelledby={labelledBy} style={{ position: 'relative', height: `${length * 100}svh` }}>
+      <div ref={root} data-scene={id} aria-labelledby={labelledBy} style={{ position: 'relative', height: `${(length + (joinPrevious ? 1 : 0)) * 100}svh`, marginTop: joinPrevious ? '-100svh' : undefined }}>
         <div style={{ position: 'sticky', top: 0, height: '100svh', overflow: 'hidden' }}>
           <div ref={toRef} className="flyin-photo" style={{ ...layer, transformOrigin: origin(to), opacity: from ? 0 : 1 }}>
             <JourneyPhoto id={to} priority={priority} />
@@ -178,18 +189,25 @@ export function FlyInScene({
 }
 
 /**
- * A block of copy over a photo, with a local scrim (not a full-screen darkening) and
- * placed on the side of the frame away from the photo's focal point.
+ * A block of copy over a photo, placed on the side of the frame away from the photo's
+ * focal point, over a photographic shade that darkens that side of the frame (on phones,
+ * where the copy spans the width, the shade runs down the middle instead).
  */
 export function SceneCopy({ photo, children, style, maxWidth = 620 }: { photo: PhotoId; children: React.ReactNode; style?: React.CSSProperties; maxWidth?: number }) {
   const right = journeyPhoto(photo).focal.x < 0.45;
   return (
-    <div style={{ flex: 1, display: 'flex', width: '100%', maxWidth: 1280, margin: '0 auto', padding: '0 clamp(20px, 4vw, 52px)', justifyContent: right ? 'flex-end' : 'flex-start', alignItems: 'center', ...style }}>
-      <div className="scene-copy" style={{ position: 'relative', maxWidth, padding: 'clamp(12px, 3vw, 36px)' }}>
-        {/* soft local scrim: fades to nothing well outside the text, so no box edge shows */}
-        <div aria-hidden style={{ position: 'absolute', inset: '-14% -12%', background: 'radial-gradient(closest-side, rgba(13,14,18,0.82), rgba(13,14,18,0.62) 55%, rgba(13,14,18,0))', pointerEvents: 'none' }} />
-        <div style={{ position: 'relative' }}>{children}</div>
+    <div className={`scene-shade ${right ? 'from-right' : 'from-left'}`} style={{ flex: 1, display: 'flex', width: '100%' }}>
+      <div style={{ flex: 1, display: 'flex', width: '100%', maxWidth: 1280, margin: '0 auto', padding: '0 clamp(20px, 4vw, 52px)', justifyContent: right ? 'flex-end' : 'flex-start', alignItems: 'center', ...style }}>
+        <div className="scene-copy" style={{ position: 'relative', maxWidth, padding: 'clamp(12px, 3vw, 36px) 0' }}>{children}</div>
       </div>
+      <style>{`
+        .scene-shade.from-left { background: linear-gradient(to right, rgba(13,14,18,0.86) 0%, rgba(13,14,18,0.72) 38%, rgba(13,14,18,0.25) 62%, rgba(13,14,18,0) 78%); }
+        .scene-shade.from-right { background: linear-gradient(to left, rgba(13,14,18,0.86) 0%, rgba(13,14,18,0.72) 38%, rgba(13,14,18,0.25) 62%, rgba(13,14,18,0) 78%); }
+        @media (max-width: 760px) {
+          .scene-shade.from-left, .scene-shade.from-right { background: linear-gradient(to bottom, rgba(13,14,18,0.3) 0%, rgba(13,14,18,0.8) 22%, rgba(13,14,18,0.8) 82%, rgba(13,14,18,0.35) 100%); }
+        }
+        .scene-copy { text-shadow: 0 1px 12px rgba(13,14,18,0.75); }
+      `}</style>
     </div>
   );
 }

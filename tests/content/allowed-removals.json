@@ -1,4 +1,14 @@
 [
   { "text": "Enter the Story ↓", "reason": "Hero button label; the button is now \"Start the journey ↓\" (same place, same job)." },
-  { "text": "Scroll to explore", "reason": "Decorative scroll hint under the old hero; the photo journey itself invites the scroll." }
+  { "text": "Scroll to explore", "reason": "Decorative scroll hint under the old hero; the photo journey itself invites the scroll." },
+  { "text": "- 6 chapters, scroll to walk through", "kind": "ui-label", "reason": "Instruction for the old drawn Story section, which the photo journey replaces; it states no fact about Ahmad." },
+  { "text": "Chapter 01 · 2021", "preservedAs": "Prologue · 2021", "reason": "Old Story kicker; the Toledo chapter now opens the journey with the same year." },
+  { "text": "Chapter 02 · 2023–2024", "preservedAs": "02 · Data Science · 2023–2024", "reason": "Old Story kicker; the years now head the Data Science and Chem-E Car worlds." },
+  { "text": "Chapter 03 · 2025", "preservedAs": "04 · Research · 2025", "reason": "Old Story kicker; the year now heads the Research world." },
+  { "text": "Chapter 04 · 2026", "preservedAs": "05 · AI Engineering · 2026", "reason": "Old Story kicker; the year now heads the AI Engineering world." },
+  { "text": "Chapter 05 · Now", "preservedAs": "03 · Sports Analytics · Now", "reason": "Old Story kicker; \"Now\" heads the Sports Analytics world." },
+  { "text": "AI & MLOps", "reason": "Project filter chip; projects are now grouped by world instead of filtered by category." },
+  { "text": "Web & Civic", "reason": "Project filter chip; projects are now grouped by world instead of filtered by category." },
+  { "text": "Each project a different operating condition. Hover a poster for the story; click for the full picture.", "reason": "Intro line of the old Work section; each world now introduces its own work, and the posters still show the story on hover and open on click." },
+  { "text": "Not tutorials, but perspective. The mechanisms behind the work are sketched in code and traced back to the project that taught them.", "reason": "Intro line of the old Insights section; each insight card now sits inside the world of the project it came from and still links to it." }
 ]
