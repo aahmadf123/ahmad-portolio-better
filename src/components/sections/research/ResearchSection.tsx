@@ -30,7 +30,7 @@ export function ResearchSection() {
           heading={<><span style={{ color: '#5b8af5' }}>{research.headingAccent}</span> Taxonomy for<br />Autonomous Systems</>}
           description={research.description}
           buttonText={research.buttonText}
-          buttonProps={{ onClick: () => window.open(research.pdf, '_blank'), style: { background: '#5b8af5', color: 'var(--foreground)', border: 'none' } }}
+          buttonProps={{ onClick: () => window.open(research.pdf, '_blank'), style: { background: '#5b8af5', color: 'var(--background)', border: 'none' } }}
           imageUrl={research.image}
           imageAlt={research.imageAlt}
           onImageClick={() => openLb(research.image, '4-Pillars AI Failure Taxonomy')}

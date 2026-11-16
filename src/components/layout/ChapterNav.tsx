@@ -59,7 +59,7 @@ export function ChapterNav() {
               className="chapter-label"
               style={{
                 fontFamily: MONO,
-                fontSize: 9,
+                fontSize: 10,
                 letterSpacing: '0.12em',
                 textTransform: 'uppercase',
                 color: isActive ? s.color : 'var(--text3)',

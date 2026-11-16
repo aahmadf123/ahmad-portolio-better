@@ -30,6 +30,7 @@ export function MagneticCursor() {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const canvas = document.createElement('canvas');
+    canvas.setAttribute('aria-hidden', 'true'); // decorative; not page content
     canvas.style.cssText =
       'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:999999;';
     document.body.appendChild(canvas);

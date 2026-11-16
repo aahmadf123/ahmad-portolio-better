@@ -103,7 +103,7 @@ export default async function FieldNotePage({ params }: PageProps) {
 
         {catCfg && (
           <span style={{
-            fontFamily: MONO, fontSize: 9, padding: '5px 12px',
+            fontFamily: MONO, fontSize: 10, padding: '5px 12px',
             background: `${catCfg.color}14`,
             border: `1px solid ${catCfg.color}35`,
             borderRadius: 4, color: catCfg.color,
@@ -152,7 +152,7 @@ export default async function FieldNotePage({ params }: PageProps) {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 36 }}>
           {note.tags.map(tag => (
             <span key={tag} style={{
-              fontFamily: MONO, fontSize: 9, padding: '3px 8px',
+              fontFamily: MONO, fontSize: 10, padding: '3px 8px',
               background: 'rgba(242,237,216,0.04)',
               border: '1px solid rgba(244,244,242,0.1)',
               borderRadius: 4, color: 'var(--text3)',

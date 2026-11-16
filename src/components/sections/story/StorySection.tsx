@@ -122,7 +122,7 @@ export function StorySection() {
         <div aria-hidden className="ghost-num" style={{ position: 'absolute', top: 8, left: 8, fontFamily: SERIF, fontSize: 'clamp(72px,11vw,160px)', fontWeight: 400, color: def.color, opacity: 0.05, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em' }}>{def.n}</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, position: 'relative', zIndex: 1 }}>
           <span style={{ display: 'inline-block', width: 22, height: 1.5, background: def.color, opacity: 0.6 }} />
-          <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: def.color }}>The Story</span>
+          <h2 style={{ fontFamily: MONO, fontSize: 11, fontWeight: 400, lineHeight: 'inherit', letterSpacing: '0.1em', textTransform: 'uppercase', color: def.color, margin: 0 }}>The Story</h2>
           <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.06em' }}>{`- ${CH} chapters, scroll to walk through`}</span>
         </div>
       </div>
@@ -156,7 +156,7 @@ export function StorySection() {
                 {/* fill bar - GSAP will scaleY this */}
                 <div data-story-railfill style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${def.color}, var(--gold))`, transformOrigin: 'top', transform: 'scaleY(0)', borderRadius: 4 }} />
               </div>
-              <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', color: 'var(--text3)', writingMode: 'vertical-rl' }}>{String(CH).padStart(2, '0')} CH</span>
+              <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text3)', writingMode: 'vertical-rl' }}>{String(CH).padStart(2, '0')} CH</span>
             </div>
           )}
         </div>

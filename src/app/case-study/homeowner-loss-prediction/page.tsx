@@ -133,12 +133,12 @@ export default function HomeownerLossCaseStudy() {
           Back to Portfolio
         </SmartBackLink>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-          <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(167,139,250,0.3)', borderRadius: 4, color: ACCENT, fontFamily: MONO, fontSize: 9, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s' }}
+          <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(167,139,250,0.3)', borderRadius: 4, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.background = `${ACCENT}14`; }}
             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
             Report ↓
           </a>
-          <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', fontFamily: MONO, fontSize: 9, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s' }}
+          <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(242,237,216,0.25)'; e.currentTarget.style.color = 'var(--foreground)'; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(244,244,242,0.1)'; e.currentTarget.style.color = 'var(--text2)'; }}>
             GitHub ↗

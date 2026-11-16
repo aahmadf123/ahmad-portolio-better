@@ -364,6 +364,15 @@ a { text-decoration: none; color: inherit; }
   .chat-launcher.at-footer { opacity: 0; transform: translateY(12px); pointer-events: none; }
 }
 
+/* Keyboard focus: one visible ring everywhere (teal, offset so it never sits
+   on top of the element's own border). Mouse clicks don't show it. */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+/* Skip-link target: receives focus programmatically, no ring around the page. */
+main[tabindex="-1"]:focus { outline: none; }
+
 /* Global responsive helpers */
 img, video, svg { max-width: 100%; height: auto; }
 pre, code { word-wrap: break-word; white-space: pre-wrap; }

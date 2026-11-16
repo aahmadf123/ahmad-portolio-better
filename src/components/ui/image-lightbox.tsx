@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { largestVariant } from '@/components/ui/pic';
 
@@ -11,6 +11,16 @@ interface LightboxProps {
 }
 
 export function Lightbox({ src, alt = '', onClose }: LightboxProps) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  // Dialog focus: move focus to Close on open, hand it back to whatever opened
+  // the lightbox on close.
+  useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
+    return () => { opener?.focus?.(); };
+  }, []);
+
   useEffect(() => {
     const h = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', h);
@@ -26,6 +36,9 @@ export function Lightbox({ src, alt = '', onClose }: LightboxProps) {
 
   return createPortal(
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={alt ? `Image: ${alt}` : 'Image preview'}
       onClick={onClose}
       style={{
         position: 'fixed', inset: 0, zIndex: 99999,
@@ -52,8 +65,9 @@ export function Lightbox({ src, alt = '', onClose }: LightboxProps) {
         }}
       />
       <button
+        ref={closeRef}
         onClick={onClose}
-        aria-label="Close lightbox"
+        aria-label="Close image preview"
         style={{
           position: 'absolute', top: 20, right: 24,
           background: 'rgba(244,244,242,0.08)',

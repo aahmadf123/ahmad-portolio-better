@@ -81,7 +81,7 @@ export function AgentArchitectureLayers() {
                 {/* Layer number + name */}
                 <div style={{ flexShrink: 0, minWidth: 130 }}>
                   <div style={{
-                    fontFamily: MONO, fontSize: 9, color: layer.color,
+                    fontFamily: MONO, fontSize: 10, color: layer.color,
                     opacity: 0.6, letterSpacing: '0.1em', marginBottom: 3,
                   }}>
                     Layer {layer.n}
@@ -108,7 +108,7 @@ export function AgentArchitectureLayers() {
                   borderRadius: 6,
                 }}>
                   <div style={{
-                    fontFamily: MONO, fontSize: 8, letterSpacing: '0.1em',
+                    fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em',
                     textTransform: 'uppercase', color: layer.color, opacity: 0.7,
                     marginBottom: 4,
                   }}>
@@ -188,7 +188,7 @@ export function MaturityLadder() {
         <div style={{
           position: 'absolute', left: -28, top: '50%', transform: 'translateY(-50%) rotate(-90deg)',
           transformOrigin: 'center center',
-          fontFamily: MONO, fontSize: 8, letterSpacing: '0.15em',
+          fontFamily: MONO, fontSize: 10, letterSpacing: '0.15em',
           textTransform: 'uppercase', color: 'var(--text3)', whiteSpace: 'nowrap',
         }}>
           More Agentic →
@@ -230,11 +230,11 @@ export function MaturityLadder() {
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'flex-start' }}>
                 <div>
-                  <div style={{ fontFamily: MONO, fontSize: 8, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 2 }}>Use when</div>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 2 }}>Use when</div>
                   <div style={{ fontFamily: SERIF, fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{stage.trigger}</div>
                 </div>
                 <div style={{ flex: 1, minWidth: 180 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 8, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 2 }}>Production question</div>
+                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 2 }}>Production question</div>
                   <div style={{ fontFamily: SERIF, fontSize: 12, color: 'var(--text2)', lineHeight: 1.5 }}>{stage.question}</div>
                 </div>
               </div>
@@ -296,7 +296,7 @@ export function AutonomyTradeoff() {
             }}
           >
             <div style={{
-              fontFamily: MONO, fontSize: 9, color: b.color,
+              fontFamily: MONO, fontSize: 10, color: b.color,
               letterSpacing: '0.06em', lineHeight: 1.3,
               marginBottom: 4, whiteSpace: 'pre-line',
             }}>
@@ -314,7 +314,7 @@ export function AutonomyTradeoff() {
 
       <div style={{
         marginTop: 14, display: 'flex', justifyContent: 'space-between',
-        fontFamily: MONO, fontSize: 9, color: 'var(--text3)', letterSpacing: '0.08em',
+        fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.08em',
       }}>
         <span>← Safer / Less Useful</span>
         <span>More Useful / Higher Stakes →</span>

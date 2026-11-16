@@ -67,7 +67,7 @@ export function FootballIQFeature() {
       {/* corner status */}
       <div style={{ position: 'absolute', top: 16, right: 18, display: 'flex', alignItems: 'center', gap: 7, zIndex: 2 }}>
         <span className="pulse" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--red)', display: 'inline-block' }} />
-        <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--red)' }}>{projectStatusLabel[p.status]}</span>
+        <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--red)' }}>{projectStatusLabel[p.status]}</span>
       </div>
 
       <div className="fiq-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 48fr) minmax(0, 52fr)', gap: 'clamp(20px, 3vw, 44px)', padding: 'clamp(24px, 3.5vw, 44px)', alignItems: 'center' }}>
@@ -89,7 +89,7 @@ export function FootballIQFeature() {
                 <div style={{ fontFamily: SERIF, fontSize: 'var(--fs-stat-xl)', lineHeight: 1, color: 'var(--gold)' }}>
                   <span data-count={s.value} data-suffix={s.suffix}>{`${s.value}${s.suffix}`}</span>
                 </div>
-                <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', marginTop: 6 }}>{s.label}</div>
+                <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', marginTop: 6 }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -109,7 +109,7 @@ export function FootballIQFeature() {
         {/* play visualization */}
         <div style={{ minWidth: 0 }}>
           <PlayDiagram />
-          <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textAlign: 'center', marginTop: 10 }}>
+          <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', textAlign: 'center', marginTop: 10 }}>
             Detection → tracking → labels - rendered from the pipeline&apos;s point of view
           </div>
         </div>

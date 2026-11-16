@@ -39,7 +39,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ padding: '16px 18px', background: `linear-gradient(180deg, ${ACCENT}0d, ${ACCENT}04)`, border: `1px solid ${ACCENT}35`, boxShadow: `0 4px 20px ${ACCENT}05`, borderRadius: 8 }}>
       <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 9, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
   );
 }
@@ -154,7 +154,7 @@ export default function ChampionsComplexCaseStudy() {
           Portfolio
         </SmartBackLink>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT, background: `${ACCENT}10`, border: `1px solid ${ACCENT}30`, borderRadius: 10 }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT, background: `${ACCENT}10`, border: `1px solid ${ACCENT}30`, borderRadius: 10 }}>
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: ACCENT, display: 'inline-block' }} />
             Athletics
           </span>
@@ -266,7 +266,7 @@ export default function ChampionsComplexCaseStudy() {
                 ].map(({ stage, label, desc }) => (
                   <div key={stage} style={{ display: 'flex', gap: 14, padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
                     <div style={{ flexShrink: 0, minWidth: 100 }}>
-                      <div style={{ fontFamily: MONO, fontSize: 9, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>{stage}</div>
+                      <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>{stage}</div>
                       <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.04em' }}>{label}</div>
                     </div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
@@ -298,7 +298,7 @@ export default function ChampionsComplexCaseStudy() {
                   ['Wellness & Support Spaces', 'Holistic student-athlete care. Closes the facility tour before the giving section with a values-aligned message.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'rgba(242,237,216,0.02)', border: '1px solid rgba(244,244,242,0.06)', borderRadius: 6 }}>
-                    <span style={{ fontFamily: MONO, fontSize: 9, color: ACCENT, flexShrink: 0, marginTop: 3 }}>→</span>
+                    <span style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, flexShrink: 0, marginTop: 3 }}>→</span>
                     <div>
                       <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 4 }}>{title}</div>
                       <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5 }}>{body}</p>
@@ -492,7 +492,7 @@ export default function ChampionsComplexCaseStudy() {
 
           {/* ── Sticky section nav ── */}
           <nav className="cs-sidebar-nav">
-            <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
+            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
                 <button

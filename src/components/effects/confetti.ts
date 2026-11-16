@@ -5,6 +5,7 @@ export function fireConfetti(opts?: { count?: number; duration?: number }) {
   const duration = opts?.duration ?? 2200;
 
   const canvas = document.createElement('canvas');
+  canvas.setAttribute('aria-hidden', 'true'); // decorative; not page content
   canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:99999;';
   document.body.appendChild(canvas);
   const ctx = canvas.getContext('2d')!;

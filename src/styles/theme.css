@@ -26,7 +26,7 @@
   /* Text ramp */
   --foreground: #f4f4f2;
   --text2: #a3a8b0;
-  --text3: #6b7078;
+  --text3: #80858e; /* >=4.5:1 on background, surface and surface-2 (was #6b7078, 3.4-3.9:1) */
 
   /* Borders / hairlines */
   --bd: rgba(244, 244, 242, 0.08);
