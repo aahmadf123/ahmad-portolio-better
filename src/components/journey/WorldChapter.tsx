@@ -24,15 +24,10 @@ export async function WorldChapter({ world, prev }: { world: World; prev: PhotoI
 
   return (
     <section id={world.id} aria-labelledby={titleId} style={{ position: 'relative', zIndex: 20 }}>
-      {/* Old links (/#story, /#projects, /#insights) from before the redesign land here. */}
-      {first && (
-        <>
-          <span id="story" aria-hidden style={hidden} />
-          <span id="projects" aria-hidden style={hidden} />
-          <span id="insights" aria-hidden style={hidden} />
-        </>
-      )}
-      <FlyInScene id={world.id} from={prev} to={world.photo} length={world.length} joinPrevious={first} labelledBy={titleId}>
+      {/* Old links from before the redesign: /#story lands on this world's words;
+          /#projects and /#insights land on its work (anchors inside WorldWork). */}
+      {first && <span id="story" data-anchor-for={world.id} aria-hidden style={hidden} />}
+      <FlyInScene id={world.id} from={prev} to={world.photo} length={world.length} joinPrevious={first}>
         <SceneCopy photo={world.photo}>
           <ChapterCopy
             mark={`${world.n} · ${world.label} · ${world.years}`}
@@ -45,7 +40,7 @@ export async function WorldChapter({ world, prev }: { world: World; prev: PhotoI
           />
         </SceneCopy>
       </FlyInScene>
-      <WorldWork world={world}>
+      <WorldWork world={world} anchors={first ? ['projects', 'insights'] : []}>
         {world.id === 'research' ? <ResearchPaper /> : null}
         {cards.length > 0 ? (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(420px, 100%), 1fr))', gap: 16 }}>

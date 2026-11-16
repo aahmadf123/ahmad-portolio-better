@@ -17,7 +17,7 @@ const FootballIQFeature = dynamic(() => import('@/components/sections/projects/F
  * cards that open the shared project modal), then anything special to this world
  * (Football IQ and its play diagram, the research paper, technical insights).
  */
-export function WorldWork({ world, children }: { world: World; children?: React.ReactNode }) {
+export function WorldWork({ world, anchors = [], children }: { world: World; anchors?: string[]; children?: React.ReactNode }) {
   const { open } = useProjectModal();
   const list = world.projectSlugs
     .map((slug) => projects.find((p) => p.slug === slug)!)
@@ -27,7 +27,26 @@ export function WorldWork({ world, children }: { world: World; children?: React.
   return (
     // No content-visibility here on purpose: skipped worlds change size mid-scroll, which
     // made header links and keyboard focus land in the wrong place.
-    <div style={{ background: 'var(--background)', padding: 'clamp(48px, 6vw, 88px) clamp(20px, 4vw, 52px)', position: 'relative', zIndex: 1 }}>
+    <div
+      id={`${world.id}-work`}
+      // Keyboard focus: the browser's smooth focus-scroll stalls over this long page of
+      // pinned scenes and can leave the focused card off screen. Bring it into view right
+      // away (instant, so there is nothing left for the smooth scroll to do), and check
+      // again once scrolling settles.
+      onFocusCapture={(e) => {
+        const el = e.target as HTMLElement;
+        const fix = () => {
+          const r = el.getBoundingClientRect();
+          if (document.activeElement === el && (r.top < 0 || r.bottom > window.innerHeight)) {
+            el.scrollIntoView({ block: 'nearest', behavior: 'instant' as ScrollBehavior });
+          }
+        };
+        fix();
+        window.addEventListener('scrollend', fix, { once: true });
+        window.setTimeout(fix, 1200); // browsers without scrollend
+      }}
+      style={{ background: 'var(--background)', padding: 'clamp(48px, 6vw, 88px) clamp(20px, 4vw, 52px)', position: 'relative', zIndex: 1 }}>
+      {anchors.map((a) => <span key={a} id={a} aria-hidden style={{ position: 'absolute', top: 0, left: 0, width: 1, height: 1 }} />)}
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
           <span aria-hidden style={{ width: 22, height: 1.5, background: world.accent }} />

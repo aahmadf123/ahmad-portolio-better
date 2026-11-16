@@ -5,6 +5,7 @@ import { journeyPhoto, type PhotoId } from '@/lib/data/worlds';
 import { useJourneyTier, type JourneyTier } from '@/lib/journey/tier';
 import { JourneyPhoto } from './JourneyPhoto';
 import { publishScene } from '@/lib/journey/store';
+import { sceneScrollTop, seenOpacity } from '@/lib/journey/anchors';
 
 /**
  * The signature move: a sticky, full-screen real photo that the camera flies into as
@@ -79,7 +80,6 @@ export function FlyInScene({
   maxZoom = 3.2,
   priority = false,
   joinPrevious = false,
-  labelledBy,
   children,
 }: {
   id: string;
@@ -96,7 +96,6 @@ export function FlyInScene({
    * two copies of the photo sliding past a seam.
    */
   joinPrevious?: boolean;
-  labelledBy?: string;
   children: React.ReactNode;
 }) {
   const tier = useJourneyTier();
@@ -164,10 +163,22 @@ export function FlyInScene({
       paint(p);
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(measure); };
+    // Keyboard focus that lands on a faded-out layer (e.g. Shift+Tab back into the
+    // opening's buttons) scrolls the scene to where that layer is fully shown.
+    const onFocus = (e: FocusEvent) => {
+      const el = e.target as HTMLElement;
+      const layer = el.closest<HTMLElement>('[data-show-at]');
+      const r = root.current;
+      if (!layer || !r || !r.contains(layer) || seenOpacity(el) > 0.99) return;
+      window.scrollTo({ top: sceneScrollTop(r, Number(layer.dataset.showAt)), behavior: 'instant' as ScrollBehavior });
+    };
     measure();
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
+    const rootEl = root.current;
+    rootEl?.addEventListener('focusin', onFocus);
     return () => {
+      rootEl?.removeEventListener('focusin', onFocus);
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
       if (frame) cancelAnimationFrame(frame);
@@ -180,7 +191,7 @@ export function FlyInScene({
   if (still) {
     return (
       <SceneContext.Provider value={state}>
-        <div data-scene={id} aria-labelledby={labelledBy} style={{ position: 'relative', minHeight: '100svh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <div data-scene={id} style={{ position: 'relative', minHeight: '100svh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
           <div className="flyin-photo" style={{ position: 'absolute', inset: 0 }}><JourneyPhoto id={to} priority={priority} /></div>
           <div style={{ position: 'relative', flex: 1, display: 'flex', flexDirection: 'column' }}>{children}</div>
         </div>
@@ -192,7 +203,14 @@ export function FlyInScene({
   // new photo and copy are hidden; without one, the `to` photo and copy show at once.
   return (
     <SceneContext.Provider value={state}>
-      <div ref={root} data-scene={id} aria-labelledby={labelledBy} style={{ position: 'relative', height: `${(length + (joinPrevious ? 1 : 0)) * 100}svh`, marginTop: joinPrevious ? '-100svh' : undefined }}>
+      <div
+        ref={root}
+        data-scene={id}
+        data-pinned=""
+        data-copy-at={from ? 0.85 : 0}
+        data-join={joinPrevious ? '' : undefined}
+        style={{ position: 'relative', height: `${(length + (joinPrevious ? 1 : 0)) * 100}svh`, marginTop: joinPrevious ? '-100svh' : undefined }}
+      >
         <div style={{ position: 'sticky', top: 0, height: '100svh', overflow: 'hidden' }}>
           <div ref={toRef} className={photoClass(to)} data-photo={to} style={{ ...layer, transformOrigin: origin(to), opacity: from ? 0 : 1 }}>
             <JourneyPhoto id={to} priority={priority} />
@@ -204,7 +222,7 @@ export function FlyInScene({
           )}
           {/* keeps the transparent site header readable over bright skies */}
           <div aria-hidden style={{ ...layer, background: 'linear-gradient(to bottom, rgba(13,14,18,0.55), rgba(13,14,18,0) 22%)' }} />
-          <div ref={copyRef} style={{ ...layer, opacity: from ? 0 : 1, pointerEvents: from ? 'none' : 'auto', display: 'flex', flexDirection: 'column' }}>
+          <div ref={copyRef} data-show-at={from ? 0.85 : 0} style={{ ...layer, opacity: from ? 0 : 1, pointerEvents: from ? 'none' : 'auto', display: 'flex', flexDirection: 'column' }}>
             {children}
           </div>
         </div>

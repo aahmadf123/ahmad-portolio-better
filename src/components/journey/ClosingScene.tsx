@@ -7,7 +7,7 @@ import { ChapterCopy } from './ChapterCopy';
 export function ClosingScene() {
   return (
     <section id="next-chapter" aria-labelledby="next-chapter-title" style={{ position: 'relative', zIndex: 20 }}>
-      <FlyInScene id="next-chapter" from="ai-engineering" to="opening" labelledBy="next-chapter-title">
+      <FlyInScene id="next-chapter" from="ai-engineering" to="opening">
         <SceneCopy photo="opening">
           <ChapterCopy
             mark={closing.kicker}

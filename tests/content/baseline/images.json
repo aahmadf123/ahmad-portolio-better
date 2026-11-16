@@ -1,0 +1,67 @@
+{
+ "home": [
+  "4-pillars",
+  "aiche-chemecar-international",
+  "athletics-group-pics",
+  "batting-cleanup",
+  "blackopal-introductionbadge",
+  "blackopal-superpositionbadge",
+  "champion-complex-render1",
+  "deepflyer-pics",
+  "deeptruth-group",
+  "graph-rl",
+  "headshot",
+  "oracle-foundation-badge",
+  "sdt-tool",
+  "seniordesign-pipeline",
+  "series-rollercoaster",
+  "toledo-athletics-onboarding"
+ ],
+ "field-notes": [
+  "agentic-ai-production-control-loop",
+  "opponent-twin-mirror",
+  "series-rollercoaster",
+  "small-data-season-noise"
+ ],
+ "docs": [],
+ "field-notes__agentic-ai-in-production": [
+  "agentic-ai-production-control-loop"
+ ],
+ "field-notes__small-data-college-sports-ai": [
+  "small-data-season-noise"
+ ],
+ "field-notes__opponent-digital-twins": [
+  "opponent-twin-mirror"
+ ],
+ "field-notes__battle-of-i75-coin-toss": [
+  "series-rollercoaster"
+ ],
+ "case-study__graph-based-rl-uav-autonomy": [],
+ "case-study__deepflyer-drone-reinforcement-learning": [
+  "deepflyer-pics"
+ ],
+ "case-study__homeowner-loss-prediction": [
+  "seniordesign-pipeline"
+ ],
+ "case-study__security-discovery-tool": [
+  "sdt-tool"
+ ],
+ "case-study__deeptruth-ai-fact-checking": [
+  "deeptruth-group"
+ ],
+ "case-study__camel-car-cheme-car-control-system": [
+  "aiche-chemecar-international"
+ ],
+ "case-study__batting-cleanup-smart-city-waste-reporting": [
+  "batting-cleanup"
+ ],
+ "case-study__champions-complex-digital-campaign": [
+  "champion-complex-render1"
+ ],
+ "case-study__toledo-athletics-onboarding-portal": [
+  "toledo-athletics-onboarding"
+ ],
+ "case-study__toledo-football-iq-computer-vision-analytics": [
+  "football-iq-analytics"
+ ]
+}

@@ -17,7 +17,7 @@ export function OpeningScene() {
     // Stacked above the first world (z 21 vs 20): that world's stage waits underneath,
     // already showing this same photo, and is revealed as the opening scrolls away.
     <section id="hero" tabIndex={-1} aria-labelledby="hero-name" style={{ position: 'relative', zIndex: 21 }}>
-      <FlyInScene id="opening" to="opening" length={1.8} priority labelledBy="hero-name">
+      <FlyInScene id="opening" to="opening" length={1.8} priority>
         <OpeningCopy />
       </FlyInScene>
     </section>
@@ -51,7 +51,7 @@ function OpeningCopy() {
       <p className="opening-sub" style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--text2)', maxWidth: 460, marginTop: 'min(22px, 2.4svh)', fontFamily: SANS }}>{site.heroSub}</p>
       <div className="opening-ctas" style={{ marginTop: 'min(24px, 2.6svh)', display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
         <a href="#chem-e-car" data-magnetic="" style={{ ...button, padding: '11px 24px', background: 'var(--primary)', color: 'var(--background)', fontSize: 11, fontWeight: 700, letterSpacing: '0.06em' }}>Start the journey ↓</a>
-        <a href="#chem-e-car" data-magnetic="" style={{ ...button, padding: '11px 24px', border: '1px solid var(--bd2)', color: 'var(--text2)', fontSize: 11, letterSpacing: '0.06em' }}>View Work</a>
+        <a href="#projects" data-magnetic="" style={{ ...button, padding: '11px 24px', border: '1px solid var(--bd2)', color: 'var(--text2)', fontSize: 11, letterSpacing: '0.06em' }}>View Work</a>
         <a href={site.resumeUrl} target="_blank" rel="noopener" style={{ ...button, gap: 6, padding: '9px 18px', border: '1px solid var(--bd)', color: FG3, fontSize: 10, letterSpacing: '0.07em' }}>Resume ↓</a>
         <a href={site.degreeUrl} target="_blank" rel="noopener" style={{ ...button, gap: 6, padding: '9px 18px', border: '1px solid rgba(45,212,191,0.35)', color: 'var(--primary)', fontSize: 10, letterSpacing: '0.07em' }}>Degree ↓</a>
       </div>
@@ -108,8 +108,8 @@ function OpeningCopy() {
   }
   return (
     <>
-      <div ref={nameRef} style={{ position: 'absolute', inset: 0, display: 'flex' }}>{name}</div>
-      <div ref={storyRef} style={{ position: 'absolute', inset: 0, display: 'flex', opacity: 0, pointerEvents: 'none' }}>{story}</div>
+      <div ref={nameRef} data-show-at="0" style={{ position: 'absolute', inset: 0, display: 'flex' }}>{name}</div>
+      <div ref={storyRef} data-show-at="0.75" style={{ position: 'absolute', inset: 0, display: 'flex', opacity: 0, pointerEvents: 'none' }}>{story}</div>
     </>
   );
 }

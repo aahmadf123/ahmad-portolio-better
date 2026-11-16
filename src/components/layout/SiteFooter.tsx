@@ -66,6 +66,7 @@ export function SiteFooter() {
               </React.Fragment>
             );
           })}
+          . All photos graded and resized for this site.
         </p>
       </div>
 

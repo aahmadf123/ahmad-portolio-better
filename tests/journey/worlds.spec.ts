@@ -72,7 +72,14 @@ for (const id of ['story', 'projects', 'insights', 'research', 'about', 'skills'
     test.skip(info.project.name !== 'desktop', 'desktop only');
     await page.goto(`/#${id}`);
     await expect(page.locator(`[id="${id}"]`)).toHaveCount(1);
-    await expect.poll(async () => Math.abs(await page.locator(`[id="${id}"]`).evaluate((e) => e.getBoundingClientRect().top)), { timeout: 5000 }).toBeLessThan(140);
+    // World links (and the old #story) land where that world's words are showing;
+    // everything else lands with its top at the top of the screen.
+    const world = id === 'story' ? worlds[0].id : worlds.find((w) => w.id === id)?.id;
+    if (world) {
+      await expect.poll(() => page.getByTestId(`world-copy-${world}`).evaluate(seenOpacity), { timeout: 5000 }).toBeGreaterThan(0.95);
+    } else {
+      await expect.poll(async () => Math.abs(await page.locator(`[id="${id}"]`).evaluate((e) => e.getBoundingClientRect().top)), { timeout: 5000 }).toBeLessThan(140);
+    }
   });
 }
 
@@ -101,10 +108,16 @@ test('keyboard focus inside a world is visible', async ({ page }, info) => {
     const all = [...document.querySelectorAll<HTMLElement>(sel)].filter((e) => !e.closest('[inert]'));
     const research = document.getElementById('research')!;
     const first = all.findIndex((e) => research.contains(e));
-    all[first - 1].focus();
+    // A keyboard user reaching this element would already have it on screen.
+    all[first - 1].scrollIntoView({ block: 'center', behavior: 'instant' });
+    all[first - 1].focus({ preventScroll: true });
   });
   await page.keyboard.press('Tab');
-  await page.waitForTimeout(300); // the world brings a just-rendered focus target into view
+  // The site scrolls smoothly, so the jump to the focused card takes a moment.
+  await expect.poll(() => page.evaluate(() => {
+    const r = (document.activeElement as HTMLElement).getBoundingClientRect();
+    return r.top >= -1 && r.bottom <= innerHeight + 1; // 1px for sub-pixel rounding
+  }), { timeout: 4000 }).toBe(true);
   const state = await page.evaluate((fn) => {
     const el = document.activeElement as HTMLElement;
     const seen = new Function(`return (${fn})`)()(el) as number;
@@ -113,8 +126,8 @@ test('keyboard focus inside a world is visible', async ({ page }, info) => {
   }, seenOpacity.toString());
   expect(state.inResearch).toBe(true);
   expect(state.seen).toBeGreaterThan(0.95);
-  expect(state.top).toBeGreaterThanOrEqual(0);
-  expect(state.bottom).toBeLessThanOrEqual(state.h);
+  expect(state.top).toBeGreaterThanOrEqual(-1);
+  expect(state.bottom).toBeLessThanOrEqual(state.h + 1);
 });
 
 test('header nav: Journey, Notes, About, Contact + Docs', async ({ page }, info) => {
