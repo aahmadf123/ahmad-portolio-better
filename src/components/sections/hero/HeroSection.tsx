@@ -193,7 +193,7 @@ function HeroPhoto() {
     as: 'image', imageSrcSet: HEADSHOT_SRCSET, imageSizes: HEADSHOT_SIZES, fetchPriority: 'high',
   });
   return (
-    // A real button (keyboard + screen reader) instead of a clickable <img>.
+    // A real button (keyboard + screen reader) instead of a clickable image element.
     <button
       type="button"
       onClick={() => openLb('/Images/optimized/headshot-1600.webp', 'Ahmad Firas')}
