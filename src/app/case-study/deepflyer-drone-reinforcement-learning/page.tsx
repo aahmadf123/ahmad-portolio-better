@@ -39,8 +39,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function Metric({ value, label }: { value: string; label: string }) {
   return (
-    <div style={{ padding: '16px 18px', background: `linear-gradient(180deg, ${ACCENT}0d, ${ACCENT}04)`, border: `1px solid ${ACCENT}35`, boxShadow: `0 4px 20px ${ACCENT}05`, borderRadius: 8 }}>
-      <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
+    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
+      <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
       <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
   );

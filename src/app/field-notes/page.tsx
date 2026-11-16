@@ -65,12 +65,7 @@ export default function FieldNotesPage() {
             marginBottom: 24, paddingBottom: '0.04em',
           }}>
             Essays from<br />
-            <span style={{
-              background: 'linear-gradient(135deg, var(--primary), var(--gold))',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              display: 'inline-block'
-            }}>the frontier.</span>
+            <span style={{ color: 'var(--primary)', fontStyle: 'italic' }}>the frontier.</span>
           </h1>
 
           <p style={{

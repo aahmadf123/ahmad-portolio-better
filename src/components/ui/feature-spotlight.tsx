@@ -45,7 +45,7 @@ const AnimatedFeatureSpotlight = React.forwardRef<HTMLElement, AnimatedFeatureSp
               src={imageUrl}
               alt={imageAlt}
               title={onImageClick ? 'Click to enlarge' : undefined}
-              className="w-full max-w-md object-contain animate-float"
+              className="w-full max-w-md object-contain"
               onClick={onImageClick}
               style={onImageClick ? { cursor: 'zoom-in' } : undefined}
             />

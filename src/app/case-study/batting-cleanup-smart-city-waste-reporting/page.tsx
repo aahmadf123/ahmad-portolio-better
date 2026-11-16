@@ -39,8 +39,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function Metric({ value, label }: { value: string; label: string }) {
   return (
-    <div style={{ padding: '16px 18px', background: `linear-gradient(180deg, ${ACCENT}0d, ${ACCENT}04)`, border: `1px solid ${ACCENT}35`, boxShadow: `0 4px 20px ${ACCENT}05`, borderRadius: 8 }}>
-      <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
+    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
+      <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
       <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
   );
@@ -161,7 +161,7 @@ export default function BattingCleanupCaseStudy() {
             <Tag>City of Toledo</Tag>
             <Tag>Applied Labs</Tag>
           </div>
-          <h1 style={{ fontFamily: DISPLAY, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, var(--foreground) 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+          <h1 style={{ fontFamily: DISPLAY, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', color: 'var(--foreground)', display: 'inline-block' }}>
             Batting Cleanup
           </h1>
           <p style={{ fontFamily: SERIF, fontSize: 16, color: 'var(--text2)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 12px' }}>

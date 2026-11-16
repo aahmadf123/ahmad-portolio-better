@@ -40,8 +40,8 @@ function SectionLabel({ label }: { label: string }) {
 
 function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
   return (
-    <div style={{ padding: '18px 20px', background: `linear-gradient(180deg, ${color}0d, ${color}04)`, border: `1px solid ${color}35`, boxShadow: `0 4px 20px ${color}05`, borderRadius: 8 }}>
-      <div style={{ fontFamily: SERIF, fontSize: 32, fontWeight: 400, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
+    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${color}` }}>
+      <div style={{ fontFamily: DISPLAY, fontSize: 34, fontWeight: 400, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
       <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 8 }}>{label}</div>
     </div>
   );
