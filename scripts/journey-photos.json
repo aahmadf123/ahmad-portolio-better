@@ -1,13 +1,16 @@
 [
   {
     "id": "opening",
-    "source": "https://images.unsplash.com/photo-1770929685497-a8edfaf831c1?w=2560&q=90&fm=jpg",
-    "page": "https://unsplash.com/photos/city-skyline-across-a-river-at-dusk-iRfYb-gh0a0",
-    "photographer": "Sean Dogjani",
+    "source": "https://images.unsplash.com/photo-1756832430925-d1c85f282736?w=2560&q=90&fm=jpg",
+    "page": "https://unsplash.com/photos/aerial-view-of-a-baseball-stadium-at-dusk-8tjUqoLKyWw",
+    "photographer": "Leo Escala",
     "licence": "Unsplash License",
     "licenceUrl": "https://unsplash.com/license",
-    "focal": { "x": 0.62, "y": 0.44 },
-    "alt": "A city skyline across a wide river at dusk"
+    "focal": {
+      "x": 0.57,
+      "y": 0.37
+    },
+    "alt": "Downtown Toledo, Ohio at dusk from the air, with Fifth Third Field lit below"
   },
   {
     "id": "chem-e-car",
@@ -16,7 +19,10 @@
     "photographer": "Chidera Faustina Okeke",
     "licence": "Unsplash License",
     "licenceUrl": "https://unsplash.com/license",
-    "focal": { "x": 0.5, "y": 0.47 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.47
+    },
     "alt": "Laboratory shelves lined with glassware"
   },
   {
@@ -26,7 +32,10 @@
     "photographer": "Nastya Dulhiier",
     "licence": "Unsplash License",
     "licenceUrl": "https://unsplash.com/license",
-    "focal": { "x": 0.55, "y": 0.38 },
+    "focal": {
+      "x": 0.55,
+      "y": 0.38
+    },
     "alt": "A city's lights at night seen from a plane, like a map of data points"
   },
   {
@@ -36,7 +45,10 @@
     "photographer": "Anthony John Garcia",
     "licence": "CC BY-SA 4.0",
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "focal": { "x": 0.4, "y": 0.62 },
+    "focal": {
+      "x": 0.4,
+      "y": 0.62
+    },
     "alt": "The Glass Bowl at sunset during a Toledo Rockets game, ROCKETS end zone and packed stands"
   },
   {
@@ -46,7 +58,10 @@
     "photographer": "Valentin Zickner",
     "licence": "Unsplash License",
     "licenceUrl": "https://unsplash.com/license",
-    "focal": { "x": 0.55, "y": 0.62 },
+    "focal": {
+      "x": 0.55,
+      "y": 0.62
+    },
     "alt": "Two drones flying in a pale sky"
   },
   {
@@ -56,7 +71,10 @@
     "photographer": "Tony Marinescu",
     "licence": "Unsplash License",
     "licenceUrl": "https://unsplash.com/license",
-    "focal": { "x": 0.55, "y": 0.6 },
+    "focal": {
+      "x": 0.55,
+      "y": 0.6
+    },
     "alt": "Rows of white server cabinets in a data centre"
   }
 ]

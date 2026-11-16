@@ -1,7 +1,7 @@
 {
   "opening": {
     "width": 2560,
-    "height": 1707,
+    "height": 1440,
     "widths": [
       640,
       1280,
@@ -23,13 +23,13 @@
     "panorama": false,
     "depth": "/Images/journey/opening-depth.webp",
     "focal": {
-      "x": 0.62,
-      "y": 0.44
+      "x": 0.57,
+      "y": 0.37
     },
-    "alt": "A city skyline across a wide river at dusk",
+    "alt": "Downtown Toledo, Ohio at dusk from the air, with Fifth Third Field lit below",
     "credit": {
-      "photographer": "Sean Dogjani",
-      "page": "https://unsplash.com/photos/city-skyline-across-a-river-at-dusk-iRfYb-gh0a0",
+      "photographer": "Leo Escala",
+      "page": "https://unsplash.com/photos/aerial-view-of-a-baseball-stadium-at-dusk-8tjUqoLKyWw",
       "licence": "Unsplash License",
       "licenceUrl": "https://unsplash.com/license"
     }
