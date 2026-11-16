@@ -40,6 +40,15 @@ export function CaseStudyPager() {
 
   return (
     <nav aria-label="More case studies" style={{ maxWidth: 1100, margin: '0 auto', padding: '0 clamp(20px, 4vw, 52px) clamp(56px, 7vw, 88px)' }}>
+      {/* Dossier motif, same numbering voice as the homepage chapters. */}
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, marginBottom: 16 }}>
+        <span aria-hidden style={{ fontFamily: SERIF, fontSize: 'clamp(40px, 6vw, 64px)', lineHeight: 1, color: studies[i].color, opacity: 0.35 }}>
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text3)' }}>
+          Case file {String(i + 1).padStart(2, '0')} of {String(studies.length).padStart(2, '0')}
+        </span>
+      </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 12 }}>
         {card(prev, 'prev')}
         {card(next, 'next')}

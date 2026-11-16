@@ -39,8 +39,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function Metric({ value, label }: { value: string; label: string }) {
   return (
-    <div style={{ padding: '16px 18px', background: `linear-gradient(180deg, ${ACCENT}0d, ${ACCENT}04)`, border: `1px solid ${ACCENT}35`, boxShadow: `0 4px 20px ${ACCENT}05`, borderRadius: 8 }}>
-      <div style={{ fontFamily: SERIF, fontSize: 28, color: ACCENT, lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
+    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
+      <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
       <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
     </div>
   );
@@ -49,7 +49,7 @@ function Metric({ value, label }: { value: string; label: string }) {
 function DbLayer({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${color}06`, border: `1px solid ${color}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.6, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 10, color, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
         <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
@@ -152,7 +152,7 @@ export default function ToledoFootballIQCaseStudy() {
             <Tag>Active Build</Tag>
             <Tag>University of Toledo Athletics</Tag>
           </div>
-          <h1 style={{ fontFamily: DISPLAY, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', background: `linear-gradient(135deg, var(--foreground) 70%, ${ACCENT} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+          <h1 style={{ fontFamily: DISPLAY, fontSize: 'var(--text-3xl)', fontWeight: 400, margin: '0 0 16px', lineHeight: 1.1, paddingBottom: '0.04em', color: 'var(--foreground)', display: 'inline-block' }}>
             Toledo Football IQ
           </h1>
           <p style={{ fontFamily: SERIF, fontSize: 16, color: 'var(--text2)', maxWidth: 620, lineHeight: 1.6, margin: '0 0 40px' }}>
@@ -256,7 +256,7 @@ export default function ToledoFootballIQCaseStudy() {
                   ['10', 'Overlay Rendering & Dashboard Indexing', 'Render clips with field grids, tracks, route paths, motion arrows, coverage shells, confidence warnings, and metric callouts. Index for dashboard search and coach review.'],
                 ].map(([n, title, body]) => (
                   <div key={n} className="pipeline-step">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.7, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
                     <div>
                       <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>{title}</div>
                       <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>{body}</p>
