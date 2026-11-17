@@ -60,15 +60,33 @@ void main() {
 
 interface Tex { img: WebGLTexture; depth: WebGLTexture; w: number; h: number }
 
-function loadImage(src: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const im = new Image();
-    im.decoding = 'async';
-    im.onload = () => resolve(im);
-    im.onerror = () => reject(new Error(src));
-    im.src = src;
-  });
+type Source = HTMLImageElement;
+
+/** Load and decode off the main thread (img.decode()), so uploading is just a copy. */
+async function loadImage(src: string): Promise<Source> {
+  const im = new Image();
+  im.decoding = 'async';
+  im.src = src;
+  await im.decode();
+  return im;
 }
+
+/**
+ * Wait until the reader is not scrolling (no scroll for 300ms) and the browser is idle:
+ * a texture upload is a big copy, and one landing mid-scroll is a visible hitch.
+ */
+let lastScroll = 0;
+if (typeof window !== 'undefined') window.addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive: true });
+const quiet = () => new Promise<void>((resolve) => {
+  const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
+  const check = () => {
+    const wait = 300 - (performance.now() - lastScroll);
+    if (wait > 0) { window.setTimeout(check, wait); return; }
+    if (ric) ric(() => resolve(), { timeout: 1000 }); else resolve();
+  };
+  check();
+});
+const sizeOf = (s: Source) => ({ w: s.naturalWidth, h: s.naturalHeight });
 
 export default function JourneyCanvas() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -122,7 +140,7 @@ export default function JourneyCanvas() {
     gl.uniform1i(u('uTo'), 2);
     gl.uniform1i(u('uToD'), 3);
 
-    const upload = (im: HTMLImageElement) => {
+    const upload = (im: Source) => {
       const t = gl.createTexture()!;
       gl.bindTexture(gl.TEXTURE_2D, t);
       gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
@@ -144,8 +162,10 @@ export default function JourneyCanvas() {
         const w = textureWidth(p.widths, innerWidth, Math.min(DPR_CAP, devicePixelRatio || 1), maxTexture);
         try {
           const [im, dm] = await Promise.all([loadImage(p.webp[String(w)]), loadImage(p.depth)]);
+          await quiet();
           if (dead) return;
-          textures.set(id, { img: upload(im), depth: upload(dm), w: im.naturalWidth, h: im.naturalHeight });
+          const { w: iw, h: ih } = sizeOf(im);
+          textures.set(id, { img: upload(im), depth: upload(dm), w: iw, h: ih });
           ready.add(id);
           markReady();
           dirty();

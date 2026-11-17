@@ -10,9 +10,13 @@ import { RadialSkills } from './RadialSkills';
 import { SkillDetailCard } from './SkillDetailCard';
 import { ConstellationLegend } from './ConstellationLegend';
 
+/** The constellation's own height (ConstellationCanvas), reserved before it loads. */
+const CANVAS_H = 'clamp(420px, 58vh, 620px)';
+const placeholder = <div aria-hidden style={{ height: CANVAS_H, borderRadius: 10, border: '1px solid var(--bd)' }} />;
+
 const ConstellationCanvas = dynamic(
   () => import('./ConstellationCanvas').then((m) => ({ default: m.ConstellationCanvas })),
-  { ssr: false }
+  { ssr: false, loading: () => placeholder }
 );
 
 type Mode = 'pending' | 'constellation' | 'radial' | 'list';
@@ -25,23 +29,23 @@ type Mode = 'pending' | 'constellation' | 'radial' | 'list';
 export function SkillsSection() {
   const def = sectionById('skills')!;
   const [mode, setMode] = useState<Mode>('pending');
+  const [near, setNear] = useState(false);
   const [listOpen, setListOpen] = useState(false);
   const [selected, setSelected] = useState<SkillNode | null>(null);
   const [focusGroup, setFocusGroup] = useState<string | null>(null);
 
-  // Pick the mode only when the section is about a screen away: the constellation pulls
-  // in three.js (~130KB), which must not compete with the journey's opening photo.
-  // Until then the list fallback renders (same as 'pending' always did).
+  // Pick the layout as soon as the page starts, so the section never changes height
+  // while someone is scrolling (a mid-scroll resize re-lays out the whole long page).
+  // three.js (~130KB) still only loads when the section is about a screen away, so it
+  // never competes with the journey's opening photo; until then its space is reserved.
   useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fine = window.matchMedia('(pointer: fine) and (min-width: 860px)').matches;
+    setMode(reduced ? 'list' : fine ? 'constellation' : 'radial');
     const el = document.getElementById('skills');
-    const choose = () => {
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const fine = window.matchMedia('(pointer: fine) and (min-width: 860px)').matches;
-      setMode(reduced ? 'list' : fine ? 'constellation' : 'radial');
-    };
-    if (!el || !('IntersectionObserver' in window)) { choose(); return; }
+    if (!el || !('IntersectionObserver' in window)) { setNear(true); return; }
     const io = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) { io.disconnect(); choose(); }
+      if (entries.some((e) => e.isIntersecting)) { io.disconnect(); setNear(true); }
     }, { rootMargin: '900px 0px' });
     io.observe(el);
     return () => io.disconnect();
@@ -68,7 +72,7 @@ export function SkillsSection() {
         <>
           <ConstellationLegend focus={focusGroup} onToggle={setFocusGroup} />
           <div style={{ position: 'relative' }}>
-            <ConstellationCanvas focusGroup={focusGroup} onSelect={onSelect} />
+            {near ? <ConstellationCanvas focusGroup={focusGroup} onSelect={onSelect} /> : placeholder}
             <SkillDetailCard node={selected} onClose={() => setSelected(null)} />
           </div>
         </>

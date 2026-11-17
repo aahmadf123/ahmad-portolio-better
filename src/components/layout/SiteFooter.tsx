@@ -26,7 +26,7 @@ export function SiteFooter() {
               Let&apos;s build something real.
             </div>
             <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14 }}>
-              {site.location} · Open to remote · Available for select projects
+              {site.location} · Open to collaborate
             </div>
           </div>
 

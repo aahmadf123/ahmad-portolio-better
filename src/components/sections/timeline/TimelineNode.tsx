@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { m } from 'framer-motion';
-import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { MONO, SERIF, SANS, Tag, pickColor, FG2, FG3 } from '@/components/shared/section-helpers';
 import type { Job } from '@/lib/data/jobs';
 import type { Award } from '@/lib/data/awards';
@@ -19,55 +17,31 @@ export type TimelineEntry =
  * in place with the complete preserved description/achievements/stack.
  */
 export function TimelineNode({ entry, side, accent }: { entry: TimelineEntry; side: 'left' | 'right'; accent: string }) {
-  const reduced = useReducedMotion();
   const color = entry.kind === 'job' ? entry.job.color : entry.kind === 'award' ? 'var(--gold)' : 'var(--purple)';
-  const fromX = side === 'left' ? -36 : 36;
 
   return (
     <div className="tl-row" style={{ display: 'grid', gridTemplateColumns: '1fr 64px 1fr', alignItems: 'start' }}>
-      {/* card */}
-      <m.div
-        initial={reduced ? false : { opacity: 0, x: fromX }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-        className={`tl-card tl-card-${side}`}
+      {/* card: slides in from its side as it scrolls into view (CSS, globals.css rv-*) */}
+      <div
+        className={`tl-card tl-card-${side} ${side === 'left' ? 'rv-left' : 'rv-right'}`}
         style={{ gridColumn: side === 'left' ? 1 : 3, gridRow: 1, minWidth: 0 }}
       >
         {entry.kind === 'job' && <JobCard job={entry.job} />}
         {entry.kind === 'award' && <AwardCard award={entry.award} />}
         {entry.kind === 'education' && <EducationCard />}
-      </m.div>
+      </div>
 
-      {/* node dot */}
+      {/* node dot: pops in; milestones add a double gold ring burst */}
       <div className="tl-dot-col" style={{ gridColumn: 2, gridRow: 1, display: 'flex', justifyContent: 'center', paddingTop: 26, position: 'relative' }}>
-        <m.div
-          initial={reduced ? false : { scale: 0 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true, amount: 1 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 18 }}
-          style={{ position: 'relative', width: 14, height: 14 }}
-        >
+        <div className="rv-pop" style={{ position: 'relative', width: 14, height: 14 }}>
           <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: entry.milestone ? 'var(--gold)' : color, boxShadow: `0 0 12px ${entry.milestone ? 'rgba(245,158,11,0.7)' : 'rgba(45,212,191,0.4)'}`, border: '2px solid var(--background)' }} />
-          {entry.milestone && !reduced && (
+          {entry.milestone && (
             <>
-              <m.span
-                initial={{ scale: 0.4, opacity: 0 }}
-                whileInView={{ scale: 2.6, opacity: [0, 0.7, 0] }}
-                viewport={{ once: true, amount: 1 }}
-                transition={{ duration: 0.7, delay: 0.15 }}
-                style={{ position: 'absolute', inset: -4, borderRadius: '50%', border: '1.5px solid var(--gold)' }}
-              />
-              <m.span
-                initial={{ scale: 0.4, opacity: 0 }}
-                whileInView={{ scale: 3.8, opacity: [0, 0.45, 0] }}
-                viewport={{ once: true, amount: 1 }}
-                transition={{ duration: 0.85, delay: 0.28 }}
-                style={{ position: 'absolute', inset: -4, borderRadius: '50%', border: '1px solid var(--gold)' }}
-              />
+              <span aria-hidden className="rv-ring" style={{ position: 'absolute', inset: -4, borderRadius: '50%', border: '1.5px solid var(--gold)', opacity: 0 }} />
+              <span aria-hidden className="rv-ring late" style={{ position: 'absolute', inset: -4, borderRadius: '50%', border: '1px solid var(--gold)', opacity: 0 }} />
             </>
           )}
-        </m.div>
+        </div>
       </div>
 
       {/* spacer keeps grid symmetric */}

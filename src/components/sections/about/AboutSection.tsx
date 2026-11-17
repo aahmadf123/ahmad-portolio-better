@@ -3,7 +3,6 @@
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, m, useInView } from 'framer-motion';
-import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { Section, SH, Tag, MONO, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { MetricsBand } from '@/components/shared/MetricsBand';
 import { HoverPeek } from '@/components/ui/link-preview';
@@ -188,7 +187,6 @@ export function AboutSection() {
 
 function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onActive: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
   const inView = useInView(ref, { amount: 0.5 });
   React.useEffect(() => {
     if (inView) onActive();
@@ -197,13 +195,10 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
   const beliefs = about.beliefs.filter((b) => lens.beliefIds.includes(b.n));
 
   return (
-    <m.article
+    <article
       id={`lens-${lens.id}`}
       ref={ref}
-      initial={reduced ? false : { opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="rv"
       style={lensPanelStyle}
     >
       <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: `radial-gradient(ellipse 60% 50% at 85% 0%, color-mix(in srgb, ${accent} 6%, transparent), transparent 70%)` }} />
@@ -271,7 +266,7 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
           )}
         </div>
       </div>
-    </m.article>
+    </article>
   );
 }
 

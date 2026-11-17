@@ -6,6 +6,7 @@ import { useJourneyTier, type JourneyTier } from '@/lib/journey/tier';
 import { JourneyPhoto } from './JourneyPhoto';
 import { publishScene } from '@/lib/journey/store';
 import { sceneScrollTop, seenOpacity } from '@/lib/journey/anchors';
+import { addScene } from '@/lib/journey/ticker';
 
 /**
  * The signature move: a sticky, full-screen real photo that the camera flies into as
@@ -47,19 +48,31 @@ export function useSceneFrame(fn: Frame) {
   useEffect(() => (still ? undefined : subscribe((p) => ref.current(p))), [subscribe, still]);
 }
 
-/** Linear map of p from [a, b] to [from, to], clamped. */
+/** Map p from [a, b] to [from, to], clamped, with smoothstep easing. */
 export function span(p: number, a: number, b: number, from: number, to: number): number {
   const t = Math.min(1, Math.max(0, (p - a) / (b - a)));
-  return from + (to - from) * t;
+  // Smoothstep: every move eases in and out instead of starting and stopping dead.
+  return from + (to - from) * t * t * (3 - 2 * t);
 }
 
 /** Opacity and transform, plus pointer-events so an invisible layer never swallows clicks. */
 export function setLayer(el: HTMLElement | null, opacity: number, transform: string) {
   if (!el) return;
-  el.style.opacity = String(opacity);
-  el.style.transform = transform;
-  el.style.pointerEvents = opacity > 0.5 ? 'auto' : 'none';
+  // Write only what changed: every style write costs a style recalc (and a session
+  // recorder event), and most frames leave most layers where they were.
+  // (Compared with what we last wrote, not el.style, which the browser normalises.)
+  const o = String(Math.round(opacity * 1000) / 1000);
+  const pe = opacity > 0.5 ? 'auto' : 'none';
+  const prev = written.get(el);
+  if (prev?.o !== o) el.style.opacity = o;
+  if (prev?.t !== transform) el.style.transform = transform;
+  if (prev?.pe !== pe) el.style.pointerEvents = pe;
+  // A faded-out layer stops its decorative loops (globals.css [data-idle]).
+  const idle = opacity < 0.02;
+  if (prev?.idle !== idle) el.toggleAttribute('data-idle', idle);
+  written.set(el, { o, t: transform, pe, idle });
 }
+const written = new WeakMap<HTMLElement, { o: string; t: string; pe: string; idle: boolean }>();
 
 const origin = (id: PhotoId) => {
   const f = journeyPhoto(id).focal;
@@ -123,9 +136,9 @@ export function FlyInScene({
       const toScale = from ? span(p, 0.45, 0.75, toStart, 1) : 1;
       const mix = from ? span(p, 0.45, 0.65, 0, 1) : 1;
       if (from) {
-        setLayer(fromRef.current, span(p, 0.45, 0.6, 1, 0), `scale(${fromScale})`);
-        setLayer(toRef.current, mix, `scale(${toScale})`);
-        setLayer(copyRef.current, span(p, 0.6, 0.8, 0, 1), `translateY(${span(p, 0.6, 0.8, 40, 0)}px)`);
+        setLayer(fromRef.current, span(p, 0.45, 0.6, 1, 0), `scale(${fromScale.toFixed(4)})`);
+        setLayer(toRef.current, mix, `scale(${toScale.toFixed(4)})`);
+        setLayer(copyRef.current, span(p, 0.6, 0.8, 0, 1), `translateY(${span(p, 0.6, 0.8, 40, 0).toFixed(1)}px)`);
       }
       if (full) publish(fromScale, toScale, mix);
       subs.current.forEach((fn) => fn(p));
@@ -133,55 +146,45 @@ export function FlyInScene({
     // Full tier: tell the depth canvas what this scene shows and how much of the
     // screen its stage covers (the canvas draws whichever scene owns the screen).
     let last = { fromScale: 1, toScale: 1, mix: from ? 0 : 1 };
+    let stageTop = 0;
     const publish = (fromScale: number, toScale: number, mix: number) => {
       last = { fromScale, toScale, mix };
-      const stage = root.current?.firstElementChild as HTMLElement | undefined;
-      if (!stage) return;
-      const r = stage.getBoundingClientRect();
-      const h = Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0));
-      publishScene(id, { from, to, fromScale, toScale, mix, area: h * r.width });
+      const vh = window.innerHeight;
+      const h = Math.max(0, Math.min(stageTop + vh, vh) - Math.max(stageTop, 0));
+      publishScene(id, { from, to, fromScale, toScale, mix, area: h * window.innerWidth });
     };
-    let frame = 0;
     let painted = false;
-    const measure = () => {
-      frame = 0;
-      const el = root.current;
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      // A joined scene spends its first screen pinned underneath while the previous
-      // scene slides away; its own progress starts after that.
-      const lead = joinPrevious ? window.innerHeight : 0;
-      const range = r.height - window.innerHeight - lead;
-      const p = range > 0 ? Math.min(1, Math.max(0, (-r.top - lead) / range)) : 0;
-      if (painted && p === progress.current) {
-        // Same progress but the stage may have moved on screen (entering/leaving).
-        if (full) publish(last.fromScale, last.toScale, last.mix);
-        return;
-      }
-      painted = true;
-      progress.current = p;
-      paint(p);
-    };
-    const schedule = () => { if (!frame) frame = requestAnimationFrame(measure); };
+    const rootEl = root.current;
+    if (!rootEl) return;
+    // One shared loop (ticker.ts) drives every scene; this one only runs near the viewport.
+    const remove = addScene({
+      root: rootEl,
+      join: joinPrevious,
+      update: (p, top) => {
+        stageTop = top;
+        if (painted && p === progress.current) {
+          // Same progress but the stage moved on screen (entering/leaving).
+          if (full) publish(last.fromScale, last.toScale, last.mix);
+          return;
+        }
+        painted = true;
+        progress.current = p;
+        paint(p);
+      },
+      leave: () => { if (full) publishScene(id, null); },
+    });
     // Keyboard focus that lands on a faded-out layer (e.g. Shift+Tab back into the
     // opening's buttons) scrolls the scene to where that layer is fully shown.
     const onFocus = (e: FocusEvent) => {
       const el = e.target as HTMLElement;
       const layer = el.closest<HTMLElement>('[data-show-at]');
-      const r = root.current;
-      if (!layer || !r || !r.contains(layer) || seenOpacity(el) > 0.99) return;
-      window.scrollTo({ top: sceneScrollTop(r, Number(layer.dataset.showAt)), behavior: 'instant' as ScrollBehavior });
+      if (!layer || !rootEl.contains(layer) || seenOpacity(el) > 0.99) return;
+      window.scrollTo({ top: sceneScrollTop(rootEl, Number(layer.dataset.showAt)), behavior: 'instant' as ScrollBehavior });
     };
-    measure();
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
-    const rootEl = root.current;
-    rootEl?.addEventListener('focusin', onFocus);
+    rootEl.addEventListener('focusin', onFocus);
     return () => {
-      rootEl?.removeEventListener('focusin', onFocus);
-      window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
-      if (frame) cancelAnimationFrame(frame);
+      rootEl.removeEventListener('focusin', onFocus);
+      remove();
       publishScene(id, null);
     };
   }, [still, from, to, maxZoom, joinPrevious, tier, id]);
@@ -237,20 +240,20 @@ export function FlyInScene({
  * where the copy spans the width, the shade runs down the middle instead). An `aside`
  * (StageArt) fills the other side so the frame is never words plus empty photo.
  */
-export function SceneCopy({ photo, children, aside, style, maxWidth = 620 }: { photo: PhotoId; children: React.ReactNode; aside?: React.ReactNode; style?: React.CSSProperties; maxWidth?: number }) {
+export function SceneCopy({ photo, children, aside, center = false, style, maxWidth = 620 }: { photo: PhotoId; children: React.ReactNode; aside?: React.ReactNode; center?: boolean; style?: React.CSSProperties; maxWidth?: number }) {
   const right = journeyPhoto(photo).focal.x < 0.45;
   return (
-    <div className={`scene-shade ${right ? 'from-right' : 'from-left'}`} style={{ flex: 1, display: 'flex', width: '100%' }}>
+    <div className={`scene-shade ${center ? 'centred' : right ? 'from-right' : 'from-left'}`} style={{ flex: 1, display: 'flex', width: '100%' }}>
       <div
         className="scene-row"
         style={{
           flex: 1, display: 'flex', width: '100%', maxWidth: aside ? 1360 : 1280, margin: '0 auto', padding: '0 clamp(20px, 4vw, 52px)',
           flexDirection: right ? 'row-reverse' : 'row',
-          justifyContent: aside ? 'space-between' : right ? 'flex-end' : 'flex-start',
+          justifyContent: center ? 'center' : aside ? 'space-between' : right ? 'flex-end' : 'flex-start',
           alignItems: 'center', gap: 'clamp(28px, 4vw, 64px)', ...style,
         }}
       >
-        <div className="scene-copy" style={{ position: 'relative', maxWidth, flex: aside ? '0 1 560px' : undefined, padding: 'clamp(12px, 3vw, 36px) 0' }}>{children}</div>
+        <div className="scene-copy" style={{ position: 'relative', maxWidth, flex: aside ? '0 1 560px' : undefined, padding: 'clamp(12px, 3vw, 36px) 0', textAlign: center ? 'center' : undefined }}>{children}</div>
         {aside && <div className="scene-aside">{aside}</div>}
       </div>
     </div>

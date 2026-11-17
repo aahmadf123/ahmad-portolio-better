@@ -21,7 +21,7 @@ function buildDossier(): string {
   lines.push(`# ${site.name} - dossier`);
   lines.push(`Tagline: ${site.taglineSegments.join(' · ')}`);
   lines.push(`Positioning: ${site.heroSub}`);
-  lines.push(`Location: ${site.location}. Availability: ${site.availability.label}; open to ${site.availability.interests.join(', ')}.`);
+  lines.push(`Location: ${site.location}. Status: works full time (Developer I, First Solar) and does sports analytics with Toledo Athletics; not looking for a job. ${site.availability.label}: ${site.availability.interests.join(', ')}.`);
   lines.push(`Contact: ${site.email} · GitHub ${site.socials.github} · LinkedIn ${site.socials.linkedin}`);
   lines.push(`Résumé: ${site.url}${site.resumeUrl} · Degree: ${site.url}${site.degreeUrl} · Docs hub: ${site.url}/docs`);
 

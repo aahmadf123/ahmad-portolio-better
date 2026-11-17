@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { m } from 'framer-motion';
-import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { Section, SH, MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { useLightboxOpen } from '@/components/layout/LightboxProvider';
 import { Pic } from '@/components/ui/pic';
@@ -19,7 +17,6 @@ import { sectionById } from '@/lib/data/sections';
 export function SignalsSection() {
   const def = sectionById('signals')!;
   const openLb = useLightboxOpen();
-  const reduced = useReducedMotion();
   const [front, setFront] = useState<number | null>(null);
   const feature = press[0];
 
@@ -30,11 +27,8 @@ export function SignalsSection() {
       <div className="signals-stage" style={{ display: 'grid', gridTemplateColumns: testimonials.length > 0 ? 'minmax(0, 58fr) minmax(0, 42fr)' : '1fr', gap: 'clamp(18px, 3vw, 36px)', alignItems: 'start' }}>
         {/* press anchor */}
         {feature && (
-          <m.div
-            initial={reduced ? false : { opacity: 0, y: 22, rotate: -0.6 }}
-            whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          <div
+            className="rv"
             style={{
               background: 'rgba(244,244,242,0.025)',
               border: '1px solid var(--bd)',
@@ -64,7 +58,7 @@ export function SignalsSection() {
                 >Read Article ↗</a>
               </div>
             </div>
-          </m.div>
+          </div>
         )}
 
         {/* testimonial theater */}
@@ -91,23 +85,19 @@ export function SignalsSection() {
 }
 
 function QuoteCard({ t, i, front, onFront }: { t: Testimonial; i: number; front: boolean; onFront: () => void }) {
-  const reduced = useReducedMotion();
   const angle = [(-2.2), 1.6, -1.1, 2.4][i % 4];
   return (
-    <m.blockquote
+    <blockquote
       onClick={onFront}
-      initial={reduced ? false : { opacity: 0, y: 26, rotate: angle * 2 }}
-      whileInView={{ opacity: 1, y: 0, rotate: angle }}
-      viewport={{ once: true, amount: 0.4 }}
-      animate={{ zIndex: front ? 10 : i, scale: front ? 1.03 : 1 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: reduced ? 0 : i * 0.12 }}
-      className={reduced ? undefined : 'signal-float'}
+      className="rv-fade signal-quote"
       style={{
+        zIndex: front ? 10 : i,
+        rotate: `${angle}deg`,
         margin: i === 0 ? 0 : '-14px 0 0 0',
         marginLeft: `${(i % 3) * 10}px`,
         padding: '20px 22px',
         background: 'var(--surface)',
-        border: '1px solid var(--bd2)',
+        border: `1px solid ${front ? 'color-mix(in srgb, var(--primary) 45%, transparent)' : 'var(--bd2)'}`,
         borderRadius: 10,
         cursor: 'pointer',
         position: 'relative',
@@ -123,11 +113,11 @@ function QuoteCard({ t, i, front, onFront }: { t: Testimonial; i: number; front:
       </footer>
       <style>{`
         @media (prefers-reduced-motion: no-preference) {
-          .signal-float { animation: signal-bob 7s ease-in-out infinite alternate; }
+          .signal-quote.in { animation: signal-bob 7s ease-in-out infinite alternate; }
         }
         @keyframes signal-bob { from { translate: 0 -4px; } to { translate: 0 5px; } }
       `}</style>
-    </m.blockquote>
+    </blockquote>
   );
 }
 

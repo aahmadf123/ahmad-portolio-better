@@ -1,0 +1,1233 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2]:
+    - /url: "#main"
+  - banner [ref=e3]:
+    - navigation [ref=e4]:
+      - link "Ahmad.dev" [ref=e5]:
+        - /url: "#hero"
+      - generic [ref=e8]:
+        - link "Journey" [ref=e9]:
+          - /url: "#chem-e-car"
+        - link "Notes" [ref=e10]:
+          - /url: "#field-notes"
+        - link "About" [ref=e11]:
+          - /url: "#about"
+        - link "Contact" [ref=e12]:
+          - /url: "#contact"
+      - link "Docs" [ref=e14]:
+        - /url: /docs
+  - main [ref=e15]:
+    - region "Ahmad Firas" [ref=e16]:
+      - generic [ref=e18]:
+        - img "Downtown Toledo, Ohio at dusk from the air, with Fifth Third Field lit below" [ref=e20]
+        - generic [ref=e22]:
+          - generic [ref=e27]:
+            - generic [ref=e29]:
+              - generic [aria-hidden] [ref=e30]: Agentic
+              - generic [ref=e31]: Agentic AI Engineer · Sports Analytics · Researcher
+            - heading "Ahmad Firas" [level=1] [ref=e33]: AhmadFiras
+            - paragraph [ref=e34]: Building AI systems for uncertain environments, from UAV autonomy research to enterprise agentic workflows.
+            - generic [ref=e35]:
+              - link "Start the journey ↓" [ref=e36]:
+                - /url: "#chem-e-car"
+              - link "View Work" [ref=e37]:
+                - /url: "#projects"
+              - link "Resume ↓" [ref=e38]:
+                - /url: /docs/Ahmad_Resume_Developer_I_FirstSolar.pdf
+              - link "Degree ↓" [ref=e39]:
+                - /url: /docs/CeD.26D8-NDTX-AGEW.pdf
+            - generic [ref=e40]:
+              - generic [ref=e41]:
+                - term [ref=e42]: Now
+                - definition [ref=e43]: Developer I
+                - definition [ref=e44]: First Solar · Jun 2026
+              - generic [ref=e45]:
+                - term [ref=e46]: Research
+                - definition [ref=e47]: LION Lab · CPHS Lab
+                - definition [ref=e48]: University of Toledo
+              - generic [ref=e49]:
+                - term [ref=e50]: Degree
+                - definition [ref=e51]: B.S. CS & Engineering
+                - definition [ref=e52]: GPA 3.23 · 2026
+              - generic [ref=e53]:
+                - term [ref=e54]: Focus
+                - definition [ref=e55]: Agentic AI · UAV · MLOps
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Prologue · 2021
+                    - heading "Toledo, Ohio." [level=2]
+                    - paragraph: "Where it started: the University of Toledo, Computer Science & Engineering. First job on campus - IT support for students and medical staff, where 100% FERPA and HIPAA compliance mattered more than looking clever, and better documentation cut repeat incidents 40%. The city keeps showing up in everything that follows."
+                    - generic:
+                      - generic: 2021–2026
+                      - generic: B.S. Computer Science & Engineering
+    - region "Chemistry, wired." [ref=e56]:
+      - generic [ref=e59]:
+        - generic:
+          - generic:
+            - img "Laboratory shelves lined with glassware"
+        - img "Downtown Toledo, Ohio at dusk from the air, with Fifth Third Field lit below" [ref=e61]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: 01 · Chem-E Car (AIChE) · 2025
+                  - heading "Chemistry, wired." [level=2]
+                  - paragraph: An Arduino control system for a chemically-powered car that won Most Innovative Car Design worldwide, third in poster and presentation.
+                  - generic:
+                    - generic: Worldwide
+                    - generic: Most Innovative Car Design · AIChE Chem-E Car
+      - generic [ref=e66]:
+        - heading "01 · Chem-E Car (AIChE) · the work" [level=3] [ref=e69]
+        - button "Camel Car - open project details" [ref=e72]:
+          - generic [ref=e75]:
+            - generic [ref=e76]:
+              - generic [ref=e77]: Embedded · 06
+              - generic [ref=e78]: Shipped
+            - generic [ref=e80]:
+              - heading "Camel Car" [level=4] [ref=e81]
+              - generic [ref=e82]:
+                - paragraph [ref=e83]: A car driven by chemistry and stopped by a threshold controller - innovative enough to win worldwide.
+                - generic [ref=e84]: "24th overall · #1 Most Innovative · AIChE 2025 ChemE Car"
+                - generic [ref=e85]:
+                  - generic [ref=e86]: Arduino
+                  - generic [ref=e87]: Pressure Sensing
+                  - generic [ref=e88]: Solenoid Control
+                  - generic [ref=e89]: Embedded C
+    - region "Learning by shipping." [ref=e90]:
+      - generic [ref=e92]:
+        - generic:
+          - generic:
+            - img "A city's lights at night seen from a plane, like a map of data points"
+        - img "Laboratory shelves lined with glassware" [ref=e94]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: 02 · Data Science · 2023–2024
+                  - heading "Learning by shipping." [level=2]
+                  - paragraph: "A data governance framework at Park Place Technologies: three security feeds merged into one Postgres store, validation catching 95% of bad entries at ingestion, zero data loss across every disaster-recovery test."
+                  - paragraph: "Different fields, same lesson: ask the right question when you have no home-field advantage."
+                  - generic:
+                    - generic: "0"
+                    - generic: data loss across all DR simulations
+      - generic [ref=e97]:
+        - heading "02 · Data Science · the work" [level=3] [ref=e100]
+        - button "Homeowner Loss Prediction - open project details" [ref=e103]:
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - generic [ref=e108]: MLOps · 03
+              - generic [ref=e109]: Shipped
+            - generic [ref=e111]:
+              - heading "Homeowner Loss Prediction" [level=4] [ref=e112]
+              - generic [ref=e113]:
+                - paragraph [ref=e114]: An insurance risk model rebuilt as a living system - one that notices when the world drifts away from it.
+                - generic [ref=e115]: R² = 0.982 · 26% over GLM baseline · 75% reduction in manual review
+                - generic [ref=e116]:
+                  - generic [ref=e117]: XGBoost
+                  - generic [ref=e118]: Airflow
+                  - generic [ref=e119]: MLflow
+                  - generic [ref=e120]: AWS S3/EC2
+                  - generic [ref=e121]: Pandera
+                  - generic [ref=e122]: Prometheus
+        - article [ref=e125]:
+          - generic [ref=e126]:
+            - generic [ref=e130]: ml_automation/dags/promote_model.py
+            - generic [ref=e131]: illustrative
+          - 'region "Code: ml_automation/dags/promote_model.py" [ref=e132]':
+            - generic [ref=e133]: "with DAG(\"model_promotion\") as dag:"
+            - generic [ref=e134]: drift = detect_drift(baseline, live_window)
+            - generic [ref=e135]: retrain = retrain_if(drift.score > THRESHOLD)
+            - generic [ref=e136]: evaluate = compare(retrain.model, production.model)
+            - generic [ref=e138]: "# automation with accountability, not without it"
+            - generic [ref=e139]: approval = SlackApprovalGate(
+            - generic [ref=e140]: to="actuarial-review",
+            - generic [ref=e141]: context=[drift.report, evaluate.shap_summary],
+            - generic [ref=e142]: )
+            - generic [ref=e143]: promote = deploy(evaluate.winner, after=approval)
+          - generic [ref=e145]:
+            - generic [ref=e146]: Move humans to the right point in the loop
+            - paragraph [ref=e147]: SlackApprovalGate sits inside the DAG as a typed stage, not a side process - it takes drift.report and evaluate.shap_summary as inputs, and promote explicitly waits on it. The scheduler treats a human decision exactly like any other pipeline dependency.
+            - 'link "From: Homeowner Loss Prediction · Grange Insurance ↗" [ref=e148]':
+              - /url: /case-study/homeowner-loss-prediction
+    - region "The game, measured." [ref=e149]:
+      - generic [ref=e151]:
+        - generic:
+          - generic:
+            - img "The Glass Bowl at sunset during a Toledo Rockets game, ROCKETS end zone and packed stands"
+        - img "A city's lights at night seen from a plane, like a map of data points" [ref=e153]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: 03 · Sports Analytics · Now
+                  - heading "The game, measured." [level=2]
+                  - paragraph: "Toledo Athletics: from DOMO roster-efficiency dashboards to a 10-stage computer vision pipeline that turns practice film, including overhead drone footage, into evidence a coach can verify, correct, and teach from - targeting 90%+ field-marking accuracy. Every corrected label becomes Toledo-specific training data. Trust is the product."
+                  - generic:
+                    - generic: 10-stage
+                    - generic: CV pipeline · 18+ structured metrics
+      - generic [ref=e156]:
+        - heading "03 · Sports Analytics · the work" [level=3] [ref=e159]
+        - generic [ref=e160]:
+          - generic [ref=e161]: Active Build
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - generic [ref=e166]: Flagship · University of Toledo Athletics · Football · Active Build
+              - heading "Toledo Football IQ" [level=3] [ref=e167]
+              - paragraph [ref=e168]: Practice film becomes evidence a coach can verify, correct, and teach from - trust is the product. A 10-stage pipeline from drone footage to coach dashboard - every output connects to the exact clip, overlay, confidence score, and correction path.
+              - generic [ref=e169]:
+                - generic [ref=e170]:
+                  - generic [ref=e171]: "10"
+                  - generic [ref=e172]: Pipeline stages
+                - generic [ref=e173]:
+                  - generic [ref=e174]: 18+
+                  - generic [ref=e175]: Structured metrics
+                - generic [ref=e176]:
+                  - generic [ref=e177]: 90%+
+                  - generic [ref=e178]: Field-marking accuracy
+              - generic [ref=e179]:
+                - generic [ref=e180]: YOLO
+                - generic [ref=e181]: ByteTrack
+                - generic [ref=e182]: RTMPose
+                - generic [ref=e183]: FastAPI
+                - generic [ref=e184]: React
+                - generic [ref=e185]: Postgres
+                - generic [ref=e186]: Cloudflare R2
+                - generic [ref=e187]: MLflow
+              - generic [ref=e188]:
+                - link "Read the case study ↗" [ref=e189]:
+                  - /url: /case-study/toledo-football-iq-computer-vision-analytics
+                - generic [ref=e190]: Live URL coming when it ships
+            - generic [ref=e191]:
+              - img "Animated football play diagram" [ref=e192]:
+                - generic [ref=e218]: WR·0.94
+                - generic [ref=e219]: TE·0.89
+              - generic [ref=e220]: Detection → tracking → labels - rendered from the pipeline's point of view
+        - generic [ref=e221]:
+          - button "Toledo Athletics Onboarding Portal - open project details" [ref=e223]:
+            - generic [ref=e226]:
+              - generic [ref=e227]:
+                - generic [ref=e228]: Internal Tools · 09
+                - generic [ref=e229]: Shipped
+              - generic [ref=e231]:
+                - heading "Toledo Athletics Onboarding Portal" [level=4] [ref=e232]
+                - generic [ref=e233]:
+                  - paragraph [ref=e234]: Tribal knowledge from a Division I athletics department, captured behind a moderation layer at the edge.
+                  - generic [ref=e235]: 14-table schema · serverless edge deployment across 5 service tiers
+                  - generic [ref=e236]:
+                    - generic [ref=e237]: Cloudflare Workers
+                    - generic [ref=e238]: Hono
+                    - generic [ref=e239]: React
+                    - generic [ref=e240]: Cloudflare D1
+                    - generic [ref=e241]: Workers AI
+                    - generic [ref=e242]: TypeScript
+          - button "Champions Complex Digital Campaign - open project details" [ref=e244]:
+            - generic [ref=e247]:
+              - generic [ref=e248]:
+                - generic [ref=e249]: Athletics · 08
+                - generic [ref=e250]: Shipped
+              - generic [ref=e252]:
+                - heading "Champions Complex Digital Campaign" [level=4] [ref=e253]
+                - generic [ref=e254]:
+                  - paragraph [ref=e255]: Ten architectural renderings arranged into a psychological journey that ends with a donation, not a dead end.
+                  - generic [ref=e256]: 74,000 sq ft · 450+ athletes · 6-stage donor psychology journey
+                  - generic [ref=e257]:
+                    - generic [ref=e258]: Web Strategy
+                    - generic [ref=e259]: Sidearm Sports
+                    - generic [ref=e260]: Donor UX
+                    - generic [ref=e261]: Information Architecture
+                    - generic [ref=e262]: Digital Fundraising
+                    - generic [ref=e263]: Brand Strategy
+        - article [ref=e266]:
+          - generic [ref=e267]:
+            - generic [ref=e271]: football_iq/schema/coach_corrections.sql
+            - generic [ref=e272]: illustrative
+          - 'region "Code: football_iq/schema/coach_corrections.sql" [ref=e273]':
+            - generic [ref=e274]: CREATE TABLE coach_corrections (
+            - generic [ref=e275]: id bigserial PRIMARY KEY,
+            - generic [ref=e276]: label_id bigint REFERENCES labels(id),
+            - generic [ref=e277]: corrected_by text NOT NULL, -- the coach, not the model
+            - generic [ref=e278]: old_value jsonb NOT NULL,
+            - generic [ref=e279]: new_value jsonb NOT NULL,
+            - generic [ref=e280]: clip_id bigint REFERENCES clips(id),
+            - generic [ref=e281]: "-- every correction becomes Toledo-specific training data"
+            - generic [ref=e282]: exported_to_dataset boolean DEFAULT false
+            - generic [ref=e283]: );
+          - generic [ref=e285]:
+            - generic [ref=e286]: The correction flywheel is the moat
+            - paragraph [ref=e287]: old_value/new_value store the exact delta and corrected_by attributes it to the coach, not the model - this table is a provenance log, not a labels table. label_id and clip_id tie every correction back to the exact evidence it came from, and exported_to_dataset marks whether it has already been folded into training data.
+            - 'link "From: Toledo Football IQ ↗" [ref=e288]':
+              - /url: /case-study/toledo-football-iq-computer-vision-analytics
+    - region "The research pivot." [ref=e289]:
+      - generic [ref=e291]:
+        - generic:
+          - generic:
+            - img "Two drones flying in a pale sky"
+        - img "The Glass Bowl at sunset during a Toledo Rockets game, ROCKETS end zone and packed stands" [ref=e294]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: 04 · Research · 2025
+                  - heading "The research pivot." [level=2]
+                  - paragraph: "LION Lab: graph-based reinforcement learning for drones that navigate worlds they have never seen - 72.8% zero-shot success, 97.3% human-in-the-loop reliability at sub-100ms. DeepFlyer made the same ideas teachable: 80% PPO success, a Gazebo world that cold-starts in under a second. A $3,000 USRCAP fellowship, an ACM Computing Surveys paper, an insurance model at R² = 0.982. The year AI stopped being coursework."
+                  - generic:
+                    - generic: 72.8%
+                    - generic: zero-shot UAV deployment via MAML
+      - generic [ref=e297]:
+        - heading "04 · Research · the work" [level=3] [ref=e300]
+        - generic [ref=e301]:
+          - button "Graph-Based RL for UAV Autonomy - open project details" [ref=e303]:
+            - generic [ref=e306]:
+              - generic [ref=e307]:
+                - generic [ref=e308]: Autonomy · 01
+                - generic [ref=e309]: Research
+              - generic [ref=e311]:
+                - heading "Graph-Based RL for UAV Autonomy" [level=4] [ref=e312]
+                - generic [ref=e313]:
+                  - paragraph [ref=e314]: A drone that reasons over relationships, not pixels - and generalizes to worlds it has never seen.
+                  - generic [ref=e315]: 73% zero-shot success across 1,000+ environments
+                  - generic [ref=e316]:
+                    - generic [ref=e317]: Graph-Based RL
+                    - generic [ref=e318]: MAML
+                    - generic [ref=e319]: GNN/GAT
+                    - generic [ref=e320]: PINN
+                    - generic [ref=e321]: ROS 2
+                    - generic [ref=e322]: Jetson Orin NX
+          - button "DeepFlyer - open project details" [ref=e324]:
+            - generic [ref=e327]:
+              - generic [ref=e328]:
+                - generic [ref=e329]: Research Tools · 02
+                - generic [ref=e330]: Shipped
+              - generic [ref=e332]:
+                - heading "DeepFlyer" [level=4] [ref=e333]
+                - generic [ref=e334]:
+                  - paragraph [ref=e335]: Reinforcement learning you can watch - students shape a reward and the drone shows them what they taught it.
+                  - generic [ref=e336]: 80% PPO success over 1M training steps; <1s Gazebo cold-start
+                  - generic [ref=e337]:
+                    - generic [ref=e338]: PPO
+                    - generic [ref=e339]: ROS 2
+                    - generic [ref=e340]: Gazebo
+                    - generic [ref=e341]: Stable-Baselines3
+        - generic [ref=e342]:
+          - generic [ref=e343]:
+            - generic [ref=e344]: Published work and ongoing investigations.
+            - paragraph [ref=e345]: Thirty-seven real AI failures, distilled into the four ways autonomous systems actually break.
+            - generic [ref=e346]:
+              - region "AI Failure Taxonomy for Autonomous Systems" [ref=e347]:
+                - generic [ref=e348]:
+                  - generic [ref=e349]:
+                    - generic [ref=e350]: ACM Computing Surveys · Under Review · 2025
+                    - heading "AI Failure Taxonomy for Autonomous Systems" [level=2] [ref=e354]: AI Failure Taxonomy forAutonomous Systems
+                    - paragraph [ref=e355]: A four-pillar taxonomy of AI failures in safety-critical autonomous environments. Synthesizes 37 documented incidents across 127 sources, formalizing how data-environment mismatch, oversight gaps, distributional brittleness, and multi-agent instability compound under operational stress.
+                    - button "View Research" [ref=e357]
+                  - img "4-Pillars AI failure taxonomy" [ref=e359]
+              - generic [ref=e360]:
+                - generic [ref=e361]:
+                  - generic [ref=e362]: "37"
+                  - generic [ref=e363]: AI failures analyzed
+                - generic [ref=e364]:
+                  - generic [ref=e365]: "127"
+                  - generic [ref=e366]: Sources reviewed
+                - generic [ref=e367]:
+                  - generic [ref=e368]: "4"
+                  - generic [ref=e369]: Pillars in taxonomy
+                - generic [ref=e370]:
+                  - generic [ref=e371]: "2025"
+                  - generic [ref=e372]: ACM CSUR submission
+              - generic [ref=e373]:
+                - generic [ref=e374]:
+                  - generic [ref=e375]:
+                    - generic [ref=e376]: "01"
+                    - generic [ref=e377]: Data-Environment Mismatch
+                  - paragraph [ref=e378]: Training distributions that diverge from deployment conditions. The initiating mechanism in 18 of 37 documented failures.
+                - generic [ref=e379]:
+                  - generic [ref=e380]:
+                    - generic [ref=e381]: "02"
+                    - generic [ref=e382]: Oversight-Gap Amplification
+                  - paragraph [ref=e383]: Monitoring blind spots that allow small deviations to compound undetected until failure becomes irreversible.
+                - generic [ref=e384]:
+                  - generic [ref=e385]:
+                    - generic [ref=e386]: "03"
+                    - generic [ref=e387]: Distributional Brittleness
+                  - paragraph [ref=e388]: Systems that perform on benchmarks but fail at the boundary of their training manifold under novel real-world inputs.
+                - generic [ref=e389]:
+                  - generic [ref=e390]:
+                    - generic [ref=e391]: "04"
+                    - generic [ref=e392]: Multi-Agent Instability
+                  - paragraph [ref=e393]: Emergent failure modes from agent interactions producing unsafe equilibria that are absent in single-agent testing.
+          - generic [ref=e394]:
+            - article [ref=e395]:
+              - generic [ref=e396]:
+                - generic [ref=e400]: deepflyer/rewards/path_efficiency.py
+                - generic [ref=e401]: illustrative
+              - 'region "Code: deepflyer/rewards/path_efficiency.py" [ref=e402]':
+                - generic [ref=e403]: "def path_efficiency_reward(state, action, prev):"
+                - generic [ref=e404]: r = 0.0
+                - generic [ref=e405]: "r += 4.0 * state.hoop_progress # pull toward the hoop"
+                - generic [ref=e406]: "r -= 0.8 * state.path_deviation # stay on the racing line"
+                - generic [ref=e407]: "r -= 6.0 * float(state.collision) # raise this → drone gets cautious"
+                - generic [ref=e408]: "r -= 0.05 # time pressure: hesitation costs"
+                - generic [ref=e409]: "if state.hoop_cleared:"
+                - generic [ref=e410]: "r += 25.0 # the moment worth learning"
+                - generic [ref=e411]: return r
+              - generic [ref=e413]:
+                - generic [ref=e414]: Reward functions encode behavior
+                - paragraph [ref=e415]: "The coefficients form a hierarchy, not just a sum: clearing the hoop (+25.0) outweighs a collision (-6.0), which outweighs hoop progress (+4.0), which outweighs path drift (-0.8) and the flat time cost (-0.05). Reorder those numbers and the policy learns a different priority entirely."
+                - 'link "From: DeepFlyer · LION Lab ↗" [ref=e416]':
+                  - /url: /case-study/deepflyer-drone-reinforcement-learning
+            - article [ref=e417]:
+              - generic [ref=e418]:
+                - generic [ref=e422]: aerosynapse/world/graph_encoder.py
+                - generic [ref=e423]: illustrative
+              - 'region "Code: aerosynapse/world/graph_encoder.py" [ref=e424]':
+                - generic [ref=e425]: "def encode(observation) -> EnvGraph:"
+                - generic [ref=e426]: g = EnvGraph()
+                - generic [ref=e427]: "for obj in observation.segments():"
+                - generic [ref=e428]: "node = g.add(obj.kind, obj.position) # obstacle | waypoint | free-space"
+                - generic [ref=e429]: "for a, b in g.pairs():"
+                - generic [ref=e430]: g.connect(a, b,
+                - generic [ref=e431]: risk=collision_risk(a, b),
+                - generic [ref=e432]: cost=traversal_cost(a, b))
+                - generic [ref=e433]: "# the policy reasons over relationships, not pixels"
+                - generic [ref=e434]: return g
+              - generic [ref=e436]:
+                - generic [ref=e437]: Navigation is a relational problem
+                - paragraph [ref=e438]: "Every edge from g.connect() carries risk and cost - not a bare topological link, but collision risk and traversal cost engineered in as domain knowledge before the policy ever trains. Typed nodes (obstacle, waypoint, free-space) do the same for perception: structure applied before learning starts."
+                - 'link "From: Graph-Based RL for UAV Autonomy ↗" [ref=e439]':
+                  - /url: /case-study/graph-based-rl-uav-autonomy
+    - region "Enterprise scale." [ref=e440]:
+      - generic [ref=e442]:
+        - generic:
+          - generic:
+            - img "Rows of white server cabinets in a data centre"
+        - img "Two drones flying in a pale sky" [ref=e444]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: 05 · AI Engineering · 2026
+                  - heading "Enterprise scale." [level=2]
+                  - paragraph: "First Solar - first as a Microsoft Solution Developer building agentic AI in Copilot Studio, wiring Azure AI into Microsoft 365 and leading two other interns. Then full-time as Developer I on Oracle Cloud: VBCS, OIC, BI Publisher, REST integrations under code review. Enterprise applications the business runs on, at a company building the energy transition."
+                  - generic:
+                    - generic: Developer I
+                    - generic: First Solar · Jun 2026
+      - generic [ref=e447]:
+        - heading "05 · AI Engineering · the work" [level=3] [ref=e450]
+        - generic [ref=e451]:
+          - button "DeepTruth - open project details" [ref=e453]:
+            - generic [ref=e456]:
+              - generic [ref=e457]:
+                - generic [ref=e458]: Hackathon · 05
+                - generic [ref=e459]: Shipped
+              - generic [ref=e461]:
+                - heading "DeepTruth" [level=4] [ref=e462]
+                - generic [ref=e463]:
+                  - paragraph [ref=e464]: A 24-hour build that refuses to declare truth - it hands you the evidence and better questions instead.
+                  - generic [ref=e465]: "#1 Best Use of MongoDB Atlas · 9,500+ training points in 24 hours"
+                  - generic [ref=e466]:
+                    - generic [ref=e467]: Gemini AI
+                    - generic [ref=e468]: DistilBERT
+                    - generic [ref=e469]: Django
+                    - generic [ref=e470]: React
+          - button "Security Discovery Tool - open project details" [ref=e472]:
+            - generic [ref=e475]:
+              - generic [ref=e476]:
+                - generic [ref=e477]: Infrastructure · 04
+                - generic [ref=e478]: Shipped
+              - generic [ref=e480]:
+                - heading "Security Discovery Tool" [level=4] [ref=e481]
+                - generic [ref=e482]:
+                  - paragraph [ref=e483]: Three security tools that disagreed about reality, reconciled into one database that tells the truth.
+                  - generic [ref=e484]: 15% faster response · 95% data integrity · zero data loss across 3 sources
+                  - generic [ref=e485]:
+                    - generic [ref=e486]: PostgreSQL
+                    - generic [ref=e487]: pgAdmin
+                    - generic [ref=e488]: Active Directory
+                    - generic [ref=e489]: Cisco AMP
+          - button "Batting Cleanup - open project details" [ref=e491]:
+            - generic [ref=e494]:
+              - generic [ref=e495]:
+                - generic [ref=e496]: Civic Tech · 07
+                - generic [ref=e497]: Live
+              - generic [ref=e499]:
+                - heading "Batting Cleanup" [level=4] [ref=e500]
+                - generic [ref=e501]:
+                  - paragraph [ref=e502]: Scan a QR code on a Toledo trash can, and the city hears about the problem before you walk away.
+                  - generic [ref=e503]: "In production: <10ms geospatial queries across 10,000+ city assets"
+                  - generic [ref=e504]:
+                    - generic [ref=e505]: Deno
+                    - generic [ref=e506]: PostGIS
+                    - generic [ref=e507]: Cloudflare Workers
+                    - generic [ref=e508]: Drizzle ORM
+        - article [ref=e511]:
+          - generic [ref=e512]:
+            - generic [ref=e516]: sdt/schema/ingest_constraints.sql
+            - generic [ref=e517]: illustrative
+          - 'region "Code: sdt/schema/ingest_constraints.sql" [ref=e518]':
+            - generic [ref=e519]: CREATE TABLE endpoint_inventory (
+            - generic [ref=e520]: host_id text PRIMARY KEY,
+            - generic [ref=e521]: source text NOT NULL
+            - generic [ref=e522]: CHECK (source IN ('ad','cisco_amp','defender')),
+            - generic [ref=e523]: hostname text NOT NULL CHECK (hostname ~ '^[a-z0-9\-\.]+$'),
+            - generic [ref=e524]: last_seen timestamptz NOT NULL,
+            - generic [ref=e525]: "-- three tools, one boundary: disagreement fails loudly here"
+            - generic [ref=e526]: CONSTRAINT fresh CHECK (last_seen > now() - interval '90 days')
+            - generic [ref=e527]: );
+          - generic [ref=e529]:
+            - generic [ref=e530]: A validated schema is a security control
+            - paragraph [ref=e531]: "Three CHECK constraints do three separate jobs here: the source enum rejects any tool the schema does not recognize, the hostname regex rejects malformed identifiers, and the 90-day freshness constraint rejects stale rows. The table enforces its own boundary instead of trusting application code to remember."
+            - 'link "From: Security Discovery Tool · Park Place ↗" [ref=e532]':
+              - /url: /case-study/security-discovery-tool
+    - region "The next chapter." [ref=e533]:
+      - generic [ref=e535]:
+        - generic:
+          - generic:
+            - img "Downtown Toledo, Ohio at dusk from the air, with Fifth Third Field lit below"
+        - img "Rows of white server cabinets in a data centre" [ref=e537]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: Epilogue · June 2026
+                  - heading "The next chapter." [level=2]
+                  - paragraph: "Two certifications in flight - Oracle's Application Integration Professional, Microsoft's AI Transformation Leader. A football computer-vision model still in progress, athletics platforms in build alongside it: a student-athlete health-insurance site, an onboarding portal. Still in Toledo, still open - AI research, ML engineering, sports analytics. Same instinct as chapter one: go where the hardest problems are."
+                  - generic:
+                    - generic: Open
+                    - generic: Available · Toledo, OH
+    - generic [ref=e540]:
+      - generic [ref=e541]:
+        - generic [ref=e542]:
+          - generic [aria-hidden]: "07"
+          - generic [ref=e543]:
+            - generic [ref=e544]:
+              - generic [ref=e546]: Field Notes
+              - generic [ref=e547]: The editorial desk
+            - paragraph [ref=e548]: "Thinking in public: dispatches from the edge of AI, robotics, and real-world systems."
+        - link "All Notes ↗" [ref=e549]:
+          - /url: /field-notes
+      - link "Featured · Sports Analytics November 16, 2026 · 9 min read The coin toss won't decide the Battle of I-75 Toledo and Bowling Green are 43-43-4 after 90 games. I pulled every public coin toss in the rivalry and 8,310 FBS games to test whether deferring actually helps. It does, for about eight minutes. Sports Analytics Football Toledo Statistics College Football Data Read the essay →" [ref=e551]:
+        - /url: /field-notes/battle-of-i75-coin-toss
+        - generic [ref=e552]:
+          - generic [ref=e553]:
+            - generic [ref=e554]: Featured · Sports Analytics
+            - generic [ref=e555]: November 16, 2026 · 9 min read
+          - heading "The coin toss won't decide the Battle of I-75" [level=3] [ref=e556]
+          - paragraph [ref=e557]: Toledo and Bowling Green are 43-43-4 after 90 games. I pulled every public coin toss in the rivalry and 8,310 FBS games to test whether deferring actually helps. It does, for about eight minutes.
+          - generic [ref=e558]:
+            - generic [ref=e559]: Sports Analytics
+            - generic [ref=e560]: Football
+            - generic [ref=e561]: Toledo
+            - generic [ref=e562]: Statistics
+            - generic [ref=e563]: College Football Data
+          - generic [ref=e564]: Read the essay →
+      - generic [ref=e567]:
+        - 'link "Sports Analytics The small-data problem: why college sports AI can''t just copy the pros 12 min read" [ref=e568]':
+          - /url: /field-notes/small-data-college-sports-ai
+          - text: Sports Analytics
+          - generic [ref=e569]: "The small-data problem: why college sports AI can't just copy the pros"
+          - generic [ref=e570]: 12 min read
+        - 'link "Sports Analytics Opponent digital twins: what it takes to simulate next Saturday’s rival 12 min read" [ref=e571]':
+          - /url: /field-notes/opponent-digital-twins
+          - text: Sports Analytics
+          - generic [ref=e572]: "Opponent digital twins: what it takes to simulate next Saturday’s rival"
+          - generic [ref=e573]: 12 min read
+    - generic [ref=e575]:
+      - generic [ref=e576]:
+        - generic [aria-hidden]: "08"
+        - generic [ref=e577]:
+          - heading "About" [level=2] [ref=e580]
+          - paragraph [ref=e581]: "Beyond the résumé: who is actually doing the work."
+      - generic [ref=e582]:
+        - generic [ref=e583]:
+          - generic [ref=e584]: "7"
+          - generic [ref=e585]: Roles
+        - generic [ref=e586]:
+          - generic [ref=e587]: "10"
+          - generic [ref=e588]: Projects
+        - generic [ref=e589]:
+          - generic [ref=e590]: "5"
+          - generic [ref=e591]: Awards
+        - generic [ref=e592]:
+          - generic [ref=e593]: "3"
+          - generic [ref=e594]: Certifications
+        - generic [ref=e595]:
+          - generic [ref=e596]: "88"
+          - generic [ref=e597]: Skills mapped
+      - generic [ref=e598]:
+        - generic [ref=e599]:
+          - heading "Chasing the gap between what AI can do in a lab and what it actually does when someone's counting on it." [level=2] [ref=e600]
+          - paragraph [ref=e601]: "Computer Science & Engineering graduate from the University of Toledo. My work spans autonomous drone systems, enterprise AI, sports analytics, and data engineering. Not by design, but by instinct: I go where the hardest problems are."
+          - generic [ref=e602]:
+            - link "View Projects ↓" [ref=e603]:
+              - /url: "#projects"
+            - link "Read Field Notes ↗" [ref=e604]:
+              - /url: /field-notes
+            - link "Open Timeline ↓" [ref=e605]:
+              - /url: "#timeline"
+          - generic [ref=e606]:
+            - link "LinkedIn ↗" [ref=e607]:
+              - /url: https://linkedin.com/in/ahmadfirasazfar
+            - link "GitHub ↗" [ref=e608]:
+              - /url: https://github.com/aahmadf123
+        - button "Enlarge photo of Ahmad Firas" [ref=e609]:
+          - img "Ahmad Firas" [ref=e610]
+          - generic [aria-hidden]:
+            - generic: Enlarge
+      - generic [ref=e611]:
+        - generic [ref=e612]:
+          - generic [ref=e613]: Three lenses
+          - generic [ref=e615]:
+            - text: Lens 01
+            - generic [ref=e616]: Engineer
+          - generic [ref=e617]:
+            - button "Engineer" [pressed] [ref=e618]
+            - button "Builder" [ref=e620]
+            - button "Thinker" [ref=e622]
+            - link "Back To Intro ↑" [ref=e624]:
+              - /url: "#about-intro"
+        - generic [ref=e625]:
+          - article [ref=e626]:
+            - generic [ref=e627]:
+              - generic [ref=e628]: Lens 01 · Engineer
+              - heading "Systems that hold up when someone is counting on them." [level=3] [ref=e629]
+              - paragraph [ref=e630]: From a PostgreSQL security database with zero data loss across every disaster-recovery test, to Oracle Cloud enterprise applications at First Solar - the through-line is engineering for the moment things go wrong, not just the demo. Human-in-the-loop by design; recovery mechanisms as first-class features.
+              - generic [ref=e631]:
+                - generic [ref=e632]: Track record
+                - generic [ref=e633]: 0 data loss across all DR simulations
+              - generic [ref=e634]:
+                - generic [ref=e635]:
+                  - generic [ref=e636]:
+                    - generic [ref=e637]: "02"
+                    - generic [ref=e638]: Human-in-the-loop by design
+                  - paragraph [ref=e639]: A system someone can't override isn't autonomous - it's unpredictable. The recovery mechanism is part of the design, not an afterthought.
+                - generic [ref=e640]:
+                  - generic [ref=e641]:
+                    - generic [ref=e642]: "03"
+                    - generic [ref=e643]: Deployment from line one
+                  - paragraph [ref=e644]: Real edge cases, latency requirements, stakeholders who need to understand the output. That pressure makes the work honest.
+              - generic [ref=e645]:
+                - generic [ref=e646]: Education
+                - generic [ref=e647]: University of Toledo
+                - generic [ref=e648]: B.S. Computer Science & Engineering
+                - generic [ref=e649]: 2021 – 2026 · Graduated · GPA 3.23
+                - group [ref=e650]:
+                  - generic "Coursework" [ref=e651]
+              - generic [ref=e652]: Recommended Next Step
+              - link "Experience timeline ↓" [ref=e654]:
+                - /url: "#timeline"
+          - article [ref=e655]:
+            - generic [ref=e656]:
+              - generic [ref=e657]: Lens 02 · Builder
+              - heading "Ten projects, each a different operating condition." [level=3] [ref=e658]
+              - paragraph [ref=e659]: "A drone that navigates unseen worlds, a city reporting tool in production downtown, an insurance model that watches itself drift, a chemical car that won worldwide. Not by design, but by instinct: going where the hardest problems are - and shipping."
+              - generic [ref=e660]:
+                - generic [ref=e661]: In production
+                - generic [ref=e662]: battingcleanup.appliedlabs.org · downtown Toledo
+              - generic [ref=e664]:
+                - generic [ref=e665]:
+                  - generic [ref=e666]: "01"
+                  - generic [ref=e667]: Interdisciplinary by instinct
+                - paragraph [ref=e668]: The skill that transfers between fields isn't domain knowledge - it's knowing how to ask the right question when you don't have home-field advantage.
+              - generic [ref=e669]: Recommended Next Step
+              - generic [ref=e670]:
+                - link "Bodies of work ↓" [ref=e671]:
+                  - /url: "#projects"
+                - link "GitHub ↗" [ref=e672]:
+                  - /url: https://github.com/aahmadf123
+          - article [ref=e673]:
+            - generic [ref=e674]:
+              - generic [ref=e675]: Lens 03 · Thinker
+              - heading "Writing down what the work keeps teaching." [level=3] [ref=e676]
+              - paragraph [ref=e677]: An ACM Computing Surveys taxonomy of how AI actually fails. Field notes on what "agentic" really means in production. Quantum computing certificates earned for curiosity, not the résumé. The questions compound faster than the answers - that is the point.
+              - generic [ref=e678]:
+                - generic [ref=e679]: Thinking in public
+                - generic [ref=e680]: Essays written when the work earns them
+              - generic [ref=e681]:
+                - generic [ref=e682]:
+                  - generic [ref=e683]:
+                    - generic [ref=e684]: "01"
+                    - generic [ref=e685]: Interdisciplinary by instinct
+                  - paragraph [ref=e686]: The skill that transfers between fields isn't domain knowledge - it's knowing how to ask the right question when you don't have home-field advantage.
+                - generic [ref=e687]:
+                  - generic [ref=e688]:
+                    - generic [ref=e689]: "02"
+                    - generic [ref=e690]: Human-in-the-loop by design
+                  - paragraph [ref=e691]: A system someone can't override isn't autonomous - it's unpredictable. The recovery mechanism is part of the design, not an afterthought.
+              - generic [ref=e692]: Recommended Next Step
+              - generic [ref=e693]:
+                - link "Field notes ↗" [ref=e694]:
+                  - /url: /field-notes
+                - link "Research ↓" [ref=e695]:
+                  - /url: "#research"
+      - generic [ref=e697]:
+        - generic [ref=e698]: Let's build something real.
+        - generic [ref=e701]: "- Ahmad"
+        - generic [ref=e702]: Toledo, OH · est. chapter one
+    - generic [ref=e704]:
+      - generic [ref=e707]:
+        - heading "Capabilities" [level=3] [ref=e710]
+        - paragraph [ref=e711]: "The stack as a constellation: clusters that orbit each other, with stars sized by how often they carry real work."
+      - generic [ref=e712]:
+        - generic [ref=e713]:
+          - generic [ref=e714]: Languages
+          - generic [ref=e717]:
+            - generic [ref=e718]: Python
+            - generic [ref=e719]: JavaScript
+            - generic [ref=e720]: TypeScript
+            - generic [ref=e721]: C++
+            - generic [ref=e722]: Java
+            - generic [ref=e723]: SQL
+            - button "+5" [ref=e724]
+        - generic [ref=e725]:
+          - generic [ref=e726]: ML & AI
+          - generic [ref=e729]:
+            - generic [ref=e730]: PyTorch
+            - generic [ref=e731]: TensorFlow
+            - generic [ref=e732]: scikit-learn
+            - generic [ref=e733]: RL
+            - generic [ref=e734]: MAML
+            - generic [ref=e735]: GNNs
+            - button "+9" [ref=e736]
+        - generic [ref=e737]:
+          - generic [ref=e738]: MLOps & Data
+          - generic [ref=e741]:
+            - generic [ref=e742]: Airflow
+            - generic [ref=e743]: MLflow
+            - generic [ref=e744]: Pandas
+            - generic [ref=e745]: NumPy
+            - generic [ref=e746]: AWS
+            - generic [ref=e747]: AWS S3
+            - button "+11" [ref=e748]
+        - generic [ref=e749]:
+          - generic [ref=e750]: Robotics
+          - generic [ref=e753]:
+            - generic [ref=e754]: ROS 2
+            - generic [ref=e755]: Gazebo
+            - generic [ref=e756]: Gazebo Fortress
+            - generic [ref=e757]: ArduPilot
+            - generic [ref=e758]: OpenCV
+            - generic [ref=e759]: YOLO11
+            - button "+10" [ref=e760]
+        - generic [ref=e761]:
+          - generic [ref=e762]: Web & Edge
+          - generic [ref=e765]:
+            - generic [ref=e766]: React
+            - generic [ref=e767]: Node.js
+            - generic [ref=e768]: Express
+            - generic [ref=e769]: FastAPI
+            - generic [ref=e770]: Django
+            - generic [ref=e771]: Cloudflare Workers
+            - button "+6" [ref=e772]
+        - generic [ref=e773]:
+          - generic [ref=e774]: Databases
+          - generic [ref=e777]:
+            - generic [ref=e778]: PostgreSQL
+            - generic [ref=e779]: MySQL
+            - generic [ref=e780]: MongoDB
+            - generic [ref=e781]: SQLite
+            - generic [ref=e782]: PostGIS
+            - generic [ref=e783]: pgvector
+            - button "+5" [ref=e784]
+        - generic [ref=e785]:
+          - generic [ref=e786]: Microsoft
+          - generic [ref=e789]:
+            - generic [ref=e790]: Azure AI
+            - generic [ref=e791]: Copilot Studio
+            - generic [ref=e792]: Power Automate
+            - generic [ref=e793]: Power BI
+            - generic [ref=e794]: M365
+            - generic [ref=e795]: SharePoint
+    - generic [ref=e797]:
+      - generic [ref=e799]:
+        - heading "Timeline" [level=3] [ref=e802]
+        - paragraph [ref=e803]: Career and education as one continuous line. Newest first, then back to the origin story.
+      - generic [ref=e806]:
+        - button "Full-time milestone Jun 2026 – Present Developer I First Solar · Perrysburg, OH Oracle Cloud VBCS & OIC development REST API & web service integrations + details" [ref=e809]:
+          - generic [ref=e810]:
+            - generic [ref=e811]:
+              - generic [ref=e813]: Full-time
+              - generic "milestone" [ref=e814]: ✦
+            - generic [ref=e815]: Jun 2026 – Present
+          - generic [ref=e816]: Developer I
+          - generic [ref=e817]: First Solar · Perrysburg, OH
+          - generic [ref=e818]:
+            - generic [ref=e819]: Oracle Cloud VBCS & OIC development
+            - generic [ref=e820]: REST API & web service integrations
+            - generic [ref=e821]: + details
+        - button "Internship Jan 2026 – May 2026 Microsoft Solution Developer First Solar · Perrysburg, OH Agentic AI solutions in Copilot Studio Automated Power Automate workflows + details" [ref=e825]:
+          - generic [ref=e826]:
+            - generic [ref=e827]: Internship
+            - generic [ref=e829]: Jan 2026 – May 2026
+          - generic [ref=e830]: Microsoft Solution Developer
+          - generic [ref=e831]: First Solar · Perrysburg, OH
+          - generic [ref=e832]:
+            - generic [ref=e833]: Agentic AI solutions in Copilot Studio
+            - generic [ref=e834]: Automated Power Automate workflows
+            - generic [ref=e835]: + details
+        - generic [ref=e839]:
+          - generic [ref=e840]:
+            - generic [ref=e841]: ✦ Milestone
+            - generic [ref=e842]: Nov 2025
+          - generic [ref=e843]: Most Innovative Car Design
+          - generic [ref=e844]: AIChE Chem-E Car · Worldwide
+        - button "Internship Oct 2025 – Present Sports Analytics & Data Science Intern Toledo Athletics · Toledo, OH ML-powered roster efficiency models DOMO dashboards for coaches & admins + details" [ref=e848]:
+          - generic [ref=e849]:
+            - generic [ref=e850]: Internship
+            - generic [ref=e853]: Oct 2025 – Present
+          - generic [ref=e854]: Sports Analytics & Data Science Intern
+          - generic [ref=e855]: Toledo Athletics · Toledo, OH
+          - generic [ref=e856]:
+            - generic [ref=e857]: ML-powered roster efficiency models
+            - generic [ref=e858]: DOMO dashboards for coaches & admins
+            - generic [ref=e859]: + details
+        - generic [ref=e863]:
+          - generic [ref=e864]:
+            - generic [ref=e865]: ✦ Milestone
+            - generic [ref=e866]: May 2025
+          - generic [ref=e867]: USRCAP Research Fellowship
+          - generic [ref=e868]: $3,000 · Graph-Based RL UAV Research
+        - button "Research Co-Op milestone May – Dec 2025 Undergraduate Researcher LION Lab · CPHS Lab · University of Toledo 72.8% zero-shot UAV deployment via MAML 97.3% HITL success at sub-100ms + details" [ref=e872]:
+          - generic [ref=e873]:
+            - generic [ref=e874]:
+              - generic [ref=e875]: Research Co-Op
+              - generic "milestone" [ref=e876]: ✦
+            - generic [ref=e877]: May – Dec 2025
+          - generic [ref=e878]: Undergraduate Researcher
+          - generic [ref=e879]: LION Lab · CPHS Lab · University of Toledo
+          - generic [ref=e880]:
+            - generic [ref=e881]: 72.8% zero-shot UAV deployment via MAML
+            - generic [ref=e882]: 97.3% HITL success at sub-100ms
+            - generic [ref=e883]: + details
+        - generic [ref=e887]:
+          - generic [ref=e888]:
+            - generic [ref=e889]: ✦ Milestone
+            - generic [ref=e890]: Mar 2025
+          - generic [ref=e891]: Best Use of MongoDB Atlas
+          - generic [ref=e892]: RocketHacks 2025 · Deep Truth
+        - button "Industry Project Aug 2024 – May 2025 Senior Design Team Lead Grange Insurance × UToledo · Toledo, OH R² = 0.982 · 26% over GLM baseline 75% reduction in manual review + details" [ref=e896]:
+          - generic [ref=e897]:
+            - generic [ref=e898]: Industry Project
+            - generic [ref=e900]: Aug 2024 – May 2025
+          - generic [ref=e901]: Senior Design Team Lead
+          - generic [ref=e902]: Grange Insurance × UToledo · Toledo, OH
+          - generic [ref=e903]:
+            - generic [ref=e904]: R² = 0.982 · 26% over GLM baseline
+            - generic [ref=e905]: 75% reduction in manual review
+            - generic [ref=e906]: + details
+        - button "Co-Op May – Aug 2023 Database Engineer Co-Op Park Place Technologies · Toledo, OH 15% faster incident response 95% data integrity rate + details" [ref=e910]:
+          - generic [ref=e911]:
+            - generic [ref=e912]: Co-Op
+            - generic [ref=e914]: May – Aug 2023
+          - generic [ref=e915]: Database Engineer Co-Op
+          - generic [ref=e916]: Park Place Technologies · Toledo, OH
+          - generic [ref=e917]:
+            - generic [ref=e918]: 15% faster incident response
+            - generic [ref=e919]: 95% data integrity rate
+            - generic [ref=e920]: + details
+        - button "Part-time Oct 2022 – Feb 2023 IT Student Assistant The University of Toledo · Toledo, OH 60% fewer recurring IT issues 100% FERPA & HIPAA compliance + details" [ref=e924]:
+          - generic [ref=e925]:
+            - generic [ref=e926]: Part-time
+            - generic [ref=e928]: Oct 2022 – Feb 2023
+          - generic [ref=e929]: IT Student Assistant
+          - generic [ref=e930]: The University of Toledo · Toledo, OH
+          - generic [ref=e931]:
+            - generic [ref=e932]: 60% fewer recurring IT issues
+            - generic [ref=e933]: 100% FERPA & HIPAA compliance
+            - generic [ref=e934]: + details
+        - generic [ref=e938]:
+          - generic [ref=e939]:
+            - generic [ref=e940]: Education · where it begins
+            - generic [ref=e941]: 2021 – 2026
+          - generic [ref=e942]: University of Toledo
+          - generic [ref=e943]: B.S. Computer Science & Engineering
+          - generic [ref=e944]: Graduated · GPA 3.23
+          - generic [ref=e945]:
+            - generic [ref=e946]: Machine Learning
+            - generic [ref=e947]: Neural Networks
+            - generic [ref=e948]: Databases
+            - generic [ref=e949]: Software Eng.
+            - generic [ref=e950]: Embedded Systems
+    - generic [ref=e954]:
+      - generic [ref=e956]:
+        - heading "Credentials" [level=3] [ref=e959]
+        - paragraph [ref=e960]: Certifications, awards, and the communities behind the work.
+      - generic [ref=e961]:
+        - generic [ref=e962]:
+          - generic [ref=e963]: Certifications · hover or tap to flip
+          - generic [ref=e964]:
+            - generic [ref=e966]:
+              - generic [ref=e967]:
+                - generic [ref=e968]:
+                  - generic [ref=e969]: Oracle · Cloud Infrastructure
+                  - heading "Cloud Infrastructure Foundations Associate" [level=3] [ref=e970]
+                - generic [ref=e971]:
+                  - generic [ref=e972]: Earned 2026 ·
+                  - button "Show details for Oracle Cloud Infrastructure Foundations Associate" [ref=e973]: Flip ↻
+              - generic [ref=e974]:
+                - generic [ref=e975]: What it covers
+                - paragraph [ref=e976]: Foundational knowledge of Oracle Cloud Infrastructure (OCI) core services - compute, storage, networking, identity and access management, security, pricing, and the OCI architecture model.
+                - generic [ref=e977]:
+                  - generic [ref=e978]: OCI
+                  - generic [ref=e979]: Cloud Computing
+                  - generic [ref=e980]: IAM
+                  - generic [ref=e981]: Networking
+                  - generic [ref=e982]: Cloud Security
+                - generic [ref=e983]:
+                  - link "Verify Badge ↗" [ref=e984]:
+                    - /url: https://catalog-education.oracle.com/ords/certview/sharebadge?id=FD6DAFE9CD1BB5971BDD46D7138EF1789ACED34BB47B6CE5764199FFF18FD6DC
+                  - link "Certificate ↓" [ref=e985]:
+                    - /url: /docs/Oracle_Foundation_eCertificate.pdf
+                  - button "Back to the Cloud Infrastructure Foundations Associate badge" [ref=e986]: ↺ Back
+            - generic [ref=e988]:
+              - generic [ref=e989]:
+                - generic [ref=e990]:
+                  - generic [ref=e991]: Q-CTRL Black Opal · Quantum Computing
+                  - heading "Introduction" [level=3] [ref=e992]
+                - generic [ref=e993]:
+                  - generic [ref=e994]: Earned 2026 ·
+                  - button "Show details for Q-CTRL Black Opal Introduction" [ref=e995]: Flip ↻
+              - generic [ref=e996]:
+                - generic [ref=e997]: What it covers
+                - paragraph [ref=e998]: An introduction to quantum technology and how it works. Covers what quantum computing is, how quantum computers work, whether they'll break the internet, how to build one, and a foundational analogy toolbox.
+                - generic [ref=e999]:
+                  - generic [ref=e1000]: Quantum Computing
+                  - generic [ref=e1001]: Fundamentals
+                  - generic [ref=e1002]: Quantum Hardware
+                - generic [ref=e1003]:
+                  - link "Verify Badge ↗" [ref=e1004]:
+                    - /url: https://black.q-ctrl.com/badge/df0a24e3-c81f-4696-b879-860c7b777fb3
+                  - button "Back to the Introduction badge" [ref=e1005]: ↺ Back
+            - generic [ref=e1007]:
+              - generic [ref=e1008]:
+                - generic [ref=e1009]:
+                  - generic [ref=e1010]: Q-CTRL Black Opal · Quantum Computing
+                  - heading "Superposition" [level=3] [ref=e1011]
+                - generic [ref=e1012]:
+                  - generic [ref=e1013]: Earned 2026 ·
+                  - button "Show details for Q-CTRL Black Opal Superposition" [ref=e1014]: Flip ↻
+              - generic [ref=e1015]:
+                - generic [ref=e1016]: What it covers
+                - paragraph [ref=e1017]: The superposition principle - where it comes from, why it's necessary, and what you can do with it. Covers superposition in waves, in the quantum world, in the abstract, and its role in quantum computing.
+                - generic [ref=e1018]:
+                  - generic [ref=e1019]: Quantum Computing
+                  - generic [ref=e1020]: Qubits
+                  - generic [ref=e1021]: Superposition
+                  - generic [ref=e1022]: Quantum Circuits
+                - generic [ref=e1023]:
+                  - link "Verify Badge ↗" [ref=e1024]:
+                    - /url: https://black.q-ctrl.com/badge/70fdb1da-8ba7-40ea-ad6b-2460f7542376
+                  - button "Back to the Superposition badge" [ref=e1025]: ↺ Back
+        - generic [ref=e1026]:
+          - generic [ref=e1027]: Awards & Recognition
+          - generic [ref=e1028]:
+            - button "AIChE Chem E Car Poster & Presentation AIChE · Worldwide Nov 2025 +" [ref=e1029]:
+              - generic [ref=e1030]:
+                - generic [ref=e1031]:
+                  - generic [ref=e1032]: AIChE Chem E Car Poster & Presentation
+                  - generic [ref=e1033]: AIChE · Worldwide
+                - generic [ref=e1034]:
+                  - generic [ref=e1035]: Nov 2025
+                  - generic [ref=e1036]: +
+            - button "Most Innovative Car Designmilestone AIChE Chem-E Car · Worldwide Nov 2025 +" [ref=e1037]:
+              - generic [ref=e1038]:
+                - generic [ref=e1039]:
+                  - generic [ref=e1040]: Most Innovative Car Design✦
+                  - generic [ref=e1041]: AIChE Chem-E Car · Worldwide
+                - generic [ref=e1042]:
+                  - generic [ref=e1043]: Nov 2025
+                  - generic [ref=e1044]: +
+            - button "USRCAP Research Fellowshipmilestone $3,000 · Graph-Based RL UAV Research May 2025 +" [ref=e1045]:
+              - generic [ref=e1046]:
+                - generic [ref=e1047]:
+                  - generic [ref=e1048]: USRCAP Research Fellowship✦
+                  - generic [ref=e1049]: $3,000 · Graph-Based RL UAV Research
+                - generic [ref=e1050]:
+                  - generic [ref=e1051]: May 2025
+                  - generic [ref=e1052]: +
+            - button "AIChE Chem E Car – Regional 3rd Place · AIChE Regional Mar 2025 +" [ref=e1053]:
+              - generic [ref=e1054]:
+                - generic [ref=e1055]:
+                  - generic [ref=e1056]: AIChE Chem E Car – Regional
+                  - generic [ref=e1057]: 3rd Place · AIChE Regional
+                - generic [ref=e1058]:
+                  - generic [ref=e1059]: Mar 2025
+                  - generic [ref=e1060]: +
+            - button "Best Use of MongoDB Atlasmilestone RocketHacks 2025 · Deep Truth Mar 2025 +" [ref=e1061]:
+              - generic [ref=e1062]:
+                - generic [ref=e1063]:
+                  - generic [ref=e1064]: Best Use of MongoDB Atlas✦
+                  - generic [ref=e1065]: RocketHacks 2025 · Deep Truth
+                - generic [ref=e1066]:
+                  - generic [ref=e1067]: Mar 2025
+                  - generic [ref=e1068]: +
+        - generic [ref=e1069]:
+          - generic [ref=e1070]: Professional Affiliations
+          - generic [ref=e1071]:
+            - button "IEEE & AESS Member Institute of Electrical & Electronics Engineers / Aerospace & Electronic Systems Society +" [ref=e1072]:
+              - generic [ref=e1073]:
+                - generic [ref=e1076]:
+                  - generic [ref=e1077]: IEEE & AESS
+                  - generic [ref=e1078]: Member
+                  - generic [ref=e1079]: Institute of Electrical & Electronics Engineers / Aerospace & Electronic Systems Society
+                - generic [ref=e1080]: +
+            - button "AIChE / Chem-E Car Team Member & Competitor American Institute of Chemical Engineers - University of Toledo Chapter +" [ref=e1081]:
+              - generic [ref=e1082]:
+                - generic [ref=e1085]:
+                  - generic [ref=e1086]: AIChE / Chem-E Car
+                  - generic [ref=e1087]: Team Member & Competitor
+                  - generic [ref=e1088]: American Institute of Chemical Engineers - University of Toledo Chapter
+                - generic [ref=e1089]: +
+            - button "Pi Sigma Epsilon Member National Co-Educational Professional Fraternity - Sales, Marketing & Management +" [ref=e1090]:
+              - generic [ref=e1091]:
+                - generic [ref=e1094]:
+                  - generic [ref=e1095]: Pi Sigma Epsilon
+                  - generic [ref=e1096]: Member
+                  - generic [ref=e1097]: National Co-Educational Professional Fraternity - Sales, Marketing & Management
+                - generic [ref=e1098]: +
+            - button "Toledo Athletics Data Science Intern University of Toledo Department of Athletics +" [ref=e1099]:
+              - generic [ref=e1100]:
+                - generic [ref=e1103]:
+                  - generic [ref=e1104]: Toledo Athletics
+                  - generic [ref=e1105]: Data Science Intern
+                  - generic [ref=e1106]: University of Toledo Department of Athletics
+                - generic [ref=e1107]: +
+    - generic [ref=e1109]:
+      - generic [ref=e1111]:
+        - heading "Signals" [level=3] [ref=e1114]
+        - paragraph [ref=e1115]: Press, recognition, and - as they arrive - words from the people behind the work.
+      - generic [ref=e1118]:
+        - img "UToledo Athletics feature" [ref=e1120]
+        - generic [ref=e1121]:
+          - generic [ref=e1122]: Featured In
+          - heading "“Toledo Athletics Data Internship Program Aids The Rockets, Spurs Student Careers”" [level=3] [ref=e1123]
+          - generic [ref=e1124]: UToledo Rockets · April 20, 2026
+          - paragraph [ref=e1125]: Featured for describing the goal of becoming an AI Engineer who builds end-to-end data systems that drive real decisions at scale, and how the internship bridged technical modeling work with direct communication to athletics leadership.
+          - link "Read Article ↗" [ref=e1126]:
+            - /url: https://utrockets.com/news/2026/4/20/toledo-athletics-data-internship-program-aids-the-rockets-spurs-student-careers.aspx
+      - paragraph [ref=e1127]: Endorsements from collaborators land here as they arrive.
+    - generic [ref=e1129]:
+      - generic [ref=e1130]:
+        - generic [ref=e1131]:
+          - generic [ref=e1133]: Now
+          - generic [ref=e1134]: Updated · June 2026
+        - paragraph [ref=e1135]: What I'm actively learning, building, and chasing outside of work.
+      - generic [ref=e1136]:
+        - generic [ref=e1137]:
+          - generic [ref=e1138]:
+            - generic [ref=e1139]:
+              - generic [ref=e1140]: ◎
+              - generic [ref=e1141]: Learning
+            - generic [ref=e1142]: In Progress
+          - generic [ref=e1145]:
+            - generic [ref=e1146]:
+              - generic [ref=e1147]: Become an Application Integration Professional
+              - generic [ref=e1148]: Oracle · OCI Application Integration
+            - generic [ref=e1149]:
+              - generic [ref=e1150]: Drive AI Transformation in Your Organization
+              - generic [ref=e1151]: Microsoft · Course AB-731T00-A
+        - generic [ref=e1152]:
+          - generic [ref=e1153]:
+            - generic [ref=e1154]:
+              - generic [ref=e1155]: ◇
+              - generic [ref=e1156]: Building
+            - generic [ref=e1157]: Active
+          - generic [ref=e1160]:
+            - generic [ref=e1161]:
+              - generic [ref=e1162]: Student Athlete Health Insurance Site
+              - generic [ref=e1163]: Toledo Athletics
+            - generic [ref=e1164]:
+              - generic [ref=e1165]: Athletics Onboarding Website
+              - generic [ref=e1166]: Toledo Athletics
+            - generic [ref=e1167]:
+              - generic [ref=e1168]: "Football Performance Metrics: CV Model"
+              - generic [ref=e1169]: Computer Vision · In progress
+        - generic [ref=e1170]:
+          - generic [ref=e1171]:
+            - generic [ref=e1172]:
+              - generic [ref=e1173]: ◎
+              - generic [ref=e1174]: Pursuing
+            - generic [ref=e1175]: Upcoming
+          - generic [ref=e1178]:
+            - generic [ref=e1179]:
+              - generic [ref=e1180]: OCI Certified Application Integration Professional
+              - generic [ref=e1181]: Oracle · Exam 1Z0-1042-26
+            - generic [ref=e1182]:
+              - generic [ref=e1183]: "Microsoft Certified: AI Transformation Leader"
+              - generic [ref=e1184]: Exam prep underway
+    - generic [ref=e1186]:
+      - generic [aria-hidden]: "14"
+      - generic [ref=e1187]:
+        - generic [ref=e1188]:
+          - generic [ref=e1190]: Contact
+          - generic [ref=e1191]: Let's talk about building something real.
+        - generic [ref=e1192]: Available · Toledo, OH
+      - generic [ref=e1196]:
+        - generic [ref=e1197]:
+          - heading "Open to roles in AI research, ML engineering, and data science." [level=2] [ref=e1198]
+          - paragraph [ref=e1199]: Whether it's a full-time opportunity, research collaboration, or just a conversation about autonomous systems, I'm listening.
+          - link "SEND → firas.azfar@gmail.com" [ref=e1200]:
+            - /url: mailto:firas.azfar@gmail.com
+            - generic [ref=e1203]: SEND →
+            - generic [ref=e1204]: firas.azfar@gmail.com
+            - generic [aria-hidden] [ref=e1205]: ▮
+          - generic [ref=e1206]:
+            - link "Resume PDF ↓" [ref=e1207]:
+              - /url: /docs/Ahmad_Resume_Developer_I_FirstSolar.pdf
+            - link "Degree PDF ↓" [ref=e1208]:
+              - /url: /docs/CeD.26D8-NDTX-AGEW.pdf
+          - generic [ref=e1209]:
+            - generic [ref=e1210]: Open to
+            - generic [ref=e1211]: AI Research
+            - generic [ref=e1212]: ML Engineering
+            - generic [ref=e1213]: Data Science
+            - generic [ref=e1214]: Robotics & Autonomy
+            - generic [ref=e1215]: Computer Vision
+            - generic [ref=e1216]: Sports Analytics
+            - generic [ref=e1217]: Full-Time Roles
+            - generic [ref=e1218]: Research Collab
+        - generic [ref=e1219]:
+          - generic [ref=e1220]: Channels
+          - generic [ref=e1230]:
+            - generic [ref=e1231]: Email
+            - link "firas.azfar@gmail.com" [ref=e1232]:
+              - /url: mailto:firas.azfar@gmail.com
+          - generic [ref=e1239]:
+            - generic [ref=e1240]: LinkedIn
+            - link "/in/ahmadfirasazfar" [ref=e1241]:
+              - /url: https://linkedin.com/in/ahmadfirasazfar
+          - generic [ref=e1246]:
+            - generic [ref=e1247]: GitHub
+            - link "/aahmadf123" [ref=e1248]:
+              - /url: https://github.com/aahmadf123
+          - generic [ref=e1254]:
+            - generic [ref=e1255]: Location
+            - text: Toledo, OH
+          - generic [ref=e1261]:
+            - generic [ref=e1262]: Response
+            - text: Within 24 hours
+  - contentinfo [ref=e1263]:
+    - generic [ref=e1265]:
+      - generic [ref=e1266]:
+        - generic [ref=e1267]:
+          - generic [ref=e1268]: Let's build something real.
+          - generic [ref=e1269]: Toledo, OH · Open to remote · Available for select projects
+        - navigation "Footer - explore" [ref=e1270]:
+          - generic [ref=e1271]: Explore
+          - link "The Story" [ref=e1272]:
+            - /url: /#story
+          - link "Bodies of Work" [ref=e1273]:
+            - /url: /#projects
+          - link "Field Notes" [ref=e1274]:
+            - /url: /field-notes
+          - link "Docs & Résumé" [ref=e1275]:
+            - /url: /docs
+        - navigation "Footer - connect" [ref=e1276]:
+          - generic [ref=e1277]: Connect
+          - link "GitHub ↗" [ref=e1278]:
+            - /url: https://github.com/aahmadf123
+          - link "LinkedIn ↗" [ref=e1279]:
+            - /url: https://linkedin.com/in/ahmadfirasazfar
+          - link "firas.azfar@gmail.com" [ref=e1280]:
+            - /url: mailto:firas.azfar@gmail.com
+      - generic [ref=e1281]:
+        - generic [ref=e1282]: © 2026 Ahmad Firas. All rights reserved.
+        - generic [ref=e1283]: Next.js · TypeScript · GSAP · three.js
+      - paragraph [ref=e1284]:
+        - text: "Photos:"
+        - link "Leo Escala" [ref=e1285]:
+          - /url: https://unsplash.com/photos/aerial-view-of-a-baseball-stadium-at-dusk-8tjUqoLKyWw
+        - text: (
+        - link "Unsplash License" [ref=e1286]:
+          - /url: https://unsplash.com/license
+        - text: ) ·
+        - link "Chidera Faustina Okeke" [ref=e1287]:
+          - /url: https://unsplash.com/photos/laboratory-shelves-filled-with-glassware-and-equipment-v41sgDGz4ik
+        - text: (
+        - link "Unsplash License" [ref=e1288]:
+          - /url: https://unsplash.com/license
+        - text: ) ·
+        - link "Nastya Dulhiier" [ref=e1289]:
+          - /url: https://unsplash.com/photos/lighted-city-at-night-aerial-photo-OKOOGO578eo
+        - text: (
+        - link "Unsplash License" [ref=e1290]:
+          - /url: https://unsplash.com/license
+        - text: ) ·
+        - link "Anthony John Garcia" [ref=e1291]:
+          - /url: https://commons.wikimedia.org/wiki/File:The_Glass_Bowl.jpg
+        - text: (
+        - link "CC BY-SA 4.0" [ref=e1292]:
+          - /url: https://creativecommons.org/licenses/by-sa/4.0/
+        - text: ) ·
+        - link "Valentin Zickner" [ref=e1293]:
+          - /url: https://unsplash.com/photos/drones-are-flying-in-a-cloudy-blue-sky-FQa5xUZlAUo
+        - text: (
+        - link "Unsplash License" [ref=e1294]:
+          - /url: https://unsplash.com/license
+        - text: ) ·
+        - link "Tony Marinescu" [ref=e1295]:
+          - /url: https://unsplash.com/photos/modern-data-center-with-rows-of-white-server-cabinets-fImCPTZ026U
+        - text: (
+        - link "Unsplash License" [ref=e1296]:
+          - /url: https://unsplash.com/license
+        - text: ). All photos graded and resized for this site.
+  - navigation "Chapters" [ref=e1297]:
+    - link "Chapter 01 - Chem-E Car (AIChE)" [ref=e1298]:
+      - /url: "#chem-e-car"
+      - generic: 01 · Chem-E Car (AIChE)
+    - link "Chapter 02 - Data Science" [ref=e1300]:
+      - /url: "#data-science"
+      - generic: 02 · Data Science
+    - link "Chapter 03 - Sports Analytics" [ref=e1302]:
+      - /url: "#sports-analytics"
+      - generic: 03 · Sports Analytics
+    - link "Chapter 04 - Research" [ref=e1304]:
+      - /url: "#research"
+      - generic: 04 · Research
+    - link "Chapter 05 - AI Engineering" [ref=e1306]:
+      - /url: "#ai-engineering"
+      - generic: 05 · AI Engineering
+    - link "Chapter 06 - The Next Chapter" [ref=e1308]:
+      - /url: "#next-chapter"
+      - generic: 06 · The Next Chapter
+    - link "Chapter 07 - Field Notes" [ref=e1310]:
+      - /url: "#field-notes"
+      - generic: 07 · Field Notes
+    - link "Chapter 08 - About" [ref=e1312]:
+      - /url: "#about"
+      - generic: 08 · About
+    - link "Chapter 09 - Capabilities" [ref=e1314]:
+      - /url: "#skills"
+      - generic: 09 · Capabilities
+    - link "Chapter 10 - Timeline" [ref=e1316]:
+      - /url: "#timeline"
+      - generic: 10 · Timeline
+    - link "Chapter 11 - Credentials" [ref=e1318]:
+      - /url: "#credentials"
+      - generic: 11 · Credentials
+    - link "Chapter 12 - Signals" [ref=e1320]:
+      - /url: "#signals"
+      - generic: 12 · Signals
+    - link "Chapter 13 - Now" [ref=e1322]:
+      - /url: "#now"
+      - generic: 13 · Now
+    - link "Chapter 14 - Contact" [ref=e1324]:
+      - /url: "#contact"
+      - generic: 14 · Contact
+  - complementary "Now building" [ref=e1326]:
+    - link "Now building Toledo Football IQ - 10-stage CV pipeline" [ref=e1331]:
+      - /url: "#projects"
+      - generic [ref=e1332]: Now building
+      - generic [ref=e1333]: Toledo Football IQ - 10-stage CV pipeline
+    - button "Dismiss now playing" [ref=e1334]: ✕
+  - button "Open Ask Ahmad - AI assistant" [ref=e1335]:
+    - generic [ref=e1339]: Ask Ahmad
+  - alert [ref=e1340]

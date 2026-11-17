@@ -3,8 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { ViewTransition } from 'react';
-import { m } from 'framer-motion';
-import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
 import { Section, MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { Pic } from '@/components/ui/pic';
 import { fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
@@ -17,7 +15,6 @@ import { sectionById } from '@/lib/data/sections';
  */
 export function FieldNotesSection() {
   const def = sectionById('field-notes')!;
-  const reduced = useReducedMotion();
   const published = fieldNotes
     .filter(n => n.published && n.date)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -57,12 +54,7 @@ export function FieldNotesSection() {
 
       {/* Featured editorial spread */}
       {featured && (
-        <m.div
-          initial={reduced ? false : { opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <div className="rv">
           <Link
             href={`/field-notes/${featured.slug}`}
             transitionTypes={['nav-forward']}
@@ -109,7 +101,7 @@ export function FieldNotesSection() {
               </div>
             )}
           </Link>
-        </m.div>
+        </div>
       )}
 
       {/* Secondary published essays */}

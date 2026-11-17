@@ -71,11 +71,11 @@ export const storyChapters: StoryChapter[] = [
     id: 'whats-next',
     kicker: `Epilogue · ${nowUpdated}`,
     title: 'The next chapter.',
-    body: "Two certifications in flight - Oracle's Application Integration Professional, Microsoft's AI Transformation Leader. A football computer-vision model still in progress, athletics platforms in build alongside it: a student-athlete health-insurance site, an onboarding portal. Still in Toledo, still open - AI research, ML engineering, sports analytics. Same instinct as chapter one: go where the hardest problems are.",
+    body: "Two certifications in flight - Oracle's Application Integration Professional, Microsoft's AI Transformation Leader. A football computer-vision model still in progress, athletics platforms in build alongside it: a student-athlete health-insurance site, an onboarding portal. Still in Toledo, open to collaborate - AI research, ML engineering, sports analytics. Same instinct as chapter one: go where the hardest problems are.",
     scene: 'horizon',
     accent: '#f59e0b',
     milestone: false,
-    stat: { value: 'Open', label: site.availability.label },
+    stat: { value: 'Open', label: 'To collaborate · Toledo, OH' },
   },
 ];
 

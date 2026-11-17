@@ -27,8 +27,8 @@ const FALLBACK_FAQ: { q: string; a: string }[] = [
     a: 'Agentic AI and enterprise systems (Oracle Cloud, Copilot Studio), reinforcement learning for UAV autonomy (PyTorch, ROS 2), MLOps (Airflow, MLflow), computer vision (YOLO, ByteTrack), and edge web stacks (Cloudflare Workers, React).',
   },
   {
-    q: 'Is Ahmad available?',
-    a: `He's based in Toledo, OH and open to AI research, ML engineering, data science, and sports analytics work - the fastest route is ${site.email}.`,
+    q: 'Is Ahmad open to collaborate?',
+    a: `He works full time as a Developer I at First Solar and on sports analytics with Toledo Athletics, based in Toledo, OH. He's open to collaborating on AI research, ML engineering, data science, and sports analytics - the fastest route is ${site.email}.`,
   },
 ];
 
@@ -139,7 +139,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             {messages.length === 0 && (
               <div>
                 <p style={{ fontFamily: SANS, fontSize: 13, lineHeight: 1.65, color: FG2, margin: '4px 0 14px' }}>
-                  Hi - I&apos;m the AI on Ahmad&apos;s site. I can walk you through his projects, research, stack, and availability. What would you like to know?
+                  Hi - I&apos;m the AI on Ahmad&apos;s site. I can walk you through his projects, research, stack, and how to collaborate. What would you like to know?
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
                   {SUGGESTED.map((s) => (
@@ -198,7 +198,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             maxLength={500}
-            placeholder="Ask about projects, research, availability…"
+            placeholder="Ask about projects, research, collaborating…"
             aria-label="Message"
             style={{ flex: 1, background: 'rgba(244,244,242,0.04)', border: '1px solid var(--bd2)', borderRadius: 8, padding: '10px 13px', fontFamily: SANS, color: 'var(--foreground)' }}
           />

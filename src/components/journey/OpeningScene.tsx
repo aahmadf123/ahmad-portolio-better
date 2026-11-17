@@ -41,22 +41,22 @@ function OpeningCopy() {
   });
 
   const name = (
-    <SceneCopy photo="opening" style={{ paddingTop: 62 }} maxWidth={720}>
+    <SceneCopy photo="opening" style={{ paddingTop: 62 }} maxWidth={880} center>
       <div className="opening-name">
       <div style={{ marginBottom: 18, minHeight: 17 }}>
         <TypedTagline segments={site.taglineSegments} active instant={still} />
       </div>
-      <h1 id="hero-name" style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'min(clamp(52px, 10vw, 132px), 13svh)', lineHeight: 0.95, letterSpacing: '-0.025em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.08em' }}>
+      <h1 id="hero-name" style={{ textAlign: 'center', fontFamily: SERIF, fontWeight: 400, fontSize: 'min(clamp(52px, 10vw, 132px), 13svh)', lineHeight: 0.95, letterSpacing: '-0.025em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.08em' }}>
         <span style={{ color: 'var(--primary)' }}>Ahmad</span><br />Firas
       </h1>
-      <p className="opening-sub" style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--text2)', maxWidth: 460, marginTop: 'min(22px, 2.4svh)', fontFamily: SANS }}>{site.heroSub}</p>
-      <div className="opening-ctas" style={{ marginTop: 'min(24px, 2.6svh)', display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+      <p className="opening-sub" style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--text2)', maxWidth: 520, margin: 'min(22px, 2.4svh) auto 0', fontFamily: SANS }}>{site.heroSub}</p>
+      <div className="opening-ctas" style={{ margin: 'min(24px, 2.6svh) auto 0', display: 'flex', gap: 10, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', width: 'fit-content', maxWidth: '100%' }}>
         <a href="#chem-e-car" data-magnetic="" style={{ ...button, padding: '11px 24px', background: 'var(--primary)', color: 'var(--background)', fontSize: 11, fontWeight: 700, letterSpacing: '0.06em' }}>Start the journey ↓</a>
         <a href="#projects" data-magnetic="" style={{ ...button, padding: '11px 24px', border: '1px solid var(--bd2)', color: 'var(--text2)', fontSize: 11, letterSpacing: '0.06em' }}>View Work</a>
         <a href={site.resumeUrl} target="_blank" rel="noopener" style={{ ...button, gap: 6, padding: '9px 18px', border: '1px solid var(--bd)', color: FG3, fontSize: 10, letterSpacing: '0.07em' }}>Resume ↓</a>
         <a href={site.degreeUrl} target="_blank" rel="noopener" style={{ ...button, gap: 6, padding: '9px 18px', border: '1px solid rgba(45,212,191,0.35)', color: 'var(--primary)', fontSize: 10, letterSpacing: '0.07em' }}>Degree ↓</a>
       </div>
-      <dl className="opening-facts" style={{ marginTop: 'min(26px, 2.8svh)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '10px 22px' }}>
+      <dl className="opening-facts" style={{ margin: 'min(26px, 2.8svh) auto 0', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '10px 22px', maxWidth: 820 }}>
         {heroFacts.map((f) => (
           <div key={f.label}>
             <dt style={{ fontFamily: MONO, fontSize: 10, color: f.color, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 2 }}>{f.label}</dt>
@@ -75,7 +75,7 @@ function OpeningCopy() {
         @media (max-width: 600px) {
           .opening-name h1 { font-size: min(clamp(48px, 13vw, 64px), 9svh) !important; }
           .opening-sub { font-size: 15px !important; line-height: 1.5 !important; }
-          .opening-ctas { display: grid !important; grid-template-columns: 1fr 1fr; gap: 8px !important; }
+          .opening-ctas { display: grid !important; grid-template-columns: 1fr 1fr; gap: 8px !important; width: 100% !important; }
           .opening-ctas a { justify-content: center; padding: 10px 8px !important; }
           .opening-facts { grid-template-columns: 1fr 1fr !important; gap: 8px 16px !important; }
           .opening-facts dd { font-size: 12px !important; }

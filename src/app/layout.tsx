@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Figtree, JetBrains_Mono, Caveat } from "next/font/google";
 import { ViewTransition } from "react";
 import "./globals.css";
-import { MagneticCursor } from "@/components/ui/magnetic-cursor";
+import { CursorGlow } from "@/components/ui/cursor-glow";
+import { SmoothScroll } from "@/components/ui/smooth-scroll";
+import { RevealObserver } from "@/components/ui/reveal-observer";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import { MotionProvider } from "@/lib/motion/lazy";
 import { ChatLauncher } from "@/components/chat/ChatLauncher";
@@ -169,7 +171,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
-        <MagneticCursor />
+        <CursorGlow />
+        <SmoothScroll />
+        <RevealObserver />
         <div id="scroll-bar" suppressHydrationWarning />
         <ViewTransition
           default="page-enter"
@@ -181,8 +185,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            // Scroll progress bar: at most one update per frame (rAF), no layout reads in the scroll event itself.
-            __html: `(function(){var f=0;function u(){f=0;var d=document.documentElement;var p=window.scrollY/Math.max(1,d.scrollHeight-window.innerHeight);var b=document.getElementById('scroll-bar');if(b)b.style.transform='scaleX('+p+')';}window.addEventListener('scroll',function(){if(!f)f=requestAnimationFrame(u);},{passive:true});})();`,
+            // Scroll progress bar fallback for browsers without CSS scroll timelines (globals.css): at most one update per frame (rAF), no layout reads in the scroll event itself.
+            __html: `(function(){if(window.CSS&&CSS.supports('animation-timeline: scroll()')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)return;var f=0;function u(){f=0;var d=document.documentElement;var p=window.scrollY/Math.max(1,d.scrollHeight-window.innerHeight);var b=document.getElementById('scroll-bar');if(b)b.style.transform='scaleX('+p+')';}window.addEventListener('scroll',function(){if(!f)f=requestAnimationFrame(u);},{passive:true});})();`,
           }}
         />
         <script

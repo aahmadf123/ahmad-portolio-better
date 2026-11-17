@@ -48,6 +48,9 @@ export function TimelineSection() {
       if (fill) fill.style.transform = 'scaleY(1)';
       return;
     }
+    // Browsers with scroll-driven animations draw the line in CSS (globals.css, .tl-wrap):
+    // on the compositor, no per-frame script. GSAP is the fallback.
+    if (CSS.supports('animation-timeline: view()')) return;
     const ctx = gsap.context(() => {
       const fill = wrap.querySelector<HTMLElement>('[data-tl-fill]');
       if (!fill) return;

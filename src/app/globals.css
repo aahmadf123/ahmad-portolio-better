@@ -101,30 +101,36 @@ a { text-decoration: none; color: inherit; }
 }
 .reveal.in { opacity: 1; transform: translateY(0); }
 
-/* ── Scroll-Driven Reveals (Progressive Enhancement) ─────────── */
+/* Entrances (rv-*). RevealObserver adds .in once, when the element arrives; a short
+   transition plays and finishes. (Scroll-driven animations were tried: they stay
+   "active" for the life of the page, so every revealed element kept its own GPU layer,
+   ~60 of them, and every frame paid to commit them.) Hidden only when scripts run, so
+   nothing is ever invisible without JS; reduced motion shows everything at once. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .rv, .rv-left, .rv-right, .rv-fade {
+    opacity: 0;
+    transition: opacity .8s cubic-bezier(.16,1,.3,1), translate .8s cubic-bezier(.16,1,.3,1), scale .8s cubic-bezier(.16,1,.3,1);
+  }
+  .rv { translate: 0 26px; }
+  .rv-left { translate: -40px 0; }
+  .rv-right { translate: 40px 0; }
+  .rv-fade { scale: .96; }
+  .rv.in, .rv-left.in, .rv-right.in, .rv-fade.in { opacity: 1; translate: none; scale: none; }
+  .rv-pop { scale: 0; }
+  .rv-pop.in { scale: 1; animation: rv-pop .5s cubic-bezier(.16,1,.3,1) both; }
+  .rv-ring.in { animation: rv-ring .8s ease-out .1s both; }
+  .rv-ring.late.in { animation-delay: .25s; }
+}
+@keyframes rv-pop { from { scale: 0; } to { scale: 1; } }
+@keyframes rv-ring { 0% { scale: .4; opacity: 0; } 35% { opacity: .7; } 100% { scale: 2.8; opacity: 0; } }
+/* Timeline line draws as it scrolls (TimelineSection; GSAP fallback without support). */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .reveal {
-      transition: none;
-      animation: sda-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 3% entry 32%;
-    }
-    .ghost-num {
-      animation: sda-ghost linear both;
-      animation-timeline: view();
-      animation-range: entry -20% entry 55%;
-    }
+    .tl-wrap { view-timeline: --tl block; }
+    .tl-wrap [data-tl-fill] { animation: tl-fill linear both; animation-timeline: --tl; animation-range: cover 28vh cover calc(100% - 58vh); }
   }
 }
-@keyframes sda-reveal {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: none; }
-}
-@keyframes sda-ghost {
-  from { opacity: 0; transform: translateX(-16px); }
-  to   { opacity: 0.05; transform: none; }
-}
+@keyframes tl-fill { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
 /* Pulse - glass breathe */
 @keyframes glass-pulse {
@@ -161,23 +167,50 @@ a { text-decoration: none; color: inherit; }
   transition: transform 0.06s linear;
   pointer-events: none;
 }
+/* Where supported, the bar follows the scroll on the compositor: no script, no DOM writes. */
+@supports (animation-timeline: scroll()) {
+  #scroll-bar { animation: scroll-bar-fill linear both; animation-timeline: scroll(root block); }
+}
+@keyframes scroll-bar-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none !important; transition: none !important; }
   * { transition: none !important; animation: none !important; }
 }
 
-/* Off-screen sections (OffscreenAnimationPauser) do not run their ambient loops. */
+/* Off-screen sections (OffscreenAnimationPauser) pause their ambient loops. (Removing
+   them outright with animation-name: none was measured to cost more: every toggle
+   rebuilt the animations of the whole section.) */
 [data-offscreen], [data-offscreen] * {
   animation-play-state: paused !important;
 }
 
-/* ── Custom cursor (pointer devices only) ─────────────────────── */
-@media (pointer: fine) {
-  html.has-custom-cursor *, html.has-custom-cursor *::before, html.has-custom-cursor *::after { cursor: none !important; }
-  /* keep the text caret affordance where people type */
-  html.has-custom-cursor input, html.has-custom-cursor textarea, html.has-custom-cursor [contenteditable="true"] { cursor: text !important; }
+/* Decorative loops (drawings, floating prints, pulses, the equaliser) hold still while
+   the page is moving and resume when it stops: most animate SVG strokes, which repaint on
+   the main thread every frame, and scrolling needs every frame it can get. */
+:is(html.lenis-scrolling, html.is-scrolling) :is(.stage-print, .scene-flow, .scene-drift, .scene-rise, .scene-drive, .scene-blink, .np-eq i, .chat-launcher-ping, .pulse, .signal-quote) {
+  animation-play-state: paused;
 }
+/* A faded-out journey layer (setLayer) pauses its loops. */
+[data-idle] * { animation-play-state: paused !important; }
+
+/* Lenis (SmoothScroll) eases the scroll itself; native smooth scrolling would fight it. */
+html.lenis { scroll-behavior: auto !important; }
+
+/* ── Cursor glow (CursorGlow; mouse and trackpad only) ─────────── */
+[data-cursor-glow] {
+  position: fixed; left: 0; top: 0; z-index: 40; pointer-events: none;
+  width: 0; height: 0; opacity: 0; transition: opacity .45s ease; will-change: translate;
+}
+[data-cursor-glow].on { opacity: 1; }
+[data-cursor-glow] > span {
+  position: absolute; left: -240px; top: -240px; width: 480px; height: 480px; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 15%, transparent) 0%, color-mix(in srgb, var(--primary) 6%, transparent) 32%, transparent 68%);
+  mix-blend-mode: screen;
+  transition: scale .35s cubic-bezier(.16,1,.3,1), opacity .35s;
+}
+[data-cursor-glow].hot > span { scale: .55; background: radial-gradient(circle, color-mix(in srgb, var(--primary) 26%, transparent) 0%, color-mix(in srgb, var(--primary) 9%, transparent) 36%, transparent 68%); }
+@media (pointer: coarse) { [data-cursor-glow] { display: none; } }
 
 /* ── View Transitions ─────────────────────────────────────────── */
 @supports (view-transition-name: none) {
@@ -368,8 +401,9 @@ a, button { min-height: 44px; min-width: 44px; }
 /* Copy over a photo sits on a photographic side shade (SceneCopy). */
 .scene-shade.from-left { background: linear-gradient(to right, rgba(13,14,18,0.86) 0%, rgba(13,14,18,0.72) 38%, rgba(13,14,18,0.25) 62%, rgba(13,14,18,0) 78%); }
 .scene-shade.from-right { background: linear-gradient(to left, rgba(13,14,18,0.86) 0%, rgba(13,14,18,0.72) 38%, rgba(13,14,18,0.25) 62%, rgba(13,14,18,0) 78%); }
+.scene-shade.centred { background: radial-gradient(ellipse 70% 75% at 50% 52%, rgba(13,14,18,0.8) 0%, rgba(13,14,18,0.55) 55%, rgba(13,14,18,0.2) 100%); }
 @media (max-width: 760px) {
-  .scene-shade.from-left, .scene-shade.from-right { background: linear-gradient(to bottom, rgba(13,14,18,0.3) 0%, rgba(13,14,18,0.8) 22%, rgba(13,14,18,0.8) 82%, rgba(13,14,18,0.35) 100%); }
+  .scene-shade.from-left, .scene-shade.from-right, .scene-shade.centred { background: linear-gradient(to bottom, rgba(13,14,18,0.3) 0%, rgba(13,14,18,0.8) 22%, rgba(13,14,18,0.8) 82%, rgba(13,14,18,0.35) 100%); }
 }
 .scene-copy { text-shadow: 0 1px 12px rgba(13,14,18,0.75); }
 /* StageArt: the world's drawing with Ahmad's own photos laid over it, opposite the words. */

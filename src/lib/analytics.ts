@@ -24,6 +24,10 @@ export function loadAnalytics(): Promise<PostHog | null> {
           capture_pageview: false,
           capture_pageleave: true,
           persistence: 'localStorage',
+          // Scroll-depth properties read scrollY and the page height on every scroll
+          // event, forcing a layout each time: ~1.1s of stalls per scroll of the photo
+          // journey on a slow CPU. Pageviews, events and session replay are unaffected.
+          disable_scroll_properties: true,
         });
         client = posthog;
         for (const [event, props] of queue.splice(0)) posthog.capture(event, props);

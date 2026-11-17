@@ -81,14 +81,14 @@ export function StageScene({ scene, accent }: { scene: StageSceneId; accent: str
           {/* shield check */}
           <path d="M 440 258 l 0 0 c 0 0 -26 8 -26 8 v 26 c 0 22 26 34 26 34 s 26 -12 26 -34 v -26 z" stroke="#f4f4f2" strokeOpacity="0.7" strokeWidth="1.6" />
           <path d="M 428 296 l 9 9 l 16 -18" stroke="#f4f4f2" strokeOpacity="0.9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          {/* arduino trace footer */}
-          <g stroke={accent} strokeOpacity="0.4" strokeWidth="1.2">
-            <path className="scene-flow" d="M 80 520 h 120 l 18 -18 h 90 l 18 18 h 100" strokeDasharray="4 8" />
-            <circle cx="80" cy="520" r="4" fill={accent} stroke="none" />
-            <circle cx="426" cy="520" r="4" fill={accent} stroke="none" />
-            <rect x="255" y="492" width="42" height="20" rx="3" />
+          {/* validation gate: bad entries caught at ingestion */}
+          <g stroke={accent} strokeOpacity="0.45" strokeWidth="1.2">
+            <path className="scene-flow" d="M 80 510 h 170" strokeDasharray="4 8" />
+            <path d="M 250 488 l 22 22 l -22 22" />
+            <path className="scene-flow" d="M 276 510 h 244" strokeDasharray="4 8" stroke="#2dd4bf" strokeOpacity="0.6" />
+            <path d="M 262 532 v 26" strokeDasharray="2 5" />
           </g>
-          <text x="300" y="560" textAnchor="middle" fill={accent} fillOpacity="0.6" fontSize="13" letterSpacing="5" fontFamily="var(--font-code), monospace">~5 PSI SETPOINT · SOLENOID CUT</text>
+          <text x="300" y="582" textAnchor="middle" fill={accent} fillOpacity="0.6" fontSize="13" letterSpacing="5" fontFamily="var(--font-code), monospace">3 FEEDS → 1 STORE · 95% CAUGHT</text>
         </svg>
       );
 
@@ -218,7 +218,7 @@ export function StageScene({ scene, accent }: { scene: StageSceneId; accent: str
         </svg>
       );
     case 'chem':
-      // Chem-E Car: the Arduino control system timing a reaction and stopping the car on the line.
+      // Chem-E Car: the Arduino control system reading pressure and cutting the solenoid to stop the car on the line.
       return (
         <svg {...common}>
           <defs>
@@ -241,7 +241,7 @@ export function StageScene({ scene, accent }: { scene: StageSceneId; accent: str
             {Array.from({ length: 10 }, (_, i) => <line key={i} x1={342 + i * 15} y1="118" x2={342 + i * 15} y2="128" strokeOpacity="0.5" />)}
             <circle cx="470" cy="196" r="6" fill="#2dd4bf" fillOpacity="0.8" className="scene-blink" />
           </g>
-          <text x="415" y="244" textAnchor="middle" fill="#2dd4bf" fillOpacity="0.7" fontSize="12" letterSpacing="4" fontFamily="var(--font-code), monospace">ARDUINO · TIMER</text>
+          <text x="415" y="244" textAnchor="middle" fill="#2dd4bf" fillOpacity="0.7" fontSize="12" letterSpacing="4" fontFamily="var(--font-code), monospace">ARDUINO · PRESSURE</text>
           {/* sensor wire from flask to board */}
           <path className="scene-flow" d="M 226 200 C 270 200, 280 166, 330 166" stroke={accent} strokeOpacity="0.6" strokeWidth="1.6" strokeDasharray="5 8" />
           {/* track, finish line and the car */}
@@ -255,7 +255,7 @@ export function StageScene({ scene, accent }: { scene: StageSceneId; accent: str
             <circle cx="130" cy="442" r="12" stroke="#f4f4f2" strokeOpacity="0.85" strokeWidth="1.8" fill="#0d0e12" />
             <circle cx="192" cy="442" r="12" stroke="#f4f4f2" strokeOpacity="0.85" strokeWidth="1.8" fill="#0d0e12" />
           </g>
-          <text x="300" y="560" textAnchor="middle" fill={accent} fillOpacity="0.65" fontSize="13" letterSpacing="5" fontFamily="var(--font-code), monospace">REACTION → TIMER → STOP ON THE LINE</text>
+          <text x="300" y="560" textAnchor="middle" fill={accent} fillOpacity="0.65" fontSize="13" letterSpacing="5" fontFamily="var(--font-code), monospace">~5 PSI SETPOINT · SOLENOID CUT</text>
         </svg>
       );
 
