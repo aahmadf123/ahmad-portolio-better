@@ -2,28 +2,11 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { m, useReducedMotion } from 'framer-motion';
-import { Section, SH, MONO, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
+import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
+import { MONO, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import type { Insight } from '@/lib/data/insights';
-import type { SectionDef } from '@/lib/data/sections';
 
 export type TokenLine = { content: string; color: string }[];
-
-export function InsightsGrid({ def, cards }: { def: SectionDef; cards: { insight: Insight; lines: TokenLine[] }[] }) {
-  return (
-    <Section id="insights" style={{ background: 'rgba(15,17,23,0.9)' }}>
-      <SH n={def.n} label="Technical Insights" sub="Not tutorials, but perspective. The mechanisms behind the work are sketched in code and traced back to the project that taught them." color={def.color} />
-      <div className="insights-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
-        {cards.map(({ insight, lines }, i) => (
-          <CodeCard key={insight.id} insight={insight} lines={lines} wide={i === 0} />
-        ))}
-      </div>
-      <style>{`
-        @media (max-width: 860px) { .insights-grid { grid-template-columns: minmax(0, 1fr) !important; } .insights-grid > * { grid-column: auto !important; } }
-      `}</style>
-    </Section>
-  );
-}
 
 /**
  * Terminal-chrome insight card. When scrolled into view the pre-tokenized
@@ -33,11 +16,8 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
   const reduced = useReducedMotion();
 
   return (
-    <m.article
-      initial={reduced ? false : { opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+    <article
+      data-insight={insight.id}
       style={{
         gridColumn: wide ? 'span 2' : undefined,
         border: `1px solid color-mix(in srgb, ${insight.color} 24%, transparent)`,
@@ -46,7 +26,7 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
         overflow: 'hidden',
         minWidth: 0,
       }}
-      className={wide ? 'insight-wide' : undefined}
+      className={wide ? 'rv insight-wide' : 'rv'}
     >
       {/* terminal chrome */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px', borderBottom: '1px solid var(--bd)', background: 'rgba(244,244,242,0.02)' }}>
@@ -58,35 +38,23 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
       </div>
 
       {/* code */}
-      <m.div
-        initial={reduced ? 'shown' : 'hidden'}
-        whileInView="shown"
-        viewport={{ once: true, amount: 0.25 }}
-        transition={{ staggerChildren: reduced ? 0 : 0.07 }}
+      <div
         tabIndex={0}
         role="region"
         aria-label={`Code: ${insight.file}`}
         style={{ padding: '16px 18px', overflowX: 'auto', fontFamily: MONO, fontSize: 12.5, lineHeight: 1.75 }}
       >
         {lines.map((line, li) => (
-          <m.div
-            key={li}
-            variants={{
-              hidden: { opacity: 0, backgroundColor: 'rgba(45,212,191,0.0)' },
-              shown: { opacity: 1, backgroundColor: ['rgba(45,212,191,0.14)', 'rgba(45,212,191,0.0)'] },
-            }}
-            transition={{ duration: reduced ? 0 : 0.5 }}
-            style={{ whiteSpace: 'pre', minHeight: 19 }}
-          >
+          <div key={li} style={{ whiteSpace: 'pre', minHeight: 19 }}>
             {line.length === 0 ? ' ' : line.map((t, ti) => (
               <span key={ti} style={{ color: t.color }}>{t.content}</span>
             ))}
-          </m.div>
+          </div>
         ))}
         {!reduced && (
           <span aria-hidden style={{ display: 'inline-block', width: 7, height: 14, background: insight.color, opacity: 0.7, animation: 'insight-caret 1s step-end infinite', verticalAlign: 'text-bottom' }} />
         )}
-      </m.div>
+      </div>
 
       {/* takeaway */}
       <div style={{ padding: '16px 18px 18px', borderTop: '1px solid var(--bd)' }}>
@@ -98,7 +66,7 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
       </div>
 
       <style>{`@keyframes insight-caret { 0%,100% { opacity: 0.7; } 50% { opacity: 0; } }`}</style>
-    </m.article>
+    </article>
   );
 }
 

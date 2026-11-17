@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, m, useInView } from 'framer-motion';
 import { Section, SH, Tag, MONO, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import { MetricsBand } from '@/components/shared/MetricsBand';
 import { HoverPeek } from '@/components/ui/link-preview';
@@ -10,6 +10,7 @@ import { about, type Lens } from '@/lib/data/about';
 import { education } from '@/lib/data/education';
 import { site } from '@/lib/data/site';
 import { sectionById } from '@/lib/data/sections';
+import { Headshot } from './Headshot';
 import { SignOff } from './SignOff';
 
 const actionBaseStyle: React.CSSProperties = {
@@ -96,14 +97,15 @@ export function AboutSection() {
 
       <MetricsBand />
 
-      {/* manifesto intro */}
-      <div id="about-intro" style={{ maxWidth: 780, marginBottom: 'clamp(36px, 5vw, 64px)' }}>
+      {/* manifesto intro, with the headshot (moved here from the hero for the photo journey) */}
+      <div className="about-intro-row" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(220px, 320px)', gap: 'clamp(24px, 4vw, 64px)', alignItems: 'start', marginBottom: 'clamp(36px, 5vw, 64px)' }}>
+      <div id="about-intro" style={{ maxWidth: 780 }}>
         <h2 style={{ fontFamily: SANS, fontWeight: 500, fontSize: 'var(--text-2xl)', lineHeight: 1.2, letterSpacing: '-0.02em', color: 'var(--foreground)' }}>
           {about.headline}
         </h2>
         <p style={{ fontFamily: SANS, fontSize: 16, lineHeight: 1.78, color: FG2, marginTop: 18, maxWidth: 640 }}>{about.bio}</p>
         <div style={{ marginTop: 16, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          <a href="#projects" style={primaryActionStyle}>View Projects ↓</a>
+          <Link href="/projects" transitionTypes={['nav-forward']} style={primaryActionStyle}>View Projects →</Link>
           <Link href="/field-notes" transitionTypes={['nav-forward']} style={secondaryActionStyle}>Read Field Notes ↗</Link>
           <a href="#timeline" style={secondaryActionStyle}>Open Timeline ↓</a>
         </div>
@@ -115,6 +117,8 @@ export function AboutSection() {
             <a href={site.socials.github} target="_blank" rel="noopener" style={secondaryActionStyle}>GitHub ↗</a>
           </HoverPeek>
         </div>
+      </div>
+      <Headshot />
       </div>
 
       {/* lenses */}
@@ -173,6 +177,7 @@ export function AboutSection() {
       <style>{`
         @media (max-width: 860px) {
           .about-grid { grid-template-columns: 1fr !important; }
+          .about-intro-row { grid-template-columns: 1fr !important; }
           .about-rail { position: relative !important; top: 0 !important; }
         }
       `}</style>
@@ -182,7 +187,6 @@ export function AboutSection() {
 
 function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onActive: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
   const inView = useInView(ref, { amount: 0.5 });
   React.useEffect(() => {
     if (inView) onActive();
@@ -191,13 +195,10 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
   const beliefs = about.beliefs.filter((b) => lens.beliefIds.includes(b.n));
 
   return (
-    <m.article
+    <article
       id={`lens-${lens.id}`}
       ref={ref}
-      initial={reduced ? false : { opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="rv"
       style={lensPanelStyle}
     >
       <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: `radial-gradient(ellipse 60% 50% at 85% 0%, color-mix(in srgb, ${accent} 6%, transparent), transparent 70%)` }} />
@@ -265,7 +266,7 @@ function LensPanel({ lens, accent, onActive }: { lens: Lens; accent: string; onA
           )}
         </div>
       </div>
-    </m.article>
+    </article>
   );
 }
 

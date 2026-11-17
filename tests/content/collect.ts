@@ -116,4 +116,45 @@ export async function collectRenderedUnits(page: Page, route: string): Promise<s
   return toUnits(await loadAndCollectText(page, route));
 }
 
-export interface AllowedRemoval { text: string; reason: string; preservedAs?: string }
+export interface AllowedRemoval { text: string; reason: string; preservedAs?: string; kind?: 'ui-label' }
+
+/**
+ * Every picture a page shows, after scrolling it fully: <img> (src + srcset),
+ * <picture><source>, SVG <image>, and CSS background images. Normalised to a stem so
+ * size variants of one photo count once: /Images/optimized/headshot-800.webp → "headshot".
+ */
+export async function collectImages(page: Page, route: string, base = ''): Promise<string[]> {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto(base + route, { waitUntil: 'load' });
+  await page.waitForTimeout(800);
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.documentElement.scrollHeight; y += 600) {
+      window.scrollTo(0, y);
+      await new Promise((r) => setTimeout(r, 120));
+    }
+  });
+  const urls = await page.evaluate(() => {
+    const out: string[] = [];
+    const add = (u: string | null | undefined) => { if (u) out.push(u); };
+    document.querySelectorAll('img').forEach((i) => { add(i.getAttribute('src')); (i.getAttribute('srcset') ?? '').split(',').forEach((s) => add(s.trim().split(/\s+/)[0])); });
+    document.querySelectorAll('picture source').forEach((s) => (s.getAttribute('srcset') ?? '').split(',').forEach((x) => add(x.trim().split(/\s+/)[0])));
+    document.querySelectorAll('image').forEach((i) => add(i.getAttribute('href') ?? i.getAttribute('xlink:href')));
+    document.querySelectorAll<HTMLElement>('body *').forEach((e) => {
+      const bg = getComputedStyle(e).backgroundImage;
+      for (const m of bg.matchAll(/url\(["']?([^"')]+)["']?\)/g)) add(m[1]);
+    });
+    return out;
+  });
+  return [...new Set(urls.map(imageStem).filter(Boolean) as string[])].sort();
+}
+
+export function imageStem(raw: string): string | null {
+  if (!raw || raw.startsWith('data:')) return null;
+  let u: URL;
+  try { u = new URL(raw, 'http://x'); } catch { return null; }
+  let path = u.pathname;
+  if (path.startsWith('/_next/image')) path = decodeURIComponent(u.searchParams.get('url') ?? '');
+  const file = decodeURIComponent(path.split('/').pop() ?? '');
+  if (!/\.(png|jpe?g|webp|avif|gif|svg)$/i.test(file)) return null;
+  return file.replace(/\.[a-z0-9]+$/i, '').replace(/-(\d{2,4})w?$/, '').toLowerCase();
+}

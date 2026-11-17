@@ -1,1 +1,97 @@
-[]
+[
+  {
+    "text": "Enter the Story ↓",
+    "reason": "Hero button label; the button is now \"Start the journey ↓\" (same place, same job)."
+  },
+  {
+    "text": "Scroll to explore",
+    "reason": "Decorative scroll hint under the old hero; the photo journey itself invites the scroll."
+  },
+  {
+    "text": "- 6 chapters, scroll to walk through",
+    "kind": "ui-label",
+    "reason": "Instruction for the old drawn Story section, which the photo journey replaces; it states no fact about Ahmad."
+  },
+  {
+    "text": "Chapter 01 · 2021",
+    "preservedAs": "Prologue · 2021",
+    "reason": "Old Story kicker; the Toledo chapter now opens the journey with the same year."
+  },
+  {
+    "text": "Chapter 02 · 2023–2024",
+    "preservedAs": "02 · Data Science · 2023–2024",
+    "reason": "Old Story kicker; the years now head the Data Science and Chem-E Car worlds."
+  },
+  {
+    "text": "Chapter 03 · 2025",
+    "preservedAs": "04 · Research · 2025",
+    "reason": "Old Story kicker; the year now heads the Research world."
+  },
+  {
+    "text": "Chapter 04 · 2026",
+    "preservedAs": "05 · AI Engineering · 2026",
+    "reason": "Old Story kicker; the year now heads the AI Engineering world."
+  },
+  {
+    "text": "Chapter 05 · Now",
+    "preservedAs": "03 · Sports Analytics · Now",
+    "reason": "Old Story kicker; \"Now\" heads the Sports Analytics world."
+  },
+  {
+    "text": "AI & MLOps",
+    "reason": "Project filter chip; projects are now grouped by world instead of filtered by category."
+  },
+  {
+    "text": "Web & Civic",
+    "reason": "Project filter chip; projects are now grouped by world instead of filtered by category."
+  },
+  {
+    "text": "Each project a different operating condition. Hover a poster for the story; click for the full picture.",
+    "reason": "Intro line of the old Work section; each world now introduces its own work, and every project tile shows its story and opens on click."
+  },
+  {
+    "text": "Not tutorials, but perspective. The mechanisms behind the work are sketched in code and traced back to the project that taught them.",
+    "reason": "Intro line of the old Insights section; each insight card now sits inside the world of the project it came from and still links to it."
+  },
+  {
+    "text": "Available · Toledo, OH",
+    "reason": "Ahmad (2026-11-16): he works full time (First Solar) and does sports analytics with Toledo Athletics, so the site says open to collaborate, not open to work.",
+    "preservedAs": "Open to collaborate · Toledo, OH"
+  },
+  {
+    "text": "Full-Time Roles",
+    "reason": "Ahmad (2026-11-16): he works full time (First Solar) and does sports analytics with Toledo Athletics, so the site says open to collaborate, not open to work. Dropped from the collaboration areas; the other seven areas remain."
+  },
+  {
+    "text": "Open to roles in AI research, ML engineering, and data science.",
+    "reason": "Ahmad (2026-11-16): he works full time (First Solar) and does sports analytics with Toledo Athletics, so the site says open to collaborate, not open to work.",
+    "preservedAs": "Open to collaborating on AI research, ML engineering, and sports analytics."
+  },
+  {
+    "text": "Whether it's a full-time opportunity, research collaboration, or just a conversation about autonomous systems, I'm listening.",
+    "reason": "Ahmad (2026-11-16): he works full time (First Solar) and does sports analytics with Toledo Athletics, so the site says open to collaborate, not open to work.",
+    "preservedAs": "Working full time at First Solar and on sports analytics with Toledo Athletics. For a research collaboration, a side build, or just a conversation about autonomous systems, I'm listening."
+  },
+  {
+    "text": "Two certifications in flight - Oracle's Application Integration Professional, Microsoft's AI Transformation Leader. A football computer-vision model still in progress, athletics platforms in build alongside it: a student-athlete health-insurance site, an onboarding portal. Still in Toledo, still open - AI research, ML engineering, sports analytics. Same instinct as chapter one: go where the hardest problems are.",
+    "reason": "Ahmad (2026-11-16): he works full time (First Solar) and does sports analytics with Toledo Athletics, so the site says open to collaborate, not open to work. Only \"still open\" changed to \"open to collaborate\"; every other word of the chapter is unchanged.",
+    "preservedAs": "The same chapter with \"Still in Toledo, open to collaborate - AI research, ML engineering, sports analytics.\""
+  },
+  {
+    "text": "· Open to remote · Available for select projects",
+    "reason": "Ahmad (2026-11-16): he works full time (First Solar) and does sports analytics with Toledo Athletics, so the site says open to collaborate, not open to work.",
+    "preservedAs": "Footer: Toledo, OH · Open to collaborate"
+  },
+  {
+    "text": "View Projects ↓",
+    "kind": "ui-label",
+    "reason": "Ahmad (2026-11-16): the button now opens the /projects page instead of scrolling, so its arrow points forward.",
+    "preservedAs": "View Projects →"
+  },
+  {
+    "text": "← Back to Portfolio",
+    "kind": "ui-label",
+    "reason": "Ahmad (2026-11-16): a case study's way back is All Projects; the projects page then returns to the portfolio where it was left.",
+    "preservedAs": "← Back to All Projects"
+  }
+]

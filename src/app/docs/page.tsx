@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
+import { PhotoBackdrop } from '@/components/journey/PhotoBackdrop';
 import { m, AnimatePresence } from 'framer-motion';
 
 const MONO  = "var(--font-code), ui-monospace, monospace";
@@ -65,7 +66,9 @@ export default function DocsPage() {
     <div
       style={{
         minHeight: '100vh',
-        background: 'var(--background)',
+        background: 'transparent',
+        position: 'relative',
+        isolation: 'isolate',
         color: 'var(--foreground)',
         fontFamily: SERIF, // body font; mono only for labels/buttons
         backgroundImage: 'radial-gradient(circle, rgba(45,212,200,0.04) 1px, transparent 1px)',
@@ -73,6 +76,7 @@ export default function DocsPage() {
         backgroundPosition: '14px 24px',
       }}
     >
+      <PhotoBackdrop id="opening" />
       <SubpageHeader backHref="/" backLabel="Portfolio" />
       <div
         style={{

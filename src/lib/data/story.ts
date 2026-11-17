@@ -1,9 +1,8 @@
 // The Story - six scroll-driven chapters. Copy is compressed from the site's own
 // About/Experience/press text; every number and fact is real. Scenes are
-// code-drawn (see story/ChapterScene.tsx) - swap in photography later if desired.
+// rendered by the photo journey (worlds.ts places each sentence in its world).
 
 import { nowUpdated } from './now';
-import { site } from './site';
 
 export type StoryScene = 'map' | 'systems' | 'neural' | 'solar' | 'field' | 'horizon';
 
@@ -71,11 +70,19 @@ export const storyChapters: StoryChapter[] = [
     id: 'whats-next',
     kicker: `Epilogue · ${nowUpdated}`,
     title: 'The next chapter.',
-    body: "Two certifications in flight - Oracle's Application Integration Professional, Microsoft's AI Transformation Leader. A football computer-vision model still in progress, athletics platforms in build alongside it: a student-athlete health-insurance site, an onboarding portal. Still in Toledo, still open - AI research, ML engineering, sports analytics. Same instinct as chapter one: go where the hardest problems are.",
+    body: "Two certifications in flight - Oracle's Application Integration Professional, Microsoft's AI Transformation Leader. A football computer-vision model still in progress, athletics platforms in build alongside it: a student-athlete health-insurance site, an onboarding portal. Still in Toledo, open to collaborate - AI research, ML engineering, sports analytics. Same instinct as chapter one: go where the hardest problems are.",
     scene: 'horizon',
     accent: '#f59e0b',
     milestone: false,
-    stat: { value: 'Open', label: site.availability.label },
+    stat: { value: 'Open', label: 'To collaborate · Toledo, OH' },
   },
 ];
 
+
+/**
+ * Split a chapter body into sentences, so the photo journey (worlds.ts) can place
+ * each sentence in the world it belongs to without retyping any of it.
+ */
+export function sentences(body: string): string[] {
+  return body.split(/(?<=[.!?])\s+(?=[A-Z0-9$"'])/);
+}

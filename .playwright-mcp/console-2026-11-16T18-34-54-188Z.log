@@ -1,0 +1,43 @@
+[   59061ms] [WARNING] The resource https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/Images/optimized/opponent-twin-mirror-960.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/:1
+[   59061ms] [WARNING] The resource https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/Images/optimized/small-data-season-noise-960.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/:1
+[   63064ms] [WARNING] The resource https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/Images/optimized/opponent-twin-mirror-960.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/:1
+[   63064ms] [WARNING] The resource https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/Images/optimized/small-data-season-noise-960.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/:1
+[   67963ms] [WARNING] The resource https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/Images/optimized/opponent-twin-mirror-960.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/:1
+[   67964ms] [WARNING] The resource https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/Images/optimized/small-data-season-noise-960.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://ahmad-portfolio-better-git-red-c2f936-aahmadf123-7151s-projects.vercel.app/:1
+[ 2189961ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3200/_vercel/insights/script.js:1
+[ 2189968ms] [LOG] [Vercel Web Analytics] Failed to load script from /_vercel/insights/script.js. Be sure to enable Web Analytics for your project and deploy again. See https://vercel.com/docs/analytics/quickstart for more information. @ http://localhost:3200/_next/static/chunks/00xbejbg0ke_y.js:31
+[ 2270638ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3200/_vercel/insights/script.js:1
+[ 2270644ms] [LOG] [Vercel Web Analytics] Failed to load script from /_vercel/insights/script.js. Be sure to enable Web Analytics for your project and deploy again. See https://vercel.com/docs/analytics/quickstart for more information. @ http://localhost:3200/_next/static/chunks/00xbejbg0ke_y.js:31
+[ 2325418ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3200/_vercel/insights/script.js:1
+[ 2325425ms] [LOG] [Vercel Web Analytics] Failed to load script from /_vercel/insights/script.js. Be sure to enable Web Analytics for your project and deploy again. See https://vercel.com/docs/analytics/quickstart for more information. @ http://localhost:3200/_next/static/chunks/00xbejbg0ke_y.js:31
+[ 2352773ms] TypeError: Cannot read properties of null (reading 'scrollHeight')
+    at tick (<anonymous>:8:174)
+    at <anonymous>:11:5
+    at <anonymous>:14:5
+    at <anonymous>:15:7
+[ 2352978ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3200/_vercel/insights/script.js:1
+[ 2352985ms] [LOG] [Vercel Web Analytics] Failed to load script from /_vercel/insights/script.js. Be sure to enable Web Analytics for your project and deploy again. See https://vercel.com/docs/analytics/quickstart for more information. @ http://localhost:3200/_next/static/chunks/00xbejbg0ke_y.js:31
+[ 2365577ms] TypeError: Cannot read properties of null (reading 'scrollHeight')
+    at tick (<anonymous>:8:174)
+    at <anonymous>:11:5
+    at <anonymous>:14:5
+    at <anonymous>:15:7
+[ 2365608ms] TypeError: Cannot read properties of null (reading 'scrollHeight')
+    at tick (<anonymous>:8:174)
+    at <anonymous>:11:5
+    at <anonymous>:14:5
+    at <anonymous>:15:7
+[ 2365805ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3200/_vercel/insights/script.js:1
+[ 2365811ms] [LOG] [Vercel Web Analytics] Failed to load script from /_vercel/insights/script.js. Be sure to enable Web Analytics for your project and deploy again. See https://vercel.com/docs/analytics/quickstart for more information. @ http://localhost:3200/_next/static/chunks/00xbejbg0ke_y.js:31
+[ 2382422ms] TypeError: Cannot read properties of null (reading 'scrollHeight')
+    at tick (<anonymous>:8:174)
+    at <anonymous>:11:5
+    at <anonymous>:14:5
+    at <anonymous>:15:7
+[ 2382454ms] TypeError: Cannot read properties of null (reading 'scrollHeight')
+    at tick (<anonymous>:8:174)
+    at <anonymous>:11:5
+    at <anonymous>:14:5
+    at <anonymous>:15:7
+[ 2382658ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3200/_vercel/insights/script.js:1
+[ 2382666ms] [LOG] [Vercel Web Analytics] Failed to load script from /_vercel/insights/script.js. Be sure to enable Web Analytics for your project and deploy again. See https://vercel.com/docs/analytics/quickstart for more information. @ http://localhost:3200/_next/static/chunks/00xbejbg0ke_y.js:31

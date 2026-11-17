@@ -41,7 +41,9 @@ export function ChapterNav() {
             className="chapter-dot"
             aria-label={`${s.n ? `Chapter ${s.n} - ` : ''}${s.label}`}
             aria-current={isActive ? 'true' : undefined}
-            style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', minHeight: 12 }}
+            // The link is only as wide as its dot: the label is absolutely positioned so its
+            // (invisible) box never sits over page content and swallows clicks there.
+            style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', minHeight: 12, width: 14 }}
           >
             <span
               aria-hidden
@@ -68,6 +70,10 @@ export function ChapterNav() {
                 borderRadius: 4,
                 padding: '3px 8px',
                 whiteSpace: 'nowrap',
+                position: 'absolute',
+                left: 20,
+                top: '50%',
+                marginTop: -10,
                 opacity: 0,
                 transform: 'translateX(-6px)',
                 transition: 'opacity 0.2s ease, transform 0.2s ease',

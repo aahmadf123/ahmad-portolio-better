@@ -5,6 +5,8 @@ import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
+/** The photo-journey world this case study belongs to (back link + label). */
+
 const SERIF = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
 const MONO  = "var(--font-code), ui-monospace, monospace";
@@ -47,7 +49,7 @@ function Metric({ value, label }: { value: string; label: string }) {
 function ArchLayer({ n, title, items }: { n: string; title: string; items: string[] }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.6, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
         <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
@@ -93,10 +95,10 @@ export default function UAVCaseStudy() {
   const active = useActiveSection(SECTION_IDS);
 
   return (
-    <div style={{ background: 'var(--background)', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
+    <div style={{ background: 'transparent', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
 
       {/* ── Sticky header ── */}
-      <SubpageHeader backHref="/#projects" backLabel="Projects" accent={ACCENT}>
+      <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
         <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 14px', border: `1px solid ${ACCENT}35`, borderRadius: 5, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none' }}>
           Research Report ↓
         </a>
@@ -130,7 +132,7 @@ export default function UAVCaseStudy() {
         {/* CTA buttons */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, paddingBottom: 'clamp(48px,6vw,72px)', borderBottom: '1px solid rgba(244,244,242,0.07)' }}>
           <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Research Report ↓</a>
-          <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</SmartBackLink>
+          <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</SmartBackLink>
         </div>
       </div>
 
@@ -423,7 +425,7 @@ export default function UAVCaseStudy() {
               { n: '06', t: 'Multi-Agent Extension', d: 'Extend the single-UAV graph-based RL framework to cooperative multi-agent UAV navigation for search, coverage, and formation tasks.' },
             ].map(({ n, t, d }) => (
               <div key={n} style={{ padding: '18px 20px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.6, marginBottom: 8 }}>{n}</div>
+                <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.9, marginBottom: 8 }}>{n}</div>
                 <div style={{ fontFamily: MONO, fontSize: 12, color: 'var(--foreground)', marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 12, lineHeight: 1.65, color: 'var(--text3)' }}>{d}</p>
               </div>
@@ -443,8 +445,8 @@ export default function UAVCaseStudy() {
               <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
                 Download Research Report ↓
               </a>
-              <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
-                ← Back to Portfolio
+              <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
+                ← Back to All Projects
               </SmartBackLink>
             </div>
           </div>

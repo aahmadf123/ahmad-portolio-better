@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { MONO, SkillChip } from '@/components/shared/section-helpers';
+import { MONO, SkillChip, readable } from '@/components/shared/section-helpers';
 import { skillGroups, type SkillGroup } from '@/lib/data/skills';
 
 function SkillGroupCard({ group }: { group: SkillGroup }) {
@@ -24,7 +24,7 @@ function SkillGroupCard({ group }: { group: SkillGroup }) {
             tabIndex={0}
             onClick={() => setShowAll(true)}
             onKeyDown={expandKey}
-            style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${group.color}0a`, border: `1px solid ${group.color}30`, borderRadius: 4, color: group.color, letterSpacing: '0.03em', cursor: 'pointer', opacity: 0.75 }}
+            style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${group.color}0a`, border: `1px solid ${group.color}30`, borderRadius: 4, color: readable(group.color), letterSpacing: '0.03em', cursor: 'pointer' }}
           >+{hidden}</span>
         )}
       </div>

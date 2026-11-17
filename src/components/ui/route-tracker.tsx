@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { jumpTo } from '@/components/ui/smooth-scroll';
 
 /**
  * Navigation memory for SmartBackLink, mounted once in the root layout.
@@ -16,6 +17,9 @@ import { usePathname } from 'next/navigation';
  *
  * Renders nothing.
  */
+/** True while a saved offset is being re-applied (it must not be re-saved half-way). */
+let restoring = false;
+
 export function RouteTracker() {
   const pathname = usePathname();
 
@@ -38,12 +42,14 @@ export function RouteTracker() {
           // offset until content finishes streaming in. The loop stops for
           // good the first time the offset sticks, so a reader who then
           // scrolls isn't fought.
-          const apply = () => window.scrollTo({ top: saved, behavior: 'instant' as ScrollBehavior });
+          const apply = () => jumpTo(saved); // (jumpTo keeps the Lenis glide in step)
+          restoring = true; // don't save the half-restored offset meanwhile
           apply();
           let tries = 0;
           const iv = setInterval(() => {
             if (Math.abs(window.scrollY - saved) <= 2 || ++tries > 20) {
               clearInterval(iv);
+              restoring = false;
               return;
             }
             apply();
@@ -62,8 +68,13 @@ export function RouteTracker() {
   // overwrite the real offset with 0 and break SmartBackLink's restore.
   useEffect(() => {
     let timer = 0;
+    // Once the reader has clicked through to another page, stop saving: while the new
+    // page renders, the old one's scroll gets clamped (a shorter page), and saving that
+    // would overwrite the real offset SmartBackLink restores later.
+    let leaving = false;
     const save = () => {
       timer = 0;
+      if (leaving || restoring || window.location.pathname !== pathname) return;
       try {
         sessionStorage.setItem(`nav:scroll:${pathname}`, String(Math.round(window.scrollY)));
       } catch { /* ignore */ }
@@ -74,7 +85,16 @@ export function RouteTracker() {
     };
     // A click or key press always precedes an in-app navigation, so flushing
     // here captures the exact offset even if the debounce hasn't fired yet.
-    const flush = () => { if (timer) window.clearTimeout(timer); save(); };
+    const flush = (e?: Event) => {
+      if (timer) window.clearTimeout(timer);
+      save();
+      const a = (e?.target as Element | null)?.closest?.('a[href]') as HTMLAnchorElement | null;
+      if (a && a.origin === window.location.origin && a.pathname !== pathname && !a.target) {
+        leaving = true;
+        // (no navigation after all, e.g. a new-tab click or a press dragged away: resume)
+        window.setTimeout(() => { leaving = false; }, 3000);
+      }
+    };
     save();
     window.addEventListener('scroll', onScroll, { passive: true });
     document.addEventListener('pointerdown', flush, { capture: true, passive: true });

@@ -79,7 +79,7 @@ export const about: AboutData = {
       beliefIds: ['01'],
       dataPoint: { label: 'In production', value: 'battingcleanup.appliedlabs.org · downtown Toledo' },
       artifacts: [
-        { label: 'Bodies of work', href: '#projects' },
+        { label: 'Bodies of work', href: '/projects' },
         { label: 'GitHub', href: 'https://github.com/aahmadf123', external: true },
       ],
     },

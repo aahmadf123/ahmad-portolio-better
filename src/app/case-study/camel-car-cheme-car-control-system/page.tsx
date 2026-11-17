@@ -7,6 +7,8 @@ import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
 
+/** The photo-journey world this case study belongs to (back link + label). */
+
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
 const MONO   = "var(--font-code), ui-monospace, monospace";
@@ -49,7 +51,7 @@ function Metric({ value, label }: { value: string; label: string }) {
 function LayerRow({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${color}06`, border: `1px solid ${color}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.6, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
         <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
@@ -87,7 +89,7 @@ export default function CamelCarCaseStudy() {
   const [lb, setLb] = useState<string | null>(null);
 
   return (
-    <div style={{ background: 'var(--background)', minHeight: '100vh', color: 'var(--text2)' }}>
+    <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
         body { background: var(--background); }
         .cs-body { font-family: ${SERIF}; font-size: 15px; line-height: 1.75; color: var(--text2); }
@@ -140,7 +142,7 @@ export default function CamelCarCaseStudy() {
       `}</style>
 
       {/* ── Sticky header ── */}
-      <SubpageHeader backHref="/#projects" backLabel="Projects" accent={ACCENT}>
+      <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
         <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Camel Car</span>
       </SubpageHeader>
 
@@ -461,7 +463,7 @@ if (pressure >= target_pressure_threshold) {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
+                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
               </div>
             </Section>
 

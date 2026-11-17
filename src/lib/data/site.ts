@@ -43,7 +43,7 @@ export const site: SiteConfig = {
   degreeUrl: '/docs/CeD.26D8-NDTX-AGEW.pdf',
   availability: {
     open: true,
-    label: 'Available · Toledo, OH',
+    label: 'Open to collaborate · Toledo, OH',
     interests: [
       'AI Research',
       'ML Engineering',
@@ -51,7 +51,6 @@ export const site: SiteConfig = {
       'Robotics & Autonomy',
       'Computer Vision',
       'Sports Analytics',
-      'Full-Time Roles',
       'Research Collab',
     ],
   },
@@ -59,7 +58,7 @@ export const site: SiteConfig = {
     icon: 'build',
     label: 'Now building',
     detail: 'Toledo Football IQ - 10-stage CV pipeline',
-    href: '#projects',
+    href: '/case-study/toledo-football-iq-computer-vision-analytics',
   },
   url: 'https://ahmadfx.xyz',
 };

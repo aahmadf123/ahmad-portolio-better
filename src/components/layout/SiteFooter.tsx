@@ -1,4 +1,9 @@
+import React from 'react';
 import { site } from '@/lib/data/site';
+import { journeyPhoto, worlds, type PhotoId } from '@/lib/data/worlds';
+
+// Stock photos only: Ahmad's own photos (the Chem-E Car) need no credit.
+const CREDITED = (['opening', ...worlds.map((w) => w.photo)] as PhotoId[]).filter((id) => journeyPhoto(id).credit);
 
 const MONO = 'var(--font-code), monospace';
 const HAND = 'var(--font-hand), cursive';
@@ -21,7 +26,7 @@ export function SiteFooter() {
               Let&apos;s build something real.
             </div>
             <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 14 }}>
-              {site.location} · Open to remote · Available for select projects
+              {site.location} · Open to collaborate
             </div>
           </div>
 
@@ -29,7 +34,7 @@ export function SiteFooter() {
             <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Explore</span>
             {[
               { label: 'The Story', href: '/#story' },
-              { label: 'Bodies of Work', href: '/#projects' },
+              { label: 'Bodies of Work', href: '/projects' },
               { label: 'Field Notes', href: '/field-notes' },
               { label: 'Docs & Résumé', href: '/docs' },
             ].map((l) => (
@@ -49,6 +54,21 @@ export function SiteFooter() {
           <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>© {year} {site.name}. All rights reserved.</span>
           <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Next.js · TypeScript · GSAP · three.js</span>
         </div>
+
+        {/* The journey's photographs are other people's work: credit every one. */}
+        <p style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', lineHeight: 1.7, marginTop: 14, letterSpacing: '0.02em' }}>
+          Photos:{' '}
+          {CREDITED.map((id, i) => {
+            const c = journeyPhoto(id).credit!;
+            return (
+              <React.Fragment key={id}>
+                <a href={c.page} target="_blank" rel="noopener" style={{ color: 'var(--text2)' }}>{c.photographer}</a>
+                {' '}(<a href={c.licenceUrl} target="_blank" rel="noopener" style={{ color: 'var(--text3)' }}>{c.licence}</a>){i < CREDITED.length - 1 ? ' · ' : ''}
+              </React.Fragment>
+            );
+          })}
+          . All photos graded and resized for this site.
+        </p>
       </div>
 
       <style>{`

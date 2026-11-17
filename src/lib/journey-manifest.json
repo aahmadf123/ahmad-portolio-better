@@ -1,0 +1,215 @@
+{
+  "opening": {
+    "width": 5120,
+    "height": 2880,
+    "widths": [
+      640,
+      1280,
+      1920,
+      2560,
+      3840
+    ],
+    "webp": {
+      "640": "/Images/journey/opening-640.webp",
+      "1280": "/Images/journey/opening-1280.webp",
+      "1920": "/Images/journey/opening-1920.webp",
+      "2560": "/Images/journey/opening-2560.webp",
+      "3840": "/Images/journey/opening-3840.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/opening-640.avif",
+      "1280": "/Images/journey/opening-1280.avif",
+      "1920": "/Images/journey/opening-1920.avif",
+      "2560": "/Images/journey/opening-2560.avif",
+      "3840": "/Images/journey/opening-3840.avif"
+    },
+    "panorama": false,
+    "depth": "/Images/journey/opening-depth.webp",
+    "focal": {
+      "x": 0.56,
+      "y": 0.45
+    },
+    "alt": "Downtown Toledo, Ohio at dusk from the air, the Maumee River curving past the skyline",
+    "credit": {
+      "photographer": "Leo Escala",
+      "page": "https://unsplash.com/photos/a-view-of-a-city-with-a-river-running-through-it-lmqBIlLUKpU",
+      "licence": "Unsplash License",
+      "licenceUrl": "https://unsplash.com/license"
+    }
+  },
+  "chem-e-car": {
+    "width": 1904,
+    "height": 1428,
+    "widths": [
+      640,
+      1280,
+      1904
+    ],
+    "webp": {
+      "640": "/Images/journey/chem-e-car-640.webp",
+      "1280": "/Images/journey/chem-e-car-1280.webp",
+      "1904": "/Images/journey/chem-e-car-1904.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/chem-e-car-640.avif",
+      "1280": "/Images/journey/chem-e-car-1280.avif",
+      "1904": "/Images/journey/chem-e-car-1904.avif"
+    },
+    "panorama": false,
+    "depth": "/Images/journey/chem-e-car-depth.webp",
+    "focal": {
+      "x": 0.47,
+      "y": 0.7
+    },
+    "alt": "The UT AIChE Chem-E Car team pointing to their car at the regional competition",
+    "own": true,
+    "source": "/Images/AIChE_Regional_Pics.jpg"
+  },
+  "data-science": {
+    "width": 5120,
+    "height": 3200,
+    "widths": [
+      640,
+      1280,
+      1920,
+      2560,
+      3840
+    ],
+    "webp": {
+      "640": "/Images/journey/data-science-640.webp",
+      "1280": "/Images/journey/data-science-1280.webp",
+      "1920": "/Images/journey/data-science-1920.webp",
+      "2560": "/Images/journey/data-science-2560.webp",
+      "3840": "/Images/journey/data-science-3840.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/data-science-640.avif",
+      "1280": "/Images/journey/data-science-1280.avif",
+      "1920": "/Images/journey/data-science-1920.avif",
+      "2560": "/Images/journey/data-science-2560.avif",
+      "3840": "/Images/journey/data-science-3840.avif"
+    },
+    "panorama": false,
+    "depth": "/Images/journey/data-science-depth.webp",
+    "focal": {
+      "x": 0.55,
+      "y": 0.38
+    },
+    "alt": "A city's lights at night seen from a plane, like a map of data points",
+    "credit": {
+      "photographer": "Nastya Dulhiier",
+      "page": "https://unsplash.com/photos/lighted-city-at-night-aerial-photo-OKOOGO578eo",
+      "licence": "Unsplash License",
+      "licenceUrl": "https://unsplash.com/license"
+    }
+  },
+  "sports-analytics": {
+    "width": 1366,
+    "height": 458,
+    "widths": [
+      640,
+      1280,
+      1366
+    ],
+    "webp": {
+      "640": "/Images/journey/sports-analytics-640.webp",
+      "1280": "/Images/journey/sports-analytics-1280.webp",
+      "1366": "/Images/journey/sports-analytics-1366.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/sports-analytics-640.avif",
+      "1280": "/Images/journey/sports-analytics-1280.avif",
+      "1366": "/Images/journey/sports-analytics-1366.avif"
+    },
+    "fill": "/Images/journey/sports-analytics-fill.webp",
+    "panorama": true,
+    "depth": "/Images/journey/sports-analytics-depth.webp",
+    "focal": {
+      "x": 0.4,
+      "y": 0.62
+    },
+    "alt": "The Glass Bowl at sunset during a Toledo Rockets game, ROCKETS end zone and packed stands",
+    "credit": {
+      "photographer": "Anthony John Garcia",
+      "page": "https://commons.wikimedia.org/wiki/File:The_Glass_Bowl.jpg",
+      "licence": "CC BY-SA 4.0",
+      "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+    }
+  },
+  "research": {
+    "width": 5120,
+    "height": 3413,
+    "widths": [
+      640,
+      1280,
+      1920,
+      2560,
+      3840
+    ],
+    "webp": {
+      "640": "/Images/journey/research-640.webp",
+      "1280": "/Images/journey/research-1280.webp",
+      "1920": "/Images/journey/research-1920.webp",
+      "2560": "/Images/journey/research-2560.webp",
+      "3840": "/Images/journey/research-3840.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/research-640.avif",
+      "1280": "/Images/journey/research-1280.avif",
+      "1920": "/Images/journey/research-1920.avif",
+      "2560": "/Images/journey/research-2560.avif",
+      "3840": "/Images/journey/research-3840.avif"
+    },
+    "panorama": false,
+    "depth": "/Images/journey/research-depth.webp",
+    "focal": {
+      "x": 0.55,
+      "y": 0.62
+    },
+    "alt": "Two drones flying in a pale sky",
+    "credit": {
+      "photographer": "Valentin Zickner",
+      "page": "https://unsplash.com/photos/drones-are-flying-in-a-cloudy-blue-sky-FQa5xUZlAUo",
+      "licence": "Unsplash License",
+      "licenceUrl": "https://unsplash.com/license"
+    }
+  },
+  "ai-engineering": {
+    "width": 5120,
+    "height": 6400,
+    "widths": [
+      640,
+      1280,
+      1920,
+      2560,
+      3840
+    ],
+    "webp": {
+      "640": "/Images/journey/ai-engineering-640.webp",
+      "1280": "/Images/journey/ai-engineering-1280.webp",
+      "1920": "/Images/journey/ai-engineering-1920.webp",
+      "2560": "/Images/journey/ai-engineering-2560.webp",
+      "3840": "/Images/journey/ai-engineering-3840.webp"
+    },
+    "avif": {
+      "640": "/Images/journey/ai-engineering-640.avif",
+      "1280": "/Images/journey/ai-engineering-1280.avif",
+      "1920": "/Images/journey/ai-engineering-1920.avif",
+      "2560": "/Images/journey/ai-engineering-2560.avif",
+      "3840": "/Images/journey/ai-engineering-3840.avif"
+    },
+    "panorama": false,
+    "depth": "/Images/journey/ai-engineering-depth.webp",
+    "focal": {
+      "x": 0.55,
+      "y": 0.6
+    },
+    "alt": "Rows of white server cabinets in a data centre",
+    "credit": {
+      "photographer": "Tony Marinescu",
+      "page": "https://unsplash.com/photos/modern-data-center-with-rows-of-white-server-cabinets-fImCPTZ026U",
+      "licence": "Unsplash License",
+      "licenceUrl": "https://unsplash.com/license"
+    }
+  }
+}

@@ -48,6 +48,9 @@ export function TimelineSection() {
       if (fill) fill.style.transform = 'scaleY(1)';
       return;
     }
+    // Browsers with scroll-driven animations draw the line in CSS (globals.css, .tl-wrap):
+    // on the compositor, no per-frame script. GSAP is the fallback.
+    if (CSS.supports('animation-timeline: view()')) return;
     const ctx = gsap.context(() => {
       const fill = wrap.querySelector<HTMLElement>('[data-tl-fill]');
       if (!fill) return;
@@ -67,7 +70,7 @@ export function TimelineSection() {
 
   return (
     <Section id="timeline" style={{ background: 'rgba(17,19,26,0.85)' }}>
-      <SH n={def.n} label="Timeline" sub="Career and education as one continuous line. Newest first, then back to the origin story." color={def.color} />
+      <SH n={def.n} label="Timeline" sub="Career and education as one continuous line. Newest first, then back to the origin story." color={def.color} variant="sub" />
 
       <div ref={wrapRef} className="tl-wrap" style={{ position: 'relative', padding: '10px 0 30px' }}>
         {/* the line */}

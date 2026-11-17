@@ -31,11 +31,15 @@ export function FootballIQFeature() {
             const target = parseFloat(el.dataset.count ?? '0');
             const suffix = el.dataset.suffix ?? '';
             const obj = { v: 0 };
+            let shown = '';
             gsap.to(obj, {
               v: target,
               duration: 1.2,
               ease: 'power2.out',
-              onUpdate: () => { el.textContent = `${Math.round(obj.v)}${suffix}`; },
+              onUpdate: () => {
+                const t = `${Math.round(obj.v)}${suffix}`;
+                if (t !== shown) { shown = t; el.textContent = t; } // only when the number changes
+              },
             });
           });
         },

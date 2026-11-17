@@ -58,10 +58,10 @@ export function ContactSection() {
           {/* ── Left ── */}
           <div>
             <h2 style={{ fontFamily: SERIF, fontSize: 'var(--fs-section-head)', fontWeight: 400, color: 'var(--foreground)', lineHeight: 1.12, marginBottom: 20, maxWidth: 560, paddingBottom: '0.05em' }}>
-              Open to roles in AI&nbsp;research, ML&nbsp;engineering, and data&nbsp;science.
+              Open to collaborating on AI&nbsp;research, ML&nbsp;engineering, and sports&nbsp;analytics.
             </h2>
             <p style={{ fontFamily: SANS, fontSize: 15, color: FG3, lineHeight: 1.8, marginBottom: 44, maxWidth: 440 }}>
-              Whether it&apos;s a full-time opportunity, research collaboration, or just a conversation about autonomous systems, I&apos;m listening.
+              Working full time at First Solar and on sports analytics with Toledo Athletics. For a research collaboration, a side build, or just a conversation about autonomous systems, I&apos;m listening.
             </p>
 
             {/* Email as terminal send-signal element */}
@@ -108,7 +108,7 @@ export function ContactSection() {
 
             {/* Interest tags */}
             <div style={{ marginTop: 52, paddingTop: 24, borderTop: '1px solid var(--bd)', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-              <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 4 }}>Open to</span>
+              <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 4 }}>Collab on</span>
               {site.availability.interests.map(t => (
                 <span key={t} style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', border: '1px solid var(--bd)', borderRadius: 3, color: FG3, letterSpacing: '0.04em', textTransform: 'uppercase', wordBreak: 'break-word' }}>{t}</span>
               ))}

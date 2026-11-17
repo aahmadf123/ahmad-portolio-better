@@ -20,6 +20,8 @@ Today the site is well built but reads as a polished dark portfolio. This redesi
 - **Homepage structure:** opening photo with his name → five world chapters, each holding that world's projects → field notes, about, contact.
 - **Inside pages** (case studies, field notes, docs) open with a real photo from their world and the same fly-in. The reading part below stays calm and readable.
 - **Headshot goes in About**, not the opening scene.
+- **Chem-E Car, kept modest (Ahmad, 2026-11-16):** his degree is Computer Engineering; he was part of the AIChE Chem-E Car team (built its Arduino control system). The world is labelled "Chem-E Car (AIChE)", framed as that control-system work, and is the shortest chapter.
+- **Sports photo is the Glass Bowl (Toledo Rockets)** and all football imagery is American college football, never soccer.
 - **Must keep:** the Football IQ play diagram and the skills constellation.
 - **No information loss.** "I have a lot of info about my life there." Every fact, number, date, project, job, award, cert, affiliation, testimonial, press item, insight and link on the current site must exist somewhere in the new one.
 - **Whole site may look different.** Not limited to small polish.

@@ -101,30 +101,36 @@ a { text-decoration: none; color: inherit; }
 }
 .reveal.in { opacity: 1; transform: translateY(0); }
 
-/* ── Scroll-Driven Reveals (Progressive Enhancement) ─────────── */
+/* Entrances (rv-*). RevealObserver adds .in once, when the element arrives; a short
+   transition plays and finishes. (Scroll-driven animations were tried: they stay
+   "active" for the life of the page, so every revealed element kept its own GPU layer,
+   ~60 of them, and every frame paid to commit them.) Hidden only when scripts run, so
+   nothing is ever invisible without JS; reduced motion shows everything at once. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .rv, .rv-left, .rv-right, .rv-fade {
+    opacity: 0;
+    transition: opacity .8s cubic-bezier(.16,1,.3,1), translate .8s cubic-bezier(.16,1,.3,1), scale .8s cubic-bezier(.16,1,.3,1);
+  }
+  .rv { translate: 0 26px; }
+  .rv-left { translate: -40px 0; }
+  .rv-right { translate: 40px 0; }
+  .rv-fade { scale: .96; }
+  .rv.in, .rv-left.in, .rv-right.in, .rv-fade.in { opacity: 1; translate: none; scale: none; }
+  .rv-pop { scale: 0; }
+  .rv-pop.in { scale: 1; animation: rv-pop .5s cubic-bezier(.16,1,.3,1) both; }
+  .rv-ring.in { animation: rv-ring .8s ease-out .1s both; }
+  .rv-ring.late.in { animation-delay: .25s; }
+}
+@keyframes rv-pop { from { scale: 0; } to { scale: 1; } }
+@keyframes rv-ring { 0% { scale: .4; opacity: 0; } 35% { opacity: .7; } 100% { scale: 2.8; opacity: 0; } }
+/* Timeline line draws as it scrolls (TimelineSection; GSAP fallback without support). */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .reveal {
-      transition: none;
-      animation: sda-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 3% entry 32%;
-    }
-    .ghost-num {
-      animation: sda-ghost linear both;
-      animation-timeline: view();
-      animation-range: entry -20% entry 55%;
-    }
+    .tl-wrap { view-timeline: --tl block; }
+    .tl-wrap [data-tl-fill] { animation: tl-fill linear both; animation-timeline: --tl; animation-range: cover 28vh cover calc(100% - 58vh); }
   }
 }
-@keyframes sda-reveal {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: none; }
-}
-@keyframes sda-ghost {
-  from { opacity: 0; transform: translateX(-16px); }
-  to   { opacity: 0.05; transform: none; }
-}
+@keyframes tl-fill { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
 /* Pulse - glass breathe */
 @keyframes glass-pulse {
@@ -161,81 +167,50 @@ a { text-decoration: none; color: inherit; }
   transition: transform 0.06s linear;
   pointer-events: none;
 }
+/* Where supported, the bar follows the scroll on the compositor: no script, no DOM writes. */
+@supports (animation-timeline: scroll()) {
+  #scroll-bar { animation: scroll-bar-fill linear both; animation-timeline: scroll(root block); }
+}
+@keyframes scroll-bar-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none !important; transition: none !important; }
   * { transition: none !important; animation: none !important; }
 }
 
-/* Off-screen sections (OffscreenAnimationPauser) and Story chapters that are
-   wiped out of view (data-story-idle) don't run their ambient loops. */
-[data-offscreen], [data-offscreen] *, [data-story-idle] * {
+/* Off-screen sections (OffscreenAnimationPauser) pause their ambient loops. (Removing
+   them outright with animation-name: none was measured to cost more: every toggle
+   rebuilt the animations of the whole section.) */
+[data-offscreen], [data-offscreen] * {
   animation-play-state: paused !important;
 }
 
-/* ── Custom cursor (pointer devices only) ─────────────────────── */
-@media (pointer: fine) {
-  html.has-custom-cursor *, html.has-custom-cursor *::before, html.has-custom-cursor *::after { cursor: none !important; }
-  /* keep the text caret affordance where people type */
-  html.has-custom-cursor input, html.has-custom-cursor textarea, html.has-custom-cursor [contenteditable="true"] { cursor: text !important; }
+/* Decorative loops (drawings, floating prints, pulses, the equaliser) hold still while
+   the page is moving and resume when it stops: most animate SVG strokes, which repaint on
+   the main thread every frame, and scrolling needs every frame it can get. */
+:is(html.lenis-scrolling, html.is-scrolling) :is(.stage-print, .scene-flow, .scene-drift, .scene-rise, .scene-drive, .scene-blink, .np-eq i, .chat-launcher-ping, .pulse, .signal-quote) {
+  animation-play-state: paused;
 }
+/* A faded-out journey layer (setLayer) pauses its loops. */
+[data-idle] * { animation-play-state: paused !important; }
 
-/* ── Card glass specular sheen ────────────────────────────────── */
-.card-project { position: relative; isolation: isolate; }
-.card-glass-sheen {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  border-radius: inherit;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.055) 0%,
-    transparent 38%,
-    transparent 62%,
-    rgba(255, 255, 255, 0.018) 100%
-  );
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-.card-project:hover .card-glass-sheen { opacity: 1; }
+/* Lenis (SmoothScroll) eases the scroll itself; native smooth scrolling would fight it. */
+html.lenis { scroll-behavior: auto !important; }
 
-/* ── Project card glint sweep (overdrive) ─────────────────────── */
-@keyframes card-glint-sweep {
-  0%   { transform: translateX(-110%) skewX(-18deg); opacity: 0; }
-  12%  { opacity: 1; }
-  88%  { opacity: 1; }
-  100% { transform: translateX(210%) skewX(-18deg); opacity: 0; }
+/* ── Cursor glow (CursorGlow; mouse and trackpad only) ─────────── */
+[data-cursor-glow] {
+  position: fixed; left: 0; top: 0; z-index: 40; pointer-events: none;
+  width: 0; height: 0; opacity: 0; transition: opacity .45s ease; will-change: translate;
 }
-.card-glint {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  border-radius: inherit;
-  overflow: hidden;
+[data-cursor-glow].on { opacity: 1; }
+[data-cursor-glow] > span {
+  position: absolute; left: -240px; top: -240px; width: 480px; height: 480px; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 15%, transparent) 0%, color-mix(in srgb, var(--primary) 6%, transparent) 32%, transparent 68%);
+  mix-blend-mode: screen;
+  transition: scale .35s cubic-bezier(.16,1,.3,1), opacity .35s;
 }
-.card-glint::after {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0;
-  left: 0;
-  width: 28%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.06) 30%,
-    rgba(255, 255, 255, 0.14) 50%,
-    rgba(255, 255, 255, 0.06) 70%,
-    transparent 100%
-  );
-  transform: translateX(-110%) skewX(-18deg);
-}
-@media (prefers-reduced-motion: no-preference) {
-  .card-project:hover .card-glint::after {
-    animation: card-glint-sweep 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.06s forwards;
-  }
-}
+[data-cursor-glow].hot > span { scale: .55; background: radial-gradient(circle, color-mix(in srgb, var(--primary) 26%, transparent) 0%, color-mix(in srgb, var(--primary) 9%, transparent) 36%, transparent 68%); }
+@media (pointer: coarse) { [data-cursor-glow] { display: none; } }
 
 /* ── View Transitions ─────────────────────────────────────────── */
 @supports (view-transition-name: none) {
@@ -421,3 +396,86 @@ a, button { min-height: 44px; min-width: 44px; }
   .reveal { animation: none !important; }
 }
 
+
+/* ── Photo journey (components/journey) ─────────────────────── */
+/* Copy over a photo sits on a photographic side shade (SceneCopy). */
+.scene-shade.from-left { background: linear-gradient(to right, rgba(13,14,18,0.86) 0%, rgba(13,14,18,0.72) 38%, rgba(13,14,18,0.25) 62%, rgba(13,14,18,0) 78%); }
+.scene-shade.from-right { background: linear-gradient(to left, rgba(13,14,18,0.86) 0%, rgba(13,14,18,0.72) 38%, rgba(13,14,18,0.25) 62%, rgba(13,14,18,0) 78%); }
+.scene-shade.centred { background: radial-gradient(ellipse 70% 75% at 50% 52%, rgba(13,14,18,0.8) 0%, rgba(13,14,18,0.55) 55%, rgba(13,14,18,0.2) 100%); }
+@media (max-width: 760px) {
+  .scene-shade.from-left, .scene-shade.from-right, .scene-shade.centred { background: linear-gradient(to bottom, rgba(13,14,18,0.3) 0%, rgba(13,14,18,0.8) 22%, rgba(13,14,18,0.8) 82%, rgba(13,14,18,0.35) 100%); }
+}
+.scene-copy { text-shadow: 0 1px 12px rgba(13,14,18,0.75); }
+/* StageArt: the world's drawing with Ahmad's own photos laid over it, opposite the words. */
+.scene-aside { flex: 0 1 min(44vw, 600px); display: flex; justify-content: center; min-width: 0; }
+.stage-art { position: relative; width: min(100%, 76svh); aspect-ratio: 1; }
+.stage-art-scene {
+  position: absolute; inset: 0; border-radius: 10px; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 45%, rgba(13,14,18,0.62), rgba(13,14,18,0.86));
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+  box-shadow: 0 30px 80px -30px color-mix(in srgb, var(--background) 85%, transparent);
+}
+.stage-print {
+  position: absolute; aspect-ratio: 4/3; border-radius: 8px; overflow: hidden; z-index: 1;
+  background: #0d0e12; border: 1px solid rgba(244,244,242,0.18);
+  box-shadow: 0 22px 50px -16px color-mix(in srgb, var(--background) 90%, transparent);
+  transition: rotate .4s cubic-bezier(.16,1,.3,1), scale .4s cubic-bezier(.16,1,.3,1);
+}
+.stage-print img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.stage-print:hover { rotate: 0deg !important; scale: 1.05; z-index: 3; }
+.stage-art[data-count="1"] .stage-print[data-i="0"] { left: 18%; top: 22%; width: 64%; rotate: -2deg; }
+.stage-art[data-count="2"] .stage-print[data-i="0"] { left: 5%; top: 10%; width: 58%; rotate: -4deg; }
+.stage-art[data-count="2"] .stage-print[data-i="1"] { right: 5%; bottom: 12%; width: 56%; rotate: 3deg; }
+.stage-art[data-count="3"] .stage-print[data-i="0"] { left: 4%; top: 6%; width: 50%; rotate: -4deg; }
+.stage-art[data-count="3"] .stage-print[data-i="1"] { right: 3%; top: 28%; width: 48%; rotate: 3deg; }
+.stage-art[data-count="3"] .stage-print[data-i="2"] { left: 12%; bottom: 6%; width: 46%; rotate: -1.5deg; }
+@media (prefers-reduced-motion: no-preference) {
+  .stage-print { animation: stage-float 9s ease-in-out infinite alternate; }
+  .stage-print[data-i="1"] { animation-delay: -3s; }
+  .stage-print[data-i="2"] { animation-delay: -6s; }
+  .scene-flow { animation: scene-dash 7s linear infinite; }
+  .scene-drift { animation: scene-spin 26s linear infinite; transform-origin: center; transform-box: fill-box; }
+  .scene-rise { animation: scene-rise 3.6s ease-in infinite; transform-box: fill-box; }
+  .scene-drive { animation: scene-drive 6s cubic-bezier(.45,0,.2,1) infinite; }
+  .scene-blink { animation: scene-blink 1.6s steps(2, jump-none) infinite; }
+}
+@keyframes stage-float { from { translate: 0 -7px; } to { translate: 0 7px; } }
+@keyframes scene-dash { to { stroke-dashoffset: -120; } }
+@keyframes scene-spin { to { rotate: 360deg; } }
+@keyframes scene-rise { from { translate: 0 0; opacity: .9; } to { translate: 0 -110px; opacity: 0; } }
+@keyframes scene-drive { 0%, 8% { translate: 0 0; } 70%, 100% { translate: 228px 0; } }
+@keyframes scene-blink { to { opacity: .2; } }
+/* ProjectTile: every project the same size, picture at full brightness, fixed-height rows. */
+/* Centred wrap, so a part-filled last row (one or two tiles) sits in the middle too. */
+.project-tiles { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+.project-tiles > .project-tile { flex: 0 0 min(360px, 100%); }
+.project-tile {
+  display: flex; flex-direction: column; width: min(360px, 100%); padding: 0; text-align: left; cursor: pointer;
+  border-radius: 10px; overflow: hidden; background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--tile) 26%, transparent);
+  transition: translate .35s cubic-bezier(.16,1,.3,1), border-color .35s, box-shadow .35s;
+}
+.project-tile:hover, .project-tile:focus-visible { translate: 0 -4px; border-color: color-mix(in srgb, var(--tile) 60%, transparent); box-shadow: 0 18px 50px -20px color-mix(in srgb, var(--tile) 45%, transparent); }
+.project-tile-media { position: relative; display: block; aspect-ratio: 16/10; overflow: hidden; background: #0d0e12; }
+.project-tile-media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: scale .5s cubic-bezier(.16,1,.3,1); }
+.project-tile:hover .project-tile-media img { scale: 1.04; }
+.project-tile-chips { position: absolute; inset: 10px 10px auto; display: flex; justify-content: space-between; gap: 8px; }
+.project-tile-chips > span { font-family: var(--font-code), monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; background: rgba(10,11,15,0.82); padding: 3px 8px; border-radius: 4px; }
+.project-tile-body { display: flex; flex-direction: column; gap: 8px; padding: 16px 18px 18px; }
+.project-tile-title { font-size: 20px; line-height: 1.1; letter-spacing: -0.015em; color: var(--foreground); height: 2.2em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.project-tile-headline { font-size: 11px; letter-spacing: .04em; line-height: 1.4; height: 1.4em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.project-tile-story { font-size: 15px; line-height: 1.55; color: var(--text2); height: 4.65em; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.project-tile-stack { display: flex; flex-wrap: wrap; gap: 4px; height: 21px; overflow: hidden; }
+.project-tile-stack > span { font-size: 10px; padding: 2px 7px; border: 1px solid var(--bd2); border-radius: 4px; color: var(--text2); white-space: nowrap; }
+.project-tile-more { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; margin-top: 4px; }
+/* Narrow screens: the words take the width; the photos are in the project tiles below. */
+@media (max-width: 900px) { .scene-aside { display: none; } }
+/* Chapter copy (ChapterCopy) tightens on phones and short screens. */
+@media (max-width: 600px) {
+  .chapter-copy p { font-size: 15px !important; line-height: 1.5 !important; }
+}
+@media (max-height: 760px) {
+  .chapter-copy p { font-size: 15px !important; line-height: 1.5 !important; }
+  .chapter-copy h2 { margin: 8px 0 10px !important; }
+}
+      

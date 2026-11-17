@@ -2,6 +2,8 @@ import React from 'react';
 import { ViewTransition } from 'react';
 import Link from 'next/link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
+import { PhotoBackdrop } from '@/components/journey/PhotoBackdrop';
+import { photoForFieldNote } from '@/lib/data/worlds';
 import type { Metadata } from 'next';
 import { getFieldNote, fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
 import { site } from '@/lib/data/site';
@@ -74,7 +76,8 @@ export default async function FieldNotePage({ params }: PageProps) {
   };
 
   return (
-    <div style={{ background: 'var(--background)', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
+    <div style={{ background: 'transparent', position: 'relative', isolation: 'isolate', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
+      <PhotoBackdrop id={photoForFieldNote(note)} />
 
       <script
         type="application/ld+json"

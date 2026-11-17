@@ -51,7 +51,7 @@ export function ConstellationLegend({
           >
             <span style={{ width: 8, height: 8, borderRadius: '50%', background: g.color, flexShrink: 0 }} />
             {g.label}
-            <span style={{ opacity: 0.55 }}>{GROUP_COUNTS[g.id] ?? 0}</span>
+            <span style={{ fontWeight: 600 }}>{GROUP_COUNTS[g.id] ?? 0}</span>
           </button>
         );
       })}

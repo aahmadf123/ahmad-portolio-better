@@ -21,12 +21,15 @@ import { useRouter } from 'next/navigation';
 export function SmartBackLink({
   fallbackHref,
   backWhenPrev = ['/'],
+  restoreScroll = false,
   children,
   ...rest
 }: {
   fallbackHref: string;
   /** Previous pathnames for which a real history back is the right move. */
   backWhenPrev?: readonly string[];
+  /** On the plain-link path too, land where the reader last left `fallbackHref`. */
+  restoreScroll?: boolean;
 } & Omit<React.ComponentProps<typeof Link>, 'href'>) {
   const router = useRouter();
 
@@ -48,6 +51,12 @@ export function SmartBackLink({
         sessionStorage.setItem('nav:restore', prev);
       } catch { /* ignore */ }
       router.back();
+      return;
+    }
+    if (restoreScroll) {
+      // Not a history back (e.g. home → projects → a case study → projects → here):
+      // RouteTracker still re-applies the offset it saved when the reader left.
+      try { sessionStorage.setItem('nav:restore', fallbackHref.split(/[?#]/)[0] || '/'); } catch { /* ignore */ }
     }
   };
 
