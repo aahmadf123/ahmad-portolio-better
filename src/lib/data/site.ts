@@ -58,7 +58,7 @@ export const site: SiteConfig = {
     icon: 'build',
     label: 'Now building',
     detail: 'Toledo Football IQ - 10-stage CV pipeline',
-    href: '#projects',
+    href: '/case-study/toledo-football-iq-computer-vision-analytics',
   },
   url: 'https://ahmadfx.xyz',
 };

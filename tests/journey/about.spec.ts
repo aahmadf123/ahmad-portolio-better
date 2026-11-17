@@ -41,9 +41,8 @@ test('every job, award, cert and testimonial is on the page', async ({ page }) =
   for (const t of testimonials) expect(text, t.name).toContain(t.name);
 });
 
-test("About's work link goes to the journey", async ({ page }) => {
+test("About's work links go to the projects page", async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#about a[href="#projects"]').first()).toBeAttached();
-  // Links stored in about.ts may still say #projects: that anchor is kept (it lands on
-  // the first world), and data files are append-only.
+  await expect(page.locator('#about a[href="/projects"]').first()).toBeAttached();
+  expect(await page.locator('#about a[href="#projects"]').count()).toBe(0);
 });

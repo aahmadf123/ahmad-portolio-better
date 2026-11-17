@@ -54,7 +54,7 @@ test('back from a case study restores the world', async ({ page }, info) => {
 
 test('reading text over the photo has contrast', async ({ page }, info) => {
   test.skip(info.project.name !== 'desktop', 'desktop only');
-  for (const url of ['/case-study/graph-based-rl-uav-autonomy', '/field-notes/battle-of-i75-coin-toss', '/docs']) {
+  for (const url of ['/case-study/graph-based-rl-uav-autonomy', '/field-notes/battle-of-i75-coin-toss', '/docs', '/projects']) {
     await page.goto(url);
     await page.waitForTimeout(600);
     const res = await new AxeBuilder({ page: page as never }).withRules(['color-contrast']).include('main').analyze();

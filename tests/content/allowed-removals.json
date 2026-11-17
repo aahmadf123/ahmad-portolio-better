@@ -81,5 +81,11 @@
     "text": "· Open to remote · Available for select projects",
     "reason": "Ahmad (2026-11-16): he works full time (First Solar) and does sports analytics with Toledo Athletics, so the site says open to collaborate, not open to work.",
     "preservedAs": "Footer: Toledo, OH · Open to collaborate"
+  },
+  {
+    "text": "View Projects ↓",
+    "kind": "ui-label",
+    "reason": "Ahmad (2026-11-16): the button now opens the /projects page instead of scrolling, so its arrow points forward.",
+    "preservedAs": "View Projects →"
   }
 ]

@@ -34,7 +34,7 @@ export function SiteFooter() {
             <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Explore</span>
             {[
               { label: 'The Story', href: '/#story' },
-              { label: 'Bodies of Work', href: '/#projects' },
+              { label: 'Bodies of Work', href: '/projects' },
               { label: 'Field Notes', href: '/field-notes' },
               { label: 'Docs & Résumé', href: '/docs' },
             ].map((l) => (
