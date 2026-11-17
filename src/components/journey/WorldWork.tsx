@@ -48,11 +48,12 @@ export function WorldWork({ world, anchors = [], children }: { world: World; anc
       style={{ background: 'var(--background)', padding: 'clamp(48px, 6vw, 88px) clamp(20px, 4vw, 52px)', position: 'relative', zIndex: 1 }}>
       {anchors.map((a) => <span key={a} id={a} aria-hidden style={{ position: 'absolute', top: 0, left: 0, width: 1, height: 1 }} />)}
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 24 }}>
           <span aria-hidden style={{ width: 22, height: 1.5, background: world.accent }} />
           <h3 style={{ margin: 0, fontFamily: MONO, fontWeight: 400, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: world.accent }}>
             {world.n} · {world.label} · the work
           </h3>
+          <span aria-hidden style={{ width: 22, height: 1.5, background: world.accent }} />
         </div>
         <div className="project-tiles">
           {list.map((p) => <ProjectTile key={p.idx} project={p} onOpen={open} />)}
