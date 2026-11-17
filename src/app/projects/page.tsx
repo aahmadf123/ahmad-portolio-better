@@ -32,7 +32,7 @@ export default function ProjectsPage() {
   return (
     <div style={{ background: 'transparent', position: 'relative', isolation: 'isolate', color: 'var(--foreground)', minHeight: '100vh' }}>
       <PhotoBackdrop id="opening" />
-      <SubpageHeader backHref="/" backLabel="Portfolio" />
+      <SubpageHeader backHref="/" backLabel="Portfolio" restoreScroll />
 
       <div style={{ maxWidth: 1240, margin: '0 auto', padding: 'clamp(64px,9vw,120px) clamp(20px,4vw,52px) 96px' }}>
         <header style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto clamp(32px, 5vw, 52px)' }}>

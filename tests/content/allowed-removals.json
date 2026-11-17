@@ -87,5 +87,11 @@
     "kind": "ui-label",
     "reason": "Ahmad (2026-11-16): the button now opens the /projects page instead of scrolling, so its arrow points forward.",
     "preservedAs": "View Projects →"
+  },
+  {
+    "text": "← Back to Portfolio",
+    "kind": "ui-label",
+    "reason": "Ahmad (2026-11-16): a case study's way back is All Projects; the projects page then returns to the portfolio where it was left.",
+    "preservedAs": "← Back to All Projects"
   }
 ]

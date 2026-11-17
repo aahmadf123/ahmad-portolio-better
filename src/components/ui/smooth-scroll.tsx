@@ -28,15 +28,19 @@ export function glideTo(top: number, reduced: boolean) {
 }
 
 export function jumpTo(top: number) {
-  if (instance) {
-    // An immediate Lenis jump also stops any glide in progress (which would otherwise
-    // carry on to its old destination). Invalidate the remembered target first so the
-    // jump is never skipped as "already there".
-    instance.targetScroll = -1;
-    instance.scrollTo(top, { immediate: true, force: true });
-    return;
-  }
+  // Scroll natively (never clamped by Lenis's possibly stale page height), then tell
+  // Lenis where we are. Its immediate jump to the current spot also stops any glide in
+  // progress, which would otherwise carry on to its old destination; invalidating the
+  // remembered target first keeps that jump from being skipped as "already there".
   window.scrollTo({ top, behavior: 'instant' as ScrollBehavior });
+  if (instance) {
+    // stop() halts any glide in progress; then adopt where we really are (no Lenis
+    // scrollTo here: it would clamp to its own, possibly stale, page height).
+    const locked = document.body.style.overflow === 'hidden';
+    instance.stop();
+    instance.targetScroll = instance.animatedScroll = window.scrollY;
+    if (!locked) instance.start();
+  }
 }
 
 /**

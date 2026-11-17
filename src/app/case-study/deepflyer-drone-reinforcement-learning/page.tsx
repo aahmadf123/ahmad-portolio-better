@@ -6,10 +6,8 @@ import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
-import { worldOf } from '@/lib/data/worlds';
 
 /** The photo-journey world this case study belongs to (back link + label). */
-const WORLD = worldOf('deepflyer-drone-reinforcement-learning');
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
@@ -94,7 +92,7 @@ export default function DeepFlyerCaseStudy() {
     <div style={{ background: 'transparent', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
 
       {/* ── Sticky header ── */}
-      <SubpageHeader backHref={`/#${WORLD.id}`} backLabel={WORLD.label} accent={ACCENT}>
+      <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
         <span style={{ fontFamily: MONO, fontSize: 10, padding: '6px 14px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Prototype · Research Platform</span>
       </SubpageHeader>
 
@@ -137,7 +135,7 @@ export default function DeepFlyerCaseStudy() {
 
         {/* CTA */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, paddingBottom: 'clamp(48px,6vw,72px)', borderBottom: '1px solid rgba(244,244,242,0.07)' }}>
-          <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</SmartBackLink>
+          <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</SmartBackLink>
         </div>
       </div>
 
@@ -462,8 +460,8 @@ export default function DeepFlyerCaseStudy() {
             <p style={{ fontSize: 14, lineHeight: 1.75, color: 'var(--text2)', maxWidth: 520, margin: '0 auto 24px' }}>
               Reward design, PPO training, ROS 2 simulation, and a future path to real drone hardware - all accessible through a browser.
             </p>
-            <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
-              ← Back to Portfolio
+            <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
+              ← Back to All Projects
             </SmartBackLink>
           </div>
         </Section>

@@ -19,12 +19,15 @@ export function SubpageHeader({
   backHref,
   backLabel,
   backWhenPrev,
+  restoreScroll,
   accent = 'var(--primary)',
   children,
 }: {
   backHref: string;
   backLabel: string;
   backWhenPrev?: string[];
+  /** Land where the reader last left the back destination (SmartBackLink). */
+  restoreScroll?: boolean;
   accent?: string;
   children?: React.ReactNode;
 }) {
@@ -52,6 +55,7 @@ export function SubpageHeader({
           <SmartBackLink
             fallbackHref={backHref}
             backWhenPrev={backWhenPrev}
+            restoreScroll={restoreScroll}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 7,
               fontFamily: MONO, fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase',

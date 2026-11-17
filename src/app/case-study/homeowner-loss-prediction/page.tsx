@@ -6,10 +6,8 @@ import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
-import { worldOf } from '@/lib/data/worlds';
 
 /** The photo-journey world this case study belongs to (back link + label). */
-const WORLD = worldOf('homeowner-loss-prediction');
 
 const SERIF = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
@@ -117,7 +115,7 @@ export default function HomeownerLossCaseStudy() {
       `}</style>
 
       {/* ── Sticky top bar ── */}
-      <SubpageHeader backHref={`/#${WORLD.id}`} backLabel={WORLD.label} accent={ACCENT}>
+      <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
           <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(167,139,250,0.3)', borderRadius: 4, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.background = `${ACCENT}14`; }}
@@ -506,7 +504,7 @@ export default function HomeownerLossCaseStudy() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
             <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Download Final Report ↓</a>
             <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: `1px solid ${ACCENT}44`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View on GitHub ↗</a>
-            <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: '1px solid rgba(244,244,242,0.12)', color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Portfolio</SmartBackLink>
+            <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: '1px solid rgba(244,244,242,0.12)', color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to All Projects</SmartBackLink>
           </div>
         </div>
       </section>

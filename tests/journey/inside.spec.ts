@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import manifest from '../../src/lib/journey-manifest.json';
 import type { ManifestEntry } from '../../src/lib/data/worlds';
-import { worlds, worldForProject } from '../../src/lib/data/worlds';
 import { caseStudySlugs } from '../../src/lib/data/projects';
 
 const backdrop = (page: import('@playwright/test').Page) => page.locator('[data-photo-backdrop] img').last();
@@ -23,17 +22,16 @@ test('field notes pick their photo by category', async ({ page }) => {
   await expect.poll(() => backdrop(page).evaluate((i: HTMLImageElement) => i.currentSrc)).toContain('opening');
 });
 
-test('every case study links back to its world', async ({ page }, info) => {
+test('every case study links back to All Projects', async ({ page }, info) => {
   test.skip(info.project.name !== 'desktop', 'desktop only');
   for (const slug of caseStudySlugs) {
     await page.goto(`/case-study/${slug}`);
-    const world = worlds.find((w) => w.id === worldForProject(slug))!;
-    const back = page.locator('header').getByRole('link', { name: world.label, exact: true }).first();
-    await expect(back, slug).toHaveAttribute('href', `/#${world.id}`);
+    const back = page.locator('header').getByRole('link', { name: 'All Projects', exact: true }).first();
+    await expect(back, slug).toHaveAttribute('href', '/projects');
   }
 });
 
-test('back from a case study restores the world', async ({ page }, info) => {
+test('browser Back from a case study restores the world', async ({ page }, info) => {
   test.skip(info.project.name !== 'desktop', 'desktop only');
   await page.goto('/');
   const card = page.locator('#research').getByRole('button', { name: 'DeepFlyer - open project details' });
@@ -44,7 +42,8 @@ test('back from a case study restores the world', async ({ page }, info) => {
   }).toPass();
   await page.getByRole('dialog').getByRole('link', { name: /case study/i }).first().click();
   await expect(page).toHaveURL(/deepflyer/);
-  await page.locator('header').getByRole('link', { name: 'Research' }).click();
+  // (the header's back link now leads to All Projects; the browser's Back returns here)
+  await page.goBack();
   await expect(page).toHaveURL(/\/(#research)?$/);
   await expect.poll(async () => page.locator('#research').evaluate((el) => {
     const r = el.getBoundingClientRect();

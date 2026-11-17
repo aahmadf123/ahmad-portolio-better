@@ -6,10 +6,8 @@ import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
-import { worldOf } from '@/lib/data/worlds';
 
 /** The photo-journey world this case study belongs to (back link + label). */
-const WORLD = worldOf('toledo-athletics-onboarding-portal');
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
@@ -144,7 +142,7 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
       `}</style>
 
       {/* ── Sticky header ── */}
-      <SubpageHeader backHref={`/#${WORLD.id}`} backLabel={WORLD.label} accent={ACCENT}>
+      <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
         <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Toledo Athletics Onboarding Portal</span>
       </SubpageHeader>
 
@@ -418,7 +416,7 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
+                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
               </div>
             </Section>
 

@@ -71,3 +71,29 @@ test('/projects is in the sitemap', async ({ request }) => {
   const xml = await (await request.get('/sitemap.xml')).text();
   expect(xml).toContain('/projects</loc>');
 });
+
+test('case study → All Projects → Portfolio lands back where the homepage was left', async ({ page }, info) => {
+  test.skip(info.project.name !== 'desktop', 'desktop flow');
+  await page.goto('/');
+  await page.waitForFunction(() => document.documentElement.classList.contains('lenis'));
+  // read down to About, then open all projects from there
+  const viewProjects = page.locator('#about').getByRole('link', { name: /View Projects/ });
+  await viewProjects.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(800); // (the site saves its scroll once scrolling settles)
+  const left = await page.evaluate(() => scrollY);
+  await viewProjects.click();
+  await expect(page).toHaveURL(/\/projects$/);
+  await page.locator('a[data-testid="project-tile"][href="/case-study/deepflyer-drone-reinforcement-learning"]').click();
+  await expect(page).toHaveURL(/deepflyer/);
+  // every way back from a case study leads to All Projects
+  const backs = page.locator('main a').filter({ hasText: /All Projects|Back to Projects/i });
+  expect(await backs.count()).toBeGreaterThan(0);
+  for (const a of await backs.all()) expect(await a.getAttribute('href')).toBe('/projects');
+  await expect(page.locator('header').getByRole('link', { name: /All Projects/i })).toHaveAttribute('href', '/projects');
+  await backs.last().click();
+  await expect(page).toHaveURL(/\/projects$/);
+  await page.locator('header').getByRole('link', { name: /Portfolio/i }).click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect.poll(() => page.evaluate(() => scrollY), { timeout: 6000 }).toBeGreaterThan(left - 60);
+  expect(await page.evaluate(() => scrollY)).toBeLessThan(left + 60);
+});

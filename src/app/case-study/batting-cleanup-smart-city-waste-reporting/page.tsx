@@ -6,10 +6,8 @@ import { SubpageHeader } from '@/components/layout/SubpageHeader';
 import { Lightbox } from '@/components/ui/image-lightbox';
 import { Pic } from '@/components/ui/pic';
 import { resolveSkillColor } from '@/lib/skill-colors';
-import { worldOf } from '@/lib/data/worlds';
 
 /** The photo-journey world this case study belongs to (back link + label). */
-const WORLD = worldOf('batting-cleanup-smart-city-waste-reporting');
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
@@ -145,7 +143,7 @@ export default function BattingCleanupCaseStudy() {
       `}</style>
 
       {/* ── Sticky header ── */}
-      <SubpageHeader backHref={`/#${WORLD.id}`} backLabel={WORLD.label} accent={ACCENT}>
+      <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#22c55e', background: 'color-mix(in srgb, var(--green) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 25%, transparent)', borderRadius: 10 }}>
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
@@ -497,7 +495,7 @@ export default function BattingCleanupCaseStudy() {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <SmartBackLink fallbackHref="/#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
+                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
                 <a href="https://battingcleanup.appliedlabs.org/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Documentation ↗</a>
                 <a href="https://toledofreepress.com/batting-cleanup-aims-to-improve-toledo-maintenance-with-tech/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid rgba(244,244,242,0.12)', color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Toledo Free Press ↗</a>
               </div>
