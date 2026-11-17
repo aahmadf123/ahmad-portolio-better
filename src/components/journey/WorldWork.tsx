@@ -7,6 +7,7 @@ import type { World } from '@/lib/data/worlds';
 import { ProjectTile } from '@/components/sections/projects/ProjectTile';
 import { useProjectModal } from '@/components/sections/projects/ProjectModalProvider';
 import dynamic from 'next/dynamic';
+import { jumpTo } from '@/components/ui/smooth-scroll';
 
 // Split out (still server-rendered): GSAP and the play diagram (~140KB) stay off the
 // critical path of the opening photo.
@@ -37,6 +38,7 @@ export function WorldWork({ world, anchors = [], children }: { world: World; anc
           const r = el.getBoundingClientRect();
           if (document.activeElement === el && (r.top < 0 || r.bottom > window.innerHeight)) {
             el.scrollIntoView({ block: 'nearest', behavior: 'instant' as ScrollBehavior });
+            jumpTo(window.scrollY); // keep the glide in step
           }
         };
         fix();

@@ -15,7 +15,8 @@ test.describe('no information loss', () => {
 
   test('data strings survive', async () => {
     const now = new Set(await collectDataStrings());
-    const missing = read<string[]>('data.json').filter((s) => !now.has(s));
+    // Only edits Ahmad asked for, each recorded with its reason in allowed-removals.json.
+    const missing = read<string[]>('data.json').filter((s) => !now.has(s) && !allowedSet.has(normalize(s)));
     expect(missing, `data strings removed or edited:\n${missing.join('\n')}`).toEqual([]);
   });
 

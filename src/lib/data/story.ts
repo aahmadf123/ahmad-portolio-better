@@ -3,7 +3,6 @@
 // rendered by the photo journey (worlds.ts places each sentence in its world).
 
 import { nowUpdated } from './now';
-import { site } from './site';
 
 export type StoryScene = 'map' | 'systems' | 'neural' | 'solar' | 'field' | 'horizon';
 

@@ -12,6 +12,34 @@ export function getLenis(): Lenis | null {
 }
 
 /**
+ * Jump straight to `top`, and tell Lenis so it doesn't glide back to where it thought
+ * it was going. (Lenis.scrollTo skips a target equal to its remembered one, and that
+ * goes stale when the browser scrolls on its own, e.g. to a focused element.)
+ */
+/** Glide to `top` (Lenis), or the browser's smooth scroll when Lenis is off. */
+export function glideTo(top: number, reduced: boolean) {
+  if (instance) {
+    const y = window.scrollY;
+    instance.targetScroll = instance.animatedScroll = y; // start from where we really are
+    instance.scrollTo(top, { duration: 1.4, force: true });
+    return;
+  }
+  window.scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' });
+}
+
+export function jumpTo(top: number) {
+  if (instance) {
+    // An immediate Lenis jump also stops any glide in progress (which would otherwise
+    // carry on to its old destination). Invalidate the remembered target first so the
+    // jump is never skipped as "already there".
+    instance.targetScroll = -1;
+    instance.scrollTo(top, { immediate: true, force: true });
+    return;
+  }
+  window.scrollTo({ top, behavior: 'instant' as ScrollBehavior });
+}
+
+/**
  * Gliding wheel and trackpad scroll: each wheel step eases to its target instead of
  * jumping, so the photo fly-ins and parallax move like film. Lenis drives the real
  * window scroll, so sticky stages, anchors and scroll listeners keep working.

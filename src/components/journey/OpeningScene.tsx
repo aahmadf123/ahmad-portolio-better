@@ -41,7 +41,7 @@ function OpeningCopy() {
   });
 
   const name = (
-    <SceneCopy photo="opening" style={{ paddingTop: 62 }} maxWidth={880} center>
+    <SceneCopy photo="opening" style={{ paddingTop: "min(62px, 6svh)" }} maxWidth={880} center>
       <div className="opening-name">
       <div style={{ marginBottom: 18, minHeight: 17 }}>
         <TypedTagline segments={site.taglineSegments} active instant={still} />
@@ -73,11 +73,12 @@ function OpeningCopy() {
           .opening-facts { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
         }
         @media (max-width: 600px) {
-          .opening-name h1 { font-size: min(clamp(48px, 13vw, 64px), 9svh) !important; }
+          .opening-name h1 { font-size: min(clamp(48px, 13vw, 64px), 8.4svh) !important; }
           .opening-sub { font-size: 15px !important; line-height: 1.5 !important; }
           .opening-ctas { display: grid !important; grid-template-columns: 1fr 1fr; gap: 8px !important; width: 100% !important; }
           .opening-ctas a { justify-content: center; padding: 10px 8px !important; }
-          .opening-facts { grid-template-columns: 1fr 1fr !important; gap: 8px 16px !important; }
+          .opening-facts { grid-template-columns: 1fr 1fr !important; gap: 4px 14px !important; margin-top: min(14px, 1.8svh) !important; }
+          .opening-ctas { margin-top: min(16px, 2svh) !important; }
           .opening-facts dd { font-size: 12px !important; }
           .opening-story p { font-size: 15px !important; line-height: 1.55 !important; }
         }

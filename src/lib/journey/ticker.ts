@@ -55,7 +55,13 @@ function tick() {
   entries.forEach((e) => {
     const near = y + vh * 2 > e.top && y - vh < e.top + e.height;
     if (!near) {
-      if (e.near) { e.near = false; e.last = -1; e.leave(); }
+      if (e.near || e.last === -1) {
+        // Leaving range (possibly in one big jump): settle on the end state first, so
+        // nothing is left half-faded off screen (e.g. buttons keyboard focus could reach).
+        const p = progressAt(y, e.top, e.height, vh, e.join);
+        if (p !== e.last) e.update(p, stageTopAt(y, e.top, e.height, vh));
+        e.near = false; e.last = p; e.leave();
+      }
       return;
     }
     e.near = true;
@@ -66,6 +72,12 @@ function tick() {
     e.lastTop = stageTop;
     e.update(p, stageTop);
   });
+}
+
+/** Bring every scene up to date with the current scroll right now (not next frame). */
+export function flushTick() {
+  if (frame) { cancelAnimationFrame(frame); frame = 0; }
+  tick();
 }
 
 export function scheduleTick() {

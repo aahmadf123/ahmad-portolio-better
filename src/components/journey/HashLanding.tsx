@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { anchorScrollTop } from '@/lib/journey/anchors';
-import { getLenis } from '@/components/ui/smooth-scroll';
+import { glideTo, jumpTo } from '@/components/ui/smooth-scroll';
 
 /**
  * Anchors on the photo-journey homepage.
@@ -33,9 +33,7 @@ export function HashLanding() {
       const top = anchorScrollTop(id);
       if (top === null) return true;
       if (Math.abs(window.scrollY - top) <= 2 && tries > 2) return true;
-      const lenis = getLenis();
-      if (lenis) lenis.scrollTo(top, { immediate: true, force: true });
-      else window.scrollTo({ top, behavior: 'instant' as ScrollBehavior });
+      jumpTo(top);
       return ++tries > 15;
     };
     const iv = window.setInterval(() => { if (aim()) window.clearInterval(iv); }, 200);
@@ -52,10 +50,7 @@ export function HashLanding() {
       e.preventDefault();
       stopped = true;
       window.history.pushState(window.history.state, '', `#${target}`);
-      const lenis = getLenis();
-      if (lenis) { lenis.scrollTo(top, { duration: 1.4 }); return; }
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      window.scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' });
+      glideTo(top, window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     };
     document.addEventListener('click', onClick, true);
 

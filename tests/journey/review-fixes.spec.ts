@@ -56,6 +56,9 @@ test('/#projects and "View Work" land on the work, not a bare photo', async ({ p
 test('Shift+Tab back into the opening never focuses an invisible button', async ({ page }, info) => {
   desktopOnly(info.project.name);
   await page.goto('/');
+  // A keyboard user tabs once the page is up: wait for it to be interactive (the glide
+  // is set up), so an early focus's native smooth scroll isn't still running.
+  await page.waitForFunction(() => document.documentElement.classList.contains('lenis'));
   await page.locator(`#${worlds[0].id}`).getByRole('button', { name: /open project details/ }).first().focus();
   for (let i = 0; i < 12; i++) {
     await page.keyboard.press('Shift+Tab');

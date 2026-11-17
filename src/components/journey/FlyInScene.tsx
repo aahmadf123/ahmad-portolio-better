@@ -6,7 +6,8 @@ import { useJourneyTier, type JourneyTier } from '@/lib/journey/tier';
 import { JourneyPhoto } from './JourneyPhoto';
 import { publishScene } from '@/lib/journey/store';
 import { sceneScrollTop, seenOpacity } from '@/lib/journey/anchors';
-import { addScene } from '@/lib/journey/ticker';
+import { addScene, flushTick } from '@/lib/journey/ticker';
+import { jumpTo } from '@/components/ui/smooth-scroll';
 
 /**
  * The signature move: a sticky, full-screen real photo that the camera flies into as
@@ -178,8 +179,10 @@ export function FlyInScene({
     const onFocus = (e: FocusEvent) => {
       const el = e.target as HTMLElement;
       const layer = el.closest<HTMLElement>('[data-show-at]');
-      if (!layer || !rootEl.contains(layer) || seenOpacity(el) > 0.99) return;
-      window.scrollTo({ top: sceneScrollTop(rootEl, Number(layer.dataset.showAt)), behavior: 'instant' as ScrollBehavior });
+      if (!layer || !rootEl.contains(layer)) return;
+      flushTick(); // a focus jump may not have been painted yet: judge the real state
+      if (seenOpacity(el) > 0.99) return;
+      jumpTo(sceneScrollTop(rootEl, Number(layer.dataset.showAt)));
     };
     rootEl.addEventListener('focusin', onFocus);
     return () => {
