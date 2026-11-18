@@ -27,7 +27,7 @@ export const affiliations: Affiliation[] = [
   {
     name: 'AIChE / Chem-E Car',
     role: 'Team Member & Competitor',
-    color: '#f0823c',
+    color: '#fb7185',
     short: 'American Institute of Chemical Engineers - University of Toledo Chapter',
     desc: 'Competed on the UT AIChE Chem-E Car team. Contributed to Arduino-based automation integrating pressure sensors, load cells, and stopping algorithms. Won Most Innovative Car Design worldwide.',
     images: ['/Images/AIChE.jpg', '/Images/AIChE%20ChemECar_International.jpg'],

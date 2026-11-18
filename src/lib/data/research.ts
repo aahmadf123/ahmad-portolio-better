@@ -41,7 +41,7 @@ export const research: ResearchMeta = {
   metrics: [
     { metric: '37', label: 'AI failures analyzed', color: '#5b8af5' },
     { metric: '127', label: 'Sources reviewed', color: '#2dd4bf' },
-    { metric: '4', label: 'Pillars in taxonomy', color: '#f59e0b' },
+    { metric: '4', label: 'Pillars in taxonomy', color: '#e5c453' },
     { metric: '2025', label: 'ACM CSUR submission', color: '#a78bfa' },
   ],
   pillars: [
@@ -54,7 +54,7 @@ export const research: ResearchMeta = {
     {
       n: '02',
       label: 'Oversight-Gap Amplification',
-      color: '#f59e0b',
+      color: '#e5c453',
       desc: 'Monitoring blind spots that allow small deviations to compound undetected until failure becomes irreversible.',
     },
     {

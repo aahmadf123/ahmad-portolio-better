@@ -14,7 +14,7 @@ const DISPLAY = "var(--font-display), Georgia, serif";
 const MONO   = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#5b8af5';
 
-const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
+const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -257,8 +257,8 @@ export default function DeepFlyerCaseStudy() {
             <StackRow n="02" title="Backend API" items={['Node.js + Express', 'MongoDB', 'JWT Authentication', 'Reward Preset Endpoints', 'Session & Log Storage', '10ms median / 20ms P95 latency']} color="#2dd4bf" />
             <StackRow n="03" title="RL Training Layer" items={['OpenAI Gym Environment', 'Stable-Baselines3', 'PPO Algorithm', 'YAML Reward-Interface Schema', 'Dynamic Reward Switching', 'MLflow Experiment Logging']} />
             <StackRow n="04" title="Simulation Layer" items={['ROS 2 Humble', 'Gazebo Fortress', 'X500 URDF (visual + collision + inertial)', 'Gazebo Contact Sensors', 'Future: SLAM / Event-Camera Plugins']} color="#a78bfa" />
-            <StackRow n="05" title="Drone Control (Future)" items={['ROS 2 Bridge', 'MAVROS', 'Pixhawk 6C Flight Controller', 'Safety Boundaries', 'Emergency Stop Protocol']} color="#f0823c" />
-            <StackRow n="06" title="Physical Hardware (Planned)" items={['Holybro S500 Frame', 'Pixhawk 6C', 'Raspberry Pi 4B Companion', 'ZED Mini Stereo Camera', 'Safety Netting + Propeller Guards', 'Instructor Kill Switch']} color="#f59e0b" />
+            <StackRow n="05" title="Drone Control (Future)" items={['ROS 2 Bridge', 'MAVROS', 'Pixhawk 6C Flight Controller', 'Safety Boundaries', 'Emergency Stop Protocol']} color="#fb7185" />
+            <StackRow n="06" title="Physical Hardware (Planned)" items={['Holybro S500 Frame', 'Pixhawk 6C', 'Raspberry Pi 4B Companion', 'ZED Mini Stereo Camera', 'Safety Netting + Propeller Guards', 'Instructor Kill Switch']} color="#e5c453" />
           </div>
 
           {/* Course design */}
@@ -325,7 +325,7 @@ export default function DeepFlyerCaseStudy() {
               { label: 'Frontend', color: ACCENT, tags: ['React 18', 'Node.js v18', 'ESLint', 'Prettier', 'Figma (user flows)'] },
               { label: 'Backend', color: '#2dd4bf', tags: ['Node.js', 'Express', 'MongoDB', 'JWT Auth', 'Reward API Endpoints', 'Session / Log Storage'] },
               { label: 'RL & Experiment Tracking', color: '#a78bfa', tags: ['OpenAI Gym', 'Stable-Baselines3', 'PPO', 'YAML Reward Schema', 'MLflow', 'Dynamic Reward Switching'] },
-              { label: 'Simulation & Robotics', color: '#f59e0b', tags: ['ROS 2 Humble', 'Gazebo Fortress', 'X500 URDF', 'Gazebo Contact Sensors', 'MAVROS (planned)', 'Future: SLAM / Event-Camera'] },
+              { label: 'Simulation & Robotics', color: '#e5c453', tags: ['ROS 2 Humble', 'Gazebo Fortress', 'X500 URDF', 'Gazebo Contact Sensors', 'MAVROS (planned)', 'Future: SLAM / Event-Camera'] },
             ].map(({ label, color, tags }) => (
               <div key={label} style={{ padding: '22px 20px', background: 'rgba(244,244,242,0.025)', borderTop: `2px solid ${color}`, borderRight: '1px solid rgba(244,244,242,0.08)', borderBottom: '1px solid rgba(244,244,242,0.08)', borderLeft: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
                 <div style={{ fontFamily: MONO, fontSize: 10, color, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>{label}</div>

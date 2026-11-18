@@ -31,7 +31,7 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
       {/* terminal chrome */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px', borderBottom: '1px solid var(--bd)', background: 'rgba(244,244,242,0.02)' }}>
         <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(239,68,68,0.5)' }} />
-        <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(245,158,11,0.5)' }} />
+        <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(229,196,83,0.5)' }} />
         <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(34,197,94,0.5)' }} />
         <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.05em', marginLeft: 8, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{insight.file}</span>
         <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginLeft: 'auto', border: '1px solid var(--bd2)', borderRadius: 4, padding: '2px 6px', flexShrink: 0 }}>illustrative</span>

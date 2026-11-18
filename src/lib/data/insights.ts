@@ -74,7 +74,7 @@ export const insights: Insight[] = [
     takeaway:
       'Every edge from g.connect() carries risk and cost - not a bare topological link, but collision risk and traversal cost engineered in as domain knowledge before the policy ever trains. Typed nodes (obstacle, waypoint, free-space) do the same for perception: structure applied before learning starts.',
     source: { label: 'Graph-Based RL for UAV Autonomy', href: '/case-study/graph-based-rl-uav-autonomy' },
-    color: '#f59e0b',
+    color: '#e5c453',
   },
   {
     id: 'schema-security',

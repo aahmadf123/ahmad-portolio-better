@@ -15,7 +15,7 @@ const MONO  = "var(--font-code), ui-monospace, monospace";
 const SANS  = "var(--font-body), system-ui, sans-serif";
 const ACCENT = '#a78bfa';
 
-const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
+const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -135,7 +135,7 @@ export default function HomeownerLossCaseStudy() {
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
             <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: `${ACCENT}14`, border: `1px solid ${ACCENT}33`, borderRadius: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>MLOps</span>
-            <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', borderRadius: 10, color: '#f59e0b', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Insurance AI</span>
+            <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', borderRadius: 10, color: '#e5c453', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Insurance AI</span>
             <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'color-mix(in srgb, var(--blue) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--blue) 25%, transparent)', borderRadius: 10, color: '#5b8af5', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Risk Modeling</span>
             <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Senior Design · 2024–2025</span>
           </div>
@@ -149,11 +149,11 @@ export default function HomeownerLossCaseStudy() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10, marginBottom: 32 }}>
             <Metric value="R² 0.982" label="Model accuracy" color={ACCENT} />
-            <Metric value="RMSE 7216" label="Prediction error" color="#f59e0b" />
+            <Metric value="RMSE 7216" label="Prediction error" color="#e5c453" />
             <Metric value="26%" label="vs GLM baseline" color="#5b8af5" />
             <Metric value="75%" label="Manual review ↓" color="#2dd4bf" />
             <Metric value="MAE $29.10" label="Avg prediction error" color={ACCENT} />
-            <Metric value="100+" label="Engineered features" color="#f0823c" />
+            <Metric value="100+" label="Engineered features" color="#fb7185" />
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -221,11 +221,11 @@ export default function HomeownerLossCaseStudy() {
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 10 }}>
           {[
-            { title: 'Manual rebuilds are slow', desc: 'Model updates required manual data pulls, notebook-based preprocessing, and repeated rebuilds - consuming actuarial time that should be focused on interpretation.', color: '#f0823c' },
+            { title: 'Manual rebuilds are slow', desc: 'Model updates required manual data pulls, notebook-based preprocessing, and repeated rebuilds - consuming actuarial time that should be focused on interpretation.', color: '#fb7185' },
             { title: 'Silent schema failures', desc: 'Data schema changes could silently break downstream training with no validation layer catching type mismatches or missing columns before they corrupted model runs.', color: '#5b8af5' },
             { title: 'No drift detection', desc: 'Model drift was difficult to detect early without automated monitoring. Stale models could price risk for weeks before a human noticed performance degradation.', color: ACCENT },
             { title: 'No experiment lineage', desc: 'Without tracking, experiments and model versions were hard to reproduce. There was no audit trail for when a model was promoted, what data it saw, or who approved it.', color: '#2dd4bf' },
-            { title: 'Interpretability gap', desc: 'Business stakeholders and actuaries needed explainability, not just predictions. A black-box model creates regulatory and trust problems in insurance.', color: '#f59e0b' },
+            { title: 'Interpretability gap', desc: 'Business stakeholders and actuaries needed explainability, not just predictions. A black-box model creates regulatory and trust problems in insurance.', color: '#e5c453' },
             { title: 'No governance layer', desc: 'High-stakes insurance decisions require human oversight, auditability, and the ability to roll back. A notebook-only workflow provides none of these guarantees.', color: '#f472b6' },
           ].map(item => (
             <div key={item.title} style={{ padding: '18px 20px', background: `${item.color}06`, border: `1px solid ${item.color}22`, borderRadius: 8 }}>
@@ -250,9 +250,9 @@ export default function HomeownerLossCaseStudy() {
             {[
               { n: '01', title: 'Raw Dataset → AWS S3', sub: 'Raw homeowner loss data stored in S3 and pulled into the pipeline by Airflow.', color: '#5b8af5' },
               { n: '02', title: 'Data Ingestion → Airflow', sub: 'Airflow schedules ingestion jobs, handles file staging, and coordinates downstream tasks.', color: '#2dd4bf' },
-              { n: '03', title: 'Schema Validation → Pandera', sub: 'Validates required columns, data types, and constraints. Logs and schema snapshots stored for auditability.', color: '#f59e0b' },
+              { n: '03', title: 'Schema Validation → Pandera', sub: 'Validates required columns, data types, and constraints. Logs and schema snapshots stored for auditability.', color: '#e5c453' },
               { n: '04', title: 'Preprocessing → Pandas / sklearn', sub: 'Missing values, outliers, encoding, feature transformations, and train/test splitting.', color: ACCENT },
-              { n: '05', title: 'Drift Detection', sub: 'Statistical drift checks against reference distributions. Detected drift triggers alerts and proposed remediation actions.', color: '#f0823c' },
+              { n: '05', title: 'Drift Detection', sub: 'Statistical drift checks against reference distributions. Detected drift triggers alerts and proposed remediation actions.', color: '#fb7185' },
               { n: '06', title: 'Model Training → XGBoost', sub: 'XGBoost models trained on 100+ engineered loss-history features with monotonic constraints.', color: '#f472b6' },
             ].map((s, i, arr) => (
               <PipelineStep key={s.n} n={s.n} title={s.title} sub={s.sub} color={s.color} isLast={i === arr.length - 1} />
@@ -260,11 +260,11 @@ export default function HomeownerLossCaseStudy() {
           </div>
           <div>
             {[
-              { n: '07', title: 'Hyperparameter Optimization → Hyperopt', sub: 'Bayesian optimization searches improved configurations and logs the best parameters to MLflow.', color: '#f59e0b' },
+              { n: '07', title: 'Hyperparameter Optimization → Hyperopt', sub: 'Bayesian optimization searches improved configurations and logs the best parameters to MLflow.', color: '#e5c453' },
               { n: '08', title: 'Model Tracking → MLflow', sub: 'Tracks experiments, metrics, artifacts, model versions, and registry transitions across every run.', color: '#5b8af5' },
               { n: '09', title: 'Monitoring & Alerts → Prometheus + Slack', sub: 'Prometheus tracks system metrics. Slack sends alerts for drift, failures, retraining events, and approval requests.', color: '#2dd4bf' },
               { n: '10', title: 'Human-in-the-Loop Governance', sub: 'Manual approval gates allow analysts to approve retraining, reject proposed fixes, override decisions, or promote models.', color: ACCENT },
-              { n: '11', title: 'Deployment → AWS EC2/S3 + CI/CD', sub: 'Containerized services deployed on AWS EC2/S3, with CI/CD support for repeatable builds and updates.', color: '#f0823c' },
+              { n: '11', title: 'Deployment → AWS EC2/S3 + CI/CD', sub: 'Containerized services deployed on AWS EC2/S3, with CI/CD support for repeatable builds and updates.', color: '#fb7185' },
             ].map((s, i, arr) => (
               <PipelineStep key={s.n} n={s.n} title={s.title} sub={s.sub} color={s.color} isLast={i === arr.length - 1} />
             ))}
@@ -284,7 +284,7 @@ export default function HomeownerLossCaseStudy() {
             { label: 'Machine Learning', color: ACCENT, items: ['XGBoost', 'Hyperopt / Bayesian Opt.', 'scikit-learn', 'SHAP explainability', 'Decile lift charts', 'RMSE · MAE · R²'] },
             { label: 'MLOps & Automation', color: '#5b8af5', items: ['Apache Airflow', 'MLflow', 'Pandera', 'Prometheus', 'Slack API', 'GitHub Actions', 'Docker'] },
             { label: 'Cloud & Storage', color: '#2dd4bf', items: ['AWS EC2', 'AWS S3', 'IAM-style access control', 'Containerized deployment', 'CI/CD pipeline'] },
-            { label: 'Data & Features', color: '#f59e0b', items: ['Pandas', 'NumPy', '100+ engineered features', 'Schema snapshots', 'Drift reference distributions', 'Monotonic constraints'] },
+            { label: 'Data & Features', color: '#e5c453', items: ['Pandas', 'NumPy', '100+ engineered features', 'Schema snapshots', 'Drift reference distributions', 'Monotonic constraints'] },
           ].map(group => (
             <div key={group.label} style={{ background: `${group.color}06`, borderTop: `2px solid ${group.color}`, borderRight: '1px solid rgba(244,244,242,0.07)', borderBottom: '1px solid rgba(244,244,242,0.07)', borderLeft: '1px solid rgba(244,244,242,0.07)', borderRadius: 8, padding: '20px 18px' }}>
               <div style={{ fontFamily: MONO, fontSize: 10, color: group.color, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 14 }}>{group.label}</div>
@@ -361,10 +361,10 @@ export default function HomeownerLossCaseStudy() {
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10, marginBottom: 28 }}>
           <Metric value="R² 0.982" label="Final model accuracy" color={ACCENT} />
-          <Metric value="RMSE 7216" label="Root mean square error" color="#f59e0b" />
+          <Metric value="RMSE 7216" label="Root mean square error" color="#e5c453" />
           <Metric value="MAE $29.10" label="Mean absolute error" color="#5b8af5" />
           <Metric value="26%" label="RMSE improvement vs GLM" color="#2dd4bf" />
-          <Metric value="75%" label="Manual review reduction" color="#f0823c" />
+          <Metric value="75%" label="Manual review reduction" color="#fb7185" />
           <Metric value="100+" label="Engineered + validated features" color={ACCENT} />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }} className="results-grid">
@@ -425,11 +425,11 @@ export default function HomeownerLossCaseStudy() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {[
-            { title: 'Schema validation is not optional in production ML', desc: 'It prevents silent failures from cascading into bad model training. Data schema changes can break downstream training without any visible error until the model produces wrong outputs.', color: '#f59e0b' },
+            { title: 'Schema validation is not optional in production ML', desc: 'It prevents silent failures from cascading into bad model training. Data schema changes can break downstream training without any visible error until the model produces wrong outputs.', color: '#e5c453' },
             { title: 'Monitoring matters as much as modeling', desc: 'Prometheus-style metrics and alerting helped expose system-level problems earlier. A model that works but can\'t be observed isn\'t production-ready.', color: '#5b8af5' },
             { title: 'Human oversight increases trust', desc: 'Actuary involvement and manual approval gates made the automation more credible to stakeholders, not less. Governance isn\'t overhead - it\'s what makes automation trustworthy.', color: ACCENT },
             { title: 'Experiment tracking is essential', desc: 'MLflow made it easier to compare runs, preserve model lineage, and reproduce results. Without it, the question of "which configuration produced this model?" has no good answer.', color: '#2dd4bf' },
-            { title: 'Drift response must be governed', desc: 'Automatic retraining is powerful, but unsafe without approval, rollback, and explanation. Self-healing workflows need human checkpoints before they touch production.', color: '#f0823c' },
+            { title: 'Drift response must be governed', desc: 'Automatic retraining is powerful, but unsafe without approval, rollback, and explanation. Self-healing workflows need human checkpoints before they touch production.', color: '#fb7185' },
           ].map(item => (
             <div key={item.title} style={{ padding: '18px 22px', background: `${item.color}05`, border: `1px solid ${item.color}18`, borderRadius: 8, display: 'flex', gap: 16, alignItems: 'flex-start' }}>
               <div style={{ width: 3, height: '100%', background: item.color, borderRadius: 4, flexShrink: 0, alignSelf: 'stretch', minHeight: 40 }} />
@@ -477,9 +477,9 @@ export default function HomeownerLossCaseStudy() {
           {[
             { title: 'Real-time pipeline', desc: 'Event-driven architecture for faster scoring and streaming updates rather than batch ingestion cycles.', color: '#5b8af5' },
             { title: 'Multi-model peril registry', desc: 'Separate model tracks for water, wind/hail, fire, and property-loss categories rather than a single monolithic model.', color: ACCENT },
-            { title: 'AWS SageMaker integration', desc: 'Managed training, hosted endpoints, model monitoring, and registry workflows through SageMaker to reduce operational overhead.', color: '#f59e0b' },
+            { title: 'AWS SageMaker integration', desc: 'Managed training, hosted endpoints, model monitoring, and registry workflows through SageMaker to reduce operational overhead.', color: '#e5c453' },
             { title: 'Fairness automation', desc: 'AIF360 or Fairlearn integration to continuously audit model outputs for demographic fairness and flag bias drift.', color: '#2dd4bf' },
-            { title: 'AI fix-proposal sandbox', desc: 'Secure sandbox where AI agents can propose drift fixes before human approval - explanation tracing included.', color: '#f0823c' },
+            { title: 'AI fix-proposal sandbox', desc: 'Secure sandbox where AI agents can propose drift fixes before human approval - explanation tracing included.', color: '#fb7185' },
             { title: 'Cohort-level dashboard', desc: 'Actual-vs-predicted premium overlays and cohort-level variance views to give actuaries richer inspection of model behavior by risk segment.', color: '#f472b6' },
           ].map(item => (
             <div key={item.title} style={{ padding: '18px 20px', background: `${item.color}06`, border: `1px solid ${item.color}22`, borderRadius: 8 }}>

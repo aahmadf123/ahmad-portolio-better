@@ -34,7 +34,7 @@ export function TimelineNode({ entry, side, accent }: { entry: TimelineEntry; si
       {/* node dot: pops in; milestones add a double gold ring burst */}
       <div className="tl-dot-col" style={{ gridColumn: 2, gridRow: 1, display: 'flex', justifyContent: 'center', paddingTop: 26, position: 'relative' }}>
         <div className="rv-pop" style={{ position: 'relative', width: 14, height: 14 }}>
-          <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: entry.milestone ? 'var(--gold)' : color, boxShadow: `0 0 12px ${entry.milestone ? 'rgba(245,158,11,0.7)' : 'rgba(45,212,191,0.4)'}`, border: '2px solid var(--background)' }} />
+          <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: entry.milestone ? 'var(--gold)' : color, boxShadow: `0 0 12px ${entry.milestone ? 'rgba(229,196,83,0.7)' : 'rgba(45,212,191,0.4)'}`, border: '2px solid var(--background)' }} />
           {entry.milestone && (
             <>
               <span aria-hidden className="rv-ring" style={{ position: 'absolute', inset: -4, borderRadius: '50%', border: '1.5px solid var(--gold)', opacity: 0 }} />
@@ -120,7 +120,7 @@ function JobCard({ job }: { job: Job }) {
 
 function AwardCard({ award }: { award: Award }) {
   return (
-    <div style={{ border: '1px solid rgba(245,158,11,0.3)', background: 'rgba(245,158,11,0.05)', borderRadius: 10, padding: '14px 18px' }}>
+    <div style={{ border: '1px solid rgba(229,196,83,0.3)', background: 'rgba(229,196,83,0.05)', borderRadius: 10, padding: '14px 18px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
         <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--gold)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>✦ Milestone</span>
         <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--gold)' }}>{award.date}</span>

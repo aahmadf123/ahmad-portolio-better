@@ -10,7 +10,7 @@ const LAYERS = [
     n: '01', name: 'Model',
     desc: 'Interprets the goal, reasons over context, generates plans and outputs',
     failure: 'Misunderstands intent or produces low-quality decisions',
-    color: '#f59e0b',
+    color: '#e5c453',
   },
   {
     n: '02', name: 'Orchestrator',
@@ -43,10 +43,10 @@ export function AgentArchitectureLayers() {
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
         fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: '#f59e0b', opacity: 0.7,
+        textTransform: 'uppercase', color: '#e5c453', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
-        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#f59e0b', opacity: 0.5 }} />
+        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#e5c453', opacity: 0.5 }} />
         Five-Layer Production Architecture
       </div>
 
@@ -160,7 +160,7 @@ const STAGES = [
     n: 4, name: 'Agent + Human Approvals',
     trigger: 'Agent prepares actions, consequences matter',
     question: 'Where should autonomy pause for review?',
-    color: '#f59e0b',
+    color: '#e5c453',
   },
   {
     n: 5, name: 'Multi-Agent System',
@@ -175,10 +175,10 @@ export function MaturityLadder() {
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
         fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: '#f59e0b', opacity: 0.7,
+        textTransform: 'uppercase', color: '#e5c453', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
-        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#f59e0b', opacity: 0.5 }} />
+        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#e5c453', opacity: 0.5 }} />
         Agentic Maturity Progression
       </div>
 
@@ -259,8 +259,8 @@ export function AutonomyTradeoff() {
   const bands = [
     { label: 'Text Only', sub: 'Can be wrong', color: '#5b8af5', width: '20%' },
     { label: 'Tool Read', sub: 'Can be wrong\nabout facts', color: '#22c55e', width: '20%' },
-    { label: 'Tool Write', sub: 'Can be wrong\nand take action', color: '#f59e0b', width: '20%' },
-    { label: 'Persistent\nActions', sub: 'Errors may\nnot be reversible', color: '#f0823c', width: '20%' },
+    { label: 'Tool Write', sub: 'Can be wrong\nand take action', color: '#e5c453', width: '20%' },
+    { label: 'Persistent\nActions', sub: 'Errors may\nnot be reversible', color: '#fb7185', width: '20%' },
     { label: 'External\nImpact', sub: 'Errors reach\nreal systems', color: '#ef4444', width: '20%' },
   ];
 
@@ -268,10 +268,10 @@ export function AutonomyTradeoff() {
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
         fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: '#f59e0b', opacity: 0.7,
+        textTransform: 'uppercase', color: '#e5c453', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
-        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#f59e0b', opacity: 0.5 }} />
+        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#e5c453', opacity: 0.5 }} />
         Tool Use Risk Spectrum
       </div>
 
@@ -333,8 +333,8 @@ export function AutonomyTradeoff() {
 // ── 4. Production Checklist ─────────────────────────────────────────────────
 
 const CHECKLIST_ITEMS = [
-  { label: 'Bounded job',        desc: 'Clear domain, not a vague mandate to "do work"',                           color: '#f59e0b' },
-  { label: 'Explicit tools',     desc: 'Every external action is named, typed, permissioned, and logged',           color: '#f59e0b' },
+  { label: 'Bounded job',        desc: 'Clear domain, not a vague mandate to "do work"',                           color: '#e5c453' },
+  { label: 'Explicit tools',     desc: 'Every external action is named, typed, permissioned, and logged',           color: '#e5c453' },
   { label: 'Loop limits',        desc: 'Cannot retry forever or spend indefinitely',                                color: '#5b8af5' },
   { label: 'State management',   desc: 'Defined what persists, expires, and must never be stored',                  color: '#5b8af5' },
   { label: 'Human-in-the-loop',  desc: 'System knows which actions require human approval',                         color: '#22c55e' },
@@ -350,10 +350,10 @@ export function ProductionChecklist() {
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
         fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: '#f59e0b', opacity: 0.7,
+        textTransform: 'uppercase', color: '#e5c453', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
-        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#f59e0b', opacity: 0.5 }} />
+        <span style={{ display: 'inline-block', width: 18, height: 1, background: '#e5c453', opacity: 0.5 }} />
         Production Readiness Checklist
       </div>
 

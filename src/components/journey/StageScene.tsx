@@ -117,8 +117,8 @@ export function StageScene({ scene, accent }: { scene: StageSceneId; accent: str
           ))}
           {nodes.map(([x, y, r], i) => (
             <g key={i}>
-              <circle cx={x} cy={y} r={r} fill={i === 0 ? '#f59e0b' : accent} fillOpacity={i === 0 ? 0.95 : 0.8} />
-              <circle cx={x} cy={y} r={r + 6} stroke={i === 0 ? '#f59e0b' : accent} strokeOpacity="0.25" strokeWidth="1" />
+              <circle cx={x} cy={y} r={r} fill={i === 0 ? '#e5c453' : accent} fillOpacity={i === 0 ? 0.95 : 0.8} />
+              <circle cx={x} cy={y} r={r + 6} stroke={i === 0 ? '#e5c453' : accent} strokeOpacity="0.25" strokeWidth="1" />
             </g>
           ))}
           {/* quadcopter silhouette */}
@@ -201,11 +201,11 @@ export function StageScene({ scene, accent }: { scene: StageSceneId; accent: str
           ))}
           {/* routes */}
           <path className="scene-flow" d="M 190 470 v -120 l 90 -80" stroke={accent} strokeWidth="2.2" strokeDasharray="7 8" />
-          <path className="scene-flow" d="M 410 470 v -90 l -60 -60 l 90 -90" stroke="#f59e0b" strokeWidth="2.2" strokeDasharray="7 8" />
+          <path className="scene-flow" d="M 410 470 v -90 l -60 -60 l 90 -90" stroke="#e5c453" strokeWidth="2.2" strokeDasharray="7 8" />
           <path d="M 280 270 l 14 -4 l -4 14 z" fill={accent} />
-          <path d="M 440 230 l 14 -4 l -4 14 z" fill="#f59e0b" />
+          <path d="M 440 230 l 14 -4 l -4 14 z" fill="#e5c453" />
           {/* players + tracking boxes */}
-          {[[190, 470, accent], [410, 470, '#f59e0b'], [300, 420, '#f4f4f2'], [260, 470, '#f4f4f2'], [340, 470, '#f4f4f2']].map(([x, y, c], i) => (
+          {[[190, 470, accent], [410, 470, '#e5c453'], [300, 420, '#f4f4f2'], [260, 470, '#f4f4f2'], [340, 470, '#f4f4f2']].map(([x, y, c], i) => (
             <g key={i}>
               <circle cx={Number(x)} cy={Number(y)} r="9" fill={String(c)} fillOpacity={0.9} />
               {i < 2 && <rect className="scene-drift" x={Number(x) - 17} y={Number(y) - 17} width="34" height="34" stroke={String(c)} strokeOpacity="0.6" strokeWidth="1.2" strokeDasharray="4 4" />}
@@ -213,7 +213,7 @@ export function StageScene({ scene, accent }: { scene: StageSceneId; accent: str
           ))}
           {/* confidence readouts */}
           <text x="150" y="330" fill={accent} fillOpacity="0.8" fontSize="12" fontFamily="var(--font-code), monospace">WR·0.94</text>
-          <text x="440" y="500" fill="#f59e0b" fillOpacity="0.8" fontSize="12" fontFamily="var(--font-code), monospace">RB·0.91</text>
+          <text x="440" y="500" fill="#e5c453" fillOpacity="0.8" fontSize="12" fontFamily="var(--font-code), monospace">RB·0.91</text>
           <text x="300" y="566" textAnchor="middle" fill={accent} fillOpacity="0.65" fontSize="13" letterSpacing="5" fontFamily="var(--font-code), monospace">EVERY METRIC → A CLIP A COACH CAN CHECK</text>
         </svg>
       );

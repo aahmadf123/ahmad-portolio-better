@@ -14,7 +14,7 @@ export function fireConfetti(opts?: { count?: number; duration?: number }) {
   canvas.height = innerHeight * dpr;
   ctx.scale(dpr, dpr);
 
-  const colors = ['#2dd4bf', '#f59e0b', '#f4f4f2', '#38bdf8'];
+  const colors = ['#2dd4bf', '#e5c453', '#f4f4f2', '#38bdf8'];
   const parts = Array.from({ length: count }, () => ({
     x: innerWidth / 2 + (Math.random() - 0.5) * innerWidth * 0.3,
     y: innerHeight * 0.35,

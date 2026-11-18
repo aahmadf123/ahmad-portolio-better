@@ -50,8 +50,8 @@ export const nowCards: NowCard[] = [
     icon: '◎',
     category: 'Pursuing',
     status: 'Upcoming',
-    statusColor: '#f0823c',
-    color: '#f0823c',
+    statusColor: '#fb7185',
+    color: '#fb7185',
     items: certPursuits,
   },
 ];

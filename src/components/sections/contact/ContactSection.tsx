@@ -10,7 +10,7 @@ export function ContactSection() {
   const [emailHovered, setEmailHovered] = useState(false);
   const def = sectionById('contact')!;
   const channels = [
-    { label: 'Email', value: site.email, href: `mailto:${site.email}`, color: '#f59e0b', Icon: Mail },
+    { label: 'Email', value: site.email, href: `mailto:${site.email}`, color: '#e5c453', Icon: Mail },
     { label: 'LinkedIn', value: '/in/ahmadfirasazfar', href: site.socials.linkedin, color: '#5b8af5', Icon: LinkedinIcon },
     { label: 'GitHub', value: '/aahmadf123', href: site.socials.github, color: '#2dd4bf', Icon: GithubIcon },
     { label: 'Location', value: site.location, href: null, color: '#a78bfa', Icon: MapPin },
@@ -119,7 +119,7 @@ export function ContactSection() {
           <div style={{ border: '1px solid var(--bd)', borderRadius: 10, overflow: 'hidden', background: 'rgba(244,244,242,0.015)' }}>
             <div style={{ padding: '14px 22px', background: 'rgba(244,244,242,0.03)', borderBottom: '1px solid var(--bd)', display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(239,68,68,0.45)', display: 'inline-block' }} />
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(245,158,11,0.45)', display: 'inline-block' }} />
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(229,196,83,0.45)', display: 'inline-block' }} />
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(34,197,94,0.45)', display: 'inline-block' }} />
               <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginLeft: 8 }}>Channels</span>
             </div>

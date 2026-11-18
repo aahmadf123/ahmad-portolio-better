@@ -14,7 +14,7 @@ const DISPLAY = "var(--font-display), Georgia, serif";
 const MONO   = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#ef4444';
 
-const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
+const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -368,7 +368,7 @@ export default function ToledoFootballIQCaseStudy() {
                     exit: '90%+ of clips have visible field markings. Coaches approve MVP direction.',
                   },
                   {
-                    phase: 'Phase 1', label: 'Foundation MVP', color: '#f59e0b',
+                    phase: 'Phase 1', label: 'Foundation MVP', color: '#e5c453',
                     items: ['Video ingestion and job tracking', 'Play segmentation with manual boundary correction', 'Field calibration and analytics-safe scoring', 'Player detection and tracking', 'Clip-linked metrics', 'Coach correction UI', 'Model and data versioning', 'Role-based access'],
                     exit: '90% of plays have acceptable boundaries. 85% of clips yield useful tracking. Metric → evidence clip in ≤2 clicks.',
                   },

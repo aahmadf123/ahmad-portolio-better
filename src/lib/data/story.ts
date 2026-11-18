@@ -34,7 +34,7 @@ export const storyChapters: StoryChapter[] = [
     title: 'Learning by shipping.',
     body: 'A data governance framework at Park Place Technologies: three security feeds merged into one Postgres store, validation catching 95% of bad entries at ingestion, zero data loss across every disaster-recovery test. An Arduino control system for a chemically-powered car that won Most Innovative Car Design worldwide, third in poster and presentation. Different fields, same lesson: ask the right question when you have no home-field advantage.',
     scene: 'systems',
-    accent: '#f0823c',
+    accent: '#fb7185',
     stat: { value: '0', label: 'data loss across all DR simulations' },
   },
   {
@@ -53,7 +53,7 @@ export const storyChapters: StoryChapter[] = [
     title: 'Enterprise scale.',
     body: 'First Solar - first as a Microsoft Solution Developer building agentic AI in Copilot Studio, wiring Azure AI into Microsoft 365 and leading two other interns. Then full-time as Developer I on Oracle Cloud: VBCS, OIC, BI Publisher, REST integrations under code review. Enterprise applications the business runs on, at a company building the energy transition.',
     scene: 'solar',
-    accent: '#f59e0b',
+    accent: '#e5c453',
     stat: { value: 'Developer I', label: 'First Solar · Jun 2026' },
   },
   {
@@ -72,7 +72,7 @@ export const storyChapters: StoryChapter[] = [
     title: 'The next chapter.',
     body: "Two certifications in flight - Oracle's Application Integration Professional, Microsoft's AI Transformation Leader. A football computer-vision model still in progress, athletics platforms in build alongside it: a student-athlete health-insurance site, an onboarding portal. Still in Toledo, open to collaborate - AI research, ML engineering, sports analytics. Same instinct as chapter one: go where the hardest problems are.",
     scene: 'horizon',
-    accent: '#f59e0b',
+    accent: '#e5c453',
     milestone: false,
     stat: { value: 'Open', label: 'To collaborate · Toledo, OH' },
   },

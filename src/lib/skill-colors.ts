@@ -1,8 +1,8 @@
 export const SKILL_COLOR_PALETTE = {
-  amber:  '#f59e0b',
+  amber:  '#e5c453',
   blue:   '#5b8af5',
   teal:   '#2dd4bf',
-  orange: '#f0823c',
+  orange: '#fb7185',
   purple: '#a78bfa',
   pink:   '#f472b6',
   sky:    '#38bdf8',
@@ -17,7 +17,7 @@ export const SKILL_COLOR_PALETTE = {
  * Seven separated hues - no two are confusable at a glance.
  */
 export const SKILL_GROUP_COLORS: Record<string, string> = {
-  'languages':  '#f59e0b', // amber
+  'languages':  '#e5c453', // amber
   'ml-ai':      '#5b8af5', // blue
   'mlops-data': '#ef4444', // red
   'robotics':   '#a78bfa', // purple
@@ -29,17 +29,17 @@ export const SKILL_GROUP_COLORS: Record<string, string> = {
 // Plain object - keys are lowercase, values are hex colors
 const SKILL_COLORS: Record<string, string> = {
   // ── Languages ──────────────────────────────────────────
-  'python':        '#f59e0b',
-  'javascript':    '#f59e0b',
-  'typescript':    '#f59e0b',
-  'c++':           '#f59e0b',
-  'java':          '#f59e0b',
-  'sql':           '#f59e0b',
-  'html/css':      '#f59e0b',
-  'embedded c':    '#f59e0b',
-  'matlab':        '#f59e0b',
-  'simulink':      '#f59e0b',
-  'bash':          '#f59e0b',
+  'python':        '#e5c453',
+  'javascript':    '#e5c453',
+  'typescript':    '#e5c453',
+  'c++':           '#e5c453',
+  'java':          '#e5c453',
+  'sql':           '#e5c453',
+  'html/css':      '#e5c453',
+  'embedded c':    '#e5c453',
+  'matlab':        '#e5c453',
+  'simulink':      '#e5c453',
+  'bash':          '#e5c453',
 
   // ── ML & AI ────────────────────────────────────────────
   'pytorch':           '#5b8af5',

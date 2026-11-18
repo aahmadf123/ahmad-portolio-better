@@ -14,7 +14,7 @@ const SERIF = "var(--font-body), system-ui, sans-serif";
 // Team colors stay hex: they get alpha-concatenated below (`${UT}22`).
 const UT    = '#6b96f7'; // Toledo blue (lifted for 4.5:1 on dark panels)
 const BG    = '#f0823c'; // Bowling Green orange
-const GOLD  = '#f59e0b';
+const GOLD  = '#e5c453';
 const GREEN = '#22c55e';
 const MUTED = '#9a9a96';
 

@@ -6,10 +6,10 @@ const MONO  = "var(--font-code), ui-monospace, monospace";
 const SERIF = "var(--font-body), system-ui, sans-serif";
 
 const GREEN = '#22c55e';
-const GOLD  = '#f59e0b';
+const GOLD  = '#e5c453';
 const BLUE  = '#5b8af5';
 const RED   = '#ef4444';
-const ORANGE = '#f0823c';
+const ORANGE = '#fb7185';
 const PURPLE = '#a78bfa';
 
 function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; color?: string }) {
@@ -608,7 +608,7 @@ export function EvidenceCalculator() {
   const seasons = gamesNeeded / 12;
   const careers = gamesNeeded / COLLEGE_CAREER_GAMES;
 
-  const verdictColor = identical || gamesNeeded > COLLEGE_CAREER_GAMES ? RED : gamesNeeded > 36 ? ORANGE : GREEN;
+  const verdictColor = identical || gamesNeeded > COLLEGE_CAREER_GAMES ? RED : gamesNeeded > 36 ? GOLD : GREEN;
   const verdict = identical
     ? 'No amount of games can separate identical teams.'
     : gamesNeeded > COLLEGE_CAREER_GAMES

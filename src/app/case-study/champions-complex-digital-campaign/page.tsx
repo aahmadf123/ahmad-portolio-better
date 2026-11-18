@@ -14,7 +14,7 @@ const DISPLAY = "var(--font-display), Georgia, serif";
 const MONO   = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#38bdf8';
 
-const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
+const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -448,7 +448,7 @@ export default function ChampionsComplexCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Build', color: ACCENT, items: ['Live Sidearm/Narrator page deployment', 'Full rendering sequence integration', 'Campaign progress tracking module', 'Naming-rights inquiry forms'] },
-                  { phase: 'Content', color: '#f59e0b', items: ['Coach and student-athlete testimonials', 'Video content for hero section', 'Interactive facility map hotspots', 'Digital donor wall in Champions Corridor'] },
+                  { phase: 'Content', color: '#e5c453', items: ['Coach and student-athlete testimonials', 'Video content for hero section', 'Interactive facility map hotspots', 'Digital donor wall in Champions Corridor'] },
                   { phase: 'Optimize', color: '#a78bfa', items: ['Mobile donation flow optimization', 'A/B testing on CTA copy and placement', 'Analytics tracking for donor funnel behavior', 'Post-launch performance reporting'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">

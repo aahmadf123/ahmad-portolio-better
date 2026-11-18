@@ -25,7 +25,7 @@ export function useMDXComponents(): MDXComponents {
         letterSpacing: '-0.015em', color: 'var(--gold)',
         marginTop: '3rem', marginBottom: '0.75rem',
         paddingTop: '0.25rem',
-        borderTop: '1px solid rgba(245,158,11,0.15)',
+        borderTop: '1px solid rgba(229,196,83,0.15)',
       }}>
         {children}
       </h2>
@@ -101,7 +101,7 @@ export function useMDXComponents(): MDXComponents {
         margin: '2rem 0',
         padding: '1.25rem 1.5rem',
         border: '1px solid color-mix(in srgb, var(--gold) 35%, transparent)',
-        background: 'rgba(245,158,11,0.04)',
+        background: 'rgba(229,196,83,0.04)',
         borderRadius: 8,
       }}>
         <div style={{
@@ -145,7 +145,7 @@ export function useMDXComponents(): MDXComponents {
         rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
         style={{
           color: 'var(--gold)', textDecoration: 'none',
-          borderBottom: '1px solid rgba(245,158,11,0.4)',
+          borderBottom: '1px solid rgba(229,196,83,0.4)',
           transition: 'border-color 0.2s, color 0.2s',
         }}
       >
@@ -181,7 +181,7 @@ export function useMDXComponents(): MDXComponents {
     ),
 
     thead: ({ children }) => (
-      <thead style={{ borderBottom: '1px solid rgba(245,158,11,0.3)' }}>
+      <thead style={{ borderBottom: '1px solid rgba(229,196,83,0.3)' }}>
         {children}
       </thead>
     ),

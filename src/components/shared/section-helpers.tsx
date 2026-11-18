@@ -55,7 +55,7 @@ export function useReveal() {
 }
 
 // ── Deterministic accent picker for uncolored tags ──
-const PALETTE = ['#f59e0b', '#5b8af5', '#2dd4bf', '#f0823c', '#a78bfa', '#f472b6', '#38bdf8', '#22c55e', '#ef4444'];
+const PALETTE = ['#e5c453', '#5b8af5', '#2dd4bf', '#fb7185', '#a78bfa', '#f472b6', '#38bdf8', '#22c55e', '#ef4444'];
 export function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;

@@ -42,7 +42,7 @@ export const about: AboutData = {
   beliefs: [
     {
       n: '01',
-      color: '#f59e0b',
+      color: '#e5c453',
       title: 'Interdisciplinary by instinct',
       body: "The skill that transfers between fields isn't domain knowledge - it's knowing how to ask the right question when you don't have home-field advantage.",
     },
@@ -54,7 +54,7 @@ export const about: AboutData = {
     },
     {
       n: '03',
-      color: '#f0823c',
+      color: '#fb7185',
       title: 'Deployment from line one',
       body: 'Real edge cases, latency requirements, stakeholders who need to understand the output. That pressure makes the work honest.',
     },

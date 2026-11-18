@@ -65,7 +65,7 @@ export const site: SiteConfig = {
 
 /** Hero side-rail info cards (preserved from the original hero). */
 export const heroFacts = [
-  { label: 'Now', value: 'Developer I', sub: 'First Solar · Jun 2026', color: '#f59e0b' },
+  { label: 'Now', value: 'Developer I', sub: 'First Solar · Jun 2026', color: '#e5c453' },
   { label: 'Research', value: 'LION Lab · CPHS Lab', sub: 'University of Toledo', color: '#5b8af5' },
   { label: 'Degree', value: 'B.S. CS & Engineering', sub: 'GPA 3.23 · 2026', color: '#a78bfa' },
   { label: 'Focus', value: 'Agentic AI · UAV · MLOps', sub: null, color: '#2dd4bf' },

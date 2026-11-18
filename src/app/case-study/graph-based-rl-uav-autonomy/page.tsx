@@ -10,9 +10,9 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 const SERIF = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
 const MONO  = "var(--font-code), ui-monospace, monospace";
-const ACCENT = '#f59e0b';
+const ACCENT = '#e5c453';
 
-const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
+const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -366,7 +366,7 @@ export default function UAVCaseStudy() {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12, marginBottom: 28 }} className="two-col-uav">
             {[
-              { mode: 'Direct Control', color: '#f0823c', d: 'The human operator controls the UAV manually. The autonomy stack is passive. Used during high-risk phases or when the environment is completely novel.' },
+              { mode: 'Direct Control', color: '#fb7185', d: 'The human operator controls the UAV manually. The autonomy stack is passive. Used during high-risk phases or when the environment is completely novel.' },
               { mode: 'Supervised Autonomy', color: ACCENT, d: 'The UAV proposes or executes navigation actions while the human monitors. The operator can intervene at any point without taking full manual control.' },
               { mode: 'Intervention Mode', color: '#5b8af5', d: 'The system detects uncertainty, safety constraint proximity, or mission ambiguity and requests human input before continuing autonomous operation.' },
               { mode: 'Natural-Language Command Mode', color: '#a78bfa', d: 'The operator gives high-level mission instructions. The voice-to-action pipeline translates these into safe flight objectives within the current graph representation.' },

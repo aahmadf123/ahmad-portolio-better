@@ -14,7 +14,7 @@ const DISPLAY = "var(--font-display), Georgia, serif";
 const MONO   = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#f472b6';
 
-const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
+const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -473,7 +473,7 @@ export default function BattingCleanupCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Operations', color: ACCENT, items: ['Live operations dashboard for city maintainers', 'SLA tracking for report resolution time', 'Route optimization for cleanup crews', 'Automated escalation rules for high-frequency assets'] },
-                  { phase: 'Intelligence', color: '#f59e0b', items: ['Report deduplication and clustering', 'Heatmaps for recurring waste hotspots', 'Anomaly detection for spam or suspicious report patterns', 'Analytics for seasonality, event impact, and foot traffic correlation'] },
+                  { phase: 'Intelligence', color: '#e5c453', items: ['Report deduplication and clustering', 'Heatmaps for recurring waste hotspots', 'Anomaly detection for spam or suspicious report patterns', 'Analytics for seasonality, event impact, and foot traffic correlation'] },
                   { phase: 'Public', color: '#5b8af5', items: ['Public transparency metrics dashboard', 'Richer QR-code asset metadata and status pages', 'Notification system for users who filed reports', 'Expanded coverage beyond downtown Toledo'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">

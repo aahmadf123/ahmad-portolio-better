@@ -6,10 +6,10 @@ const MONO  = "var(--font-code), ui-monospace, monospace";
 const SERIF = "var(--font-body), system-ui, sans-serif";
 
 const GREEN = '#22c55e';
-const GOLD  = '#f59e0b';
+const GOLD  = '#e5c453';
 const BLUE  = '#5b8af5';
 const RED   = '#ef4444';
-const ORANGE = '#f0823c';
+const ORANGE = '#fb7185';
 const PURPLE = '#a78bfa';
 
 function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; color?: string }) {
@@ -314,7 +314,7 @@ export function GamePlanSimulator() {
   }, [fidelity, runKey]);
 
   const maxCount = result ? Math.max(...result.bins, 1) : 1;
-  const verdictColor = fidelity < BREAK_EVEN ? RED : fidelity < 75 ? ORANGE : GREEN;
+  const verdictColor = fidelity < BREAK_EVEN ? RED : fidelity < 75 ? GOLD : GREEN;
   const verdict = fidelity < BREAK_EVEN
     ? 'Below break-even. This twin is actively worse than generic preparation - you are rehearsing against a rival that doesn’t exist.'
     : fidelity < 75

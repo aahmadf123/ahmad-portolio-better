@@ -29,7 +29,7 @@ export const jobs: Job[] = [
     location: 'Perrysburg, OH',
     type: 'Full-time',
     active: true,
-    color: '#f59e0b',
+    color: '#e5c453',
     logo: '/Images/first%20solar_logo.png',
     description:
       "Develops and supports First Solar's Enterprise Applications based on Oracle technologies. Builds and maintains Oracle Cloud applications using Visual Builder (VBCS), Oracle Integration Cloud (OIC), and Oracle BI Publisher Reports (BIP). Designs and implements application components, REST API integrations, and web services. Conducts unit and system testing, participates in code reviews, maintains coding standards, and collaborates with cross-functional teams and senior architects to deliver high-quality enterprise software solutions.",
@@ -71,7 +71,7 @@ export const jobs: Job[] = [
     period: 'Jan 2026 – May 2026',
     location: 'Perrysburg, OH',
     type: 'Internship',
-    color: '#f59e0b',
+    color: '#e5c453',
     logo: '/Images/first%20solar_logo.png',
     description:
       'Functioned as an AI Engineer & Data Engineer, delivering AI solutions within Microsoft for the Business. Developed and tested automated workflows using Power Automate. Integrated Azure AI services into Microsoft 365 applications for enhanced functionality. Spearheaded project workflows for a team of two additional interns, coordinating contributions to meet critical milestones. Created connectors and scripts to support enterprise-level automation.',
@@ -135,7 +135,7 @@ export const jobs: Job[] = [
     period: 'May – Aug 2023',
     location: 'Toledo, OH',
     type: 'Co-Op',
-    color: '#f0823c',
+    color: '#fb7185',
     logo: '/Images/park%20place_logo.png',
     description:
       'Architected and implemented a data governance framework consolidating security data from Active Directory, Cisco AMP, and Microsoft Defender into a centralized PostgreSQL database. Implemented validation rules catching 95% of non-compliant entries during ingestion. Revamped disaster recovery protocol - achieving zero data loss across all quarterly DR simulations.',

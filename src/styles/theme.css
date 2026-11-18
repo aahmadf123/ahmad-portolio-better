@@ -12,14 +12,14 @@
 
   /* Identity accents */
   --primary: #2dd4bf;            /* teal-cyan - the site's voice */
-  --gold: #f59e0b;               /* milestones & achievements only */
+  --gold: #e5c453;               /* milestones & achievements only */
 
   /* Supporting accent range (data-driven chips, per-section identities) */
   --blue: #5b8af5;
   --purple: #a78bfa;
   --pink: #f472b6;
   --sky: #38bdf8;
-  --orange: #f0823c;
+  --orange: #fb7185;             /* rose: the site uses no orange (only BG in the I-75 note) */
   --green: #22c55e;
   --red: #ef4444;
 

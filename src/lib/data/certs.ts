@@ -34,7 +34,7 @@ export const certs: Cert[] = [
     verifyUrl:
       'https://catalog-education.oracle.com/ords/certview/sharebadge?id=FD6DAFE9CD1BB5971BDD46D7138EF1789ACED34BB47B6CE5764199FFF18FD6DC',
     certificateUrl: '/docs/Oracle_Foundation_eCertificate.pdf',
-    color: '#f0823c',
+    color: '#fb7185',
     earned: '2026',
   },
   {

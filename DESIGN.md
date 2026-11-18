@@ -13,11 +13,11 @@ colors:
   border-elevated: "rgba(244,244,242,0.16)"
   # ── Primary identity accent (teal) + gold for milestones ──
   primary: "#2dd4bf"
-  gold: "#f59e0b"
+  gold: "#e5c453"
   # ── Project-aesthetic accents (original six) ──
   blue: "#5b8af5"
   teal: "#2dd4bf"
-  orange: "#f0823c"
+  rose: "#fb7185"
   purple: "#A78BFA"
   pink: "#F472B6"
   # ── Project-specific extension accents ──
@@ -166,8 +166,9 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 
 ### Accents
 - **Primary teal `#2dd4bf`:** system chrome: primary CTAs, focus ring, scroll bar, chapter rail, the logo dot.
-- **Gold `#f59e0b`:** milestones and highlights (timeline bursts, the scroll bar's far end).
-- **Project and section accents:** blue `#5b8af5`, orange `#f0823c`, purple `#a78bfa`, pink `#f472b6`, sky `#38bdf8`, red `#ef4444`, green `#22c55e`. Each project and section owns one and uses it consistently (tags, borders, its debrief stats, its pager card).
+- **Gold `#e5c453`:** milestones and highlights (timeline bursts, the scroll bar's far end). A soft gold, used sparingly.
+- **No orange anywhere.** The one exception is Bowling Green's orange `#f0823c`, used only to label BG in the Battle of I-75 field note.
+- **Project and section accents:** blue `#5b8af5`, rose `#fb7185`, purple `#a78bfa`, pink `#f472b6`, sky `#38bdf8`, red `#ef4444`, green `#22c55e`. Each project and section owns one and uses it consistently (tags, borders, its debrief stats, its pager card).
 
 ### Rules
 - **Tints, not fills.** Accents sit on surfaces at 3-10% and on borders at 20-35%. Solid accent fills only on buttons, and buttons carry dark text (`--background`), never white: white on blue or red fails contrast.

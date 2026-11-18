@@ -66,7 +66,7 @@ const foundation = sentences(ch('engineering-foundation').body);
 
 export const worlds: World[] = [
   {
-    id: 'chem-e-car', n: '01', label: 'Chem-E Car (AIChE)', years: '2025', accent: '#f0823c',
+    id: 'chem-e-car', n: '01', label: 'Chem-E Car (AIChE)', years: '2025', accent: '#fb7185',
     title: 'Chemistry, wired.', // new copy
     paragraphs: [foundation[1]],
     stat: { value: 'Worldwide', label: 'Most Innovative Car Design · AIChE Chem-E Car' }, // new copy

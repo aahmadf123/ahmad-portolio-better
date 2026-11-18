@@ -14,7 +14,7 @@ const DISPLAY = "var(--font-display), Georgia, serif";
 const MONO   = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#22C55E';
 
-const PALETTE = ['#f59e0b','#5b8af5','#2dd4bf','#f0823c','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
+const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
 function pickColor(text: string) {
   let h = 0;
   for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
@@ -394,7 +394,7 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 {[
                   { phase: 'Near-Term', color: ACCENT, items: ['Authenticated UToledo SSO login', 'Role-based admin dashboard for content approval', 'Onboarding progress tracking for each new employee', 'Manager checklists for 30/60/90-day reviews'] },
-                  { phase: 'Mid-Term', color: '#f59e0b', items: ['Semantic search across articles and policies', 'Analytics for most-viewed and unanswered questions', 'Automatic stale-content reminders', 'CSV import/export for staff and contacts', 'AI-generated summaries for long policy documents'] },
+                  { phase: 'Mid-Term', color: '#e5c453', items: ['Semantic search across articles and policies', 'Analytics for most-viewed and unanswered questions', 'Automatic stale-content reminders', 'CSV import/export for staff and contacts', 'AI-generated summaries for long policy documents'] },
                   { phase: 'Long-Term', color: '#a78bfa', items: ['Department-specific onboarding paths (coaches, operations, communications, compliance, ticketing, development)', 'Audit logs for all content updates', 'Mobile-first quick-start mode for first-day onboarding', 'Cross-role knowledge transfer workflows when staff change positions'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">

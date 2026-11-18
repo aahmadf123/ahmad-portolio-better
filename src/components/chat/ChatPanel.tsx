@@ -173,7 +173,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             )}
 
             {limited && (
-              <p style={{ fontFamily: MONO, fontSize: 10.5, color: 'var(--gold)', lineHeight: 1.6, background: 'rgba(245,158,11,0.07)', border: '1px solid rgba(245,158,11,0.25)', borderRadius: 8, padding: '9px 12px' }}>
+              <p style={{ fontFamily: MONO, fontSize: 10.5, color: 'var(--gold)', lineHeight: 1.6, background: 'rgba(229,196,83,0.07)', border: '1px solid rgba(229,196,83,0.25)', borderRadius: 8, padding: '9px 12px' }}>
                 Easy there - that&apos;s the rate limit. Give it a few minutes, or just email {site.email}.
               </p>
             )}
@@ -244,7 +244,7 @@ function Rich({ text }: { text: string }) {
 function Fallback() {
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(245,158,11,0.3)', background: 'rgba(245,158,11,0.06)', borderRadius: 6, padding: '6px 10px', display: 'inline-block' }}>
+      <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(229,196,83,0.3)', background: 'rgba(229,196,83,0.06)', borderRadius: 6, padding: '6px 10px', display: 'inline-block' }}>
         Assistant warming up - live answers soon
       </div>
       <p style={{ fontFamily: SANS, fontSize: 12.5, lineHeight: 1.65, color: FG2, margin: '12px 0 14px' }}>
