@@ -116,7 +116,9 @@ export async function collectRenderedUnits(page: Page, route: string): Promise<s
   return toUnits(await loadAndCollectText(page, route));
 }
 
-export interface AllowedRemoval { text: string; reason: string; preservedAs?: string; kind?: 'ui-label' }
+export interface AllowedRemoval { text: string; reason: string; preservedAs?: string;
+  /** Page that now shows preservedAs (default: the homepage). */
+  preservedOn?: string; kind?: 'ui-label' }
 
 /**
  * Every picture a page shows, after scrolling it fully: <img> (src + srcset),

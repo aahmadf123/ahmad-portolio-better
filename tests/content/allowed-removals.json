@@ -93,5 +93,23 @@
     "kind": "ui-label",
     "reason": "Ahmad (2026-11-16): a case study's way back is All Projects; the projects page then returns to the portfolio where it was left.",
     "preservedAs": "← Back to All Projects"
+  },
+  {
+    "text": "17 of 27 opening snaps were runs, a normal scripted start. The two biggest first snaps were BG's 56-yard run in 2019 and Toledo's 39-yard pass in 2025.",
+    "reason": "Ahmad (2026-11-18, pre-post checklist): dropped the unsupported \"normal scripted start\" claim. Every number stays.",
+    "preservedAs": "17 of 27 opening snaps were runs. The two biggest first snaps were BG's 56-yard run in 2019 and Toledo's 39-yard pass in 2025.",
+    "preservedOn": "/field-notes/battle-of-i75-coin-toss"
+  },
+  {
+    "text": "The 95% interval on 16-11 runs from 41% to 76%. With 27 games, only an effect of about 27 percentage points would reliably show up, and no coin toss is worth that. To detect an edge the size the league data actually shows, you'd need roughly",
+    "reason": "Ahmad (2026-11-18, pre-post checklist): reworded the 78,400 sentence. The interval, the 27-point figure and 78,400 all stay.",
+    "preservedAs": "Even if the league's tiny point estimate were real, you'd need about 78,400 rivalry games to see it.",
+    "preservedOn": "/field-notes/battle-of-i75-coin-toss"
+  },
+  {
+    "text": "rivalry games. At one game a year, check back around the year 80,000.",
+    "reason": "Ahmad (2026-11-18, pre-post checklist): second half of the reworded 78,400 sentence; \"check back around the year 80,000\" is kept word for word.",
+    "preservedAs": "At one game a year, check back around the year 80,000.",
+    "preservedOn": "/field-notes/battle-of-i75-coin-toss"
   }
 ]

@@ -37,9 +37,12 @@ test.describe('no information loss', () => {
     // shows (preservedAs), unless it is explicitly a UI label that states no fact.
     const withDigits = allowed.filter((a) => /\d/.test(a.text) && a.kind !== 'ui-label');
     for (const a of withDigits) expect(a.preservedAs, `"${a.text}" has a number but no preservedAs`).toBeTruthy();
-    if (withDigits.length) {
-      const home = normalize((await loadAndCollectText(page, '/')).join(' '));
-      for (const a of withDigits) expect(home.includes(normalize(a.preservedAs!)), `preservedAs "${a.preservedAs}" not on /`).toBe(true);
+    const routes = [...new Set(withDigits.map((a) => a.preservedOn ?? '/'))];
+    for (const route of routes) {
+      const text = normalize((await loadAndCollectText(page, route)).join(' '));
+      for (const a of withDigits.filter((x) => (x.preservedOn ?? '/') === route)) {
+        expect(text.includes(normalize(a.preservedAs!)), `preservedAs "${a.preservedAs}" not on ${route}`).toBe(true);
+      }
     }
   });
 });
