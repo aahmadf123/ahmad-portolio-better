@@ -15,7 +15,8 @@ test('desktop gets exactly one depth canvas, and it takes over the photos', asyn
   await page.goto('/');
   await expect(page.locator('canvas[data-journey-canvas]')).toHaveCount(1);
   await expect.poll(() => page.evaluate(() => document.documentElement.dataset.depthReady ?? ''), { timeout: 10000 }).toContain('opening');
-  await expect(page.locator('#hero .flyin-photo').first()).toHaveCSS('visibility', 'hidden');
+  // (the hero's photo is a plain backdrop; the canvas takes over the journey's scene layers)
+  await expect(page.locator('[data-scene="chem-e-car"] .flyin-photo.depthable[data-photo="opening"]').first()).toHaveCSS('visibility', 'hidden');
 });
 
 test('the canvas draws the photo', async ({ page }, info) => {
@@ -49,7 +50,7 @@ test('phones and reduced motion get no canvas', async ({ page }, info) => {
   await page.goto('/');
   await page.waitForTimeout(1500);
   await expect(page.locator('canvas[data-journey-canvas]')).toHaveCount(0);
-  await expect(page.locator('#hero .flyin-photo').first()).toHaveCSS('visibility', 'visible');
+  await expect(page.locator('[data-scene="chem-e-car"] .flyin-photo').first()).toHaveCSS('visibility', 'visible');
 });
 
 test('canvas failure falls back to css photos', async ({ page }, info) => {
@@ -60,7 +61,7 @@ test('canvas failure falls back to css photos', async ({ page }, info) => {
   await page.goto('/');
   await page.waitForTimeout(3000);
   expect(await page.evaluate(() => document.documentElement.dataset.depthReady ?? '')).toBe('');
-  await expect(page.locator('#hero .flyin-photo').first()).toHaveCSS('visibility', 'visible');
+  await expect(page.locator('[data-scene="chem-e-car"] .flyin-photo').first()).toHaveCSS('visibility', 'visible');
   expect(errors).toEqual([]);
 });
 

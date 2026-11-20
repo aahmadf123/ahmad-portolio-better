@@ -26,11 +26,11 @@ test('Back after an in-page link click returns to the homepage', async ({ page }
   desktopOnly(info.project.name);
   await page.goto('/');
   await page.locator('#hero').getByRole('link', { name: 'Start the journey ↓' }).click();
-  await expect(page).toHaveURL(/#chem-e-car$/);
+  await expect(page).toHaveURL(/#experience$/);
   await openCaseStudyFromCard(page, 'ai-engineering', 'DeepTruth');
   await page.goBack();
-  await expect(page).toHaveURL(/\/#chem-e-car$/);
-  await expect(page.locator('#chem-e-car')).toBeAttached({ timeout: 8000 });
+  await expect(page).toHaveURL(/\/#experience$/);
+  await expect(page.locator('#experience')).toBeAttached({ timeout: 8000 });
 });
 
 for (const w of worlds) {
@@ -91,7 +91,7 @@ for (const vp of [{ width: 360, height: 640 }, { width: 320, height: 568 }, { wi
       }, seenOpacity.toString());
       expect(s.seen, f.label).toBeGreaterThan(0.95);
       expect(s.top, f.label).toBeGreaterThanOrEqual(0);
-      expect(s.bottom, f.label).toBeLessThanOrEqual(s.h);
+      expect(s.bottom, f.label).toBeLessThanOrEqual(s.h + 1); // scrolled into view: allow subpixel rounding
     }
   });
 }

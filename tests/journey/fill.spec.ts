@@ -51,7 +51,7 @@ test('every project is an equal-size tile with its picture at full brightness', 
     expect(Math.abs(ht - sizes[0][1]), 'same height').toBeLessThanOrEqual(1);
   }
   const opacities = await all.locator('img').evaluateAll((els) => els.map((e) => getComputedStyle(e).opacity));
-  expect(opacities.length).toBe(caseStudySlugs.length);
+  expect(opacities.length).toBe(caseStudySlugs.length - featured.length);
   for (const o of opacities) expect(o).toBe('1');
 });
 

@@ -50,7 +50,9 @@ test('engineering-foundation splits into exactly three sentences', () => {
 
 test('every story sentence lands exactly once', () => {
   const placed = [...sentences(opening.body), ...sentences(closing.body), ...worlds.flatMap((w) => w.paragraphs.flatMap(sentences))];
-  for (const c of storyChapters) {
+  // Ahmad (2026-11-20) shortened the Toledo prologue; its full chapter stays in story.ts.
+  expect(opening.body).toBe('I studied Computer Science & Engineering at the University of Toledo and worked in campus IT support.');
+  for (const c of storyChapters.filter((c) => c.id !== 'toledo-origins')) {
     for (const s of sentences(c.body)) {
       expect(placed.filter((p) => p === s), `"${s.slice(0, 60)}…" from ${c.id}`).toHaveLength(1);
     }
