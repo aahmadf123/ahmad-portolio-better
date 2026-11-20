@@ -97,7 +97,7 @@ export const insights: Insight[] = [
   },
   {
     id: 'correction-flywheel',
-    title: 'The correction flywheel is the moat',
+    title: 'Coach corrections become training data',
     lang: 'sql',
     file: 'football_iq/schema/coach_corrections.sql',
     code: `CREATE TABLE coach_corrections (

@@ -12,7 +12,7 @@ import { glideTo, jumpTo } from '@/components/ui/smooth-scroll';
  *    happens while the page is still settling and aims at the section top (the previous
  *    photo), so re-aim at anchorScrollTop() for up to ~3s until it sticks, and stop for
  *    good as soon as the reader scrolls or presses anything.
- * 2. In-page links (<a href="#…">: "Start the journey", the header nav) are handled
+ * 2. In-page links (<a href="#…">: the header nav, the chapter rail) are handled
  *    here too. A native hash jump pushes a history entry with null state, which this
  *    Next version's router ignores on Back, stranding the reader on a case study. So:
  *    push the hash with the router's own state, then scroll to the same landing point.

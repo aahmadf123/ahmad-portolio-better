@@ -25,12 +25,12 @@ async function openCaseStudyFromCard(page: Page, world: string, title: string) {
 test('Back after an in-page link click returns to the homepage', async ({ page }, info) => {
   desktopOnly(info.project.name);
   await page.goto('/');
-  await page.locator('#hero').getByRole('link', { name: 'Start the journey ↓' }).click();
-  await expect(page).toHaveURL(/#experience$/);
+  await page.locator('header nav a[href="#chem-e-car"]').first().click();
+  await expect(page).toHaveURL(/#chem-e-car$/);
   await openCaseStudyFromCard(page, 'ai-engineering', 'DeepTruth');
   await page.goBack();
-  await expect(page).toHaveURL(/\/#experience$/);
-  await expect(page.locator('#experience')).toBeAttached({ timeout: 8000 });
+  await expect(page).toHaveURL(/\/#chem-e-car$/);
+  await expect(page.locator('#chem-e-car')).toBeAttached({ timeout: 8000 });
 });
 
 for (const w of worlds) {
@@ -83,15 +83,17 @@ for (const vp of [{ width: 360, height: 640 }, { width: 320, height: 568 }, { wi
     await page.waitForTimeout(500);
     for (const f of heroFacts) {
       const fact = page.locator('#hero dl > div').filter({ hasText: f.value }).first();
-      await fact.scrollIntoViewIfNeeded();
+      // The hero scrolls like any block now: bring each fact fully into view (scrollIntoViewIfNeeded
+      // leaves a fact that is already partly on screen where it is).
+      await fact.evaluate((e) => { const r = e.getBoundingClientRect(); window.scrollTo({ top: scrollY + r.top - (innerHeight - r.height) / 2, behavior: 'instant' }); });
       await page.waitForTimeout(150);
-      const s = await fact.evaluate((e, fn) => {
+      const read = () => fact.evaluate((e, fn) => {
         const r = e.getBoundingClientRect();
         return { seen: (new Function(`return (${fn})`)())(e) as number, top: r.top, bottom: r.bottom, h: innerHeight };
       }, seenOpacity.toString());
-      expect(s.seen, f.label).toBeGreaterThan(0.95);
-      expect(s.top, f.label).toBeGreaterThanOrEqual(0);
-      expect(s.bottom, f.label).toBeLessThanOrEqual(s.h + 1); // scrolled into view: allow subpixel rounding
+      // Polled: the smooth-scroll glide can still be settling right after scrollIntoView.
+      await expect.poll(async () => { const s = await read(); return s.top >= 0 && s.bottom <= s.h + 1; }, { message: f.label, timeout: 3000 }).toBe(true);
+      expect((await read()).seen, f.label).toBeGreaterThan(0.95);
     }
   });
 }

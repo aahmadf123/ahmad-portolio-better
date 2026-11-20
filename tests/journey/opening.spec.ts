@@ -19,6 +19,16 @@ test('opening renders name, facts, ctas', async ({ page }) => {
   await expect(page.locator(`#hero a[href="${site.degreeUrl}"]`)).toHaveCount(1);
 });
 
+test('hero actions: View projects first and primary, Download resume second', async ({ page }) => {
+  await page.goto('/');
+  const ctas = page.locator('#hero .opening-ctas a');
+  await expect(ctas).toHaveText(['View projects', 'Download resume', 'View Work', 'Degree ↓']);
+  await expect(ctas.nth(0)).toHaveAttribute('href', '/projects');
+  await expect(ctas.nth(0)).toHaveClass(/hero-btn-primary/);
+  await expect(ctas.nth(1)).toHaveAttribute('href', site.resumeUrl);
+  await expect(ctas.nth(3)).toHaveAttribute('href', site.degreeUrl);
+});
+
 test('opening photo is the LCP image', async ({ page }) => {
   await page.goto('/');
   const img = page.locator('#hero picture img').first();

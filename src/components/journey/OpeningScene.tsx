@@ -28,9 +28,9 @@ export function OpeningScene() {
           </h1>
           <p className="opening-sub" style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--foreground)', maxWidth: 560, margin: '20px auto 0', fontFamily: SANS }}>{site.heroSub}</p>
           <div className="opening-ctas">
-            <a href="#experience" data-magnetic="" className="hero-btn hero-btn-primary">Start the journey ↓</a>
+            <a href="/projects" data-magnetic="" className="hero-btn hero-btn-primary">View projects</a>
+            <a href={site.resumeUrl} target="_blank" rel="noopener" className="hero-btn">Download resume</a>
             <a href="/projects" data-magnetic="" className="hero-btn">View Work</a>
-            <a href={site.resumeUrl} target="_blank" rel="noopener" className="hero-btn">Resume ↓</a>
             <a href={site.degreeUrl} target="_blank" rel="noopener" className="hero-btn hero-btn-teal">Degree ↓</a>
           </div>
           <dl className="opening-facts">

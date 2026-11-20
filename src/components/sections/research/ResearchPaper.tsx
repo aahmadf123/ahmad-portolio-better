@@ -16,7 +16,7 @@ export function ResearchPaper() {
   const openLb = useLightboxOpen();
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#5b8af5', marginBottom: 12 }}>Published work and ongoing investigations.</div>
+      <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#5b8af5', marginBottom: 12 }}>Research under review and ongoing investigations.</div>
       {research.storyLine && (
         <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 15, color: FG2, maxWidth: 560, lineHeight: 1.65, marginTop: 0, marginBottom: 28 }}>
           {research.storyLine}

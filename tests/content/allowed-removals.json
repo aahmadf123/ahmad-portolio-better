@@ -116,5 +116,38 @@
     "text": "Where it started: the University of Toledo, Computer Science & Engineering. First job on campus - IT support for students and medical staff, where 100% FERPA and HIPAA compliance mattered more than looking clever, and better documentation cut repeat incidents 40%. The city keeps showing up in everything that follows.",
     "reason": "Ahmad (2026-11-20): the prologue paragraph is shortened to \"I studied Computer Science & Engineering at the University of Toledo and worked in campus IT support.\" The full chapter stays in story.ts; its facts still show in the Timeline (University of Toledo IT support role).",
     "preservedAs": "100% FERPA & HIPAA compliance"
+  },
+  {
+    "text": "10-stage CV pipeline · 90%+ field-marking accuracy · 18+ structured metrics",
+    "reason": "Ahmad (2026-11-20): an unqualified \"90%+ field-marking accuracy\" now reads \"Field-marking accuracy target: 90%+\".",
+    "preservedAs": "10-stage CV pipeline · Field-marking accuracy target: 90%+ · 18+ structured metrics"
+  },
+  {
+    "text": "An active computer vision platform for Toledo Football - a 10-stage pipeline from video ingest to coach dashboard, targeting 90%+ field-marking accuracy across a 18+ table database schema. In Phase 0, the system works through 50–100 annotated evaluation clips to validate each pipeline stage before advancing. Every output connects to the exact clip, overlay, confidence score, and correction path. If a coach cannot verify it, correct it, and teach from it - it is not a production metric.",
+    "reason": "Ahmad (2026-11-20): an unqualified \"90%+ field-marking accuracy\" now reads \"Field-marking accuracy target: 90%+\". Only that phrase changed; every other word of the overview is unchanged.",
+    "preservedAs": "Field-marking accuracy target: 90%+"
+  },
+  {
+    "text": "Field-marking accuracy",
+    "kind": "ui-label",
+    "reason": "Ahmad (2026-11-20): an unqualified \"90%+ field-marking accuracy\" now reads \"Field-marking accuracy target: 90%+\". The stat under 90%+ is labelled \"Field-marking accuracy target\"."
+  },
+  {
+    "text": "Toledo Athletics: from DOMO roster-efficiency dashboards to a 10-stage computer vision pipeline that turns practice film, including overhead drone footage, into evidence a coach can verify, correct, and teach from - targeting 90%+ field-marking accuracy. Every corrected label becomes Toledo-specific training data. Trust is the product.",
+    "reason": "Ahmad (2026-11-20): \"targeting 90%+ field-marking accuracy\" now reads \"Field-marking accuracy target: 90%+\". Every other word of the chapter is unchanged.",
+    "preservedAs": "Field-marking accuracy target: 90%+"
+  },
+  {
+    "text": "LION Lab: graph-based reinforcement learning for drones that navigate worlds they have never seen - 72.8% zero-shot success, 97.3% human-in-the-loop reliability at sub-100ms. DeepFlyer made the same ideas teachable: 80% PPO success, a Gazebo world that cold-starts in under a second. A $3,000 USRCAP fellowship, an ACM Computing Surveys paper, an insurance model at R² = 0.982. The year AI stopped being coursework.",
+    "reason": "Ahmad (2026-11-20): the paper is under review, so \"an ACM Computing Surveys paper\" now reads \"a taxonomy of AI failures submitted to ACM Computing Surveys\". Every other word of the chapter is unchanged.",
+    "preservedAs": "a taxonomy of AI failures submitted to ACM Computing Surveys"
+  },
+  {
+    "text": "The correction flywheel is the moat",
+    "reason": "Ahmad (2026-11-20): the Football IQ insight heading now reads \"Coach corrections become training data\"; its explanation below is unchanged."
+  },
+  {
+    "text": "Published work and ongoing investigations.",
+    "reason": "Ahmad (2026-11-20): the paper is under review, so the research label now reads \"Research under review and ongoing investigations.\""
   }
 ]

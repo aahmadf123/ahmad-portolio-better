@@ -33,7 +33,8 @@ test('every project is in its world', async ({ page }) => {
     // The two featured projects sit below the hero, in their own sections.
     const featured = (featuredProjectSlugs as readonly string[]).includes(p.slug!);
     const where = page.locator(featured ? `#${p.slug === flagshipProject.slug ? 'toledo-football-iq' : p.slug}` : `#${worldForProject(p.slug!)}`);
-    await expect(where.getByRole('button', { name: `${p.title} - open project details` })).toBeAttached();
+    const name = featured ? p.detailsLabel! : `${p.title} - open project details`;
+    await expect(where.getByRole('button', { name, exact: true })).toBeAttached();
   }
 });
 

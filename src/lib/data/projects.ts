@@ -52,6 +52,8 @@ export interface Project {
   category: ProjectCategory;
   status: ProjectStatus;
   flagship?: boolean;
+  /** Text of the button that opens this project's details (default "Details →"). */
+  detailsLabel?: string;
   /** The picture is a concept, not output from the build: shown with an "Illustrative example" label. */
   imageIllustrative?: boolean;
   featuredStats?: { value: string; label: string }[];
@@ -142,6 +144,7 @@ export const projects: Project[] = [
     tag: 'Grange Insurance × UToledo · Senior Design',
     headline: 'R² = 0.982 · 26% over GLM baseline · 75% reduction in manual review',
     image: '/Images/SeniorDesign_Pipeline.jpeg',
+    detailsLabel: 'Read Homeowner Loss Prediction case study',
     span: 2,
     stacks: ['XGBoost', 'Airflow', 'MLflow', 'AWS S3/EC2', 'Pandera', 'Prometheus', 'Hyperopt', 'SHAP'],
     detailStacks: ['XGBoost', 'Hyperopt', 'Airflow', 'MLflow', 'AWS S3', 'AWS EC2', 'Pandera', 'Prometheus', 'Slack API', 'Docker', 'GitHub Actions', 'SHAP', 'scikit-learn'],
@@ -247,6 +250,7 @@ export const projects: Project[] = [
     tag: 'AIChE 2025 · Most Innovative Car Design · 3rd Poster · 24th Overall',
     headline: '24th overall · #1 Most Innovative · AIChE 2025 ChemE Car',
     image: '/Images/AIChE%20ChemECar_International.jpg',
+    detailsLabel: 'View Camel Car project',
     span: 1,
     stacks: ['Arduino', 'Pressure Sensing', 'Solenoid Control', 'Embedded C', 'Calibration'],
     detailStacks: ['Arduino', 'Pressure Sensing', 'Solenoid Control', 'Embedded C', 'Calibration', 'Safety Systems', 'CO₂ Propulsion'],
@@ -377,16 +381,17 @@ export const projects: Project[] = [
     color: '#ef4444',
     title: 'Toledo Football IQ',
     tag: 'University of Toledo Athletics · Football · Active Build',
-    headline: '10-stage CV pipeline · 90%+ field-marking accuracy · 18+ structured metrics',
+    headline: '10-stage CV pipeline · Field-marking accuracy target: 90%+ · 18+ structured metrics',
     image: '/Images/Football_IQ_Analytics.png',
     imageIllustrative: true,
+    detailsLabel: 'Read Toledo Football IQ case study',
     span: 1,
     stacks: ['YOLO', 'ByteTrack', 'RTMPose', 'FastAPI', 'React', 'Postgres', 'Cloudflare R2', 'MLflow'],
     detailStacks: ['YOLO', 'RF-DETR', 'ByteTrack', 'BoT-SORT', 'RTMPose', 'FastAPI', 'React', 'Postgres', 'pgvector', 'Cloudflare R2', 'MLflow', 'PyTorch', 'FFmpeg', 'CUDA'],
     detail: [
       {
         label: 'Overview',
-        body: 'An active computer vision platform for Toledo Football - a 10-stage pipeline from video ingest to coach dashboard, targeting 90%+ field-marking accuracy across a 18+ table database schema. In Phase 0, the system works through 50–100 annotated evaluation clips to validate each pipeline stage before advancing. Every output connects to the exact clip, overlay, confidence score, and correction path. If a coach cannot verify it, correct it, and teach from it - it is not a production metric.',
+        body: 'An active computer vision platform for Toledo Football - a 10-stage pipeline from video ingest to coach dashboard, across a 18+ table database schema. Field-marking accuracy target: 90%+. In Phase 0, the system works through 50–100 annotated evaluation clips to validate each pipeline stage before advancing. Every output connects to the exact clip, overlay, confidence score, and correction path. If a coach cannot verify it, correct it, and teach from it - it is not a production metric.',
       },
       {
         label: 'Problem',
@@ -412,7 +417,7 @@ export const projects: Project[] = [
     featuredStats: [
       { value: '10', label: 'Pipeline stages' },
       { value: '18+', label: 'Structured metrics' },
-      { value: '90%+', label: 'Field-marking accuracy' },
+      { value: '90%+', label: 'Field-marking accuracy target' },
     ],
     story: 'Practice film becomes evidence a coach can verify, correct, and teach from - trust is the product.',
   },

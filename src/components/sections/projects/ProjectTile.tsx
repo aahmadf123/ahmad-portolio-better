@@ -36,7 +36,7 @@ function TileBody({ p }: { p: Project }) {
         <span className="project-tile-stack">
           {p.stacks.map((t) => <span key={t} style={{ fontFamily: MONO }}>{t}</span>)}
         </span>
-        <span className="project-tile-more" style={{ fontFamily: MONO, color: p.color }}>Details →</span>
+        <span className="project-tile-more" style={{ fontFamily: MONO, color: p.color }}>{p.detailsLabel ?? 'Details →'}</span>
       </span>
     </>
   );

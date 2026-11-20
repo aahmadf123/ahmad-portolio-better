@@ -76,8 +76,8 @@ function ProjectPanel({ project: p }: { project: Project }) {
             if (l.kind === 'case-study') return <Link key={l.href} href={l.href} transitionTypes={['nav-forward']} style={style}>{l.label} ↗</Link>;
             return <a key={l.href} href={l.href} target="_blank" rel="noopener" style={style}>{l.label} {l.kind === 'pdf' ? '↓' : '↗'}</a>;
           })}
-          <button type="button" onClick={() => open(p)} aria-label={`${p.title} - open project details`} style={{ ...label, display: 'inline-flex', alignItems: 'center', padding: '10px 18px', borderRadius: 5, background: 'var(--background)', border: '1px solid var(--text2)', color: 'var(--foreground)', cursor: 'pointer' }}>
-            Details →
+          <button type="button" onClick={() => open(p)} style={{ ...label, display: 'inline-flex', alignItems: 'center', padding: '10px 18px', borderRadius: 5, background: 'var(--background)', border: '1px solid var(--text2)', color: 'var(--foreground)', cursor: 'pointer' }}>
+            {p.detailsLabel ?? 'Details →'}
           </button>
         </div>
       </div>

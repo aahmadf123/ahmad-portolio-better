@@ -66,7 +66,7 @@ export function FootballIQFeature() {
   const stats = [
     { value: 10, suffix: '', label: 'Pipeline stages' },
     { value: 18, suffix: '+', label: 'Structured metrics' },
-    { value: 90, suffix: '%+', label: 'Field-marking accuracy' },
+    { value: 90, suffix: '%+', label: 'Field-marking accuracy target' },
   ];
 
   return (
@@ -119,8 +119,8 @@ export function FootballIQFeature() {
             <Link href={`/case-study/${p.slug}`} transitionTypes={['nav-forward']} data-magnetic="" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 22px', background: 'var(--red)', color: 'var(--background)', fontFamily: MONO, fontSize: 14, fontWeight: 700, borderRadius: 5 }}>
               Read the case study ↗
             </Link>
-            <button type="button" onClick={() => open(p)} aria-label={`${p.title} - open project details`} style={{ display: 'inline-flex', alignItems: 'center', padding: '10px 18px', background: 'var(--background)', border: '1px solid var(--text2)', color: 'var(--foreground)', fontFamily: MONO, fontSize: 14, borderRadius: 5, cursor: 'pointer' }}>
-              Details →
+            <button type="button" onClick={() => open(p)} style={{ display: 'inline-flex', alignItems: 'center', padding: '10px 18px', background: 'var(--background)', border: '1px solid var(--text2)', color: 'var(--foreground)', fontFamily: MONO, fontSize: 14, borderRadius: 5, cursor: 'pointer' }}>
+              {p.detailsLabel ?? 'Details →'}
             </button>
           </div>
           <p style={{ ...label, color: 'var(--text2)', marginTop: 12 }}>Live URL coming when it ships</p>
