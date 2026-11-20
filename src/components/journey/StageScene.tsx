@@ -255,7 +255,7 @@ export function StageScene({ scene, accent }: { scene: StageSceneId; accent: str
             <circle cx="130" cy="442" r="12" stroke="#f4f4f2" strokeOpacity="0.85" strokeWidth="1.8" fill="#0d0e12" />
             <circle cx="192" cy="442" r="12" stroke="#f4f4f2" strokeOpacity="0.85" strokeWidth="1.8" fill="#0d0e12" />
           </g>
-          <text x="300" y="560" textAnchor="middle" fill={accent} fillOpacity="0.65" fontSize="13" letterSpacing="5" fontFamily="var(--font-code), monospace">~5 PSI SETPOINT · SOLENOID CUT</text>
+          {/* "~5 PSI setpoint · solenoid cut" is the world's caption under the drawing (worlds.ts artCaption). */}
         </svg>
       );
 

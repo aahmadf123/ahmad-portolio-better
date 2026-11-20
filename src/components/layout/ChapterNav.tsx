@@ -1,93 +1,94 @@
 'use client';
 
-import React from 'react';
-import { sections } from '@/lib/data/sections';
+import React, { useEffect, useId, useState } from 'react';
+import { sections, type SectionDef } from '@/lib/data/sections';
 import { MONO } from '@/components/shared/section-helpers';
 import { useScrollSpy } from '@/components/ui/use-scroll-spy';
 
-const CHAPTERS = sections.filter((s) => s.id !== 'hero');
-const CHAPTER_IDS = CHAPTERS.map((s) => s.id);
+const CHAPTER_IDS = sections.map((s) => s.id);
+
+const label = (s: SectionDef) => `${s.n ? `${s.n} · ` : ''}${s.label}`;
 
 /**
- * Fixed left-side chapter rail (desktop only): one dot per chapter, active dot
- * grows and takes the section color, labels slide out on hover.
+ * Homepage chapter rail (wide desktop only). It sits in its own reserved column on the
+ * left (globals.css pads the page by --rail-w while it is shown), so it never covers
+ * the words, the artwork or the hero's links. Collapsed it shows a "Chapters" toggle
+ * and the chapter you are in; expanded it lists every chapter, grouped as on the page.
+ * Below 1200px it is not shown (the reading column would get cramped) and the header
+ * nav takes over.
  */
 export function ChapterNav() {
-  // Shared scroll-spy keeps the rail in lockstep with the header and stays
-  // correct across route changes / hash landings. Only meaningful on the
-  // homepage where the chapters exist - the found gate hides it elsewhere.
-  const { active, found } = useScrollSpy(CHAPTER_IDS);
+  const { active } = useScrollSpy(CHAPTER_IDS);
+  const [open, setOpen] = useState(false);
+  const listId = useId();
+  const current = sections.find((s) => s.id === active) ?? sections[0];
 
-  if (found <= 4) return null;
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   return (
-    <nav aria-label="Chapters" className="chapter-nav" style={{
-      position: 'fixed',
-      left: 14,
-      top: '50%',
-      transform: 'translateY(-50%)',
-      zIndex: 60,
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 10,
-      padding: '10px 6px',
-    }}>
-      {CHAPTERS.map((s) => {
-        const isActive = active === s.id;
-        return (
-          <a
-            key={s.id}
-            href={`#${s.id}`}
-            className="chapter-dot"
-            aria-label={`${s.n ? `Chapter ${s.n} - ` : ''}${s.label}`}
-            aria-current={isActive ? 'true' : undefined}
-            // The link is only as wide as its dot: the label is absolutely positioned so its
-            // (invisible) box never sits over page content and swallows clicks there.
-            style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', minHeight: 12, width: 14 }}
-          >
-            <span
-              aria-hidden
-              style={{
-                width: isActive ? 10 : 6,
-                height: isActive ? 10 : 6,
-                borderRadius: '50%',
-                background: isActive ? s.color : 'var(--bd2)',
-                boxShadow: isActive ? `0 0 10px ${s.color}` : 'none',
-                transition: 'all 0.25s cubic-bezier(0.16,1,0.3,1)',
-                flexShrink: 0,
-              }}
-            />
-            <span
-              className="chapter-label"
-              style={{
-                fontFamily: MONO,
-                fontSize: 10,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: isActive ? s.color : 'var(--text3)',
-                background: 'rgba(13,14,18,0.85)',
-                border: '1px solid var(--bd)',
-                borderRadius: 4,
-                padding: '3px 8px',
-                whiteSpace: 'nowrap',
-                position: 'absolute',
-                left: 20,
-                top: '50%',
-                marginTop: -10,
-                opacity: 0,
-                transform: 'translateX(-6px)',
-                transition: 'opacity 0.2s ease, transform 0.2s ease',
-                pointerEvents: 'none',
-              }}
-            >
-              {s.n ? `${s.n} · ` : ''}{s.label}
-            </span>
-          </a>
-        );
-      })}
+    <nav aria-label="Chapters" className="chapter-nav" style={{ fontFamily: MONO }}>
+      <button type="button" className="chapter-toggle" aria-expanded={open} aria-controls={listId} onClick={() => setOpen((o) => !o)}>
+        <span>Chapters</span>
+        <span aria-hidden className="chapter-chevron" data-open={open || undefined}>▾</span>
+      </button>
+
+      {!open && (
+        <a href={`#${current.id}`} className="chapter-current" aria-current="true">
+          <span aria-hidden className="chapter-dot" style={{ background: current.color }} />
+          <span><span className="sr-only">Current chapter: </span>{label(current)}</span>
+        </a>
+      )}
+
+      <ol id={listId} hidden={!open} className="chapter-list">
+        {sections.map((s, i) => {
+          const isActive = s.id === current.id;
+          const startsGroup = s.group && sections[i - 1]?.group !== s.group;
+          return (
+            <li key={s.id} className={s.group ? 'in-group' : undefined}>
+              {startsGroup && <div className="chapter-group" aria-hidden>{s.group}</div>}
+              <a href={`#${s.id}`} aria-current={isActive ? 'true' : undefined} className="chapter-link" style={isActive ? { color: 'var(--foreground)' } : undefined}>
+                <span aria-hidden className="chapter-dot" style={{ background: isActive ? s.color : 'var(--text3)' }} />
+                <span>{label(s)}</span>
+              </a>
+            </li>
+          );
+        })}
+      </ol>
+
       <style>{`
-        @media (max-width: 1023px) { .chapter-nav { display: none !important; } }
-        .chapter-dot:hover .chapter-label, .chapter-dot:focus-visible .chapter-label { opacity: 1; transform: translateX(0); }
+        .chapter-nav { display: none; }
+        @media (min-width: 1200px) {
+          .chapter-nav {
+            display: block; position: fixed; left: 0; top: 0; bottom: 0; width: var(--rail-w); z-index: 60;
+            background: var(--background); border-right: 1px solid var(--bd);
+            padding: 78px 12px 104px; overflow-y: auto; overscroll-behavior: contain;
+          }
+        }
+        .chapter-toggle {
+          width: 100%; min-height: 40px; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+          padding: 8px 10px; border-radius: 5px; border: 1px solid var(--text2); background: var(--background);
+          color: var(--foreground); font: inherit; font-size: 14px; cursor: pointer;
+        }
+        .chapter-toggle:hover { background: var(--surface-2); }
+        .chapter-chevron { transition: transform .2s ease; }
+        .chapter-chevron[data-open] { transform: rotate(180deg); }
+        .chapter-current, .chapter-link {
+          display: flex; align-items: flex-start; gap: 9px; min-height: 34px; min-width: 0; padding: 7px 10px; border-radius: 5px;
+          font-size: 14px; line-height: 1.35; text-decoration: none;
+        }
+        .chapter-current { margin-top: 10px; color: var(--foreground); }
+        .chapter-link { color: var(--text2); }
+        .chapter-current:hover, .chapter-link:hover { background: var(--surface); color: var(--foreground); }
+        .chapter-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+        .chapter-list { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+        .chapter-list li.in-group .chapter-link { padding-left: 18px; }
+        .chapter-group { font-size: 14px; line-height: 1.35; color: var(--foreground); padding: 12px 10px 4px; border-top: 1px solid var(--bd); margin-top: 6px; }
+        .chapter-list li.in-group + li:not(.in-group) { border-top: 1px solid var(--bd); margin-top: 6px; padding-top: 6px; }
       `}</style>
     </nav>
   );

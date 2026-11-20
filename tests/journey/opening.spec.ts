@@ -37,30 +37,50 @@ test('headshot lives in About', async ({ page }) => {
   }).toPass();
 });
 
-test('fly-in reveals the Toledo story on scroll', async ({ page }, info) => {
-  test.skip(info.project.name === 'reduced', 'still tier has no scroll choreography');
+test('the Toledo prologue is its own block, below all of the hero', async ({ page }) => {
   await page.goto('/');
   const story = page.getByTestId('opening-story');
-  // Before scrolling, the Toledo block is still hidden behind the name.
-  expect(await story.evaluate(seenOpacity)).toBeLessThan(0.2);
-  // Re-apply the scroll inside the poll: the site's scroll restoration can reset an
-  // early scroll made before hydration.
-  await expect.poll(async () => {
-    await page.evaluate(() => {
-      const s = document.querySelector('[data-scene="opening"]') as HTMLElement;
-      window.scrollTo({ top: s.offsetTop + (s.offsetHeight - innerHeight) * 0.85, behavior: 'instant' });
-    });
-    return story.evaluate(seenOpacity);
-  }).toBeGreaterThan(0.95);
+  // In normal flow: fully opaque, never layered over the hero, and nothing pinned.
+  expect(await story.evaluate(seenOpacity)).toBeGreaterThan(0.99);
+  const [heroBottom, prologueTop] = await page.evaluate(() => [
+    document.querySelector('#hero')!.getBoundingClientRect().bottom,
+    document.querySelector('#prologue')!.getBoundingClientRect().top,
+  ]);
+  expect(prologueTop).toBeGreaterThanOrEqual(heroBottom);
+  await expect(page.locator('#hero [data-pinned], #prologue [data-pinned]')).toHaveCount(0);
+  await story.scrollIntoViewIfNeeded();
   await expect(story.getByText(opening.title)).toBeVisible();
 });
+
+for (const width of [160, 200, 320, 390]) {
+  // 160 and 200 stand in for a 320 / 400px phone at 200% text zoom.
+  test(`hero name, description, buttons and credentials stay separate at ${width}px`, async ({ page }, info) => {
+    test.skip(info.project.name !== 'desktop', 'viewport set explicitly');
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto('/');
+    const clashes = await page.evaluate(() => {
+      const panel = document.querySelector('#hero .hero-panel')!;
+      const parts = [panel.querySelector('.hero-roles'), panel.querySelector('h1'), panel.querySelector('.opening-sub'), ...panel.querySelectorAll('.opening-ctas a'), ...panel.querySelectorAll('.opening-facts > div')]
+        .map((el) => ({ el: el!, r: el!.getBoundingClientRect() }));
+      const out: string[] = [];
+      for (let i = 0; i < parts.length; i++) for (let j = i + 1; j < parts.length; j++) {
+        const [a, b] = [parts[i].r, parts[j].r];
+        if (a.left < b.right - 0.5 && b.left < a.right - 0.5 && a.top < b.bottom - 0.5 && b.top < a.bottom - 0.5) out.push(`${parts[i].el.textContent} / ${parts[j].el.textContent}`);
+      }
+      const hero = document.querySelector('#hero')!.getBoundingClientRect();
+      for (const p of parts) if (p.r.bottom > hero.bottom + 0.5 || p.r.right > innerWidth + 0.5) out.push(`${p.el.textContent} outside the hero`);
+      return out;
+    });
+    expect(clashes).toEqual([]);
+  });
+}
 
 test('reduced motion is still', async ({ page }, info) => {
   test.skip(info.project.name !== 'reduced', 'reduced project only');
   await page.goto('/');
   await expect(page.getByTestId('opening-story')).toBeVisible();
   // Polled: right after hydration the still layout replaces the server-rendered one.
-  await expect.poll(() => page.locator('#hero .flyin-photo').evaluateAll((els) => els.map((e) => getComputedStyle(e).transform))).toEqual(['none']);
+  await expect.poll(() => page.locator('#prologue .flyin-photo').evaluateAll((els) => els.map((e) => getComputedStyle(e).transform))).toEqual(['none']);
 });
 
 for (const vp of [{ width: 390, height: 844 }, { width: 360, height: 740 }, { width: 1280, height: 720 }, { width: 1440, height: 900 }]) {
@@ -86,12 +106,9 @@ for (const vp of [{ width: 390, height: 844 }, { width: 360, height: 740 }, { wi
       const hit = document.elementFromPoint(r.left + 8, r.top + r.height / 2);
       return `${e.textContent} ← covered by ${hit?.tagName}.${hit?.className} in ${hit?.parentElement?.tagName}.${hit?.parentElement?.className}`;
     })), { timeout: 4000 }).toEqual([]);
-    const storyBottom = await page.evaluate(() => {
-      const s = document.querySelector('[data-scene="opening"]') as HTMLElement;
-      window.scrollTo({ top: s.offsetTop + (s.offsetHeight - innerHeight) * 0.9, behavior: 'instant' });
-      return new Promise<number>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(document.querySelector('[data-testid="opening-story"]')!.getBoundingClientRect().bottom))));
-    });
-    expect(storyBottom).toBeLessThanOrEqual(vp.height);
+    // The prologue's words fit one screen too, once scrolled to.
+    const storyHeight = await page.getByTestId('opening-story').evaluate((e) => e.getBoundingClientRect().height);
+    expect(storyHeight).toBeLessThanOrEqual(vp.height);
   });
 }
 
@@ -101,8 +118,8 @@ test('a scene that loads mid-scroll is not frozen', async ({ page }, info) => {
   // landing mid-journey. The scene must catch up without any further scroll events.
   await page.goto('/');
   await page.evaluate(() => {
-    const s = document.querySelector('[data-scene="opening"]') as HTMLElement;
-    window.scrollTo({ top: s.offsetTop + (s.offsetHeight - innerHeight) * 0.85, behavior: 'instant' });
+    const s = document.querySelector('[data-scene="chem-e-car"]') as HTMLElement;
+    window.scrollTo({ top: s.getBoundingClientRect().top + scrollY + (s.offsetHeight - innerHeight) * 0.85, behavior: 'instant' });
   });
-  await expect.poll(() => page.getByTestId('opening-story').evaluate(seenOpacity), { timeout: 5000 }).toBeGreaterThan(0.95);
+  await expect.poll(() => page.getByTestId('world-copy-chem-e-car').evaluate(seenOpacity), { timeout: 5000 }).toBeGreaterThan(0.95);
 });

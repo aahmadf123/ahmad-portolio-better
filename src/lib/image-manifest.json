@@ -313,5 +313,14 @@
     ],
     "w": 1536,
     "h": 1024
+  },
+  "/Images/Football_IQ_Clip_Review.png": {
+    "base": "/Images/optimized/football-iq-clip-review",
+    "widths": [
+      800,
+      1600
+    ],
+    "w": 1600,
+    "h": 1286
   }
 }

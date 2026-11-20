@@ -8,7 +8,6 @@ import { RevealObserver } from "@/components/ui/reveal-observer";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import { MotionProvider } from "@/lib/motion/lazy";
 import { ChatLauncher } from "@/components/chat/ChatLauncher";
-import { ChapterNav } from "@/components/layout/ChapterNav";
 import { RouteTracker } from "@/components/ui/route-tracker";
 import { NowPlayingBar } from "@/components/layout/NowPlayingBar";
 import { OffscreenAnimationPauser } from "@/components/effects/OffscreenAnimationPauser";
@@ -197,7 +196,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd).replace(/</g, "\\u003c") }}
         />
-        <ChapterNav />
         <RouteTracker />
         <OffscreenAnimationPauser />
         <NowPlayingBar />

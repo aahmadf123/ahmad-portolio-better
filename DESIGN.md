@@ -56,6 +56,12 @@ typography:
     lineHeight: 1.65
   label:
     fontFamily: "var(--font-code), monospace"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "0"
+  label-legacy:
+    fontFamily: "var(--font-code), monospace"
     fontSize: "11px"
     fontWeight: 400
     lineHeight: 1.4
@@ -97,10 +103,11 @@ components:
     rounded: "{rounded.sm}"
     padding: "11px 24px"
   button-secondary:
-    backgroundColor: "transparent"
-    textColor: "{colors.text-secondary}"
+    backgroundColor: "{colors.background}"
+    textColor: "{colors.foreground}"
+    borderColor: "{colors.text-secondary}"
     rounded: "{rounded.sm}"
-    padding: "11px 24px"
+    padding: "11px 22px"
     typography: "{typography.label}"
   button-ghost:
     backgroundColor: "transparent"
@@ -139,6 +146,7 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 - The fly-in: each world is a full-screen real photo; scrolling pushes the camera toward a point in it and out the other side into the next world (`src/components/journey/FlyInScene.tsx`).
 - Real depth on desktop: a depth map per photo drives parallax on a single WebGL2 canvas (`JourneyCanvas`), with the CSS photo as the fallback everywhere.
 - The world registry (`src/lib/data/worlds.ts`) groups the existing content by world *by reference*, and the chapter registry (`sections.ts`) drives header colours and the left chapter rail.
+- **Page order:** the hero, then the two featured projects (Toledo Football IQ, Homeowner Loss Prediction; `FeaturedWork`), then **Experience and background**: the Toledo prologue, the five worlds and "The next chapter", then the calmer sections. The hero and the prologue are ordinary blocks in the page flow, never pinned or layered over each other.
 - The Football IQ play diagram, the skills constellation, the kinetic timeline.
 - Letterbox "film-strip" page transitions; the handwritten sign-off.
 
@@ -181,27 +189,30 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 |---|---|---|
 | Display | Instrument Serif (`--font-display`), 400, italic available | Hero name, page and section titles, case-study h1/h2, field-note headings, ghost numerals, debrief stat numbers. Single weight: never bold it. |
 | Body | Figtree (`--font-body`) | All prose, card text, descriptions. |
-| Label / code | JetBrains Mono (`--font-code`) | Uppercase tracked labels (0.08-0.14em), nav, buttons, metadata, code. |
+| Label / code | JetBrains Mono (`--font-code`) | Labels, buttons, metadata, code. Around the introduction, the chapters and the projects, labels render as written (sentence case, normal tracking) at 14px; older sections still use uppercase tracked labels. |
 | Hand | Caveat (`--font-hand`) | The sign-off and the easter egg only. Not preloaded. |
 
-**Ramp:** hero name `clamp(56px,10vw,132px)` lh 0.95; ghost numeral `clamp(72px,11vw,160px)` at 5% opacity; title 20px; body 15px lh 1.65 (17px in long-form articles); label 11px; small label 10px, the floor for any readable text; metadata 12px. Inputs on touch devices are 16px so iOS doesn't zoom.
+**Ramp:** hero name `clamp(56px,10vw,132px)` lh 0.95 (`clamp(48px,13vw,64px)` on phones, 600px and under); ghost numeral `clamp(72px,11vw,160px)` at 5% opacity; title 20px; body 15px lh 1.65 (17px in long-form articles); label 14px (secondary labels and captions around the introduction, chapters and projects never go below it); legacy label 11px and small label 10px in older sections only; metadata 12px. Inputs on touch devices are 16px so iOS doesn't zoom.
 
 ## 4. Elevation and effects
 
 - **Tonal first.** Depth comes from background tint steps and border opacity, not shadows.
 - **Blur budget.** `backdrop-filter` only where content actually scrolls behind something: the sticky site header, the modal scrim, the chat panel, the lightbox. Never on cards or on fixed chrome over solid backgrounds: it costs a repaint every scroll frame on phones and is invisible there.
-- **Shadows** only on floating layers (chat, modal, popovers), never on cards or sections.
+- **Shadows** only on floating layers (modal, popovers, the open chat panel), never on cards or sections. No coloured glows or halos: the logo dot is solid teal and the "Ask Ahmad" button has a crisp 1px teal border.
+- **Words never sit on artwork directly.** Copy over a photo or a drawing is on an opaque `--background` panel (the hero panel, `.scene-copy`); a drawing's caption sits under it on its own opaque strip (`StageArt` `caption`), not inside the SVG.
 
 ## 5. Components
 
-- **World chapter (`WorldChapter`):** a `FlyInScene` (mark `NN · World · years`, display-serif title, that world's story sentences, one stat), with `StageArt` filling the side opposite the words (the world's animated drawing from the old Story section, with Ahmad's own photos laid over it like prints; hidden under 900px), then the calm work area on `--background`: every project in the world as an equal-size `ProjectTile` with its picture at full brightness (one shared project modal), its extras (Football IQ + play diagram, the research paper) and the insights traced to its projects.
+- **World chapter (`WorldChapter`):** a `FlyInScene` (mark `NN · World · years`, display-serif title, that world's story sentences, one stat), with `StageArt` filling the side opposite the words (the world's animated drawing from the old Story section, with Ahmad's own photos laid over it like prints; hidden under 900px), then the calm work area on `--background`: every project in the world as an equal-size `ProjectTile` with its picture at full brightness (one shared project modal), its extras (the research paper) and the insights traced to its projects. The featured projects are not repeated there. Chapter words are either fully shown or hidden, never half-faded.
+- **Featured projects (`FeaturedWork`):** full-width panels: description, then its tools, then stats and links. Football IQ shows one real output from the build (the Clip Review screen) beside the pipeline explanation; drawings or concepts that are not real output (the play diagram, the concept dashboard image) carry an "Illustrative example" label.
 - **Section header (`SH`):** ghost numeral, 22px accent line, mono `h2` label in the section colour, optional 15px subtitle, 52px gap below. Sections after the journey open with one; parts of About (Capabilities, Timeline, Credentials, Signals) use `variant="sub"`: no numeral, an `h3`, 32px gap.
-- **Site header:** 62px, transparent until scrolled. Four nav items (Journey, Notes, About, Contact) plus Docs; the chapter rail reaches every chapter and its links are only as wide as their dots.
+- **Site header:** 62px, transparent until scrolled. Four nav items (Journey, Notes, About, Contact) plus Docs.
+- **Chapter rail (`ChapterNav`, homepage, 1200px and up):** its own reserved left column (`--rail-w`; the page is padded by it), so it never covers text, artwork or links. Collapsed it shows a "Chapters" toggle and the current chapter; expanded it lists every chapter, with the prologue and worlds grouped under "Experience and background". Below 1200px it is not shown and the header nav takes over.
 - **Subpage header (`SubpageHeader`):** every non-home page. 56px, same colours and logo, a smart back link (history-back when you came from inside the site), and a page-specific slot on the right that hides on phones.
 - **Site footer:** on every page, including case studies, field notes and docs.
 - **Case study frame:** `SubpageHeader`; hero (tags, display-serif title, lede); **debrief stats** (accent rule on top, display-serif number, mono label, no boxes); sticky section nav (sidebar on desktop, tab bar on smaller screens); then the prev/next **case-file pager** ("Case file 03 of 10").
-- **Buttons:** primary is an accent fill with dark text; secondary is transparent with a `--bd2` border; mono 11px uppercase label. Minimum 44px tap target.
-- **Tags and chips:** mono 10-11px, accent tint background, accent border.
+- **Buttons:** primary is an accent fill with dark text; secondary is an opaque `--background` fill with `--foreground` text and a `--text2` border (8:1, clearly visible); mono 14px label as written. Minimum 44px tap target.
+- **Tags and chips:** mono, accent tint background, accent border; 14px beside project descriptions (`Tag size={14}`), 10-11px in older sections.
 - **Focus:** one 2px teal `:focus-visible` ring everywhere, offset 3px. Never `outline: none` without a replacement.
 
 ## 6. Motion
@@ -219,7 +230,7 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 - Open every post-journey homepage section with `SH` and every subpage with `SubpageHeader`.
 - Move content, never drop it: `tests/content/` holds a snapshot of every string and the rendered text of every route, and `allowed-removals.json` lists (with reasons) the only labels that may disappear.
 - Give each project one accent and use it consistently.
-- Keep readable text at 10px or larger and at least 4.5:1.
+- Keep readable text at 10px or larger (14px for labels and captions around the introduction, chapters and projects) and at least 4.5:1.
 - Check new layouts at 320, 768, 1280 and 2560 px with no horizontal overflow (use `minmax(min(Npx,100%),1fr)` for card grids).
 
 **Don't**

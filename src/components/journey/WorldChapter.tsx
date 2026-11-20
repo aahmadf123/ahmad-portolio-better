@@ -9,8 +9,6 @@ import { ChapterCopy } from './ChapterCopy';
 import { WorldWork } from './WorldWork';
 import { StageArt } from './StageArt';
 
-const hidden: React.CSSProperties = { position: 'absolute', top: 0, left: 0, width: 1, height: 1 };
-
 /**
  * One world of the photo journey: fly in from the previous photo to this world's
  * photo with its part of the story, then its projects, extras and insights.
@@ -25,11 +23,10 @@ export async function WorldChapter({ world, prev }: { world: World; prev: PhotoI
 
   return (
     <section id={world.id} aria-labelledby={titleId} style={{ position: 'relative', zIndex: 20 }}>
-      {/* Old links from before the redesign: /#story lands on this world's words;
-          /#projects and /#insights land on its work (anchors inside WorldWork). */}
-      {first && <span id="story" data-anchor-for={world.id} aria-hidden style={hidden} />}
-      <FlyInScene id={world.id} from={prev} to={world.photo} length={world.length} joinPrevious={first}>
-        <SceneCopy photo={world.photo} aside={<StageArt id={world.id} scene={world.scene} accent={world.accent} gallery={world.gallery} />}>
+      {/* Old links from before the redesign: /#insights lands on this world's work (an
+          anchor inside WorldWork). /#story and /#projects now live in page.tsx. */}
+      <FlyInScene id={world.id} from={prev} to={world.photo} length={world.length}>
+        <SceneCopy photo={world.photo} aside={<StageArt id={world.id} scene={world.scene} accent={world.accent} gallery={world.gallery} caption={world.artCaption} />}>
           <ChapterCopy
             mark={`${world.n} · ${world.label} · ${world.years}`}
             title={world.title}
@@ -41,7 +38,7 @@ export async function WorldChapter({ world, prev }: { world: World; prev: PhotoI
           />
         </SceneCopy>
       </FlyInScene>
-      <WorldWork world={world} anchors={first ? ['projects', 'insights'] : []}>
+      <WorldWork world={world} anchors={first ? ['insights'] : []}>
         {world.id === 'research' ? <ResearchPaper /> : null}
         {cards.length > 0 ? (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(420px, 100%), 1fr))', gap: 16 }}>

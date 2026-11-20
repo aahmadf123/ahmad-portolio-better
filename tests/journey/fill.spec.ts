@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { worlds, journeyPhoto } from '../../src/lib/data/worlds';
+import { worlds, journeyPhoto, featuredProjectSlugs } from '../../src/lib/data/worlds';
 import { caseStudySlugs } from '../../src/lib/data/projects';
 
 // Ahmad's review of the first preview: each world was words on one side and a big
@@ -39,9 +39,11 @@ for (const w of worlds) {
 test('every project is an equal-size tile with its picture at full brightness', async ({ page }) => {
   await page.goto('/');
   const all = page.locator('[data-testid="project-tile"]');
-  await expect(all).toHaveCount(caseStudySlugs.length);
+  // The featured projects are panels below the hero; every other project is a tile in its world.
+  const featured: readonly string[] = featuredProjectSlugs;
+  await expect(all).toHaveCount(caseStudySlugs.length - featured.length);
   for (const w of worlds) {
-    await expect(page.locator(`#${w.id}-work [data-testid="project-tile"]`)).toHaveCount(w.projectSlugs.length);
+    await expect(page.locator(`#${w.id}-work [data-testid="project-tile"]`)).toHaveCount(w.projectSlugs.filter((s) => !featured.includes(s)).length);
   }
   const sizes = await all.evaluateAll((els) => els.map((e) => { const r = e.getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height)]; }));
   for (const [wd, ht] of sizes) {

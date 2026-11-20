@@ -9,8 +9,8 @@ import { StageScene } from './StageScene';
  * Ahmad's own photos laid over it like prints. The journey photo still shows around it.
  * Hidden on narrow screens, where the words take the whole width.
  */
-export function StageArt({ id, scene, accent, gallery = [] }: { id: string; scene: StageSceneId; accent: string; gallery?: StagePhoto[] }) {
-  return (
+export function StageArt({ id, scene, accent, gallery = [], caption }: { id: string; scene: StageSceneId; accent: string; gallery?: StagePhoto[]; caption?: string }) {
+  const art = (
     <div data-testid={`stage-art-${id}`} className="stage-art" data-count={gallery.length} style={{ '--accent': accent } as React.CSSProperties}>
       <div className="stage-art-scene"><StageScene scene={scene} accent={accent} /></div>
       {gallery.map((g, i) => (
@@ -19,5 +19,13 @@ export function StageArt({ id, scene, accent, gallery = [] }: { id: string; scen
         </figure>
       ))}
     </div>
+  );
+  if (!caption) return art;
+  // The caption sits under the drawing on its own opaque strip, never inside the artwork.
+  return (
+    <figure className="stage-art-figure">
+      {art}
+      <figcaption className="stage-art-caption">{caption}</figcaption>
+    </figure>
   );
 }

@@ -111,5 +111,10 @@
     "reason": "Ahmad (2026-11-18, pre-post checklist): second half of the reworded 78,400 sentence; \"check back around the year 80,000\" is kept word for word.",
     "preservedAs": "At one game a year, check back around the year 80,000.",
     "preservedOn": "/field-notes/battle-of-i75-coin-toss"
+  },
+  {
+    "text": "Where it started: the University of Toledo, Computer Science & Engineering. First job on campus - IT support for students and medical staff, where 100% FERPA and HIPAA compliance mattered more than looking clever, and better documentation cut repeat incidents 40%. The city keeps showing up in everything that follows.",
+    "reason": "Ahmad (2026-11-20): the prologue paragraph is shortened to \"I studied Computer Science & Engineering at the University of Toledo and worked in campus IT support.\" The full chapter stays in story.ts; its facts still show in the Timeline (University of Toledo IT support role).",
+    "preservedAs": "40% reduction in repeat incidents"
   }
 ]

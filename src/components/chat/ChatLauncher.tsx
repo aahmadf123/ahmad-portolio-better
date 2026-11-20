@@ -47,17 +47,13 @@ export function ChatLauncher() {
             gap: 9,
             padding: '12px 18px 12px 14px',
             borderRadius: 99,
-            border: '1px solid rgba(45,212,191,0.4)',
-            background: 'rgba(15,17,23,0.92)',
+            border: '1px solid var(--primary)',
+            background: 'var(--background)',
             color: 'var(--primary)',
             cursor: 'pointer',
-            boxShadow: '0 12px 34px -12px rgba(0,0,0,0.7), 0 0 24px -10px rgba(45,212,191,0.5)',
           }}
         >
-          <span aria-hidden style={{ position: 'relative', width: 9, height: 9 }}>
-            <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: 'var(--primary)' }} />
-            <span className="chat-launcher-ping" style={{ position: 'absolute', inset: -3, borderRadius: '50%', border: '1.5px solid var(--primary)' }} />
-          </span>
+          <span aria-hidden style={{ width: 9, height: 9, borderRadius: '50%', background: 'var(--primary)' }} />
           <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.09em', textTransform: 'uppercase' }}>Ask Ahmad</span>
         </button>
       )}
@@ -69,10 +65,6 @@ export function ChatLauncher() {
       )}
 
       <style>{`
-        @media (prefers-reduced-motion: no-preference) {
-          .chat-launcher-ping { animation: chat-ping 2.6s cubic-bezier(0, 0, 0.2, 1) infinite; }
-        }
-        @keyframes chat-ping { 0% { transform: scale(0.8); opacity: 0.8; } 70%, 100% { transform: scale(2.1); opacity: 0; } }
         @media print { .chat-launcher { display: none; } }
         @media (max-width: 420px) {
           .chat-launcher { right: 12px !important; bottom: calc(12px + env(safe-area-inset-bottom)) !important; padding: 10px 14px 10px 12px !important; }

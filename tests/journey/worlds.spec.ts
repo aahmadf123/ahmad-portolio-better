@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import { worlds, worldForProject, worldForInsight } from '../../src/lib/data/worlds';
+import { worlds, worldForProject, worldForInsight, featuredProjectSlugs } from '../../src/lib/data/worlds';
 import { projects, flagshipProject } from '../../src/lib/data/projects';
 import { insights } from '../../src/lib/data/insights';
 
@@ -30,9 +30,10 @@ test('five worlds in order', async ({ page }) => {
 test('every project is in its world', async ({ page }) => {
   await page.goto('/');
   for (const p of projects.filter((p) => p.slug)) {
-    const world = page.locator(`#${worldForProject(p.slug!)}`);
-    if (p === flagshipProject) await expect(world.getByText(p.title, { exact: false }).first()).toBeAttached();
-    else await expect(world.getByRole('button', { name: `${p.title} - open project details` })).toBeAttached();
+    // The two featured projects sit below the hero, in their own sections.
+    const featured = (featuredProjectSlugs as readonly string[]).includes(p.slug!);
+    const where = page.locator(featured ? `#${p.slug === flagshipProject.slug ? 'toledo-football-iq' : p.slug}` : `#${worldForProject(p.slug!)}`);
+    await expect(where.getByRole('button', { name: `${p.title} - open project details` })).toBeAttached();
   }
 });
 
@@ -48,9 +49,18 @@ test('a world card opens the project details', async ({ page }, info) => {
   }).toPass();
 });
 
-test('play diagram survives in sports analytics', async ({ page }) => {
+test('Football IQ shows a real output beside its pipeline, and labels the drawing as illustrative', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#sports-analytics svg[aria-label="Animated football play diagram"]')).toBeAttached();
+  const fiq = page.locator('#toledo-football-iq');
+  await expect(fiq.getByRole('heading', { name: 'Inspect a practice-film analysis' })).toBeAttached();
+  await expect(fiq.getByText('Review a clip, inspect an overlay and see the associated labels.')).toBeAttached();
+  await expect(fiq.locator('img[src*="football-iq-clip-review"]')).toBeAttached();
+  // The play diagram is a drawing, not output: it carries the label.
+  await expect(fiq.locator('figure.fiq-illustration').getByText('Illustrative example', { exact: true })).toBeAttached();
+  await expect(fiq.locator('figure.fiq-illustration svg[aria-label="Animated football play diagram"]')).toBeAttached();
+  // Status and availability notice are unchanged.
+  await expect(fiq.getByText('Active Build', { exact: true })).toBeAttached();
+  await expect(fiq.getByText('Live URL coming when it ships')).toBeAttached();
 });
 
 test('research paper lives in the research world', async ({ page }) => {
@@ -72,13 +82,14 @@ for (const id of ['story', 'projects', 'insights', 'research', 'about', 'skills'
     test.skip(info.project.name !== 'desktop', 'desktop only');
     await page.goto(`/#${id}`);
     await expect(page.locator(`[id="${id}"]`)).toHaveCount(1);
-    // World links (and the old #story) land where that world's words are showing;
-    // everything else lands with its top at the top of the screen.
-    const world = id === 'story' ? worlds[0].id : worlds.find((w) => w.id === id)?.id;
+    // World links land where that world's words are showing; the old #story lands on
+    // the Toledo prologue; everything else lands with its top at the top of the screen.
+    const world = worlds.find((w) => w.id === id)?.id;
+    const target = id === 'story' ? 'prologue' : id;
     if (world) {
       await expect.poll(() => page.getByTestId(`world-copy-${world}`).evaluate(seenOpacity), { timeout: 5000 }).toBeGreaterThan(0.95);
     } else {
-      await expect.poll(async () => Math.abs(await page.locator(`[id="${id}"]`).evaluate((e) => e.getBoundingClientRect().top)), { timeout: 5000 }).toBeLessThan(140);
+      await expect.poll(async () => Math.abs(await page.locator(`[id="${target}"]`).evaluate((e) => e.getBoundingClientRect().top)), { timeout: 5000 }).toBeLessThan(140);
     }
   });
 }
@@ -138,42 +149,12 @@ test('header nav: Journey, Notes, About, Contact + Docs', async ({ page }, info)
   await expect(page.locator('header a[href="/docs"]').first()).toBeVisible();
 });
 
-test('opening hands over to the first world without a seam', async ({ page }, info) => {
-  test.skip(info.project.name === 'reduced', 'still tier has no sticky stages');
+test('the prologue and the first world never share screen space', async ({ page }) => {
   await page.goto('/');
-  for (const extra of [1, 40, 200]) {
-    const stage = await page.evaluate((extra) => {
-      const open = document.querySelector('[data-scene="opening"]') as HTMLElement;
-      const end = open.getBoundingClientRect().top + scrollY + open.offsetHeight - innerHeight;
-      window.scrollTo({ top: end + extra, behavior: 'instant' });
-      const st = (document.querySelector('[data-scene="chem-e-car"]') as HTMLElement).firstElementChild as HTMLElement;
-      const r = st.getBoundingClientRect();
-      return { top: r.top, bottom: r.bottom, h: innerHeight };
-    }, extra);
-    expect(Math.abs(stage.top), `stage top ${extra}px past the opening`).toBeLessThanOrEqual(1);
-    expect(stage.bottom).toBeGreaterThanOrEqual(stage.h - 1);
-  }
-});
-
-test('the opening is gone before the first world changes', async ({ page }, info) => {
-  test.skip(info.project.name === 'reduced', 'still tier has no sticky stages');
-  await page.goto('/');
-  // Wherever the first world shows anything but the opening photo at 1x, the opening
-  // stage must already be fully off screen.
-  const res = await page.evaluate(async () => {
-    const open = document.querySelector('[data-scene="opening"]') as HTMLElement;
-    const chem = document.querySelector('[data-scene="chem-e-car"]') as HTMLElement;
-    const openStage = open.firstElementChild as HTMLElement;
-    const fromLayer = chem.querySelectorAll('.flyin-photo')[1] as HTMLElement; // the `from` layer
-    const start = chem.getBoundingClientRect().top + scrollY;
-    const bad: number[] = [];
-    for (let y = start; y < start + chem.offsetHeight; y += 40) {
-      window.scrollTo({ top: y, behavior: 'instant' });
-      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-      const changed = fromLayer.style.transform && fromLayer.style.transform !== 'scale(1)';
-      if (changed && openStage.getBoundingClientRect().bottom > 1) bad.push(Math.round(y - start));
-    }
-    return bad;
-  });
-  expect(res).toEqual([]);
+  // No negative offset tucks the first world under the prologue: it starts after it.
+  const gap = await page.evaluate(() =>
+    document.querySelector('[data-scene="chem-e-car"]')!.getBoundingClientRect().top -
+    document.querySelector('#prologue')!.getBoundingClientRect().bottom);
+  expect(gap).toBeGreaterThanOrEqual(-0.5);
+  await expect(page.locator('[data-scene="chem-e-car"][data-join]')).toHaveCount(0);
 });

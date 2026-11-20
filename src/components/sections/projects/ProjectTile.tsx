@@ -20,6 +20,7 @@ function TileBody({ p }: { p: Project }) {
     <>
       <span className="project-tile-media">
         <Pic src={p.image} alt="" sizes="(max-width: 420px) 100vw, 360px" />
+        {p.imageIllustrative && <span className="illustrative-chip" style={{ position: 'absolute', left: 10, bottom: 10 }}>Illustrative example</span>}
         <span className="project-tile-chips">
           <span style={{ color: p.color }}>{p.domain} · {p.idx}</span>
           <span style={{ color: STATUS_COLOR[p.status], display: 'inline-flex', alignItems: 'center', gap: 5 }}>

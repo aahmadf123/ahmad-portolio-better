@@ -55,6 +55,8 @@ export interface World {
   /** Fills the side of the stage opposite the words: a drawing behind Ahmad's own photos. */
   scene: StageSceneId;
   gallery: StagePhoto[];
+  /** A readable caption under the drawing (kept out of the drawing itself). */
+  artCaption?: string;
 }
 
 const ch = (id: string): StoryChapter => {
@@ -73,6 +75,7 @@ export const worlds: World[] = [
     projectSlugs: ['camel-car-cheme-car-control-system'],
     photo: 'chem-e-car', length: 1.8,
     scene: 'chem',
+    artCaption: '~5 PSI setpoint · solenoid cut',
     gallery: [
       { src: '/Images/AIChE ChemECar_International.jpg', alt: 'The UT AIChE Chem-E Car team at the international competition' },
       { src: '/Images/AIChE.jpg', alt: 'The UT AIChE team at the 2025 AIChE Annual Meeting in Boston' },
@@ -138,8 +141,17 @@ const scene = (id: string, kicker: string, stage: StageSceneId) => {
   const c = ch(id);
   return { photo: 'opening' as const, kicker, title: c.title, body: c.body, stat: c.stat!, scene: stage };
 };
-/** "Toledo, Ohio." Where the story starts, over the opening photo. */
-export const opening = scene('toledo-origins', '2021', 'map');
+/**
+ * "Toledo, Ohio." Where the story starts, over the opening photo. Ahmad (2026-11-20)
+ * shortened its paragraph; the full chapter stays in story.ts as the content record.
+ */
+export const opening = {
+  ...scene('toledo-origins', '2021', 'map'),
+  body: 'I studied Computer Science & Engineering at the University of Toledo and worked in campus IT support.',
+};
+
+/** Projects shown directly below the hero, ahead of the chronological background. */
+export const featuredProjectSlugs = ['toledo-football-iq-computer-vision-analytics', 'homeowner-loss-prediction'] as const;
 /** "The next chapter." Closes the journey, flying back to the opening photo. */
 export const closing = scene('whats-next', ch('whats-next').kicker, 'horizon');
 

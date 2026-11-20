@@ -16,7 +16,8 @@ import { jumpTo } from '@/components/ui/smooth-scroll';
  * Progress p (0..1) across the scene's scroll length drives, compositor-only:
  *   from photo: scale 1 → maxZoom about its focal point over p 0..0.55, fades out 0.45..0.6
  *   to photo:   fades in 0.45..0.65, settles from 1.3× to 1× over 0.45..0.75
- *   copy:       fades and rises in over 0.6..0.8 (immediately visible when there is no `from`)
+ *   copy:       switches on at 0.6 (never half-faded) and rises into place over 0.6..0.8
+ *               (immediately visible when there is no `from`)
  * Panoramas (the Glass Bowl, 1366px) never zoom: they are never drawn larger than their real size.
  * In the `still` tier (reduced motion) none of this runs: the `to` photo sits behind
  * the copy at full size and the page just scrolls.
@@ -139,7 +140,8 @@ export function FlyInScene({
       if (from) {
         setLayer(fromRef.current, span(p, 0.45, 0.6, 1, 0), `scale(${fromScale.toFixed(4)})`);
         setLayer(toRef.current, mix, `scale(${toScale.toFixed(4)})`);
-        setLayer(copyRef.current, span(p, 0.6, 0.8, 0, 1), `translateY(${span(p, 0.6, 0.8, 40, 0).toFixed(1)}px)`);
+        // The words are either fully shown or not at all: no half-faded copy mid-transition.
+        setLayer(copyRef.current, p >= 0.6 ? 1 : 0, `translateY(${span(p, 0.6, 0.8, 40, 0).toFixed(1)}px)`);
       }
       if (full) publish(fromScale, toScale, mix);
       subs.current.forEach((fn) => fn(p));
@@ -256,7 +258,7 @@ export function SceneCopy({ photo, children, aside, center = false, style, maxWi
           alignItems: 'center', gap: 'clamp(28px, 4vw, 64px)', ...style,
         }}
       >
-        <div className="scene-copy" style={{ position: 'relative', maxWidth, flex: aside ? '0 1 560px' : undefined, padding: 'clamp(12px, 3vw, 36px) 0', textAlign: center ? 'center' : undefined }}>{children}</div>
+        <div className="scene-copy" style={{ position: 'relative', maxWidth, flex: aside ? '0 1 560px' : undefined, padding: 'clamp(18px, 3vw, 36px)', textAlign: center ? 'center' : undefined }}>{children}</div>
         {aside && <div className="scene-aside">{aside}</div>}
       </div>
     </div>

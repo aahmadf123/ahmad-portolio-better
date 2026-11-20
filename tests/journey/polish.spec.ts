@@ -10,18 +10,23 @@ test('the pressure/solenoid drawing belongs to the Chem-E Car, not Data Science'
   await page.goto('/');
   const text = (id: string) => page.getByTestId(`stage-art-${id}`).evaluate((e) => e.textContent ?? '');
   test.skip((await page.getByTestId('stage-art-chem-e-car').count()) === 0, 'stage art not rendered');
-  expect(await text('data-science')).not.toMatch(/SOLENOID|PSI/);
-  expect(await text('chem-e-car')).toMatch(/SOLENOID/);
+  expect(await text('data-science')).not.toMatch(/solenoid|PSI/i);
+  // A readable caption under the drawing, not text inside the artwork.
+  expect(await text('chem-e-car')).not.toMatch(/solenoid/i);
+  const caption = page.locator('#chem-e-car .stage-art-caption');
+  await expect(caption).toHaveText('~5 PSI setpoint · solenoid cut');
+  expect(await caption.evaluate((e) => parseFloat(getComputedStyle(e).fontSize))).toBeGreaterThanOrEqual(14);
 });
 
 test('the hero name, buttons and facts are centred', async ({ page }) => {
   await page.goto('/');
-  const vw = page.viewportSize()!.width;
+  // Centred in the hero (on wide screens the chapter rail takes a column on the left).
+  const hero = (await page.locator('#hero').boundingBox())!;
+  const mid = hero.x + hero.width / 2;
   for (const sel of ['#hero-name', '.opening-ctas', '.opening-facts']) {
-    // (the reduced-motion layout swaps in after hydration, so poll)
     await expect.poll(async () => {
       const box = await page.locator(sel).first().boundingBox();
-      return box ? Math.abs(box.x + box.width / 2 - vw / 2) : Infinity;
+      return box ? Math.abs(box.x + box.width / 2 - mid) : Infinity;
     }, { message: sel }).toBeLessThanOrEqual(24);
   }
   expect(await page.locator('#hero-name').evaluate((e) => getComputedStyle(e).textAlign)).toBe('center');

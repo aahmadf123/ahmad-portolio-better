@@ -62,10 +62,10 @@ export function pickColor(text: string) {
   return PALETTE[h % PALETTE.length];
 }
 
-export function Tag({ color, children }: { color?: string; children: React.ReactNode }) {
+export function Tag({ color, size = 11, children }: { color?: string; /** px; 14 where tags sit with project descriptions. */ size?: number; children: React.ReactNode }) {
   const skillColor = typeof children === 'string' ? resolveSkillColor(children) : undefined;
   const c = color ?? skillColor ?? (typeof children === 'string' ? pickColor(children) : '#5b8af5');
-  return <span style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}33`, borderRadius: 4, color: readable(c), letterSpacing: '0.03em' }}>{children}</span>;
+  return <span style={{ fontFamily: MONO, fontSize: size, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}33`, borderRadius: 4, color: readable(c), letterSpacing: '0.03em' }}>{children}</span>;
 }
 
 /**

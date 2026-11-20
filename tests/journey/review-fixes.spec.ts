@@ -47,7 +47,7 @@ test('old /#projects links still land on the work, not a bare photo', async ({ p
   desktopOnly(info.project.name);
   const inView = (sel: string) => page.locator(sel).evaluate((e) => { const r = e.getBoundingClientRect(); return r.top >= -2 && r.top < innerHeight * 0.5; });
   await page.goto('/#projects');
-  await expect.poll(() => inView(`#${worlds[0].id}-work`), { timeout: 6000 }).toBe(true);
+  await expect.poll(() => inView('#toledo-football-iq'), { timeout: 6000 }).toBe(true);
   // ("View Work" now opens the /projects page: tests/journey/projects-page.spec.ts)
 });
 

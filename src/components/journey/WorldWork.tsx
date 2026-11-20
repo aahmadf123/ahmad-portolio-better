@@ -2,26 +2,25 @@
 
 import React from 'react';
 import { MONO } from '@/components/shared/section-helpers';
-import { projects, flagshipProject } from '@/lib/data/projects';
-import type { World } from '@/lib/data/worlds';
+import { projects } from '@/lib/data/projects';
+import { featuredProjectSlugs, type World } from '@/lib/data/worlds';
 import { ProjectTile } from '@/components/sections/projects/ProjectTile';
 import { useProjectModal } from '@/components/sections/projects/ProjectModalProvider';
-import dynamic from 'next/dynamic';
 import { jumpTo } from '@/components/ui/smooth-scroll';
 
-// Split out (still server-rendered): GSAP and the play diagram (~140KB) stay off the
-// critical path of the opening photo.
-const FootballIQFeature = dynamic(() => import('@/components/sections/projects/FootballIQFeature').then((m) => ({ default: m.FootballIQFeature })));
+const featured: readonly string[] = featuredProjectSlugs;
 
 /**
  * The calm part of a world, after its photo: every project that belongs to it as an
  * equal-size tile (opens the shared project modal), then anything special to this world
- * (Football IQ's deep dive with its play diagram, the research paper, technical insights).
+ * (the research paper, technical insights). The featured projects (Football IQ and
+ * Homeowner Loss Prediction) are shown below the hero instead (FeaturedWork).
  */
 export function WorldWork({ world, anchors = [], children }: { world: World; anchors?: string[]; children?: React.ReactNode }) {
   const { open } = useProjectModal();
-  const list = world.projectSlugs.map((slug) => projects.find((p) => p.slug === slug)!);
-  const hasFlagship = list.includes(flagshipProject);
+  const list = world.projectSlugs.filter((slug) => !featured.includes(slug)).map((slug) => projects.find((p) => p.slug === slug)!);
+  const hasExtras = React.Children.toArray(children).length > 0;
+  if (list.length === 0 && !hasExtras && anchors.length === 0) return null;
 
   return (
     // No content-visibility here on purpose: skipped worlds change size mid-scroll, which
@@ -50,16 +49,17 @@ export function WorldWork({ world, anchors = [], children }: { world: World; anc
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 24 }}>
           <span aria-hidden style={{ width: 22, height: 1.5, background: world.accent }} />
-          <h3 style={{ margin: 0, fontFamily: MONO, fontWeight: 400, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: world.accent }}>
+          <h3 style={{ margin: 0, fontFamily: MONO, fontWeight: 400, fontSize: 14, color: world.accent }}>
             {world.n} · {world.label} · the work
           </h3>
           <span aria-hidden style={{ width: 22, height: 1.5, background: world.accent }} />
         </div>
-        <div className="project-tiles">
-          {list.map((p) => <ProjectTile key={p.idx} project={p} onOpen={open} />)}
-        </div>
-        {hasFlagship && <div style={{ marginTop: 'clamp(40px, 5vw, 64px)' }}><FootballIQFeature /></div>}
-        {children && <div style={{ marginTop: 'clamp(40px, 5vw, 64px)', display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 4vw, 48px)' }}>{children}</div>}
+        {list.length > 0 && (
+          <div className="project-tiles">
+            {list.map((p) => <ProjectTile key={p.idx} project={p} onOpen={open} />)}
+          </div>
+        )}
+        {hasExtras && <div style={{ marginTop: list.length > 0 ? 'clamp(40px, 5vw, 64px)' : 0, display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 4vw, 48px)' }}>{children}</div>}
       </div>
     </div>
   );

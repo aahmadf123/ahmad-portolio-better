@@ -13,7 +13,7 @@ export function TypedTagline({ segments, active, instant }: { segments: string[]
   const done = len >= full.length;
 
   useEffect(() => {
-    if (instant) { setLen(full.length); return; }
+    if (instant || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setLen(full.length); return; }
     if (!active) return;
     let i = 0;
     const id = window.setInterval(() => {
@@ -25,14 +25,14 @@ export function TypedTagline({ segments, active, instant }: { segments: string[]
   }, [active, instant, full]);
 
   return (
-    <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--primary)', minHeight: 16, display: 'inline-flex', alignItems: 'center' }}>
+    <span style={{ fontFamily: MONO, fontSize: 14, color: 'var(--primary)', minHeight: 20, display: 'inline-flex', alignItems: 'center' }}>
       <span aria-hidden={!done}>{full.slice(0, len)}</span>
       {/* full text for screen readers regardless of typing state */}
       <span className="sr-only" style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clipPath: 'inset(50%)' }}>{full}</span>
       {!done && active && !instant && (
-        <span aria-hidden style={{ display: 'inline-block', width: 7, height: 13, marginLeft: 3, background: 'var(--primary)', opacity: 0.7, animation: 'tagline-blink 0.9s step-end infinite' }} />
+        <span aria-hidden style={{ display: 'inline-block', width: 7, height: 15, marginLeft: 3, background: 'var(--primary)', animation: 'tagline-blink 0.9s step-end infinite' }} />
       )}
-      <style>{`@keyframes tagline-blink { 0%,100%{opacity:.7} 50%{opacity:0} }`}</style>
+      <style>{`@keyframes tagline-blink { 0%,100%{opacity:1} 50%{opacity:0} }`}</style>
     </span>
   );
 }

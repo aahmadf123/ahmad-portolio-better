@@ -11,6 +11,8 @@ export interface SectionDef {
   color: string;
   /** Show in the header pill nav (ChapterNav shows all). */
   nav: boolean;
+  /** Heading the chapter rail lists this section under. */
+  group?: string;
 }
 
 /**
@@ -33,11 +35,21 @@ export const legacySections: SectionDef[] = [
   { id: 'contact', n: '12', label: 'Contact', color: '#38bdf8', nav: true },
 ];
 
-/** The live registry: the photo journey's five worlds, then the calmer sections. */
+/** The heading over the prologue and the photo journey (page and chapter rail). */
+export const EXPERIENCE = 'Experience and background';
+
+/**
+ * The live registry, in page order: the hero, the two featured projects, then
+ * "Experience and background" (the Toledo prologue and the photo journey's five
+ * worlds), then the calmer sections. Sections sharing a `group` are listed under that heading in the rail.
+ */
 export const sections: SectionDef[] = [
-  { id: 'hero', n: '', label: 'Prologue', color: '#2dd4bf', nav: false },
-  ...worlds.map((w) => ({ id: w.id, n: w.n, label: w.label, color: w.accent, nav: w.id === 'chem-e-car' })),
-  { id: 'next-chapter', n: '06', label: 'The Next Chapter', color: '#2dd4bf', nav: false },
+  { id: 'hero', n: '', label: 'Introduction', color: '#2dd4bf', nav: false },
+  { id: 'toledo-football-iq', n: '', label: 'Toledo Football IQ', color: '#ef4444', nav: false },
+  { id: 'homeowner-loss-prediction', n: '', label: 'Homeowner Loss Prediction', color: '#a78bfa', nav: false },
+  { id: 'prologue', n: '', label: 'Toledo, Ohio', color: '#2dd4bf', nav: false, group: EXPERIENCE },
+  ...worlds.map((w) => ({ id: w.id, n: w.n, label: w.label, color: w.accent, nav: w.id === 'chem-e-car', group: EXPERIENCE })),
+  { id: 'next-chapter', n: '06', label: 'The Next Chapter', color: '#2dd4bf', nav: false, group: EXPERIENCE },
   { id: 'field-notes', n: '07', label: 'Field Notes', color: '#2dd4bf', nav: true },
   { id: 'about', n: '08', label: 'About', color: '#38bdf8', nav: true },
   { id: 'skills', n: '09', label: 'Capabilities', color: '#f472b6', nav: false },

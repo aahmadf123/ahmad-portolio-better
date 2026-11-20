@@ -181,7 +181,6 @@ export function SiteHeader() {
                 borderRadius: 4,
                 background: 'var(--primary)',
                 flexShrink: 0,
-                boxShadow: '0 0 10px rgba(45,212,191,0.6)',
               }}
             />
             <span style={{ fontFamily: SERIF, fontSize: 18, fontWeight: 400, letterSpacing: '-0.01em', color: 'var(--foreground)' }}>

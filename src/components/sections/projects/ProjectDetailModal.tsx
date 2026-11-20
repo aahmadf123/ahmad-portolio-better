@@ -83,6 +83,7 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
             <div style={{ position: 'relative', aspectRatio: '16/6', overflow: 'hidden', borderRadius: '10px 10px 0 0', background: 'var(--background)' }}>
               <Pic src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', opacity: 0.9 }} />
               <div aria-hidden style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, var(--surface) 4%, transparent 55%), linear-gradient(135deg, color-mix(in srgb, ${project.color} 12%, transparent), transparent 50%)` }} />
+              {project.imageIllustrative && <span className="illustrative-chip" style={{ position: 'absolute', left: 14, top: 14 }}>Illustrative example</span>}
               <button
                 onClick={onClose}
                 aria-label="Close project details"

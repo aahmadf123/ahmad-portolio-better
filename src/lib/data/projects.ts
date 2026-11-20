@@ -52,6 +52,8 @@ export interface Project {
   category: ProjectCategory;
   status: ProjectStatus;
   flagship?: boolean;
+  /** The picture is a concept, not output from the build: shown with an "Illustrative example" label. */
+  imageIllustrative?: boolean;
   featuredStats?: { value: string; label: string }[];
   /** One-sentence story line for the poster card. */
   story: string;
@@ -377,6 +379,7 @@ export const projects: Project[] = [
     tag: 'University of Toledo Athletics · Football · Active Build',
     headline: '10-stage CV pipeline · 90%+ field-marking accuracy · 18+ structured metrics',
     image: '/Images/Football_IQ_Analytics.png',
+    imageIllustrative: true,
     span: 1,
     stacks: ['YOLO', 'ByteTrack', 'RTMPose', 'FastAPI', 'React', 'Postgres', 'Cloudflare R2', 'MLflow'],
     detailStacks: ['YOLO', 'RF-DETR', 'ByteTrack', 'BoT-SORT', 'RTMPose', 'FastAPI', 'React', 'Postgres', 'pgvector', 'Cloudflare R2', 'MLflow', 'PyTorch', 'FFmpeg', 'CUDA'],
