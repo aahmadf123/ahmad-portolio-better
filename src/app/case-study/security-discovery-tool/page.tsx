@@ -11,7 +11,8 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
-const MONO   = "var(--font-code), ui-monospace, monospace";
+const MONO   = "var(--font-body), system-ui, sans-serif";
+const CODE = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#2dd4bf';
 
 const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
@@ -24,7 +25,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 13, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: 0 }}>
       {children}
     </span>
   );
@@ -34,7 +35,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
       <span style={{ display: 'inline-block', width: 18, height: 1.5, background: ACCENT, opacity: 0.5, flexShrink: 0 }} />
-      <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT }}>{children}</span>
+      <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>{children}</span>
     </div>
   );
 }
@@ -43,7 +44,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
       <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginTop: 6 }}>{label}</div>
     </div>
   );
 }
@@ -51,12 +52,12 @@ function Metric({ value, label }: { value: string; label: string }) {
 function DbLayer({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${color}06`, border: `1px solid ${color}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 13, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+        <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 13, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -96,9 +97,9 @@ export default function SecurityDiscoveryToolCaseStudy() {
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
-        .cs-body li::marker { color: ${ACCENT}; }
+        .cs-body li::marker { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
         .cs-h2 { font-family: ${DISPLAY}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
-        .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
+        .cs-h3 { font-family: ${MONO}; font-size: 13px;   color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); margin: 24px 0 10px; }
         .metrics-grid-sdt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
         @media (max-width: 640px) { .metrics-grid-sdt { grid-template-columns: repeat(2, 1fr); } }
         .two-col-sdt { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -108,13 +109,13 @@ export default function SecurityDiscoveryToolCaseStudy() {
         @media (max-width: 480px) { .three-col-sdt { grid-template-columns: 1fr; } }
         .entity-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .entity-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
-        .entity-field { font-family: ${MONO}; font-size: 10px; color: var(--text3); padding: '2px 0'; letter-spacing: 0.03em; }
-        .entity-key { color: ${ACCENT}; }
-        .principle-card { padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
+        .entity-field { font-family: ${MONO}; font-size: 13px; color: var(--text3); padding: '2px 0';  }
+        .entity-key { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
+        .principle-card { padding: 16px 18px; background: color-mix(in srgb, var(--foreground) 2%, transparent); border: 1px solid color-mix(in srgb, var(--foreground) 7%, transparent); border-radius: 8px; transition: all 0.2s ease; }
         .principle-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: color-mix(in srgb, var(--foreground) 2%, transparent); border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
-        .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
+        .nav-link { font-family: ${MONO}; font-size: 13px;   text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
         .cs-grid-container {
           display: grid;
           grid-template-columns: 1fr 200px;
@@ -141,7 +142,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
 
       {/* ── Sticky header ── */}
       <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
-        <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Security Discovery Tool</span>
+        <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>Security Discovery Tool</span>
       </SubpageHeader>
 
       {/* ── Hero ── */}
@@ -216,7 +217,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
                   ['Hard recovery', 'Scattered data makes disaster-recovery planning and verification difficult.'],
                 ].map(([title, body]) => (
                   <div key={title} className="principle-card">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>{body}</p>
                   </div>
                 ))}
@@ -253,7 +254,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
                   ['Operational fit', 'Validation rules must balance strictness with flexibility - a rule that blocks useful data fails its purpose.'],
                 ].map(([title, body]) => (
                   <div key={title} className="principle-card">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>{body}</p>
                   </div>
                 ))}
@@ -277,7 +278,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
                   { name: 'Audit Logs', fields: ['audit_id', 'table_name', 'record_id', 'action', 'source', 'changed_by', 'changed_at'] },
                 ].map(({ name, fields }) => (
                   <div key={name} className="entity-card">
-                    <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>{name}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>{name}</div>
                     {fields.map(f => (
                       <div key={f} className="entity-field" style={{ paddingBottom: 3 }}>
                         <span className="entity-key">- </span>{f}
@@ -287,7 +288,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
                 ))}
               </div>
               <p>
-                This relational structure supports stronger reporting than disconnected spreadsheets because records can be joined, validated, audited, and queried consistently. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>audit_logs</code> table in particular ensures every data change is traceable - who changed it, when, and from which source system.
+                This relational structure supports stronger reporting than disconnected spreadsheets because records can be joined, validated, audited, and queried consistently. The <code style={{ fontFamily: CODE, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>audit_logs</code> table in particular ensures every data change is traceable - who changed it, when, and from which source system.
               </p>
             </Section>
 
@@ -327,7 +328,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
                   ['On-time delivery', 'Full case study project completed on schedule within the AIIS Summer 2023 cohort timeline.'],
                 ].map(([title, body]) => (
                   <div key={title} className="principle-card">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>{body}</p>
                   </div>
                 ))}
@@ -350,20 +351,20 @@ export default function SecurityDiscoveryToolCaseStudy() {
                   ['Data quality problems are usually not adversarial', 'Most inconsistencies in security data come from mismatched tooling conventions meeting at a shared boundary - not from external threats. Fixing the data layer fixes the downstream problem.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>{body}</p>
                   </div>
                 ))}
               </div>
               <div className="two-col-sdt">
                 <div style={{ padding: '16px 18px', background: `${ACCENT}0c`, border: `1px solid ${ACCENT}30`, borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What broke</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>What broke</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     The validation layer was the real friction, not the schema. Rules strict enough to kill duplicate and stale records also threatened to reject legitimate entries - and a rule that blocks useful data fails its purpose. Tuning that balance, run after run, was the part that actually took the time.
                   </p>
                 </div>
-                <div style={{ padding: '16px 18px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                <div style={{ padding: '16px 18px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 9%, transparent)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     Ingestion was manual - records were imported and normalized by hand. I&apos;d build automated connectors for Active Directory, Cisco AMP, and Defender from the start, so the central database stays continuously fresh instead of depending on someone remembering to pull the next export.
                   </p>
@@ -385,7 +386,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
                   { phase: 'Long-Term', color: '#a78bfa', items: ['Anomaly detection for unusual asset or account behavior', 'Audit-ready change history for all critical records', 'Backup verification and DR-status dashboards', 'Cross-tenant federation for multi-org environments'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
                     <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
                       {items.map(item => <li key={item} style={{ fontSize: 13, marginBottom: 4, lineHeight: 1.5 }}>{item}</li>)}
                     </ul>
@@ -403,7 +404,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
+                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 13, fontWeight: 700, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
               </div>
             </Section>
 
@@ -411,7 +412,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
 
           {/* ── Sticky section nav ── */}
           <nav className="cs-sidebar-nav">
-            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
                 <button

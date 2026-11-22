@@ -57,18 +57,18 @@ export function PlayDiagram({ loop = true }: { loop?: boolean }) {
   return (
     <svg ref={ref} viewBox="0 0 560 340" fill="none" aria-label="Animated football play diagram" role="img" style={{ width: '100%', height: 'auto', display: 'block' }}>
       {/* field */}
-      <rect x="20" y="16" width="520" height="308" rx="8" stroke="rgba(45,212,191,0.35)" strokeWidth="1.4" />
+      <rect x="20" y="16" width="520" height="308" rx="8" stroke="color-mix(in srgb, var(--primary) 35%, transparent)" strokeWidth="1.4" />
       {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-        <line key={i} x1={20} y1={60 + i * 38} x2={540} y2={60 + i * 38} stroke="rgba(45,212,191,0.14)" strokeWidth="1" />
+        <line key={i} x1={20} y1={60 + i * 38} x2={540} y2={60 + i * 38} stroke="color-mix(in srgb, var(--primary) 14%, transparent)" strokeWidth="1" />
       ))}
       {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-        <g key={`h${i}`} stroke="rgba(45,212,191,0.25)" strokeWidth="1">
+        <g key={`h${i}`} stroke="color-mix(in srgb, var(--primary) 25%, transparent)" strokeWidth="1">
           <line x1={200} y1={56 + i * 38} x2={200} y2={64 + i * 38} />
           <line x1={360} y1={56 + i * 38} x2={360} y2={64 + i * 38} />
         </g>
       ))}
       {/* line of scrimmage */}
-      <line x1="20" y1="300" x2="540" y2="300" stroke="rgba(244,244,242,0.4)" strokeWidth="1.6" strokeDasharray="10 6" />
+      <line x1="20" y1="300" x2="540" y2="300" stroke="color-mix(in srgb, var(--foreground) 40%, transparent)" strokeWidth="1.6" strokeDasharray="10 6" />
 
       {/* routes */}
       {ROUTES.map((r) => (
@@ -77,9 +77,9 @@ export function PlayDiagram({ loop = true }: { loop?: boolean }) {
 
       {/* offensive line */}
       {[190, 225, 295, 330].map((x) => (
-        <circle key={x} cx={x} cy={300} r="7" fill="rgba(244,244,242,0.5)" />
+        <circle key={x} cx={x} cy={300} r="7" fill="color-mix(in srgb, var(--foreground) 50%, transparent)" />
       ))}
-      <rect x="253" y="293" width="14" height="14" fill="none" stroke="rgba(244,244,242,0.7)" strokeWidth="1.6" />
+      <rect x="253" y="293" width="14" height="14" fill="none" stroke="color-mix(in srgb, var(--foreground) 70%, transparent)" strokeWidth="1.6" />
 
       {/* skill players with tracking boxes */}
       {ROUTES.map((r) => {

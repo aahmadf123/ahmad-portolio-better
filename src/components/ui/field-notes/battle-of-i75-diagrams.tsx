@@ -8,7 +8,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-const MONO  = "var(--font-code), ui-monospace, monospace";
+const MONO  = "var(--font-body), system-ui, sans-serif";
 const SERIF = "var(--font-body), system-ui, sans-serif";
 
 // Team colors stay hex: they get alpha-concatenated below (`${UT}22`).
@@ -27,8 +27,7 @@ const teamName = (t: Team) => (t === 'UT' ? 'Toledo' : 'Bowling Green');
 function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; color?: string }) {
   return (
     <div style={{
-      fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em',
-      textTransform: 'uppercase', color,
+      fontFamily: MONO, fontSize: 13, letterSpacing: 0, color,
       marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
     }}>
       <span style={{ display: 'inline-block', width: 18, height: 1, background: color, opacity: 0.5 }} />
@@ -40,9 +39,9 @@ function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; 
 function Panel({ children, accent }: { children: React.ReactNode; accent?: string }) {
   return (
     <div style={{
-      border: `1px solid ${accent ? accent + '28' : 'rgba(244,244,242,0.09)'}`,
+      border: `1px solid ${accent ? accent + '28' : 'color-mix(in srgb, var(--foreground) 9%, transparent)'}`,
       borderRadius: 10,
-      background: accent ? `${accent}06` : 'rgba(244,244,242,0.02)',
+      background: accent ? `${accent}06` : 'color-mix(in srgb, var(--foreground) 2%, transparent)',
       padding: 'clamp(14px,3vw,20px)',
     }}>
       {children}
@@ -53,8 +52,8 @@ function Panel({ children, accent }: { children: React.ReactNode; accent?: strin
 function Caption({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
-      marginTop: 12, fontFamily: MONO, fontSize: 11,
-      color: 'var(--text3)', letterSpacing: '0.05em', textAlign: 'center', lineHeight: 1.6,
+      marginTop: 12, fontFamily: MONO, fontSize: 13,
+      color: 'var(--text3)', letterSpacing: 0, textAlign: 'center', lineHeight: 1.6,
     }}>
       {children}
     </div>
@@ -70,10 +69,10 @@ function Chip({
       onClick={onClick}
       aria-pressed={active}
       style={{
-        fontFamily: MONO, fontSize: 11, letterSpacing: '0.04em',
+        fontFamily: MONO, fontSize: 13, letterSpacing: 0,
         padding: '7px 11px', borderRadius: 6, cursor: 'pointer',
-        background: active ? `${color}1c` : 'rgba(244,244,242,0.03)',
-        border: `1px solid ${active ? color : 'rgba(244,244,242,0.12)'}`,
+        background: active ? `${color}1c` : 'color-mix(in srgb, var(--foreground) 3%, transparent)',
+        border: `1px solid ${active ? color : 'color-mix(in srgb, var(--foreground) 12%, transparent)'}`,
         color: active ? color : 'var(--text2)',
         transition: 'all 0.15s',
       }}
@@ -89,7 +88,7 @@ function Stat({ label, value, sub, color }: { label: string; value: string; sub:
       padding: '12px 14px', borderRadius: 8,
       background: `${color}0a`, border: `1px solid ${color}26`,
     }}>
-      <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color, marginBottom: 6 }}>
+      <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color, marginBottom: 6 }}>
         {label}
       </div>
       <div style={{ fontFamily: MONO, fontSize: 20, color, lineHeight: 1, marginBottom: 6, fontVariantNumeric: 'tabular-nums' }}>
@@ -159,11 +158,10 @@ export function AnswersUpFront() {
   return (
     <nav aria-label="The short version" style={{
       margin: '2rem 0 2.5rem', borderRadius: 10, overflow: 'hidden',
-      border: '1px solid rgba(244,244,242,0.1)', background: 'rgba(244,244,242,0.02)',
+      border: '1px solid color-mix(in srgb, var(--foreground) 10%, transparent)', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)',
     }}>
       <div style={{
-        padding: '12px 16px', fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: GOLD, borderBottom: '1px solid rgba(244,244,242,0.08)',
+        padding: '12px 16px', fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: GOLD, borderBottom: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)',
       }}>
         The short version · 5 questions
       </div>
@@ -171,13 +169,13 @@ export function AnswersUpFront() {
         <a key={x.id} href={`#${x.id}`} style={{
           display: 'grid', gridTemplateColumns: 'minmax(68px, 92px) 1fr', gap: 14, alignItems: 'baseline',
           padding: '14px 16px', textDecoration: 'none', color: 'inherit', borderBottom: 'none',
-          borderTop: i ? '1px solid rgba(244,244,242,0.07)' : 'none',
+          borderTop: i ? '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)' : 'none',
         }}>
           <span style={{ fontFamily: MONO, fontSize: 20, color: 'var(--foreground)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
             {x.big}
           </span>
           <span>
-            <span style={{ display: 'block', fontFamily: MONO, fontSize: 11, color: GOLD, letterSpacing: '0.04em', marginBottom: 4 }}>
+            <span style={{ display: 'block', fontFamily: MONO, fontSize: 13, color: GOLD, letterSpacing: 0, marginBottom: 4 }}>
               {String(i + 1).padStart(2, '0')} · {x.q} ↓
             </span>
             <span style={{ display: 'block', fontFamily: SERIF, fontSize: 15, lineHeight: 1.55, color: 'var(--text2)' }}>
@@ -192,8 +190,8 @@ export function AnswersUpFront() {
 
 export function Question({ n, id, q, a }: { n: number; id: string; q: string; a: string }) {
   return (
-    <div id={id} style={{ scrollMarginTop: 120, marginTop: '4rem', paddingTop: '1.75rem', borderTop: '1px solid rgba(244,244,242,0.1)' }}>
-      <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: GOLD, marginBottom: 10 }}>
+    <div id={id} style={{ scrollMarginTop: 120, marginTop: '4rem', paddingTop: '1.75rem', borderTop: '1px solid color-mix(in srgb, var(--foreground) 10%, transparent)' }}>
+      <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: GOLD, marginBottom: 10 }}>
         Question {n} of 5
       </div>
       <h2 style={{
@@ -207,7 +205,7 @@ export function Question({ n, id, q, a }: { n: number; id: string; q: string; a:
         border: `1px solid ${GOLD}40`, background: `${GOLD}0d`,
         fontFamily: SERIF, fontSize: 17, lineHeight: 1.55, color: 'var(--foreground)',
       }}>
-        <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: GOLD, marginRight: 10 }}>
+        <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: GOLD, marginRight: 10 }}>
           Answer
         </span>
         {a}
@@ -310,7 +308,7 @@ export function SeriesExplorer() {
 
   const utWon = g.res === 'W', tie = g.res === 'T';
   const resultColor = tie ? MUTED : utWon ? UT : BG;
-  const LABEL = { fontSize: 11, fill: 'var(--text3)', fontFamily: MONO } as const;
+  const LABEL = { fontSize: 13, fill: 'var(--text3)', fontFamily: MONO } as const;
 
   return (
     <div style={{ margin: '2.5rem 0' }}>
@@ -353,7 +351,7 @@ export function SeriesExplorer() {
             {[4, 0, -4, -8, -12].map(v => (
               <g key={v}>
                 <line x1={G.l} x2={G.W - G.r} y1={G.y(v)} y2={G.y(v)}
-                  stroke="rgba(244,244,242,0.08)" strokeDasharray={v === 0 ? undefined : '2 4'} />
+                  stroke="color-mix(in srgb, var(--foreground) 8%, transparent)" strokeDasharray={v === 0 ? undefined : '2 4'} />
                 <text x={G.l - 6} y={G.y(v) + 4} textAnchor="end" {...LABEL}>{v > 0 ? `+${v}` : v}</text>
               </g>
             ))}
@@ -362,7 +360,7 @@ export function SeriesExplorer() {
             ))}
 
             {/* WWII-era gap */}
-            <rect x={G.x(1935.5)} y={G.t} width={G.x(1947.5) - G.x(1935.5)} height={G.H - G.t - G.b} fill="rgba(244,244,242,0.04)" />
+            <rect x={G.x(1935.5)} y={G.t} width={G.x(1947.5) - G.x(1935.5)} height={G.H - G.t - G.b} fill="color-mix(in srgb, var(--foreground) 4%, transparent)" />
             {!narrow && (
               <text x={(G.x(1935.5) + G.x(1947.5)) / 2} y={G.t + 14} textAnchor="middle" {...LABEL}>no games</text>
             )}
@@ -402,16 +400,16 @@ export function SeriesExplorer() {
         <div style={{
           minHeight: 48, fontFamily: SERIF, fontSize: 15, lineHeight: 1.6, color: 'var(--text2)',
           padding: '12px 14px', borderRadius: 8,
-          background: m ? `${m.color}0a` : 'rgba(244,244,242,0.02)',
-          border: `1px solid ${m ? m.color + '28' : 'rgba(244,244,242,0.07)'}`,
+          background: m ? `${m.color}0a` : 'color-mix(in srgb, var(--foreground) 2%, transparent)',
+          border: `1px solid ${m ? m.color + '28' : 'color-mix(in srgb, var(--foreground) 7%, transparent)'}`,
         }}>
           {m ? m.text : 'Drag across the chart, or use the slider, to step through every game. Pick a moment above for the story behind it.'}
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 6, marginTop: 12 }}>
           {ERAS.map(e => (
-            <div key={e.label} style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid rgba(244,244,242,0.07)' }}>
-              <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            <div key={e.label} style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)' }}>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0 }}>
                 {e.label} · {e.from}–{e.to}
               </div>
               <div style={{ fontFamily: MONO, fontSize: 15, color: 'var(--foreground)', marginTop: 4 }}>
@@ -455,7 +453,7 @@ const REAL = runStats(DECIDED);
 function Strip({ seq, label }: { seq: boolean[] | null; label: string }) {
   return (
     <div style={{ marginBottom: 10 }}>
-      <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 5 }}>
+      <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginBottom: 5 }}>
         {label}
       </div>
       <div style={{ display: 'flex', gap: 1, height: 22 }} aria-hidden>
@@ -463,7 +461,7 @@ function Strip({ seq, label }: { seq: boolean[] | null; label: string }) {
           ? seq.map((ut, i) => (
               <div key={i} style={{ flex: 1, minWidth: 1, background: ut ? UT : BG, opacity: 0.85, borderRadius: 1 }} />
             ))
-          : <div style={{ flex: 1, border: '1px dashed rgba(244,244,242,0.15)', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: MONO, fontSize: 11, color: 'var(--text3)' }}>
+          : <div style={{ flex: 1, border: '1px dashed color-mix(in srgb, var(--foreground) 15%, transparent)', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: MONO, fontSize: 13, color: 'var(--text3)' }}>
               press shuffle
             </div>}
       </div>
@@ -631,8 +629,8 @@ export function CoinTossLedger() {
                 aria-label={`${x.y}: ${x.tw ? `${teamName(x.tw)} won the toss and ${x.dec === 'defer' ? 'deferred' : 'took the ball'}` : 'toss not codable'}. ${teamName(x.w)} won ${Math.max(x.ut, x.bg)}-${Math.min(x.ut, x.bg)}.`}
                 style={{
                   textAlign: 'left', cursor: 'pointer', padding: '8px 9px', borderRadius: 7,
-                  background: active ? `${L.color}14` : 'rgba(244,244,242,0.02)',
-                  border: `1px solid ${active ? L.color : isHit && lens !== 'all' ? L.color + '66' : 'rgba(244,244,242,0.09)'}`,
+                  background: active ? `${L.color}14` : 'color-mix(in srgb, var(--foreground) 2%, transparent)',
+                  border: `1px solid ${active ? L.color : isHit && lens !== 'all' ? L.color + '66' : 'color-mix(in srgb, var(--foreground) 9%, transparent)'}`,
                   opacity: dim ? 0.28 : 1, transition: 'opacity 0.2s, border-color 0.2s',
                 }}
               >
@@ -644,12 +642,12 @@ export function CoinTossLedger() {
                         background: x.dec === 'defer' ? teamColor(x.tw) : 'transparent',
                         border: `2px solid ${teamColor(x.tw)}`, boxSizing: 'border-box',
                       }} />
-                    : <span style={{ fontFamily: MONO, fontSize: 11, color: MUTED }}>?</span>}
+                    : <span style={{ fontFamily: MONO, fontSize: 13, color: MUTED }}>?</span>}
                 </div>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text2)', lineHeight: 1.6 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>
                   2H: <span style={{ color: teamColor(x.r2) }}>{x.r2 ?? '?'}</span>
                 </div>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: teamColor(x.w), lineHeight: 1.6 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: teamColor(x.w), lineHeight: 1.6 }}>
                   {x.w} {Math.max(x.ut, x.bg)}-{Math.min(x.ut, x.bg)}
                 </div>
               </button>
@@ -658,7 +656,7 @@ export function CoinTossLedger() {
         </div>
 
         {/* Legend */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', marginTop: 10, fontFamily: MONO, fontSize: 11, color: 'var(--text3)' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', marginTop: 10, fontFamily: MONO, fontSize: 13, color: 'var(--text3)' }}>
           <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: UT, marginRight: 5 }} />Toledo won toss, deferred</span>
           <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: BG, marginRight: 5 }} />BG won toss, deferred</span>
           <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', border: `2px solid ${MUTED}`, boxSizing: 'border-box', marginRight: 5 }} />took the ball</span>
@@ -668,14 +666,14 @@ export function CoinTossLedger() {
         {/* Detail */}
         <div style={{
           marginTop: 14, padding: '12px 14px', borderRadius: 8,
-          border: '1px solid rgba(244,244,242,0.09)', background: 'rgba(244,244,242,0.025)',
+          border: '1px solid color-mix(in srgb, var(--foreground) 9%, transparent)', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)',
         }}>
-          <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.06em', marginBottom: 8 }}>
+          <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginBottom: 8 }}>
             {t.y} · AT {t.host === 'UT' ? 'TOLEDO' : 'BOWLING GREEN'} · WIND {t.wind.toUpperCase()} ·{' '}
             <span style={{ color: UT }}>UT {t.ut}</span>, <span style={{ color: BG }}>BG {t.bg}</span>
           </div>
           {t.line
-            ? <div style={{ fontFamily: SERIF, fontSize: 15, fontStyle: 'italic', color: 'var(--foreground)', lineHeight: 1.6 }}>
+            ? <div style={{ fontFamily: SERIF, fontSize: 15, fontStyle: 'normal', color: 'var(--foreground)', lineHeight: 1.6 }}>
                 “{t.line}”
               </div>
             : <div style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--text3)' }}>No toss line in the box score.</div>}
@@ -685,9 +683,9 @@ export function CoinTossLedger() {
             </div>
           )}
           <a href={t.src} target="_blank" rel="noopener noreferrer" style={{
-            display: 'inline-block', marginTop: 10, fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em',
+            display: 'inline-block', marginTop: 10, fontFamily: MONO, fontSize: 13, letterSpacing: 0,
             color: 'var(--text2)', textDecoration: 'underline', textUnderlineOffset: 3,
-            textDecorationColor: 'rgba(244,244,242,0.3)', padding: 0,
+            textDecorationColor: 'color-mix(in srgb, var(--foreground) 30%, transparent)', padding: 0,
           }}>
             Official box score ↗
           </a>
@@ -746,12 +744,12 @@ export function TwentySevenCoins() {
           {(lastRun ?? new Array(N_RIVAL).fill(null)).map((v, i) => (
             <span key={i} style={{
               width: 11, height: 11, borderRadius: '50%',
-              background: v === null ? 'transparent' : v ? UT : 'rgba(244,244,242,0.18)',
-              border: v === null ? '1px dashed rgba(244,244,242,0.18)' : 'none',
+              background: v === null ? 'transparent' : v ? UT : 'color-mix(in srgb, var(--foreground) 18%, transparent)',
+              border: v === null ? '1px dashed color-mix(in srgb, var(--foreground) 18%, transparent)' : 'none',
             }} />
           ))}
         </div>
-        <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text2)', marginBottom: 14, minHeight: 15 }}>
+        <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text2)', marginBottom: 14, minHeight: 15 }}>
           {lastWins !== null
             ? <>Last rivalry: 2nd-half receiver went <span style={{ color: 'var(--foreground)' }}>{lastWins}-{N_RIVAL - lastWins}</span>{(lastWins >= OBS || lastWins <= N_RIVAL - OBS) && <span style={{ color: GOLD }}> · at least as lopsided as the real thing</span>}</>
             : 'One dot per game. Blue = 2nd-half receiver won.'}
@@ -765,13 +763,13 @@ export function TwentySevenCoins() {
             return (
               <div key={k} title={`${k}-${N_RIVAL - k}: ${c} rivalries`} style={{
                 flex: 1, height: `${(c / maxC) * 100}%`, minHeight: c ? 2 : 0,
-                background: isObs ? GOLD : isExtreme ? BG : 'rgba(244,244,242,0.25)',
+                background: isObs ? GOLD : isExtreme ? BG : 'color-mix(in srgb, var(--foreground) 25%, transparent)',
                 opacity: isObs ? 1 : 0.75, borderRadius: '4px 4px 0 0',
               }} />
             );
           })}
         </div>
-        <div style={{ position: 'relative', height: 14, fontFamily: MONO, fontSize: 11, color: 'var(--text3)', marginTop: 4 }}>
+        <div style={{ position: 'relative', height: 14, fontFamily: MONO, fontSize: 13, color: 'var(--text3)', marginTop: 4 }}>
           {[{ k: 0, t: '0' }, { k: 11, t: '11' }, { k: 13.5, t: 'even' }, { k: OBS, t: '16', c: GOLD }, { k: 27, t: '27 wins' }].map(({ k, t, c }) => (
             <span key={t} style={{
               position: 'absolute', left: `${((k + 0.5) / (N_RIVAL + 1)) * 100}%`,
@@ -807,19 +805,19 @@ function ForestRow({
 }: { label: string; sub: string; est: number; lo: number; hi: number; color: string; min: number; max: number; fmt: (v: number) => string }) {
   const p = (v: number) => `${((v - min) / (max - min)) * 100}%`;
   return (
-    <div style={{ padding: '12px 0', borderBottom: '1px solid rgba(244,244,242,0.06)' }}>
+    <div style={{ padding: '12px 0', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
         <div>
           <div style={{ fontFamily: SERIF, fontSize: 14, color: 'var(--foreground)' }}>{label}</div>
-          <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>{sub}</div>
+          <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', marginTop: 2 }}>{sub}</div>
         </div>
         <div style={{ fontFamily: MONO, fontSize: 14, color, textAlign: 'right' }}>
-          {fmt(est)} <span style={{ color: 'var(--text3)', fontSize: 11 }}>[{fmt(lo)}, {fmt(hi)}]</span>
+          {fmt(est)} <span style={{ color: 'var(--text3)', fontSize: 13 }}>[{fmt(lo)}, {fmt(hi)}]</span>
         </div>
       </div>
       <div style={{ position: 'relative', height: 18 }}>
-        <div style={{ position: 'absolute', left: 0, right: 0, top: '50%', height: 1, background: 'rgba(244,244,242,0.08)' }} />
-        <div style={{ position: 'absolute', left: p(0), top: 0, bottom: 0, width: 1, background: 'rgba(244,244,242,0.35)' }} />
+        <div style={{ position: 'absolute', left: 0, right: 0, top: '50%', height: 1, background: 'color-mix(in srgb, var(--foreground) 8%, transparent)' }} />
+        <div style={{ position: 'absolute', left: p(0), top: 0, bottom: 0, width: 1, background: 'color-mix(in srgb, var(--foreground) 35%, transparent)' }} />
         <div style={{ position: 'absolute', left: p(lo), width: `calc(${p(hi)} - ${p(lo)})`, top: 6, bottom: 6, borderRadius: 4, background: `${color}55` }} />
         <div style={{ position: 'absolute', left: p(est), top: 2, width: 14, height: 14, marginLeft: -7, borderRadius: '50%', background: color, border: '2px solid var(--background)' }} />
       </div>
@@ -859,7 +857,7 @@ export function MiddleEightVsGame() {
             <div style={{ position: 'relative', height: 150, margin: '18px 0 6px' }}>
               {[46, 50, 54].map(v => (
                 <div key={v} style={{ position: 'absolute', left: 30, right: 0, bottom: `${((v - 45) / 10) * 100}%`, borderTop: `1px ${v === 50 ? 'solid' : 'dashed'} rgba(244,244,242,${v === 50 ? 0.3 : 0.08})` }}>
-                  <span style={{ position: 'absolute', left: -30, top: -6, fontFamily: MONO, fontSize: 10, color: 'var(--text3)' }}>{v}%</span>
+                  <span style={{ position: 'absolute', left: -30, top: -6, fontFamily: MONO, fontSize: 13, color: 'var(--text3)' }}>{v}%</span>
                 </div>
               ))}
               <div style={{ position: 'absolute', left: 30, right: 0, top: 0, bottom: 0, display: 'flex' }}>
@@ -881,7 +879,7 @@ export function MiddleEightVsGame() {
             </div>
             <div style={{ display: 'flex', marginLeft: 30 }}>
               {BY_SEASON.map(([yr]) => (
-                <div key={yr} style={{ flex: 1, textAlign: 'center', fontFamily: MONO, fontSize: 10, color: 'var(--text3)' }}>
+                <div key={yr} style={{ flex: 1, textAlign: 'center', fontFamily: MONO, fontSize: 13, color: 'var(--text3)' }}>
                   {`'${String(yr).slice(2)}`}
                 </div>
               ))}
@@ -995,7 +993,7 @@ export function OpeningDrives() {
         {/* Column labels */}
         <div style={{
           display: 'grid', gridTemplateColumns: '44px 34px 1fr 40px 62px', gap: 8,
-          fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase',
+          fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0,
           padding: '0 8px 6px',
         }}>
           <span>Year</span><span>Ball</span><span>Yards gained</span><span style={{ textAlign: 'right' }}>Yds</span><span style={{ textAlign: 'right' }}>Result</span>
@@ -1017,20 +1015,20 @@ export function OpeningDrives() {
                   display: 'grid', gridTemplateColumns: '44px 34px 1fr 40px 62px', gap: 8, alignItems: 'center',
                   padding: '6px 8px', borderRadius: 6, cursor: 'pointer', textAlign: 'left',
                   background: active ? 'color-mix(in srgb, var(--foreground) 7%, transparent)' : 'transparent',
-                  border: `1px solid ${active ? 'rgba(244,244,242,0.22)' : 'transparent'}`,
+                  border: `1px solid ${active ? 'color-mix(in srgb, var(--foreground) 22%, transparent)' : 'transparent'}`,
                 }}
               >
                 <span style={{ fontFamily: MONO, fontSize: 12, color: 'var(--foreground)' }}>{r[0]}</span>
                 <span style={{ fontFamily: MONO, fontSize: 12, color: c }}>{r[1]}</span>
                 <span style={{ position: 'relative', height: 12 }}>
-                  <span style={{ position: 'absolute', left: `${pos(0)}%`, top: -2, bottom: -2, width: 1, background: 'rgba(244,244,242,0.25)' }} />
+                  <span style={{ position: 'absolute', left: `${pos(0)}%`, top: -2, bottom: -2, width: 1, background: 'color-mix(in srgb, var(--foreground) 25%, transparent)' }} />
                   <span style={{
                     position: 'absolute', left: `${left}%`, width: `${Math.max(right - left, 0.8)}%`, top: 1, bottom: 1,
                     borderRadius: 4, background: c, opacity: scored(r[8]) ? 0.9 : 0.4,
                   }} />
                 </span>
                 <span style={{ fontFamily: MONO, fontSize: 12, color: 'var(--text2)', textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{r[7]}</span>
-                <span style={{ fontFamily: MONO, fontSize: 11, color: resultColor(r[8]), textAlign: 'right' }}>{r[8]}</span>
+                <span style={{ fontFamily: MONO, fontSize: 13, color: resultColor(r[8]), textAlign: 'right' }}>{r[8]}</span>
               </button>
             );
           })}
@@ -1039,16 +1037,16 @@ export function OpeningDrives() {
         {/* Detail */}
         <div style={{
           marginTop: 14, padding: '14px 16px', borderRadius: 8,
-          border: '1px solid rgba(244,244,242,0.09)', background: 'rgba(244,244,242,0.025)',
+          border: '1px solid color-mix(in srgb, var(--foreground) 9%, transparent)', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)',
         }}>
-          <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.06em', marginBottom: 8 }}>
+          <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginBottom: 8 }}>
             {d[0]} · {teamName(d[1]).toUpperCase()} BALL · FINAL{' '}
             <span style={{ color: UT }}>UT {t.ut}</span>, <span style={{ color: BG }}>BG {t.bg}</span>
           </div>
           <div style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--text2)', lineHeight: 1.6, marginBottom: 8 }}>
             {teamName(d[1])} got the ball first because {whyText(d)}.
           </div>
-          <div style={{ fontFamily: SERIF, fontSize: 15, fontStyle: 'italic', color: 'var(--foreground)', lineHeight: 1.6 }}>
+          <div style={{ fontFamily: SERIF, fontSize: 15, fontStyle: 'normal', color: 'var(--foreground)', lineHeight: 1.6 }}>
             First snap: “{d[10]}”
           </div>
           <div style={{ fontFamily: SERIF, fontSize: 15, color: 'var(--text2)', lineHeight: 1.6, marginTop: 8 }}>
@@ -1056,9 +1054,9 @@ export function OpeningDrives() {
             <span style={{ color: resultColor(d[8]) }}>{d[8]}</span>. {teamName(d[9])} won the game.
           </div>
           <a href={t.src} target="_blank" rel="noopener noreferrer" style={{
-            display: 'inline-block', marginTop: 10, fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em',
+            display: 'inline-block', marginTop: 10, fontFamily: MONO, fontSize: 13, letterSpacing: 0,
             color: 'var(--text2)', textDecoration: 'underline', textUnderlineOffset: 3,
-            textDecorationColor: 'rgba(244,244,242,0.3)', padding: 0,
+            textDecorationColor: 'color-mix(in srgb, var(--foreground) 30%, transparent)', padding: 0,
           }}>
             Official box score ↗
           </a>

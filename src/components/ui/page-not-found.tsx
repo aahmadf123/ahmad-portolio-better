@@ -51,10 +51,9 @@ export default function NotFoundPage() {
       <div style={{ position: 'relative', zIndex: 1 }}>
         <div
           style={{
-            fontFamily: 'var(--font-code), monospace',
-            fontSize: 11,
-            letterSpacing: '0.16em',
-            textTransform: 'uppercase',
+            fontFamily: 'var(--font-body), system-ui, sans-serif',
+            fontSize: 13,
+            letterSpacing: 0,
             color: 'var(--primary)',
             marginBottom: 14,
           }}
@@ -96,12 +95,11 @@ export default function NotFoundPage() {
               padding: '12px 26px',
               background: 'var(--primary)',
               color: 'var(--background)',
-              fontFamily: 'var(--font-code), monospace',
-              fontSize: 11,
+              fontFamily: 'var(--font-body), system-ui, sans-serif',
+              fontSize: 13,
               fontWeight: 700,
-              letterSpacing: '0.06em',
+              letterSpacing: 0,
               borderRadius: 5,
-              textTransform: 'uppercase',
             }}
           >
             Back to the huddle ↩
@@ -115,11 +113,10 @@ export default function NotFoundPage() {
               padding: '12px 26px',
               border: '1px solid var(--bd2)',
               color: 'var(--text2)',
-              fontFamily: 'var(--font-code), monospace',
-              fontSize: 11,
-              letterSpacing: '0.06em',
+              fontFamily: 'var(--font-body), system-ui, sans-serif',
+              fontSize: 13,
+              letterSpacing: 0,
               borderRadius: 5,
-              textTransform: 'uppercase',
             }}
           >
             Read Field Notes

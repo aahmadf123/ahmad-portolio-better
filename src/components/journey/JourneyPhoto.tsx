@@ -11,7 +11,7 @@ const srcSet = (sizes: Record<string, string>) =>
  * their real pixel size, over a blurred copy of themselves instead of being blown up.
  * Non-priority photos ask for 130vw: they arrive at a 1.3x zoom and settle to 1x.
  */
-export function JourneyPhoto({ id, priority = false }: { id: PhotoId; priority?: boolean }) {
+export function JourneyPhoto({ id, priority = false, sizes: sizesProp }: { id: PhotoId; priority?: boolean; sizes?: string }) {
   const p = journeyPhoto(id);
   const fallback = p.webp[String(p.widths.includes(1280) ? 1280 : Math.max(...p.widths))];
   if (priority) {
@@ -20,7 +20,7 @@ export function JourneyPhoto({ id, priority = false }: { id: PhotoId; priority?:
     preload(avif, { as: 'image', type: 'image/avif', imageSrcSet: srcSet(p.avif), imageSizes: '100vw', fetchPriority: 'high' });
   }
   const position = `${p.focal.x * 100}% ${p.focal.y * 100}%`;
-  const sizes = priority ? '100vw' : '130vw';
+  const sizes = sizesProp ?? (priority ? '100vw' : '130vw');
   const img = (
     <picture>
       <source type="image/avif" srcSet={srcSet(p.avif)} sizes={sizes} />

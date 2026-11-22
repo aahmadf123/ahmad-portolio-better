@@ -11,7 +11,8 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
-const MONO   = "var(--font-code), ui-monospace, monospace";
+const MONO   = "var(--font-body), system-ui, sans-serif";
+const CODE = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#f472b6';
 
 const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
@@ -24,7 +25,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 13, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: 0 }}>
       {children}
     </span>
   );
@@ -34,7 +35,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
       <span style={{ display: 'inline-block', width: 18, height: 1.5, background: ACCENT, opacity: 0.5, flexShrink: 0 }} />
-      <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT }}>{children}</span>
+      <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>{children}</span>
     </div>
   );
 }
@@ -43,7 +44,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
       <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginTop: 6 }}>{label}</div>
     </div>
   );
 }
@@ -51,12 +52,12 @@ function Metric({ value, label }: { value: string; label: string }) {
 function LayerRow({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${color}06`, border: `1px solid ${color}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 13, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+        <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 13, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -96,9 +97,9 @@ export default function BattingCleanupCaseStudy() {
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
-        .cs-body li::marker { color: ${ACCENT}; }
+        .cs-body li::marker { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
         .cs-h2 { font-family: ${DISPLAY}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
-        .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
+        .cs-h3 { font-family: ${MONO}; font-size: 13px;   color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); margin: 24px 0 10px; }
         .metrics-grid-bc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
         @media (max-width: 640px) { .metrics-grid-bc { grid-template-columns: repeat(2, 1fr); } }
         .two-col-bc { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -106,18 +107,18 @@ export default function BattingCleanupCaseStudy() {
         .three-col-bc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-bc { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-bc { grid-template-columns: 1fr; } }
-        .info-card { padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
+        .info-card { padding: 16px 18px; background: color-mix(in srgb, var(--foreground) 2%, transparent); border: 1px solid color-mix(in srgb, var(--foreground) 7%, transparent); border-radius: 8px; transition: all 0.2s ease; }
         .info-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
         .accent-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .accent-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
-        .live-badge { display: inline-flex; align-items: center; gap: 6px; padding: '4px 10px'; font-family: ${MONO}; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); background: color-mix(in srgb, var(--green) 10%, transparent); border: 1px solid color-mix(in srgb, var(--green) 30%, transparent); border-radius: 10px; }
+        .live-badge { display: inline-flex; align-items: center; gap: 6px; padding: '4px 10px'; font-family: ${MONO}; font-size: 13px;   color: var(--green); background: color-mix(in srgb, var(--green) 10%, transparent); border: 1px solid color-mix(in srgb, var(--green) 30%, transparent); border-radius: 10px; }
         .entity-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .entity-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
-        .entity-field { font-family: ${MONO}; font-size: 10px; color: var(--text3); padding: 2px 0; letter-spacing: 0.03em; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .entity-field { font-family: ${MONO}; font-size: 13px; color: var(--text3); padding: 2px 0;  }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: color-mix(in srgb, var(--foreground) 2%, transparent); border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
-        .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
-        code { font-family: ${MONO}; font-size: 11px; background: ${ACCENT}12; border: 1px solid ${ACCENT}25; padding: 2px 5px; border-radius: 4px; color: var(--foreground); }
+        .nav-link { font-family: ${MONO}; font-size: 13px;   text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
+        code { font-family: ${CODE}; font-size: 13px; background: ${ACCENT}12; border: 1px solid ${ACCENT}25; padding: 2px 5px; border-radius: 4px; color: var(--foreground); }
         .cs-grid-container {
           display: grid;
           grid-template-columns: 1fr 200px;
@@ -145,11 +146,11 @@ export default function BattingCleanupCaseStudy() {
       {/* ── Sticky header ── */}
       <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#22c55e', background: 'color-mix(in srgb, var(--green) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 25%, transparent)', borderRadius: 10 }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 10px', fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: '#22c55e', background: 'color-mix(in srgb, var(--green) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 25%, transparent)', borderRadius: 10 }}>
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
             Live
           </span>
-          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Batting Cleanup</span>
+          <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>Batting Cleanup</span>
         </div>
       </SubpageHeader>
 
@@ -210,8 +211,8 @@ export default function BattingCleanupCaseStudy() {
                 I contributed as a core backend engineer. My work transitioned the system from raw initialization scripts into a modern, type-safe Deno monorepo bridging Cloudflare Workers/Hono APIs with a PostGIS geospatial database - and built the spatial modeling, performance optimization, and validation infrastructure that makes the system reliable at city scale.
               </p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 4, marginBottom: 4 }}>
-                <a href="https://battingcleanup.appliedlabs.org/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 16px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Documentation ↗</a>
-                <a href="https://toledofreepress.com/batting-cleanup-aims-to-improve-toledo-maintenance-with-tech/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 16px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Toledo Free Press ↗</a>
+                <a href="https://battingcleanup.appliedlabs.org/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 16px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 13, fontWeight: 700, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>Documentation ↗</a>
+                <a href="https://toledofreepress.com/batting-cleanup-aims-to-improve-toledo-maintenance-with-tech/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 16px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>Toledo Free Press ↗</a>
               </div>
             </Section>
 
@@ -232,7 +233,7 @@ export default function BattingCleanupCaseStudy() {
                   ['Local dev friction', 'A 7-person team doing manual database setup diverges quickly - inconsistent environments slow everyone down.'],
                 ].map(([title, body]) => (
                   <div key={title} className="info-card">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>{body}</p>
                   </div>
                 ))}
@@ -261,8 +262,8 @@ export default function BattingCleanupCaseStudy() {
                   ['6', 'Report stored with verification metadata in PostGIS database'],
                   ['7', 'Maintainers query structured, location-aware report data'],
                 ].map(([n, step]) => (
-                  <div key={n} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.06)', borderRadius: 6 }}>
-                    <span style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.7, flexShrink: 0, minWidth: 16 }}>{n}</span>
+                  <div key={n} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)', borderRadius: 6 }}>
+                    <span style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, opacity: 0.7, flexShrink: 0, minWidth: 16 }}>{n}</span>
                     <span style={{ fontSize: 13, lineHeight: 1.5 }}>{step}</span>
                   </div>
                 ))}
@@ -296,7 +297,7 @@ export default function BattingCleanupCaseStudy() {
                   { name: 'Maintainer View', fields: ['Asset clusters', 'Report frequency', 'Recurring hotspots', 'Response status'] },
                 ].map(({ name, fields }) => (
                   <div key={name} className="entity-card">
-                    <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>{name}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>{name}</div>
                     {fields.map(f => (
                       <div key={f} className="entity-field" style={{ paddingBottom: 3 }}>
                         <span style={{ color: ACCENT }}>- </span>{f}
@@ -323,17 +324,17 @@ export default function BattingCleanupCaseStudy() {
 
               <div className="two-col-bc" style={{ marginBottom: 24 }}>
                 <div className="info-card">
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Before - B-Tree Index</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginBottom: 8 }}>Before - B-Tree Index</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: 'var(--text3)' }}>Full table scan on every geofence query. Latency grows linearly with asset count. Not viable at city scale - every report submission triggers an O(n) scan across all assets.</p>
                 </div>
                 <div className="accent-card">
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>After - GiST Spatial Index</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>After - GiST Spatial Index</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>GiST (Generalized Search Tree) indexes are designed for spatial lookup patterns. They prune the search space geometrically. Result: sub-10 ms <code>ST_DWithin</code> benchmarks against 10,000+ assets in the simulator.</p>
                 </div>
               </div>
 
               <div style={{ padding: '16px 20px', background: 'rgba(244,114,182,0.06)', border: '1px solid rgba(244,114,182,0.18)', borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Key queries optimized</div>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>Key queries optimized</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {[
                     'Which asset is nearest to this submitted coordinate?',
@@ -363,7 +364,7 @@ export default function BattingCleanupCaseStudy() {
 
               <div className="two-col-bc" style={{ marginBottom: 24 }}>
                 <div className="accent-card">
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Local simulator generates</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>Local simulator generates</div>
                   <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
                     {['10,000+ localized waste assets', 'Relational report records', 'Geospatially accurate test coordinates', 'Repeatable development seed state', 'PostGIS extension and GiST indexes pre-configured'].map(i => (
                       <li key={i} style={{ fontSize: 13, marginBottom: 5, lineHeight: 1.5 }}>{i}</li>
@@ -371,7 +372,7 @@ export default function BattingCleanupCaseStudy() {
                   </ul>
                 </div>
                 <div className="accent-card">
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What this eliminates</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>What this eliminates</div>
                   <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
                     {['Schema version drift between developers', 'Manual PostGIS setup steps', 'Stale or inconsistent seed data', 'Reliance on production data for testing', '"Works on my machine" environment bugs'].map(i => (
                       <li key={i} style={{ fontSize: 13, marginBottom: 5, lineHeight: 1.5 }}>{i}</li>
@@ -405,7 +406,7 @@ export default function BattingCleanupCaseStudy() {
                   ['Spoofed coordinates', 'A bad actor may attempt to inject fake location data to flood or mislead the maintenance system.'],
                 ].map(([title, body]) => (
                   <div key={title} className="info-card">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>{body}</p>
                   </div>
                 ))}
@@ -420,7 +421,7 @@ export default function BattingCleanupCaseStudy() {
                   { flag: 'Plausibility metadata', desc: 'Contextual signals (distance, confidence, indoor flag) are stored to support downstream filtering and trust scoring.' },
                   { flag: 'Audit trail', desc: 'Structured record of report context allows maintainers and analysts to review submission quality over time.' },
                 ].map(({ flag, desc }) => (
-                  <div key={flag} style={{ display: 'flex', gap: 14, padding: '12px 16px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.07)', borderRadius: 6 }}>
+                  <div key={flag} style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 14px', padding: '12px 16px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)', borderRadius: 6 }}>
                     <code style={{ flexShrink: 0, alignSelf: 'flex-start', marginTop: 1 }}>{flag}</code>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: 'var(--text2)' }}>{desc}</p>
                   </div>
@@ -442,20 +443,20 @@ export default function BattingCleanupCaseStudy() {
                   ['Real city deployments surface edge cases no classroom project reveals', 'GPS noise, QR code durability, public network reliability, and user behavior at scale are not theoretical concerns. They show up immediately.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>{body}</p>
                   </div>
                 ))}
               </div>
               <div className="two-col-bc">
                 <div style={{ padding: '16px 18px', background: `${ACCENT}0c`, border: `1px solid ${ACCENT}30`, borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What broke</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>What broke</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     The first geofence benchmark ran on PostgreSQL&apos;s default B-Tree index and fell over - every report submission triggered a full table scan, latency growing linearly with asset count. Not viable at city scale. Moving to a GiST spatial index dropped <code>ST_DWithin</code> to sub-10 ms across 10,000+ assets.
                   </p>
                 </div>
-                <div style={{ padding: '16px 18px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                <div style={{ padding: '16px 18px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 9%, transparent)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     Duplicate reports are stored and flagged today, not merged - several people reporting one overflowing can still land as separate rows. I&apos;d fold deduplication and clustering into the write path, so maintainers see one asset with N reports instead of N rows of noise.
                   </p>
@@ -477,7 +478,7 @@ export default function BattingCleanupCaseStudy() {
                   { phase: 'Public', color: '#5b8af5', items: ['Public transparency metrics dashboard', 'Richer QR-code asset metadata and status pages', 'Notification system for users who filed reports', 'Expanded coverage beyond downtown Toledo'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
                     <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
                       {items.map(item => <li key={item} style={{ fontSize: 13, marginBottom: 4, lineHeight: 1.5 }}>{item}</li>)}
                     </ul>
@@ -495,9 +496,9 @@ export default function BattingCleanupCaseStudy() {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
-                <a href="https://battingcleanup.appliedlabs.org/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Documentation ↗</a>
-                <a href="https://toledofreepress.com/batting-cleanup-aims-to-improve-toledo-maintenance-with-tech/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid rgba(244,244,242,0.12)', color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Toledo Free Press ↗</a>
+                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 13, fontWeight: 700, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
+                <a href="https://battingcleanup.appliedlabs.org/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>Documentation ↗</a>
+                <a href="https://toledofreepress.com/batting-cleanup-aims-to-improve-toledo-maintenance-with-tech/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid color-mix(in srgb, var(--foreground) 12%, transparent)', color: 'var(--text2)', fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>Toledo Free Press ↗</a>
               </div>
             </Section>
 
@@ -505,7 +506,7 @@ export default function BattingCleanupCaseStudy() {
 
           {/* ── Sticky section nav ── */}
           <nav className="cs-sidebar-nav">
-            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
                 <button

@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
-import { PhotoBackdrop } from '@/components/journey/PhotoBackdrop';
 import { getPublishedNotes } from '@/lib/field-notes';
 import { FieldNoteCard } from '@/components/ui/field-notes/field-note-card';
 
@@ -23,15 +22,14 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', title: 'Field Notes · Ahmad Firas', description: FN_DESCRIPTION, images: ['/Images/optimized/og.png'] },
 };
 
-const SERIF = 'var(--font-display), Georgia, serif';
-const MONO  = 'var(--font-code), monospace';
+const SERIF = 'var(--font-body), system-ui, sans-serif';
+const MONO = 'var(--font-body), system-ui, sans-serif';
 
 export default function FieldNotesPage() {
   const published = getPublishedNotes();
 
   return (
     <div style={{ background: 'transparent', position: 'relative', isolation: 'isolate', color: 'var(--foreground)', minHeight: '100vh', fontFamily: SERIF }}>
-      <PhotoBackdrop id="opening" />
 
       <SubpageHeader backHref="/#field-notes" backLabel="Portfolio" />
 
@@ -41,21 +39,11 @@ export default function FieldNotesPage() {
         maxWidth: 1200, margin: '0 auto',
         position: 'relative', overflow: 'hidden',
       }}>
-        {/* Background number */}
-        <div aria-hidden style={{
-          position: 'absolute', top: 0, right: -20,
-          fontFamily: SERIF, fontSize: 'clamp(72px,18vw,112px)',
-          fontWeight: 400, color: 'var(--primary)', opacity: 0.03,
-          lineHeight: 1, userSelect: 'none', pointerEvents: 'none',
-          letterSpacing: '-0.05em', zIndex: 0,
-        }}>
-          FN
-        </div>
 
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-            <span style={{ display: 'inline-block', width: 28, height: 1.5, background: 'linear-gradient(90deg, var(--primary), var(--gold))', opacity: 0.8 }} />
-            <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--primary)' }}>
+            <span style={{ display: 'inline-block', width: 28, height: 1.5, background: 'var(--bd2)', opacity: 0.8 }} />
+            <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--primary)' }}>
               Field Notes
             </span>
           </div>
@@ -67,7 +55,7 @@ export default function FieldNotesPage() {
             marginBottom: 24, paddingBottom: '0.04em',
           }}>
             Essays from<br />
-            <span style={{ color: 'var(--primary)', fontStyle: 'italic' }}>the frontier.</span>
+            <span style={{ color: 'var(--primary)', fontStyle: 'normal' }}>the frontier.</span>
           </h1>
 
           <p style={{
@@ -85,7 +73,7 @@ export default function FieldNotesPage() {
         <div style={{ padding: '0 clamp(20px,4vw,52px) 80px', maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
             <span style={{ display: 'inline-block', width: 22, height: 1.5, background: 'var(--primary)', opacity: 0.8 }} />
-            <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--primary)' }}>
+            <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--primary)' }}>
               Essays
             </span>
           </div>

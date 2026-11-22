@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import { collectDataStrings, loadAndCollectText, normalize, ROUTES, routeSlug, type AllowedRemoval } from './collect';
+import { collectDataStrings, loadAndCollectText, normalize, ROUTES, routeSlug, shownOn, type AllowedRemoval } from './collect';
 import { sentences } from '../../src/lib/data/story';
 
 // Guards Ahmad's rule: the redesign may move content, never drop it.
@@ -22,7 +22,10 @@ test.describe('no information loss', () => {
 
   for (const route of ROUTES) {
     test(`rendered text survives on ${route}`, async ({ page }) => {
-      const text = normalize((await loadAndCollectText(page, route)).join(' '));
+      // Text may have moved to a companion page (the homepage's detail now lives on /about).
+      const parts: string[] = [];
+      for (const r of shownOn(route)) parts.push(...(await loadAndCollectText(page, r)));
+      const text = normalize(parts.join(' '));
       // A paragraph the redesign split across places (e.g. one story chapter shared by two
       // worlds) still counts as present when every one of its sentences is on the page.
       const present = (u: string) => text.includes(u) || (sentences(u).length > 1 && sentences(u).every((s) => text.includes(normalize(s))));
@@ -39,7 +42,9 @@ test.describe('no information loss', () => {
     for (const a of withDigits) expect(a.preservedAs, `"${a.text}" has a number but no preservedAs`).toBeTruthy();
     const routes = [...new Set(withDigits.map((a) => a.preservedOn ?? '/'))];
     for (const route of routes) {
-      const text = normalize((await loadAndCollectText(page, route)).join(' '));
+      const parts: string[] = [];
+      for (const r of shownOn(route)) parts.push(...(await loadAndCollectText(page, r)));
+      const text = normalize(parts.join(' '));
       for (const a of withDigits.filter((x) => (x.preservedOn ?? '/') === route)) {
         expect(text.includes(normalize(a.preservedAs!)), `preservedAs "${a.preservedAs}" not on ${route}`).toBe(true);
       }

@@ -149,5 +149,40 @@
   {
     "text": "Published work and ongoing investigations.",
     "reason": "Ahmad (2026-11-20): the paper is under review, so the research label now reads \"Research under review and ongoing investigations.\""
+  },
+  {
+    "text": "Back To Intro ↑",
+    "kind": "ui-label",
+    "reason": "Control of the old sticky About rail; /about is now one plain column, so there is no rail to jump back from."
+  },
+  {
+    "text": "Certifications · hover or tap to flip",
+    "kind": "ui-label",
+    "reason": "Instruction for the retired flip cards; certifications are now a plain list with every detail visible."
+  },
+  {
+    "text": "What it covers",
+    "kind": "ui-label",
+    "reason": "Label on the back of the retired flip cards; the description it introduced is shown directly under each certification."
+  },
+  {
+    "text": "The stack as a constellation: clusters that orbit each other, with stars sized by how often they carry real work.",
+    "kind": "ui-label",
+    "reason": "Described the retired 3D skills constellation; capabilities are now grouped text lists with a subtitle that describes them."
+  },
+  {
+    "text": "The editorial desk",
+    "kind": "ui-label",
+    "reason": "Decorative kicker beside the old Field Notes heading; the section keeps its title and its one-line description."
+  },
+  {
+    "text": "Read the case study ↗",
+    "kind": "ui-label",
+    "reason": "Same link, now \"Read the case study →\" (an in-site link takes →, ↗ is kept for links that leave the site)."
+  },
+  {
+    "text": "Next.js · TypeScript · GSAP · three.js",
+    "kind": "ui-label",
+    "reason": "Footer colophon; three.js left with the WebGL depth journey, so the footer now says \"Next.js · TypeScript\"."
   }
 ]

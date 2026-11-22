@@ -7,7 +7,7 @@ const WIDTHS = [320, 375, 430, 768, 1024, 1280, 1920, 2560];
 test.describe('every route at every width', () => {
   test.beforeEach(({}, info) => test.skip(info.project.name !== 'desktop', 'widths set explicitly'));
 
-  for (const route of ROUTES) {
+  for (const route of [...ROUTES, '/about', '/projects']) {
     test(`no horizontal overflow on ${route}`, async ({ page }) => {
       const bad: string[] = [];
       for (const width of WIDTHS) {
@@ -26,8 +26,10 @@ test.describe('every route at every width', () => {
     });
   }
 
-  for (const route of ['/', '/case-study/toledo-football-iq-computer-vision-analytics', '/field-notes/battle-of-i75-coin-toss', '/field-notes', '/docs']) {
-    test(`axe: no serious or critical issues on ${route}`, async ({ page }) => {
+  const AXE_ROUTES = ['/', '/about', '/projects', '/case-study/toledo-football-iq-computer-vision-analytics', '/field-notes/battle-of-i75-coin-toss', '/field-notes', '/docs'];
+  for (const theme of ['light', 'dark'] as const) for (const route of AXE_ROUTES) {
+    test(`axe (${theme}): no serious or critical issues on ${route}`, async ({ page }) => {
+      await page.emulateMedia({ colorScheme: theme });
       await page.goto(route);
       await page.waitForTimeout(800);
       const res = await new AxeBuilder({ page: page as never }).analyze();

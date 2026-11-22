@@ -1,100 +1,96 @@
-'use client';
-
-import React, { useEffect, useMemo, useRef } from 'react';
-import { gsap, refreshOnFontsReady } from '@/lib/motion/gsap';
-import { Section, SH } from '@/components/shared/section-helpers';
+import React from 'react';
+import { SH } from '@/components/shared/section-helpers';
 import { jobs, type Job } from '@/lib/data/jobs';
 import { education } from '@/lib/data/education';
 import { awards, type Award } from '@/lib/data/awards';
-import { sectionById } from '@/lib/data/sections';
-import { TimelineNode, type TimelineEntry } from './TimelineNode';
+
+type Entry =
+  | { kind: 'job'; id: string; date: string; job: Job }
+  | { kind: 'award'; id: string; date: string; award: Award }
+  | { kind: 'education'; id: string; date: string };
 
 /**
- * Kinetic career strip: jobs, education, and milestone awards merged into one
- * dated line that draws itself as you scroll (GSAP scrub). Nodes slide in from
- * alternating sides; gold milestones burst. All job/education content from the
- * old Experience section lives inside the expandable nodes, unchanged.
+ * Jobs, education and milestone awards as one dated list, newest first. Each job opens
+ * in place to its full description, achievements and stack.
  */
 export function TimelineSection() {
-  const def = sectionById('timeline')!;
-  const wrapRef = useRef<HTMLDivElement>(null);
-
-  const entries = useMemo<TimelineEntry[]>(() => {
-    const jobEntries: TimelineEntry[] = jobs.map((j: Job) => ({
-      kind: 'job',
-      id: j.id,
-      date: j.startDate,
-      milestone: !!j.milestone,
-      job: j,
-    }));
-    const awardEntries: TimelineEntry[] = awards
-      .filter((a: Award) => a.milestone)
-      .map((a) => ({ kind: 'award', id: a.title, date: a.startDate, milestone: true, award: a }));
-    const eduEntry: TimelineEntry = {
-      kind: 'education',
-      id: 'utoledo',
-      date: education.startDate,
-      milestone: false,
-    };
-    return [...jobEntries, ...awardEntries, eduEntry].sort((a, b) => (a.date < b.date ? 1 : -1));
-  }, []);
-
-  // Scroll-scrubbed line draw
-  useEffect(() => {
-    const wrap = wrapRef.current;
-    if (!wrap) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const fill = wrap.querySelector<HTMLElement>('[data-tl-fill]');
-      if (fill) fill.style.transform = 'scaleY(1)';
-      return;
-    }
-    // Browsers with scroll-driven animations draw the line in CSS (globals.css, .tl-wrap):
-    // on the compositor, no per-frame script. GSAP is the fallback.
-    if (CSS.supports('animation-timeline: view()')) return;
-    const ctx = gsap.context(() => {
-      const fill = wrap.querySelector<HTMLElement>('[data-tl-fill]');
-      if (!fill) return;
-      gsap.fromTo(
-        fill,
-        { scaleY: 0 },
-        {
-          scaleY: 1,
-          ease: 'none',
-          scrollTrigger: { trigger: wrap, start: 'top 72%', end: 'bottom 58%', scrub: 1 },
-        }
-      );
-    }, wrap);
-    refreshOnFontsReady();
-    return () => ctx.revert();
-  }, []);
+  const entries: Entry[] = [
+    ...jobs.map((j): Entry => ({ kind: 'job', id: j.id, date: j.startDate, job: j })),
+    ...awards.filter((a) => a.milestone).map((a): Entry => ({ kind: 'award', id: a.title, date: a.startDate, award: a })),
+    { kind: 'education' as const, id: 'utoledo', date: education.startDate },
+  ].sort((a, b) => (a.date < b.date ? 1 : -1));
 
   return (
-    <Section id="timeline" style={{ background: 'rgba(17,19,26,0.85)' }}>
-      <SH n={def.n} label="Timeline" sub="Career and education as one continuous line. Newest first, then back to the origin story." color={def.color} variant="sub" />
-
-      <div ref={wrapRef} className="tl-wrap" style={{ position: 'relative', padding: '10px 0 30px' }}>
-        {/* the line */}
-        <div aria-hidden className="tl-line" style={{ position: 'absolute', top: 0, bottom: 0, left: '50%', width: 2, transform: 'translateX(-50%)', background: 'var(--bd)', borderRadius: 4, overflow: 'hidden' }}>
-          <div data-tl-fill style={{ position: 'absolute', inset: 0, transformOrigin: 'top', transform: 'scaleY(0)', background: 'linear-gradient(to bottom, var(--primary), color-mix(in srgb, var(--primary) 55%, var(--gold)))', boxShadow: '0 0 12px rgba(45,212,191,0.5)' }} />
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(18px, 2.4vw, 30px)' }}>
-          {entries.map((entry, i) => (
-            <TimelineNode key={entry.id} entry={entry} side={i % 2 === 0 ? 'left' : 'right'} accent={def.color} />
+    <section id="timeline" aria-label="Timeline" className="tl">
+      <div className="wrap">
+        <SH label="Timeline" sub="Career and education as one continuous line. Newest first, then back to the origin story." variant="sub" />
+        <ol className="tl-list">
+          {entries.map((e) => (
+            <li key={e.id} className="tl-item">
+              {e.kind === 'job' && <JobRow job={e.job} />}
+              {e.kind === 'award' && (
+                <>
+                  <span className="tl-date tnum">{e.award.date}</span>
+                  <div>
+                    <span className="tl-kind">Milestone</span>
+                    <div className="tl-role">{e.award.title}</div>
+                    <div className="tl-org">{e.award.detail}</div>
+                  </div>
+                </>
+              )}
+              {e.kind === 'education' && (
+                <>
+                  <span className="tl-date tnum">{education.period}</span>
+                  <div>
+                    <span className="tl-kind">Education · where it begins</span>
+                    <div className="tl-role">{education.school}</div>
+                    <div className="tl-org">{education.degree} · {education.status} · GPA {education.gpa}</div>
+                    <p className="tl-tools">{education.coursework.join(' · ')}</p>
+                  </div>
+                </>
+              )}
+            </li>
           ))}
-        </div>
-
-        {/* origin cap */}
-        <div aria-hidden style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translate(-50%, 50%)', width: 10, height: 10, borderRadius: '50%', border: '2px solid var(--gold)', background: 'var(--background)' }} className="tl-cap" />
+        </ol>
       </div>
-
       <style>{`
-        @media (max-width: 820px) {
-          .tl-line { left: 14px !important; }
-          .tl-cap { left: 14px !important; }
-        }
+        .tl { padding: clamp(40px, 6vw, 80px) 0; }
+        .tl-list { list-style: none; border-top: 1px solid var(--foreground); }
+        .tl-item { display: grid; grid-template-columns: 12em minmax(0, 1fr); gap: 6px 32px; padding: 22px 0; border-bottom: 1px solid var(--bd); }
+        .tl-date { font-size: 15px; color: var(--text2); }
+        .tl-kind { font-size: 14px; color: var(--text3); }
+        .tl-role { font-size: 20px; letter-spacing: -0.015em; line-height: 1.3; margin-top: 2px; }
+        .tl-org { font-size: 15px; color: var(--text2); margin-top: 2px; }
+        .tl-highlights { font-size: 15px; margin-top: 8px; }
+        .tl-item details { margin-top: 6px; }
+        .tl-item summary { cursor: pointer; font-size: 15px; color: var(--text2); min-height: 44px; display: inline-flex; align-items: center; }
+        .tl-item summary:hover { color: var(--foreground); }
+        .tl-desc { color: var(--text2); font-size: 16px; max-width: 40em; }
+        .tl-ach { margin: 12px 0 0 1.1em; font-size: 15px; color: var(--text2); }
+        .tl-ach li { margin-top: 4px; }
+        .tl-tools { margin-top: 10px; font-size: 14px; color: var(--text3); line-height: 1.7; }
+        @media (max-width: 700px) { .tl-item { grid-template-columns: minmax(0, 1fr); } }
       `}</style>
-    </Section>
+    </section>
   );
 }
 
+function JobRow({ job }: { job: Job }) {
+  return (
+    <>
+      <span className="tl-date tnum">{job.period}</span>
+      <div>
+        <span className="tl-kind">{job.type}{job.active ? ' · current' : ''}</span>
+        <div className="tl-role">{job.role}</div>
+        <div className="tl-org">{job.company} · {job.location}</div>
+        <p className="tl-highlights">{job.achievements.slice(0, 2).join(' · ')}</p>
+        <details>
+          <summary>Details</summary>
+          <p className="tl-desc">{job.description}</p>
+          <ul className="tl-ach">{job.achievements.map((a) => <li key={a}>{a}</li>)}</ul>
+          <p className="tl-tools">{job.stack.join(' · ')}</p>
+        </details>
+      </div>
+    </>
+  );
+}

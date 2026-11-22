@@ -4,7 +4,6 @@ import { storyChapters, sentences } from '../../src/lib/data/story';
 import { caseStudySlugs } from '../../src/lib/data/projects';
 import { insights } from '../../src/lib/data/insights';
 import { fieldNotes } from '../../src/lib/field-notes';
-import { textureWidth } from '../../src/lib/journey/texture';
 
 // Pure data tests: no browser needed, run once.
 test.beforeEach(({}, info) => test.skip(info.project.name !== 'desktop', 'desktop only'));
@@ -118,11 +117,3 @@ test('every full-bleed photo ships at least 3840px wide (sharp on big and retina
   }
 });
 
-test('depth canvas picks a texture big enough for the screen at the 1.3x settle zoom', () => {
-  const widths = [640, 1280, 1920, 2560, 3840];
-  expect(textureWidth(widths, 1440, 1)).toBe(1920); // 1872 needed
-  expect(textureWidth(widths, 1440, 2)).toBe(3840); // 3744 needed
-  expect(textureWidth(widths, 1920, 2)).toBe(3840); // more than we have: the largest
-  expect(textureWidth(widths, 1440, 2, 2048)).toBe(1920); // GPU limit wins
-  expect(textureWidth([1366], 1440, 1)).toBe(1366);
-});

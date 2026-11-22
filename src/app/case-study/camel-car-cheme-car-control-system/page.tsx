@@ -11,7 +11,8 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
-const MONO   = "var(--font-code), ui-monospace, monospace";
+const MONO   = "var(--font-body), system-ui, sans-serif";
+const CODE = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#fb7185';
 
 const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
@@ -24,7 +25,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 13, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: 0 }}>
       {children}
     </span>
   );
@@ -34,7 +35,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
       <span style={{ display: 'inline-block', width: 18, height: 1.5, background: ACCENT, opacity: 0.5, flexShrink: 0 }} />
-      <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT }}>{children}</span>
+      <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>{children}</span>
     </div>
   );
 }
@@ -43,7 +44,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
       <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginTop: 6 }}>{label}</div>
     </div>
   );
 }
@@ -51,12 +52,12 @@ function Metric({ value, label }: { value: string; label: string }) {
 function LayerRow({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${color}06`, border: `1px solid ${color}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 13, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+        <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 13, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -96,9 +97,9 @@ export default function CamelCarCaseStudy() {
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
-        .cs-body li::marker { color: ${ACCENT}; }
+        .cs-body li::marker { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
         .cs-h2 { font-family: ${DISPLAY}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
-        .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
+        .cs-h3 { font-family: ${MONO}; font-size: 13px;   color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); margin: 24px 0 10px; }
         .metrics-grid-cc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
         @media (max-width: 640px) { .metrics-grid-cc { grid-template-columns: repeat(2, 1fr); } }
         .two-col-cc { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -106,17 +107,17 @@ export default function CamelCarCaseStudy() {
         .three-col-cc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-cc { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-cc { grid-template-columns: 1fr; } }
-        .info-card { padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
+        .info-card { padding: 16px 18px; background: color-mix(in srgb, var(--foreground) 2%, transparent); border: 1px solid color-mix(in srgb, var(--foreground) 7%, transparent); border-radius: 8px; transition: all 0.2s ease; }
         .info-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
         .accent-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .accent-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
         .award-banner { padding: 20px 24px; background: ${ACCENT}10; border: 1px solid ${ACCENT}35; border-radius: 10px; margin-bottom: 32px; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: color-mix(in srgb, var(--foreground) 2%, transparent); border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
-        .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
-        .reaction-box { padding: 14px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.08); border-radius: 8px; font-family: ${MONO}; font-size: 12px; color: var(--text2); line-height: 1.7; }
-        .reaction-box .eq { color: ${ACCENT}; }
-        code { font-family: ${MONO}; font-size: 11px; background: ${ACCENT}12; border: 1px solid ${ACCENT}25; padding: 2px 5px; border-radius: 4px; color: var(--foreground); }
+        .nav-link { font-family: ${MONO}; font-size: 13px;   text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
+        .reaction-box { padding: 14px 18px; background: color-mix(in srgb, var(--foreground) 2%, transparent); border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent); border-radius: 8px; font-family: ${MONO}; font-size: 12px; color: var(--text2); line-height: 1.7; }
+        .reaction-box .eq { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
+        code { font-family: ${CODE}; font-size: 13px; background: ${ACCENT}12; border: 1px solid ${ACCENT}25; padding: 2px 5px; border-radius: 4px; color: var(--foreground); }
         .cs-grid-container {
           display: grid;
           grid-template-columns: 1fr 200px;
@@ -143,7 +144,7 @@ export default function CamelCarCaseStudy() {
 
       {/* ── Sticky header ── */}
       <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
-        <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Camel Car</span>
+        <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>Camel Car</span>
       </SubpageHeader>
 
       {/* ── Hero ── */}
@@ -209,17 +210,17 @@ export default function CamelCarCaseStudy() {
               <h2 className="cs-h2">Boston, 2025 - competing worldwide</h2>
 
               <div className="award-banner">
-                <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>2025 AIChE Annual Student Conference · Boston, MA</div>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 12 }}>2025 AIChE Annual Student Conference · Boston, MA</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   {[
                     { place: '#1', label: 'Most Innovative Car Design', note: 'Awarded for the novel pressure-based control architecture and dual-reaction vehicle concept' },
                     { place: '3rd', label: 'Poster & Presentation', note: 'Recognized for technical communication and visual documentation of the system' },
                     { place: '24th', label: 'Overall Performance', note: 'Ranked 24th among teams from universities worldwide' },
                   ].map(({ place, label, note }) => (
-                    <div key={place} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '12px 16px', background: 'rgba(13,14,18,0.6)', border: `1px solid ${ACCENT}20`, borderRadius: 8 }}>
+                    <div key={place} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '12px 16px', background: 'color-mix(in srgb, var(--background) 60%, transparent)', border: `1px solid ${ACCENT}20`, borderRadius: 8 }}>
                       <div style={{ fontFamily: SERIF, fontSize: 26, color: ACCENT, lineHeight: 1, flexShrink: 0, minWidth: 52 }}>{place}</div>
                       <div>
-                        <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 4 }}>{label}</div>
+                        <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 4 }}>{label}</div>
                         <div style={{ fontFamily: SERIF, fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{note}</div>
                       </div>
                     </div>
@@ -249,7 +250,7 @@ export default function CamelCarCaseStudy() {
                   ['Safety constraints', 'The system operates with oxidizers, acids, and pressurized gas - safety limits every design decision.'],
                 ].map(([title, body]) => (
                   <div key={title} className="info-card">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>{body}</p>
                   </div>
                 ))}
@@ -310,8 +311,8 @@ export default function CamelCarCaseStudy() {
                   ['6', 'Gas flow to air motor is cut'],
                   ['7', 'Car coasts to stop - coast distance factored into calibration'],
                 ].map(([n, step]) => (
-                  <div key={n} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.06)', borderRadius: 6 }}>
-                    <span style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.7, flexShrink: 0, minWidth: 16 }}>{n}</span>
+                  <div key={n} style={{ display: 'flex', gap: 14, padding: '10px 16px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)', borderRadius: 6 }}>
+                    <span style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, opacity: 0.7, flexShrink: 0, minWidth: 16 }}>{n}</span>
                     <span style={{ fontSize: 13, lineHeight: 1.5 }}>{step}</span>
                   </div>
                 ))}
@@ -319,7 +320,7 @@ export default function CamelCarCaseStudy() {
 
               <h3 className="cs-h3">Core logic</h3>
               <div style={{ padding: '16px 20px', background: 'color-mix(in srgb, var(--orange) 6%, transparent)', border: '1px solid color-mix(in srgb, var(--orange) 18%, transparent)', borderRadius: 8, marginBottom: 20 }}>
-                <pre style={{ margin: 0, fontFamily: MONO, fontSize: 12, color: 'var(--text2)', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>{`read pressure_sensor;
+                <pre style={{ margin: 0, fontFamily: CODE, fontSize: 12, color: 'var(--text2)', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>{`read pressure_sensor;
 
 if (pressure >= target_pressure_threshold) {
     close_solenoid_valve();
@@ -341,17 +342,17 @@ if (pressure >= target_pressure_threshold) {
 
               <div className="two-col-cc" style={{ marginBottom: 24 }}>
                 <div className="accent-card">
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>KI Volume → Pressure Rise Rate</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>KI Volume → Pressure Rise Rate</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>More potassium iodide catalyst accelerates H₂O₂ decomposition, which increases the rate of O₂ production and raises pressure faster. Calibration maps a specific KI volume to an expected time-to-threshold at ~5 psi.</p>
                 </div>
                 <div className="accent-card">
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Pressure Rise Rate → Stop Distance</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>Pressure Rise Rate → Stop Distance</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>Faster pressure rise → earlier Arduino trigger → car stops sooner → shorter travel distance. On competition day, the target distance is converted into a required time-to-threshold, then mapped to a KI volume via the calibration curve.</p>
                 </div>
               </div>
 
-              <div style={{ padding: '16px 20px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.07)', borderRadius: 8, marginBottom: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>Calibration workflow</div>
+              <div style={{ padding: '16px 20px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)', borderRadius: 8, marginBottom: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginBottom: 10 }}>Calibration workflow</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {[
                     'Run stopping reaction at several KI volumes - record pressure vs. time',
@@ -361,7 +362,7 @@ if (pressure >= target_pressure_threshold) {
                     'On competition day: convert target distance to KI volume and load the run',
                   ].map((step, i) => (
                     <div key={i} style={{ display: 'flex', gap: 10, fontSize: 13, color: 'var(--text2)', lineHeight: 1.5 }}>
-                      <span style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.7, flexShrink: 0 }}>{i + 1}.</span>
+                      <span style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, opacity: 0.7, flexShrink: 0 }}>{i + 1}.</span>
                       <span>{step}</span>
                     </div>
                   ))}
@@ -386,7 +387,7 @@ if (pressure >= target_pressure_threshold) {
                   ['Control system', 'The shutoff must be reliable - a control failure that leaves gas on is a pressure and chemical hazard, not just a competition loss.'],
                 ].map(([title, body]) => (
                   <div key={title} className="info-card">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 12, lineHeight: 1.6 }}>{body}</p>
                   </div>
                 ))}
@@ -410,20 +411,20 @@ if (pressure >= target_pressure_threshold) {
                   ['Competition constraints produce better engineering', 'Unknown target distance, one-shot execution, and real chemical hazards force engineering decisions that open-ended projects never surface. Design for worst case.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>{body}</p>
                   </div>
                 ))}
               </div>
               <div className="two-col-cc">
                 <div style={{ padding: '16px 18px', background: `${ACCENT}0c`, border: `1px solid ${ACCENT}30`, borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What broke</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>What broke</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     The competition controller read raw pressure and fired at ~5 psi - no filtering, no hysteresis, no logging. Between chemical run-to-run variability, sensor noise, solenoid actuation delay, and post-cutoff coast, that bare threshold never mapped cleanly to a stop distance on its own. The calibration table existed precisely because the controller couldn&apos;t be trusted alone.
                   </p>
                 </div>
-                <div style={{ padding: '16px 18px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                <div style={{ padding: '16px 18px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 9%, transparent)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     Log every run and trigger on the pressure slope, not just the level. We tuned against a stopwatch with no on-car recording; writing pressure to an SD card each run - plus a low-pass filter and hysteresis - would let the calibration come from real traces instead of timed guesses.
                   </p>
@@ -445,7 +446,7 @@ if (pressure >= target_pressure_threshold) {
                   { phase: 'Calibration', color: '#5b8af5', items: ['Build a calibration dashboard: KI volume → time-to-threshold → stop distance', 'Add wheel encoder data to measure actual travel distance per run', 'Add IMU to detect acceleration and vibration patterns', 'Add environmental correction for temperature and humidity'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
                     <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
                       {items.map(item => <li key={item} style={{ fontSize: 13, marginBottom: 4, lineHeight: 1.5 }}>{item}</li>)}
                     </ul>
@@ -463,7 +464,7 @@ if (pressure >= target_pressure_threshold) {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
+                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 13, fontWeight: 700, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
               </div>
             </Section>
 
@@ -471,7 +472,7 @@ if (pressure >= target_pressure_threshold) {
 
           {/* ── Sticky section nav ── */}
           <nav className="cs-sidebar-nav">
-            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
                 <button

@@ -2,10 +2,14 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { resolveSkillColor } from '@/lib/skill-colors';
+import { accentInk } from '@/lib/accent';
 
 // ── Font tokens (single source of truth for inline-styled components) ──
-export const SERIF = 'var(--font-display), Georgia, serif';
-export const MONO = 'var(--font-code), monospace';
+// One typeface. SERIF and MONO are kept as names so older components keep compiling;
+// both resolve to the body face. CODE is the real monospace, for code only.
+export const SERIF = 'var(--font-body), system-ui, sans-serif';
+export const MONO = 'var(--font-body), system-ui, sans-serif';
+export const CODE = 'var(--font-code), ui-monospace, monospace';
 export const SANS = 'var(--font-body), system-ui, sans-serif';
 export const HAND = 'var(--font-hand), cursive';
 
@@ -23,20 +27,15 @@ export const BG = 'var(--background)';
 // hook here and still renderable from server components.
 // `variant="sub"`: a part of a larger chapter (Capabilities, Timeline, Credentials and
 // Signals inside About): no ghost numeral, an h3 label, a tighter gap below.
-export function SH({ n, label, sub = '', color = 'var(--primary)', variant = 'chapter' }: { n: string; label: string; sub?: string; color?: string; variant?: 'chapter' | 'sub' }) {
-  const { ref, visible } = useReveal();
-  const revealCls = 'reveal' + (visible ? ' in' : '');
+export function SH({ label, sub = '', color = 'var(--primary-fill)', variant = 'chapter' }: { n?: string; label: string; sub?: string; color?: string; variant?: 'chapter' | 'sub' }) {
   const Label = variant === 'sub' ? 'h3' : 'h2';
   return (
-    <div ref={ref} style={{ position: 'relative', marginBottom: variant === 'sub' ? 32 : 52, paddingTop: 8 }}>
-      {variant === 'chapter' && <div aria-hidden className="ghost-num" style={{ position: 'absolute', top: -32, left: -8, fontFamily: SERIF, fontSize: 'clamp(72px,11vw,160px)', fontWeight: 400, color, opacity: 0.05, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em', zIndex: 0 }}>{n}</div>}
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <div className={revealCls} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: sub ? 10 : 0, transitionDelay: '0ms' }}>
-          <span style={{ display: 'inline-block', width: 22, height: 1.5, background: color, opacity: 0.6, flexShrink: 0 }} />
-          <Label style={{ fontFamily: MONO, fontSize: 11, fontWeight: 400, lineHeight: 'inherit', letterSpacing: '0.1em', textTransform: 'uppercase', color, margin: 0 }}>{label}</Label>
-        </div>
-        {sub && <p className={revealCls} style={{ fontSize: 15, color: FG2, maxWidth: 460, lineHeight: 1.65, marginTop: 4, fontFamily: SANS, transitionDelay: '60ms' }}>{sub}</p>}
+    <div style={{ marginBottom: variant === 'sub' ? 28 : 44, paddingTop: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: sub ? 10 : 0 }}>
+        <span aria-hidden style={{ width: 6, height: 6, borderRadius: 3, background: color, flexShrink: 0 }} />
+        <Label style={{ fontFamily: SANS, fontSize: variant === 'sub' ? 20 : 'var(--fs-section-head)', fontWeight: 400, lineHeight: 1.1, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: 0 }}>{label}</Label>
       </div>
+      {sub && <p style={{ fontSize: 16, color: FG2, maxWidth: 520, lineHeight: 1.6, marginTop: 6, fontFamily: SANS }}>{sub}</p>}
     </div>
   );
 }
@@ -65,30 +64,29 @@ export function pickColor(text: string) {
 export function Tag({ color, size = 11, children }: { color?: string; /** px; 14 where tags sit with project descriptions. */ size?: number; children: React.ReactNode }) {
   const skillColor = typeof children === 'string' ? resolveSkillColor(children) : undefined;
   const c = color ?? skillColor ?? (typeof children === 'string' ? pickColor(children) : '#5b8af5');
-  return <span style={{ fontFamily: MONO, fontSize: size, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}33`, borderRadius: 4, color: readable(c), letterSpacing: '0.03em' }}>{children}</span>;
+  return <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: SANS, fontSize: Math.max(size, 13), color: 'var(--text2)' }}><span aria-hidden style={{ width: 5, height: 5, borderRadius: 3, background: c, flexShrink: 0 }} />{children}</span>;
 }
 
 /**
  * Chip text: the accent mixed 30% toward the foreground. Red, blue and purple accents
  * on a tint of themselves fall just under 4.5:1 at 11px; this keeps the hue and passes.
  */
-export const readable = (c: string) => `color-mix(in srgb, ${c} 70%, #f4f4f2)`;
+export const readable = (c: string) => accentInk(c);
+export { accentInk };
 
 export function SkillChip({ color, children }: { color?: string; children: React.ReactNode }) {
   const c = color ?? (typeof children === 'string' ? pickColor(children) : '#5b8af5');
   return (
-    <span
-      style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}35`, borderRadius: 4, color: readable(c), letterSpacing: '0.02em', cursor: 'default', transition: 'background 0.18s, color 0.18s' }}
-      onMouseEnter={e => { e.currentTarget.style.background = `${c}2a`; e.currentTarget.style.color = 'var(--foreground)'; }}
-      onMouseLeave={e => { e.currentTarget.style.background = `${c}14`; e.currentTarget.style.color = readable(c); }}
-    >{children}</span>
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: SANS, fontSize: 14, color: 'var(--text2)' }}>
+      <span aria-hidden style={{ width: 5, height: 5, borderRadius: 3, background: c, flexShrink: 0 }} />{children}
+    </span>
   );
 }
 
 // ── Section wrapper ──
 export function Section({ id, children, style }: { id?: string; children: React.ReactNode; style?: React.CSSProperties }) {
   return (
-    <section id={id} style={{ padding: 'clamp(64px, 8vw, 100px) clamp(20px, 4vw, 52px)', position: 'relative', overflowX: 'clip', overflowY: 'visible', background: 'rgba(13,14,18,0.80)', zIndex: 20, ...style }}>
+    <section id={id} style={{ padding: 'clamp(64px, 8vw, 100px) clamp(20px, 4vw, 52px)', position: 'relative', overflowX: 'clip', overflowY: 'visible', background: 'color-mix(in srgb, var(--background) 80%, transparent)', zIndex: 20, ...style }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         {children}
       </div>

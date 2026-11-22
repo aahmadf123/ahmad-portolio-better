@@ -1,38 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Figtree, JetBrains_Mono, Caveat } from "next/font/google";
+import { DM_Sans, JetBrains_Mono, Caveat } from "next/font/google";
 import { ViewTransition } from "react";
 import "./globals.css";
-import { CursorGlow } from "@/components/ui/cursor-glow";
-import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import { RevealObserver } from "@/components/ui/reveal-observer";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import { MotionProvider } from "@/lib/motion/lazy";
 import { ChatLauncher } from "@/components/chat/ChatLauncher";
 import { RouteTracker } from "@/components/ui/route-tracker";
-import { NowPlayingBar } from "@/components/layout/NowPlayingBar";
 import { OffscreenAnimationPauser } from "@/components/effects/OffscreenAnimationPauser";
-import { FootballEasterEgg } from "@/components/effects/FootballEasterEgg";
 import { Analytics } from "@vercel/analytics/next";
 import { site } from "@/lib/data/site";
+import { THEME_SCRIPT } from "@/components/ui/theme-toggle";
 
-// Display: editorial serif for headlines and ghost numerals.
-const displayFont = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-// Body: Figtree stands in for Satoshi (Fontshare download is manual - to swap,
-// drop Satoshi-Variable.woff2 into src/app/fonts and switch this loader to
-// next/font/local; every component reads var(--font-body).
-const bodyFont = Figtree({
+// One typeface for everything a reader reads: DM Sans (variable, 400/500 used).
+const bodyFont = DM_Sans({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
 });
 
+// Code blocks only.
 const codeFont = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-code",
@@ -119,8 +106,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0d0e12",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f3f2ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#121314" },
+  ],
+  colorScheme: "light dark",
   // Lets the existing env(safe-area-inset-*) rules (chat, now-playing bar)
   // take effect on notched phones; body pads the sides in landscape.
   viewportFit: "cover",
@@ -162,32 +152,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${displayFont.variable} ${bodyFont.variable} ${codeFont.variable} ${handFont.variable}`}
+      suppressHydrationWarning
+      className={`${bodyFont.variable} ${codeFont.variable} ${handFont.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body suppressHydrationWarning>
         <PostHogProvider>
         <MotionProvider>
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
-        <CursorGlow />
-        <SmoothScroll />
         <RevealObserver />
-        <div id="scroll-bar" suppressHydrationWarning />
         <ViewTransition
           default="page-enter"
-          enter={{ 'nav-forward': 'nav-forward', 'nav-back': 'nav-back', default: 'page-enter' }}
-          exit={{ 'nav-forward': 'nav-forward', 'nav-back': 'nav-back', default: 'page-enter' }}
         >
           {children}
         </ViewTransition>
-        <script
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            // Scroll progress bar fallback for browsers without CSS scroll timelines (globals.css): at most one update per frame (rAF), no layout reads in the scroll event itself.
-            __html: `(function(){if(window.CSS&&CSS.supports('animation-timeline: scroll()')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)return;var f=0;function u(){f=0;var d=document.documentElement;var p=window.scrollY/Math.max(1,d.scrollHeight-window.innerHeight);var b=document.getElementById('scroll-bar');if(b)b.style.transform='scaleX('+p+')';}window.addEventListener('scroll',function(){if(!f)f=requestAnimationFrame(u);},{passive:true});})();`,
-          }}
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
@@ -198,8 +180,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <RouteTracker />
         <OffscreenAnimationPauser />
-        <NowPlayingBar />
-        <FootballEasterEgg />
         <ChatLauncher />
         </MotionProvider>
         </PostHogProvider>

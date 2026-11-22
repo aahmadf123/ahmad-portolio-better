@@ -2,8 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useReducedMotion } from '@/lib/motion/use-reduced-motion';
-import { MONO, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
 import type { Insight } from '@/lib/data/insights';
 
 export type TokenLine = { content: string; color: string }[];
@@ -13,59 +11,35 @@ export type TokenLine = { content: string; color: string }[];
  * lines reveal one by one with a background sweep; a cursor blinks at the end.
  */
 export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: TokenLine[]; wide?: boolean }) {
-  const reduced = useReducedMotion();
-
   return (
-    <article
-      data-insight={insight.id}
-      style={{
-        gridColumn: wide ? 'span 2' : undefined,
-        border: `1px solid color-mix(in srgb, ${insight.color} 24%, transparent)`,
-        borderRadius: 10,
-        background: 'var(--surface)',
-        overflow: 'hidden',
-        minWidth: 0,
-      }}
-      className={wide ? 'rv insight-wide' : 'rv'}
-    >
-      {/* terminal chrome */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px', borderBottom: '1px solid var(--bd)', background: 'rgba(244,244,242,0.02)' }}>
-        <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(239,68,68,0.5)' }} />
-        <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(229,196,83,0.5)' }} />
-        <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(34,197,94,0.5)' }} />
-        <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.05em', marginLeft: 8, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{insight.file}</span>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginLeft: 'auto', border: '1px solid var(--bd2)', borderRadius: 4, padding: '2px 6px', flexShrink: 0 }}>illustrative</span>
+    <article data-insight={insight.id} className={wide ? 'cc insight-wide' : 'cc'} style={{ gridColumn: wide ? 'span 2' : undefined }}>
+      <div className="cc-bar">
+        <span className="cc-file">{insight.file}</span>
+        <span className="cc-flag">illustrative</span>
       </div>
-
-      {/* code */}
-      <div
-        tabIndex={0}
-        role="region"
-        aria-label={`Code: ${insight.file}`}
-        style={{ padding: '16px 18px', overflowX: 'auto', fontFamily: MONO, fontSize: 12.5, lineHeight: 1.75 }}
-      >
+      <div tabIndex={0} role="region" aria-label={`Code: ${insight.file}`} className="cc-code">
         {lines.map((line, li) => (
           <div key={li} style={{ whiteSpace: 'pre', minHeight: 19 }}>
-            {line.length === 0 ? ' ' : line.map((t, ti) => (
-              <span key={ti} style={{ color: t.color }}>{t.content}</span>
-            ))}
+            {line.length === 0 ? ' ' : line.map((t, ti) => <span key={ti} style={{ color: t.color.startsWith('#758575') ? '#a3a294' : t.color }}>{t.content}</span>)}
           </div>
         ))}
-        {!reduced && (
-          <span aria-hidden style={{ display: 'inline-block', width: 7, height: 14, background: insight.color, opacity: 0.7, animation: 'insight-caret 1s step-end infinite', verticalAlign: 'text-bottom' }} />
-        )}
       </div>
-
-      {/* takeaway */}
-      <div style={{ padding: '16px 18px 18px', borderTop: '1px solid var(--bd)' }}>
-        <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: insight.color, marginBottom: 7 }}>{insight.title}</div>
-        <p style={{ fontFamily: SANS, fontSize: 13.5, lineHeight: 1.7, color: FG2, margin: 0 }}>{insight.takeaway}</p>
-        <Link href={insight.source.href} transitionTypes={['nav-forward']} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 12, fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.07em', textTransform: 'uppercase' }}>
-          From: {insight.source.label} ↗
-        </Link>
+      <div className="cc-foot">
+        <h4 className="cc-title">{insight.title}</h4>
+        <p className="cc-take">{insight.takeaway}</p>
+        <Link href={insight.source.href} transitionTypes={['nav-forward']} className="text-link is-underlined cc-src">From: {insight.source.label} →</Link>
       </div>
-
-      <style>{`@keyframes insight-caret { 0%,100% { opacity: 0.7; } 50% { opacity: 0; } }`}</style>
+      <style>{`
+        .cc { min-width: 0; }
+        .cc-bar { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--text3); padding-bottom: 8px; }
+        .cc-file { font-family: var(--font-code), monospace; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        /* Code stays on its own dark panel in both themes (the highlighter's palette is dark). */
+        .cc-code { background: #16171a; color: #dbd7ca; border-radius: 3px; padding: 16px 18px; overflow-x: auto; font-family: var(--font-code), monospace; font-size: 13px; line-height: 1.75; }
+        .cc-foot { padding-top: 14px; }
+        .cc-title { font-size: 17px; font-weight: 500; }
+        .cc-take { margin-top: 6px; font-size: 15px; color: var(--text2); }
+        .cc-src { margin-top: 10px; font-size: 14px; }
+      `}</style>
     </article>
   );
 }

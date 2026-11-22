@@ -2,10 +2,9 @@
 
 import React, { useState } from 'react';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
-import { PhotoBackdrop } from '@/components/journey/PhotoBackdrop';
 import { m, AnimatePresence } from 'framer-motion';
 
-const MONO  = "var(--font-code), ui-monospace, monospace";
+const MONO  = "var(--font-body), system-ui, sans-serif";
 const SERIF = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
 const ACCENT = 'var(--primary)';
@@ -76,7 +75,6 @@ export default function DocsPage() {
         backgroundPosition: '14px 24px',
       }}
     >
-      <PhotoBackdrop id="opening" />
       <SubpageHeader backHref="/" backLabel="Portfolio" />
       <div
         style={{
@@ -119,9 +117,8 @@ export default function DocsPage() {
             <span
               style={{
                 fontFamily: MONO,
-                fontSize: 10,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
+                fontSize: 13,
+                letterSpacing: 0,
                 color: ACCENT,
               }}
             >
@@ -148,7 +145,7 @@ export default function DocsPage() {
               fontSize: 13,
               color: 'var(--text2)',
               marginTop: 10,
-              letterSpacing: '0.02em',
+              letterSpacing: 0,
               lineHeight: 1.65,
             }}
           >
@@ -166,13 +163,12 @@ export default function DocsPage() {
                 onClick={() => setSelected(doc as DocItem)}
                 style={{
                   fontFamily: MONO,
-                  fontSize: 10,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
+                  fontSize: 13,
+                  letterSpacing: 0,
                   padding: '9px 20px',
-                  border: `1px solid ${isActive ? 'color-mix(in srgb, var(--primary) 50%, transparent)' : 'rgba(244,244,242,0.1)'}`,
+                  border: `1px solid ${isActive ? 'color-mix(in srgb, var(--primary) 50%, transparent)' : 'color-mix(in srgb, var(--foreground) 10%, transparent)'}`,
                   borderRadius: 4,
-                  background: isActive ? 'color-mix(in srgb, var(--primary) 8%, transparent)' : 'rgba(244,244,242,0.02)',
+                  background: isActive ? 'color-mix(in srgb, var(--primary) 8%, transparent)' : 'color-mix(in srgb, var(--foreground) 2%, transparent)',
                   color: isActive ? ACCENT : 'var(--text2)',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
@@ -199,7 +195,7 @@ export default function DocsPage() {
               fontFamily: SERIF,
               fontSize: 12,
               color: 'var(--text2)',
-              letterSpacing: '0.03em',
+              letterSpacing: 0,
               marginBottom: 20,
               lineHeight: 1.6,
             }}
@@ -211,10 +207,10 @@ export default function DocsPage() {
         {/* PDF viewer container */}
         <div
           style={{
-            border: '1px solid rgba(244,244,242,0.08)',
+            border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)',
             borderRadius: 8,
             overflow: 'hidden',
-            background: 'rgba(244,244,242,0.015)',
+            background: 'color-mix(in srgb, var(--foreground) 1.5%, transparent)',
             boxShadow: '0 4px 48px rgba(0,0,0,0.5)',
           }}
         >
@@ -225,8 +221,8 @@ export default function DocsPage() {
               alignItems: 'center',
               justifyContent: 'space-between',
               padding: '10px 18px',
-              borderBottom: '1px solid rgba(244,244,242,0.06)',
-              background: 'rgba(244,244,242,0.025)',
+              borderBottom: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)',
+              background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)',
               gap: 12,
               flexWrap: 'wrap',
             }}
@@ -234,9 +230,9 @@ export default function DocsPage() {
             <span
               style={{
                 fontFamily: MONO,
-                fontSize: 10,
+                fontSize: 13,
                 color: 'var(--text3)',
-                letterSpacing: '0.05em',
+                letterSpacing: 0,
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
@@ -255,12 +251,11 @@ export default function DocsPage() {
                     rel="noopener noreferrer"
                     style={{
                       fontFamily: MONO,
-                      fontSize: 10,
-                      letterSpacing: '0.1em',
-                      textTransform: 'uppercase',
+                      fontSize: 13,
+                      letterSpacing: 0,
                       color: 'var(--text2)',
                       padding: '5px 13px',
-                      border: '1px solid rgba(244,244,242,0.12)',
+                      border: '1px solid color-mix(in srgb, var(--foreground) 12%, transparent)',
                       borderRadius: 4,
                       background: 'transparent',
                       textDecoration: 'none',
@@ -268,7 +263,7 @@ export default function DocsPage() {
                       whiteSpace: 'nowrap',
                     }}
                     onMouseEnter={e => {
-                      e.currentTarget.style.background = 'rgba(244,244,242,0.06)';
+                      e.currentTarget.style.background = 'color-mix(in srgb, var(--foreground) 6%, transparent)';
                       e.currentTarget.style.color = 'var(--foreground)';
                     }}
                     onMouseLeave={e => {
@@ -283,9 +278,8 @@ export default function DocsPage() {
                     download
                     style={{
                       fontFamily: MONO,
-                      fontSize: 10,
-                      letterSpacing: '0.1em',
-                      textTransform: 'uppercase',
+                      fontSize: 13,
+                      letterSpacing: 0,
                       color: 'var(--foreground)',
                       padding: '5px 14px',
                       border: '1px solid color-mix(in srgb, var(--primary) 40%, transparent)',
@@ -339,7 +333,7 @@ export default function DocsPage() {
                   style={{
                     display: 'none',
                     padding: '24px 20px',
-                    borderTop: '1px solid rgba(244,244,242,0.06)',
+                    borderTop: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)',
                     textAlign: 'center',
                   }}
                   className="pdf-mobile-fallback"
@@ -347,9 +341,9 @@ export default function DocsPage() {
                   <p
                     style={{
                       fontFamily: SERIF,
-                      fontSize: 11,
+                      fontSize: 13,
                       color: 'var(--text2)',
-                      letterSpacing: '0.05em',
+                      letterSpacing: 0,
                       marginBottom: 12,
                     }}
                   >
@@ -361,9 +355,8 @@ export default function DocsPage() {
                     rel="noopener noreferrer"
                     style={{
                       fontFamily: MONO,
-                      fontSize: 10,
-                      letterSpacing: '0.1em',
-                      textTransform: 'uppercase',
+                      fontSize: 13,
+                      letterSpacing: 0,
                       color: ACCENT,
                       textDecoration: 'none',
                       border: `1px solid color-mix(in srgb, var(--primary) 35%, transparent)`,

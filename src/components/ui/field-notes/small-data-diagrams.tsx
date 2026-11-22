@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 
-const MONO  = "var(--font-code), ui-monospace, monospace";
+const MONO  = "var(--font-body), system-ui, sans-serif";
 const SERIF = "var(--font-body), system-ui, sans-serif";
 
 const GREEN = '#22c55e';
@@ -15,8 +15,7 @@ const PURPLE = '#a78bfa';
 function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; color?: string }) {
   return (
     <div style={{
-      fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-      textTransform: 'uppercase', color, opacity: 0.75,
+      fontFamily: MONO, fontSize: 13, letterSpacing: 0, color, opacity: 0.75,
       marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
     }}>
       <span style={{ display: 'inline-block', width: 18, height: 1, background: color, opacity: 0.5 }} />
@@ -28,8 +27,8 @@ function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; 
 function Caption({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
-      marginTop: 12, fontFamily: MONO, fontSize: 10,
-      color: 'var(--text3)', letterSpacing: '0.05em', textAlign: 'center',
+      marginTop: 12, fontFamily: MONO, fontSize: 13,
+      color: 'var(--text3)', letterSpacing: 0, textAlign: 'center',
       lineHeight: 1.6,
     }}>
       {children}
@@ -111,7 +110,7 @@ export function SeasonSimulator() {
           {/* True quality slider */}
           <div style={{ flex: '1 1 220px', minWidth: 200 }}>
             <div style={{
-              fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
+              fontFamily: MONO, fontSize: 13, letterSpacing: 0,
               color: 'var(--text3)', marginBottom: 6, display: 'flex', justifyContent: 'space-between',
             }}>
               <span>True team quality</span>
@@ -128,7 +127,7 @@ export function SeasonSimulator() {
           {/* Season length buttons */}
           <div>
             <div style={{
-              fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
+              fontFamily: MONO, fontSize: 13, letterSpacing: 0,
               color: 'var(--text3)', marginBottom: 6,
             }}>
               Season length
@@ -141,16 +140,16 @@ export function SeasonSimulator() {
                     key={s.games}
                     onClick={() => setGames(s.games)}
                     style={{
-                      fontFamily: MONO, fontSize: 10, letterSpacing: '0.05em',
+                      fontFamily: MONO, fontSize: 13, letterSpacing: 0,
                       padding: '7px 10px', borderRadius: 6, cursor: 'pointer',
-                      background: active ? `${GREEN}18` : 'rgba(244,244,242,0.03)',
-                      border: `1px solid ${active ? GREEN : 'rgba(244,244,242,0.12)'}`,
+                      background: active ? `${GREEN}18` : 'color-mix(in srgb, var(--foreground) 3%, transparent)',
+                      border: `1px solid ${active ? GREEN : 'color-mix(in srgb, var(--foreground) 12%, transparent)'}`,
                       color: active ? GREEN : 'var(--text2)',
                       transition: 'all 0.15s',
                     }}
                   >
                     <div>{s.label}</div>
-                    <div style={{ fontSize: 10, opacity: 0.65, marginTop: 2 }}>{s.sub}</div>
+                    <div style={{ fontSize: 13, opacity: 0.65, marginTop: 2 }}>{s.sub}</div>
                   </button>
                 );
               })}
@@ -161,7 +160,7 @@ export function SeasonSimulator() {
           <button
             onClick={() => setRunKey(k => k + 1)}
             style={{
-              fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase',
+              fontFamily: MONO, fontSize: 13, letterSpacing: 0,
               padding: '9px 14px', borderRadius: 6, cursor: 'pointer',
               background: `${GOLD}12`, border: `1px solid ${GOLD}45`, color: GOLD,
             }}
@@ -191,7 +190,7 @@ export function SeasonSimulator() {
                 );
               })
             : <div style={{
-                fontFamily: MONO, fontSize: 10, color: 'var(--text3)',
+                fontFamily: MONO, fontSize: 13, color: 'var(--text3)',
                 alignSelf: 'center', width: '100%', textAlign: 'center',
               }}>
                 Simulating seasons…
@@ -201,8 +200,8 @@ export function SeasonSimulator() {
         {/* Axis */}
         <div style={{
           display: 'flex', justifyContent: 'space-between',
-          fontFamily: MONO, fontSize: 10, color: 'var(--text3)',
-          letterSpacing: '0.08em', marginBottom: 14,
+          fontFamily: MONO, fontSize: 13, color: 'var(--text3)',
+          letterSpacing: 0, marginBottom: 14,
         }}>
           <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100% observed win rate</span>
         </div>
@@ -234,13 +233,13 @@ export function SeasonSimulator() {
                 padding: '10px 12px', borderRadius: 8,
                 background: `${stat.color}08`, border: `1px solid ${stat.color}22`,
               }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: stat.color, opacity: 0.75, marginBottom: 4 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: stat.color, opacity: 0.75, marginBottom: 4 }}>
                   {stat.label}
                 </div>
                 <div style={{ fontFamily: MONO, fontSize: 20, color: stat.color, lineHeight: 1, marginBottom: 4 }}>
                   {stat.value}
                 </div>
-                <div style={{ fontFamily: SERIF, fontSize: 11, color: 'var(--text3)', lineHeight: 1.45 }}>
+                <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.45 }}>
                   {stat.sub}
                 </div>
               </div>
@@ -284,8 +283,8 @@ export function EvidencePerSeason() {
       <SectionLabel>Interactive · What One Season Can Prove</SectionLabel>
 
       <div style={{
-        border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10,
-        background: 'rgba(244,244,242,0.02)', padding: '16px 18px',
+        border: '1px solid color-mix(in srgb, var(--foreground) 9%, transparent)', borderRadius: 10,
+        background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', padding: '16px 18px',
       }}>
         <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
           Take a team whose true quality is 60%. After one full season, where could its
@@ -305,15 +304,15 @@ export function EvidencePerSeason() {
                   display: 'flex', alignItems: 'center', gap: 12,
                   padding: '9px 12px', borderRadius: 8, cursor: 'pointer',
                   background: active ? `${r.color}0C` : 'transparent',
-                  border: `1px solid ${active ? r.color + '40' : 'rgba(244,244,242,0.07)'}`,
+                  border: `1px solid ${active ? r.color + '40' : 'color-mix(in srgb, var(--foreground) 7%, transparent)'}`,
                   textAlign: 'left', width: '100%', transition: 'all 0.15s',
                 }}
               >
                 <div style={{ width: 118, flexShrink: 0 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: active ? r.color : 'var(--text2)', letterSpacing: '0.04em' }}>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: active ? r.color : 'var(--text2)', letterSpacing: 0 }}>
                     {r.league}
                   </div>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', marginTop: 2 }}>
                     {r.games} games
                   </div>
                 </div>
@@ -322,7 +321,7 @@ export function EvidencePerSeason() {
                 <div style={{ flex: 1, position: 'relative', height: 18 }}>
                   <div style={{
                     position: 'absolute', left: 0, right: 0, top: '50%',
-                    height: 1, background: 'rgba(244,244,242,0.08)',
+                    height: 1, background: 'color-mix(in srgb, var(--foreground) 8%, transparent)',
                   }} />
                   {/* Truth tick at 60% */}
                   <div style={{
@@ -339,7 +338,7 @@ export function EvidencePerSeason() {
                   }} />
                 </div>
 
-                <div style={{ width: 84, flexShrink: 0, textAlign: 'right', fontFamily: MONO, fontSize: 10, color: active ? r.color : 'var(--text3)' }}>
+                <div style={{ width: 84, flexShrink: 0, textAlign: 'right', fontFamily: MONO, fontSize: 13, color: active ? r.color : 'var(--text3)' }}>
                   {Math.round(r.lo * 100)}–{Math.round(r.hi * 100)}%
                 </div>
               </button>
@@ -395,11 +394,11 @@ export function RosterHalfLife() {
       <SectionLabel>Interactive · The Dissolving Sample</SectionLabel>
 
       <div style={{
-        border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10,
-        background: 'rgba(244,244,242,0.02)', padding: '16px 18px',
+        border: '1px solid color-mix(in srgb, var(--foreground) 9%, transparent)', borderRadius: 10,
+        background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', padding: '16px 18px',
       }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', marginBottom: 16 }}>
-          <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', marginRight: 6 }}>
+          <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--text3)', marginRight: 6 }}>
             Your Year-1 roster, seen from…
           </div>
           {['Year 1', 'Year 2', 'Year 3', 'Year 4'].map((label, i) => {
@@ -409,10 +408,10 @@ export function RosterHalfLife() {
                 key={label}
                 onClick={() => setYear(i)}
                 style={{
-                  fontFamily: MONO, fontSize: 10, letterSpacing: '0.05em',
+                  fontFamily: MONO, fontSize: 13, letterSpacing: 0,
                   padding: '6px 12px', borderRadius: 6, cursor: 'pointer',
-                  background: active ? `${GREEN}18` : 'rgba(244,244,242,0.03)',
-                  border: `1px solid ${active ? GREEN : 'rgba(244,244,242,0.12)'}`,
+                  background: active ? `${GREEN}18` : 'color-mix(in srgb, var(--foreground) 3%, transparent)',
+                  border: `1px solid ${active ? GREEN : 'color-mix(in srgb, var(--foreground) 12%, transparent)'}`,
                   color: active ? GREEN : 'var(--text2)',
                   transition: 'all 0.15s',
                 }}
@@ -435,8 +434,8 @@ export function RosterHalfLife() {
                 key={i}
                 style={{
                   aspectRatio: '1', borderRadius: '50%',
-                  background: present ? GREEN : 'rgba(244,244,242,0.05)',
-                  border: `1px solid ${present ? GREEN : 'rgba(244,244,242,0.1)'}`,
+                  background: present ? GREEN : 'color-mix(in srgb, var(--foreground) 5%, transparent)',
+                  border: `1px solid ${present ? GREEN : 'color-mix(in srgb, var(--foreground) 10%, transparent)'}`,
                   opacity: present ? 0.85 : 0.35,
                   transition: 'all 0.35s ease',
                 }}
@@ -446,8 +445,8 @@ export function RosterHalfLife() {
         </div>
 
         <div style={{
-          textAlign: 'center', fontFamily: MONO, fontSize: 11, color: GREEN,
-          letterSpacing: '0.05em', marginBottom: 4,
+          textAlign: 'center', fontFamily: MONO, fontSize: 13, color: GREEN,
+          letterSpacing: 0, marginBottom: 4,
         }}>
           ~{Math.round(YEAR_RETENTION[year] * 100)}% of the original roster still producing data
         </div>
@@ -538,11 +537,11 @@ export function SmallDataPlaybook() {
                   background: 'transparent', border: 'none',
                 }}
               >
-                <span style={{ fontFamily: MONO, fontSize: 11, color: item.color, opacity: 0.6, flexShrink: 0 }}>
+                <span style={{ fontFamily: MONO, fontSize: 13, color: item.color, opacity: 0.6, flexShrink: 0 }}>
                   {item.n}
                 </span>
                 <span style={{ flex: 1 }}>
-                  <span style={{ display: 'block', fontFamily: MONO, fontSize: 12, color: item.color, letterSpacing: '0.04em', marginBottom: 2 }}>
+                  <span style={{ display: 'block', fontFamily: MONO, fontSize: 12, color: item.color, letterSpacing: 0, marginBottom: 2 }}>
                     {item.title}
                   </span>
                   <span style={{ display: 'block', fontFamily: SERIF, fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>
@@ -620,7 +619,7 @@ export function EvidenceCalculator() {
   const sliderRow = (label: string, value: number, setter: (n: number) => void, color: string) => (
     <div style={{ flex: '1 1 210px', minWidth: 190 }}>
       <div style={{
-        fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
+        fontFamily: MONO, fontSize: 13, letterSpacing: 0,
         color: 'var(--text3)', marginBottom: 6, display: 'flex', justifyContent: 'space-between',
       }}>
         <span>{label}</span>
@@ -656,7 +655,7 @@ export function EvidenceCalculator() {
         {/* Results */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 8, marginBottom: 12 }}>
           <div style={{ padding: '12px 14px', borderRadius: 8, background: `${GOLD}08`, border: `1px solid ${GOLD}25` }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: GOLD, opacity: 0.75, marginBottom: 4 }}>
+            <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: GOLD, opacity: 0.75, marginBottom: 4 }}>
               Games required
             </div>
             <div style={{ fontFamily: MONO, fontSize: 24, color: GOLD, lineHeight: 1 }}>
@@ -664,7 +663,7 @@ export function EvidenceCalculator() {
             </div>
           </div>
           <div style={{ padding: '12px 14px', borderRadius: 8, background: `${GREEN}08`, border: `1px solid ${GREEN}25` }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: GREEN, opacity: 0.75, marginBottom: 4 }}>
+            <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: GREEN, opacity: 0.75, marginBottom: 4 }}>
               In college seasons
             </div>
             <div style={{ fontFamily: MONO, fontSize: 24, color: GREEN, lineHeight: 1 }}>
@@ -672,13 +671,13 @@ export function EvidenceCalculator() {
             </div>
           </div>
           <div style={{ padding: '12px 14px', borderRadius: 8, background: `${BLUE}08`, border: `1px solid ${BLUE}25` }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: BLUE, opacity: 0.75, marginBottom: 4 }}>
+            <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: BLUE, opacity: 0.75, marginBottom: 4 }}>
               After 12 games
             </div>
             <div style={{ fontFamily: MONO, fontSize: 24, color: BLUE, lineHeight: 1 }}>
               {(pAfterSeason * 100).toFixed(0)}%
             </div>
-            <div style={{ fontFamily: SERIF, fontSize: 10, color: 'var(--text3)', marginTop: 4, lineHeight: 1.4 }}>
+            <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', marginTop: 4, lineHeight: 1.4 }}>
               chance the better team even looks better
             </div>
           </div>
@@ -690,7 +689,7 @@ export function EvidenceCalculator() {
           background: `${verdictColor}09`, border: `1px solid ${verdictColor}30`,
           fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65,
         }}>
-          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: verdictColor, marginRight: 10 }}>
+          <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: verdictColor, marginRight: 10 }}>
             Verdict
           </span>
           {verdict}

@@ -11,7 +11,7 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
-const MONO   = "var(--font-code), ui-monospace, monospace";
+const MONO   = "var(--font-body), system-ui, sans-serif";
 const ACCENT = '#5b8af5';
 
 const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
@@ -24,7 +24,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 13, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: 0 }}>
       {children}
     </span>
   );
@@ -34,7 +34,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
       <span style={{ display: 'inline-block', width: 18, height: 1.5, background: ACCENT, opacity: 0.5, flexShrink: 0 }} />
-      <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT }}>{children}</span>
+      <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>{children}</span>
     </div>
   );
 }
@@ -43,7 +43,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
       <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginTop: 6 }}>{label}</div>
     </div>
   );
 }
@@ -51,12 +51,12 @@ function Metric({ value, label }: { value: string; label: string }) {
 function StackRow({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${color}06`, border: `1px solid ${color}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 13, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+        <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 13, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -93,15 +93,15 @@ export default function DeepFlyerCaseStudy() {
 
       {/* ── Sticky header ── */}
       <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
-        <span style={{ fontFamily: MONO, fontSize: 10, padding: '6px 14px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Prototype · Research Platform</span>
+        <span style={{ fontFamily: MONO, fontSize: 13, padding: '6px 14px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: 0 }}>Prototype · Research Platform</span>
       </SubpageHeader>
 
       {/* ── Hero ── */}
       <div style={{ padding: 'clamp(48px,7vw,96px) clamp(20px,4vw,52px) 0', maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
-          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Educational AI / Robotics</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>LION Lab · University of Toledo</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Team: Uma · Jay · Ahmad</span>
+          <span style={{ fontFamily: MONO, fontSize: 13, padding: '4px 10px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: 0 }}>Educational AI / Robotics</span>
+          <span style={{ fontFamily: MONO, fontSize: 13, padding: '4px 10px', background: 'color-mix(in srgb, var(--foreground) 4%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 10%, transparent)', borderRadius: 4, color: 'var(--text2)', letterSpacing: 0 }}>LION Lab · University of Toledo</span>
+          <span style={{ fontFamily: MONO, fontSize: 13, padding: '4px 10px', background: 'color-mix(in srgb, var(--foreground) 4%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 10%, transparent)', borderRadius: 4, color: 'var(--text2)', letterSpacing: 0 }}>Team: Uma · Jay · Ahmad</span>
         </div>
 
         {/* Hero image */}
@@ -134,20 +134,20 @@ export default function DeepFlyerCaseStudy() {
         </div>
 
         {/* CTA */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, paddingBottom: 'clamp(48px,6vw,72px)', borderBottom: '1px solid rgba(244,244,242,0.07)' }}>
-          <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</SmartBackLink>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, paddingBottom: 'clamp(48px,6vw,72px)', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)' }}>
+          <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid color-mix(in srgb, var(--foreground) 16%, transparent)', color: 'var(--text2)', fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>← All Projects</SmartBackLink>
         </div>
       </div>
 
       {/* ── Section nav ── */}
-      <div style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(13,14,18,0.96)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto' }}>
+      <div style={{ position: 'sticky', top: 56, zIndex: 90, background: 'color-mix(in srgb, var(--background) 96%, transparent)', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)', overflowX: 'auto' }}>
         <div style={{ display: 'flex', gap: 0, padding: '0 clamp(20px,4vw,52px)', maxWidth: 1100, margin: '0 auto' }}>
           {SECTION_IDS.map((id, i) => (
             <button
               key={id}
               onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
               style={{
-                fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase',
+                fontFamily: MONO, fontSize: 13, letterSpacing: 0,
                 padding: '14px 16px', background: 'transparent', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
                 color: active === id ? ACCENT : 'var(--text3)',
                 borderBottom: active === id ? `2px solid ${ACCENT}` : '2px solid transparent',
@@ -185,14 +185,14 @@ export default function DeepFlyerCaseStudy() {
                 { l: 'Status', v: 'Prototype - Weeks 1–3 complete' },
                 { l: 'Hardware Target', v: 'Holybro S500 · Pixhawk 6C · ZED Mini' },
               ].map(({ l, v }) => (
-                <div key={l} style={{ display: 'flex', gap: 12, padding: '10px 0', borderBottom: '1px solid rgba(244,244,242,0.06)' }}>
-                  <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.08em', flexShrink: 0, minWidth: 90 }}>{l}</span>
+                <div key={l} style={{ display: 'flex', gap: 12, padding: '10px 0', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)' }}>
+                  <span style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, flexShrink: 0, minWidth: 90 }}>{l}</span>
                   <span style={{ fontSize: 13, color: 'var(--text2)' }}>{v}</span>
                 </div>
               ))}
               <div style={{ marginTop: 14, padding: '18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}20`, borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Core Thesis</div>
-                <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--foreground)', fontStyle: 'italic' }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>Core Thesis</div>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--foreground)', fontStyle: 'normal' }}>
                   &ldquo;Reward functions are not just math. They encode behavior. The best way to teach that is to let students see a drone learn - and fail - in real time.&rdquo;
                 </p>
               </div>
@@ -218,8 +218,8 @@ export default function DeepFlyerCaseStudy() {
               { t: 'Safety Constraints', d: 'Safety boundaries and emergency stops are afterthoughts in most RL coursework. In real robotics, they are foundational design decisions.' },
               { t: 'AWS DeepRacer Ceiling', d: 'DeepRacer is excellent for 2D car navigation but limited in scope. Drone autonomy requires 3D reasoning, altitude control, and richer state representations.' },
             ].map(({ t, d }) => (
-              <div key={t} style={{ padding: '16px 18px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.07)', borderLeft: `2px solid ${ACCENT}50`, borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
+              <div key={t} style={{ padding: '16px 18px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)', borderLeft: `2px solid ${ACCENT}50`, borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{d}</p>
               </div>
             ))}
@@ -227,16 +227,16 @@ export default function DeepFlyerCaseStudy() {
 
           {/* DeepRacer vs DeepFlyer comparison */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="two-col-df">
-            <div style={{ padding: '20px 22px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>AWS DeepRacer</div>
+            <div style={{ padding: '20px 22px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 8 }}>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginBottom: 12 }}>AWS DeepRacer</div>
               {['2D track navigation', 'RC car (ground vehicle)', 'Fixed action space', '2D obstacle avoidance', 'Cloud training only', 'Pre-built course only'].map(p => (
                 <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, fontSize: 13, color: 'var(--text3)' }}>
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgba(244,244,242,0.2)', flexShrink: 0, display: 'inline-block' }} />{p}
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'color-mix(in srgb, var(--foreground) 20%, transparent)', flexShrink: 0, display: 'inline-block' }} />{p}
                 </div>
               ))}
             </div>
             <div style={{ padding: '20px 22px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}22`, borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>DeepFlyer</div>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 12 }}>DeepFlyer</div>
               {['3D hoop & obstacle navigation', 'Quadcopter drone (aerial)', '3D continuous action space', 'Altitude, yaw, speed, alignment', 'Edge + local inference', 'Configurable course layouts'].map(p => (
                 <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, fontSize: 13, color: 'var(--text2)' }}>
                   <span style={{ width: 6, height: 6, borderRadius: '50%', background: ACCENT, flexShrink: 0, display: 'inline-block' }} />{p}
@@ -264,14 +264,14 @@ export default function DeepFlyerCaseStudy() {
           {/* Course design */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="two-col-df">
             <div style={{ padding: '20px 22px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}22`, borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Course Type A - Hoop Navigation</div>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 12 }}>Course Type A - Hoop Navigation</div>
               <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text2)', marginBottom: 10 }}>A fixed 4–5 hoop circuit with multiple laps at ~0.8 m altitude. Visual targets provide immediate student feedback. Best for public demos and intuitive reward-behavior observation.</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                 {['5 Hoops', 'Multi-lap', '0.8m altitude', 'Visual targets', 'Demo-friendly'].map(t => <Tag key={t}>{t}</Tag>)}
               </div>
             </div>
-            <div style={{ padding: '20px 22px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Course Type B - Obstacle Course</div>
+            <div style={{ padding: '20px 22px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 8 }}>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text2)', letterSpacing: 0, marginBottom: 12 }}>Course Type B - Obstacle Course</div>
               <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text2)', marginBottom: 10 }}>A straight path from start to finish with static obstacles requiring lateral maneuvering. Fixed altitude. Easier to compare across reward functions. Best for controlled benchmarking.</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                 {['Static obstacles', 'Lateral maneuver', 'Fixed altitude', 'Benchmark-friendly', 'Used in Week 3'].map(t => <Tag key={t} color="var(--text3)">{t}</Tag>)}
@@ -299,16 +299,16 @@ export default function DeepFlyerCaseStudy() {
               { term: 'Boundary Violation Penalty', effect: 'Hard constraint on staying within the safety zone. Essential for real-hardware deployment with safety netting.' },
             ].map(({ term, effect }) => (
               <div key={term} style={{ padding: '16px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.04em', marginBottom: 8 }}>{term}</div>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>{term}</div>
                 <p style={{ fontSize: 12, lineHeight: 1.65, color: 'var(--text2)' }}>{effect}</p>
               </div>
             ))}
           </div>
           <div style={{ padding: '22px 26px', background: `linear-gradient(180deg, ${ACCENT}0d, ${ACCENT}04)`, border: `1px solid ${ACCENT}35`, boxShadow: `0 4px 20px ${ACCENT}05`, borderRadius: 10 }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>12-Dimensional Observation Space</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>12-Dimensional Observation Space</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {['Direction to target hoop', 'Relative altitude error', 'Forward velocity', 'Lateral velocity', 'Distance to target', 'Velocity alignment', 'Hoop alignment (camera)', 'Vision hoop distance', 'Hoop visibility', 'Course progress', 'Lap progress', 'Safety zone proximity'].map(obs => (
-                <span key={obs} style={{ fontFamily: MONO, fontSize: 10, padding: '4px 9px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)' }}>{obs}</span>
+                <span key={obs} style={{ fontFamily: MONO, fontSize: 13, padding: '4px 9px', background: 'color-mix(in srgb, var(--foreground) 4%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 10%, transparent)', borderRadius: 4, color: 'var(--text2)' }}>{obs}</span>
               ))}
             </div>
             <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)', marginTop: 12 }}>
@@ -327,8 +327,8 @@ export default function DeepFlyerCaseStudy() {
               { label: 'RL & Experiment Tracking', color: '#a78bfa', tags: ['OpenAI Gym', 'Stable-Baselines3', 'PPO', 'YAML Reward Schema', 'MLflow', 'Dynamic Reward Switching'] },
               { label: 'Simulation & Robotics', color: '#e5c453', tags: ['ROS 2 Humble', 'Gazebo Fortress', 'X500 URDF', 'Gazebo Contact Sensors', 'MAVROS (planned)', 'Future: SLAM / Event-Camera'] },
             ].map(({ label, color, tags }) => (
-              <div key={label} style={{ padding: '22px 20px', background: 'rgba(244,244,242,0.025)', borderTop: `2px solid ${color}`, borderRight: '1px solid rgba(244,244,242,0.08)', borderBottom: '1px solid rgba(244,244,242,0.08)', borderLeft: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>{label}</div>
+              <div key={label} style={{ padding: '22px 20px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', borderTop: `2px solid ${color}`, borderRight: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderLeft: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, marginBottom: 14 }}>{label}</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                   {tags.map(t => <Tag key={t} color={color}>{t}</Tag>)}
                 </div>
@@ -363,8 +363,8 @@ export default function DeepFlyerCaseStudy() {
                 items: ['Gazebo contact sensors integrated', 'Collision false positives reduced below 5%', 'Node.js + Express + MongoDB + JWT backend complete', 'PPO agent trained for 1M steps', '80% success rate within 100 steps on Distance-to-Goal preset', 'MLflow experiment logging integrated', 'Convergence plateau identified at ~9e5 steps for further tuning'],
               },
             ].map(({ week, color, items }) => (
-              <div key={week} style={{ padding: '18px 20px', background: 'rgba(244,244,242,0.025)', border: `1px solid ${color}55`, borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 11, color, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>{week}</div>
+              <div key={week} style={{ padding: '18px 20px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: `1px solid ${color}55`, borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, marginBottom: 10 }}>{week}</div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 4 }}>
                   {items.map(item => (
                     <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 13, color: 'var(--text2)', lineHeight: 1.5 }}>
@@ -406,21 +406,21 @@ export default function DeepFlyerCaseStudy() {
               { t: 'Log Everything From Day One', d: 'MLflow was integrated in Week 3 and it immediately revealed the convergence plateau at 9e5 steps. Without experiment tracking, that insight would have required re-running experiments.' },
               { t: 'Separate High-Level RL From Low-Level Flight Control', d: 'Students should reason about rewards and actions, not attitude stabilization and PID tuning. The flight controller abstraction boundary is a pedagogical design decision as much as a technical one.' },
             ].map(({ t, d }) => (
-              <div key={t} style={{ padding: '18px 20px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
+              <div key={t} style={{ padding: '18px 20px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{d}</p>
               </div>
             ))}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12, marginTop: 12 }} className="two-col-df">
             <div style={{ padding: '18px 20px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What broke</div>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>What broke</div>
               <p style={{ fontSize: 13, lineHeight: 1.75, color: 'var(--text2)' }}>
                 The X500 URDF came in too mesh-heavy to simulate smoothly - I cut its complexity 40% (mass and inertia still validated within 2%) to hold a sub-1-second Gazebo start. Training had its own ceiling: PPO plateaued around 80% success, with convergence flattening near 9e5 of the 1M steps.
               </p>
             </div>
-            <div style={{ padding: '18px 20px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What I&apos;d do differently</div>
+            <div style={{ padding: '18px 20px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 8 }}>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 10 }}>What I&apos;d do differently</div>
               <p style={{ fontSize: 13, lineHeight: 1.75, color: 'var(--text2)' }}>
                 Wire experiment tracking in on day one. MLflow only went in during Week 3, and it surfaced the ~9e5-step plateau immediately - had it been logging from the first PPO run, I&apos;d have seen that ceiling before spending a full 1M-step run to find it.
               </p>
@@ -441,7 +441,7 @@ export default function DeepFlyerCaseStudy() {
               { phase: 'Long-Term', color: '#2dd4bf', items: ['XAI logging + attention overlays', 'SHAP explainability', 'Altitude-stability maps', 'Dynamic leaderboard', 'Composite reward presets', 'Final sim-to-real validation'] },
             ].map(({ phase, color, items }) => (
               <div key={phase} style={{ padding: '18px 20px', background: `${color}06`, border: `1px solid ${color}22`, borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>{phase}</div>
+                <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, marginBottom: 14 }}>{phase}</div>
                 {items.map(item => (
                   <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 8, fontSize: 13, color: 'var(--text2)', lineHeight: 1.5 }}>
                     <span style={{ width: 5, height: 5, borderRadius: '50%', background: color, flexShrink: 0, marginTop: 5 }} />{item}
@@ -452,15 +452,15 @@ export default function DeepFlyerCaseStudy() {
           </div>
 
           {/* Footer CTA */}
-          <div style={{ padding: '36px 40px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.07)', borderRadius: 10, textAlign: 'center' }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 12 }}>DeepFlyer</div>
+          <div style={{ padding: '36px 40px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)', borderRadius: 10, textAlign: 'center' }}>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 12 }}>DeepFlyer</div>
             <h3 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 14, lineHeight: 1.2, paddingBottom: '0.06em' }}>
               Making reinforcement learning physical.
             </h3>
             <p style={{ fontSize: 14, lineHeight: 1.75, color: 'var(--text2)', maxWidth: 520, margin: '0 auto 24px' }}>
               Reward design, PPO training, ROS 2 simulation, and a future path to real drone hardware - all accessible through a browser.
             </p>
-            <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
+            <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid color-mix(in srgb, var(--foreground) 16%, transparent)', color: 'var(--text2)', fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>
               ← Back to All Projects
             </SmartBackLink>
           </div>
