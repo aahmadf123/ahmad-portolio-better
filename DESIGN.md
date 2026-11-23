@@ -86,6 +86,7 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 - **Links**: plain text with an arrow (`→` stays on the site, `↗` leaves it, `↓` downloads). `.text-link` draws an underline on hover; `.is-underlined` shows a quiet one at rest.
 - **Featured spreads** (`FeaturedWork`): words in 5 columns, real output in 7 (alternating). Drawings that are not real output carry the "Illustrative example" chip.
 - **Header** (`SiteHeader`): logo + name left; Work, Notes, About, Contact, theme switch right; "Menu" disclosure under 720px. Sticky with a hairline on inside pages, in-flow on the homepage.
+- **Field Note return links:** header and article footer share the plain `.back-link` style and "All Field Notes" label. Both lead to `/field-notes`, restoring history only when the previous page was that index, never the portfolio.
 - **Chat**: "Ask Ahmad" is a small bordered text button bottom-right, hidden while the homepage hero is on screen.
 - **Focus**: one 2px `--primary` `:focus-visible` ring, offset 3px.
 

@@ -8,6 +8,7 @@ import { getFieldNote, fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
 import { site } from '@/lib/data/site';
 import { notFound } from 'next/navigation';
 import { Pic } from '@/components/ui/pic';
+import { SmartBackLink } from '@/components/ui/smart-back-link';
 
 const SERIF = 'var(--font-body), system-ui, sans-serif';
 const MONO = 'var(--font-body), system-ui, sans-serif';
@@ -82,7 +83,7 @@ export default async function FieldNotePage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd).replace(/</g, '\\u003c') }}
       />
 
-      <SubpageHeader backHref="/field-notes" backLabel="All notes" backWhenPrev={['/', '/field-notes']}>
+      <SubpageHeader backHref="/field-notes" backLabel="All Field Notes" backWhenPrev={['/field-notes']}>
         {catCfg && (
           <span style={{
             fontFamily: MONO, fontSize: 13, padding: '5px 12px',
@@ -209,15 +210,9 @@ export default async function FieldNotePage({ params }: PageProps) {
 
         {/* Navigation */}
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-          <Link href="/field-notes" transitionTypes={['nav-forward']} style={{
-            display: 'inline-flex', alignItems: 'center', gap: 6,
-            padding: '10px 18px',
-            border: '1px solid color-mix(in srgb, var(--foreground) 12%, transparent)',
-            color: 'var(--text2)', fontFamily: MONO, fontSize: 13,
-            letterSpacing: 0, borderRadius: 5, textDecoration: 'none',
-          }}>
-            ← All Field Notes
-          </Link>
+          <SmartBackLink fallbackHref="/field-notes" backWhenPrev={['/field-notes']} className="back-link">
+            <span aria-hidden>←</span> All Field Notes
+          </SmartBackLink>
           <Link href="/#field-notes" style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '10px 18px',
