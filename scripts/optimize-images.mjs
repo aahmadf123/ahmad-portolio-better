@@ -20,13 +20,12 @@ async function emit(name, pipeline) {
   report.push(`${name}: ${(info.size / 1024).toFixed(0)}KB ${info.width}x${info.height}`);
 }
 
-// 1. Headshot - 4.3MB PNG → ~tens of KB webp at two sizes.
+// 1. Headshot - source PNG → compact WebP variants for the page and lightbox.
 await emit('headshot-800.webp', sharp(path.join(IMAGES, 'my pic.png')).resize({ width: 800 }).webp({ quality: 82 }));
 await emit('headshot-480.webp', sharp(path.join(IMAGES, 'my pic.png')).resize({ width: 480 }).webp({ quality: 80 }));
 
-// 1b. Headshot lightbox target - near-native resolution for the hero's zoom
-// view (source is 1447px wide; withoutEnlargement caps it there - still
-// ~40x smaller than the 4.5MB original PNG the lightbox used to open).
+// 1b. Headshot lightbox target - highest available source resolution, capped
+// at the original dimensions.
 await emit('headshot-1600.webp', sharp(path.join(IMAGES, 'my pic.png')).rotate().resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 78 }));
 
 // 2. Favicon - 1.3MB logo → crisp 512/192 PNGs.

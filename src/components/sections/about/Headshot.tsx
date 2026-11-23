@@ -7,7 +7,7 @@ const HEADSHOT_SRCSET = '/Images/optimized/headshot-480.webp 480w, /Images/optim
 
 /**
  * Ahmad's headshot, moved from the hero into About for the photo journey (a cut-out
- * portrait over a stock photo would read as fake). Opens the 1600w copy in the lightbox.
+ * portrait over a stock photo would read as fake). Opens the highest-resolution copy in the lightbox.
  */
 export function Headshot() {
   const openLb = useLightboxOpen();
@@ -24,8 +24,8 @@ export function Headshot() {
         src="/Images/optimized/headshot-800.webp"
         srcSet={HEADSHOT_SRCSET}
         sizes="(max-width: 860px) 92vw, 320px"
-        width={800}
-        height={1376}
+        width={768}
+        height={960}
         loading="lazy"
         decoding="async"
         alt="Ahmad Firas"

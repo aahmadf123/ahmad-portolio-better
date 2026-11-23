@@ -280,11 +280,10 @@
   "/Images/my pic.png": {
     "base": "/Images/optimized/my-pic",
     "widths": [
-      480,
-      960
+      480
     ],
-    "w": 1447,
-    "h": 2489
+    "w": 768,
+    "h": 960
   },
   "/Images/park place_logo.png": {
     "base": "/Images/optimized/park-place-logo",
