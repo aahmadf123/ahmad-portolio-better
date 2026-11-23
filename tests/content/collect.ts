@@ -65,14 +65,8 @@ export const ROUTES: string[] = [
   ...caseStudySlugs.map((s) => `/case-study/${s}`),
 ];
 
-/**
- * Content a baseline route used to show that now lives on other pages too. The 2026-11
- * "Uncertain Paths" redesign kept the homepage lean and moved the background chapters,
- * capabilities, timeline, credentials, signals and "now" to /about.
- */
-export const SHOWN_ON: Record<string, string[]> = {
-  '/': ['/', '/about'],
-};
+/** Content a baseline route used to show that now lives on other pages too (none today). */
+export const SHOWN_ON: Record<string, string[]> = {};
 export const shownOn = (route: string): string[] => SHOWN_ON[route] ?? [route];
 
 export function routeSlug(route: string): string {

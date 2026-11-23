@@ -1,5 +1,6 @@
 import React from 'react';
 import { site } from '@/lib/data/site';
+import { MagneticLink } from '@/components/ui/magnetic-link';
 
 /** The last section on the homepage: the address large, everything else as plain links. */
 export function ContactSection() {
@@ -12,16 +13,16 @@ export function ContactSection() {
   return (
     <section id="contact" aria-labelledby="contact-title" className="ct">
       <div className="wrap">
-        <p className="ct-kicker">Contact · Let&apos;s talk about building something real.</p>
-        <h2 id="contact-title" className="ct-title">
+        <p className="ct-kicker rv">Contact · Let&apos;s talk about building something real.</p>
+        <h2 id="contact-title" className="ct-title rv" style={{ '--i': 1 } as React.CSSProperties}>
           Open to collaborating on AI&nbsp;research, ML&nbsp;engineering, and sports&nbsp;analytics.
         </h2>
-        <div className="ct-grid">
+        <div className="ct-grid rv" style={{ '--i': 2 } as React.CSSProperties}>
           <div>
             <p className="ct-body">
               Working full time at First Solar and on sports analytics with Toledo Athletics. For a research collaboration, a side build, or just a conversation about autonomous systems, I&apos;m listening.
             </p>
-            <a href={`mailto:${site.email}`} className="ct-email">{site.email}<span aria-hidden> ↗</span></a>
+            <MagneticLink href={`mailto:${site.email}`} className="ct-email" max={8}>{site.email}<span aria-hidden> ↗</span></MagneticLink>
             <p className="ct-status"><i aria-hidden /> {site.availability.label}</p>
             <div className="ct-docs">
               <a href={site.resumeUrl} target="_blank" rel="noopener" className="text-link is-underlined">Resume PDF ↓</a>

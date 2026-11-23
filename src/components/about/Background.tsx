@@ -7,6 +7,7 @@ import { ResearchPaper } from '@/components/sections/research/ResearchPaper';
 import { JourneyPhoto } from '@/components/journey/JourneyPhoto';
 import { Pic } from '@/components/ui/pic';
 import { EXPERIENCE } from '@/lib/data/sections';
+import { CountUp } from '@/components/ui/count-up';
 
 /**
  * "Experience and background": where it started (Toledo), the five worlds in order,
@@ -18,7 +19,7 @@ export async function Background() {
   return (
     <section id="experience" aria-labelledby="experience-title" className="bg">
       <div className="wrap">
-        <h2 id="experience-title" className="bg-title">{EXPERIENCE}</h2>
+        <h2 id="experience-title" className="bg-title rv draw-rule">{EXPERIENCE}</h2>
         <span id="story" aria-hidden className="bg-anchor" />
         <span id="insights" aria-hidden className="bg-anchor" />
         <Chapter
@@ -85,24 +86,24 @@ function Chapter({ id, mark, title, paragraphs, stat, photo, children, gallery, 
     <article id={id} aria-labelledby={`${id}-title`} className="ch">
       {photo && (
         <>
-          <div className="ch-photo"><JourneyPhoto id={photo} sizes="(max-width: 1240px) 100vw, 1140px" /></div>
+          <div className="ch-photo rv-photo parallax"><JourneyPhoto id={photo} sizes="(max-width: 1240px) 100vw, 1140px" /></div>
           <Credit id={photo} />
         </>
       )}
       <div className="ch-grid">
-        <div>
+        <div className="rv">
           <p className="ch-mark">{mark}</p>
           <h3 id={`${id}-title`} className="ch-title">{title}</h3>
         </div>
-        <div className="ch-body">
+        <div className="ch-body rv" style={{ '--i': 2 } as React.CSSProperties}>
           {paragraphs.map((t) => <p key={t.slice(0, 24)}>{t}</p>)}
-          <dl className="ch-stat"><dt>{stat.label}</dt><dd>{stat.value}</dd></dl>
+          <dl className="ch-stat tnum"><dt>{stat.label}</dt><dd><CountUp value={stat.value} /></dd></dl>
           {caption && <p className="ch-caption">{caption}</p>}
           {gallery && gallery.length > 0 && (
             <div className="ch-gallery">
-              {gallery.map((g) => (
-                <figure key={g.src}>
-                  <div className="pic"><Pic src={g.src} alt={g.alt} sizes="(max-width: 860px) 46vw, 260px" /></div>
+              {gallery.map((g, i) => (
+                <figure key={g.src} className="rv-fade" style={{ '--i': i + 3 } as React.CSSProperties}>
+                  <div className="pic lift-img"><Pic src={g.src} alt={g.alt} sizes="(max-width: 860px) 46vw, 260px" /></div>
                   <figcaption>{g.alt}</figcaption>
                 </figure>
               ))}
@@ -129,7 +130,7 @@ function WorldBlock({ world: w, cards }: { world: World; cards: { insight: (type
     >
       {w.id === 'research' && <ResearchPaper />}
       {cards.length > 0 && (
-        <div className="ch-cards">
+        <div className="ch-cards rv">
           {cards.map(({ insight, lines }) => <CodeCard key={insight.id} insight={insight} lines={lines} />)}
         </div>
       )}

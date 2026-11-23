@@ -7,8 +7,9 @@ import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 export const NAV = [
   { href: '/#work', label: 'Work' },
+  { href: '/#experience', label: 'Story' },
   { href: '/field-notes', label: 'Notes' },
-  { href: '/about', label: 'About' },
+  { href: '/#about', label: 'About' },
   { href: '/#contact', label: 'Contact' },
 ] as const;
 

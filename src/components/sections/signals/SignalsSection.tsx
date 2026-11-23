@@ -17,8 +17,8 @@ export function SignalsSection() {
       <div className="wrap">
         <SH label="Signals" sub="Press, recognition, and - as they arrive - words from the people behind the work." variant="sub" />
         {feature && (
-          <article className="sg-press">
-            <button type="button" className="sg-img" onClick={() => openLb(feature.image, feature.imageAlt)} aria-label="Enlarge the article image">
+          <article className="sg-press rv">
+            <button type="button" className="sg-img lift-img" onClick={() => openLb(feature.image, feature.imageAlt)} aria-label="Enlarge the article image">
               <Pic src={feature.image} alt={feature.imageAlt} sizes="(max-width: 700px) 92vw, 320px" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </button>
             <div>

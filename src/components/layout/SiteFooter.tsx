@@ -20,7 +20,7 @@ export function SiteFooter() {
           <nav aria-label="Footer - explore" className="ft-col">
             <span className="ft-small">Explore</span>
             {[
-              { label: 'The Story', href: '/about#experience' },
+              { label: 'The Story', href: '/#experience' },
               { label: 'Bodies of Work', href: '/projects' },
               { label: 'Field Notes', href: '/field-notes' },
               { label: 'Docs & Résumé', href: '/docs' },

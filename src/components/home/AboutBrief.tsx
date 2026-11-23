@@ -8,14 +8,14 @@ export function AboutBrief() {
   return (
     <section id="intro" aria-labelledby="intro-title" className="ib">
       <div className="wrap ib-grid">
-        <div className="ib-photo"><Headshot /></div>
-        <div>
+        <div className="ib-photo rv-photo lift-img"><Headshot /></div>
+        <div className="rv">
           <p className="ib-kicker">{site.role}</p>
           <h2 id="intro-title" className="ib-title">{site.name}</h2>
           <p className="ib-lead">{site.heroSub}</p>
           <dl className="ib-facts">
-            {heroFacts.map((f) => (
-              <div key={f.label}>
+            {heroFacts.map((f, i) => (
+              <div key={f.label} className="rv" style={{ '--i': i + 2 } as React.CSSProperties}>
                 <dt>{f.label}</dt>
                 <dd>{f.value}{f.sub && <span>{f.sub}</span>}</dd>
               </div>
@@ -26,7 +26,7 @@ export function AboutBrief() {
             <Link href={site.nowPlaying.href} className="text-link is-underlined">{site.nowPlaying.detail}</Link>
           </p>
           <p className="ib-links">
-            <Link href="/about" className="text-link is-underlined">More about Ahmad →</Link>
+            <a href="#about" className="text-link is-underlined">More about Ahmad ↓</a>
             <a href={site.resumeUrl} target="_blank" rel="noopener" className="text-link is-underlined">Download resume ↓</a>
             <a href={site.degreeUrl} target="_blank" rel="noopener" className="text-link is-underlined">Degree ↓</a>
           </p>

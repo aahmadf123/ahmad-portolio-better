@@ -5,9 +5,9 @@ import { certs } from '../../src/lib/data/certs';
 import { worlds } from '../../src/lib/data/worlds';
 import { skillGroups } from '../../src/lib/data/skills';
 
-test('/about holds the background, capabilities, timeline, credentials, signals and now', async ({ page }) => {
-  await page.goto('/about');
-  const ids = ['about', 'experience', 'prologue', ...worlds.map((w) => w.id), 'next-chapter', 'skills', 'timeline', 'credentials', 'signals', 'now'];
+test('the homepage holds the background, capabilities, timeline, credentials, signals and now', async ({ page }) => {
+  await page.goto('/');
+  const ids = ['experience', 'prologue', ...worlds.map((w) => w.id), 'next-chapter', 'about', 'skills', 'timeline', 'credentials', 'signals', 'now'];
   const tops: number[] = [];
   for (const id of ids) {
     await expect(page.locator(`#${id}`), id).toHaveCount(1);
@@ -16,8 +16,8 @@ test('/about holds the background, capabilities, timeline, credentials, signals 
   expect([...tops].sort((a, b) => a - b)).toEqual(tops);
 });
 
-test('every job, award, cert and skill is on /about', async ({ page }) => {
-  await page.goto('/about');
+test('every job, award, cert and skill is on the homepage', async ({ page }) => {
+  await page.goto('/');
   const text = await page.locator('main').innerText();
   for (const j of jobs) expect(text, j.role).toContain(j.role);
   for (const a of awards) expect(text, a.title).toContain(a.title);
@@ -26,7 +26,7 @@ test('every job, award, cert and skill is on /about', async ({ page }) => {
 });
 
 test('the research paper and the anchors About links to exist', async ({ page }) => {
-  await page.goto('/about');
+  await page.goto('/');
   await expect(page.locator('#research')).toContainText('Taxonomy');
   await expect(page.locator('#insights')).toHaveCount(1);
 });

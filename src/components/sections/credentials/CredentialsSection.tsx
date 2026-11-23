@@ -14,7 +14,7 @@ export function CredentialsSection() {
   const photos = (images: string[], alt: string, ratio?: string, fit?: React.CSSProperties['objectFit'], pos?: string) => (
     <div className="cr-photos">
       {images.map((src) => (
-        <button key={src} type="button" onClick={() => openLb(src, alt)} aria-label={`Enlarge photo: ${alt}`} style={{ aspectRatio: ratio ?? '16/9' }}>
+        <button key={src} type="button" className="lift-img" onClick={() => openLb(src, alt)} aria-label={`Enlarge photo: ${alt}`} style={{ aspectRatio: ratio ?? '16/9' }}>
           <Pic src={src} alt={alt} sizes="(max-width: 860px) 45vw, 300px" style={{ width: '100%', height: '100%', objectFit: fit ?? 'cover', objectPosition: pos ?? 'center', display: 'block' }} />
         </button>
       ))}
@@ -29,7 +29,7 @@ export function CredentialsSection() {
         <h4 className="cr-h">Certifications</h4>
         <ul className="cr-list">
           {certs.map((c) => (
-            <li key={c.id} className="cr-cert">
+            <li key={c.id} className="cr-cert rv">
               <Pic src={c.badgeImage} alt="" sizes="72px" className="cr-badge" />
               <div>
                 <div className="cr-meta">{c.issuer} · {c.track} · Earned {c.earned}</div>
@@ -48,15 +48,12 @@ export function CredentialsSection() {
         <h4 className="cr-h">Awards & Recognition</h4>
         <ul className="cr-list">
           {awards.map((a) => (
-            <li key={a.title} className="cr-row">
+            <li key={a.title} className="cr-row rv">
               <span className="cr-date tnum">{a.date}</span>
               <div>
                 <h5 className="cr-title">{a.title}{a.milestone && <span className="cr-milestone"> · milestone</span>}</h5>
                 <p className="cr-desc">{a.detail}</p>
-                <details>
-                  <summary>Photos</summary>
-                  {photos(a.images, a.title, a.ratio, a.imgFit, a.imgPos)}
-                </details>
+                {photos(a.images, a.title, a.ratio, a.imgFit, a.imgPos)}
               </div>
             </li>
           ))}
@@ -65,16 +62,13 @@ export function CredentialsSection() {
         <h4 className="cr-h">Professional Affiliations</h4>
         <ul className="cr-list">
           {affiliations.map((a) => (
-            <li key={a.name} className="cr-row">
+            <li key={a.name} className="cr-row rv">
               <span className="cr-date">{a.role}</span>
               <div>
                 <h5 className="cr-title">{a.name}</h5>
                 <p className="cr-desc">{a.short}</p>
-                <details>
-                  <summary>More</summary>
-                  {photos(a.images, a.name, a.ratio, a.imgFit, a.imgPos)}
-                  <p className="cr-desc">{a.desc}</p>
-                </details>
+                <p className="cr-desc">{a.desc}</p>
+                {photos(a.images, a.name, a.ratio, a.imgFit, a.imgPos)}
               </div>
             </li>
           ))}
@@ -95,7 +89,7 @@ export function CredentialsSection() {
         .cr-links { display: flex; gap: 20px; margin-top: 8px; font-size: 15px; }
         .cr details { margin-top: 4px; }
         .cr summary { cursor: pointer; font-size: 15px; color: var(--text2); min-height: 44px; display: inline-flex; align-items: center; }
-        .cr-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 8px; margin: 6px 0 10px; }
+        .cr-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr)); gap: 8px; margin: 14px 0 4px; max-width: 640px; }
         .cr-photos button { padding: 0; border: 0; background: var(--surface); border-radius: 3px; overflow: hidden; cursor: zoom-in; }
         @media (max-width: 700px) { .cr-row { grid-template-columns: minmax(0, 1fr); } }
       `}</style>

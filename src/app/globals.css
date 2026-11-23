@@ -111,11 +111,55 @@ code, pre, kbd, samp { font-family: var(--font-code), ui-monospace, monospace; }
 .reveal { opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.in { opacity: 1; transform: none; }
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
-  .rv, .rv-left, .rv-right, .rv-fade { opacity: 0; transition: opacity .6s ease, translate .6s ease; }
-  .rv, .rv-left, .rv-right { translate: 0 10px; }
-  .rv.in, .rv-left.in, .rv-right.in, .rv-fade.in { opacity: 1; translate: none; }
+  .rv, .rv-left, .rv-right, .rv-fade, .rv-pop {
+    opacity: 0;
+    transition: opacity .8s cubic-bezier(.2,.7,.2,1), translate .8s cubic-bezier(.2,.7,.2,1), scale .8s cubic-bezier(.2,.7,.2,1), clip-path 1.1s cubic-bezier(.2,.7,.2,1);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+  .rv { translate: 0 24px; }
+  .rv-left { translate: -32px 0; }
+  .rv-right { translate: 32px 0; }
+  .rv-fade { scale: .97; }
+  .rv-pop { scale: 0; }
+  .rv.in, .rv-left.in, .rv-right.in, .rv-fade.in, .rv-pop.in { opacity: 1; translate: none; scale: none; }
+
+  /* A photo uncovers itself from the top as it arrives. */
+  .rv-photo { position: relative; }
+  .rv-photo::after { content: ''; position: absolute; inset: 0; z-index: 3; background: var(--background); transform-origin: top; transition: transform 1.2s cubic-bezier(.65,0,.25,1) .1s; pointer-events: none; }
+  .rv-photo.in::after { transform: scaleY(0); }
+
+  /* Section titles: a short rule draws itself under the words. */
+  .draw-rule::after { content: ''; display: block; width: 64px; height: 1px; margin-top: 18px; background: var(--foreground); transform: scaleX(0); transform-origin: left; transition: transform .9s cubic-bezier(.2,.7,.2,1) .25s; }
+  .draw-rule.in::after, .in .draw-rule::after { transform: scaleX(1); }
 }
-@media (scripting: none), (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+@media (scripting: none), (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+  .draw-rule::after { content: ''; display: block; width: 64px; height: 1px; margin-top: 18px; background: var(--foreground); }
+}
+
+/* Photos drift a little against the scroll where the browser can do it on the compositor. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .parallax img { scale: 1.12; animation: parallax linear both; animation-timeline: view(); animation-range: cover; }
+  }
+}
+@keyframes parallax { from { translate: 0 -24px; } to { translate: 0 24px; } }
+
+/* ── Hover and focus micro-motion (always mirrored on focus) ───── */
+.lift-img { overflow: hidden; }
+.lift-img img { transition: scale .6s cubic-bezier(.2,.7,.2,1), opacity .3s; }
+:is(a, button):is(:hover, :focus-visible) .lift-img img,
+.lift-img:is(:hover, :focus-within) img { scale: 1.04; }
+
+/* Skills marquee: one long row that drifts; hover pauses it. */
+.marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee-track { display: flex; width: max-content; gap: 0; }
+.marquee-track > span { white-space: nowrap; padding-right: 2.2em; }
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track { animation: marquee 60s linear infinite; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+}
+@keyframes marquee { to { transform: translateX(-50%); } }
 
 @keyframes glass-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
 .pulse { animation: glass-pulse 2.4s ease-in-out infinite; }

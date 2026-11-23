@@ -1,4 +1,5 @@
 import { jobs } from '@/lib/data/jobs';
+import { CountUp } from '@/components/ui/count-up';
 import { projects } from '@/lib/data/projects';
 import { awards } from '@/lib/data/awards';
 import { certs } from '@/lib/data/certs';
@@ -18,7 +19,7 @@ export function MetricsBand() {
   return (
     <dl className="metrics tnum">
       {METRICS.map((m) => (
-        <div key={m.label}><dd>{m.value}</dd><dt>{m.label}</dt></div>
+        <div key={m.label}><dd><CountUp value={m.value} /></dd><dt>{m.label}</dt></div>
       ))}
       <style>{`
         .metrics { display: flex; flex-wrap: wrap; gap: 12px clamp(24px, 4vw, 48px); padding: 18px 0; border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd); margin-bottom: clamp(36px, 5vw, 64px); }

@@ -10,8 +10,8 @@ export function NowSection() {
         <SH label="Now" sub="What I'm actively learning, building, and chasing outside of work." />
         <p className="now-updated">Updated · {nowUpdated}</p>
         <div className="now-grid">
-          {nowCards.map((card) => (
-            <div key={card.category} className="now-col">
+          {nowCards.map((card, i) => (
+            <div key={card.category} className="now-col rv" style={{ '--i': i } as React.CSSProperties}>
               <div className="now-col-head">
                 <h3>{card.category}</h3>
                 <span><i aria-hidden style={{ background: card.statusColor }} />{card.status}</span>

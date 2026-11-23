@@ -4,6 +4,7 @@ import React from 'react';
 import { useLightboxOpen } from '@/components/layout/LightboxProvider';
 import { Pic } from '@/components/ui/pic';
 import { research } from '@/lib/data/research';
+import { CountUp } from '@/components/ui/count-up';
 
 /** The research paper: what it is, its figure, its numbers and its four pillars. */
 export function ResearchPaper() {
@@ -19,16 +20,16 @@ export function ResearchPaper() {
           <p className="rp-desc">{research.description}</p>
           <a href={research.pdf} target="_blank" rel="noopener" className="text-link is-underlined rp-link">{research.buttonText} ↗</a>
         </div>
-        <button type="button" className="rp-img" onClick={() => openLb(research.image, '4-Pillars AI Failure Taxonomy')} aria-label="Enlarge the taxonomy figure">
+        <button type="button" className="rp-img lift-img rv-fade" onClick={() => openLb(research.image, '4-Pillars AI Failure Taxonomy')} aria-label="Enlarge the taxonomy figure">
           <Pic src={research.image} alt={research.imageAlt} sizes="(max-width: 860px) 92vw, 520px" style={{ width: '100%', height: 'auto', display: 'block' }} />
         </button>
       </div>
       <dl className="rp-metrics tnum">
-        {research.metrics.map((m) => <div key={m.label}><dd>{m.metric}</dd><dt>{m.label}</dt></div>)}
+        {research.metrics.map((m) => <div key={m.label}><dd><CountUp value={m.metric} /></dd><dt>{m.label}</dt></div>)}
       </dl>
       <ol className="rp-pillars">
-        {research.pillars.map((p) => (
-          <li key={p.n}>
+        {research.pillars.map((p, i) => (
+          <li key={p.n} className="rv" style={{ '--i': i } as React.CSSProperties}>
             <h5><span>{p.n}</span> {p.label}</h5>
             <p>{p.desc}</p>
           </li>

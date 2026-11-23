@@ -49,10 +49,11 @@ test('the work index lists every project once, each linking to its case study', 
   expect(new Set(hrefs)).toEqual(new Set(caseStudySlugs.map((s) => `/case-study/${s}`)));
 });
 
-test('old homepage anchors land on /about', async ({ page }) => {
+test('old anchors land on their section, and /about redirects to it', async ({ page }) => {
   await page.goto('/#timeline');
-  await expect(page).toHaveURL(/\/about#timeline$/);
-  await expect(page.locator('#timeline')).toBeVisible();
+  await expect(page.locator('#timeline')).toBeInViewport();
+  await page.goto('/about');
+  await expect(page).toHaveURL(/\/#about$/);
 });
 
 test('the chat button stays off the first screen', async ({ page }) => {

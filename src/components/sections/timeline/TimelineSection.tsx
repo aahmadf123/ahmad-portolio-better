@@ -24,9 +24,12 @@ export function TimelineSection() {
     <section id="timeline" aria-label="Timeline" className="tl">
       <div className="wrap">
         <SH label="Timeline" sub="Career and education as one continuous line. Newest first, then back to the origin story." variant="sub" />
+        <div className="tl-wrap">
+        <div aria-hidden className="tl-line"><div data-tl-fill className="tl-fill" /></div>
         <ol className="tl-list">
           {entries.map((e) => (
-            <li key={e.id} className="tl-item">
+            <li key={e.id} className="tl-item rv">
+              <span aria-hidden className="tl-dot rv-pop" />
               {e.kind === 'job' && <JobRow job={e.job} />}
               {e.kind === 'award' && (
                 <>
@@ -52,9 +55,16 @@ export function TimelineSection() {
             </li>
           ))}
         </ol>
+        </div>
       </div>
       <style>{`
         .tl { padding: clamp(40px, 6vw, 80px) 0; }
+        .tl-wrap { position: relative; }
+        .tl-line { position: absolute; left: calc(12em + 15px); top: 0; bottom: 0; width: 1px; background: var(--bd); }
+        .tl-fill { position: absolute; inset: 0; background: var(--foreground); transform-origin: top; transform: scaleY(1); }
+        .tl-dot { position: absolute; left: calc(12em + 11px); top: 30px; width: 9px; height: 9px; border-radius: 50%; background: var(--background); border: 1px solid var(--foreground); }
+        .tl-item:first-child .tl-dot { background: var(--primary-fill); border-color: var(--primary-fill); }
+        .tl-item { position: relative; }
         .tl-list { list-style: none; border-top: 1px solid var(--foreground); }
         .tl-item { display: grid; grid-template-columns: 12em minmax(0, 1fr); gap: 6px 32px; padding: 22px 0; border-bottom: 1px solid var(--bd); }
         .tl-date { font-size: 15px; color: var(--text2); }
@@ -65,11 +75,11 @@ export function TimelineSection() {
         .tl-item details { margin-top: 6px; }
         .tl-item summary { cursor: pointer; font-size: 15px; color: var(--text2); min-height: 44px; display: inline-flex; align-items: center; }
         .tl-item summary:hover { color: var(--foreground); }
-        .tl-desc { color: var(--text2); font-size: 16px; max-width: 40em; }
+        .tl-desc { color: var(--text2); font-size: 16px; max-width: 40em; margin-top: 10px; }
         .tl-ach { margin: 12px 0 0 1.1em; font-size: 15px; color: var(--text2); }
         .tl-ach li { margin-top: 4px; }
         .tl-tools { margin-top: 10px; font-size: 14px; color: var(--text3); line-height: 1.7; }
-        @media (max-width: 700px) { .tl-item { grid-template-columns: minmax(0, 1fr); } }
+        @media (max-width: 700px) { .tl-item { grid-template-columns: minmax(0, 1fr); padding-left: 24px; } .tl-line { left: 4px; } .tl-dot { left: 0; } }
       `}</style>
     </section>
   );
@@ -83,13 +93,9 @@ function JobRow({ job }: { job: Job }) {
         <span className="tl-kind">{job.type}{job.active ? ' · current' : ''}</span>
         <div className="tl-role">{job.role}</div>
         <div className="tl-org">{job.company} · {job.location}</div>
-        <p className="tl-highlights">{job.achievements.slice(0, 2).join(' · ')}</p>
-        <details>
-          <summary>Details</summary>
-          <p className="tl-desc">{job.description}</p>
-          <ul className="tl-ach">{job.achievements.map((a) => <li key={a}>{a}</li>)}</ul>
-          <p className="tl-tools">{job.stack.join(' · ')}</p>
-        </details>
+        <p className="tl-desc">{job.description}</p>
+        <ul className="tl-ach">{job.achievements.map((a) => <li key={a}>{a}</li>)}</ul>
+        <p className="tl-tools">{job.stack.join(' · ')}</p>
       </div>
     </>
   );

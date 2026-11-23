@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-const SELECTOR = '.rv, .rv-left, .rv-right, .rv-fade, .rv-pop, .rv-ring';
+const SELECTOR = '.rv, .rv-left, .rv-right, .rv-fade, .rv-pop, .rv-ring, .rv-photo, .draw-rule';
 
 /**
  * One IntersectionObserver for every entrance on the site (the rv-* classes in

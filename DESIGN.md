@@ -38,14 +38,14 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 **Concept: "Uncertain Paths."** A quiet introduction traced by a looping flight path, connecting Ahmad's AI, UAV research and sports analytics work without crowding the page. The site should read like a well-set document, not a template: one typeface, lots of paper, hairlines instead of boxes, real evidence (screens, photos, numbers) instead of decoration.
 
 **Page structure**
-- **Home (`/`)**: `FlightPathHero` → `FeaturedWork` (Toledo Football IQ, Homeowner Loss Prediction as editorial spreads) → `WorkIndex` (all ten projects as typographic rows, grouped by path) → `FieldNotesSection` (dated list) → `AboutBrief` → `ContactSection`.
-- **About (`/about`)**: the full About long-read, then "Experience and background" (Toledo prologue, the five worlds, the next chapter, each opening on its photograph of a real place, with Ahmad's own photos, the research paper and the code insights), Capabilities, Timeline, Credentials, Signals, Now.
+- **Home (`/`)** holds everything, in order: `FlightPathHero` → `AboutBrief` (name, role, facts, now building) → `FeaturedWork` → `WorkIndex` (all ten projects, grouped by path) → `Background` ("Experience and background": Toledo prologue, the five worlds with their photographs, galleries, research paper and code insights, the next chapter) → `FieldNotesSection` → `AboutSection` → Capabilities, Timeline, Credentials, Signals, Now → `ContactSection`.
+- Details are shown, not hidden: every job's description, achievements and stack, award and affiliation photos, coursework.
+- `/about` redirects to `/#about`. Old anchors (`/#research`, `/#timeline`, …) resolve on the homepage.
 - **Inside pages** (`/projects`, case studies, field notes, docs) share `SiteHeader` (sticky, with a back link) and `SiteFooter`.
-- Old homepage anchors (`/#research`, `/#timeline`, …) are forwarded to `/about#…` by `LegacyHashRedirect`.
 
 **The flight path** (`src/components/home/FlightPathHero.tsx`): one hand-authored SVG path in a 1440×900 box, stretched to the viewport with `preserveAspectRatio="none"` and a 1px non-scaling stroke. The three nodes (Agentic AI, UAV Research, Sports Analytics) are vertices of the path; their labels are real links to the matching group in the work index. The line draws itself once (1.6s), then a small teal dash travels the path (28s per pass) and lights the node it passes. Paused off-screen and in background tabs; static under reduced motion. On narrow screens the line stays as background and the nodes become a short list under the words.
 
-**What it rejects:** gradients, glows, glassmorphism, drop shadows on content, boxed stat cards, pill-tag clouds, ghost numerals, uppercase tracked mono labels, typing effects, flip cards, 3D, custom cursors, scroll-jacking or smooth-scroll libraries, count-up numbers, "magnetic" buttons, emoji as icons.
+**What it rejects:** gradients, glows, glassmorphism, drop shadows on content, boxed stat cards, pill-tag clouds, ghost numerals, uppercase tracked mono labels, typing effects, flip cards, 3D, custom cursors, scroll-jacking or smooth-scroll libraries, emoji as icons. Motion is allowed where it reveals content or responds to the reader (§5), never as ambient decoration.
 
 ## 2. Colour
 
@@ -88,14 +88,19 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 
 ## 5. Motion
 
-- Only three things move: the path drawing on, the travelling dot, and short (≤600ms) fades. Hover states change colour or draw an underline.
-- `prefers-reduced-motion` stops all of it (global kill-switch in `globals.css`; the hero places the dot on "Agentic AI" and stops).
+- **Hero:** the path draws itself (1.6s), the headline and line rise in, a teal dash travels the path and lights each node; nodes nudge on hover; "Explore the work" leans toward the pointer.
+- **Scroll reveals:** `RevealObserver` adds `.in` once per element. `.rv` rises 24px, `.rv-left`/`.rv-right` slide 32px, `.rv-fade` settles from 97%, `.rv-pop` pops; stagger with `style={{ '--i': n }}` (70ms steps). `.rv-photo` uncovers a photo with a curtain that retracts upward; `.draw-rule` draws a short rule under big section titles.
+- **Numbers:** `CountUp` (`src/components/ui/count-up.tsx`) counts a stat up once when it enters view; the real value is server-rendered.
+- **Timeline:** its vertical line fills as you scroll (CSS scroll-driven animation); the newest entry's dot is teal.
+- **Parallax:** chapter photos drift ±24px against the scroll (`.parallax`, CSS `view()` timeline, compositor only).
+- **Hover (mirrored on focus):** project and note rows tint and indent, titles get a drawn underline, arrows slide, images zoom 4% (`.lift-img`), skills nudge; the contact email is magnetic (`MagneticLink`, fine pointers only); the skills marquee drifts and pauses on hover.
+- **Reduced motion** turns all of it off (global kill-switch in `globals.css`; reveals start visible; the hero dot sits still on "Agentic AI"; count-ups show the final value).
 - Page transitions are a plain crossfade (React `ViewTransition`).
 
 ## 6. Do's and don'ts
 
 **Do**
-- Move content, never drop it: `tests/content/` snapshots every string and picture; homepage content may render on `/` or `/about` (`SHOWN_ON` in `tests/content/collect.ts`). Labels that genuinely go away are listed with reasons in `allowed-removals.json`.
+- Move content, never drop it: `tests/content/` snapshots every string and picture; everything that was on the homepage must render on it. Labels that genuinely go away are listed with reasons in `allowed-removals.json`.
 - Check layouts at 320, 768, 1280 and 2560px, in both themes, with no horizontal overflow (`tests/site/matrix.spec.ts` runs axe on both themes).
 - Keep accents as markers; use `accentInk()` for accent text.
 

@@ -7,6 +7,7 @@ import { useLightboxOpen } from '@/components/layout/LightboxProvider';
 import { accentInk } from '@/lib/accent';
 import { flagshipProject, projects, projectStatusLabel, type Project } from '@/lib/data/projects';
 import { useProjectModal } from './ProjectModalProvider';
+import { CountUp } from '@/components/ui/count-up';
 import { PlayDiagram } from './PlayDiagram';
 
 /** A real screen from the Football IQ build: Clip Review with its vision overlays and play labels. */
@@ -32,7 +33,7 @@ export function FeaturedWork() {
       {/* Old links from before the redesign: /#projects lands on the work. */}
       <span id="projects" aria-hidden className="fw-anchor" />
       <div className="wrap">
-        <h2 id="selected-title" className="fw-kicker">Selected work</h2>
+        <h2 id="selected-title" className="fw-kicker rv">Selected work</h2>
         <FootballIQ />
         <Spread project={homeowner} />
       </div>
@@ -90,7 +91,7 @@ function FootballIQ() {
   const { open } = useProjectModal();
   return (
     <article id="toledo-football-iq" aria-labelledby="toledo-football-iq-title" className="fw-spread">
-      <div>
+      <div className="rv-left">
         <div className="fw-meta">
           <span>Flagship · {p.tag}</span>
           <Status p={p} />
@@ -103,7 +104,7 @@ function FootballIQ() {
         <p className="fw-tools">{p.stacks.join(' · ')}</p>
         <dl className="fw-stats tnum">
           {FIQ_STATS.map((s) => (
-            <div key={s.label}><dt>{s.label}</dt><dd>{s.value}</dd></div>
+            <div key={s.label}><dt>{s.label}</dt><dd><CountUp value={s.value} /></dd></div>
           ))}
         </dl>
         <div className="fw-actions">
@@ -112,10 +113,10 @@ function FootballIQ() {
         </div>
         <p className="fw-note">Live URL coming when it ships</p>
       </div>
-      <div className="fw-media">
+      <div className="fw-media rv-right">
         <figure className="fw-figure">
           <h3>Inspect a practice-film analysis</h3>
-          <button type="button" className="fw-shot" onClick={() => openLb(largestVariant(OUTPUT.src), OUTPUT.alt)} aria-label="Enlarge the Clip Review screen">
+          <button type="button" className="fw-shot lift-img" onClick={() => openLb(largestVariant(OUTPUT.src), OUTPUT.alt)} aria-label="Enlarge the Clip Review screen">
             <Pic src={OUTPUT.src} alt={OUTPUT.alt} sizes="(max-width: 900px) 92vw, 680px" />
           </button>
           <figcaption>Review a clip, inspect an overlay and see the associated labels.</figcaption>
@@ -136,7 +137,7 @@ function Spread({ project: p }: { project: Project }) {
   const { open } = useProjectModal();
   return (
     <article id={p.slug} aria-labelledby={`${p.slug}-title`} className="fw-spread flip">
-      <div>
+      <div className="rv-right">
         <div className="fw-meta">
           <span>{p.domain} · {p.idx}</span>
           <Status p={p} />
@@ -155,8 +156,8 @@ function Spread({ project: p }: { project: Project }) {
           <button type="button" onClick={() => open(p)}>{p.detailsLabel ?? 'Details →'}</button>
         </div>
       </div>
-      <div className="fw-media">
-        <div className="fw-plain-img">
+      <div className="fw-media rv-left">
+        <div className="fw-plain-img lift-img">
           <Pic src={p.image} alt={p.title} sizes="(max-width: 900px) 92vw, 680px" style={{ display: 'block', width: '100%', height: 'auto' }} />
         </div>
       </div>

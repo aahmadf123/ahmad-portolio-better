@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { SiteHeader } from '@/components/layout/SiteHeader';
+import { useMagnetic } from '@/components/ui/use-magnetic';
 
 /*
  * The first screen: one thin flight path loops across the page and touches the three
@@ -41,6 +42,7 @@ export function FlightPathHero() {
   const pathRef = React.useRef<SVGPathElement>(null);
   const dotRef = React.useRef<HTMLSpanElement>(null);
   const [near, setNear] = React.useState<string>('agentic-ai');
+  const exploreRef = useMagnetic<HTMLAnchorElement>(8);
 
   React.useEffect(() => {
     const hero = heroRef.current;
@@ -150,7 +152,7 @@ export function FlightPathHero() {
         </p>
       </div>
 
-      <Link href="#work" className="fp-explore">
+      <Link ref={exploreRef} href="#work" className="fp-explore">
         <span>Explore the work</span>
         <span aria-hidden>↓</span>
       </Link>
@@ -164,7 +166,9 @@ export function FlightPathHero() {
         .fp-nodes { list-style: none; position: absolute; inset: 0; pointer-events: none; }
         .fp-nodes li { position: absolute; transform: translate(-5px, -50%); pointer-events: auto; }
         .fp-node { display: inline-flex; align-items: center; gap: 14px; font-size: 16px; color: var(--text2); white-space: nowrap; min-height: 44px; transition: color .2s; }
-        .fp-node:hover { color: var(--foreground); }
+        .fp-node { transition: color .2s, translate .3s cubic-bezier(.2,.7,.2,1); }
+        .fp-node:is(:hover, :focus-visible) { color: var(--foreground); translate: 4px 0; }
+        .fp-node:is(:hover, :focus-visible) .fp-node-dot { transform: scale(1.6); background: var(--primary-fill); }
         .fp-node-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text2); transition: background .4s, transform .4s; }
         [data-near] .fp-node-dot { background: var(--primary-fill); transform: scale(1.35); }
         .fp-node:hover .fp-node-dot { background: var(--foreground); }
@@ -180,7 +184,12 @@ export function FlightPathHero() {
           .fp-nodes li:nth-child(1) { animation-delay: 1.25s; }
           .fp-nodes li:nth-child(2) { animation-delay: 1.4s; }
           .fp-nodes li:nth-child(3) { animation-delay: .75s; }
+          .fp-title, .fp-sub, .fp-explore { opacity: 0; translate: 0 18px; animation: fp-rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+          .fp-title { animation-delay: .35s; }
+          .fp-sub { animation-delay: .6s; }
+          .fp-explore { animation-delay: 1.5s; }
         }
+        @keyframes fp-rise { to { opacity: 1; translate: 0 0; } }
         @keyframes fp-draw { to { stroke-dashoffset: 0; } }
         @keyframes fp-in { to { opacity: 1; } }
 

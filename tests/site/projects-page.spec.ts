@@ -43,12 +43,10 @@ test('the work index, About and the footer go to the projects page', async ({ pa
   await page.goto('/');
   await expect(page.locator('#work').getByRole('link', { name: /All projects with pictures/ })).toHaveAttribute('href', '/projects');
   await expect(page.locator('footer').getByRole('link', { name: 'Bodies of Work' })).toHaveAttribute('href', '/projects');
-  await page.goto('/about');
   await expect(page.locator('#about').getByRole('link', { name: /View Projects/ })).toHaveAttribute('href', '/projects');
 });
 
-test('/projects and /about are in the sitemap', async ({ request }) => {
+test('/projects is in the sitemap', async ({ request }) => {
   const xml = await (await request.get('/sitemap.xml')).text();
   expect(xml).toContain('/projects</loc>');
-  expect(xml).toContain('/about</loc>');
 });

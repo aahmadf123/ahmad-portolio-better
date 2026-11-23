@@ -21,7 +21,7 @@ export function AboutSection() {
         <SH label="About" sub="Beyond the résumé: who is actually doing the work." />
         <MetricsBand />
 
-        <div className="ab-intro">
+        <div className="ab-intro rv">
           <div id="about-intro">
             <h2 className="ab-headline">{about.headline}</h2>
             <p className="ab-bio">{about.bio}</p>
@@ -33,7 +33,7 @@ export function AboutSection() {
               <a href={site.socials.github} target="_blank" rel="noopener" className="text-link is-underlined">GitHub ↗</a>
             </p>
           </div>
-          <div className="ab-photo"><Headshot /></div>
+          <div className="ab-photo lift-img"><Headshot /></div>
         </div>
 
         <div className="ab-lenses">
@@ -67,7 +67,8 @@ export function AboutSection() {
         .ab-edu-meta { font-size: 15px; color: var(--text2); }
         .ab-edu details { margin-top: 8px; font-size: 15px; }
         .ab-edu summary { cursor: pointer; color: var(--text2); min-height: 44px; display: inline-flex; align-items: center; }
-        .ab-edu-courses { color: var(--text2); line-height: 1.8; }
+        .ab-edu-courses { color: var(--text2); line-height: 1.8; font-size: 15px; margin-top: 8px; }
+        .ab-edu-courses span { color: var(--text3); margin-right: 6px; }
         .ab-next { margin-top: 24px; font-size: 15px; display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; }
         .ab-next > span { color: var(--text3); }
         @media (max-width: 860px) {
@@ -82,7 +83,7 @@ export function AboutSection() {
 function LensBlock({ lens }: { lens: Lens }) {
   const beliefs = about.beliefs.filter((b) => lens.beliefIds.includes(b.n));
   return (
-    <article id={`lens-${lens.id}`} className="ab-lens">
+    <article id={`lens-${lens.id}`} className="ab-lens rv">
       <div>
         <div className="ab-lens-kicker">{lens.kicker} · {lens.title}</div>
         <div className="ab-lens-title">{lens.title}</div>
@@ -94,8 +95,8 @@ function LensBlock({ lens }: { lens: Lens }) {
 
         {beliefs.length > 0 && (
           <ul className="ab-beliefs">
-            {beliefs.map((b) => (
-              <li key={b.n}>
+            {beliefs.map((b, i) => (
+              <li key={b.n} className="rv" style={{ '--i': i + 1 } as React.CSSProperties}>
                 <strong><span>{b.n}</span>{b.title}</strong>
                 <p>{b.body}</p>
               </li>
@@ -109,10 +110,7 @@ function LensBlock({ lens }: { lens: Lens }) {
             <div className="ab-edu-school">{education.school}</div>
             <div className="ab-edu-meta">{education.degree}</div>
             <div className="ab-edu-meta tnum">{education.period} · {education.status} · GPA {education.gpa}</div>
-            <details>
-              <summary>Coursework</summary>
-              <p className="ab-edu-courses">{education.coursework.join(' · ')}</p>
-            </details>
+            <p className="ab-edu-courses"><span>Coursework</span> {education.coursework.join(' · ')}</p>
           </div>
         )}
 
