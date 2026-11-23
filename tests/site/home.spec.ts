@@ -66,7 +66,8 @@ test('every project appears once: featured above, the rest inside their story ch
 test('no picture is shown twice on the homepage', async ({ page }) => {
   await page.goto('/');
   await page.evaluate(async () => { for (let y = 0; y < document.documentElement.scrollHeight; y += 900) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } });
-  const stems = await page.locator('main img').evaluateAll((imgs) => imgs.map((i) => ((i as HTMLImageElement).currentSrc || (i as HTMLImageElement).src).split('/').pop()!.replace(/-\d+\.(webp|avif)$/, '')));
+  // Company logos repeat on purpose (two roles at one company); photos must not.
+  const stems = await page.locator('main img:not(.tl-logo img)').evaluateAll((imgs) => imgs.map((i) => ((i as HTMLImageElement).currentSrc || (i as HTMLImageElement).src).split('/').pop()!.replace(/-\d+\.(webp|avif)$/, '')));
   const seen = new Set<string>(); const dups: string[] = [];
   for (const s of stems) { if (seen.has(s)) dups.push(s); seen.add(s); }
   expect(dups).toEqual([]);
