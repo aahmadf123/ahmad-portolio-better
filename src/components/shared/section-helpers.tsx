@@ -30,7 +30,7 @@ export const BG = 'var(--background)';
 export function SH({ label, sub = '', color = 'var(--primary-fill)', variant = 'chapter' }: { n?: string; label: string; sub?: string; color?: string; variant?: 'chapter' | 'sub' }) {
   const Label = variant === 'sub' ? 'h3' : 'h2';
   return (
-    <div className="rv" style={{ marginBottom: variant === 'sub' ? 28 : 44, paddingTop: 8 }}>
+    <div className="rv sh" style={{ marginBottom: variant === 'sub' ? 28 : 44, paddingTop: 8 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: sub ? 10 : 0 }}>
         <span aria-hidden style={{ width: 6, height: 6, borderRadius: 3, background: color, flexShrink: 0 }} />
         <Label style={{ fontFamily: SANS, fontSize: variant === 'sub' ? 20 : 'var(--fs-section-head)', fontWeight: 400, lineHeight: 1.1, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: 0 }}>{label}</Label>

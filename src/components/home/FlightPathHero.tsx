@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { useMagnetic } from '@/components/ui/use-magnetic';
+import { AREA_COLORS } from '@/lib/data/areas';
 
 /*
  * The first screen: one thin flight path loops across the page and touches the three
@@ -18,10 +19,10 @@ const PATH = [
   'M 1520 110',
   'C 1160 40, 680 14, 430 34',
   'C 170 56, 40 180, 70 320',
-  'C 110 470, 330 650, 450 800',
-  'C 480 850, 400 790, 360 690',
-  'C 320 590, 360 520, 500 500',
-  'C 620 484, 720 420, 700 330',
+  'C 100 470, 200 650, 300 800',
+  'C 320 850, 250 800, 220 700',
+  'C 190 600, 220 520, 300 470',
+  'C 460 440, 720 430, 700 330',
   'C 680 236, 430 232, 404 292',
   'C 380 356, 560 420, 700 438',
   'C 820 452, 900 400, 940 340',
@@ -30,9 +31,9 @@ const PATH = [
 ].join(' ');
 
 export const NODES = [
-  { id: 'agentic-ai', label: 'Agentic AI', x: 940, y: 340, href: '#path-agentic-ai' },
-  { id: 'uav-research', label: 'UAV Research', x: 1140, y: 190, href: '#path-uav-research' },
-  { id: 'sports-analytics', label: 'Sports Analytics', x: 450, y: 800, href: '#path-sports-analytics' },
+  { id: 'agentic-ai', label: 'Agentic AI', x: 940, y: 340, href: '#path-agentic-ai', color: AREA_COLORS['ai-engineering'] },
+  { id: 'uav-research', label: 'UAV Research', x: 1140, y: 190, href: '#path-uav-research', color: AREA_COLORS.research },
+  { id: 'sports-analytics', label: 'Sports Analytics', x: 300, y: 800, href: '#path-sports-analytics', color: AREA_COLORS['sports-analytics'] },
 ] as const;
 
 const pct = (v: number, of: number) => `${(v / of) * 100}%`;
@@ -40,6 +41,7 @@ const pct = (v: number, of: number) => `${(v / of) * 100}%`;
 export function FlightPathHero() {
   const heroRef = React.useRef<HTMLElement>(null);
   const pathRef = React.useRef<SVGPathElement>(null);
+  const maskId = `fp-reveal-${React.useId().replace(/:/g, '')}`;
   const dotRef = React.useRef<HTMLSpanElement>(null);
   const [near, setNear] = React.useState<string>('agentic-ai');
   const exploreRef = useMagnetic<HTMLAnchorElement>(8);
@@ -126,16 +128,25 @@ export function FlightPathHero() {
     <section ref={heroRef} id="hero" tabIndex={-1} aria-labelledby="hero-title" className="fp-hero">
       <div className="fp-art" aria-hidden>
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="fp-svg">
-          <path ref={pathRef} d={PATH} pathLength={1} className="fp-path" />
+          {/* The line draws itself through a mask: the visible stroke is non-scaling (1px at
+              any size), and dashes on a non-scaling stroke are measured in screen pixels, so
+              a normalised dash would end early on wide screens. The mask's thick stroke scales
+              normally, so its pathLength=1 dash always covers the whole line. */}
+          <defs>
+            <mask id={maskId} maskUnits="userSpaceOnUse" x={-200} y={-200} width={W + 400} height={H + 400}>
+              <path d={PATH} pathLength={1} className="fp-reveal" />
+            </mask>
+          </defs>
+          <path ref={pathRef} d={PATH} className="fp-path" mask={`url(#${maskId})`} />
         </svg>
-        <span ref={dotRef} className="fp-dot" />
+        <span ref={dotRef} className="fp-dot" style={{ background: NODES.find((n) => n.id === near)?.color }} />
       </div>
 
       <SiteHeader />
 
       <ul className="fp-nodes" aria-label="Three kinds of work">
         {NODES.map((n) => (
-          <li key={n.id} style={{ left: pct(n.x, W), top: pct(n.y, H) }} data-near={near === n.id || undefined}>
+          <li key={n.id} style={{ left: pct(n.x, W), top: pct(n.y, H), '--area': n.color } as React.CSSProperties} data-near={near === n.id || undefined}>
             <a href={n.href} className="fp-node">
               <span aria-hidden className="fp-node-dot" />
               <span>{n.label}</span>
@@ -146,10 +157,6 @@ export function FlightPathHero() {
 
       <div className="fp-copy">
         <h1 id="hero-title" className="fp-title">AI systems for<br />uncertain environments</h1>
-        <p className="fp-sub">
-          Agentic workflows in production, reinforcement learning for UAV autonomy, and
-          practice-film analysis for University of Toledo football.
-        </p>
       </div>
 
       <Link ref={exploreRef} href="#work" className="fp-explore">
@@ -161,32 +168,31 @@ export function FlightPathHero() {
         .fp-hero { position: relative; min-height: max(100svh, 640px); display: flex; flex-direction: column; overflow: hidden; isolation: isolate; }
         .fp-art { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
         .fp-svg { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; overflow: visible; }
-        .fp-path { fill: none; stroke: var(--path); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 0; }
-        .fp-dot { position: absolute; left: 0; top: 0; width: 14px; height: 4px; margin: -2px 0 0 -7px; border-radius: 2px; background: var(--primary-fill); }
+        .fp-path { fill: none; stroke: var(--path); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-linecap: round; }
+        .fp-reveal { fill: none; stroke: #fff; stroke-width: 80; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+        .fp-dot { position: absolute; left: 0; top: 0; width: 14px; height: 4px; margin: -2px 0 0 -7px; border-radius: 2px; background: var(--primary-fill); transition: background-color .6s; }
         .fp-nodes { list-style: none; position: absolute; inset: 0; pointer-events: none; }
         .fp-nodes li { position: absolute; transform: translate(-5px, -50%); pointer-events: auto; }
         .fp-node { display: inline-flex; align-items: center; gap: 14px; font-size: 16px; color: var(--text2); white-space: nowrap; min-height: 44px; transition: color .2s; }
         .fp-node { transition: color .2s, translate .3s cubic-bezier(.2,.7,.2,1); }
         .fp-node:is(:hover, :focus-visible) { color: var(--foreground); translate: 4px 0; }
-        .fp-node:is(:hover, :focus-visible) .fp-node-dot { transform: scale(1.6); background: var(--primary-fill); }
-        .fp-node-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text2); transition: background .4s, transform .4s; }
-        [data-near] .fp-node-dot { background: var(--primary-fill); transform: scale(1.35); }
-        .fp-node:hover .fp-node-dot { background: var(--foreground); }
-        .fp-copy { position: absolute; left: 39%; right: clamp(16px, 4vw, 56px); top: 52%; }
+        .fp-node:is(:hover, :focus-visible) .fp-node-dot { transform: scale(1.6); }
+        .fp-node-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--area); transition: transform .4s, box-shadow .4s; }
+        [data-near] .fp-node-dot { transform: scale(1.5); box-shadow: 0 0 0 5px color-mix(in srgb, var(--area) 22%, transparent); }
+        [data-near] .fp-node { color: var(--foreground); }
+                .fp-copy { position: absolute; left: clamp(16px, 4vw, 56px); right: clamp(16px, 4vw, 56px); top: 56%; text-align: center; }
         .fp-title { font-size: clamp(40px, 4.6vw, 88px); font-weight: 400; line-height: 1.08; letter-spacing: -0.03em; color: var(--foreground); }
-        .fp-sub { margin-top: 22px; max-width: 34em; font-size: clamp(16px, 1.25vw, 19px); line-height: 1.55; color: var(--text2); }
-        .fp-explore { position: absolute; right: clamp(16px, 4vw, 56px); bottom: clamp(24px, 6svh, 64px); display: inline-flex; align-items: center; gap: 48px; padding-bottom: 12px; border-bottom: 1px solid var(--bd2); font-size: 18px; color: var(--foreground); transition: border-color .2s, gap .3s; }
+        .fp-explore { position: absolute; left: 0; right: 0; margin: 0 auto; width: max-content; bottom: clamp(24px, 6svh, 64px); display: inline-flex; align-items: center; gap: 48px; padding-bottom: 12px; border-bottom: 1px solid var(--bd2); font-size: 18px; color: var(--foreground); transition: border-color .2s, gap .3s; }
         .fp-explore:hover { border-color: var(--foreground); gap: 56px; }
         @media (prefers-reduced-motion: no-preference) {
-          .fp-path { stroke-dashoffset: 1; animation: fp-draw 1.6s cubic-bezier(.45,.05,.2,1) .15s forwards; }
+          .fp-reveal { stroke-dashoffset: 1; animation: fp-draw 1.6s cubic-bezier(.45,.05,.2,1) .15s forwards; }
           .fp-dot, .fp-nodes li { opacity: 0; animation: fp-in .6s ease forwards; }
           .fp-dot { animation-delay: 1.4s; }
           .fp-nodes li:nth-child(1) { animation-delay: 1.25s; }
           .fp-nodes li:nth-child(2) { animation-delay: 1.4s; }
           .fp-nodes li:nth-child(3) { animation-delay: .75s; }
-          .fp-title, .fp-sub, .fp-explore { opacity: 0; translate: 0 18px; animation: fp-rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+          .fp-title, .fp-explore { opacity: 0; translate: 0 18px; animation: fp-rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
           .fp-title { animation-delay: .35s; }
-          .fp-sub { animation-delay: .6s; }
           .fp-explore { animation-delay: 1.5s; }
         }
         @keyframes fp-rise { to { opacity: 1; translate: 0 0; } }
@@ -198,9 +204,9 @@ export function FlightPathHero() {
         @media (max-width: 860px) {
           .fp-hero { min-height: auto; }
           .fp-copy { position: relative; left: auto; right: auto; top: auto; padding: clamp(96px, 22svh, 200px) clamp(16px, 4vw, 56px) 0; }
-          .fp-nodes { position: relative; inset: auto; display: flex; flex-wrap: wrap; gap: 0 28px; padding: 28px clamp(16px, 4vw, 56px) 0; order: 3; }
+          .fp-nodes { position: relative; inset: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 28px; padding: 28px clamp(16px, 4vw, 56px) 0; order: 3; }
           .fp-nodes li { position: static; transform: none; }
-          .fp-explore { position: relative; right: auto; bottom: auto; order: 4; align-self: flex-start; margin: 40px clamp(16px, 4vw, 56px) 48px; }
+          .fp-explore { position: relative; left: auto; right: auto; bottom: auto; order: 4; align-self: center; margin: 40px clamp(16px, 4vw, 56px) 48px; }
           .fp-copy { order: 2; }
           .fp-path { stroke: color-mix(in srgb, var(--path) 70%, transparent); }
           .fp-dot { display: none; }

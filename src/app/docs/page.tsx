@@ -84,8 +84,9 @@ export default function DocsPage() {
         }}
       >
         {/* Section header */}
-        <div style={{ marginBottom: 40, position: 'relative' }}>
+        <div style={{ marginBottom: 40, position: 'relative', textAlign: 'center' }}>
           <div
+            hidden
             aria-hidden
             style={{
               position: 'absolute',
@@ -103,7 +104,7 @@ export default function DocsPage() {
             Docs
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, position: 'relative' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 14, position: 'relative' }}>
             <span
               style={{
                 display: 'inline-block',
@@ -154,7 +155,7 @@ export default function DocsPage() {
         </div>
 
         {/* Document type tabs */}
-        <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap', justifyContent: 'center' }}>
           {DOCS.map((doc) => {
             const isActive = selected.id === doc.id;
             return (

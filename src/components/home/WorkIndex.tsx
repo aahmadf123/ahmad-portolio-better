@@ -40,7 +40,7 @@ export function WorkIndex() {
           const list = w.projectSlugs.filter((slug) => !FEATURED.includes(slug)).map((slug) => projects.find((p) => p.slug === slug)!);
           if (list.length === 0) return null;
           return (
-            <div key={g.anchor} id={g.anchor} className="wi-group" aria-labelledby={`${g.anchor}-h`}>
+            <div key={g.anchor} id={g.anchor} className="wi-group" aria-labelledby={`${g.anchor}-h`} style={{ '--area': w.accent } as React.CSSProperties}>
               <div className="wi-group-head rv">
                 <h3 id={`${g.anchor}-h`} className="wi-group-title">
                   <span aria-hidden className="wi-dot" />
@@ -62,10 +62,11 @@ export function WorkIndex() {
         .wi-lede { color: var(--text2); max-width: 34em; font-size: 18px; }
         .wi-all { grid-column: 2; justify-self: start; font-size: 15px; }
         .wi-group { scroll-margin-top: 24px; margin-top: clamp(40px, 5vw, 64px); }
-        .wi-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--foreground); }
+        .wi-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 14px; border-bottom: 2px solid var(--area); }
         .wi-group-title { display: inline-flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 400; letter-spacing: -0.015em; }
-        .wi-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text2); }
-        .wi-group:target .wi-dot { background: var(--primary-fill); }
+        .wi-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--area); }
+        .wi-group-years { color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)) !important; }
+        .wi-group:target .wi-dot { box-shadow: 0 0 0 5px color-mix(in srgb, var(--area) 25%, transparent); }
         .wi-group-years { color: var(--text3); font-size: 15px; }
         .wi-rows { list-style: none; }
         .wi-row { border-bottom: 1px solid var(--bd); }
@@ -76,10 +77,10 @@ export function WorkIndex() {
         .wi-link:hover .wi-thumb img { opacity: .85; }
         .wi-name { font-size: clamp(20px, 1.7vw, 24px); line-height: 1.2; letter-spacing: -0.015em; color: var(--foreground); }
         .wi-name-arrow { display: inline-block; margin-left: .35em; color: var(--text3); transition: transform .25s, color .25s; }
-        .wi-link:hover .wi-name-arrow, .wi-link:focus-visible .wi-name-arrow { transform: translateX(6px); color: var(--foreground); }
-        .wi-link:is(:hover, :focus-visible) { background: var(--surface); padding-left: 14px; padding-right: 14px; }
-        .wi-name { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .4s cubic-bezier(.2,.7,.2,1); }
-        .wi-link:is(:hover, :focus-visible) .wi-name { background-size: 100% 1px; }
+        .wi-link:hover .wi-name-arrow, .wi-link:focus-visible .wi-name-arrow { transform: translateX(6px); color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)); }
+        .wi-link:is(:hover, :focus-visible) { background: color-mix(in srgb, var(--area) 8%, var(--background)); padding-left: 14px; padding-right: 14px; }
+        .wi-name { background: linear-gradient(var(--area), var(--area)) 0 100% / 0 2px no-repeat; transition: background-size .4s cubic-bezier(.2,.7,.2,1); }
+        .wi-link:is(:hover, :focus-visible) .wi-name { background-size: 100% 2px; }
         .wi-tag { display: block; margin-top: 6px; font-size: 14px; color: var(--text3); }
         .wi-result { font-size: 16px; line-height: 1.45; }
         .wi-story { display: block; margin-top: 6px; font-size: 15px; line-height: 1.5; color: var(--text2); }

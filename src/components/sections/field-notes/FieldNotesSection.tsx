@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { fieldNotes } from '@/lib/field-notes';
+import { fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
 import { Pic } from '@/components/ui/pic';
 
 const fmt = (d: string) => new Date(d).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
@@ -24,7 +24,7 @@ export function FieldNotesSection() {
         </div>
         <ol className="fn-list">
           {published.map((n, i) => (
-            <li key={n.slug} className="rv" style={{ '--i': i } as React.CSSProperties}>
+            <li key={n.slug} className="rv" style={{ '--i': i, '--area': CATEGORY_CONFIG[n.category]?.color ?? '#2dd4bf' } as React.CSSProperties}>
               <Link href={`/field-notes/${n.slug}`} transitionTypes={['nav-forward']} className="fn-row">
                 <span className="fn-date tnum">{fmt(n.date)}</span>
                 <span>
@@ -52,7 +52,9 @@ export function FieldNotesSection() {
         .fn-date, .fn-meta { font-size: 14px; color: var(--text3); }
         .fn-meta { text-align: right; }
         .fn-name { font-size: clamp(19px, 1.6vw, 23px); line-height: 1.25; letter-spacing: -0.015em; }
-        .fn-row:is(:hover, :focus-visible) { background: var(--surface); padding-left: 14px; padding-right: 14px; }
+        .fn-meta { color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)) !important; }
+        .fn-date::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--area); margin-right: 10px; }
+        .fn-row:is(:hover, :focus-visible) { background: color-mix(in srgb, var(--area) 8%, var(--background)); padding-left: 14px; padding-right: 14px; }
         .fn-row:is(:hover, :focus-visible) .fn-name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
         .fn-excerpt { display: block; margin-top: 8px; font-size: 16px; color: var(--text2); max-width: 40em; }
         .fn-tags { display: block; margin-top: 10px; font-size: 14px; color: var(--text3); }

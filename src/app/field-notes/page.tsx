@@ -40,8 +40,8 @@ export default function FieldNotesPage() {
         position: 'relative', overflow: 'hidden',
       }}>
 
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 20 }}>
             <span style={{ display: 'inline-block', width: 28, height: 1.5, background: 'var(--bd2)', opacity: 0.8 }} />
             <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--primary)' }}>
               Field Notes
@@ -60,7 +60,7 @@ export default function FieldNotesPage() {
 
           <p style={{
             fontSize: 17, lineHeight: 1.75, color: 'var(--text2)',
-            maxWidth: 560, marginBottom: 0, fontFamily: 'var(--font-body), sans-serif',
+            maxWidth: 560, margin: '0 auto', fontFamily: 'var(--font-body), sans-serif',
           }}>
             What actually works, what fails in production, and what I am still figuring out -
             across AI engineering, autonomous systems, sports analytics, and the path from research to shipping.

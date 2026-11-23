@@ -8,13 +8,13 @@ import { site } from '@/lib/data/site';
 
 /** Homepage sections the bar links to, in page order. */
 const LINKS = [
-  { id: 'work', label: 'Work' },
-  { id: 'experience', label: 'Story' },
-  { id: 'field-notes', label: 'Notes' },
-  { id: 'about', label: 'About' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'timeline', label: 'Timeline' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'work', label: 'Work', color: '#fb7185' },
+  { id: 'experience', label: 'Story', color: '#5b8af5' },
+  { id: 'field-notes', label: 'Notes', color: '#2dd4bf' },
+  { id: 'about', label: 'About', color: '#38bdf8' },
+  { id: 'skills', label: 'Skills', color: '#f472b6' },
+  { id: 'timeline', label: 'Timeline', color: '#a78bfa' },
+  { id: 'contact', label: 'Contact', color: '#22c55e' },
 ] as const;
 /** Everything the spy watches: sections without a link light the one before them. */
 const SPY_IDS = ['hero', 'intro', 'toledo-football-iq', 'work', 'experience', 'field-notes', 'about', 'skills', 'timeline', 'credentials', 'signals', 'now', 'contact'];
@@ -46,7 +46,7 @@ export function HomeNav() {
         <Brand />
         <nav aria-label="Sections" className="home-nav-links">
           {LINKS.map((l) => (
-            <a key={l.id} href={`#${l.id}`} className="home-nav-link" aria-current={current === l.id ? 'location' : undefined}>{l.label}</a>
+            <a key={l.id} href={`#${l.id}`} className="home-nav-link" style={{ '--area': l.color } as React.CSSProperties} aria-current={current === l.id ? 'location' : undefined}>{l.label}</a>
           ))}
         </nav>
         <div className="home-nav-end">
@@ -73,7 +73,7 @@ export function HomeNav() {
         .home-nav-link { position: relative; font-size: 15px; color: var(--text2); display: inline-flex; align-items: center; min-height: 44px; transition: color .2s; }
         .home-nav-link:hover { color: var(--foreground); }
         .home-nav-link[aria-current] { color: var(--foreground); }
-        .home-nav-link::after { content: ''; position: absolute; left: 50%; bottom: 6px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--primary-fill); transform: scale(0); transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+        .home-nav-link::after { content: ''; position: absolute; left: 50%; bottom: 6px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--area, var(--primary-fill)); transform: scale(0); transition: transform .3s cubic-bezier(.2,.7,.2,1); }
         .home-nav-link[aria-current]::after { transform: scale(1); }
         .home-nav-resume { color: var(--foreground); }
         .home-nav-menu { display: none; background: none; border: 0; font: inherit; font-size: 15px; color: var(--foreground); cursor: pointer; }

@@ -50,10 +50,11 @@ export async function Background() {
         .ch-photo { position: relative; aspect-ratio: 21 / 8; overflow: hidden; border-radius: 3px; background: var(--surface); margin-bottom: clamp(24px, 3vw, 40px); }
         .ch-credit { font-size: 13px; color: var(--text3); margin: -28px 0 28px; }
         .ch-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 20px clamp(24px, 5vw, 80px); }
-        .ch-mark { font-size: 14px; color: var(--text2); }
+        .ch-mark { font-size: 14px; display: inline-flex; align-items: center; gap: 8px; color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)); }
+        .ch-mark::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--area); }
         .ch-title { font-size: clamp(28px, 3vw, 44px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.05; margin-top: 8px; }
         .ch-body p { margin-bottom: 12px; max-width: 38em; }
-        .ch-stat { display: flex; flex-direction: column; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--bd); max-width: 38em; }
+        .ch-stat { display: flex; flex-direction: column; margin-top: 18px; padding-top: 12px; border-top: 2px solid var(--area); max-width: 38em; }
         .ch-stat dd { font-size: 26px; letter-spacing: -0.02em; order: 1; }
         .ch-stat dt { font-size: 14px; color: var(--text2); order: 2; }
         .ch-photo.own { max-height: none; }
@@ -80,12 +81,12 @@ function Credit({ id }: { id: PhotoId }) {
   );
 }
 
-function Chapter({ id, mark, title, paragraphs, stat, photo, children, gallery, caption }: {
+function Chapter({ id, mark, title, paragraphs, stat, photo, children, gallery, caption, area = '#2dd4bf' }: {
   id: string; mark: string; title: string; paragraphs: string[]; stat: { value: string; label: string };
-  photo?: PhotoId; children?: React.ReactNode; gallery?: World['gallery']; caption?: string;
+  photo?: PhotoId; children?: React.ReactNode; gallery?: World['gallery']; caption?: string; area?: string;
 }) {
   return (
-    <article id={id} aria-labelledby={`${id}-title`} className="ch">
+    <article id={id} aria-labelledby={`${id}-title`} className="ch" style={{ '--area': area } as React.CSSProperties}>
       {photo && (
         <>
           {journeyPhoto(photo).own ? (
@@ -128,6 +129,7 @@ function Chapter({ id, mark, title, paragraphs, stat, photo, children, gallery, 
 function WorldBlock({ world: w, cards }: { world: World; cards: { insight: (typeof insights)[number]; lines: Awaited<ReturnType<typeof highlightInsight>> }[] }) {
   return (
     <Chapter
+      area={w.accent}
       id={w.id}
       mark={`${w.n} · ${w.label} · ${w.years}`}
       title={w.title}

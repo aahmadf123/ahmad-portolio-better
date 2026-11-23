@@ -22,12 +22,12 @@ export function TimelineSection() {
   return (
     <section id="timeline" aria-label="Timeline" className="tl">
       <div className="wrap">
-        <SH label="Timeline" sub="Career and education as one continuous line. Newest first, then back to the origin story." variant="sub" />
+        <SH color="#a78bfa" label="Timeline" sub="Career and education as one continuous line. Newest first, then back to the origin story." variant="sub" />
         <div className="tl-wrap">
         <div aria-hidden className="tl-line"><div data-tl-fill className="tl-fill" /></div>
         <ol className="tl-list">
           {entries.map((e) => (
-            <li key={e.id} className="tl-item rv">
+            <li key={e.id} className="tl-item rv" style={{ '--area': e.kind === 'job' ? e.job.color : '#a78bfa' } as React.CSSProperties}>
               <span aria-hidden className="tl-dot rv-pop" />
               {e.kind === 'job' && <JobRow job={e.job} />}
               {e.kind === 'award' && (
@@ -61,8 +61,9 @@ export function TimelineSection() {
         .tl-wrap { position: relative; }
         .tl-line { position: absolute; left: calc(12em + 15px); top: 0; bottom: 0; width: 1px; background: var(--bd); }
         .tl-fill { position: absolute; inset: 0; background: var(--foreground); transform-origin: top; transform: scaleY(1); }
-        .tl-dot { position: absolute; left: calc(12em + 11px); top: 30px; width: 9px; height: 9px; border-radius: 50%; background: var(--background); border: 1px solid var(--foreground); }
-        .tl-item:first-child .tl-dot { background: var(--primary-fill); border-color: var(--primary-fill); }
+        .tl-dot { position: absolute; left: calc(12em + 10px); top: 29px; width: 11px; height: 11px; border-radius: 50%; background: var(--background); border: 2px solid var(--area); }
+        .tl-item:first-child .tl-dot { background: var(--area); }
+        .tl-kind { color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)) !important; }
         .tl-item { position: relative; }
         .tl-list { list-style: none; border-top: 1px solid var(--foreground); }
         .tl-item { display: grid; grid-template-columns: 12em minmax(0, 1fr); gap: 6px 32px; padding: 22px 0; border-bottom: 1px solid var(--bd); }

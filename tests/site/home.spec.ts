@@ -8,7 +8,6 @@ import { featuredProjectSlugs } from '../../src/lib/data/worlds';
 test('the hero: headline, supporting line, the path and three linked nodes', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(/AI systems for\s*uncertain environments/);
-  await expect(page.locator('#hero')).toContainText('reinforcement learning for UAV autonomy');
   await expect(page.locator('#hero .fp-path')).toHaveCount(1);
   for (const [label, anchor] of [['Agentic AI', 'path-agentic-ai'], ['UAV Research', 'path-uav-research'], ['Sports Analytics', 'path-sports-analytics']]) {
     const link = page.locator('#hero').getByRole('link', { name: label });
@@ -16,6 +15,17 @@ test('the hero: headline, supporting line, the path and three linked nodes', asy
     await expect(page.locator(`#${anchor}`)).toHaveCount(1);
   }
   await expect(page.locator('#hero').getByRole('link', { name: /Explore the work/ })).toHaveAttribute('href', '#work');
+});
+
+test('the whole path is drawn, on normal and very wide screens', async ({ page }, info) => {
+  test.skip(info.project.name === 'phone', 'desktop widths');
+  for (const width of [1440, 2000, 2560]) {
+    await page.setViewportSize({ width, height: 975 });
+    await page.goto('/');
+    await page.waitForTimeout(2400);
+    expect(await page.locator('.fp-path').evaluate((el) => getComputedStyle(el).strokeDasharray), `${width}px`).toBe('none');
+    expect(await page.locator('.fp-reveal').evaluate((el) => parseFloat(getComputedStyle(el).strokeDashoffset)), `${width}px`).toBe(0);
+  }
 });
 
 test('nodes sit on the line and never cover the headline', async ({ page }, info) => {

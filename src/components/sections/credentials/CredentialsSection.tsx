@@ -30,7 +30,7 @@ export function CredentialsSection() {
   return (
     <section id="credentials" aria-label="Credentials" className="cr">
       <div className="wrap">
-        <SH label="Credentials" sub="Certifications, awards, and the communities behind the work." variant="sub" />
+        <SH color="#e5c453" label="Credentials" sub="Certifications, awards, and the communities behind the work." variant="sub" />
 
         <h4 className="cr-h">Certifications</h4>
         <ul className="cr-list">

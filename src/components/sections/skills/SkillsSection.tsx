@@ -8,7 +8,7 @@ export function SkillsSection() {
   return (
     <section id="skills" aria-label="Capabilities" className="sk">
       <div className="wrap">
-        <SH label="Capabilities" sub={`${total} tools and methods, grouped by the kind of work they carry.`} variant="sub" />
+        <SH color="#f472b6" label="Capabilities" sub={`${total} tools and methods, grouped by the kind of work they carry.`} variant="sub" />
         {/* A drifting row of every skill (decorative; the full grouped list follows). */}
         <div className="marquee sk-marquee" aria-hidden>
           <div className="marquee-track">

@@ -15,7 +15,7 @@ export function SignalsSection() {
   return (
     <section id="signals" aria-label="Signals" className="sg">
       <div className="wrap">
-        <SH label="Signals" sub="Press, recognition, and - as they arrive - words from the people behind the work." variant="sub" />
+        <SH color="#fb7185" label="Signals" sub="Press, recognition, and - as they arrive - words from the people behind the work." variant="sub" />
         {feature && (
           <article className="sg-press rv">
             <button type="button" className="sg-img lift-img" onClick={() => openLb(feature.image, feature.imageAlt)} aria-label="Enlarge the article image">

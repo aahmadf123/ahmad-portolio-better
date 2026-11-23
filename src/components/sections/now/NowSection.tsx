@@ -7,7 +7,7 @@ export function NowSection() {
   return (
     <section id="now" aria-label="Now" className="now">
       <div className="wrap">
-        <SH label="Now" sub="What I'm actively learning, building, and chasing outside of work." />
+        <SH color="#2dd4bf" label="Now" sub="What I'm actively learning, building, and chasing outside of work." />
         <p className="now-updated">Updated · {nowUpdated}</p>
         <div className="now-grid">
           {nowCards.map((card, i) => (

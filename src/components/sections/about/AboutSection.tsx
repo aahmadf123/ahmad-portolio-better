@@ -16,7 +16,7 @@ export function AboutSection() {
   return (
     <section id="about" aria-label="About" className="ab">
       <div className="wrap">
-        <SH label="About" sub="Beyond the résumé: who is actually doing the work." />
+        <SH color="#38bdf8" label="About" sub="Beyond the résumé: who is actually doing the work." />
         <MetricsBand />
 
         <div className="ab-intro rv">
@@ -34,7 +34,7 @@ export function AboutSection() {
         </div>
 
         <div className="ab-lenses">
-          {about.lenses.map((lens) => <LensBlock key={lens.id} lens={lens} />)}
+          {about.lenses.map((lens, i) => <LensBlock key={lens.id} lens={lens} color={LENS_COLORS[i % LENS_COLORS.length]} />)}
         </div>
 
         <SignOff text={about.signOff.text} sub={about.signOff.sub} />
@@ -47,14 +47,15 @@ export function AboutSection() {
         .ab-links { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 24px; font-size: 15px; }
         .ab-lenses { margin-top: clamp(56px, 8vw, 112px); border-top: 1px solid var(--foreground); }
         .ab-lens { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 20px clamp(24px, 5vw, 80px); padding: clamp(32px, 4vw, 56px) 0; border-bottom: 1px solid var(--bd); scroll-margin-top: 80px; }
-        .ab-lens-kicker { font-size: 14px; color: var(--text2); }
+        .ab-lens-kicker { font-size: 14px; color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)); }
+        .ab-lens-title::after { content: ''; display: block; width: 40px; height: 3px; border-radius: 2px; background: var(--area); margin: 14px auto 0; }
         .ab-lens-title { font-size: clamp(28px, 3vw, 44px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.05; margin-top: 6px; }
         .ab-lens-lead { font-size: 21px; line-height: 1.35; letter-spacing: -0.01em; font-weight: 400; }
         .ab-lens-body { margin-top: 14px; color: var(--text2); }
         .ab-data { display: flex; gap: 10px; margin-top: 18px; font-size: 15px; }
         .ab-data dt { color: var(--text3); }
         .ab-beliefs { list-style: none; margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 20px 32px; }
-        .ab-beliefs li { padding-top: 12px; border-top: 1px solid var(--bd); }
+        .ab-beliefs li { padding-top: 12px; border-top: 2px solid color-mix(in srgb, var(--area) 45%, transparent); }
         .ab-beliefs strong { font-weight: 500; font-size: 16px; display: flex; gap: 10px; }
         .ab-beliefs strong span { color: var(--text3); font-weight: 400; }
         .ab-beliefs p { margin-top: 6px; font-size: 15px; color: var(--text2); }
@@ -77,10 +78,12 @@ export function AboutSection() {
   );
 }
 
-function LensBlock({ lens }: { lens: Lens }) {
+const LENS_COLORS = ['#38bdf8', '#fb7185', '#a78bfa'];
+
+function LensBlock({ lens, color }: { lens: Lens; color: string }) {
   const beliefs = about.beliefs.filter((b) => lens.beliefIds.includes(b.n));
   return (
-    <article id={`lens-${lens.id}`} className="ab-lens rv">
+    <article id={`lens-${lens.id}`} className="ab-lens rv" style={{ '--area': color } as React.CSSProperties}>
       <div>
         <div className="ab-lens-kicker">{lens.kicker} · {lens.title}</div>
         <div className="ab-lens-title">{lens.title}</div>
@@ -88,7 +91,7 @@ function LensBlock({ lens }: { lens: Lens }) {
       <div>
         <h3 className="ab-lens-lead">{lens.lead}</h3>
         <p className="ab-lens-body">{lens.body}</p>
-        <dl className="ab-data"><dt>{lens.dataPoint.label}</dt><dd style={{ color: accentInk('#38bdf8') }}>{lens.dataPoint.value}</dd></dl>
+        <dl className="ab-data"><dt>{lens.dataPoint.label}</dt><dd style={{ color: accentInk(color) }}>{lens.dataPoint.value}</dd></dl>
 
         {beliefs.length > 0 && (
           <ul className="ab-beliefs">

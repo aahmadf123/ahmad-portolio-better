@@ -59,6 +59,8 @@ body {
 ::selection { background: color-mix(in srgb, var(--primary-fill) 28%, transparent); color: var(--foreground); }
 
 a { text-decoration: none; color: inherit; }
+/* Side-sliding entrances start off to the side; never let them widen the page. */
+main { overflow-x: clip; }
 code, pre, kbd, samp { font-family: var(--font-code), ui-monospace, monospace; }
 
 /* ── Layout primitives ─────────────────────────────────────────── */
@@ -277,3 +279,40 @@ a, button { min-height: 44px; min-width: 44px; }
   :root:not([data-theme="dark"]) [style*="background:#f472b6"][style*="color:var(--background)"] { background: #8c496e !important; }
   :root:not([data-theme="dark"]) [style*="background:#38bdf8"][style*="color:var(--background)"] { background: #296783 !important; }
   :root:not([data-theme="dark"]) [style*="background:#6b96f7"][style*="color:var(--background)"] { background: #475e94 !important; }
+
+/* ── Composition (homepage) ──────────────────────────────────────
+   Centred: the hero and each section's opener (title, one-line lede, link) — they mark
+   the chapters of the page. Left-aligned: everything a reader reads inside a section,
+   in two-column editorial layouts that sit in a centred column, so nothing hugs the
+   left edge on wide screens and nothing is centred just because it can be. Story
+   chapters alternate sides to give the long page a rhythm. */
+main .wi-head, main .fn-head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+main .wi-lede, main .fn-lede { max-width: 36em; }
+main .draw-rule::after { margin-left: auto; margin-right: auto; transform-origin: center; }
+main .bg-title { text-align: center; }
+main .sh { text-align: center; }
+main .sh > div { justify-content: center; }
+main .sh p { margin-left: auto; margin-right: auto; }
+main .fw-kicker { text-align: center; }
+main .metrics { justify-content: center; }
+
+/* Reading columns: centred on the page, left-aligned inside. */
+main .wi-group, main .fn-list, main .tl-wrap, main .cr .cr-list, main .cr .cr-h, main .sg-press, main .sg-quotes, main .now-grid, main .sk-grid, main .metrics, main .ab-lenses, main .ab-intro, main .rp, main .ch-cards, main .ch-grid, main .ib-grid, main .ct-grid { max-width: 1080px; margin-left: auto; margin-right: auto; }
+main .sg-empty { text-align: center; }
+
+/* Story chapters: title on one side, words on the other, swapping every chapter. */
+main .ch:nth-of-type(even) .ch-grid { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); }
+main .ch:nth-of-type(even) .ch-grid > div:first-child { order: 2; text-align: right; }
+main .ch:nth-of-type(even) .ch-mark { flex-direction: row-reverse; }
+@media (max-width: 860px) {
+  main .ch:nth-of-type(even) .ch-grid { grid-template-columns: minmax(0, 1fr); }
+  main .ch:nth-of-type(even) .ch-grid > div:first-child { order: 0; text-align: left; }
+  main .ch:nth-of-type(even) .ch-mark { flex-direction: row; }
+}
+
+/* Contact: the statement centred, the details in two columns under it. */
+main .ct-kicker, main .ct-title { text-align: center; margin-left: auto; margin-right: auto; }
+
+/* ── Area colours (set --area on the element) ───────────────────── */
+.area-dot { background: var(--area, var(--text2)) !important; }
+.area-ink { color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)) !important; }

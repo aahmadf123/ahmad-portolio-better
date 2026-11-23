@@ -24,7 +24,7 @@ export function ProjectsGrid() {
 
   return (
     <>
-      <div role="group" aria-label="Filter by side" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start', gap: '4px 24px', marginBottom: 'clamp(28px, 4vw, 44px)' }}>
+      <div role="group" aria-label="Filter by side" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '4px 24px', marginBottom: 'clamp(28px, 4vw, 44px)' }}>
         <button type="button" aria-pressed={side === 'all'} onClick={() => setSide('all')} style={chip(side === 'all')}>
           All
         </button>

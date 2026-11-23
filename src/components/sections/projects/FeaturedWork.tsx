@@ -47,6 +47,8 @@ export function FeaturedWork() {
         .fw-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; font-size: 14px; color: var(--text2); }
         .fw-status { display: inline-flex; align-items: center; gap: 8px; }
         .fw-status i { width: 6px; height: 6px; border-radius: 50%; }
+        .fw-spread { --area: var(--fw-color); }
+        .fw-title::before { content: ''; display: block; width: 44px; height: 3px; border-radius: 2px; background: var(--fw-color); margin-bottom: 18px; }
         .fw-title { font-size: clamp(32px, 3.6vw, 52px); font-weight: 400; line-height: 1.05; letter-spacing: -0.03em; margin-top: 18px; }
         .fw-headline { margin-top: 14px; font-size: 17px; }
         .fw-story { margin-top: 18px; color: var(--text2); max-width: 34em; }
@@ -90,7 +92,7 @@ function FootballIQ() {
   const openLb = useLightboxOpen();
   const { open } = useProjectModal();
   return (
-    <article id="toledo-football-iq" aria-labelledby="toledo-football-iq-title" className="fw-spread">
+    <article id="toledo-football-iq" aria-labelledby="toledo-football-iq-title" className="fw-spread" style={{ '--fw-color': p.color } as React.CSSProperties}>
       <div className="rv-left">
         <div className="fw-meta">
           <span>Flagship · {p.tag}</span>
@@ -136,7 +138,7 @@ function FootballIQ() {
 function Spread({ project: p }: { project: Project }) {
   const { open } = useProjectModal();
   return (
-    <article id={p.slug} aria-labelledby={`${p.slug}-title`} className="fw-spread flip">
+    <article id={p.slug} aria-labelledby={`${p.slug}-title`} className="fw-spread flip" style={{ '--fw-color': p.color } as React.CSSProperties}>
       <div className="rv-right">
         <div className="fw-meta">
           <span>{p.domain} · {p.idx}</span>
