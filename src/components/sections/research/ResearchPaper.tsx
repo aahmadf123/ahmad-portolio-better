@@ -5,6 +5,7 @@ import { useLightboxOpen } from '@/components/layout/LightboxProvider';
 import { Pic } from '@/components/ui/pic';
 import { research } from '@/lib/data/research';
 import { CountUp } from '@/components/ui/count-up';
+import { SpecRow } from '@/components/shared/SpecRow';
 
 /** The research paper: what it is, its figure, its numbers and its four pillars. */
 export function ResearchPaper() {
@@ -24,8 +25,8 @@ export function ResearchPaper() {
           <Pic src={research.image} alt={research.imageAlt} sizes="(max-width: 860px) 92vw, 520px" style={{ width: '100%', height: 'auto', display: 'block' }} />
         </button>
       </div>
-      <dl className="rp-metrics tnum">
-        {research.metrics.map((m) => <div key={m.label}><dd><CountUp value={m.metric} /></dd><dt>{m.label}</dt></div>)}
+      <dl className="spec-sheet rp-specs">
+        {research.metrics.map((m) => <SpecRow key={m.label} label={m.label} value={<CountUp value={m.metric} />} color={m.color} />)}
       </dl>
       <ol className="rp-pillars">
         {research.pillars.map((p, i) => (
@@ -44,7 +45,8 @@ export function ResearchPaper() {
         .rp-desc { margin-top: 14px; color: var(--text2); }
         .rp-link { margin-top: 16px; font-size: 15px; }
         .rp-img { padding: 0; border: 0; border-radius: 3px; overflow: hidden; background: #f4f4f2; cursor: zoom-in; align-self: start; }
-        .rp-metrics { display: flex; flex-wrap: wrap; gap: 16px clamp(24px, 4vw, 56px); margin-top: 32px; padding: 18px 0; border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd); }
+        .rp-specs { margin-top: 32px; }
+        .rp-metrics-old { display: flex; flex-wrap: wrap; gap: 16px clamp(24px, 4vw, 56px); margin-top: 32px; padding: 18px 0; border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd); }
         .rp-metrics div { display: flex; flex-direction: column; }
         .rp-metrics dd { font-size: 28px; letter-spacing: -0.02em; order: 1; }
         .rp-metrics dt { font-size: 14px; color: var(--text2); order: 2; }

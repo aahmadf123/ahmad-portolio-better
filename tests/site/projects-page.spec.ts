@@ -41,7 +41,6 @@ test('a project tile on /projects opens that project’s page', async ({ page })
 
 test('the work index, About and the footer go to the projects page', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#work').getByRole('link', { name: /All projects with pictures/ })).toHaveAttribute('href', '/projects');
   await expect(page.locator('footer').getByRole('link', { name: 'Bodies of Work' })).toHaveAttribute('href', '/projects');
   await expect(page.locator('#about').getByRole('link', { name: /View Projects/ })).toHaveAttribute('href', '/projects');
 });

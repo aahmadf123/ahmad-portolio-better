@@ -1,5 +1,6 @@
 'use client';
 
+import { SpecRow } from '@/components/shared/SpecRow';
 import React, { useEffect, useState } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
@@ -40,13 +41,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Metric({ value, label }: { value: string; label: string }) {
-  return (
-    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
-      <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginTop: 6 }}>{label}</div>
-    </div>
-  );
+function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
+  return <SpecRow value={value} label={label} color={color} />;
 }
 
 function LayerRow({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
@@ -100,9 +96,7 @@ export default function ChampionsComplexCaseStudy() {
         .cs-body li::marker { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
         .cs-h2 { font-family: ${DISPLAY}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 13px;   color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); margin: 24px 0 10px; }
-        .metrics-grid-cc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
-        @media (max-width: 640px) { .metrics-grid-cc { grid-template-columns: repeat(2, 1fr); } }
-        .two-col-cc { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+                        .two-col-cc { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         @media (max-width: 700px) { .two-col-cc { grid-template-columns: 1fr; } }
         .three-col-cc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-cc { grid-template-columns: 1fr 1fr; } }
@@ -170,14 +164,14 @@ export default function ChampionsComplexCaseStudy() {
             A donor-focused web campaign strategy for the Champions Complex - a 74,000-square-foot transformation of the University of Toledo Health Education Building into a centralized student-athlete development hub.
           </p>
 
-          <div className="metrics-grid-cc">
+          <dl className="spec-sheet metrics-grid-cc" style={{ marginBottom: 36 }}>
             <Metric value="74K sq ft" label="Facility renovation scope" />
             <Metric value="450+" label="Rocket student-athletes impacted" />
             <Metric value="10" label="Architectural renderings mapped" />
             <Metric value="6" label="Donor journey stages" />
             <Metric value="Sidearm" label="Narrator platform strategy" />
             <Metric value="UToledo" label="Brand-aligned throughout" />
-          </div>
+          </dl>
 
           {/* Hero image */}
           <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>

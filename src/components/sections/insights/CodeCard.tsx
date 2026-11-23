@@ -12,9 +12,9 @@ export type TokenLine = { content: string; color: string }[];
  */
 export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: TokenLine[]; wide?: boolean }) {
   return (
-    <article data-insight={insight.id} className={wide ? 'cc insight-wide' : 'cc'} style={{ gridColumn: wide ? 'span 2' : undefined }}>
+    <article data-insight={insight.id} className={wide ? 'cc insight-wide' : 'cc'} style={{ gridColumn: wide ? 'span 2' : undefined, '--area': insight.color } as React.CSSProperties}>
       <div className="cc-bar">
-        <span className="cc-file">{insight.file}</span>
+        <span className="cc-file"><i aria-hidden className="cc-dots"><b /><b /><b /></i>{insight.file}</span>
         <span className="cc-flag">illustrative</span>
       </div>
       <div tabIndex={0} role="region" aria-label={`Code: ${insight.file}`} className="cc-code">
@@ -30,13 +30,18 @@ export function CodeCard({ insight, lines, wide }: { insight: Insight; lines: To
         <Link href={insight.source.href} transitionTypes={['nav-forward']} className="text-link is-underlined cc-src">From: {insight.source.label} →</Link>
       </div>
       <style>{`
-        .cc { min-width: 0; }
-        .cc-bar { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--text3); padding-bottom: 8px; }
-        .cc-file { font-family: var(--font-code), monospace; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        /* Code stays on its own dark panel in both themes (the highlighter's palette is dark). */
-        .cc-code { background: #16171a; color: #dbd7ca; border-radius: 3px; padding: 16px 18px; overflow-x: auto; font-family: var(--font-code), monospace; font-size: 13px; line-height: 1.75; }
-        .cc-foot { padding-top: 14px; }
-        .cc-title { font-size: 17px; font-weight: 500; }
+        .cc { min-width: 0; border: 1px solid color-mix(in srgb, var(--area) 45%, #2c2f36); border-radius: 6px; overflow: hidden; background: #16171a; }
+        :root[data-theme="dark"] .cc { background: #1b1d22; }
+        .cc-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; background: color-mix(in srgb, var(--area) 16%, #1f2126); color: #c9c7bd; font-size: 13px; border-bottom: 1px solid color-mix(in srgb, var(--area) 35%, #2c2f36); }
+        .cc-file { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-code), monospace; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #e6e3d8; }
+        .cc-dots { display: inline-flex; gap: 5px; }
+        .cc-dots b { width: 8px; height: 8px; border-radius: 50%; background: var(--area); opacity: .9; }
+        .cc-dots b + b { opacity: .55; }
+        .cc-dots b + b + b { opacity: .3; }
+        .cc-flag { flex-shrink: 0; padding: 2px 8px; border-radius: 3px; border: 1px solid #4a4e58; color: #c9c7bd; font-size: 12px; }
+        .cc-code { background: transparent; color: #dbd7ca; padding: 18px 20px; overflow-x: auto; font-family: var(--font-code), monospace; font-size: 13.5px; line-height: 1.75; }
+        .cc-foot { padding: 16px 20px 18px; background: var(--background); border-top: 1px solid color-mix(in srgb, var(--area) 35%, #2c2f36); }
+        .cc-title { font-size: 17px; font-weight: 500; color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)); }
         .cc-take { margin-top: 6px; font-size: 15px; color: var(--text2); }
         .cc-src { margin-top: 10px; font-size: 14px; }
       `}</style>

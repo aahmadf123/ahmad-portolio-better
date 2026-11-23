@@ -19,8 +19,8 @@ export function AboutSection() {
         <SH color="#38bdf8" label="About" sub="Beyond the résumé: who is actually doing the work." />
         <MetricsBand />
 
-        <div className="ab-intro rv">
-          <div id="about-intro">
+        <div id="about-intro" className="ab-intro rv">
+          <div>
             <h2 className="ab-headline">{about.headline}</h2>
             <p className="ab-bio">{about.bio}</p>
             <p className="ab-links">

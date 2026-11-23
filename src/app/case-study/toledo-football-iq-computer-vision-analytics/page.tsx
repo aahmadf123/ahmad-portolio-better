@@ -1,5 +1,6 @@
 'use client';
 
+import { SpecRow } from '@/components/shared/SpecRow';
 import React, { useEffect, useState } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
@@ -40,13 +41,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Metric({ value, label }: { value: string; label: string }) {
-  return (
-    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
-      <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginTop: 6 }}>{label}</div>
-    </div>
-  );
+function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
+  return <SpecRow value={value} label={label} color={color} />;
 }
 
 function DbLayer({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
@@ -100,9 +96,7 @@ export default function ToledoFootballIQCaseStudy() {
         .cs-body li::marker { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
         .cs-h2 { font-family: ${DISPLAY}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 13px;   color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); margin: 24px 0 10px; }
-        .metrics-grid-fiq { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
-        @media (max-width: 640px) { .metrics-grid-fiq { grid-template-columns: repeat(2, 1fr); } }
-        .two-col-fiq { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+                        .two-col-fiq { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 700px) { .two-col-fiq { grid-template-columns: 1fr; } }
         .three-col-fiq { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-fiq { grid-template-columns: 1fr 1fr; } }
@@ -162,14 +156,14 @@ export default function ToledoFootballIQCaseStudy() {
             A drone-based computer vision platform for Toledo Football that converts overhead practice footage into clip-linked player tracking, football labels, self-scout insights, and coach-correctable analytics.
           </p>
 
-          <div className="metrics-grid-fiq">
+          <dl className="spec-sheet metrics-grid-fiq" style={{ marginBottom: 36 }}>
             <Metric value="10" label="Stage CV pipeline" />
             <Metric value="50–100" label="Phase 0 evaluation clips" />
             <Metric value="90%+" label="Field-marking visibility target" />
             <Metric value="85%" label="Usable-clip target for metrics" />
             <Metric value="18+" label="Database schema tables" />
             <Metric value="&lt;10 min" label="Same-session feedback target" />
-          </div>
+          </dl>
 
           {/* Hero image */}
           <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>

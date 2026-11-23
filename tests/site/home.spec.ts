@@ -14,7 +14,7 @@ test('the hero: headline, supporting line, the path and three linked nodes', asy
     await expect(link).toHaveAttribute('href', `#${anchor}`);
     await expect(page.locator(`#${anchor}`)).toHaveCount(1);
   }
-  await expect(page.locator('#hero').getByRole('link', { name: /Explore the work/ })).toHaveAttribute('href', '#work');
+  await expect(page.locator('#hero').getByRole('link', { name: /Explore the work/ })).toHaveAttribute('href', '#projects');
 });
 
 test('the whole path is drawn, on normal and very wide screens', async ({ page }, info) => {
@@ -52,15 +52,15 @@ test('the travelling dot moves, and stands still under reduced motion', async ({
   else expect(b).not.toBe(a);
 });
 
-test('every project appears once: featured above, the rest in the work list', async ({ page }) => {
+test('every project appears once: featured above, the rest inside their story chapters', async ({ page }) => {
   await page.goto('/');
   const featured: readonly string[] = featuredProjectSlugs;
   const rest = caseStudySlugs.filter((s) => !featured.includes(s));
-  const links = page.locator('#work .wi-link');
-  await expect(links).toHaveCount(rest.length);
-  const hrefs = await links.evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+  const cards = page.locator('#experience a.pc');
+  await expect(cards).toHaveCount(rest.length);
+  const hrefs = await cards.evaluateAll((els) => els.map((e) => e.getAttribute('href')));
   expect(new Set(hrefs)).toEqual(new Set(rest.map((s) => `/case-study/${s}`)));
-  for (const s of featured) await expect(page.locator(`#work a[href="/case-study/${s}"]`)).toHaveCount(0);
+  for (const s of featured) await expect(page.locator(`#experience a.pc[href="/case-study/${s}"]`)).toHaveCount(0);
 });
 
 test('no picture is shown twice on the homepage', async ({ page }) => {

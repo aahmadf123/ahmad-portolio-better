@@ -1,5 +1,6 @@
 'use client';
 
+import { SpecRow } from '@/components/shared/SpecRow';
 import React, { useEffect, useState } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
@@ -40,13 +41,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Metric({ value, label }: { value: string; label: string }) {
-  return (
-    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
-      <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginTop: 6 }}>{label}</div>
-    </div>
-  );
+function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
+  return <SpecRow value={value} label={label} color={color} />;
 }
 
 function DbLayer({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
@@ -100,10 +96,8 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
         .cs-body li::marker { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
         .cs-h2 { font-family: ${DISPLAY}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 13px;   color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); margin: 24px 0 10px; }
-        .metrics-grid-taop { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 36px; }
-        .metrics-grid-taop > * { min-width: 0; overflow-wrap: anywhere; }
-        @media (max-width: 640px) { .metrics-grid-taop { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-        .two-col-taop { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+                .metrics-grid-taop > * { min-width: 0; overflow-wrap: anywhere; }
+                .two-col-taop { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 700px) { .two-col-taop { grid-template-columns: 1fr; } }
         .three-col-taop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-taop { grid-template-columns: 1fr 1fr; } }
@@ -163,14 +157,14 @@ export default function ToledoAthleticsOnboardingCaseStudy() {
             A serverless internal platform that centralizes onboarding knowledge, policies, contacts, org chart data, systems directories, and moderated staff tips for University of Toledo Athletics staff.
           </p>
 
-          <div className="metrics-grid-taop">
+          <dl className="spec-sheet metrics-grid-taop" style={{ marginBottom: 36 }}>
             <Metric value="14" label="Database schema tables" />
             <Metric value="5" label="Core services" />
             <Metric value="10+" label="Onboarding content areas" />
             <Metric value="Serverless" label="Edge deployment" />
             <Metric value="Workers AI" label="Chat assistant" />
             <Metric value="Moderated" label="Tips workflow" />
-          </div>
+          </dl>
 
           {/* Hero image */}
           <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>

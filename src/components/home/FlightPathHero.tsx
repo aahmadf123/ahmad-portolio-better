@@ -159,7 +159,7 @@ export function FlightPathHero() {
         <h1 id="hero-title" className="fp-title">AI systems for<br />uncertain environments</h1>
       </div>
 
-      <Link ref={exploreRef} href="#work" className="fp-explore">
+      <Link ref={exploreRef} href="#projects" className="fp-explore">
         <span>Explore the work</span>
         <span aria-hidden>↓</span>
       </Link>

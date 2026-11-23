@@ -1,5 +1,6 @@
 'use client';
 
+import { SpecRow } from '@/components/shared/SpecRow';
 import React, { useEffect, useState } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
@@ -40,13 +41,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Metric({ value, label }: { value: string; label: string }) {
-  return (
-    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
-      <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginTop: 6 }}>{label}</div>
-    </div>
-  );
+function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
+  return <SpecRow value={value} label={label} color={color} />;
 }
 
 function DbLayer({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
@@ -100,9 +96,7 @@ export default function SecurityDiscoveryToolCaseStudy() {
         .cs-body li::marker { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
         .cs-h2 { font-family: ${DISPLAY}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
         .cs-h3 { font-family: ${MONO}; font-size: 13px;   color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); margin: 24px 0 10px; }
-        .metrics-grid-sdt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
-        @media (max-width: 640px) { .metrics-grid-sdt { grid-template-columns: repeat(2, 1fr); } }
-        .two-col-sdt { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+                        .two-col-sdt { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 700px) { .two-col-sdt { grid-template-columns: 1fr; } }
         .three-col-sdt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-sdt { grid-template-columns: 1fr 1fr; } }
@@ -161,14 +155,14 @@ export default function SecurityDiscoveryToolCaseStudy() {
             A database-centered cybersecurity project that centralized security discovery data across enterprise sources to improve visibility, data integrity, reporting quality, and incident-response readiness.
           </p>
 
-          <div className="metrics-grid-sdt">
+          <dl className="spec-sheet metrics-grid-sdt" style={{ marginBottom: 36 }}>
             <Metric value="15%" label="Faster incident response" />
             <Metric value="95%" label="Data integrity improvement" />
             <Metric value="Zero" label="Data loss in DR tests" />
             <Metric value="3" label="Consolidated security sources" />
             <Metric value="AIIS" label="Summer 2023 industry cohort" />
             <Metric value="100%" label="On-time project delivery" />
-          </div>
+          </dl>
 
           {/* Hero image */}
           <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>

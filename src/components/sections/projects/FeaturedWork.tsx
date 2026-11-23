@@ -8,6 +8,7 @@ import { accentInk } from '@/lib/accent';
 import { flagshipProject, projects, projectStatusLabel, type Project } from '@/lib/data/projects';
 import { useProjectModal } from './ProjectModalProvider';
 import { CountUp } from '@/components/ui/count-up';
+import { SpecRow } from '@/components/shared/SpecRow';
 import { PlayDiagram } from './PlayDiagram';
 
 /** A real screen from the Football IQ build: Clip Review with its vision overlays and play labels. */
@@ -29,9 +30,8 @@ const FIQ_STATS = [
 export function FeaturedWork() {
   const homeowner = projects.find((p) => p.slug === 'homeowner-loss-prediction')!;
   return (
-    <section aria-labelledby="selected-title" className="fw">
+    <section id="projects" aria-labelledby="selected-title" className="fw">
       {/* Old links from before the redesign: /#projects lands on the work. */}
-      <span id="projects" aria-hidden className="fw-anchor" />
       <div className="wrap">
         <h2 id="selected-title" className="fw-kicker rv">Selected work</h2>
         <FootballIQ />
@@ -53,7 +53,8 @@ export function FeaturedWork() {
         .fw-headline { margin-top: 14px; font-size: 17px; }
         .fw-story { margin-top: 18px; color: var(--text2); max-width: 34em; }
         .fw-tools { margin-top: 18px; font-size: 14px; color: var(--text3); line-height: 1.7; }
-        .fw-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px clamp(16px, 2.5vw, 40px); margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--bd); }
+        .fw-specs { margin-top: 28px; border-top: 1px solid var(--foreground); }
+        .fw-stats-old { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px clamp(16px, 2.5vw, 40px); margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--bd); }
         .fw-stats dt { font-size: 14px; color: var(--text2); order: 2; }
         .fw-stats div { display: flex; flex-direction: column; gap: 2px; }
         .fw-stats dd { font-size: 28px; letter-spacing: -0.02em; line-height: 1.1; order: 1; }
@@ -104,10 +105,8 @@ function FootballIQ() {
           {p.story} A 10-stage pipeline from drone footage to coach dashboard - every output connects to the exact clip, overlay, confidence score, and correction path.
         </p>
         <p className="fw-tools">{p.stacks.join(' · ')}</p>
-        <dl className="fw-stats tnum">
-          {FIQ_STATS.map((s) => (
-            <div key={s.label}><dt>{s.label}</dt><dd><CountUp value={s.value} /></dd></div>
-          ))}
+        <dl className="fw-specs">
+          {FIQ_STATS.map((s) => <SpecRow key={s.label} label={s.label} value={<CountUp value={s.value} />} color={p.color} />)}
         </dl>
         <div className="fw-actions">
           <Link href={`/case-study/${p.slug}`} transitionTypes={['nav-forward']} className="text-link is-underlined">Read the case study →</Link>

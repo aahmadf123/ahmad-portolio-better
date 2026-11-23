@@ -1,5 +1,6 @@
 'use client';
 
+import { SpecRow } from '@/components/shared/SpecRow';
 import React, { useState, useEffect, useRef } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
@@ -41,12 +42,7 @@ function SectionLabel({ label }: { label: string }) {
 }
 
 function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
-  return (
-    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${color}` }}>
-      <div style={{ fontFamily: DISPLAY, fontSize: 34, fontWeight: 400, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginTop: 8 }}>{label}</div>
-    </div>
-  );
+  return <SpecRow value={value} label={label} color={color} />;
 }
 
 function PipelineStep({ n, title, sub, color = ACCENT, isLast = false }: { n: string; title: string; sub: string; color?: string; isLast?: boolean }) {
@@ -147,14 +143,14 @@ export default function HomeownerLossCaseStudy() {
             A production-style MLOps system for homeowner loss prediction that turns a manual actuarial modeling workflow into an automated, auditable, human-in-the-loop AI pipeline. Built with Grange Insurance × University of Toledo.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10, marginBottom: 32 }}>
+          <dl className="spec-sheet" style={{ marginBottom: 32 }}>
             <Metric value="R² 0.982" label="Model accuracy" color={ACCENT} />
             <Metric value="RMSE 7216" label="Prediction error" color="#e5c453" />
             <Metric value="26%" label="vs GLM baseline" color="#5b8af5" />
             <Metric value="75%" label="Manual review ↓" color="#2dd4bf" />
             <Metric value="MAE $29.10" label="Avg prediction error" color={ACCENT} />
             <Metric value="100+" label="Engineered features" color="#fb7185" />
-          </div>
+          </dl>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             <a href="#cs-architecture" onClick={e => { e.preventDefault(); document.getElementById('cs-architecture')?.scrollIntoView({ behavior: 'smooth' }); }} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 13, fontWeight: 700, letterSpacing: 0, borderRadius: 5, textDecoration: 'none', cursor: 'pointer' }}>
@@ -359,14 +355,14 @@ export default function HomeownerLossCaseStudy() {
         <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 24, paddingBottom: '0.05em' }}>
           Strong predictive performance and meaningful automation gains
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10, marginBottom: 28 }}>
+        <dl className="spec-sheet" style={{ marginBottom: 28 }}>
           <Metric value="R² 0.982" label="Final model accuracy" color={ACCENT} />
           <Metric value="RMSE 7216" label="Root mean square error" color="#e5c453" />
           <Metric value="MAE $29.10" label="Mean absolute error" color="#5b8af5" />
           <Metric value="26%" label="RMSE improvement vs GLM" color="#2dd4bf" />
           <Metric value="75%" label="Manual review reduction" color="#fb7185" />
           <Metric value="100+" label="Engineered + validated features" color={ACCENT} />
-        </div>
+        </dl>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }} className="results-grid">
           <div style={{ padding: '20px 22px', background: 'rgba(167,139,250,0.04)', border: '1px solid rgba(167,139,250,0.15)', borderRadius: 8 }}>
             <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 14 }}>Automation Gains</div>

@@ -8,7 +8,7 @@ import { site } from '@/lib/data/site';
 
 /** Homepage sections the bar links to, in page order. */
 const LINKS = [
-  { id: 'work', label: 'Work', color: '#fb7185' },
+  { id: 'projects', label: 'Work', color: '#fb7185' },
   { id: 'experience', label: 'Story', color: '#5b8af5' },
   { id: 'field-notes', label: 'Notes', color: '#2dd4bf' },
   { id: 'about', label: 'About', color: '#38bdf8' },
@@ -17,8 +17,8 @@ const LINKS = [
   { id: 'contact', label: 'Contact', color: '#22c55e' },
 ] as const;
 /** Everything the spy watches: sections without a link light the one before them. */
-const SPY_IDS = ['hero', 'intro', 'toledo-football-iq', 'work', 'experience', 'field-notes', 'about', 'skills', 'timeline', 'credentials', 'signals', 'now', 'contact'];
-const LINK_FOR: Record<string, string> = { intro: '', 'toledo-football-iq': 'work', credentials: 'timeline', signals: 'timeline', now: 'timeline' };
+const SPY_IDS = ['hero', 'intro', 'projects', 'experience', 'field-notes', 'about', 'skills', 'timeline', 'credentials', 'signals', 'now', 'contact'];
+const LINK_FOR: Record<string, string> = { intro: '', credentials: 'timeline', signals: 'timeline', now: 'timeline' };
 
 /**
  * The homepage's own nav bar: hidden over the hero (which has its own header), it slides

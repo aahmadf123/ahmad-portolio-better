@@ -3,7 +3,6 @@ import { ProjectModalProvider } from '@/components/sections/projects/ProjectModa
 import { FlightPathHero } from '@/components/home/FlightPathHero';
 import { AboutBrief } from '@/components/home/AboutBrief';
 import { FeaturedWork } from '@/components/sections/projects/FeaturedWork';
-import { WorkIndex } from '@/components/home/WorkIndex';
 import { Background } from '@/components/about/Background';
 import { FieldNotesSection } from '@/components/sections/field-notes/FieldNotesSection';
 import { AboutSection } from '@/components/sections/about/AboutSection';
@@ -26,7 +25,6 @@ export default function Home() {
           <FlightPathHero />
           <AboutBrief />
           <FeaturedWork />
-          <WorkIndex />
           <Background />
           <FieldNotesSection />
           <AboutSection />

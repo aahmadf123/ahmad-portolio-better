@@ -1,5 +1,6 @@
 'use client';
 
+import { SpecRow } from '@/components/shared/SpecRow';
 import React, { useEffect, useState } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
@@ -39,13 +40,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Metric({ value, label }: { value: string; label: string }) {
-  return (
-    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
-      <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginTop: 6 }}>{label}</div>
-    </div>
-  );
+function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
+  return <SpecRow value={value} label={label} color={color} />;
 }
 
 function StackRow({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
@@ -124,14 +120,14 @@ export default function DeepFlyerCaseStudy() {
         </p>
 
         {/* Metrics */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 36 }} className="metrics-grid-df">
+        <dl className="spec-sheet metrics-grid-df" style={{ marginBottom: 36 }}>
           <Metric value="80%" label="PPO success rate within 100 steps" />
           <Metric value="1M" label="PPO training steps completed" />
           <Metric value="<1s" label="Gazebo cold simulation startup" />
           <Metric value="10ms" label="Reward API median latency" />
           <Metric value="<5%" label="Collision-detection false-positive rate" />
           <Metric value="40%" label="X500 URDF mesh optimization" />
-        </div>
+        </dl>
 
         {/* CTA */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, paddingBottom: 'clamp(48px,6vw,72px)', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)' }}>

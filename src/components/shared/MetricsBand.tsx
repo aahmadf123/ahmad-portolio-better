@@ -1,9 +1,12 @@
+import React from 'react';
 import { jobs } from '@/lib/data/jobs';
 import { CountUp } from '@/components/ui/count-up';
 import { projects } from '@/lib/data/projects';
 import { awards } from '@/lib/data/awards';
 import { certs } from '@/lib/data/certs';
 import { constellation } from '@/lib/data/skills';
+
+const COLORS = ['#38bdf8', '#fb7185', '#e5c453', '#a78bfa', '#22c55e'];
 
 // Every figure is a data module's own .length, never a hand-typed number.
 const METRICS: { value: string; label: string }[] = [
@@ -18,13 +21,14 @@ const METRICS: { value: string; label: string }[] = [
 export function MetricsBand() {
   return (
     <dl className="metrics tnum">
-      {METRICS.map((m) => (
-        <div key={m.label}><dd><CountUp value={m.value} /></dd><dt>{m.label}</dt></div>
+      {METRICS.map((m, i) => (
+        <div key={m.label} style={{ '--area': COLORS[i] } as React.CSSProperties}><dd><CountUp value={m.value} /></dd><dt>{m.label}</dt></div>
       ))}
       <style>{`
         .metrics { display: flex; flex-wrap: wrap; gap: 12px clamp(24px, 4vw, 48px); padding: 18px 0; border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd); margin-bottom: clamp(36px, 5vw, 64px); }
         .metrics div { display: flex; align-items: baseline; gap: 8px; }
-        .metrics dd { font-size: 22px; letter-spacing: -0.02em; }
+        .metrics dd { font-size: 26px; letter-spacing: -0.02em; color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)); }
+        .metrics div { padding-left: 12px; border-left: 2px solid var(--area); }
         .metrics dt { font-size: 14px; color: var(--text2); }
       `}</style>
     </dl>

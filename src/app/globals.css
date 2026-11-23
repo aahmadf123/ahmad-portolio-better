@@ -316,3 +316,40 @@ main .ct-kicker, main .ct-title { text-align: center; margin-left: auto; margin-
 /* ── Area colours (set --area on the element) ───────────────────── */
 .area-dot { background: var(--area, var(--text2)) !important; }
 .area-ink { color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)) !important; }
+
+/* ── Spec sheet: numbers as ruled lines, not boxed "stat cards" ───── */
+.spec-row { display: flex; align-items: baseline; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--bd); }
+.spec-row dt { font-size: 15px; color: var(--text2); flex: 0 1 auto; }
+.spec-leader { flex: 1 1 24px; min-width: 24px; border-bottom: 1px dotted var(--bd2); transform: translateY(-4px); }
+.spec-row dd { font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.02em; line-height: 1.1; white-space: nowrap; color: color-mix(in oklab, var(--area, var(--foreground)) var(--accent-mix), var(--foreground)); }
+.spec-sheet { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 56px); border-top: 1px solid var(--foreground); }
+@media (max-width: 640px) { .spec-sheet { grid-template-columns: minmax(0, 1fr); } }
+
+/* Code: its own framed panel in both themes, a filename bar on top. */
+pre { border: 1px solid #2c2f36 !important; }
+:root[data-theme="dark"] pre { background: #1b1d22 !important; border-color: #353943 !important; }
+
+/* ── Section colours ─────────────────────────────────────────────
+   Every homepage section has one colour (the same as its dot in the nav). It draws
+   the rule under the section title, the top rule of its lists and its link underlines. */
+#intro { --area: #a78bfa; } #projects { --area: #fb7185; } #experience > .wrap > .bg-title { --area: #5b8af5; }
+#field-notes { --area: #2dd4bf; } #about { --area: #38bdf8; } #skills { --area: #f472b6; }
+#timeline { --area: #a78bfa; } #credentials { --area: #e5c453; } #signals { --area: #fb7185; }
+#now { --area: #2dd4bf; } #contact { --area: #22c55e; }
+main .draw-rule::after { height: 3px; border-radius: 2px; width: 56px; background: var(--area, var(--foreground)); }
+main :is(.fn-list, .tl-list, .cr-h, .sg-press, .ab-lenses, .fw-kicker, .ib-facts, .ct-channels) { border-top-color: var(--area, var(--foreground)) !important; border-top-width: 2px !important; }
+main .fw-kicker { border-bottom: 2px solid var(--area) !important; color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)) !important; }
+main .text-link.is-underlined { background-image: linear-gradient(color-mix(in srgb, var(--area, var(--primary-fill)) 70%, transparent), color-mix(in srgb, var(--area, var(--primary-fill)) 70%, transparent)); background-size: 100% 2px; }
+main .text-link.is-underlined:hover { background-image: linear-gradient(var(--area, var(--primary-fill)), var(--area, var(--primary-fill))); }
+main .sh span[aria-hidden] { width: 9px !important; height: 9px !important; border-radius: 50%; }
+main .ib-title, main .ct-title { text-decoration: none; }
+main .ib-kicker { color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)); }
+main .ct-email { border-bottom: 2px solid var(--area) !important; }
+
+/* About intro: headline on the left, the words and links on the right (no empty half). */
+main .ab-intro { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 20px clamp(28px, 5vw, 72px); align-items: start; }
+main .ab-intro > div { display: contents; }
+main .ab-headline { grid-column: 1; grid-row: 1 / span 2; }
+main .ab-bio { grid-column: 2; margin-top: 0; }
+main .ab-links { grid-column: 2; margin-top: 0; }
+@media (max-width: 860px) { main .ab-intro { grid-template-columns: minmax(0, 1fr); } main .ab-headline, main .ab-bio, main .ab-links { grid-column: 1; grid-row: auto; } }

@@ -38,7 +38,7 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 **Concept: "Uncertain Paths."** A quiet introduction traced by a looping flight path, connecting Ahmad's AI, UAV research and sports analytics work without crowding the page. The site should read like a well-set document, not a template: one typeface, lots of paper, hairlines instead of boxes, real evidence (screens, photos, numbers) instead of decoration.
 
 **Page structure**
-- **Home (`/`)** holds everything, in order: `FlightPathHero` → `AboutBrief` (name, role, facts, now building) → `FeaturedWork` → `WorkIndex` (all ten projects, grouped by path) → `Background` ("Experience and background": Toledo prologue, the five worlds with their photographs, galleries, research paper and code insights, the next chapter) → `FieldNotesSection` → `AboutSection` → Capabilities, Timeline, Credentials, Signals, Now → `ContactSection`.
+- **Home (`/`)** holds everything, in order: `FlightPathHero` → `AboutBrief` (name, role, facts, now building) → `FeaturedWork` → `Background` ("Experience and background": Toledo prologue, the five worlds with their photographs, galleries, each world's own projects as `ProjectCard`s linking to their case studies, the research paper and code insights, the next chapter) → `FieldNotesSection` → `AboutSection` → Capabilities, Timeline, Credentials, Signals, Now → `ContactSection`.
 - Details are shown, not hidden: every job's description, achievements and stack, award and affiliation photos, coursework.
 - **One thing, one place.** Each picture appears once on the homepage (`src/lib/data/image-places.ts` decides which section keeps it, in page order; the press image stays with the article). The two featured projects are not repeated in the work list, education lives in the Timeline, awards live in Credentials, the headshot is in the intro only.
 - **Nav:** the hero carries its own header; once it scrolls away, `HomeNav` slides in (fixed, scroll-spy on the current section, a reading-progress hairline, Resume link, theme switch; a Menu sheet under 960px).
@@ -112,3 +112,11 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 - Use mono or uppercase for labels.
 - Hide content behind hover without a touch equivalent.
 - Add new colours without updating `theme.css` and this file.
+
+## 8. Layout and colour rules (current)
+
+- **Alignment:** centred only for the hero and each section opener (title, short lede, link). Everything inside a section is left-aligned, in two-column layouts that sit in a centred column (max 1080px), so edges line up down the page and nothing hugs the left edge.
+- **No empty halves:** a chapter is title + mark on one rule, then words (with a lone photo under them) beside a sidebar (spec line, caption, project links). Two or more photos form a full-width grid; a single project is a horizontal card.
+- **Numbers:** always a spec sheet (`SpecRow`: label, dotted leader, number in the area's ink), never boxed stat cards. Case studies, featured work, the research paper and chapter stats all use it.
+- **Code:** a framed panel with a filename bar tinted in the source project's colour; plain `pre` blocks get a visible border in both themes.
+- **Colour:** each area (`src/lib/data/areas.ts`) and each homepage section (`#projects`, `#about`, … in `globals.css`) has one colour, set as `--area`. It draws dots, the 2–3px rule under titles, list top rules, link underlines and hover tints; as text it goes through the accent ink. No gradients or glows.
