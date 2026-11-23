@@ -1,5 +1,6 @@
 'use client';
 
+import { SpecRow } from '@/components/shared/SpecRow';
 import React, { useEffect, useState } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
@@ -11,7 +12,8 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
-const MONO   = "var(--font-code), ui-monospace, monospace";
+const MONO   = "var(--font-body), system-ui, sans-serif";
+const CODE = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#ef4444';
 
 const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
@@ -24,7 +26,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 13, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: 0 }}>
       {children}
     </span>
   );
@@ -34,29 +36,24 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
       <span style={{ display: 'inline-block', width: 18, height: 1.5, background: ACCENT, opacity: 0.5, flexShrink: 0 }} />
-      <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT }}>{children}</span>
+      <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>{children}</span>
     </div>
   );
 }
 
-function Metric({ value, label }: { value: string; label: string }) {
-  return (
-    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
-      <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
-    </div>
-  );
+function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
+  return <SpecRow value={value} label={label} color={color} />;
 }
 
 function DbLayer({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${color}06`, border: `1px solid ${color}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 13, color, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+        <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 13, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -96,25 +93,23 @@ export default function ToledoFootballIQCaseStudy() {
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
-        .cs-body li::marker { color: ${ACCENT}; }
+        .cs-body li::marker { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
         .cs-h2 { font-family: ${DISPLAY}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
-        .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
-        .metrics-grid-fiq { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
-        @media (max-width: 640px) { .metrics-grid-fiq { grid-template-columns: repeat(2, 1fr); } }
-        .two-col-fiq { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .cs-h3 { font-family: ${MONO}; font-size: 13px;   color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); margin: 24px 0 10px; }
+                        .two-col-fiq { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 700px) { .two-col-fiq { grid-template-columns: 1fr; } }
         .three-col-fiq { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-fiq { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-fiq { grid-template-columns: 1fr; } }
         .entity-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .entity-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
-        .entity-field { font-family: ${MONO}; font-size: 10px; color: var(--text3); padding: 2px 0; letter-spacing: 0.03em; }
-        .entity-key { color: ${ACCENT}; }
-        .principle-card { padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
+        .entity-field { font-family: ${MONO}; font-size: 13px; color: var(--text3); padding: 2px 0;  }
+        .entity-key { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
+        .principle-card { padding: 16px 18px; background: color-mix(in srgb, var(--foreground) 2%, transparent); border: 1px solid color-mix(in srgb, var(--foreground) 7%, transparent); border-radius: 8px; transition: all 0.2s ease; }
         .principle-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: color-mix(in srgb, var(--foreground) 2%, transparent); border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
-        .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
+        .nav-link { font-family: ${MONO}; font-size: 13px;   text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
         .pipeline-step { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: ${ACCENT}06; border: 1px solid ${ACCENT}18; border-radius: 8px; }
         .cs-grid-container {
           display: grid;
@@ -142,7 +137,7 @@ export default function ToledoFootballIQCaseStudy() {
 
       {/* ── Sticky header ── */}
       <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
-        <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>Toledo Football IQ</span>
+        <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>Toledo Football IQ</span>
       </SubpageHeader>
 
       {/* ── Hero ── */}
@@ -161,14 +156,14 @@ export default function ToledoFootballIQCaseStudy() {
             A drone-based computer vision platform for Toledo Football that converts overhead practice footage into clip-linked player tracking, football labels, self-scout insights, and coach-correctable analytics.
           </p>
 
-          <div className="metrics-grid-fiq">
+          <dl className="spec-sheet metrics-grid-fiq" style={{ marginBottom: 36 }}>
             <Metric value="10" label="Stage CV pipeline" />
             <Metric value="50–100" label="Phase 0 evaluation clips" />
             <Metric value="90%+" label="Field-marking visibility target" />
             <Metric value="85%" label="Usable-clip target for metrics" />
             <Metric value="18+" label="Database schema tables" />
             <Metric value="&lt;10 min" label="Same-session feedback target" />
-          </div>
+          </dl>
 
           {/* Hero image */}
           <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>
@@ -230,7 +225,7 @@ export default function ToledoFootballIQCaseStudy() {
                   ['Health and workload sensitivity', 'Effort, load, and biomechanics outputs touch athlete welfare. Role-based access, conservative labeling, and no automated medical inference are non-negotiable.'],
                 ].map(([title, body]) => (
                   <div key={title} className="principle-card">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>{body}</p>
                   </div>
                 ))}
@@ -258,9 +253,9 @@ export default function ToledoFootballIQCaseStudy() {
                   ['10', 'Overlay Rendering & Dashboard Indexing', 'Render clips with field grids, tracks, route paths, motion arrows, coverage shells, confidence warnings, and metric callouts. Index for dashboard search and coach review.'],
                 ].map(([n, title, body]) => (
                   <div key={n} className="pipeline-step">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
                     <div>
-                      <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>{title}</div>
+                      <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 4 }}>{title}</div>
                       <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>{body}</p>
                     </div>
                   </div>
@@ -314,7 +309,7 @@ export default function ToledoFootballIQCaseStudy() {
                   { name: 'quantum_experiments', fields: ['exp_id', 'name', 'hypothesis', 'status', 'result_summary', 'created_at'] },
                 ].map(({ name, fields }) => (
                   <div key={name} className="entity-card">
-                    <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>{name}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>{name}</div>
                     {fields.map(f => (
                       <div key={f} className="entity-field" style={{ paddingBottom: 3 }}>
                         <span className="entity-key">- </span>{f}
@@ -324,7 +319,7 @@ export default function ToledoFootballIQCaseStudy() {
                 ))}
               </div>
               <p>
-                The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>coach_corrections</code> table is the flywheel engine - every correction to any output type is recorded, timestamped, and exported to <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>training_datasets</code> for model retraining. The <code style={{ fontFamily: MONO, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>metrics.suppressed</code> flag prevents analytics from surfacing when calibration confidence is below threshold.
+                The <code style={{ fontFamily: CODE, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>coach_corrections</code> table is the flywheel engine - every correction to any output type is recorded, timestamped, and exported to <code style={{ fontFamily: CODE, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>training_datasets</code> for model retraining. The <code style={{ fontFamily: CODE, fontSize: 12, color: ACCENT, background: `${ACCENT}10`, padding: '1px 5px', borderRadius: 4 }}>metrics.suppressed</code> flag prevents analytics from surfacing when calibration confidence is below threshold.
               </p>
             </Section>
 
@@ -344,7 +339,7 @@ export default function ToledoFootballIQCaseStudy() {
                   ['Same-Session Feedback', 'A later phase targets period-break feedback: clip-ready metrics to position coaches within 5–10 minutes between periods. Full sessions processed within 60 minutes of practice ending. Lightweight models run during practice; full-quality runs run overnight.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>{body}</p>
                   </div>
                 ))}
@@ -390,13 +385,13 @@ export default function ToledoFootballIQCaseStudy() {
                 ].map(({ phase, label, color, items, exit }) => (
                   <div key={phase} className="roadmap-row" style={{ flexDirection: 'column', gap: 10 }}>
                     <div style={{ display: 'flex', gap: 12, alignItems: 'baseline' }}>
-                      <span style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0 }}>{phase}</span>
-                      <span style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em' }}>{label}</span>
+                      <span style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, flexShrink: 0 }}>{phase}</span>
+                      <span style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0 }}>{label}</span>
                     </div>
                     <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
                       {items.map(item => <li key={item} style={{ fontSize: 13, marginBottom: 4, lineHeight: 1.5 }}>{item}</li>)}
                     </ul>
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', borderTop: '1px solid rgba(244,244,242,0.06)', paddingTop: 8 }}>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', borderTop: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)', paddingTop: 8 }}>
                       Exit criteria: {exit}
                     </div>
                   </div>
@@ -419,7 +414,7 @@ export default function ToledoFootballIQCaseStudy() {
                   ['Health outputs require governance, not just disclaimers', 'Effort, load, and biomechanics data touch athlete welfare. Role-based access, conservative labeling, and a strict no-automated-medical-inference rule are non-negotiable from the start, not retrofitted later.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>{body}</p>
                   </div>
                 ))}
@@ -437,7 +432,7 @@ export default function ToledoFootballIQCaseStudy() {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
+                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 13, fontWeight: 700, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
               </div>
             </Section>
 
@@ -445,7 +440,7 @@ export default function ToledoFootballIQCaseStudy() {
 
           {/* ── Sticky section nav ── */}
           <nav className="cs-sidebar-nav">
-            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
                 <button

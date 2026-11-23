@@ -1,152 +1,65 @@
-'use client';
-
-import React, { useState } from 'react';
-import { Mail, MapPin, Clock } from 'lucide-react';
-import { Section, GithubIcon, LinkedinIcon, MONO, SERIF, SANS, FG3 } from '@/components/shared/section-helpers';
+import React from 'react';
 import { site } from '@/lib/data/site';
-import { sectionById } from '@/lib/data/sections';
+import { MagneticLink } from '@/components/ui/magnetic-link';
 
+/** The last section on the homepage: the address large, everything else as plain links. */
 export function ContactSection() {
-  const [emailHovered, setEmailHovered] = useState(false);
-  const def = sectionById('contact')!;
   const channels = [
-    { label: 'Email', value: site.email, href: `mailto:${site.email}`, color: '#e5c453', Icon: Mail },
-    { label: 'LinkedIn', value: '/in/ahmadfirasazfar', href: site.socials.linkedin, color: '#5b8af5', Icon: LinkedinIcon },
-    { label: 'GitHub', value: '/aahmadf123', href: site.socials.github, color: '#2dd4bf', Icon: GithubIcon },
-    { label: 'Location', value: site.location, href: null, color: '#a78bfa', Icon: MapPin },
-    { label: 'Response', value: 'Within 24 hours', href: null, color: '#22c55e', Icon: Clock },
+    { label: 'LinkedIn', value: '/in/ahmadfirasazfar', href: site.socials.linkedin },
+    { label: 'GitHub', value: '/aahmadf123', href: site.socials.github },
+    { label: 'Location', value: site.location, href: null },
+    { label: 'Response', value: 'Within 24 hours', href: null },
   ];
   return (
-    <Section id="contact" style={{ background: 'rgba(9,10,15,0.97)' }}>
-      <style>{`
-        @keyframes contact-blink { 0%,100%{opacity:.55}50%{opacity:0} }
-        @keyframes contact-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.55)}60%{box-shadow:0 0 0 5px rgba(34,197,94,0)} }
-        .contact-email-wrap:hover .contact-email-text { color: #38BDF8; }
-        .contact-email-wrap:hover { border-color: rgba(56,189,248,0.65); background: rgba(56,189,248,0.10); }
-        .contact-channel-row:hover { background: rgba(244,244,242,0.03); }
-        .contact-resume-link:hover { color: var(--text2); border-bottom-color: var(--bd2); }
-        /* single column before the 400px rail squeezes the left column (was 767px) */
-        @media (max-width: 900px) {
-          .contact-layout-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 32px !important; }
-        }
-        @media (max-width: 420px) {
-          .contact-email-wrap { padding: 16px 18px !important; gap: 12px !important; max-width: 100%; }
-          .contact-email-text { font-size: 13px !important; overflow-wrap: anywhere; }
-        }
-      `}</style>
-
-      {/* Ghost watermark */}
-      <div aria-hidden style={{ position: 'absolute', top: -28, right: -4, fontFamily: SERIF, fontSize: 'clamp(72px,14vw,112px)', fontWeight: 400, color: def.color, opacity: 0.04, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em', zIndex: 0 }}>{def.n}</div>
-
-      {/* Section header row */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginBottom: 56, position: 'relative', zIndex: 1 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ display: 'inline-block', width: 22, height: 1.5, background: def.color, opacity: 0.6, flexShrink: 0 }} />
-          <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: def.color }}>Contact</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.06em' }}>Let&apos;s talk about building something real.</span>
-        </div>
-        {/* Live status badge */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 14px', border: '1px solid rgba(34,197,94,0.22)', borderRadius: 4, background: 'rgba(34,197,94,0.05)', flexShrink: 0 }}>
-          <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', display: 'inline-block', animation: 'contact-pulse 2.4s ease-in-out infinite' }} />
-          <span style={{ fontFamily: MONO, fontSize: 10, color: '#22c55e', letterSpacing: '0.12em', textTransform: 'uppercase' }}>{site.availability.label}</span>
-        </div>
-      </div>
-
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <div className="contact-layout-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 400px', gap: 52, alignItems: 'start' }}>
-
-          {/* ── Left ── */}
+    <section id="contact" aria-labelledby="contact-title" className="ct">
+      <div className="wrap">
+        <p className="ct-kicker rv">Contact · Let&apos;s talk about building something real.</p>
+        <h2 id="contact-title" className="ct-title rv" style={{ '--i': 1 } as React.CSSProperties}>
+          Open to collaborating on AI&nbsp;research, ML&nbsp;engineering, and sports&nbsp;analytics.
+        </h2>
+        <div className="ct-grid rv" style={{ '--i': 2 } as React.CSSProperties}>
           <div>
-            <h2 style={{ fontFamily: SERIF, fontSize: 'var(--fs-section-head)', fontWeight: 400, color: 'var(--foreground)', lineHeight: 1.12, marginBottom: 20, maxWidth: 560, paddingBottom: '0.05em' }}>
-              Open to collaborating on AI&nbsp;research, ML&nbsp;engineering, and sports&nbsp;analytics.
-            </h2>
-            <p style={{ fontFamily: SANS, fontSize: 15, color: FG3, lineHeight: 1.8, marginBottom: 44, maxWidth: 440 }}>
+            <p className="ct-body">
               Working full time at First Solar and on sports analytics with Toledo Athletics. For a research collaboration, a side build, or just a conversation about autonomous systems, I&apos;m listening.
             </p>
-
-            {/* Email as terminal send-signal element */}
-            <a
-              href={`mailto:${site.email}`}
-              className="contact-email-wrap"
-              onMouseEnter={() => setEmailHovered(true)}
-              onMouseLeave={() => setEmailHovered(false)}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 18,
-                padding: '18px 28px',
-                background: emailHovered ? 'rgba(56,189,248,0.10)' : 'rgba(56,189,248,0.06)',
-                border: `1px solid ${emailHovered ? 'rgba(56,189,248,0.65)' : 'rgba(56,189,248,0.32)'}`,
-                borderRadius: 6, textDecoration: 'none',
-                marginBottom: 20, position: 'relative', overflow: 'hidden',
-                transition: 'background 0.18s, border-color 0.18s',
-              }}
-            >
-              <span aria-hidden style={{ position: 'absolute', top: 0, left: 0, width: 20, height: 20, borderTop: '2px solid rgba(56,189,248,0.55)', borderLeft: '2px solid rgba(56,189,248,0.55)' }} />
-              <span aria-hidden style={{ position: 'absolute', bottom: 0, right: 0, width: 20, height: 20, borderBottom: '2px solid rgba(56,189,248,0.55)', borderRight: '2px solid rgba(56,189,248,0.55)' }} />
-              <span style={{ fontFamily: MONO, fontSize: 10, color: '#38bdf8', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '0.1em', flexShrink: 0 }}>SEND →</span>
-              <span className="contact-email-text" style={{ fontFamily: MONO, fontSize: 15, color: '#38bdf8', letterSpacing: '0.04em', transition: 'color 0.18s' }}>
-                {site.email}
-              </span>
-              <span aria-hidden style={{ fontFamily: MONO, fontSize: 15, color: '#38bdf8', opacity: 0.5, animation: 'contact-blink 1s step-end infinite' }}>▮</span>
-            </a>
-
-            <div>
-              <a
-                href={site.resumeUrl}
-                target="_blank" rel="noopener"
-                className="contact-resume-link"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', paddingBottom: 4, borderBottom: '1px solid var(--bd)', transition: 'color 0.15s, border-color 0.15s' }}>
-                Resume PDF ↓
-              </a>
-              <a
-                href={site.degreeUrl}
-                target="_blank" rel="noopener"
-                className="contact-resume-link"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', paddingBottom: 4, borderBottom: '1px solid var(--bd)', transition: 'color 0.15s, border-color 0.15s', marginLeft: 16 }}>
-                Degree PDF ↓
-              </a>
+            <MagneticLink href={`mailto:${site.email}`} className="ct-email" max={8}>{site.email}<span aria-hidden> ↗</span></MagneticLink>
+            <p className="ct-status"><i aria-hidden /> {site.availability.label}</p>
+            <div className="ct-docs">
+              <a href={site.resumeUrl} target="_blank" rel="noopener" className="text-link is-underlined">Resume PDF ↓</a>
+              <a href={site.degreeUrl} target="_blank" rel="noopener" className="text-link is-underlined">Degree PDF ↓</a>
             </div>
-
-            {/* Interest tags */}
-            <div style={{ marginTop: 52, paddingTop: 24, borderTop: '1px solid var(--bd)', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-              <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 4 }}>Collab on</span>
-              {site.availability.interests.map(t => (
-                <span key={t} style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', border: '1px solid var(--bd)', borderRadius: 3, color: FG3, letterSpacing: '0.04em', textTransform: 'uppercase', wordBreak: 'break-word' }}>{t}</span>
+          </div>
+          <div>
+            <dl className="ct-channels">
+              {channels.map((c) => (
+                <div key={c.label}>
+                  <dt>{c.label}</dt>
+                  <dd>{c.href ? <a href={c.href} target="_blank" rel="noopener" className="text-link">{c.value} ↗</a> : c.value}</dd>
+                </div>
               ))}
-            </div>
+            </dl>
+            <p className="ct-interests"><span>Collab on</span> {site.availability.interests.join(' · ')}</p>
           </div>
-
-          {/* ── Right: channel terminal ── */}
-          <div style={{ border: '1px solid var(--bd)', borderRadius: 10, overflow: 'hidden', background: 'rgba(244,244,242,0.015)' }}>
-            <div style={{ padding: '14px 22px', background: 'rgba(244,244,242,0.03)', borderBottom: '1px solid var(--bd)', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(239,68,68,0.45)', display: 'inline-block' }} />
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(229,196,83,0.45)', display: 'inline-block' }} />
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(34,197,94,0.45)', display: 'inline-block' }} />
-              <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginLeft: 8 }}>Channels</span>
-            </div>
-            {channels.map((c, i) => (
-              <div
-                key={c.label}
-                className="contact-channel-row"
-                style={{ padding: '20px 22px', borderBottom: i < 4 ? '1px solid var(--bd)' : 'none', transition: 'background 0.15s', display: 'flex', alignItems: 'center', gap: 16 }}
-              >
-                <div style={{ width: 38, height: 38, borderRadius: 8, background: `${c.color}10`, border: `1px solid ${c.color}28`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <c.Icon size={16} color={c.color} strokeWidth={1.5} />
-                </div>
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 5 }}>{c.label}</div>
-                  {c.href ? (
-                    <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel={c.href.startsWith('http') ? 'noopener' : undefined} style={{ fontFamily: MONO, fontSize: 13, color: c.color, textDecoration: 'none', wordBreak: 'break-all', letterSpacing: '0.02em' }}>{c.value}</a>
-                  ) : (
-                    <span style={{ fontFamily: MONO, fontSize: 13, color: c.color }}>{c.value}</span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
         </div>
       </div>
-    </Section>
+      <style>{`
+        .ct { padding: clamp(72px, 11vw, 160px) 0 clamp(56px, 8vw, 112px); border-top: 1px solid var(--bd); }
+        .ct-kicker { font-size: 15px; color: var(--text2); }
+        .ct-title { margin-top: 20px; max-width: 18em; font-size: clamp(32px, 4.2vw, 64px); font-weight: 400; line-height: 1.08; letter-spacing: -0.03em; }
+        .ct-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px clamp(32px, 6vw, 96px); margin-top: clamp(40px, 5vw, 64px); }
+        .ct-body { color: var(--text2); max-width: 32em; }
+        .ct-email { display: inline-block; margin-top: 28px; font-size: clamp(22px, 2.6vw, 36px); letter-spacing: -0.02em; border-bottom: 1px solid var(--foreground); padding-bottom: 4px; overflow-wrap: anywhere; }
+        .ct-email:hover { color: var(--primary); border-color: var(--primary); }
+        .ct-status { margin-top: 20px; font-size: 15px; color: var(--text2); display: flex; align-items: center; gap: 10px; }
+        .ct-status i { width: 7px; height: 7px; border-radius: 50%; background: var(--primary-fill); }
+        .ct-docs { display: flex; flex-wrap: wrap; gap: 12px 28px; margin-top: 24px; font-size: 15px; }
+        .ct-channels { border-top: 1px solid var(--bd); }
+        .ct-channels > div { display: grid; grid-template-columns: 7em minmax(0, 1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--bd); font-size: 16px; }
+        .ct-channels dt { color: var(--text3); font-size: 15px; }
+        .ct-interests { margin-top: 24px; font-size: 15px; color: var(--text2); line-height: 1.7; }
+        .ct-interests span { color: var(--text3); margin-right: 6px; }
+        @media (max-width: 860px) { .ct-grid { grid-template-columns: minmax(0, 1fr); } }
+      `}</style>
+    </section>
   );
 }
-

@@ -1,120 +1,104 @@
 'use client';
 
 import React from 'react';
-import { Section, SH, useReveal, MONO, SANS, FG3 } from '@/components/shared/section-helpers';
+import { SH } from '@/components/shared/section-helpers';
 import { useLightboxOpen } from '@/components/layout/LightboxProvider';
 import { Pic } from '@/components/ui/pic';
 import { awards } from '@/lib/data/awards';
 import { affiliations } from '@/lib/data/affiliations';
 import { certs } from '@/lib/data/certs';
-import { sectionById } from '@/lib/data/sections';
-import { CertFlipCard } from './CertFlipCard';
+import { showInCredentials } from '@/lib/data/image-places';
 
-/**
- * Credentials wall: certifications, awards & recognition, and professional
- * affiliations (content unchanged from the original Skills section; the
- * cinematic badge treatment lands in Phase 5).
- */
+/** Certifications, awards and affiliations as three plain lists; photos open in place. */
 export function CredentialsSection() {
-  const { ref, visible } = useReveal();
-  const [openAward, setOpenAward] = React.useState<number | null>(null);
-  const [openAffil, setOpenAffil] = React.useState<number | null>(null);
   const openLb = useLightboxOpen();
-  const def = sectionById('credentials')!;
+  const photos = (all: string[], alt: string, ratio?: string, _fit?: React.CSSProperties['objectFit'], pos?: string) => {
+    // Photos already shown higher up the page are not repeated here.
+    const images = all.filter(showInCredentials);
+    if (images.length === 0) return null;
+    return (
+    <div className="cr-photos">
+      {images.map((src) => (
+        <button key={src} type="button" className="lift-img" onClick={() => openLb(src, alt)} aria-label={`Enlarge photo: ${alt}`} style={{ aspectRatio: ratio ?? '16/9' }}>
+          <Pic src={src} alt={alt} sizes="(max-width: 860px) 45vw, 300px" style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: pos ?? 'center', display: 'block' }} />
+        </button>
+      ))}
+    </div>
+    );
+  };
+
   return (
-    <Section id="credentials" style={{ background: 'rgba(15,17,23,0.86)' }}>
-      <SH n={def.n} label="Credentials" sub="Certifications, awards, and the communities behind the work." color={def.color} variant="sub" />
-      <div ref={ref} className={`reveal ${visible ? 'in' : ''}`}>
-        {/* Certifications - 3D flip badges */}
-        <div>
-          <div style={{ fontFamily: MONO, fontSize: 11, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Certifications · hover or tap to flip</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }} className="cert-flip-grid">
-            {certs.map((cert) => (
-              <CertFlipCard key={cert.id} cert={cert} />
-            ))}
-          </div>
-        </div>
+    <section id="credentials" aria-label="Credentials" className="cr">
+      <div className="wrap">
+        <SH color="#e5c453" label="Credentials" sub="Certifications, awards, and the communities behind the work." variant="sub" />
 
-        {/* Awards */}
-        <div style={{ marginTop: 52 }}>
-          <div style={{ fontFamily: MONO, fontSize: 11, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Awards & Recognition</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, alignItems: 'start' }} className="two-col-awards">
-            {awards.map((a, i) => (
-              <div key={i}
-                role="button"
-                tabIndex={0}
-                aria-expanded={openAward === i}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpenAward(openAward === i ? null : i); } }}
-                onClick={() => setOpenAward(openAward === i ? null : i)}
-                style={{ background: openAward === i ? `${a.color}10` : `${a.color}07`, borderTop: `2px solid ${a.color}`, borderRight: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderBottom: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderLeft: `1px solid ${openAward === i ? a.color + '55' : a.color + '25'}`, borderRadius: 8, cursor: 'pointer', transition: 'all 0.25s', overflow: 'hidden' }}>
-                <div style={{ padding: '18px 22px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div>
-                    <div style={{ fontFamily: SANS, fontSize: 14, fontWeight: 600, color: 'var(--foreground)' }}>{a.title}{a.milestone && <span style={{ color: 'var(--gold)', marginLeft: 7 }} aria-label="milestone">✦</span>}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text2)', marginTop: 3 }}>{a.detail}</div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0, marginLeft: 10 }}>
-                    <span style={{ fontFamily: MONO, fontSize: 11, color: a.color }}>{a.date}</span>
-                    <span style={{ fontSize: 14, color: FG3, transition: 'transform 0.3s', transform: openAward === i ? 'rotate(45deg)' : 'none' }}>+</span>
-                  </div>
-                </div>
-                {openAward === i && (
-                  <div style={{ padding: '0 18px 18px', borderTop: '1px solid var(--bd)' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.images.length}, 1fr)`, gap: 8, marginTop: 14 }}>
-                      {a.images.map((src, j) => (
-                        <div key={j} style={{ width: '100%', aspectRatio: a.ratio ?? '16/9', background: 'var(--background)', borderRadius: 6, overflow: 'hidden' }}>
-                          <Pic src={src} alt={a.title} sizes={`(max-width: 860px) ${Math.round(100 / a.images.length)}vw, ${Math.round(50 / a.images.length)}vw`} onClick={e => { e.stopPropagation(); openLb(src, a.title); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
+        <h4 className="cr-h">Certifications</h4>
+        <ul className="cr-list">
+          {certs.map((c) => (
+            <li key={c.id} className="cr-cert rv">
+              <Pic src={c.badgeImage} alt="" sizes="72px" className="cr-badge" />
+              <div>
+                <div className="cr-meta">{c.issuer} · {c.track} · Earned {c.earned}</div>
+                <h5 className="cr-title">{c.title}</h5>
+                <p className="cr-desc">{c.description}</p>
+                <p className="cr-tools">{c.skills.join(' · ')}</p>
+                <p className="cr-links">
+                  {c.verifyUrl && <a href={c.verifyUrl} target="_blank" rel="noopener" className="text-link is-underlined">Verify Badge ↗</a>}
+                  {c.certificateUrl && <a href={c.certificateUrl} target="_blank" rel="noopener" className="text-link is-underlined">Certificate ↓</a>}
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
+            </li>
+          ))}
+        </ul>
 
-        {/* Affiliations */}
-        <div style={{ marginTop: 52 }}>
-          <div style={{ fontFamily: MONO, fontSize: 11, color: FG3, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Professional Affiliations</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, alignItems: 'start' }} className="two-col-awards">
-            {affiliations.map((a, i) => (
-              <div key={i}
-                role="button"
-                tabIndex={0}
-                aria-expanded={openAffil === i}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpenAffil(openAffil === i ? null : i); } }}
-                onClick={() => setOpenAffil(openAffil === i ? null : i)}
-                style={{ background: openAffil === i ? `${a.color}10` : `${a.color}07`, border: `1px solid ${openAffil === i ? a.color + '55' : a.color + '25'}`, borderRadius: 10, cursor: 'pointer', transition: 'all 0.25s', overflow: 'hidden' }}>
-                <div style={{ padding: '20px 22px', display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 8, background: `${a.color}15`, border: `1px solid ${a.color}33`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <div style={{ width: 10, height: 10, borderRadius: 4, background: a.color }} />
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontFamily: SANS, fontSize: 14, fontWeight: 600, color: 'var(--foreground)', lineHeight: 1.3 }}>{a.name}</div>
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: a.color, marginTop: 3 }}>{a.role}</div>
-                    <div style={{ fontSize: 12, color: FG3, marginTop: 3, lineHeight: 1.4 }}>{a.short}</div>
-                  </div>
-                  <span style={{ fontSize: 16, color: FG3, transition: 'transform 0.3s', transform: openAffil === i ? 'rotate(45deg)' : 'none', flexShrink: 0, marginTop: 2 }}>+</span>
-                </div>
-                {openAffil === i && (
-                  <div style={{ padding: '0 22px 22px', borderTop: '1px solid var(--bd)' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${a.images.length}, 1fr)`, gap: 8, marginTop: 14 }}>
-                      {a.images.map((src, j) => (
-                        <div key={j} style={{ width: '100%', aspectRatio: a.ratio ?? '16/9', background: 'var(--background)', borderRadius: 6, overflow: 'hidden' }}>
-                          <Pic src={src} alt={a.name} sizes={`(max-width: 860px) ${Math.round(100 / a.images.length)}vw, ${Math.round(50 / a.images.length)}vw`} onClick={e => { e.stopPropagation(); openLb(src, a.name); }} style={{ width: '100%', height: '100%', objectFit: a.imgFit, objectPosition: a.imgPos ?? 'center', display: 'block', cursor: 'zoom-in' }} />
-                        </div>
-                      ))}
-                    </div>
-                    <p style={{ fontSize: 13, lineHeight: 1.75, color: 'var(--text2)', marginTop: 14 }}>{a.desc}</p>
-                  </div>
-                )}
+        <h4 className="cr-h">Awards & Recognition</h4>
+        <ul className="cr-list">
+          {awards.map((a) => (
+            <li key={a.title} className="cr-row rv">
+              <span className="cr-date tnum">{a.date}</span>
+              <div>
+                <h5 className="cr-title">{a.title}{a.milestone && <span className="cr-milestone"> · milestone</span>}</h5>
+                <p className="cr-desc">{a.detail}</p>
+                {photos(a.images, a.title, a.ratio, a.imgFit, a.imgPos)}
               </div>
-            ))}
-          </div>
-        </div>
+            </li>
+          ))}
+        </ul>
+
+        <h4 className="cr-h">Professional Affiliations</h4>
+        <ul className="cr-list">
+          {affiliations.map((a) => (
+            <li key={a.name} className="cr-row rv">
+              <span className="cr-date">{a.role}</span>
+              <div>
+                <h5 className="cr-title">{a.name}</h5>
+                <p className="cr-desc">{a.short}</p>
+                <p className="cr-desc">{a.desc}</p>
+                {photos(a.images, a.name, a.ratio, a.imgFit, a.imgPos)}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
-      <style>{`@media(max-width:900px){.cert-flip-grid{grid-template-columns:1fr!important}}@media(max-width:860px){.two-col-awards{grid-template-columns:1fr!important}}`}</style>
-    </Section>
+      <style>{`
+        .cr { padding: clamp(40px, 6vw, 80px) 0; }
+        .cr-h { font-size: 15px; font-weight: 400; color: var(--text2); margin-top: 40px; padding-bottom: 12px; border-bottom: 1px solid var(--foreground); }
+        .cr-list { list-style: none; }
+        .cr-cert, .cr-row { display: grid; grid-template-columns: 12em minmax(0, 1fr); gap: 8px 32px; padding: 22px 0; border-bottom: 1px solid var(--bd); }
+        .cr-cert { grid-template-columns: 72px minmax(0, 1fr); }
+        .cr-badge { width: 72px; height: 72px; object-fit: contain; }
+        .cr-meta, .cr-date { font-size: 14px; color: var(--text2); }
+        .cr-title { font-size: 19px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.3; }
+        .cr-milestone { color: var(--text3); font-size: 15px; }
+        .cr-desc { font-size: 15px; color: var(--text2); margin-top: 4px; max-width: 44em; }
+        .cr-tools { font-size: 14px; color: var(--text3); margin-top: 8px; }
+        .cr-links { display: flex; gap: 20px; margin-top: 8px; font-size: 15px; }
+        .cr details { margin-top: 4px; }
+        .cr summary { cursor: pointer; font-size: 15px; color: var(--text2); min-height: 44px; display: inline-flex; align-items: center; }
+        .cr-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr)); gap: 8px; margin: 14px 0 4px; max-width: 640px; }
+        .cr-photos button { padding: 0; border: 0; background: var(--surface); border-radius: 3px; overflow: hidden; cursor: zoom-in; }
+        @media (max-width: 700px) { .cr-row { grid-template-columns: minmax(0, 1fr); } }
+      `}</style>
+    </section>
   );
 }
-

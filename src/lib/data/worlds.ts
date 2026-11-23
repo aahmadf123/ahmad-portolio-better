@@ -150,6 +150,9 @@ export const opening = {
   body: 'I studied Computer Science & Engineering at the University of Toledo and worked in campus IT support.',
 };
 
+/** Toledo Athletics belongs in the Toledo prologue too (new copy, from the jobs record). */
+export const openingAthletics = "Since October 2025 I've also worked with Toledo Athletics as a sports analytics and data science intern.";
+
 /** Projects shown directly below the hero, ahead of the chronological background. */
 export const featuredProjectSlugs = ['toledo-football-iq-computer-vision-analytics', 'homeowner-loss-prediction'] as const;
 /** "The next chapter." Closes the journey, flying back to the opening photo. */

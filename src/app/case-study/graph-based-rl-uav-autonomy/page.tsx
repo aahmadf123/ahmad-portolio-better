@@ -1,5 +1,6 @@
 'use client';
 
+import { SpecRow } from '@/components/shared/SpecRow';
 import React, { useEffect, useRef, useState } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
@@ -9,7 +10,7 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
-const MONO  = "var(--font-code), ui-monospace, monospace";
+const MONO  = "var(--font-body), system-ui, sans-serif";
 const ACCENT = '#e5c453';
 
 const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
@@ -22,7 +23,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 13, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: 0 }}>
       {children}
     </span>
   );
@@ -32,29 +33,24 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
       <span style={{ display: 'inline-block', width: 18, height: 1.5, background: ACCENT, opacity: 0.5, flexShrink: 0 }} />
-      <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT }}>{children}</span>
+      <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>{children}</span>
     </div>
   );
 }
 
-function Metric({ value, label }: { value: string; label: string }) {
-  return (
-    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
-      <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
-    </div>
-  );
+function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
+  return <SpecRow value={value} label={label} color={color} />;
 }
 
 function ArchLayer({ n, title, items }: { n: string; title: string; items: string[] }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+        <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 13, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -99,7 +95,7 @@ export default function UAVCaseStudy() {
 
       {/* ── Sticky header ── */}
       <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
-        <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 14px', border: `1px solid ${ACCENT}35`, borderRadius: 5, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none' }}>
+        <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 14px', border: `1px solid ${ACCENT}35`, borderRadius: 5, color: ACCENT, fontFamily: MONO, fontSize: 13, letterSpacing: 0, textDecoration: 'none' }}>
           Research Report ↓
         </a>
       </SubpageHeader>
@@ -107,9 +103,9 @@ export default function UAVCaseStudy() {
       {/* ── Hero ── */}
       <div style={{ padding: 'clamp(48px,7vw,96px) clamp(20px,4vw,52px) 0', maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
-          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Autonomy Research</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>USRCAP Summer 2025</span>
-          <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>LION Lab · University of Toledo</span>
+          <span style={{ fontFamily: MONO, fontSize: 13, padding: '4px 10px', background: `${ACCENT}15`, border: `1px solid ${ACCENT}35`, borderRadius: 4, color: ACCENT, letterSpacing: 0 }}>Autonomy Research</span>
+          <span style={{ fontFamily: MONO, fontSize: 13, padding: '4px 10px', background: 'color-mix(in srgb, var(--foreground) 4%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 10%, transparent)', borderRadius: 4, color: 'var(--text2)', letterSpacing: 0 }}>USRCAP Summer 2025</span>
+          <span style={{ fontFamily: MONO, fontSize: 13, padding: '4px 10px', background: 'color-mix(in srgb, var(--foreground) 4%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 10%, transparent)', borderRadius: 4, color: 'var(--text2)', letterSpacing: 0 }}>LION Lab · University of Toledo</span>
         </div>
         <h1 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-3xl)', lineHeight: 1.05, letterSpacing: '-0.025em', color: 'var(--foreground)', marginBottom: 18, paddingBottom: '0.06em' }}>
           AeroSynapse:<br />
@@ -120,31 +116,31 @@ export default function UAVCaseStudy() {
         </p>
 
         {/* Metrics */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 36 }} className="metrics-grid-uav">
+        <dl className="spec-sheet metrics-grid-uav" style={{ marginBottom: 36 }}>
           <Metric value="73%" label="Zero-shot navigation success" />
           <Metric value="89%" label="Success after 5 adaptation episodes" />
           <Metric value="<20ms" label="Control-loop latency (HIL)" />
           <Metric value="<500ms" label="Voice-to-action latency" />
           <Metric value="1000+" label="Randomized simulated environments" />
           <Metric value="95%" label="Operational cost vs. cloud alternatives" />
-        </div>
+        </dl>
 
         {/* CTA buttons */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, paddingBottom: 'clamp(48px,6vw,72px)', borderBottom: '1px solid rgba(244,244,242,0.07)' }}>
-          <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Research Report ↓</a>
-          <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← All Projects</SmartBackLink>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, paddingBottom: 'clamp(48px,6vw,72px)', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)' }}>
+          <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 13, fontWeight: 700, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>Research Report ↓</a>
+          <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid color-mix(in srgb, var(--foreground) 16%, transparent)', color: 'var(--text2)', fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>← All Projects</SmartBackLink>
         </div>
       </div>
 
       {/* ── Section nav ── */}
-      <div style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(13,14,18,0.96)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto' }}>
+      <div style={{ position: 'sticky', top: 56, zIndex: 90, background: 'color-mix(in srgb, var(--background) 96%, transparent)', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)', overflowX: 'auto' }}>
         <div style={{ display: 'flex', gap: 0, padding: '0 clamp(20px,4vw,52px)', maxWidth: 1100, margin: '0 auto' }}>
           {SECTION_IDS.map((id, i) => (
             <button
               key={id}
               onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
               style={{
-                fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase',
+                fontFamily: MONO, fontSize: 13, letterSpacing: 0,
                 padding: '14px 16px', background: 'transparent', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
                 color: active === id ? ACCENT : 'var(--text3)',
                 borderBottom: active === id ? `2px solid ${ACCENT}` : '2px solid transparent',
@@ -182,14 +178,14 @@ export default function UAVCaseStudy() {
                 { l: 'Role', v: 'AI & Autonomy Architecture Lead' },
                 { l: 'Hardware', v: 'Jetson Orin NX · Cube Orange+ · OAK-D Pro' },
               ].map(({ l, v }) => (
-                <div key={l} style={{ display: 'flex', gap: 12, padding: '10px 0', borderBottom: '1px solid rgba(244,244,242,0.06)' }}>
-                  <span style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.08em', flexShrink: 0, minWidth: 90 }}>{l}</span>
+                <div key={l} style={{ display: 'flex', gap: 12, padding: '10px 0', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)' }}>
+                  <span style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, flexShrink: 0, minWidth: 90 }}>{l}</span>
                   <span style={{ fontSize: 13, color: 'var(--text2)' }}>{v}</span>
                 </div>
               ))}
               <div style={{ marginTop: 14, padding: '18px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}20`, borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Research Question</div>
-                <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--foreground)', fontStyle: 'italic' }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>Research Question</div>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--foreground)', fontStyle: 'normal' }}>
                   &ldquo;Can a UAV enter an unfamiliar environment and make useful navigation decisions without being pre-trained on that exact space?&rdquo;
                 </p>
               </div>
@@ -215,14 +211,14 @@ export default function UAVCaseStudy() {
               { t: 'Sim-to-Reality Gap', d: 'Deep RL policies can achieve near-perfect simulation scores while failing entirely when facing real-world sensor noise and dynamics.' },
               { t: 'No Safe Failure Mode', d: 'When constraints are violated, most autonomy stacks have no principled fallback - leading to unpredictable or catastrophic failure.' },
             ].map(({ t, d }) => (
-              <div key={t} style={{ padding: '16px 18px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.07)', borderLeft: `2px solid ${ACCENT}50`, borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
+              <div key={t} style={{ padding: '16px 18px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)', borderLeft: `2px solid ${ACCENT}50`, borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{d}</p>
               </div>
             ))}
           </div>
           <div style={{ padding: '20px 24px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10 }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Design Principle</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>Design Principle</div>
             <p style={{ fontSize: 15, lineHeight: 1.75, color: 'var(--foreground)' }}>
               Autonomy should not collapse when the environment is unknown. AeroSynapse was designed around this exact failure case.
             </p>
@@ -248,9 +244,9 @@ export default function UAVCaseStudy() {
             <ArchLayer n="07" title="Human-in-the-Loop Interface" items={['Direct Control Mode', 'Supervised Autonomy', 'Natural-Language Commands', 'Intervention & Recovery']} />
             <ArchLayer n="08" title="Edge Deployment" items={['Jetson Orin NX (onboard)', 'ArduPilot / Cube Orange+', 'ROS 2 Modular Coordination', 'Local Inference (no cloud)']} />
           </div>
-          <div style={{ padding: '16px 22px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
+          <div style={{ padding: '16px 22px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 8 }}>
             <p style={{ fontSize: 14, lineHeight: 1.75, color: 'var(--text2)' }}>
-              <span style={{ color: 'var(--foreground)', fontFamily: MONO, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Validation method:</span> Hardware-in-the-loop simulation with edge deployment assumptions centered on Jetson Orin NX-class compute. Progressive testing protocol with domain randomization for sim-to-reality transfer evaluation.
+              <span style={{ color: 'var(--foreground)', fontFamily: MONO, fontSize: 13, letterSpacing: 0 }}>Validation method:</span> Hardware-in-the-loop simulation with edge deployment assumptions centered on Jetson Orin NX-class compute. Progressive testing protocol with domain randomization for sim-to-reality transfer evaluation.
             </p>
           </div>
         </Section>
@@ -281,8 +277,8 @@ export default function UAVCaseStudy() {
                 tags: ['Domain Randomization', 'Sim-to-Reality Transfer', 'Zero-Shot Evaluation', 'Few-Shot Evaluation', 'Hardware-in-the-Loop Testing', 'Safety & Failure-Mode Analysis', 'Progressive Testing Protocol'],
               },
             ].map(({ label, color, tags }) => (
-              <div key={label} style={{ padding: '22px 20px', background: 'rgba(244,244,242,0.025)', borderTop: `2px solid ${color}`, borderRight: '1px solid rgba(244,244,242,0.08)', borderBottom: '1px solid rgba(244,244,242,0.08)', borderLeft: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>{label}</div>
+              <div key={label} style={{ padding: '22px 20px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', borderTop: `2px solid ${color}`, borderRight: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderLeft: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, marginBottom: 14 }}>{label}</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                   {tags.map(t => <Tag key={t} color={color}>{t}</Tag>)}
                 </div>
@@ -317,12 +313,12 @@ export default function UAVCaseStudy() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }} className="two-col-uav">
             <div style={{ padding: '16px 20px', background: 'color-mix(in srgb, var(--primary) 6%, transparent)', border: '1px solid color-mix(in srgb, var(--primary) 20%, transparent)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: '#2dd4bf', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Safety</div>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: '#2dd4bf', letterSpacing: 0, marginBottom: 8 }}>Safety</div>
               <div style={{ fontFamily: SERIF, fontSize: 24, color: '#2dd4bf', marginBottom: 6, paddingBottom: '0.05em' }}>100%</div>
               <p style={{ fontSize: 12, lineHeight: 1.6, color: 'var(--text2)' }}>Collision-free testing across all evaluated safety scenarios in the reported validation.</p>
             </div>
             <div style={{ padding: '16px 20px', background: 'rgba(167,139,250,0.06)', border: '1px solid rgba(167,139,250,0.2)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: '#a78bfa', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Infrastructure Cost</div>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: '#a78bfa', letterSpacing: 0, marginBottom: 8 }}>Infrastructure Cost</div>
               <div style={{ fontFamily: SERIF, fontSize: 24, color: '#a78bfa', marginBottom: 6, paddingBottom: '0.05em' }}>95% ↓</div>
               <p style={{ fontSize: 12, lineHeight: 1.6, color: 'var(--text2)' }}>Estimated operational cost reduction by replacing cloud-dependent inference with edge-first architecture.</p>
             </div>
@@ -333,7 +329,7 @@ export default function UAVCaseStudy() {
         <Section id="insights">
           <SectionLabel>Key Insights</SectionLabel>
           <div style={{ padding: '28px 32px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}20`, borderRadius: 10, marginBottom: 28 }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Why Graph-Based RL</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 12 }}>Why Graph-Based RL</div>
             <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--foreground)' }}>
               Navigation is a relational problem. A flat perception model sees objects - a graph sees relationships between obstacles, goals, risk, and motion constraints. UAV navigation is naturally relational: which gap is safest? which path preserves battery? which region should be avoided? Graphs make these relationships explicit. By using graph-based RL, AeroSynapse gives the UAV a stronger representation for decisions in cluttered and unfamiliar environments.
             </p>
@@ -347,8 +343,8 @@ export default function UAVCaseStudy() {
               { t: 'Human Oversight Is a Control Layer, Not a Weakness', d: 'Full autonomy is not always the right answer. The human-in-the-loop modes exist because some decisions require human judgment, and a system that removes that option is more dangerous, not more capable.' },
               { t: 'Credible Research Requires Measurable Claims', d: 'The most important discipline in this project was separating what the architecture is designed to achieve from what has actually been validated. Strong framing with honest limitations is what makes research credible.' },
             ].map(({ t, d }) => (
-              <div key={t} style={{ padding: '18px 20px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--foreground)', letterSpacing: '0.04em', marginBottom: 8 }}>{t}</div>
+              <div key={t} style={{ padding: '18px 20px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text3)' }}>{d}</p>
               </div>
             ))}
@@ -372,16 +368,16 @@ export default function UAVCaseStudy() {
               { mode: 'Natural-Language Command Mode', color: '#a78bfa', d: 'The operator gives high-level mission instructions. The voice-to-action pipeline translates these into safe flight objectives within the current graph representation.' },
             ].map(({ mode, color, d }) => (
               <div key={mode} style={{ padding: '18px 20px', background: `${color}06`, border: `1px solid ${color}22`, borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>{mode}</div>
+                <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, marginBottom: 8 }}>{mode}</div>
                 <p style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--text2)' }}>{d}</p>
               </div>
             ))}
           </div>
-          <div style={{ padding: '20px 24px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Safety Mechanisms</div>
+          <div style={{ padding: '20px 24px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 8 }}>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text2)', letterSpacing: 0, marginBottom: 10 }}>Safety Mechanisms</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {['Runtime State Monitoring', 'Collision-Distance Constraints', 'Altitude Limits', 'Battery Safety Bounds', 'Emergency Fallback', 'Human Override', 'Baseline Controller Takeover', 'Decision Logging'].map(m => (
-                <span key={m} style={{ fontFamily: MONO, fontSize: 10, padding: '4px 9px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)' }}>{m}</span>
+                <span key={m} style={{ fontFamily: MONO, fontSize: 13, padding: '4px 9px', background: 'color-mix(in srgb, var(--foreground) 4%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 10%, transparent)', borderRadius: 4, color: 'var(--text2)' }}>{m}</span>
               ))}
             </div>
           </div>
@@ -395,13 +391,13 @@ export default function UAVCaseStudy() {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }} className="two-col-uav">
             <div style={{ padding: '20px 22px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}22`, borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What broke</div>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>What broke</div>
               <p style={{ fontSize: 14, lineHeight: 1.75, color: 'var(--text2)' }}>
                 The distance between designed and validated is real. Most numbers here come from simulation and hardware-in-the-loop, not real flight, and a 13% sim-to-reality transfer gap already shows up in the reported validation. A deep RL policy can score near-perfect in simulation and still fail once it meets real sensor noise and dynamics - which is exactly why the safety layer and the deliberately measurable claims exist.
               </p>
             </div>
-            <div style={{ padding: '20px 22px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>What I&apos;d do differently</div>
+            <div style={{ padding: '20px 22px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 8 }}>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 10 }}>What I&apos;d do differently</div>
               <p style={{ fontSize: 14, lineHeight: 1.75, color: 'var(--text2)' }}>
                 Benchmark earlier. The graph-representation advantage is argued more than it is measured - a small GNN policy trained against PPO/SAC baselines on the same randomized suite would turn that claim into a number. I&apos;d also ground the metrics in real flight logs sooner, so the sim-to-reality gap becomes an empirical result instead of an estimate.
               </p>
@@ -424,8 +420,8 @@ export default function UAVCaseStudy() {
               { n: '05', t: 'Safety-Gated ArduPilot Integration', d: 'Integrate safety-gated autonomy with ArduPilot flight modes so the constraint layer can trigger failsafe behaviors through the standard flight controller interface.' },
               { n: '06', t: 'Multi-Agent Extension', d: 'Extend the single-UAV graph-based RL framework to cooperative multi-agent UAV navigation for search, coverage, and formation tasks.' },
             ].map(({ n, t, d }) => (
-              <div key={n} style={{ padding: '18px 20px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, opacity: 0.9, marginBottom: 8 }}>{n}</div>
+              <div key={n} style={{ padding: '18px 20px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 8 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, opacity: 0.9, marginBottom: 8 }}>{n}</div>
                 <div style={{ fontFamily: MONO, fontSize: 12, color: 'var(--foreground)', marginBottom: 8 }}>{t}</div>
                 <p style={{ fontSize: 12, lineHeight: 1.65, color: 'var(--text3)' }}>{d}</p>
               </div>
@@ -433,8 +429,8 @@ export default function UAVCaseStudy() {
           </div>
 
           {/* Footer CTA */}
-          <div style={{ padding: '36px 40px', background: 'rgba(244,244,242,0.025)', border: '1px solid rgba(244,244,242,0.07)', borderRadius: 10, textAlign: 'center' }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 12 }}>AeroSynapse</div>
+          <div style={{ padding: '36px 40px', background: 'color-mix(in srgb, var(--foreground) 2.5%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)', borderRadius: 10, textAlign: 'center' }}>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 12 }}>AeroSynapse</div>
             <h3 style={{ fontFamily: SERIF, fontSize: 'var(--text-xl)', fontWeight: 400, color: 'var(--foreground)', marginBottom: 14, lineHeight: 1.2, paddingBottom: '0.06em' }}>
               Edge AI for the environments that matter most.
             </h3>
@@ -442,10 +438,10 @@ export default function UAVCaseStudy() {
               Graph learning, meta-learning, safety assurance, and human-AI teaming - composed into a practical autonomy stack for GPS-denied, map-free UAV navigation.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
-              <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
+              <a href="/docs/USRCAP_Final_Report.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 13, fontWeight: 700, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>
                 Download Research Report ↓
               </a>
-              <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid rgba(244,244,242,0.16)', color: 'var(--text2)', fontFamily: MONO, fontSize: 11, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
+              <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', border: '1px solid color-mix(in srgb, var(--foreground) 16%, transparent)', color: 'var(--text2)', fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>
                 ← Back to All Projects
               </SmartBackLink>
             </div>

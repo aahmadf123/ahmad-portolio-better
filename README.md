@@ -1,8 +1,9 @@
-# ahmadfx.xyz - cinematic portfolio
+# ahmadfx.xyz - portfolio
 
-Ahmad Firas's portfolio: a scroll-driven, cinematic personal journey built on
-Next.js 16 (App Router), TypeScript, Tailwind v4, framer-motion, GSAP, and
-vanilla three.js. Deployed on Vercel.
+Ahmad Firas's portfolio, "Uncertain Paths": a quiet, typographic site on warm
+paper (with a night theme), introduced by one looping flight path that links
+the three kinds of work. Built on Next.js 16 (App Router), TypeScript and
+Tailwind v4. Deployed on Vercel. Design system: [DESIGN.md](DESIGN.md).
 
 ## Getting started
 
@@ -74,12 +75,9 @@ a 600-token output cap. These bound cost but are best-effort on serverless -
 
 ## Fonts
 
-Display: Instrument Serif · Body: Figtree (stand-in for Satoshi) · Code:
-JetBrains Mono · Handwritten: Caveat - all via `next/font`. To switch the body
-font to Satoshi: download the variable WOFF2 from
-[fontshare.com/fonts/satoshi](https://www.fontshare.com/fonts/satoshi), drop it
-in `src/app/fonts/`, and swap the `Figtree` loader in `src/app/layout.tsx` for
-`next/font/local`. Every component reads `var(--font-body)`.
+One family for reading: DM Sans (`--font-body`; `--font-display` points at it).
+Code: JetBrains Mono (`code`/`pre` only) · Handwritten: Caveat (the About
+sign-off only) - all via `next/font` in `src/app/layout.tsx`.
 
 ## Asset pipeline
 

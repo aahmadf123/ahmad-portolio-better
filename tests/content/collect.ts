@@ -65,6 +65,10 @@ export const ROUTES: string[] = [
   ...caseStudySlugs.map((s) => `/case-study/${s}`),
 ];
 
+/** Content a baseline route used to show that now lives on other pages too (none today). */
+export const SHOWN_ON: Record<string, string[]> = {};
+export const shownOn = (route: string): string[] => SHOWN_ON[route] ?? [route];
+
 export function routeSlug(route: string): string {
   return route === '/' ? 'home' : route.replace(/^\//, '').replace(/\//g, '__');
 }

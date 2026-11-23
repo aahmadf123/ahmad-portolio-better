@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { jumpTo } from '@/components/ui/smooth-scroll';
+const jumpTo = (y: number) => window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior });
 
 /**
  * Navigation memory for SmartBackLink, mounted once in the root layout.
@@ -42,7 +42,7 @@ export function RouteTracker() {
           // offset until content finishes streaming in. The loop stops for
           // good the first time the offset sticks, so a reader who then
           // scrolls isn't fought.
-          const apply = () => jumpTo(saved); // (jumpTo keeps the Lenis glide in step)
+          const apply = () => jumpTo(saved);
           restoring = true; // don't save the half-restored offset meanwhile
           apply();
           let tries = 0;

@@ -42,7 +42,7 @@ export function Lightbox({ src, alt = '', onClose }: LightboxProps) {
       onClick={onClose}
       style={{
         position: 'fixed', inset: 0, zIndex: 99999,
-        background: 'rgba(13,14,18,0.92)',
+        background: 'color-mix(in srgb, var(--background) 92%, transparent)',
         backdropFilter: 'blur(16px)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         cursor: 'zoom-out',
@@ -70,17 +70,17 @@ export function Lightbox({ src, alt = '', onClose }: LightboxProps) {
         aria-label="Close image preview"
         style={{
           position: 'absolute', top: 20, right: 24,
-          background: 'rgba(244,244,242,0.08)',
-          border: '1px solid rgba(244,244,242,0.18)',
+          background: 'color-mix(in srgb, var(--foreground) 8%, transparent)',
+          border: '1px solid color-mix(in srgb, var(--foreground) 18%, transparent)',
           borderRadius: '50%', width: 40, height: 40,
           color: 'var(--foreground)', fontSize: 18, cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           lineHeight: 1, transition: 'background 0.15s',
         }}
-        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(244,244,242,0.18)'; }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(244,244,242,0.08)'; }}
+        onMouseEnter={e => { e.currentTarget.style.background = 'color-mix(in srgb, var(--foreground) 18%, transparent)'; }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'color-mix(in srgb, var(--foreground) 8%, transparent)'; }}
       >✕</button>
-      <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', fontFamily: "var(--font-code), ui-monospace, monospace", fontSize: 10, color: 'rgba(244,244,242,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', userSelect: 'none' }}>
+      <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', fontFamily: "var(--font-body), system-ui, sans-serif", fontSize: 13, color: 'color-mix(in srgb, var(--foreground) 35%, transparent)', letterSpacing: 0, userSelect: 'none' }}>
         Click anywhere or press Esc to close
       </div>
       <style>{`

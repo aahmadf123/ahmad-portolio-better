@@ -2,91 +2,166 @@
 
 import React from 'react';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
-import { MONO, SERIF, SANS, Tag } from '@/components/shared/section-helpers';
-import { Pic } from '@/components/ui/pic';
-import { projects, projectStatusLabel, type Project } from '@/lib/data/projects';
+import { Pic, largestVariant } from '@/components/ui/pic';
+import { useLightboxOpen } from '@/components/layout/LightboxProvider';
+import { accentInk } from '@/lib/accent';
+import { flagshipProject, projects, projectStatusLabel, type Project } from '@/lib/data/projects';
 import { useProjectModal } from './ProjectModalProvider';
+import { CountUp } from '@/components/ui/count-up';
+import { SpecRow } from '@/components/shared/SpecRow';
+import { PlayDiagram } from './PlayDiagram';
 
-// Split out (still server-rendered): GSAP and the play diagram stay off the critical
-// path of the hero photo.
-const FootballIQFeature = dynamic(() => import('./FootballIQFeature').then((m) => ({ default: m.FootballIQFeature })));
-
-const STATUS_COLOR: Record<Project['status'], string> = {
-  live: 'var(--green)',
-  'active-build': 'var(--red)',
-  shipped: 'var(--primary)',
-  research: 'var(--blue)',
+/** A real screen from the Football IQ build: Clip Review with its vision overlays and play labels. */
+const OUTPUT = {
+  src: '/Images/Football_IQ_Clip_Review.png',
+  alt: 'Toledo Football IQ Clip Review screen: an overhead practice clip with player-tracking overlays, the play marked Preliminary and Reviewed, and the play tag fields beside it.',
 };
 
+const FIQ_STATS = [
+  { value: '10', label: 'Pipeline stages' },
+  { value: '18+', label: 'Structured metrics' },
+  { value: '90%+', label: 'Field-marking accuracy target' },
+];
+
 /**
- * The two projects shown straight after the hero, before the chronological background:
- * Toledo Football IQ (its flagship panel) and Homeowner Loss Prediction. Both keep their
- * own descriptions, links and status labels; their worlds no longer repeat them.
+ * Two projects, straight after the hero: Toledo Football IQ and Homeowner Loss
+ * Prediction, as editorial spreads (words on one side, the real output on the other).
  */
 export function FeaturedWork() {
   const homeowner = projects.find((p) => p.slug === 'homeowner-loss-prediction')!;
   return (
-    <div style={{ position: 'relative', zIndex: 20, background: 'var(--background)', padding: 'clamp(40px, 6vw, 80px) clamp(16px, 4vw, 52px)' }}>
+    <section id="projects" aria-labelledby="selected-title" className="fw">
       {/* Old links from before the redesign: /#projects lands on the work. */}
-      <span id="projects" aria-hidden style={{ position: 'absolute', top: 0, left: 0, width: 1, height: 1 }} />
-      <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 4vw, 56px)' }}>
-        <section id="toledo-football-iq" aria-labelledby="toledo-football-iq-title" style={{ scrollMarginTop: 72 }}>
-          <FootballIQFeature />
-        </section>
-        <section id="homeowner-loss-prediction" aria-labelledby="homeowner-loss-prediction-title" style={{ scrollMarginTop: 72 }}>
-          <ProjectPanel project={homeowner} />
-        </section>
+      <div className="wrap">
+        <h2 id="selected-title" className="fw-kicker rv">Selected work</h2>
+        <FootballIQ />
+        <Spread project={homeowner} />
       </div>
-    </div>
+      <style>{`
+        .fw { position: relative; padding-top: clamp(64px, 10vw, 140px); }
+        .fw-anchor { position: absolute; top: 0; left: 0; width: 1px; height: 1px; }
+        .fw-kicker { font-size: 15px; font-weight: 400; color: var(--text2); padding-bottom: 14px; border-bottom: 1px solid var(--bd); }
+        .fw-spread { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); padding: clamp(40px, 6vw, 88px) 0; border-bottom: 1px solid var(--bd); scroll-margin-top: 24px; }
+        .fw-spread.flip > .fw-media { order: -1; }
+        .fw-spread.flip { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+        .fw-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; font-size: 14px; color: var(--text2); }
+        .fw-status { display: inline-flex; align-items: center; gap: 8px; }
+        .fw-status i { width: 6px; height: 6px; border-radius: 50%; }
+        .fw-spread { --area: var(--fw-color); }
+        .fw-title::before { content: ''; display: block; width: 44px; height: 3px; border-radius: 2px; background: var(--fw-color); margin-bottom: 18px; }
+        .fw-title { font-size: clamp(32px, 3.6vw, 52px); font-weight: 400; line-height: 1.05; letter-spacing: -0.03em; margin-top: 18px; }
+        .fw-headline { margin-top: 14px; font-size: 17px; }
+        .fw-story { margin-top: 18px; color: var(--text2); max-width: 34em; }
+        .fw-tools { margin-top: 18px; font-size: 14px; color: var(--text3); line-height: 1.7; }
+        .fw-specs { margin-top: 28px; border-top: 1px solid var(--foreground); }
+        .fw-stats-old { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px clamp(16px, 2.5vw, 40px); margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--bd); }
+        .fw-stats dt { font-size: 14px; color: var(--text2); order: 2; }
+        .fw-stats div { display: flex; flex-direction: column; gap: 2px; }
+        .fw-stats dd { font-size: 28px; letter-spacing: -0.02em; line-height: 1.1; order: 1; }
+        .fw-actions { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 28px; align-items: center; }
+        .fw-actions button { background: none; border: 0; font: inherit; font-size: 15px; color: var(--text2); cursor: pointer; padding: 0; min-height: 44px; text-decoration: underline; text-decoration-color: var(--bd2); text-underline-offset: 5px; }
+        .fw-actions button:hover { color: var(--foreground); }
+        .fw-note { margin-top: 10px; font-size: 14px; color: var(--text3); }
+        .fw-media { min-width: 0; display: flex; flex-direction: column; gap: 28px; }
+        .fw-figure { margin: 0; }
+        .fw-figure h3 { font-size: 15px; font-weight: 400; color: var(--text2); margin-bottom: 12px; }
+        .fw-shot { display: block; width: 100%; padding: 0; border: 1px solid var(--bd); border-radius: 3px; overflow: hidden; background: var(--surface); cursor: zoom-in; }
+        .fw-shot img { display: block; width: 100%; height: auto; }
+        .fw-figure figcaption { margin-top: 10px; font-size: 14px; color: var(--text2); }
+        .fw-diagram { border: 1px solid var(--bd); border-radius: 3px; padding: clamp(12px, 2vw, 20px); }
+        .fw-plain-img { border-radius: 3px; overflow: hidden; background: #f4f4f2; } /* the pipeline drawing is white-backed */
+        @media (max-width: 900px) {
+          .fw-spread, .fw-spread.flip { grid-template-columns: minmax(0, 1fr); }
+          .fw-spread.flip > .fw-media { order: 0; }
+        }
+      `}</style>
+    </section>
   );
 }
 
-const label: React.CSSProperties = { fontFamily: MONO, fontSize: 14 };
+function Status({ p }: { p: Project }) {
+  return (
+    <span className="fw-status">
+      <i aria-hidden style={{ background: p.color }} />
+      {projectStatusLabel[p.status]}
+    </span>
+  );
+}
 
-/** A project as a full-width panel: its picture beside its description, tools, links and details. */
-function ProjectPanel({ project: p }: { project: Project }) {
+function FootballIQ() {
+  const p = flagshipProject;
+  const openLb = useLightboxOpen();
   const { open } = useProjectModal();
   return (
-    <div className="project-panel" style={{ '--tile': p.color } as React.CSSProperties}>
-      <div className="project-panel-media">
-        <Pic src={p.image} alt={p.title} sizes="(max-width: 900px) 92vw, 600px" style={{ display: 'block', width: '100%', height: '100%', objectFit: 'contain' }} />
+    <article id="toledo-football-iq" aria-labelledby="toledo-football-iq-title" className="fw-spread" style={{ '--fw-color': p.color } as React.CSSProperties}>
+      <div className="rv-left">
+        <div className="fw-meta">
+          <span>Flagship · {p.tag}</span>
+          <Status p={p} />
+        </div>
+        <h3 id="toledo-football-iq-title" className="fw-title">{p.title}</h3>
+        <p className="fw-headline" style={{ color: accentInk(p.color) }}>{p.headline}</p>
+        <p className="fw-story">
+          {p.story} A 10-stage pipeline from drone footage to coach dashboard - every output connects to the exact clip, overlay, confidence score, and correction path.
+        </p>
+        <p className="fw-tools">{p.stacks.join(' · ')}</p>
+        <dl className="fw-specs">
+          {FIQ_STATS.map((s) => <SpecRow key={s.label} label={s.label} value={<CountUp value={s.value} />} color={p.color} />)}
+        </dl>
+        <div className="fw-actions">
+          <Link href={`/case-study/${p.slug}`} transitionTypes={['nav-forward']} className="text-link is-underlined">Read the case study →</Link>
+          <button type="button" onClick={() => open(p)}>{p.detailsLabel ?? 'Details →'}</button>
+        </div>
+        <p className="fw-note">Live URL coming when it ships</p>
       </div>
-      <div className="project-panel-body">
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '8px 16px' }}>
-          <span style={{ ...label, color: p.color }}>{p.domain} · {p.idx}</span>
-          <span style={{ ...label, color: STATUS_COLOR[p.status], display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-            <span aria-hidden style={{ width: 6, height: 6, borderRadius: '50%', background: STATUS_COLOR[p.status] }} />
-            {projectStatusLabel[p.status]}
-          </span>
-        </div>
-        <div style={{ ...label, color: 'var(--text2)', marginTop: 10 }}>{p.tag}</div>
-        <h3 id={`${p.slug}-title`} style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--fs-section-head)', lineHeight: 1.05, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: '8px 0 0' }}>{p.title}</h3>
-        <div style={{ ...label, color: `color-mix(in srgb, ${p.color} 70%, #f4f4f2)`, marginTop: 10 }}>{p.headline}</div>
-        <p style={{ fontFamily: SANS, fontSize: 16, lineHeight: 1.7, color: 'var(--foreground)', marginTop: 14, maxWidth: 560 }}>{p.story}</p>
-        {/* tools, directly below the description */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 16 }}>
-          {p.stacks.map((t) => <Tag key={t} size={14}>{t}</Tag>)}
-        </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 24 }}>
-          {p.links.map((l, i) => {
-            const style: React.CSSProperties = i === 0
-              ? { ...label, display: 'inline-flex', alignItems: 'center', padding: '10px 18px', borderRadius: 5, background: p.color, color: 'var(--background)', fontWeight: 700 }
-              : { ...label, display: 'inline-flex', alignItems: 'center', padding: '10px 18px', borderRadius: 5, background: 'var(--background)', border: '1px solid var(--text2)', color: 'var(--foreground)' };
-            if (l.kind === 'case-study') return <Link key={l.href} href={l.href} transitionTypes={['nav-forward']} style={style}>{l.label} ↗</Link>;
-            return <a key={l.href} href={l.href} target="_blank" rel="noopener" style={style}>{l.label} {l.kind === 'pdf' ? '↓' : '↗'}</a>;
-          })}
-          <button type="button" onClick={() => open(p)} style={{ ...label, display: 'inline-flex', alignItems: 'center', padding: '10px 18px', borderRadius: 5, background: 'var(--background)', border: '1px solid var(--text2)', color: 'var(--foreground)', cursor: 'pointer' }}>
-            {p.detailsLabel ?? 'Details →'}
+      <div className="fw-media rv-right">
+        <figure className="fw-figure">
+          <h3>Inspect a practice-film analysis</h3>
+          <button type="button" className="fw-shot lift-img" onClick={() => openLb(largestVariant(OUTPUT.src), OUTPUT.alt)} aria-label="Enlarge the Clip Review screen">
+            <Pic src={OUTPUT.src} alt={OUTPUT.alt} sizes="(max-width: 900px) 92vw, 680px" />
           </button>
+          <figcaption>Review a clip, inspect an overlay and see the associated labels.</figcaption>
+        </figure>
+        <figure className="fw-figure">
+          <div className="fw-diagram">
+            <span className="illustrative-chip" style={{ display: 'inline-block', marginBottom: 10 }}>Illustrative example</span>
+            <PlayDiagram />
+          </div>
+          <figcaption>Detection → tracking → labels - rendered from the pipeline&apos;s point of view</figcaption>
+        </figure>
+      </div>
+    </article>
+  );
+}
+
+function Spread({ project: p }: { project: Project }) {
+  const { open } = useProjectModal();
+  return (
+    <article id={p.slug} aria-labelledby={`${p.slug}-title`} className="fw-spread flip" style={{ '--fw-color': p.color } as React.CSSProperties}>
+      <div className="rv-right">
+        <div className="fw-meta">
+          <span>{p.domain} · {p.idx}</span>
+          <Status p={p} />
+        </div>
+        <p className="fw-meta" style={{ marginTop: 6 }}>{p.tag}</p>
+        <h3 id={`${p.slug}-title`} className="fw-title">{p.title}</h3>
+        <p className="fw-headline" style={{ color: accentInk(p.color) }}>{p.headline}</p>
+        <p className="fw-story">{p.story}</p>
+        <p className="fw-tools">{p.stacks.join(' · ')}</p>
+        <div className="fw-actions">
+          {p.links.map((l) =>
+            l.kind === 'case-study'
+              ? <Link key={l.href} href={l.href} transitionTypes={['nav-forward']} className="text-link is-underlined">{l.label} →</Link>
+              : <a key={l.href} href={l.href} target="_blank" rel="noopener" className="text-link is-underlined">{l.label} {l.kind === 'pdf' ? '↓' : '↗'}</a>
+          )}
+          <button type="button" onClick={() => open(p)}>{p.detailsLabel ?? 'Details →'}</button>
         </div>
       </div>
-      <style>{`
-        .project-panel { display: grid; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr); border: 1px solid color-mix(in srgb, var(--tile) 28%, transparent); border-radius: 10px; overflow: hidden; background: var(--surface); }
-        .project-panel-media { min-height: 260px; display: flex; align-items: center; background: var(--foreground); } /* light backing for the white diagram (the lightest token) */
-        .project-panel-body { padding: clamp(20px, 3.5vw, 44px); }
-        @media (max-width: 900px) { .project-panel { grid-template-columns: minmax(0, 1fr); } .project-panel-media { min-height: 0; aspect-ratio: 16/10; } }
-      `}</style>
-    </div>
+      <div className="fw-media rv-left">
+        <div className="fw-plain-img lift-img">
+          <Pic src={p.image} alt={p.title} sizes="(max-width: 900px) 92vw, 680px" style={{ display: 'block', width: '100%', height: 'auto' }} />
+        </div>
+      </div>
+    </article>
   );
 }

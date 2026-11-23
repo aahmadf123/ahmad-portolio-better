@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 
-const MONO  = "var(--font-code), ui-monospace, monospace";
+const MONO  = "var(--font-body), system-ui, sans-serif";
 const SERIF = "var(--font-body), system-ui, sans-serif";
 
 const GREEN = '#22c55e';
@@ -15,8 +15,7 @@ const PURPLE = '#a78bfa';
 function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; color?: string }) {
   return (
     <div style={{
-      fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-      textTransform: 'uppercase', color, opacity: 0.75,
+      fontFamily: MONO, fontSize: 13, letterSpacing: 0, color, opacity: 0.75,
       marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
     }}>
       <span style={{ display: 'inline-block', width: 18, height: 1, background: color, opacity: 0.5 }} />
@@ -28,8 +27,8 @@ function SectionLabel({ children, color = GREEN }: { children: React.ReactNode; 
 function Caption({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
-      marginTop: 12, fontFamily: MONO, fontSize: 10,
-      color: 'var(--text3)', letterSpacing: '0.05em', textAlign: 'center',
+      marginTop: 12, fontFamily: MONO, fontSize: 13,
+      color: 'var(--text3)', letterSpacing: 0, textAlign: 'center',
       lineHeight: 1.6,
     }}>
       {children}
@@ -103,11 +102,11 @@ export function TwinAnatomy() {
                   background: 'transparent', border: 'none',
                 }}
               >
-                <span style={{ fontFamily: MONO, fontSize: 11, color: item.color, opacity: 0.6, flexShrink: 0 }}>
+                <span style={{ fontFamily: MONO, fontSize: 13, color: item.color, opacity: 0.6, flexShrink: 0 }}>
                   {item.n}
                 </span>
                 <span style={{ flex: 1 }}>
-                  <span style={{ display: 'block', fontFamily: MONO, fontSize: 12, color: item.color, letterSpacing: '0.04em', marginBottom: 2 }}>
+                  <span style={{ display: 'block', fontFamily: MONO, fontSize: 12, color: item.color, letterSpacing: 0, marginBottom: 2 }}>
                     {item.title}
                   </span>
                   <span style={{ display: 'block', fontFamily: SERIF, fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>
@@ -179,7 +178,7 @@ export function FilmBudget() {
         background: `${BLUE}05`, padding: '16px 18px',
       }}>
         <div style={{
-          fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
+          fontFamily: MONO, fontSize: 13, letterSpacing: 0,
           color: 'var(--text3)', marginBottom: 6, display: 'flex', justifyContent: 'space-between',
         }}>
           <span>Games of opponent film charted</span>
@@ -199,13 +198,13 @@ export function FilmBudget() {
               <div key={r.key} style={{
                 display: 'flex', alignItems: 'center', gap: 12,
                 padding: '9px 12px', borderRadius: 8,
-                border: '1px solid rgba(244,244,242,0.07)',
+                border: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)',
               }}>
                 <div style={{ width: 128, flexShrink: 0 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: r.color, letterSpacing: '0.04em' }}>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: r.color, letterSpacing: 0 }}>
                     {r.label}
                   </div>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', marginTop: 2 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', marginTop: 2 }}>
                     n = {r.n} snaps
                   </div>
                 </div>
@@ -214,7 +213,7 @@ export function FilmBudget() {
                 <div style={{ flex: 1, position: 'relative', height: 18 }}>
                   <div style={{
                     position: 'absolute', left: 0, right: 0, top: '50%',
-                    height: 1, background: 'rgba(244,244,242,0.08)',
+                    height: 1, background: 'color-mix(in srgb, var(--foreground) 8%, transparent)',
                   }} />
                   <div style={{
                     position: 'absolute', left: `${r.trueRun * 100}%`, top: 1, bottom: 1,
@@ -231,7 +230,7 @@ export function FilmBudget() {
 
                 <div style={{
                   width: 92, flexShrink: 0, textAlign: 'right',
-                  fontFamily: MONO, fontSize: 10,
+                  fontFamily: MONO, fontSize: 13,
                   color: known ? GREEN : RED,
                 }}>
                   ±{r.halfPts.toFixed(0)} pts {known ? '✓' : '✗'}
@@ -338,7 +337,7 @@ export function GamePlanSimulator() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, alignItems: 'flex-end', marginBottom: 16 }}>
           <div style={{ flex: '1 1 220px', minWidth: 200 }}>
             <div style={{
-              fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
+              fontFamily: MONO, fontSize: 13, letterSpacing: 0,
               color: 'var(--text3)', marginBottom: 6, display: 'flex', justifyContent: 'space-between',
             }}>
               <span>Twin fidelity</span>
@@ -355,7 +354,7 @@ export function GamePlanSimulator() {
           <button
             onClick={() => setRunKey(k => k + 1)}
             style={{
-              fontFamily: MONO, fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase',
+              fontFamily: MONO, fontSize: 13, letterSpacing: 0,
               padding: '9px 14px', borderRadius: 6, cursor: 'pointer',
               background: `${GOLD}12`, border: `1px solid ${GOLD}45`, color: GOLD,
             }}
@@ -384,7 +383,7 @@ export function GamePlanSimulator() {
                 );
               })
             : <div style={{
-                fontFamily: MONO, fontSize: 10, color: 'var(--text3)',
+                fontFamily: MONO, fontSize: 13, color: 'var(--text3)',
                 alignSelf: 'center', width: '100%', textAlign: 'center',
               }}>
                 Simulating games…
@@ -392,8 +391,8 @@ export function GamePlanSimulator() {
         </div>
         <div style={{
           display: 'flex', justifyContent: 'space-between',
-          fontFamily: MONO, fontSize: 10, color: 'var(--text3)',
-          letterSpacing: '0.08em', marginBottom: 14,
+          fontFamily: MONO, fontSize: 13, color: 'var(--text3)',
+          letterSpacing: 0, marginBottom: 14,
         }}>
           <span>−35</span><span>lose</span><span>0</span><span>win</span><span>+35 margin</span>
         </div>
@@ -424,13 +423,13 @@ export function GamePlanSimulator() {
                 padding: '10px 12px', borderRadius: 8,
                 background: `${stat.color}08`, border: `1px solid ${stat.color}22`,
               }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: stat.color, opacity: 0.75, marginBottom: 4 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: stat.color, opacity: 0.75, marginBottom: 4 }}>
                   {stat.label}
                 </div>
                 <div style={{ fontFamily: MONO, fontSize: 20, color: stat.color, lineHeight: 1, marginBottom: 4 }}>
                   {stat.value}
                 </div>
-                <div style={{ fontFamily: SERIF, fontSize: 11, color: 'var(--text3)', lineHeight: 1.45 }}>
+                <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.45 }}>
                   {stat.sub}
                 </div>
               </div>
@@ -443,7 +442,7 @@ export function GamePlanSimulator() {
           background: `${verdictColor}09`, border: `1px solid ${verdictColor}30`,
           fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65,
         }}>
-          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: verdictColor, marginRight: 10 }}>
+          <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: verdictColor, marginRight: 10 }}>
             Verdict
           </span>
           {verdict}
@@ -507,8 +506,8 @@ export function AdaptationDecay() {
       <SectionLabel color={BLUE}>Interactive · The Tell Has a Half-Life</SectionLabel>
 
       <div style={{
-        border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10,
-        background: 'rgba(244,244,242,0.02)', padding: '16px 18px',
+        border: '1px solid color-mix(in srgb, var(--foreground) 9%, transparent)', borderRadius: 10,
+        background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', padding: '16px 18px',
       }}>
         <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.6, marginBottom: 14 }}>
           Your twin finds a real tell worth {EDGE_0} points a game. But every snap you spend
@@ -523,10 +522,10 @@ export function AdaptationDecay() {
                 key={s.key}
                 onClick={() => setStrategyKey(s.key)}
                 style={{
-                  fontFamily: MONO, fontSize: 10, letterSpacing: '0.05em',
+                  fontFamily: MONO, fontSize: 13, letterSpacing: 0,
                   padding: '7px 12px', borderRadius: 6, cursor: 'pointer',
-                  background: active ? `${s.color}18` : 'rgba(244,244,242,0.03)',
-                  border: `1px solid ${active ? s.color : 'rgba(244,244,242,0.12)'}`,
+                  background: active ? `${s.color}18` : 'color-mix(in srgb, var(--foreground) 3%, transparent)',
+                  border: `1px solid ${active ? s.color : 'color-mix(in srgb, var(--foreground) 12%, transparent)'}`,
                   color: active ? s.color : 'var(--text2)',
                   transition: 'all 0.15s',
                 }}
@@ -543,7 +542,7 @@ export function AdaptationDecay() {
             const h = (v / maxWeekly) * 100;
             return (
               <div key={w} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, height: '100%', justifyContent: 'flex-end' }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: sel.color }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: sel.color }}>
                   {v.toFixed(1)}
                 </div>
                 <div style={{
@@ -557,8 +556,8 @@ export function AdaptationDecay() {
         </div>
         <div style={{
           display: 'flex', gap: 10, padding: '0 4px',
-          fontFamily: MONO, fontSize: 10, color: 'var(--text3)',
-          letterSpacing: '0.08em', marginBottom: 16,
+          fontFamily: MONO, fontSize: 13, color: 'var(--text3)',
+          letterSpacing: 0, marginBottom: 16,
         }}>
           {Array.from({ length: WEEKS }, (_, w) => (
             <div key={w} style={{ flex: 1, textAlign: 'center' }}>WK {w + 1}</div>
@@ -572,13 +571,13 @@ export function AdaptationDecay() {
               padding: '10px 12px', borderRadius: 8,
               background: `${s.color}08`, border: `1px solid ${s.color}${s.key === strategyKey ? '45' : '22'}`,
             }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: s.color, opacity: 0.75, marginBottom: 4 }}>
+              <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: s.color, opacity: 0.75, marginBottom: 4 }}>
                 {s.label}
               </div>
               <div style={{ fontFamily: MONO, fontSize: 20, color: s.color, lineHeight: 1, marginBottom: 4 }}>
                 {s.total.toFixed(1)} pts
               </div>
-              <div style={{ fontFamily: SERIF, fontSize: 11, color: 'var(--text3)', lineHeight: 1.45 }}>
+              <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.45 }}>
                 total value over {WEEKS} weeks · wk 1: {s.weekly[0].toFixed(1)}, wk {WEEKS}: {s.weekly[WEEKS - 1].toFixed(1)}
               </div>
             </div>
@@ -590,7 +589,7 @@ export function AdaptationDecay() {
           background: `${BLUE}09`, border: `1px solid ${BLUE}30`,
           fontFamily: SERIF, fontSize: 13, color: 'var(--text2)', lineHeight: 1.65,
         }}>
-          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: BLUE, marginRight: 10 }}>
+          <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: BLUE, marginRight: 10 }}>
             The exception
           </span>
           If only one game matters - a rivalry, a conference title - hammering the tell is correct:

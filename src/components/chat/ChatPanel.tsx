@@ -110,20 +110,20 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         height: 'min(560px, calc(100svh - 100px))',
         display: 'flex',
         flexDirection: 'column',
-        background: 'rgba(15,17,23,0.98)',
-        border: '1px solid rgba(45,212,191,0.3)',
+        background: 'color-mix(in srgb, var(--background) 98%, transparent)',
+        border: '1px solid color-mix(in srgb, var(--primary) 30%, transparent)',
         borderRadius: 10,
-        boxShadow: '0 30px 80px -20px rgba(0,0,0,0.8), 0 0 40px -20px rgba(45,212,191,0.3)',
+        boxShadow: '0 30px 80px -20px rgba(0,0,0,0.8), 0 0 40px -20px color-mix(in srgb, var(--primary) 30%, transparent)',
         overflow: 'hidden',
         backdropFilter: 'blur(16px)',
       }}
     >
       {/* header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', borderBottom: '1px solid var(--bd)', background: 'rgba(45,212,191,0.05)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', borderBottom: '1px solid var(--bd)', background: 'color-mix(in srgb, var(--primary) 5%, transparent)' }}>
         <span aria-hidden style={{ width: 32, height: 32, borderRadius: 9, background: 'linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 45%, var(--background)))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: SERIF, fontSize: 15, color: 'var(--background)', fontWeight: 600 }}>AF</span>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 600, color: 'var(--foreground)' }}>Ask Ahmad</div>
-          <div style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          <div style={{ fontFamily: MONO, fontSize: 13, color: FG3, letterSpacing: 0 }}>
             AI · answers from his portfolio
           </div>
         </div>
@@ -143,7 +143,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
                   {SUGGESTED.map((s) => (
-                    <button key={s} onClick={() => submit(s)} style={{ textAlign: 'left', fontFamily: MONO, fontSize: 11, letterSpacing: '0.02em', color: 'var(--primary)', background: 'rgba(45,212,191,0.06)', border: '1px solid rgba(45,212,191,0.22)', borderRadius: 8, padding: '9px 13px', cursor: 'pointer' }}>
+                    <button key={s} onClick={() => submit(s)} style={{ textAlign: 'left', fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--primary)', background: 'color-mix(in srgb, var(--primary) 6%, transparent)', border: '1px solid color-mix(in srgb, var(--primary) 22%, transparent)', borderRadius: 8, padding: '9px 13px', cursor: 'pointer' }}>
                       {s} →
                     </button>
                   ))}
@@ -156,7 +156,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
                 <div style={{
                   fontFamily: SANS, fontSize: 13.5, lineHeight: 1.62, whiteSpace: 'pre-wrap',
                   color: m.role === 'user' ? 'var(--background)' : 'var(--foreground)',
-                  background: m.role === 'user' ? 'var(--primary)' : 'rgba(244,244,242,0.05)',
+                  background: m.role === 'user' ? 'var(--primary)' : 'color-mix(in srgb, var(--foreground) 5%, transparent)',
                   border: m.role === 'user' ? 'none' : '1px solid var(--bd)',
                   borderRadius: m.role === 'user' ? '12px 12px 3px 12px' : '12px 12px 12px 3px',
                   padding: '10px 13px',
@@ -167,18 +167,18 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             ))}
 
             {busy && (
-              <div aria-live="polite" style={{ alignSelf: 'flex-start', fontFamily: MONO, fontSize: 11, color: FG3, display: 'flex', gap: 5, alignItems: 'center', padding: '4px 2px' }}>
+              <div aria-live="polite" style={{ alignSelf: 'flex-start', fontFamily: MONO, fontSize: 13, color: FG3, display: 'flex', gap: 5, alignItems: 'center', padding: '4px 2px' }}>
                 <span className="chat-dot" /><span className="chat-dot" style={{ animationDelay: '0.18s' }} /><span className="chat-dot" style={{ animationDelay: '0.36s' }} />
               </div>
             )}
 
             {limited && (
-              <p style={{ fontFamily: MONO, fontSize: 10.5, color: 'var(--gold)', lineHeight: 1.6, background: 'rgba(229,196,83,0.07)', border: '1px solid rgba(229,196,83,0.25)', borderRadius: 8, padding: '9px 12px' }}>
+              <p style={{ fontFamily: MONO, fontSize: 13, color: 'var(--gold)', lineHeight: 1.6, background: 'rgba(229,196,83,0.07)', border: '1px solid rgba(229,196,83,0.25)', borderRadius: 8, padding: '9px 12px' }}>
                 Easy there - that&apos;s the rate limit. Give it a few minutes, or just email {site.email}.
               </p>
             )}
             {error && !limited && !unconfigured && (
-              <p style={{ fontFamily: MONO, fontSize: 10.5, color: 'var(--red)', lineHeight: 1.6 }}>
+              <p style={{ fontFamily: MONO, fontSize: 13, color: 'var(--red)', lineHeight: 1.6 }}>
                 Something hiccuped. Try again, or email {site.email}.
               </p>
             )}
@@ -200,13 +200,13 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             maxLength={500}
             placeholder="Ask about projects, research, collaborating…"
             aria-label="Message"
-            style={{ flex: 1, background: 'rgba(244,244,242,0.04)', border: '1px solid var(--bd2)', borderRadius: 8, padding: '10px 13px', fontFamily: SANS, color: 'var(--foreground)' }}
+            style={{ flex: 1, background: 'color-mix(in srgb, var(--foreground) 4%, transparent)', border: '1px solid var(--bd2)', borderRadius: 8, padding: '10px 13px', fontFamily: SANS, color: 'var(--foreground)' }}
           />
           <button
             type="submit"
             disabled={busy || !input.trim()}
             aria-label="Send"
-            style={{ background: busy || !input.trim() ? 'rgba(45,212,191,0.25)' : 'var(--primary)', color: 'var(--background)', border: 'none', borderRadius: 8, width: 42, cursor: busy ? 'wait' : 'pointer', fontSize: 15, fontWeight: 700 }}
+            style={{ background: busy || !input.trim() ? 'color-mix(in srgb, var(--primary) 25%, transparent)' : 'var(--primary)', color: 'var(--background)', border: 'none', borderRadius: 8, width: 42, cursor: busy ? 'wait' : 'pointer', fontSize: 15, fontWeight: 700 }}
           >↑</button>
         </form>
       )}
@@ -244,7 +244,7 @@ function Rich({ text }: { text: string }) {
 function Fallback() {
   return (
     <div>
-      <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(229,196,83,0.3)', background: 'rgba(229,196,83,0.06)', borderRadius: 6, padding: '6px 10px', display: 'inline-block' }}>
+      <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--gold)', border: '1px solid rgba(229,196,83,0.3)', background: 'rgba(229,196,83,0.06)', borderRadius: 6, padding: '6px 10px', display: 'inline-block' }}>
         Assistant warming up - live answers soon
       </div>
       <p style={{ fontFamily: SANS, fontSize: 12.5, lineHeight: 1.65, color: FG2, margin: '12px 0 14px' }}>
@@ -252,13 +252,13 @@ function Fallback() {
       </p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {FALLBACK_FAQ.map((f) => (
-          <div key={f.q} style={{ border: '1px solid var(--bd)', borderRadius: 8, padding: '11px 13px', background: 'rgba(244,244,242,0.02)' }}>
-            <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--primary)', marginBottom: 5 }}>{f.q}</div>
+          <div key={f.q} style={{ border: '1px solid var(--bd)', borderRadius: 8, padding: '11px 13px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)' }}>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--primary)', marginBottom: 5 }}>{f.q}</div>
             <div style={{ fontFamily: SANS, fontSize: 12.5, lineHeight: 1.6, color: FG2 }}>{f.a}</div>
           </div>
         ))}
       </div>
-      <a href={`mailto:${site.email}`} style={{ display: 'inline-flex', marginTop: 14, fontFamily: MONO, fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--background)', background: 'var(--primary)', borderRadius: 6, padding: '9px 16px', fontWeight: 700 }}>
+      <a href={`mailto:${site.email}`} style={{ display: 'inline-flex', marginTop: 14, fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--background)', background: 'var(--primary)', borderRadius: 6, padding: '9px 16px', fontWeight: 700 }}>
         Email Ahmad instead ↗
       </a>
     </div>

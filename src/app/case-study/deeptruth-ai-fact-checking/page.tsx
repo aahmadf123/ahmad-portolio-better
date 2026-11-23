@@ -1,5 +1,6 @@
 'use client';
 
+import { SpecRow } from '@/components/shared/SpecRow';
 import React, { useEffect, useState } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
@@ -11,7 +12,8 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF  = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
-const MONO   = "var(--font-code), ui-monospace, monospace";
+const MONO   = "var(--font-body), system-ui, sans-serif";
+const CODE = "var(--font-code), ui-monospace, monospace";
 const ACCENT = '#e5c453';
 
 const PALETTE = ['#e5c453','#5b8af5','#2dd4bf','#fb7185','#a78bfa','#f472b6','#38bdf8','#22C55E','#ef4444'];
@@ -24,7 +26,7 @@ function pickColor(text: string) {
 function Tag({ children, color }: { children: React.ReactNode; color?: string }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? pickColor(children)) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 13, padding: '3px 8px', background: `${c}14`, border: `1px solid ${c}30`, borderRadius: 4, color: c, letterSpacing: 0 }}>
       {children}
     </span>
   );
@@ -34,29 +36,24 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
       <span style={{ display: 'inline-block', width: 18, height: 1.5, background: ACCENT, opacity: 0.5, flexShrink: 0 }} />
-      <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT }}>{children}</span>
+      <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>{children}</span>
     </div>
   );
 }
 
-function Metric({ value, label }: { value: string; label: string }) {
-  return (
-    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${ACCENT}` }}>
-      <div style={{ fontFamily: DISPLAY, fontSize: 34, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 6 }}>{label}</div>
-    </div>
-  );
+function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
+  return <SpecRow value={value} label={label} color={color} />;
 }
 
 function LayerRow({ n, title, items, color = ACCENT }: { n: string; title: string; items: string[]; color?: string }) {
   return (
     <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 18px', background: `${color}06`, border: `1px solid ${color}18`, borderRadius: 8 }}>
-      <div style={{ fontFamily: MONO, fontSize: 10, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
+      <div style={{ fontFamily: MONO, fontSize: 13, color, opacity: 0.9, flexShrink: 0, minWidth: 22, marginTop: 1 }}>{n}</div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontFamily: MONO, fontSize: 11, color, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+        <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.map(item => { const ic = resolveSkillColor(item) ?? pickColor(item); return (
-            <span key={item} style={{ fontFamily: MONO, fontSize: 10, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
+            <span key={item} style={{ fontFamily: MONO, fontSize: 13, color: ic, padding: '2px 7px', background: `${ic}12`, border: `1px solid ${ic}30`, borderRadius: 4 }}>{item}</span>
           ); })}
         </div>
       </div>
@@ -96,27 +93,25 @@ export default function DeepTruthCaseStudy() {
         .cs-body p { margin: 0 0 14px; }
         .cs-body ul { margin: 0 0 14px; padding-left: 20px; }
         .cs-body li { margin-bottom: 6px; }
-        .cs-body li::marker { color: ${ACCENT}; }
+        .cs-body li::marker { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
         .cs-h2 { font-family: ${DISPLAY}; font-size: 20px; color: var(--foreground); font-weight: 400; margin: 0 0 18px; line-height: 1.2; padding-bottom: 0.04em; }
-        .cs-h3 { font-family: ${MONO}; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: ${ACCENT}; margin: 24px 0 10px; }
-        .metrics-grid-dt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
-        @media (max-width: 640px) { .metrics-grid-dt { grid-template-columns: repeat(2, 1fr); } }
-        .two-col-dt { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .cs-h3 { font-family: ${MONO}; font-size: 13px;   color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); margin: 24px 0 10px; }
+                        .two-col-dt { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         @media (max-width: 700px) { .two-col-dt { grid-template-columns: 1fr; } }
         .three-col-dt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         @media (max-width: 700px) { .three-col-dt { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .three-col-dt { grid-template-columns: 1fr; } }
-        .info-card { padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.07); border-radius: 8px; transition: all 0.2s ease; }
+        .info-card { padding: 16px 18px; background: color-mix(in srgb, var(--foreground) 2%, transparent); border: 1px solid color-mix(in srgb, var(--foreground) 7%, transparent); border-radius: 8px; transition: all 0.2s ease; }
         .info-card:hover { border-color: ${ACCENT}40; background: ${ACCENT}0a; }
         .accent-card { padding: 16px 18px; background: ${ACCENT}04; border: 1px solid ${ACCENT}18; border-radius: 8px; transition: all 0.2s ease; }
         .accent-card:hover { border-color: ${ACCENT}50; background: ${ACCENT}0c; }
         .model-card { flex: 1; padding: 20px 22px; background: ${ACCENT}06; border: 1px solid ${ACCENT}22; border-radius: 10px; }
-        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: rgba(244,244,242,0.02); border: 1px solid rgba(244,244,242,0.06); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
+        .roadmap-row { display: flex; gap: 14px; padding: 16px 18px; background: color-mix(in srgb, var(--foreground) 2%, transparent); border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent); border-radius: 8px; align-items: flex-start; transition: all 0.2s ease; }
         .roadmap-row:hover { border-color: ${ACCENT}40; background: ${ACCENT}06; }
-        .nav-link { font-family: ${MONO}; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
+        .nav-link { font-family: ${MONO}; font-size: 13px;   text-decoration: none; transition: color 0.2s; padding: 4px 0; cursor: pointer; background: none; border: none; }
         .weight-bar { display: flex; border-radius: 6px; overflow: hidden; height: 32px; margin-bottom: 12px; }
-        .weight-bar .gemini { display: flex; align-items: center; justify-content: center; width: 70%; background: ${ACCENT}22; border: 1px solid ${ACCENT}40; font-family: ${MONO}; font-size: 10px; color: ${ACCENT}; letter-spacing: 0.06em; }
-        .weight-bar .distil { display: flex; align-items: center; justify-content: center; width: 30%; background: color-mix(in srgb, var(--blue) 15%, transparent); border: 1px solid color-mix(in srgb, var(--blue) 30%, transparent); border-left: none; font-family: ${MONO}; font-size: 10px; color: var(--blue); letter-spacing: 0.06em; }
+        .weight-bar .gemini { display: flex; align-items: center; justify-content: center; width: 70%; background: ${ACCENT}22; border: 1px solid ${ACCENT}40; font-family: ${MONO}; font-size: 13px; color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground));  }
+        .weight-bar .distil { display: flex; align-items: center; justify-content: center; width: 30%; background: color-mix(in srgb, var(--blue) 15%, transparent); border: 1px solid color-mix(in srgb, var(--blue) 30%, transparent); border-left: none; font-family: ${MONO}; font-size: 13px; color: var(--blue);  }
         .cs-grid-container {
           display: grid;
           grid-template-columns: 1fr 200px;
@@ -143,7 +138,7 @@ export default function DeepTruthCaseStudy() {
 
       {/* ── Sticky header ── */}
       <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
-        <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT }}>DeepTruth</span>
+        <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>DeepTruth</span>
       </SubpageHeader>
 
       {/* ── Hero ── */}
@@ -166,14 +161,14 @@ export default function DeepTruthCaseStudy() {
             A Rocket Hacks project combining Gemini AI, DistilBERT, Django REST, React, MongoDB, and a Chrome extension to help users evaluate online claims before they spread.
           </p>
 
-          <div className="metrics-grid-dt">
+          <dl className="spec-sheet metrics-grid-dt" style={{ marginBottom: 36 }}>
             <Metric value="#1" label="Best Use of MongoDB Atlas" />
             <Metric value="24h" label="Build sprint" />
             <Metric value="70/30" label="Gemini / DistilBERT weighting" />
             <Metric value="2" label="Interfaces: web app + extension" />
             <Metric value="9.5K" label="Training data points" />
             <Metric value="Dual" label="AI model fusion pipeline" />
-          </div>
+          </dl>
 
           {/* Hero image */}
           <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden', border: `1px solid ${ACCENT}18`, background: 'var(--background)', marginBottom: 64 }}>
@@ -221,7 +216,7 @@ export default function DeepTruthCaseStudy() {
                   ['Single-source trust', 'Readers often rely on one outlet rather than cross-referencing multiple independent sources.'],
                 ].map(([title, body]) => (
                   <div key={title} className="info-card">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6 }}>{body}</p>
                   </div>
                 ))}
@@ -240,7 +235,7 @@ export default function DeepTruthCaseStudy() {
               </p>
               <div className="two-col-dt" style={{ marginBottom: 24 }}>
                 <div className="accent-card">
-                  <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>Web App</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>Web App</div>
                   <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
                     <li style={{ fontSize: 13, marginBottom: 5 }}>Users input article titles or claims directly</li>
                     <li style={{ fontSize: 13, marginBottom: 5 }}>Returns credibility score, veracity assessment, reasoning, and independent source links</li>
@@ -248,7 +243,7 @@ export default function DeepTruthCaseStudy() {
                   </ul>
                 </div>
                 <div className="accent-card">
-                  <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>Chrome Extension</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>Chrome Extension</div>
                   <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
                     <li style={{ fontSize: 13, marginBottom: 5 }}>Brings credibility analysis directly into the browsing workflow</li>
                     <li style={{ fontSize: 13, marginBottom: 5 }}>No need to leave the article page to begin verification</li>
@@ -266,10 +261,10 @@ export default function DeepTruthCaseStudy() {
                   { method: 'POST', path: '/api/verify-claim/', desc: 'Analyze an article title or claim - returns credibility, veracity, reasoning, and source links.' },
                   { method: 'GET',  path: '/api/false-news/',   desc: 'Retrieve previously analyzed or flagged claims stored in MongoDB.' },
                 ].map(({ method, path, desc }) => (
-                  <div key={path} style={{ padding: '12px 16px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.08)', borderRadius: 6, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                    <span style={{ fontFamily: MONO, fontSize: 10, color: method === 'POST' ? ACCENT : '#5b8af5', background: method === 'POST' ? `${ACCENT}14` : 'color-mix(in srgb, var(--blue) 12%, transparent)', padding: '2px 8px', borderRadius: 4, flexShrink: 0, marginTop: 1 }}>{method}</span>
+                  <div key={path} style={{ padding: '12px 16px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)', borderRadius: 6, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                    <span style={{ fontFamily: MONO, fontSize: 13, color: method === 'POST' ? ACCENT : '#5b8af5', background: method === 'POST' ? `${ACCENT}14` : 'color-mix(in srgb, var(--blue) 12%, transparent)', padding: '2px 8px', borderRadius: 4, flexShrink: 0, marginTop: 1 }}>{method}</span>
                     <div>
-                      <code style={{ fontFamily: MONO, fontSize: 12, color: 'var(--foreground)' }}>{path}</code>
+                      <code style={{ fontFamily: CODE, fontSize: 12, color: 'var(--foreground)' }}>{path}</code>
                       <p style={{ margin: '4px 0 0', fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{desc}</p>
                     </div>
                   </div>
@@ -296,13 +291,13 @@ export default function DeepTruthCaseStudy() {
 
               <div className="two-col-dt" style={{ marginBottom: 24 }}>
                 <div className="model-card">
-                  <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>Gemini AI - 70%</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>Gemini AI - 70%</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65, color: 'var(--text2)' }}>
                     Google Gemini Pro handles high-level reasoning, claim interpretation, and explanation generation. It produces human-readable analysis of why a claim may be credible or suspicious - not just a score, but the reasoning behind it.
                   </p>
                 </div>
                 <div style={{ flex: 1, padding: '20px 22px', background: 'color-mix(in srgb, var(--blue) 6%, transparent)', border: '1px solid color-mix(in srgb, var(--blue) 18%, transparent)', borderRadius: 10 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 11, color: '#5b8af5', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>DistilBERT - 30%</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: '#5b8af5', letterSpacing: 0, marginBottom: 10 }}>DistilBERT - 30%</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65, color: 'var(--text2)' }}>
                     A fine-tuned DistilBERT model provides NLP-based veracity classification. Trained on approximately 9,500 data points, it adds a language-model signal specialized for misinformation patterns that complements Gemini&apos;s broader reasoning.
                   </p>
@@ -310,7 +305,7 @@ export default function DeepTruthCaseStudy() {
               </div>
 
               <div style={{ padding: '18px 22px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 10, marginBottom: 8 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Why fusion matters</div>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>Why fusion matters</div>
                 <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: 'var(--text2)' }}>
                   A single model produces overconfident outputs. By combining Gemini&apos;s reasoning with DistilBERT&apos;s classification, DeepTruth surfaces more calibrated credibility signals - and makes the system more honest about what it knows and does not know.
                 </p>
@@ -324,7 +319,7 @@ export default function DeepTruthCaseStudy() {
               <p>
                 The system flows from user input through two interface layers, a REST API backend, AI inference, MongoDB storage, and back to a structured result.
               </p>
-              <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--text3)', letterSpacing: '0.06em', textAlign: 'center', padding: '12px 0', marginBottom: 16 }}>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, textAlign: 'center', padding: '12px 0', marginBottom: 16 }}>
                 User input → React app or Chrome extension → Django REST API → Gemini + DistilBERT → MongoDB → credibility result + reasoning + sources
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
@@ -372,20 +367,20 @@ export default function DeepTruthCaseStudy() {
                   ['AI should assist, not replace, judgment', 'Framing matters. A tool that claims to decide truth is both overreaching and less credible than one that claims to help users think more carefully.'],
                 ].map(([title, body]) => (
                   <div key={title} style={{ padding: '14px 18px', background: `${ACCENT}06`, border: `1px solid ${ACCENT}18`, borderRadius: 8 }}>
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>{title}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 6 }}>{title}</div>
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>{body}</p>
                   </div>
                 ))}
               </div>
               <div className="two-col-dt" style={{ marginBottom: 24 }}>
                 <div style={{ padding: '16px 18px', background: `${ACCENT}0c`, border: `1px solid ${ACCENT}30`, borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What broke</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 8 }}>What broke</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     The demo was the easy part. Getting DistilBERT inference, Gemini API calls, MongoDB writes, and the Chrome extension to talk to one another - all at once, on a 24-hour clock - is where the integration debt piled up fastest.
                   </p>
                 </div>
-                <div style={{ padding: '16px 18px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 8 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>What I&apos;d do differently</div>
+                <div style={{ padding: '16px 18px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 9%, transparent)', borderRadius: 8 }}>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 8 }}>What I&apos;d do differently</div>
                   <p style={{ margin: 0, fontSize: 13, lineHeight: 1.65 }}>
                     The 70/30 fusion reasons from what the two models already know - neither one actually retrieves evidence. I&apos;d add a RAG step before the explanation so a verdict cites fetched sources instead of leaning on model priors.
                   </p>
@@ -393,12 +388,12 @@ export default function DeepTruthCaseStudy() {
               </div>
 
               {/* Responsible framing callout */}
-              <div style={{ padding: '20px 24px', background: 'rgba(244,244,242,0.03)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 10 }}>
-                <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>Responsible framing</div>
+              <div style={{ padding: '20px 24px', background: 'color-mix(in srgb, var(--foreground) 3%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 10%, transparent)', borderRadius: 10 }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginBottom: 10 }}>Responsible framing</div>
                 <p style={{ margin: '0 0 8px', fontSize: 14, color: 'var(--text2)', lineHeight: 1.6 }}>
                   DeepTruth should be read as an AI-assisted credibility platform, not an absolute truth detector.
                 </p>
-                <p style={{ margin: 0, fontSize: 14, color: ACCENT, fontFamily: MONO, letterSpacing: '0.03em', lineHeight: 1.6 }}>
+                <p style={{ margin: 0, fontSize: 14, color: ACCENT, fontFamily: MONO, letterSpacing: 0, lineHeight: 1.6 }}>
                   &ldquo;DeepTruth provides credibility signals, reasoning, and independent sources to support critical thinking.&rdquo;
                 </p>
               </div>
@@ -418,7 +413,7 @@ export default function DeepTruthCaseStudy() {
                   { phase: 'Long-Term', color: '#a78bfa', items: ['Browser-level non-intrusive warnings for highly suspicious headlines', 'Multi-language support for international misinformation detection', 'Model improvement pipeline using MongoDB-stored claim history as training feedback'] },
                 ].map(({ phase, color, items }) => (
                   <div key={phase} className="roadmap-row">
-                    <div style={{ fontFamily: MONO, fontSize: 10, color, letterSpacing: '0.08em', textTransform: 'uppercase', flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
+                    <div style={{ fontFamily: MONO, fontSize: 13, color, letterSpacing: 0, flexShrink: 0, minWidth: 90, paddingTop: 2 }}>{phase}</div>
                     <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
                       {items.map(item => <li key={item} style={{ fontSize: 13, marginBottom: 4, lineHeight: 1.5 }}>{item}</li>)}
                     </ul>
@@ -436,9 +431,9 @@ export default function DeepTruthCaseStudy() {
               </div>
 
               <div style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
-                <a href="https://github.com/TheChozenWon/DeepTruth.git" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>GitHub ↗</a>
-                <a href="https://youtu.be/whTYKriT5JU?si=M-0yUWXURhPrvy--" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid rgba(244,244,242,0.12)', color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Watch Demo ↗</a>
+                <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 13, fontWeight: 700, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>← Back to Projects</SmartBackLink>
+                <a href="https://github.com/TheChozenWon/DeepTruth.git" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}40`, color: ACCENT, fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>GitHub ↗</a>
+                <a href="https://youtu.be/whTYKriT5JU?si=M-0yUWXURhPrvy--" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid color-mix(in srgb, var(--foreground) 12%, transparent)', color: 'var(--text2)', fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>Watch Demo ↗</a>
               </div>
             </Section>
 
@@ -446,7 +441,7 @@ export default function DeepTruthCaseStudy() {
 
           {/* ── Sticky section nav ── */}
           <nav className="cs-sidebar-nav">
-            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--text3)', marginBottom: 14 }}>On This Page</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {SECTION_IDS.map((id, i) => (
                 <button

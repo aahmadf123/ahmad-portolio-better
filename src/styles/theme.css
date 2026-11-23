@@ -1,60 +1,66 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   Design tokens - single authoritative sheet for the cinematic redesign.
-   Dark-only by decision. Legacy variable names (--amber, --teal, --font-chakra …)
+   Design tokens - "Uncertain Paths". Paper (light) by default, night via
+   [data-theme="dark"] (system preference or the header toggle). Legacy variable names (--amber, --teal, --font-chakra …)
    are remapped here so every untouched page re-skins without edits.
    ──────────────────────────────────────────────────────────────────────────── */
 
 :root {
-  /* Core surfaces */
-  --background: #0d0e12;
-  --surface: #13151b;
-  --surface-2: #1a1d25;
+  color-scheme: light;
+  /* Paper (light, the default) */
+  --background: #f3f2ee;
+  --surface: #eae8e3;
+  --surface-2: #e1dfd9;
 
-  /* Identity accents */
-  --primary: #2dd4bf;            /* teal-cyan - the site's voice */
-  --gold: #e5c453;               /* milestones & achievements only */
+  /* One identity accent. Fill teal is for dots and markers; ink teal for text. */
+  --primary: #0f766e;
+  --primary-fill: #14b8a6;
+  --gold: #735a0c;
 
-  /* Supporting accent range (data-driven chips, per-section identities) */
-  --blue: #5b8af5;
-  --purple: #a78bfa;
-  --pink: #f472b6;
-  --sky: #38bdf8;
-  --orange: #fb7185;             /* rose: the site uses no orange (only BG in the I-75 note) */
-  --green: #22c55e;
-  --red: #ef4444;
+  /* Project accents (hex in JS for markers; text goes through accentInk()). */
+  --blue: #3d63c9;
+  --purple: #6d4fc4;
+  --pink: #b8326f;
+  --sky: #0c6f9c;
+  --orange: #b83a4e;
+  --green: #17803d;
+  --red: #b42323;
 
-  /* Text ramp */
-  --foreground: #f4f4f2;
-  --text2: #a3a8b0;
-  --text3: #80858e; /* >=4.5:1 on background, surface and surface-2 (was #6b7078, 3.4-3.9:1) */
+  /* Ink ramp */
+  --foreground: #1c1d1f;
+  --text2: #4b4e53;
+  --text3: #63666b;
 
-  /* Borders / hairlines */
-  --bd: rgba(244, 244, 242, 0.08);
-  --bd2: rgba(244, 244, 242, 0.16);
+  /* Hairlines */
+  --bd: rgba(28, 29, 31, 0.12);
+  --bd2: rgba(28, 29, 31, 0.22);
+  --path: rgba(28, 29, 31, 0.24);
+  /* How much of an accent survives when it is used as text (see accentInk). */
+  --accent-mix: 40%;
 
   /* Semantic (shadcn-style) */
   --card: var(--surface);
   --card-foreground: var(--foreground);
-  --popover: var(--surface);
+  --popover: var(--background);
   --popover-foreground: var(--foreground);
-  --primary-foreground: var(--background);
+  --primary-foreground: #ffffff;
   --secondary: var(--surface);
   --secondary-foreground: var(--foreground);
   --muted: var(--surface-2);
   --muted-foreground: var(--text2);
   --accent: var(--surface-2);
   --accent-foreground: var(--foreground);
-  --destructive: #f43f5e;
+  --destructive: #be123c;
   --destructive-foreground: #ffffff;
   --border: var(--bd);
   --input: var(--bd);
   --ring: var(--primary);
-  --radius: 0.5rem;
+  --radius: 0.25rem;
 
-  /* Type system.
-     --font-display / --font-body / --font-code / --font-hand are set by
-     next/font on <html>. Body is Figtree today - swap to Satoshi by replacing
-     the loader in src/app/layout.tsx (see README "Fonts"). */
+  /* Type: --font-body (DM Sans), --font-code (JetBrains Mono, code only) and
+     --font-hand (Caveat, sign-off only) are set by next/font on <html>. */
+
+  /* One typeface: the display role is the body face (DM Sans). */
+  --font-display: var(--font-body);
 
   /* Motion */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -73,8 +79,8 @@
   --color-secondary: var(--surface);
   --color-accent: var(--primary);
   --color-text: var(--foreground);
-  --color-text-muted: rgba(244, 244, 242, 0.7);
-  --color-border: rgba(255, 255, 255, 0.05);
+  --color-text-muted: var(--text2);
+  --color-border: var(--bd);
   --color-overlay: rgba(0, 0, 0, 0.5);
   --font-primary: var(--font-body);
   --font-display-legacy: var(--font-display);
@@ -112,3 +118,29 @@
   --fs-chapter-hud:    clamp(56px, 9vw, 108px);   /* ambient chapter HUD #   */
 }
 
+
+/* Night (system preference or the toggle; the head script sets data-theme before paint). */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #121314;
+  --surface: #1a1b1d;
+  --surface-2: #232427;
+  --primary: #2dd4bf;
+  --primary-fill: #2dd4bf;
+  --gold: #e5c453;
+  --blue: #7d9ef5;
+  --purple: #b9a2fb;
+  --pink: #f48fc0;
+  --sky: #5cc6f8;
+  --orange: #fb8a9a;
+  --green: #4ade80;
+  --red: #f87171;
+  --foreground: #ecebe6;
+  --text2: #b0b1ad;
+  --text3: #94958f;
+  --bd: rgba(236, 235, 230, 0.1);
+  --bd2: rgba(236, 235, 230, 0.2);
+  --path: rgba(236, 235, 230, 0.26);
+  --accent-mix: 72%;
+  --primary-foreground: #121314;
+}

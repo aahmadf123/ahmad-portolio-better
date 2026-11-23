@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { collectImages, ROUTES, routeSlug } from './collect';
+import { collectImages, ROUTES, routeSlug, shownOn } from './collect';
 
 // Every picture on the pre-redesign site must still be shown somewhere on the same page.
 // Baseline captured once from the live (pre-redesign) site:
@@ -25,7 +25,8 @@ test.describe('no picture is lost', () => {
   const baseline: Record<string, string[]> = JSON.parse(readFileSync(FILE, 'utf8'));
   for (const route of ROUTES) {
     test(`every picture survives on ${route}`, async ({ page }) => {
-      const now = new Set(await collectImages(page, route));
+      const now = new Set<string>();
+      for (const r of shownOn(route)) for (const s of await collectImages(page, r)) now.add(s);
       const missing = (baseline[routeSlug(route)] ?? []).filter((s) => !now.has(s));
       expect(missing, `pictures missing on ${route}`).toEqual([]);
     });

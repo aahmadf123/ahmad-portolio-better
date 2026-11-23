@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MONO  = "var(--font-code), ui-monospace, monospace";
+const MONO  = "var(--font-body), system-ui, sans-serif";
 const SERIF = "var(--font-body), system-ui, sans-serif";
 
 // ── 1. The Five-Layer Architecture ──────────────────────────────────────────
@@ -42,8 +42,7 @@ export function AgentArchitectureLayers() {
   return (
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
-        fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: '#e5c453', opacity: 0.7,
+        fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: '#e5c453', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
         <span style={{ display: 'inline-block', width: 18, height: 1, background: '#e5c453', opacity: 0.5 }} />
@@ -81,14 +80,14 @@ export function AgentArchitectureLayers() {
                 {/* Layer number + name */}
                 <div style={{ flexShrink: 0, minWidth: 130 }}>
                   <div style={{
-                    fontFamily: MONO, fontSize: 10, color: layer.color,
-                    opacity: 0.6, letterSpacing: '0.1em', marginBottom: 3,
+                    fontFamily: MONO, fontSize: 13, color: layer.color,
+                    opacity: 0.6, letterSpacing: 0, marginBottom: 3,
                   }}>
                     Layer {layer.n}
                   </div>
                   <div style={{
                     fontFamily: MONO, fontSize: 13, color: layer.color,
-                    letterSpacing: '0.04em', fontWeight: 500,
+                    letterSpacing: 0, fontWeight: 500,
                   }}>
                     {layer.name}
                   </div>
@@ -108,13 +107,12 @@ export function AgentArchitectureLayers() {
                   borderRadius: 6,
                 }}>
                   <div style={{
-                    fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em',
-                    textTransform: 'uppercase', color: layer.color, opacity: 0.7,
+                    fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: layer.color, opacity: 0.7,
                     marginBottom: 4,
                   }}>
                     If weak
                   </div>
-                  <div style={{ fontFamily: SERIF, fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>
+                  <div style={{ fontFamily: SERIF, fontSize: 13, color: 'var(--text3)', lineHeight: 1.5 }}>
                     {layer.failure}
                   </div>
                 </div>
@@ -126,8 +124,8 @@ export function AgentArchitectureLayers() {
 
       {/* Caption */}
       <div style={{
-        marginTop: 12, fontFamily: MONO, fontSize: 10,
-        color: 'var(--text3)', letterSpacing: '0.05em', textAlign: 'center',
+        marginTop: 12, fontFamily: MONO, fontSize: 13,
+        color: 'var(--text3)', letterSpacing: 0, textAlign: 'center',
       }}>
         Every production agent relies on all five layers. Weakness in any one compounds across the rest.
       </div>
@@ -174,8 +172,7 @@ export function MaturityLadder() {
   return (
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
-        fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: '#e5c453', opacity: 0.7,
+        fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: '#e5c453', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
         <span style={{ display: 'inline-block', width: 18, height: 1, background: '#e5c453', opacity: 0.5 }} />
@@ -188,8 +185,7 @@ export function MaturityLadder() {
         <div style={{
           position: 'absolute', left: -28, top: '50%', transform: 'translateY(-50%) rotate(-90deg)',
           transformOrigin: 'center center',
-          fontFamily: MONO, fontSize: 10, letterSpacing: '0.15em',
-          textTransform: 'uppercase', color: 'var(--text3)', whiteSpace: 'nowrap',
+          fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--text3)', whiteSpace: 'nowrap',
         }}>
           More Agentic →
         </div>
@@ -224,17 +220,17 @@ export function MaturityLadder() {
             <div style={{ flex: 1, padding: '12px 16px' }}>
               <div style={{
                 fontFamily: MONO, fontSize: 12, color: stage.color,
-                letterSpacing: '0.05em', marginBottom: 4,
+                letterSpacing: 0, marginBottom: 4,
               }}>
                 {stage.name}
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'flex-start' }}>
                 <div>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 2 }}>Use when</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginBottom: 2 }}>Use when</div>
                   <div style={{ fontFamily: SERIF, fontSize: 12, color: 'var(--text3)', lineHeight: 1.5 }}>{stage.trigger}</div>
                 </div>
                 <div style={{ flex: 1, minWidth: 180 }}>
-                  <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 2 }}>Production question</div>
+                  <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginBottom: 2 }}>Production question</div>
                   <div style={{ fontFamily: SERIF, fontSize: 12, color: 'var(--text2)', lineHeight: 1.5 }}>{stage.question}</div>
                 </div>
               </div>
@@ -244,8 +240,8 @@ export function MaturityLadder() {
       </div>
 
       <div style={{
-        marginTop: 12, fontFamily: MONO, fontSize: 10,
-        color: 'var(--text3)', letterSpacing: '0.05em', textAlign: 'center',
+        marginTop: 12, fontFamily: MONO, fontSize: 13,
+        color: 'var(--text3)', letterSpacing: 0, textAlign: 'center',
       }}>
         Move up only when the current stage genuinely cannot handle the task&apos;s variability.
       </div>
@@ -267,8 +263,7 @@ export function AutonomyTradeoff() {
   return (
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
-        fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: '#e5c453', opacity: 0.7,
+        fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: '#e5c453', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
         <span style={{ display: 'inline-block', width: 18, height: 1, background: '#e5c453', opacity: 0.5 }} />
@@ -291,19 +286,19 @@ export function AutonomyTradeoff() {
               width: b.width,
               padding: '10px 8px',
               borderTop: `2px solid ${b.color}`,
-              borderRight: i < bands.length - 1 ? '1px solid rgba(244,244,242,0.06)' : 'none',
+              borderRight: i < bands.length - 1 ? '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)' : 'none',
               background: `${b.color}06`,
             }}
           >
             <div style={{
-              fontFamily: MONO, fontSize: 10, color: b.color,
-              letterSpacing: '0.06em', lineHeight: 1.3,
+              fontFamily: MONO, fontSize: 13, color: b.color,
+              letterSpacing: 0, lineHeight: 1.3,
               marginBottom: 4, whiteSpace: 'pre-line',
             }}>
               {b.label}
             </div>
             <div style={{
-              fontFamily: SERIF, fontSize: 10, color: 'var(--text3)',
+              fontFamily: SERIF, fontSize: 13, color: 'var(--text3)',
               lineHeight: 1.4, whiteSpace: 'pre-line',
             }}>
               {b.sub}
@@ -314,15 +309,15 @@ export function AutonomyTradeoff() {
 
       <div style={{
         marginTop: 14, display: 'flex', justifyContent: 'space-between',
-        fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.08em',
+        fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0,
       }}>
         <span>← Safer / Less Useful</span>
         <span>More Useful / Higher Stakes →</span>
       </div>
 
       <div style={{
-        marginTop: 10, fontFamily: MONO, fontSize: 10,
-        color: 'var(--text3)', letterSpacing: '0.05em', textAlign: 'center',
+        marginTop: 10, fontFamily: MONO, fontSize: 13,
+        color: 'var(--text3)', letterSpacing: 0, textAlign: 'center',
       }}>
         Permissions, not personality, determine how dangerous a wrong step can be.
       </div>
@@ -349,8 +344,7 @@ export function ProductionChecklist() {
   return (
     <div style={{ margin: '2.5rem 0' }}>
       <div style={{
-        fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em',
-        textTransform: 'uppercase', color: '#e5c453', opacity: 0.7,
+        fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: '#e5c453', opacity: 0.7,
         marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10,
       }}>
         <span style={{ display: 'inline-block', width: 18, height: 1, background: '#e5c453', opacity: 0.5 }} />
@@ -387,8 +381,8 @@ export function ProductionChecklist() {
 
             <div>
               <div style={{
-                fontFamily: MONO, fontSize: 11, color: item.color,
-                letterSpacing: '0.04em', marginBottom: 3,
+                fontFamily: MONO, fontSize: 13, color: item.color,
+                letterSpacing: 0, marginBottom: 3,
               }}>
                 {item.label}
               </div>

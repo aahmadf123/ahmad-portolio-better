@@ -98,13 +98,13 @@ export function ProjectDetailModal({ project, onClose }: { project: Project | nu
             </div>
 
             <div style={{ padding: 'clamp(20px, 3vw, 36px)' }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: project.color, marginBottom: 10 }}>
+              <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: project.color, marginBottom: 10 }}>
                 {project.domain} · {project.idx} - {project.tag}
               </div>
               <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--fs-section-head)', lineHeight: 1.05, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.06em' }}>
                 {project.title}
               </h3>
-              <div style={{ fontFamily: MONO, fontSize: 11, color: project.color, letterSpacing: '0.04em', marginTop: 10 }}>{project.headline}</div>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: project.color, letterSpacing: 0, marginTop: 10 }}>{project.headline}</div>
 
               <div style={{ marginTop: 20, fontSize: 15, lineHeight: 1.8, color: 'var(--text2)' }} className="pdm-body">
                 <ProjectDetail project={project} />

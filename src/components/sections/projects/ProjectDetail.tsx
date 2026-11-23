@@ -11,7 +11,7 @@ export function ProjectDetail({ project }: { project: Project }) {
     <>
       {project.detail.map((sec, i) => (
         <React.Fragment key={sec.label}>
-          <h4 style={{ color: project.color, fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: i === 0 ? 0 : 16, marginBottom: 8 }}>{sec.label}</h4>
+          <h4 style={{ color: project.color, fontFamily: MONO, fontSize: 13, letterSpacing: 0, marginTop: i === 0 ? 0 : 16, marginBottom: 8 }}>{sec.label}</h4>
           <p>{sec.body}</p>
         </React.Fragment>
       ))}
@@ -32,8 +32,7 @@ export function ProjectDetail({ project }: { project: Project }) {
 function ProjectLinkButton({ link, color, primary }: { link: ProjectLink; color: string; primary: boolean }) {
   const base: React.CSSProperties = {
     display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px',
-    fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5,
-    textTransform: 'uppercase', textDecoration: 'none',
+    fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none',
   };
   const style: React.CSSProperties = primary
     ? { ...base, background: color, color: 'var(--background)', fontWeight: 700 }

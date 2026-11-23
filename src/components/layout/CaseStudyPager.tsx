@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { projects } from '@/lib/data/projects';
 
-const MONO = 'var(--font-code), ui-monospace, monospace';
-const SERIF = 'var(--font-display), Georgia, serif';
+const MONO = 'var(--font-body), system-ui, sans-serif';
+const SERIF = 'var(--font-body), system-ui, sans-serif';
 
 const studies = projects.filter((p) => p.slug);
 
@@ -31,7 +31,7 @@ export function CaseStudyPager() {
         textAlign: dir === 'next' ? 'right' : 'left',
       }}
     >
-      <span style={{ display: 'block', fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 6 }}>
+      <span style={{ display: 'block', fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--text3)', marginBottom: 6 }}>
         {dir === 'next' ? 'Next case study →' : '← Previous case study'}
       </span>
       <span style={{ display: 'block', fontFamily: SERIF, fontSize: 22, lineHeight: 1.2, color: 'var(--foreground)' }}>{p.title}</span>
@@ -45,7 +45,7 @@ export function CaseStudyPager() {
         <span aria-hidden style={{ fontFamily: SERIF, fontSize: 'clamp(40px, 6vw, 64px)', lineHeight: 1, color: studies[i].color, opacity: 0.35 }}>
           {String(i + 1).padStart(2, '0')}
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text3)' }}>
+        <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--text3)' }}>
           Case file {String(i + 1).padStart(2, '0')} of {String(studies.length).padStart(2, '0')}
         </span>
       </div>

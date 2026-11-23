@@ -1,5 +1,6 @@
 'use client';
 
+import { SpecRow } from '@/components/shared/SpecRow';
 import React, { useState, useEffect, useRef } from 'react';
 import { SmartBackLink } from '@/components/ui/smart-back-link';
 import { SubpageHeader } from '@/components/layout/SubpageHeader';
@@ -11,7 +12,7 @@ import { resolveSkillColor } from '@/lib/skill-colors';
 
 const SERIF = "var(--font-body), system-ui, sans-serif";
 const DISPLAY = "var(--font-display), Georgia, serif";
-const MONO  = "var(--font-code), ui-monospace, monospace";
+const MONO  = "var(--font-body), system-ui, sans-serif";
 const SANS  = "var(--font-body), system-ui, sans-serif";
 const ACCENT = '#a78bfa';
 
@@ -25,7 +26,7 @@ function pickColor(text: string) {
 function Tag({ color, children }: { color?: string; children: React.ReactNode }) {
   const c = color ?? (typeof children === 'string' ? (resolveSkillColor(children) ?? ACCENT) : ACCENT);
   return (
-    <span style={{ fontFamily: MONO, fontSize: 11, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}33`, borderRadius: 4, color: c, letterSpacing: '0.03em' }}>
+    <span style={{ fontFamily: MONO, fontSize: 13, padding: '4px 9px', background: `${c}14`, border: `1px solid ${c}33`, borderRadius: 4, color: c, letterSpacing: 0 }}>
       {children}
     </span>
   );
@@ -35,18 +36,13 @@ function SectionLabel({ label }: { label: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
       <span style={{ display: 'inline-block', width: 18, height: 1.5, background: ACCENT, opacity: 0.5, flexShrink: 0 }} />
-      <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT }}>{label}</span>
+      <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>{label}</span>
     </div>
   );
 }
 
 function Metric({ value, label, color = ACCENT }: { value: string; label: string; color?: string }) {
-  return (
-    <div style={{ padding: '14px 2px 0', borderTop: `2px solid ${color}` }}>
-      <div style={{ fontFamily: DISPLAY, fontSize: 34, fontWeight: 400, color: 'var(--foreground)', lineHeight: 1, paddingBottom: '0.05em' }}>{value}</div>
-      <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 8 }}>{label}</div>
-    </div>
-  );
+  return <SpecRow value={value} label={label} color={color} />;
 }
 
 function PipelineStep({ n, title, sub, color = ACCENT, isLast = false }: { n: string; title: string; sub: string; color?: string; isLast?: boolean }) {
@@ -54,7 +50,7 @@ function PipelineStep({ n, title, sub, color = ACCENT, isLast = false }: { n: st
     <div style={{ display: 'flex', alignItems: 'flex-start', gap: 0 }}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0, width: 40 }}>
         <div style={{ width: 32, height: 32, borderRadius: '50%', background: `${color}18`, border: `1.5px solid ${color}55`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-          <span style={{ fontFamily: MONO, fontSize: 10, color, fontWeight: 700 }}>{n}</span>
+          <span style={{ fontFamily: MONO, fontSize: 13, color, fontWeight: 700 }}>{n}</span>
         </div>
         {!isLast && <div style={{ width: 1, flex: 1, minHeight: 24, background: `linear-gradient(to bottom, ${color}44, transparent)`, marginTop: 4 }} />}
       </div>
@@ -68,7 +64,7 @@ function PipelineStep({ n, title, sub, color = ACCENT, isLast = false }: { n: st
 
 function Section({ id, children, alt = false }: { id: string; children: React.ReactNode; alt?: boolean }) {
   return (
-    <section id={id} style={{ padding: 'clamp(48px,6vw,80px) clamp(20px,4vw,52px)', background: alt ? 'rgba(15,17,25,0.92)' : 'rgba(13,14,18,0.9)', position: 'relative', overflowX: 'clip' }}>
+    <section id={id} style={{ padding: 'clamp(48px,6vw,80px) clamp(20px,4vw,52px)', background: alt ? 'rgba(15,17,25,0.92)' : 'color-mix(in srgb, var(--background) 90%, transparent)', position: 'relative', overflowX: 'clip' }}>
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         {children}
       </div>
@@ -111,20 +107,20 @@ export default function HomeownerLossCaseStudy() {
   return (
     <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text2)' }}>
       <style>{`
-        li::marker { color: ${ACCENT}; }
+        li::marker { color: color-mix(in oklab, ${ACCENT} var(--accent-mix), var(--foreground)); }
       `}</style>
 
       {/* ── Sticky top bar ── */}
       <SubpageHeader backHref="/projects" backLabel="All Projects" backWhenPrev={["/projects"]} accent={ACCENT}>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-          <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(167,139,250,0.3)', borderRadius: 4, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s' }}
+          <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(167,139,250,0.3)', borderRadius: 4, color: ACCENT, fontFamily: MONO, fontSize: 13, letterSpacing: 0, textDecoration: 'none', transition: 'all 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.background = `${ACCENT}14`; }}
             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
             Report ↓
           </a>
-          <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 4, color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(244,244,242,0.25)'; e.currentTarget.style.color = 'var(--foreground)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(244,244,242,0.1)'; e.currentTarget.style.color = 'var(--text2)'; }}>
+          <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '6px 12px', border: '1px solid color-mix(in srgb, var(--foreground) 10%, transparent)', borderRadius: 4, color: 'var(--text2)', fontFamily: MONO, fontSize: 13, letterSpacing: 0, textDecoration: 'none', transition: 'all 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'color-mix(in srgb, var(--foreground) 25%, transparent)'; e.currentTarget.style.color = 'var(--foreground)'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'color-mix(in srgb, var(--foreground) 10%, transparent)'; e.currentTarget.style.color = 'var(--text2)'; }}>
             GitHub ↗
           </a>
         </div>
@@ -134,10 +130,10 @@ export default function HomeownerLossCaseStudy() {
       <section style={{ paddingTop: 'clamp(48px,7vw,96px)', paddingBottom: 'clamp(48px,6vw,80px)', paddingLeft: 'clamp(20px,4vw,52px)', paddingRight: 'clamp(20px,4vw,52px)', borderBottom: '1px solid rgba(167,139,250,0.1)', background: 'linear-gradient(180deg, rgba(167,139,250,0.04) 0%, transparent 100%)' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
-            <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: `${ACCENT}14`, border: `1px solid ${ACCENT}33`, borderRadius: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>MLOps</span>
-            <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', borderRadius: 10, color: '#e5c453', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Insurance AI</span>
-            <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'color-mix(in srgb, var(--blue) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--blue) 25%, transparent)', borderRadius: 10, color: '#5b8af5', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Risk Modeling</span>
-            <span style={{ fontFamily: MONO, fontSize: 10, padding: '4px 10px', background: 'rgba(244,244,242,0.04)', border: '1px solid rgba(244,244,242,0.1)', borderRadius: 10, color: 'var(--text3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Senior Design · 2024–2025</span>
+            <span style={{ fontFamily: MONO, fontSize: 13, padding: '4px 10px', background: `${ACCENT}14`, border: `1px solid ${ACCENT}33`, borderRadius: 10, color: ACCENT, letterSpacing: 0 }}>MLOps</span>
+            <span style={{ fontFamily: MONO, fontSize: 13, padding: '4px 10px', background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', borderRadius: 10, color: '#e5c453', letterSpacing: 0 }}>Insurance AI</span>
+            <span style={{ fontFamily: MONO, fontSize: 13, padding: '4px 10px', background: 'color-mix(in srgb, var(--blue) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--blue) 25%, transparent)', borderRadius: 10, color: '#5b8af5', letterSpacing: 0 }}>Risk Modeling</span>
+            <span style={{ fontFamily: MONO, fontSize: 13, padding: '4px 10px', background: 'color-mix(in srgb, var(--foreground) 4%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 10%, transparent)', borderRadius: 10, color: 'var(--text3)', letterSpacing: 0 }}>Senior Design · 2024–2025</span>
           </div>
 
           <h1 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-3xl)', lineHeight: 1.05, letterSpacing: '-0.025em', color: 'var(--foreground)', margin: 0, paddingBottom: '0.08em', marginBottom: 16 }}>
@@ -147,23 +143,23 @@ export default function HomeownerLossCaseStudy() {
             A production-style MLOps system for homeowner loss prediction that turns a manual actuarial modeling workflow into an automated, auditable, human-in-the-loop AI pipeline. Built with Grange Insurance × University of Toledo.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10, marginBottom: 32 }}>
+          <dl className="spec-sheet" style={{ marginBottom: 32 }}>
             <Metric value="R² 0.982" label="Model accuracy" color={ACCENT} />
             <Metric value="RMSE 7216" label="Prediction error" color="#e5c453" />
             <Metric value="26%" label="vs GLM baseline" color="#5b8af5" />
             <Metric value="75%" label="Manual review ↓" color="#2dd4bf" />
             <Metric value="MAE $29.10" label="Avg prediction error" color={ACCENT} />
             <Metric value="100+" label="Engineered features" color="#fb7185" />
-          </div>
+          </dl>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-            <a href="#cs-architecture" onClick={e => { e.preventDefault(); document.getElementById('cs-architecture')?.scrollIntoView({ behavior: 'smooth' }); }} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none', cursor: 'pointer' }}>
+            <a href="#cs-architecture" onClick={e => { e.preventDefault(); document.getElementById('cs-architecture')?.scrollIntoView({ behavior: 'smooth' }); }} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 13, fontWeight: 700, letterSpacing: 0, borderRadius: 5, textDecoration: 'none', cursor: 'pointer' }}>
               View Architecture ↓
             </a>
-            <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}44`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
+            <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: `1px solid ${ACCENT}44`, color: ACCENT, fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>
               Final Report ↓
             </a>
-            <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid rgba(244,244,242,0.14)', color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
+            <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 20px', border: '1px solid color-mix(in srgb, var(--foreground) 14%, transparent)', color: 'var(--text2)', fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>
               GitHub ↗
             </a>
           </div>
@@ -171,14 +167,14 @@ export default function HomeownerLossCaseStudy() {
       </section>
 
       {/* ── Section nav ── */}
-      <nav style={{ position: 'sticky', top: 56, zIndex: 90, background: 'rgba(13,14,18,0.97)', borderBottom: '1px solid rgba(244,244,242,0.06)', overflowX: 'auto', scrollbarWidth: 'none' }}>
+      <nav style={{ position: 'sticky', top: 56, zIndex: 90, background: 'color-mix(in srgb, var(--background) 97%, transparent)', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)', overflowX: 'auto', scrollbarWidth: 'none' }}>
         <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 clamp(20px,4vw,52px)', display: 'flex', gap: 0 }}>
           {NAV_SECTIONS.map(s => (
             <button key={s.id}
               onClick={() => document.getElementById(s.id)?.scrollIntoView({ behavior: 'smooth' })}
               style={{
                 padding: '14px 16px', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
-                fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
+                fontFamily: MONO, fontSize: 13, letterSpacing: 0,
                 color: active === s.id ? ACCENT : 'var(--text3)',
                 borderBottom: active === s.id ? `2px solid ${ACCENT}` : '2px solid transparent',
                 background: active === s.id ? `${ACCENT}0d` : 'transparent',
@@ -286,8 +282,8 @@ export default function HomeownerLossCaseStudy() {
             { label: 'Cloud & Storage', color: '#2dd4bf', items: ['AWS EC2', 'AWS S3', 'IAM-style access control', 'Containerized deployment', 'CI/CD pipeline'] },
             { label: 'Data & Features', color: '#e5c453', items: ['Pandas', 'NumPy', '100+ engineered features', 'Schema snapshots', 'Drift reference distributions', 'Monotonic constraints'] },
           ].map(group => (
-            <div key={group.label} style={{ background: `${group.color}06`, borderTop: `2px solid ${group.color}`, borderRight: '1px solid rgba(244,244,242,0.07)', borderBottom: '1px solid rgba(244,244,242,0.07)', borderLeft: '1px solid rgba(244,244,242,0.07)', borderRadius: 8, padding: '20px 18px' }}>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: group.color, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 14 }}>{group.label}</div>
+            <div key={group.label} style={{ background: `${group.color}06`, borderTop: `2px solid ${group.color}`, borderRight: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)', borderLeft: '1px solid color-mix(in srgb, var(--foreground) 7%, transparent)', borderRadius: 8, padding: '20px 18px' }}>
+              <div style={{ fontFamily: MONO, fontSize: 13, color: group.color, letterSpacing: 0, marginBottom: 14 }}>{group.label}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {group.items.map(item => (
                   <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -312,7 +308,7 @@ export default function HomeownerLossCaseStudy() {
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }} className="model-grid">
           <div>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 14 }}>Why XGBoost</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 14 }}>Why XGBoost</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
                 'Strong performance on structured/tabular insurance data',
@@ -329,7 +325,7 @@ export default function HomeownerLossCaseStudy() {
             </div>
           </div>
           <div>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 14 }}>Alternatives Considered</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--text3)', letterSpacing: 0, marginBottom: 14 }}>Alternatives Considered</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {[
                 { name: 'GLM Pipeline', why: 'Baseline - 26% worse RMSE' },
@@ -338,16 +334,16 @@ export default function HomeownerLossCaseStudy() {
                 { name: 'CatBoost', why: 'Good, but SHAP integration less mature' },
                 { name: 'Deep Learning / MLP', why: 'Too opaque for actuarial review' },
               ].map(item => (
-                <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8, fontSize: 13, padding: '6px 0', borderBottom: '1px solid rgba(244,244,242,0.05)' }}>
+                <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8, fontSize: 13, padding: '6px 0', borderBottom: '1px solid color-mix(in srgb, var(--foreground) 5%, transparent)' }}>
                   <span style={{ color: 'var(--text3)' }}>{item.name}</span>
-                  <span style={{ color: 'var(--text3)', fontSize: 11, textAlign: 'right' }}>{item.why}</span>
+                  <span style={{ color: 'var(--text3)', fontSize: 13, textAlign: 'right' }}>{item.why}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
         <div style={{ padding: '20px 22px', background: `${ACCENT}08`, border: `1px solid ${ACCENT}22`, borderRadius: 8 }}>
-          <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>Hyperparameter Optimization</div>
+          <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>Hyperparameter Optimization</div>
           <p style={{ fontSize: 14, lineHeight: 1.75, margin: 0 }}>Hyperopt with Bayesian optimization searched across learning rate, max depth, subsample, colsample, and regularization parameters. Every tuning run was tracked in MLflow with the associated training dataset snapshot, enabling reproducible comparison across experiments and preventing the common problem of &quot;which run was the best one?&quot;</p>
         </div>
         <style>{`@media(max-width:600px){.model-grid{grid-template-columns:1fr!important}}`}</style>
@@ -359,17 +355,17 @@ export default function HomeownerLossCaseStudy() {
         <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.25, marginBottom: 24, paddingBottom: '0.05em' }}>
           Strong predictive performance and meaningful automation gains
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10, marginBottom: 28 }}>
+        <dl className="spec-sheet" style={{ marginBottom: 28 }}>
           <Metric value="R² 0.982" label="Final model accuracy" color={ACCENT} />
           <Metric value="RMSE 7216" label="Root mean square error" color="#e5c453" />
           <Metric value="MAE $29.10" label="Mean absolute error" color="#5b8af5" />
           <Metric value="26%" label="RMSE improvement vs GLM" color="#2dd4bf" />
           <Metric value="75%" label="Manual review reduction" color="#fb7185" />
           <Metric value="100+" label="Engineered + validated features" color={ACCENT} />
-        </div>
+        </dl>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }} className="results-grid">
           <div style={{ padding: '20px 22px', background: 'rgba(167,139,250,0.04)', border: '1px solid rgba(167,139,250,0.15)', borderRadius: 8 }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 14 }}>Automation Gains</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 14 }}>Automation Gains</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {[
                 '75% reduction in manual iteration / review burden',
@@ -387,7 +383,7 @@ export default function HomeownerLossCaseStudy() {
             </div>
           </div>
           <div style={{ padding: '20px 22px', background: 'rgba(45,212,200,0.04)', border: '1px solid color-mix(in srgb, var(--primary) 15%, transparent)', borderRadius: 8 }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: '#2dd4bf', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 14 }}>Business Impact</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: '#2dd4bf', letterSpacing: 0, marginBottom: 14 }}>Business Impact</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {[
                 'Reduced manual validation effort for actuarial team',
@@ -418,10 +414,10 @@ export default function HomeownerLossCaseStudy() {
           The 75% reduction didn&apos;t happen because humans were removed from the workflow. It happened because the system moved humans to the right point in the loop - intervening only where judgment matters, not at every routine validation step.
         </p>
         <div style={{ padding: '24px 28px', background: `${ACCENT}0a`, border: `1px solid ${ACCENT}28`, borderRadius: 10, marginBottom: 20 }}>
-          <div style={{ fontFamily: SERIF, fontSize: 18, color: 'var(--foreground)', lineHeight: 1.5, fontStyle: 'italic', marginBottom: 10 }}>
+          <div style={{ fontFamily: SERIF, fontSize: 18, color: 'var(--foreground)', lineHeight: 1.5, fontStyle: 'normal', marginBottom: 10 }}>
             &ldquo;Instead of asking actuaries or analysts to manually rebuild and inspect every step, the pipeline handles routine validation, training, logging, and alerting automatically. Humans intervene only when judgment matters: drift remediation, suspicious model behavior, hyperparameter override, rollback, or production promotion.&rdquo;
           </div>
-          <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Core Design Principle</div>
+          <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0 }}>Core Design Principle</div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {[
@@ -453,13 +449,13 @@ export default function HomeownerLossCaseStudy() {
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 10 }}>
           <div style={{ padding: '20px 22px', background: `${ACCENT}0a`, border: `1px solid ${ACCENT}28`, borderRadius: 10 }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>What broke</div>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: ACCENT, letterSpacing: 0, marginBottom: 10 }}>What broke</div>
             <p style={{ fontSize: 14, lineHeight: 1.75, margin: 0 }}>
               Schema changes broke training silently. A shifted column type or a missing field could pass straight through preprocessing and corrupt a model run with no visible error - the pipeline only looked wrong once the predictions came out wrong. That is the whole reason a Pandera validation layer and schema snapshots now sit in front of training.
             </p>
           </div>
-          <div style={{ padding: '20px 22px', background: 'rgba(244,244,242,0.02)', border: '1px solid rgba(244,244,242,0.09)', borderRadius: 10 }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--foreground)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>What I&apos;d do differently</div>
+          <div style={{ padding: '20px 22px', background: 'color-mix(in srgb, var(--foreground) 2%, transparent)', border: '1px solid color-mix(in srgb, var(--foreground) 9%, transparent)', borderRadius: 10 }}>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--foreground)', letterSpacing: 0, marginBottom: 10 }}>What I&apos;d do differently</div>
             <p style={{ fontSize: 14, lineHeight: 1.75, margin: 0 }}>
               One XGBoost model carries every peril, and ingestion runs in batch. I&apos;d split it into separate model tracks for water, wind/hail, fire, and property loss so each can be tuned and monitored on its own drift, and move toward event-driven scoring rather than waiting for the next batch cycle.
             </p>
@@ -492,9 +488,9 @@ export default function HomeownerLossCaseStudy() {
       </Section>
 
       {/* ── Footer CTA ── */}
-      <section style={{ padding: 'clamp(48px,6vw,80px) clamp(20px,4vw,52px)', borderTop: '1px solid rgba(167,139,250,0.12)', background: 'rgba(13,14,18,0.95)' }}>
+      <section style={{ padding: 'clamp(48px,6vw,80px) clamp(20px,4vw,52px)', borderTop: '1px solid rgba(167,139,250,0.12)', background: 'color-mix(in srgb, var(--background) 95%, transparent)' }}>
         <div style={{ maxWidth: 860, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 20 }}>
-          <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT }}>Grange Insurance × University of Toledo · 2024–2025</div>
+          <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: ACCENT }}>Grange Insurance × University of Toledo · 2024–2025</div>
           <h2 style={{ fontFamily: DISPLAY, fontWeight: 400, fontSize: 'var(--text-2xl)', letterSpacing: '-0.02em', color: 'var(--foreground)', lineHeight: 1.2, paddingBottom: '0.05em', margin: 0 }}>
             Read the full technical report
           </h2>
@@ -502,9 +498,9 @@ export default function HomeownerLossCaseStudy() {
             The final report covers methodology, feature engineering details, model evaluation, pipeline architecture diagrams, and governance framework in full.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
-            <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>Download Final Report ↓</a>
-            <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: `1px solid ${ACCENT}44`, color: ACCENT, fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>View on GitHub ↗</a>
-            <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: '1px solid rgba(244,244,242,0.12)', color: 'var(--text2)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.06em', borderRadius: 5, textTransform: 'uppercase', textDecoration: 'none' }}>← Back to All Projects</SmartBackLink>
+            <a href="/docs/EECS4020_FinalReport_G3.pdf" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', background: ACCENT, color: 'var(--background)', fontFamily: MONO, fontSize: 13, fontWeight: 700, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>Download Final Report ↓</a>
+            <a href="https://github.com/RayFrightener/ml_automation" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: `1px solid ${ACCENT}44`, color: ACCENT, fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>View on GitHub ↗</a>
+            <SmartBackLink fallbackHref="/projects" backWhenPrev={["/projects"]} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '12px 24px', border: '1px solid color-mix(in srgb, var(--foreground) 12%, transparent)', color: 'var(--text2)', fontFamily: MONO, fontSize: 13, letterSpacing: 0, borderRadius: 5, textDecoration: 'none' }}>← Back to All Projects</SmartBackLink>
           </div>
         </div>
       </section>

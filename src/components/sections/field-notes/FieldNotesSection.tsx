@@ -1,133 +1,73 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { ViewTransition } from 'react';
-import { Section, MONO, SERIF, SANS, FG2, FG3 } from '@/components/shared/section-helpers';
-import { Pic } from '@/components/ui/pic';
 import { fieldNotes, CATEGORY_CONFIG } from '@/lib/field-notes';
-import { sectionById } from '@/lib/data/sections';
+import { Pic } from '@/components/ui/pic';
+
+const fmt = (d: string) => new Date(d).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 
 /**
- * Field Notes as an editorial spread: the featured essay gets the full
- * magazine treatment (dateline, pull excerpt, hero image with the shared
- * view-transition morph). Only published essays are surfaced.
+ * Field Notes on the homepage: a dated list, newest first. The newest note carries its
+ * excerpt; the rest are titles. Only published essays are listed.
  */
 export function FieldNotesSection() {
-  const def = sectionById('field-notes')!;
   const published = fieldNotes
-    .filter(n => n.published && n.date)
+    .filter((n) => n.published && n.date)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  const featured = published[0];
-  const rest = published.slice(1, 3);
-  const catColor = featured ? (CATEGORY_CONFIG[featured.category]?.color ?? def.color) : def.color;
 
   return (
-    <Section id="field-notes">
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', marginBottom: 46 }}>
-        <div style={{ position: 'relative', paddingTop: 8, flex: 1 }}>
-          <div aria-hidden className="ghost-num" style={{ position: 'absolute', top: -32, left: -8, fontFamily: SERIF, fontSize: 'clamp(72px,11vw,160px)', fontWeight: 400, color: def.color, opacity: 0.05, lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-0.03em', zIndex: 0 }}>{def.n}</div>
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
-              <span style={{ display: 'inline-block', width: 22, height: 1.5, background: def.color, opacity: 0.6, flexShrink: 0 }} />
-              <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: def.color }}>Field Notes</span>
-              <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.06em', textTransform: 'uppercase' }}>The editorial desk</span>
-            </div>
-            <p style={{ fontSize: 15, color: FG2, maxWidth: 500, lineHeight: 1.65, marginTop: 4, fontFamily: SANS }}>
-              Thinking in public: dispatches from the edge of AI, robotics, and real-world systems.
-            </p>
-          </div>
+    <section id="field-notes" aria-labelledby="field-notes-title" className="fn">
+      <div className="wrap">
+        <div className="fn-head rv">
+          <h2 id="field-notes-title" className="fn-title draw-rule">Field notes</h2>
+          <p className="fn-lede">Thinking in public: dispatches from the edge of AI, robotics, and real-world systems.</p>
+          <Link href="/field-notes" transitionTypes={['nav-forward']} className="text-link is-underlined fn-all">All Notes ↗</Link>
         </div>
-        <Link
-          href="/field-notes"
-          transitionTypes={['nav-forward']}
-          style={{
-            fontFamily: MONO, fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase',
-            color: def.color, border: '1px solid rgba(45,212,191,0.3)', borderRadius: 5,
-            padding: '9px 18px', textDecoration: 'none', flexShrink: 0, marginTop: 8,
-            display: 'inline-block',
-          }}
-        >
-          All Notes ↗
-        </Link>
+        <ol className="fn-list">
+          {published.map((n, i) => (
+            <li key={n.slug} className="rv" style={{ '--i': i, '--area': CATEGORY_CONFIG[n.category]?.color ?? '#2dd4bf' } as React.CSSProperties}>
+              <Link href={`/field-notes/${n.slug}`} transitionTypes={['nav-forward']} className="fn-row">
+                <span className="fn-date tnum">{fmt(n.date)}</span>
+                <span>
+                  <span className="fn-name">{n.title}</span>
+                  {i === 0 && <span className="fn-excerpt">{n.excerpt}</span>}
+                  {i === 0 && <span className="fn-tags">{n.tags.join(' · ')}</span>}
+                  {i === 0 && <span className="fn-read">Read the essay →</span>}
+                  {i === 0 && n.heroImage && <span className="fn-img lift-img"><Pic src={n.heroImage} alt="" sizes="(max-width: 860px) 92vw, 560px" /></span>}
+                </span>
+                <span className="fn-meta">{n.category} · {n.readingTime} min read</span>
+              </Link>
+            </li>
+          ))}
+        </ol>
       </div>
-
-      {/* Featured editorial spread */}
-      {featured && (
-        <div className="rv">
-          <Link
-            href={`/field-notes/${featured.slug}`}
-            transitionTypes={['nav-forward']}
-            className="fn-featured"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'minmax(0, 56fr) minmax(0, 44fr)',
-              gap: 0,
-              border: `1px solid color-mix(in srgb, ${catColor} 25%, transparent)`,
-              borderRadius: 10,
-              overflow: 'hidden',
-              background: `linear-gradient(135deg, color-mix(in srgb, ${catColor} 6%, transparent), var(--surface) 55%)`,
-              textDecoration: 'none',
-            }}
-          >
-            <div style={{ padding: 'clamp(24px, 3.5vw, 44px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: catColor, border: `1px solid color-mix(in srgb, ${catColor} 40%, transparent)`, borderRadius: 4, padding: '3px 8px' }}>
-                  Featured · {featured.category}
-                </span>
-                <span style={{ fontFamily: MONO, fontSize: 10, color: FG3, letterSpacing: '0.06em' }}>
-                  {new Date(featured.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })} · {featured.readingTime} min read
-                </span>
-              </div>
-              <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 'var(--fs-fn-featured)', lineHeight: 1.12, letterSpacing: '-0.02em', color: 'var(--foreground)', margin: '16px 0 0', paddingBottom: '0.05em' }}>
-                {featured.title}
-              </h3>
-              <p style={{ fontFamily: SANS, fontSize: 14.5, lineHeight: 1.75, color: FG2, marginTop: 14, maxWidth: 560 }}>
-                {featured.excerpt}
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 16 }}>
-                {featured.tags.map((t) => (
-                  <span key={t} style={{ fontFamily: MONO, fontSize: 10, padding: '3px 8px', background: 'rgba(244,244,242,0.03)', border: '1px solid var(--bd)', borderRadius: 4, color: FG3, letterSpacing: '0.04em', textTransform: 'uppercase' }}>{t}</span>
-                ))}
-              </div>
-              <span style={{ fontFamily: MONO, fontSize: 10, color: catColor, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 20 }}>Read the essay →</span>
-            </div>
-            {featured.heroImage && (
-              <div style={{ position: 'relative', minHeight: 260, background: 'var(--background)' }}>
-                <ViewTransition name={`fn-img-${featured.slug}`} share="morph">
-                  <Pic src={featured.heroImage} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
-                </ViewTransition>
-                <div aria-hidden style={{ position: 'absolute', inset: 0, background: `linear-gradient(to right, var(--surface) 0%, transparent 30%)` }} />
-              </div>
-            )}
-          </Link>
-        </div>
-      )}
-
-      {/* Secondary published essays */}
-      {rest.length > 0 && (
-        <div className="fn-lower" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14, marginTop: 14 }}>
-        {rest.map((note) => {
-          const c = CATEGORY_CONFIG[note.category]?.color ?? def.color;
-          return (
-            <Link key={note.slug} href={`/field-notes/${note.slug}`} transitionTypes={['nav-forward']} style={{ border: '1px solid var(--bd)', borderRadius: 10, padding: '18px 20px', background: 'rgba(244,244,242,0.02)', textDecoration: 'none' }}>
-              <span style={{ fontFamily: MONO, fontSize: 10, color: c, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{note.category}</span>
-              <div style={{ fontFamily: SERIF, fontSize: 19, color: 'var(--foreground)', marginTop: 6, lineHeight: 1.3 }}>{note.title}</div>
-              <div style={{ fontFamily: MONO, fontSize: 10, color: FG3, marginTop: 8 }}>{note.readingTime} min read</div>
-            </Link>
-          );
-        })}
-        </div>
-      )}
-
       <style>{`
-        @media (max-width: 820px) {
-          .fn-featured { grid-template-columns: 1fr !important; }
-          .fn-featured > div:last-child { min-height: 200px !important; order: -1; }
-          .fn-lower { grid-template-columns: 1fr !important; }
+        .fn { padding: clamp(64px, 10vw, 140px) 0; }
+        .fn-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 16px 40px; align-items: end; margin-bottom: 32px; }
+        .fn-title { font-size: clamp(40px, 5vw, 72px); font-weight: 400; letter-spacing: -0.03em; line-height: 1; }
+        .fn-lede { color: var(--text2); max-width: 32em; font-size: 18px; }
+        .fn-all { grid-column: 2; justify-self: start; font-size: 15px; }
+        .fn-list { list-style: none; border-top: 1px solid var(--foreground); }
+        .fn-list li { border-bottom: 1px solid var(--bd); }
+        .fn-row { transition: background-color .3s, padding .3s; border-radius: 3px; display: grid; grid-template-columns: 11em minmax(0, 1fr) 15em; gap: 8px 28px; padding: 22px 0; align-items: baseline; }
+        .fn-date, .fn-meta { font-size: 14px; color: var(--text3); }
+        .fn-meta { text-align: right; }
+        .fn-name { font-size: clamp(19px, 1.6vw, 23px); line-height: 1.25; letter-spacing: -0.015em; }
+        .fn-meta { color: color-mix(in oklab, var(--area) var(--accent-mix), var(--foreground)) !important; }
+        .fn-date::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--area); margin-right: 10px; }
+        .fn-row:is(:hover, :focus-visible) { background: color-mix(in srgb, var(--area) 8%, var(--background)); padding-left: 14px; padding-right: 14px; }
+        .fn-row:is(:hover, :focus-visible) .fn-name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+        .fn-excerpt { display: block; margin-top: 8px; font-size: 16px; color: var(--text2); max-width: 40em; }
+        .fn-tags { display: block; margin-top: 10px; font-size: 14px; color: var(--text3); }
+        .fn-read { display: inline-block; margin-top: 12px; font-size: 15px; border-bottom: 1px solid var(--bd2); }
+        .fn-img { display: block; margin-top: 20px; max-width: 560px; border-radius: 3px; overflow: hidden; background: var(--surface); }
+        .fn-img img { display: block; width: 100%; height: auto; }
+        @media (max-width: 860px) {
+          .fn-head { grid-template-columns: minmax(0, 1fr); }
+          .fn-all { grid-column: 1; }
+          .fn-row { grid-template-columns: minmax(0, 1fr); }
+          .fn-meta { text-align: left; }
         }
       `}</style>
-    </Section>
+    </section>
   );
 }
-

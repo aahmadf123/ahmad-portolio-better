@@ -1,91 +1,45 @@
-'use client';
+import React from 'react';
+import { SH } from '@/components/shared/section-helpers';
+import { skillGroups } from '@/lib/data/skills';
 
-import React, { useCallback, useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import { Section, SH, MONO } from '@/components/shared/section-helpers';
-import { sectionById } from '@/lib/data/sections';
-import type { SkillNode } from '@/lib/data/skills';
-import { SkillListFallback } from './SkillListFallback';
-import { RadialSkills } from './RadialSkills';
-import { SkillDetailCard } from './SkillDetailCard';
-import { ConstellationLegend } from './ConstellationLegend';
-
-/** The constellation's own height (ConstellationCanvas), reserved before it loads. */
-const CANVAS_H = 'clamp(420px, 58vh, 620px)';
-const placeholder = <div aria-hidden style={{ height: CANVAS_H, borderRadius: 10, border: '1px solid var(--bd)' }} />;
-
-const ConstellationCanvas = dynamic(
-  () => import('./ConstellationCanvas').then((m) => ({ default: m.ConstellationCanvas })),
-  { ssr: false, loading: () => placeholder }
-);
-
-type Mode = 'pending' | 'constellation' | 'radial' | 'list';
-
-/**
- * Skills as an interactive constellation (desktop, fine pointer, motion OK),
- * a swipeable radial carousel (touch), or the full chip inventory (reduced
- * motion / by choice). All 88 skills stay reachable as text in every mode.
- */
+/** Capabilities: every skill, grouped, as plain text columns. */
 export function SkillsSection() {
-  const def = sectionById('skills')!;
-  const [mode, setMode] = useState<Mode>('pending');
-  const [near, setNear] = useState(false);
-  const [listOpen, setListOpen] = useState(false);
-  const [selected, setSelected] = useState<SkillNode | null>(null);
-  const [focusGroup, setFocusGroup] = useState<string | null>(null);
-
-  // Pick the layout as soon as the page starts, so the section never changes height
-  // while someone is scrolling (a mid-scroll resize re-lays out the whole long page).
-  // three.js (~130KB) still only loads when the section is about a screen away, so it
-  // never competes with the journey's opening photo; until then its space is reserved.
-  useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const fine = window.matchMedia('(pointer: fine) and (min-width: 860px)').matches;
-    setMode(reduced ? 'list' : fine ? 'constellation' : 'radial');
-    const el = document.getElementById('skills');
-    if (!el || !('IntersectionObserver' in window)) { setNear(true); return; }
-    const io = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) { io.disconnect(); setNear(true); }
-    }, { rootMargin: '900px 0px' });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  const onSelect = useCallback((node: SkillNode | null) => setSelected(node), []);
-
+  const total = skillGroups.reduce((n, g) => n + g.skills.length, 0);
   return (
-    <Section id="skills">
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 14, flexWrap: 'wrap' }}>
-        <SH n={def.n} label="Capabilities" sub="The stack as a constellation: clusters that orbit each other, with stars sized by how often they carry real work." color={def.color} variant="sub" />
-        {mode === 'constellation' && (
-          <button
-            onClick={() => setListOpen((v) => !v)}
-            aria-pressed={listOpen}
-            style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.09em', textTransform: 'uppercase', padding: '8px 16px', borderRadius: 5, border: '1px solid var(--bd2)', background: listOpen ? 'rgba(45,212,191,0.1)' : 'transparent', color: listOpen ? 'var(--primary)' : 'var(--text3)', cursor: 'pointer', marginBottom: 52 }}
-          >
-            {listOpen ? 'Hide list' : 'View as list'}
-          </button>
-        )}
-      </div>
-
-      {mode === 'constellation' && (
-        <>
-          <ConstellationLegend focus={focusGroup} onToggle={setFocusGroup} />
-          <div style={{ position: 'relative' }}>
-            {near ? <ConstellationCanvas focusGroup={focusGroup} onSelect={onSelect} /> : placeholder}
-            <SkillDetailCard node={selected} onClose={() => setSelected(null)} />
+    <section id="skills" aria-label="Capabilities" className="sk">
+      <div className="wrap">
+        <SH color="#f472b6" label="Capabilities" sub={`${total} tools and methods, grouped by the kind of work they carry.`} variant="sub" />
+        {/* A drifting row of every skill (decorative; the full grouped list follows). */}
+        <div className="marquee sk-marquee" aria-hidden>
+          <div className="marquee-track">
+            {[0, 1].map((copy) => (
+              <React.Fragment key={copy}>
+                {skillGroups.flatMap((g) => g.skills).map((s) => <span key={`${copy}-${s}`}>{s}</span>)}
+              </React.Fragment>
+            ))}
           </div>
-        </>
-      )}
-      {mode === 'radial' && <RadialSkills />}
-      {(mode === 'list' || mode === 'pending') && <SkillListFallback />}
-
-      {/* the full inventory stays in the DOM for search/SR; visually revealed on toggle */}
-      {mode === 'constellation' && (
-        <div style={listOpen ? { marginTop: 20 } : { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clipPath: 'inset(50%)' }} aria-hidden={false}>
-          <SkillListFallback />
         </div>
-      )}
-    </Section>
+        <div className="sk-grid">
+          {skillGroups.map((g, i) => (
+            <div key={g.id} className="rv" style={{ '--i': i } as React.CSSProperties}>
+              <h4 className="sk-head"><i aria-hidden style={{ background: g.color }} />{g.label}</h4>
+              <ul className="sk-list">
+                {g.skills.map((s) => <li key={s}>{s}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+      <style>{`
+        .sk { padding: clamp(40px, 6vw, 80px) 0; }
+        .sk-marquee { font-size: clamp(28px, 3.4vw, 48px); letter-spacing: -0.02em; color: var(--text3); margin: 0 0 clamp(32px, 4vw, 56px); padding: 10px 0; border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd); }
+        .sk-list li { transition: color .2s, translate .2s; }
+        .sk-list li:hover { color: var(--foreground); translate: 4px 0; }
+        .sk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); gap: 32px clamp(24px, 3vw, 48px); }
+        .sk-head { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 500; padding-bottom: 10px; border-bottom: 1px solid var(--foreground); }
+        .sk-head i { width: 6px; height: 6px; border-radius: 50%; }
+        .sk-list { list-style: none; margin-top: 10px; font-size: 15px; color: var(--text2); line-height: 1.85; }
+      `}</style>
+    </section>
   );
 }

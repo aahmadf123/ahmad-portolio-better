@@ -2,7 +2,8 @@ import type { MDXComponents } from 'mdx/types';
 import React from 'react';
 
 const SERIF = "var(--font-body), system-ui, sans-serif";
-const MONO  = "var(--font-code), ui-monospace, monospace";
+const MONO  = "var(--font-body), system-ui, sans-serif";
+const CODE = "var(--font-code), ui-monospace, monospace";
 const DISPLAY = "var(--font-display), Georgia, serif";
 
 export function useMDXComponents(): MDXComponents {
@@ -45,7 +46,7 @@ export function useMDXComponents(): MDXComponents {
     h4: ({ children }) => (
       <h4 style={{
         fontFamily: MONO, fontWeight: 400,
-        fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase',
+        fontSize: 12, letterSpacing: 0,
         color: 'var(--gold)', opacity: 0.8,
         marginTop: '1.5rem', marginBottom: '0.5rem',
       }}>
@@ -106,7 +107,7 @@ export function useMDXComponents(): MDXComponents {
       }}>
         <div style={{
           fontFamily: SERIF, fontSize: 18, lineHeight: 1.7,
-          color: 'var(--foreground)', fontStyle: 'italic',
+          color: 'var(--foreground)', fontStyle: 'normal',
         }}>
           {children}
         </div>
@@ -115,9 +116,9 @@ export function useMDXComponents(): MDXComponents {
 
     code: ({ children }) => (
       <code style={{
-        fontFamily: MONO, fontSize: 13,
-        background: 'rgba(244,244,242,0.07)',
-        border: '1px solid rgba(244,244,242,0.12)',
+        fontFamily: CODE, fontSize: 13,
+        background: 'color-mix(in srgb, var(--foreground) 7%, transparent)',
+        border: '1px solid color-mix(in srgb, var(--foreground) 12%, transparent)',
         borderRadius: 4, padding: '1px 6px',
         color: 'var(--gold)',
       }}>
@@ -127,9 +128,9 @@ export function useMDXComponents(): MDXComponents {
 
     pre: ({ children }) => (
       <pre style={{
-        fontFamily: MONO, fontSize: 13, lineHeight: 1.6,
-        background: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(244,244,242,0.08)',
+        fontFamily: CODE, fontSize: 13, lineHeight: 1.6,
+        background: 'color-mix(in srgb, var(--foreground) 3%, transparent)',
+        border: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)',
         borderRadius: 8, padding: '1.25rem 1.5rem',
         overflowX: 'auto', margin: '1.5rem 0',
         color: 'var(--text2)',
@@ -156,7 +157,7 @@ export function useMDXComponents(): MDXComponents {
     hr: () => (
       <hr style={{
         border: 'none',
-        borderTop: '1px solid rgba(244,244,242,0.08)',
+        borderTop: '1px solid color-mix(in srgb, var(--foreground) 8%, transparent)',
         margin: '3rem 0',
       }} />
     ),
@@ -166,7 +167,7 @@ export function useMDXComponents(): MDXComponents {
     ),
 
     em: ({ children }) => (
-      <em style={{ color: 'var(--text2)', fontStyle: 'italic' }}>{children}</em>
+      <em style={{ color: 'var(--text2)', fontStyle: 'normal' }}>{children}</em>
     ),
 
     table: ({ children }) => (
@@ -188,8 +189,7 @@ export function useMDXComponents(): MDXComponents {
 
     th: ({ children }) => (
       <th style={{
-        fontFamily: MONO, fontSize: 10, letterSpacing: '0.1em',
-        textTransform: 'uppercase', color: 'var(--gold)',
+        fontFamily: MONO, fontSize: 13, letterSpacing: 0, color: 'var(--gold)',
         padding: '8px 16px 8px 0', textAlign: 'left', fontWeight: 400,
       }}>
         {children}
@@ -200,7 +200,7 @@ export function useMDXComponents(): MDXComponents {
       <td style={{
         padding: '10px 16px 10px 0',
         color: 'var(--text2)', lineHeight: 1.6,
-        borderBottom: '1px solid rgba(244,244,242,0.06)',
+        borderBottom: '1px solid color-mix(in srgb, var(--foreground) 6%, transparent)',
         verticalAlign: 'top',
       }}>
         {children}
