@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { caseStudySlugs } from '../../src/lib/data/projects';
+import { featuredProjectSlugs } from '../../src/lib/data/worlds';
 
 // The "Uncertain Paths" homepage: a flight path that links three kinds of work, a
 // two-line headline, then selected work, the work index, notes, a short intro, contact.
@@ -41,12 +42,39 @@ test('the travelling dot moves, and stands still under reduced motion', async ({
   else expect(b).not.toBe(a);
 });
 
-test('the work index lists every project once, each linking to its case study', async ({ page }) => {
+test('every project appears once: featured above, the rest in the work list', async ({ page }) => {
   await page.goto('/');
+  const featured: readonly string[] = featuredProjectSlugs;
+  const rest = caseStudySlugs.filter((s) => !featured.includes(s));
   const links = page.locator('#work .wi-link');
-  await expect(links).toHaveCount(caseStudySlugs.length);
+  await expect(links).toHaveCount(rest.length);
   const hrefs = await links.evaluateAll((els) => els.map((e) => e.getAttribute('href')));
-  expect(new Set(hrefs)).toEqual(new Set(caseStudySlugs.map((s) => `/case-study/${s}`)));
+  expect(new Set(hrefs)).toEqual(new Set(rest.map((s) => `/case-study/${s}`)));
+  for (const s of featured) await expect(page.locator(`#work a[href="/case-study/${s}"]`)).toHaveCount(0);
+});
+
+test('no picture is shown twice on the homepage', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(async () => { for (let y = 0; y < document.documentElement.scrollHeight; y += 900) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } });
+  const stems = await page.locator('main img').evaluateAll((imgs) => imgs.map((i) => ((i as HTMLImageElement).currentSrc || (i as HTMLImageElement).src).split('/').pop()!.replace(/-\d+\.(webp|avif)$/, '')));
+  const seen = new Set<string>(); const dups: string[] = [];
+  for (const s of stems) { if (seen.has(s)) dups.push(s); seen.add(s); }
+  expect(dups).toEqual([]);
+});
+
+test('the nav bar appears after the hero and follows the reader', async ({ page }, info) => {
+  await page.goto('/');
+  await expect(page.locator('.home-nav')).not.toHaveClass(/is-shown/);
+  await page.evaluate(() => document.getElementById('timeline')!.scrollIntoView());
+  await expect(page.locator('.home-nav')).toHaveClass(/is-shown/);
+  if (info.project.name === 'phone') {
+    await page.locator('.home-nav-menu').click();
+    await page.locator('.home-nav-sheet').getByRole('link', { name: 'Contact' }).click();
+  } else {
+    await expect(page.locator('.home-nav-link[aria-current]')).toHaveText('Timeline');
+    await page.locator('.home-nav-links').getByRole('link', { name: 'Contact' }).click();
+  }
+  await expect(page.locator('#contact-title')).toBeInViewport();
 });
 
 test('old anchors land on their section, and /about redirects to it', async ({ page }) => {

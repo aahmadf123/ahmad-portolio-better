@@ -9,6 +9,7 @@ test.describe('every route at every width', () => {
 
   for (const route of [...ROUTES, '/projects']) {
     test(`no horizontal overflow on ${route}`, async ({ page }) => {
+      test.setTimeout(300_000); // eight widths, each a full load and scroll
       const bad: string[] = [];
       for (const width of WIDTHS) {
         await page.setViewportSize({ width, height: 900 });

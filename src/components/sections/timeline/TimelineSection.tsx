@@ -2,7 +2,7 @@ import React from 'react';
 import { SH } from '@/components/shared/section-helpers';
 import { jobs, type Job } from '@/lib/data/jobs';
 import { education } from '@/lib/data/education';
-import { awards, type Award } from '@/lib/data/awards';
+import type { Award } from '@/lib/data/awards';
 
 type Entry =
   | { kind: 'job'; id: string; date: string; job: Job }
@@ -10,13 +10,12 @@ type Entry =
   | { kind: 'education'; id: string; date: string };
 
 /**
- * Jobs, education and milestone awards as one dated list, newest first. Each job opens
+ * Jobs and education as one dated list (awards are listed under Credentials), newest first. Each job opens
  * in place to its full description, achievements and stack.
  */
 export function TimelineSection() {
   const entries: Entry[] = [
     ...jobs.map((j): Entry => ({ kind: 'job', id: j.id, date: j.startDate, job: j })),
-    ...awards.filter((a) => a.milestone).map((a): Entry => ({ kind: 'award', id: a.title, date: a.startDate, award: a })),
     { kind: 'education' as const, id: 'utoledo', date: education.startDate },
   ].sort((a, b) => (a.date < b.date ? 1 : -1));
 

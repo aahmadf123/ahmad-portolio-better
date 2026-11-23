@@ -140,10 +140,10 @@ code, pre, kbd, samp { font-family: var(--font-code), ui-monospace, monospace; }
 /* Photos drift a little against the scroll where the browser can do it on the compositor. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .parallax img { scale: 1.12; animation: parallax linear both; animation-timeline: view(); animation-range: cover; }
+    .parallax img { scale: 1.06; animation: parallax linear both; animation-timeline: view(); animation-range: cover; }
   }
 }
-@keyframes parallax { from { translate: 0 -24px; } to { translate: 0 24px; } }
+@keyframes parallax { from { translate: 0 -14px; } to { translate: 0 14px; } }
 
 /* ── Hover and focus micro-motion (always mirrored on focus) ───── */
 .lift-img { overflow: hidden; }

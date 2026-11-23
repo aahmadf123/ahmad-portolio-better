@@ -7,19 +7,25 @@ import { Pic } from '@/components/ui/pic';
 import { awards } from '@/lib/data/awards';
 import { affiliations } from '@/lib/data/affiliations';
 import { certs } from '@/lib/data/certs';
+import { showInCredentials } from '@/lib/data/image-places';
 
 /** Certifications, awards and affiliations as three plain lists; photos open in place. */
 export function CredentialsSection() {
   const openLb = useLightboxOpen();
-  const photos = (images: string[], alt: string, ratio?: string, fit?: React.CSSProperties['objectFit'], pos?: string) => (
+  const photos = (all: string[], alt: string, ratio?: string, _fit?: React.CSSProperties['objectFit'], pos?: string) => {
+    // Photos already shown higher up the page are not repeated here.
+    const images = all.filter(showInCredentials);
+    if (images.length === 0) return null;
+    return (
     <div className="cr-photos">
       {images.map((src) => (
         <button key={src} type="button" className="lift-img" onClick={() => openLb(src, alt)} aria-label={`Enlarge photo: ${alt}`} style={{ aspectRatio: ratio ?? '16/9' }}>
-          <Pic src={src} alt={alt} sizes="(max-width: 860px) 45vw, 300px" style={{ width: '100%', height: '100%', objectFit: fit ?? 'cover', objectPosition: pos ?? 'center', display: 'block' }} />
+          <Pic src={src} alt={alt} sizes="(max-width: 860px) 45vw, 300px" style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: pos ?? 'center', display: 'block' }} />
         </button>
       ))}
     </div>
-  );
+    );
+  };
 
   return (
     <section id="credentials" aria-label="Credentials" className="cr">

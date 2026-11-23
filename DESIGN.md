@@ -40,6 +40,9 @@ Tokens live in `src/styles/theme.css` (exposed to Tailwind through `@theme inlin
 **Page structure**
 - **Home (`/`)** holds everything, in order: `FlightPathHero` → `AboutBrief` (name, role, facts, now building) → `FeaturedWork` → `WorkIndex` (all ten projects, grouped by path) → `Background` ("Experience and background": Toledo prologue, the five worlds with their photographs, galleries, research paper and code insights, the next chapter) → `FieldNotesSection` → `AboutSection` → Capabilities, Timeline, Credentials, Signals, Now → `ContactSection`.
 - Details are shown, not hidden: every job's description, achievements and stack, award and affiliation photos, coursework.
+- **One thing, one place.** Each picture appears once on the homepage (`src/lib/data/image-places.ts` decides which section keeps it, in page order; the press image stays with the article). The two featured projects are not repeated in the work list, education lives in the Timeline, awards live in Credentials, the headshot is in the intro only.
+- **Nav:** the hero carries its own header; once it scrolls away, `HomeNav` slides in (fixed, scroll-spy on the current section, a reading-progress hairline, Resume link, theme switch; a Menu sheet under 960px).
+- **Photos are never cropped where it matters:** Ahmad's own chapter photo is shown at its real shape, galleries and credential photos keep their proportions (`ZoomPic` opens them large).
 - `/about` redirects to `/#about`. Old anchors (`/#research`, `/#timeline`, …) resolve on the homepage.
 - **Inside pages** (`/projects`, case studies, field notes, docs) share `SiteHeader` (sticky, with a back link) and `SiteFooter`.
 

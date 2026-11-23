@@ -14,12 +14,14 @@ import { SignalsSection } from '@/components/sections/signals/SignalsSection';
 import { NowSection } from '@/components/sections/now/NowSection';
 import { ContactSection } from '@/components/sections/contact/ContactSection';
 import { SiteFooter } from '@/components/layout/SiteFooter';
+import { HomeNav } from '@/components/home/HomeNav';
 
 /** Everything on one page: who, the work, the story, notes, about, and how to reach him. */
 export default function Home() {
   return (
     <LightboxProvider>
       <ProjectModalProvider>
+        <HomeNav />
         <main id="main" tabIndex={-1}>
           <FlightPathHero />
           <AboutBrief />

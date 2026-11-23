@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { projects, projectStatusLabel, type Project } from '@/lib/data/projects';
-import { worlds, type WorldId } from '@/lib/data/worlds';
+import { worlds, featuredProjectSlugs, type WorldId } from '@/lib/data/worlds';
 import { accentInk } from '@/lib/accent';
 import { Pic } from '@/components/ui/pic';
 
@@ -19,6 +19,8 @@ const GROUPS: { world: WorldId; anchor: string; label: string }[] = [
   { world: 'chem-e-car', anchor: 'path-chem-e-car', label: 'Chem-E Car (AIChE)' },
 ];
 
+const FEATURED: readonly string[] = featuredProjectSlugs;
+
 export function WorkIndex() {
   return (
     <section id="work" aria-labelledby="work-title" className="wi">
@@ -26,7 +28,7 @@ export function WorkIndex() {
         <div className="wi-head rv">
           <h2 id="work-title" className="wi-title draw-rule">Work</h2>
           <p className="wi-lede">
-            Ten projects across five kinds of problem. Each one is a different way of
+            Eight more projects, beyond the two above. Each one is a different way of
             dealing with data, environments or people that don&apos;t behave as planned.
           </p>
           <Link href="/projects" className="text-link is-underlined wi-all">All projects with pictures →</Link>
@@ -34,7 +36,9 @@ export function WorkIndex() {
 
         {GROUPS.map((g) => {
           const w = worlds.find((x) => x.id === g.world)!;
-          const list = w.projectSlugs.map((slug) => projects.find((p) => p.slug === slug)!);
+          // The featured projects are shown in full above; the list holds the rest.
+          const list = w.projectSlugs.filter((slug) => !FEATURED.includes(slug)).map((slug) => projects.find((p) => p.slug === slug)!);
+          if (list.length === 0) return null;
           return (
             <div key={g.anchor} id={g.anchor} className="wi-group" aria-labelledby={`${g.anchor}-h`}>
               <div className="wi-group-head rv">
@@ -68,7 +72,7 @@ export function WorkIndex() {
         .wi-link { position: relative; transition: background-color .3s, padding .3s; border-radius: 3px; display: grid; grid-template-columns: 3.2em minmax(0, 4fr) minmax(0, 5fr) 7.5em; gap: 8px 28px; padding: 22px 0; align-items: baseline; color: inherit; }
         .wi-idx { color: var(--text3); font-size: 15px; }
         .wi-thumb { display: block; width: 128px; aspect-ratio: 16 / 10; border-radius: 2px; overflow: hidden; background: var(--surface); margin-bottom: 14px; }
-        .wi-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: opacity .25s; }
+        .wi-thumb img { display: block; width: 100%; height: 100%; object-fit: contain; transition: opacity .25s; }
         .wi-link:hover .wi-thumb img { opacity: .85; }
         .wi-name { font-size: clamp(20px, 1.7vw, 24px); line-height: 1.2; letter-spacing: -0.015em; color: var(--foreground); }
         .wi-name-arrow { display: inline-block; margin-left: .35em; color: var(--text3); transition: transform .25s, color .25s; }

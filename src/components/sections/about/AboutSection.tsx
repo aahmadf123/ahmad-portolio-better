@@ -4,9 +4,7 @@ import { SH } from '@/components/shared/section-helpers';
 import { accentInk } from '@/lib/accent';
 import { MetricsBand } from '@/components/shared/MetricsBand';
 import { about, type Lens } from '@/lib/data/about';
-import { education } from '@/lib/data/education';
 import { site } from '@/lib/data/site';
-import { Headshot } from './Headshot';
 import { SignOff } from './SignOff';
 
 /**
@@ -33,7 +31,6 @@ export function AboutSection() {
               <a href={site.socials.github} target="_blank" rel="noopener" className="text-link is-underlined">GitHub ↗</a>
             </p>
           </div>
-          <div className="ab-photo lift-img"><Headshot /></div>
         </div>
 
         <div className="ab-lenses">
@@ -44,7 +41,7 @@ export function AboutSection() {
       </div>
       <style>{`
         .ab { padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 8vw, 112px); }
-        .ab-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 300px); gap: clamp(24px, 5vw, 80px); align-items: start; }
+        .ab-intro { max-width: 900px; }
         .ab-headline { font-size: clamp(26px, 2.8vw, 40px); font-weight: 400; line-height: 1.2; letter-spacing: -0.02em; max-width: 22em; }
         .ab-bio { margin-top: 20px; color: var(--text2); max-width: 36em; }
         .ab-links { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 24px; font-size: 15px; }
@@ -102,16 +99,6 @@ function LensBlock({ lens }: { lens: Lens }) {
               </li>
             ))}
           </ul>
-        )}
-
-        {lens.id === 'engineer' && (
-          <div className="ab-edu">
-            <h4>Education</h4>
-            <div className="ab-edu-school">{education.school}</div>
-            <div className="ab-edu-meta">{education.degree}</div>
-            <div className="ab-edu-meta tnum">{education.period} · {education.status} · GPA {education.gpa}</div>
-            <p className="ab-edu-courses"><span>Coursework</span> {education.coursework.join(' · ')}</p>
-          </div>
         )}
 
         <p className="ab-next">
