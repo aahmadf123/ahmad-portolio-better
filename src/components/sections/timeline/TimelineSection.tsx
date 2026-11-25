@@ -49,7 +49,7 @@ export function TimelineSection() {
               const logo = e.kind === 'job' ? e.job.logo : UT_LOGO;
               const org = e.kind === 'job' ? e.job.company : education.school;
               return (
-                <li key={e.id} className={`tl-item rv${isOpen ? ' is-open' : ''}`} style={{ '--area': color } as React.CSSProperties}>
+                <li key={e.id} className="tl-item rv" data-open={isOpen || undefined} style={{ '--area': color } as React.CSSProperties}>
                   <span aria-hidden className="tl-dot rv-pop" />
                   <span className="tl-date tnum">{e.kind === 'job' ? e.job.period : education.period}</span>
                   <div className="tl-main">
@@ -99,7 +99,7 @@ export function TimelineSection() {
         .tl-list { list-style: none; border-top: 2px solid var(--area, var(--foreground)); }
         .tl-item { position: relative; display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 6px 32px; padding: 18px 0; border-bottom: 1px solid var(--bd); }
         .tl-dot { position: absolute; left: calc(11em + 10px); top: 40px; width: 11px; height: 11px; border-radius: 50%; background: var(--background); border: 2px solid var(--area); z-index: 1; }
-        .tl-item.is-open .tl-dot, .tl-item:first-child .tl-dot { background: var(--area); }
+        .tl-item[data-open] .tl-dot, .tl-item:first-child .tl-dot { background: var(--area); }
         .tl-date { font-size: 15px; color: var(--text2); padding-top: 22px; }
         .tl-head { display: flex; align-items: center; gap: 18px; width: 100%; text-align: left; background: none; border: 0; font: inherit; color: inherit; cursor: pointer; padding: 6px 10px; margin: 0 -10px; border-radius: 4px; transition: background-color .25s; }
         .tl-head:hover, .tl-head:focus-visible { background: color-mix(in srgb, var(--area) 8%, var(--background)); }
@@ -114,11 +114,11 @@ export function TimelineSection() {
         .tl-toggle i { position: relative; width: 12px; height: 12px; }
         .tl-toggle i::before, .tl-toggle i::after { content: ''; position: absolute; left: 0; top: 5.5px; width: 12px; height: 1.5px; background: currentColor; border-radius: 1px; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
         .tl-toggle i::after { transform: rotate(90deg); }
-        .tl-item.is-open .tl-toggle { background: var(--area); border-color: var(--area); color: #121314; }
-        .tl-item.is-open .tl-toggle i::after { transform: rotate(0deg); }
+        .tl-item[data-open] .tl-toggle { background: var(--area); border-color: var(--area); color: #121314; }
+        .tl-item[data-open] .tl-toggle i::after { transform: rotate(0deg); }
         /* Opens smoothly: the panel's row grows from 0 to its content height. */
         .tl-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.2,.7,.2,1); }
-        .tl-item.is-open .tl-panel { grid-template-rows: 1fr; }
+        .tl-item[data-open] .tl-panel { grid-template-rows: 1fr; }
         .tl-panel-inner { overflow: hidden; padding-left: 82px; }
         .tl-panel-inner > :first-child { margin-top: 14px; }
         .tl-panel-inner > :last-child { margin-bottom: 8px; }
